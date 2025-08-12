@@ -60,8 +60,8 @@ const StoryList: React.FC<StoryListProps> = ({
   return (
     <div className="w-full h-full bg-slate-900/95 backdrop-blur flex flex-col">
       <div className="p-6 border-b border-slate-700/50 bg-gradient-to-r from-slate-800/50 to-slate-900/50">
-        <h1 className="text-2xl font-bold text-slate-100 mb-1">Bygone Business</h1>
-        <p className="text-sm text-slate-400">Jewish Businesses in Pre-1945 Berlin</p>
+        <h1 className="text-lg font-mono font-bold text-slate-100 mb-1 tracking-tight uppercase">BYGONE BUSINESS</h1>
+        <p className="text-xs text-slate-400 font-mono">JEWISH BUSINESSES · PRE-1945 BERLIN</p>
         
         <div className="mt-4 space-y-3">
           <div className="relative">
@@ -70,7 +70,7 @@ const StoryList: React.FC<StoryListProps> = ({
               placeholder="Search stories..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 pl-10 bg-slate-800/80 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-slate-200 placeholder-slate-500 text-sm"
+              className="w-full px-3 py-2 pl-9 bg-slate-800/80 border border-slate-600 focus:outline-none focus:border-primary text-slate-200 placeholder-slate-500 text-xs font-mono"
             />
             <svg className="absolute left-3 top-2.5 w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -80,7 +80,7 @@ const StoryList: React.FC<StoryListProps> = ({
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-4 py-2 bg-slate-800/80 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-slate-200 text-sm"
+            className="w-full px-3 py-2 bg-slate-800/80 border border-slate-600 focus:outline-none focus:border-primary text-slate-200 text-xs font-mono"
           >
             <option value="all">All Categories</option>
             <option value="business">Businesses</option>
@@ -107,17 +107,17 @@ const StoryList: React.FC<StoryListProps> = ({
         {filteredStories.map((story) => (
           <div 
             key={story.id}
-            className={`group bg-slate-800/60 backdrop-blur rounded-lg p-4 border-l-4 transition-all duration-300 hover:shadow-xl hover:bg-slate-800/80 cursor-pointer ${
+            className={`group bg-slate-800/60 backdrop-blur p-3 border-l-4 transition-all duration-200 hover:shadow-xl hover:bg-slate-800/80 cursor-pointer ${
               story.id === activeStoryId ? 'ring-2 ring-primary shadow-xl' : ''
             } ${getStatusColor(story)}`}
             onClick={() => handleStoryClick(story.id)}
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h3 className="font-semibold text-slate-100 group-hover:text-primary-light transition-colors">
+                <h3 className="font-medium text-slate-100 text-sm group-hover:text-primary-light transition-colors">
                   {story.title}
                 </h3>
-                <p className="text-sm text-slate-400 mt-1 line-clamp-2">{story.description}</p>
+                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">{story.description}</p>
                 
                 <div className="flex items-center gap-4 mt-3 text-xs text-slate-500">
                   <span className="flex items-center gap-1">
@@ -127,7 +127,7 @@ const StoryList: React.FC<StoryListProps> = ({
                     {new Date(story.startDate).getFullYear()} - {new Date(story.endDate).getFullYear()}
                   </span>
                   {story.category && (
-                    <span className="px-2 py-0.5 bg-slate-700/70 text-slate-300 rounded-full">
+                    <span className="px-2 py-0.5 bg-slate-700/70 text-slate-300 text-xs font-mono uppercase">
                       {story.category}
                     </span>
                   )}
@@ -135,7 +135,7 @@ const StoryList: React.FC<StoryListProps> = ({
               </div>
               
               {story.imageUrls && story.imageUrls.length > 0 && (
-                <div className="relative w-20 h-20 ml-4 rounded-lg overflow-hidden flex-shrink-0">
+                <div className="relative w-16 h-16 ml-3 overflow-hidden flex-shrink-0 border border-slate-600">
                   <Image
                     src={story.imageUrls[0]}
                     alt={story.title}
@@ -147,7 +147,7 @@ const StoryList: React.FC<StoryListProps> = ({
             </div>
             
             <button
-              className="mt-3 text-xs text-primary-light hover:text-slate-300 transition-colors"
+              className="mt-2 text-xs text-primary-light hover:text-slate-300 transition-colors font-mono uppercase tracking-wider"
               onClick={(e) => {
                 e.stopPropagation();
                 handleViewDetails(story.id);

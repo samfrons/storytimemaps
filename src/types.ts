@@ -5,11 +5,14 @@ export interface StoryMap {
   longDescription: string | null;
   lat: number;
   lng: number;
+  address?: string;
+  category?: 'business' | 'institution' | 'residence';
   startDate: string | null;
   midDate: string | null;
   endDate: string | null;
-  media: MediaItem[] | null;
-  imageUrls: string[]; 
+  media?: MediaItem[] | null;
+  mediaLink?: string;
+  imageUrls?: string[]; 
 }
 
 

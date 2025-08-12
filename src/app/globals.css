@@ -1,23 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #2c5f7c;
+  --primary-light: #4a8db8;
+  --secondary: #7ca4b8;
+  --warning: #d4942a;
+  --danger: #8b3a3a;
+  --success: #4a7c59;
+  --background: #faf8f3;
+  --foreground: #2c3e50;
+  --muted: #6c757d;
+  --border: #d6cfc4;
+  --shadow: rgba(44, 95, 124, 0.12);
+  --map-overlay: rgba(44, 95, 124, 0.04);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --primary: #5a9ec4;
+    --primary-light: #7ab4d4;
+    --secondary: #94b8cc;
+    --warning: #e4b04a;
+    --danger: #b85454;
+    --success: #6a9c7a;
+    --background: #1a1f26;
+    --foreground: #e1e8ed;
+    --muted: #94a3b1;
+    --border: #2c3640;
+    --shadow: rgba(90, 158, 196, 0.15);
+    --map-overlay: rgba(90, 158, 196, 0.06);
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer utilities {
@@ -26,7 +52,68 @@ body {
   }
 }
 
-
-.detail {
-
+@layer components {
+  .card {
+    @apply bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-xl shadow-lg border border-border;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-light transition-all duration-200 font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all duration-200 font-medium;
+  }
+  
+  .panel {
+    @apply bg-white/95 dark:bg-slate-900/95 backdrop-blur border-l border-border shadow-xl;
+  }
+  
+  .marker-active {
+    @apply bg-primary border-2 border-white shadow-lg;
+  }
+  
+  .marker-declining {
+    @apply bg-warning border-2 border-white shadow-lg;
+  }
+  
+  .marker-closed {
+    @apply bg-danger border-2 border-white shadow-lg;
+  }
+  
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .map-gradient {
+    background: linear-gradient(135deg, 
+      rgba(44, 95, 124, 0.4) 0%, 
+      rgba(74, 141, 184, 0.3) 25%, 
+      rgba(124, 164, 184, 0.2) 50%, 
+      rgba(148, 168, 184, 0.15) 75%, 
+      rgba(168, 184, 200, 0.1) 100%);
+    pointer-events: none;
+  }
+  
+  .tooltip-label {
+    @apply px-3 py-1.5 rounded-md text-sm font-medium shadow-lg backdrop-blur-sm border;
+  }
+  
+  .tooltip-label-active {
+    @apply text-primary border-primary;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-opacity: 0.3;
+  }
+  
+  .tooltip-label-declining {
+    @apply text-yellow-900 dark:text-yellow-100 border-warning;
+    background-color: rgba(212, 148, 42, 0.2);
+    border-opacity: 0.5;
+  }
+  
+  .tooltip-label-closed {
+    @apply text-red-900 dark:text-red-100 border-danger;
+    background-color: rgba(139, 58, 58, 0.2);
+    border-opacity: 0.5;
+  }
 }

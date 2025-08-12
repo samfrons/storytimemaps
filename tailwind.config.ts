@@ -9,8 +9,38 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        primary: "var(--primary)",
+        "primary-light": "var(--primary-light)",
+        secondary: "var(--secondary)",
+        warning: "var(--warning)",
+        danger: "var(--danger)",
+        success: "var(--success)",
         background: "var(--background)",
         foreground: "var(--foreground)",
+        muted: "var(--muted)",
+        border: "var(--border)",
+      },
+      fontFamily: {
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.3s ease-in-out',
+        'slide-in': 'slideIn 0.3s ease-out',
+        'pulse-subtle': 'pulseSubtle 2s infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideIn: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        pulseSubtle: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.8' },
+        },
       },
     },
   },

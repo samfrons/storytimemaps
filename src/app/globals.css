@@ -5,34 +5,34 @@
 @tailwind utilities;
 
 :root {
-  --primary: #2c5f7c;
-  --primary-light: #4a8db8;
-  --secondary: #7ca4b8;
-  --warning: #d4942a;
-  --danger: #8b3a3a;
-  --success: #4a7c59;
-  --background: #faf8f3;
-  --foreground: #2c3e50;
-  --muted: #6c757d;
-  --border: #d6cfc4;
-  --shadow: rgba(44, 95, 124, 0.12);
-  --map-overlay: rgba(44, 95, 124, 0.04);
+  --primary: #4a5f7a;
+  --primary-light: #6b82a0;
+  --secondary: #8b9dc3;
+  --warning: #c4a574;
+  --danger: #9b6b6b;
+  --success: #7a9c89;
+  --background: #f7f6f4;
+  --foreground: #3a3f47;
+  --muted: #8a8d91;
+  --border: #e2e0dd;
+  --shadow: rgba(0, 0, 0, 0.06);
+  --map-overlay: rgba(74, 95, 122, 0.03);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: #5a9ec4;
-    --primary-light: #7ab4d4;
-    --secondary: #94b8cc;
-    --warning: #e4b04a;
-    --danger: #b85454;
-    --success: #6a9c7a;
-    --background: #1a1f26;
-    --foreground: #e1e8ed;
-    --muted: #94a3b1;
-    --border: #2c3640;
-    --shadow: rgba(90, 158, 196, 0.15);
-    --map-overlay: rgba(90, 158, 196, 0.06);
+    --primary: #6b82a0;
+    --primary-light: #8b9dc3;
+    --secondary: #a4b5d3;
+    --warning: #d4b074;
+    --danger: #c87474;
+    --success: #8aac9a;
+    --background: #1e2128;
+    --foreground: #e8eaed;
+    --muted: #9ca3af;
+    --border: #2e343d;
+    --shadow: rgba(0, 0, 0, 0.2);
+    --map-overlay: rgba(107, 130, 160, 0.05);
   }
 }
 
@@ -55,19 +55,19 @@ body {
 
 @layer components {
   .card {
-    @apply bg-white/90 dark:bg-slate-800/90 backdrop-blur shadow-lg border border-border;
+    @apply bg-white dark:bg-slate-800/95 shadow-sm hover:shadow-md transition-shadow duration-200 border border-border;
   }
   
   .btn-primary {
-    @apply bg-primary text-white px-3 py-1.5 hover:bg-primary-light transition-colors duration-150 font-medium text-xs uppercase tracking-wider;
+    @apply bg-primary text-white px-4 py-2 hover:bg-primary-light transition-all duration-200 font-medium text-sm shadow-sm hover:shadow;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-white px-3 py-1.5 hover:opacity-90 transition-colors duration-150 font-medium text-xs uppercase tracking-wider;
+    @apply bg-transparent border border-border text-foreground px-4 py-2 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-200 font-medium text-sm;
   }
   
   .panel {
-    @apply bg-white/95 dark:bg-slate-900/95 backdrop-blur border-l border-border shadow-xl;
+    @apply bg-white dark:bg-slate-900 border border-border shadow-sm;
   }
   
   .marker-active {

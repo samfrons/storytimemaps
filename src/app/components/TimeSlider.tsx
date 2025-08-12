@@ -46,11 +46,11 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-medium text-muted">{minDate.getFullYear()}</span>
+        <span className="text-xs font-mono text-muted">{minDate.getFullYear()}</span>
         <div className="flex items-center gap-2">
           <button
             onClick={handlePlayPause}
-            className="p-1.5 rounded-lg bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors"
+            className="p-2 bg-white dark:bg-slate-800 border border-border hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-sm hover:shadow"
             aria-label={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (
@@ -64,16 +64,16 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
               </svg>
             )}
           </button>
-          <span className="text-sm font-bold text-primary">
+          <span className="text-xs font-mono font-bold text-foreground bg-white dark:bg-slate-800 px-3 py-1.5 border border-border shadow-sm uppercase tracking-wide">
             {currentDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
           </span>
         </div>
-        <span className="text-xs font-medium text-muted">{maxDate.getFullYear()}</span>
+        <span className="text-xs font-mono text-muted">{maxDate.getFullYear()}</span>
       </div>
       
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full h-2 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-primary to-primary-light transition-all duration-300 ease-out"
               style={{ width: `${percentage}%` }}
@@ -89,23 +89,23 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
           onChange={handleChange}
           className="relative w-full h-2 bg-transparent appearance-none cursor-pointer z-10
             [&::-webkit-slider-thumb]:appearance-none
-            [&::-webkit-slider-thumb]:w-4
-            [&::-webkit-slider-thumb]:h-4
+            [&::-webkit-slider-thumb]:w-3.5
+            [&::-webkit-slider-thumb]:h-3.5
             [&::-webkit-slider-thumb]:rounded-full
             [&::-webkit-slider-thumb]:bg-primary
             [&::-webkit-slider-thumb]:border-2
             [&::-webkit-slider-thumb]:border-white
-            [&::-webkit-slider-thumb]:shadow-lg
+            [&::-webkit-slider-thumb]:shadow-md
             [&::-webkit-slider-thumb]:cursor-pointer
             [&::-webkit-slider-thumb]:transition-all
             [&::-webkit-slider-thumb]:hover:scale-125
-            [&::-moz-range-thumb]:w-4
-            [&::-moz-range-thumb]:h-4
+            [&::-moz-range-thumb]:w-3.5
+            [&::-moz-range-thumb]:h-3.5
             [&::-moz-range-thumb]:rounded-full
             [&::-moz-range-thumb]:bg-primary
             [&::-moz-range-thumb]:border-2
             [&::-moz-range-thumb]:border-white
-            [&::-moz-range-thumb]:shadow-lg
+            [&::-moz-range-thumb]:shadow-md
             [&::-moz-range-thumb]:cursor-pointer
             [&::-moz-range-thumb]:transition-all
             [&::-moz-range-thumb]:hover:scale-125"
@@ -113,7 +113,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
       </div>
       
       <div className="flex justify-between mt-2">
-        <div className="flex gap-2 text-xs">
+        <div className="flex gap-3 text-xs font-mono">
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-primary"></span>
             Active

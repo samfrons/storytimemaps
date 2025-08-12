@@ -26,8 +26,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gradient-to-br from-slate-900 to-slate-800">
-      <div className="w-full md:w-1/3 h-1/2 md:h-screen order-2 md:order-1 border-r border-slate-700">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-slate-950">
+      <div className="w-full md:w-1/3 h-1/2 md:h-screen order-2 md:order-1">
         <StoryList
           visibleStories={visibleStories}
           activeStoryId={activeStoryId}
@@ -38,7 +38,7 @@ export default function Home() {
           onStoryClick={handleStoryClick}
         />
       </div>
-      <div className="w-full md:w-2/3 h-1/2 md:h-screen order-1 md:order-2 relative overflow-hidden">
+      <div className="w-full md:w-2/3 h-1/2 md:h-screen order-1 md:order-2 relative">
         <Map
           center={berlinCoordinates}
           zoom={defaultZoom}

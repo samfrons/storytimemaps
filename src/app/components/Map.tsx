@@ -12,10 +12,10 @@ delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 const createCustomIcon = (state: string, isActive: boolean, hasImage?: boolean) => {
   const colors = {
-    active: '#2c5f7c',
-    declining: '#d4942a',
-    closed: '#8b3a3a',
-    future: '#6c757d'
+    active: '#4a5f7a',
+    declining: '#c4a574',
+    closed: '#9b6b6b',
+    future: '#8a8d91'
   };
   
   const color = colors[state] || colors.active;
@@ -29,7 +29,7 @@ const createCustomIcon = (state: string, isActive: boolean, hasImage?: boolean) 
           width: ${size}px;
           height: ${size}px;
           border-radius: 50%;
-          border: 3px solid ${color};
+          border: 2px solid ${color};
           background: white;
           box-shadow: 0 3px 10px rgba(0,0,0,0.3);
           transition: all 0.3s ease;
@@ -57,7 +57,7 @@ const createCustomIcon = (state: string, isActive: boolean, hasImage?: boolean) 
         width: ${size}px;
         height: ${size}px;
         border-radius: 50%;
-        border: 3px solid white;
+        border: 2px solid white;
         box-shadow: 0 3px 10px rgba(0,0,0,0.3);
         transition: all 0.3s ease;
         display: flex;
@@ -101,7 +101,7 @@ function ZoomControls() {
     <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
       <button
         onClick={() => map.zoomIn()}
-        className="bg-white dark:bg-slate-800 p-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 border border-border"
+        className="bg-white dark:bg-slate-800 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-border"
         aria-label="Zoom in"
       >
         <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@ function ZoomControls() {
       </button>
       <button
         onClick={() => map.zoomOut()}
-        className="bg-white dark:bg-slate-800 p-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 border border-border"
+        className="bg-white dark:bg-slate-800 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-border"
         aria-label="Zoom out"
       >
         <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,11 +166,11 @@ function MapContent({ markers, onMarkerClick, activeMarkerId, currentDate }: Omi
 
   return (
     <>
-      <div className="absolute inset-0 map-gradient opacity-30 z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 z-[1] pointer-events-none" />
       <TileLayer
-        url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+        url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        opacity={0.8}
+        opacity={0.9}
       />
       <MarkerClusterGroup
         chunkedLoading
@@ -181,7 +181,7 @@ function MapContent({ markers, onMarkerClick, activeMarkerId, currentDate }: Omi
           const count = cluster.getChildCount();
           return L.divIcon({
             html: `<div class="cluster-marker" style="
-              background: linear-gradient(135deg, #2c5f7c 0%, #4a8db8 100%);
+              background: linear-gradient(135deg, #4a5f7a 0%, #6b82a0 100%);
               color: white;
               width: 44px;
               height: 44px;
@@ -191,7 +191,7 @@ function MapContent({ markers, onMarkerClick, activeMarkerId, currentDate }: Omi
               justify-content: center;
               font-weight: 600;
               font-size: 15px;
-              border: 3px solid white;
+              border: 2px solid white;
               box-shadow: 0 4px 12px rgba(0,0,0,0.25);
             ">${count}</div>`,
             className: 'custom-cluster',
@@ -212,7 +212,7 @@ const Map: React.FC<MapProps> = ({ markers = [], center, zoom, onMarkerClick, ac
   }, [markers]);
 
   return (
-    <div className="relative h-full w-full rounded-lg overflow-hidden shadow-2xl">
+    <div className="relative h-full w-full overflow-hidden border-l border-border">
       <MapContainer 
         center={center} 
         zoom={zoom} 

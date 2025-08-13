@@ -25,7 +25,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   zoom,
   markers = [],
   onMarkerClick,
-  activeMarkerId
+  activeMarkerId,
+  currentDate
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
   const [viewState, setViewState] = useState({
@@ -68,7 +69,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [markers])
+  }, [markers, currentDate])
 
   // Get clusters for current viewport
   const clusters = useMemo(() => {
@@ -131,7 +132,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       }))
     }
-  }, [supercluster, viewState, mapLoaded, markers])
+  }, [supercluster, viewState, mapLoaded, markers, currentDate])
 
   // Focus on active marker
   useEffect(() => {

@@ -3,7 +3,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';
 import StoryDetail from './StoryDetail';
@@ -30,6 +30,11 @@ const StoryList: React.FC<StoryListProps> = ({
   const [selectedStoryId, setSelectedStoryId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
+  const [showSearchFilter, setShowSearchFilter] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const handleViewDetails = (storyId: string) => {
     setSelectedStoryId(prevId => prevId === storyId ? null : storyId);
@@ -38,6 +43,39 @@ const StoryList: React.FC<StoryListProps> = ({
   const handleStoryClick = (storyId: string) => {
     onStoryClick(storyId);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!listRef.current) return;
+      
+      setIsScrolling(true);
+      
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+      
+      if (window.innerWidth <= 768) {
+        if (listRef.current.scrollTop > 50 && !isHeaderCollapsed) {
+          setIsHeaderCollapsed(true);
+        }
+      }
+    };
+
+    const listElement = listRef.current;
+    if (listElement) {
+      listElement.addEventListener('scroll', handleScroll);
+      return () => {
+        listElement.removeEventListener('scroll', handleScroll);
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+      };
+    }
+  }, [isHeaderCollapsed]);
 
   const filteredStories = visibleStories.filter(story => {
     const matchesSearch = story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -59,47 +97,86 @@ const StoryList: React.FC<StoryListProps> = ({
 
   return (
     <div className="w-full h-full bg-white dark:bg-slate-900 flex flex-col">
-      <div className="p-6 border-b border-border bg-gray-50 dark:bg-slate-900/50">
-        <h1 className="text-lg font-mono font-bold text-foreground mb-1 tracking-tight uppercase">Historical Locations</h1>
-        <p className="text-xs font-mono text-muted uppercase tracking-wide">Berlin · 1900-1945</p>
-        
-        <div className="mt-4 space-y-3">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search stories..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-3 py-2.5 pl-9 bg-white dark:bg-slate-800 border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-foreground placeholder-muted text-xs font-mono transition-all"
-            />
-            <svg className="absolute left-3 top-2.5 w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+      <div className={`border-b border-border bg-gray-50 dark:bg-slate-900/50 transition-all duration-300 ${
+        isHeaderCollapsed ? 'p-3 md:p-6' : 'p-4 md:p-6'
+      }`}>
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <h1 className="text-lg font-mono font-bold text-foreground mb-1 tracking-tight uppercase">Bygone Berlin Businesses</h1>
+            {!isHeaderCollapsed && (
+              <p className="text-xs font-mono text-muted uppercase tracking-wide">Berlin · 1900-1945</p>
+            )}
           </div>
           
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-3 py-2.5 bg-white dark:bg-slate-800 border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-foreground text-xs font-mono transition-all"
-          >
-            <option value="all">All Categories</option>
-            <option value="business">Businesses</option>
-            <option value="institution">Institutions</option>
-            <option value="residence">Residences</option>
-          </select>
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => setShowSearchFilter(!showSearchFilter)}
+              className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Toggle search and filters"
+            >
+              <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+            
+            <button
+              onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
+              className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Toggle header"
+            >
+              <svg 
+                className={`w-5 h-5 text-foreground transition-transform duration-200 ${isHeaderCollapsed ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
         </div>
         
-        <div className="mt-4">
-          <TimeSlider 
-            minDate={minDate}
-            maxDate={maxDate}
-            currentDate={currentDate}
-            onChange={setCurrentDate}
-          />
+        <div className={`transition-all duration-300 overflow-hidden ${
+          isHeaderCollapsed && !showSearchFilter ? 'max-h-0 opacity-0 mt-0' : 'max-h-96 opacity-100 mt-4'
+        } md:max-h-96 md:opacity-100 md:mt-4`}>
+          <div className="space-y-3">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search stories..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-3 py-2.5 pl-9 bg-white dark:bg-slate-800 border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-foreground placeholder-muted text-xs font-mono transition-all"
+              />
+              <svg className="absolute left-3 top-2.5 w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-3 py-2.5 bg-white dark:bg-slate-800 border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-foreground text-xs font-mono transition-all"
+            >
+              <option value="all">All Categories</option>
+              <option value="business">Businesses</option>
+              <option value="institution">Institutions</option>
+              <option value="residence">Residences</option>
+            </select>
+          </div>
+          
+          <div className={`transition-all duration-300 ${isHeaderCollapsed && !showSearchFilter ? 'mt-0' : 'mt-4'}`}>
+            <TimeSlider 
+              minDate={minDate}
+              maxDate={maxDate}
+              currentDate={currentDate}
+              onChange={setCurrentDate}
+            />
+          </div>
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3">
         <div className="text-xs font-mono text-muted mb-3 uppercase tracking-wide">
           {filteredStories.length} locations found
         </div>

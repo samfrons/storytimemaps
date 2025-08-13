@@ -49,57 +49,57 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
         </div>
       )}
       
-      <div className="grid grid-cols-1 gap-3">
-        <div className="flex items-start gap-2">
+      <div className="grid grid-cols-1 gap-4">
+        <div className="flex items-start gap-3">
           <svg className="w-4 h-4 text-muted mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <div className="text-sm">
-            <p className="font-medium text-foreground">{story.address}</p>
-            <p className="text-xs text-muted">
+          <div className="flex-1">
+            <p className="font-mono text-xs font-semibold text-foreground">{story.address}</p>
+            <p className="font-mono text-xs text-muted mt-0.5">
               {story.lat.toFixed(6)}, {story.lng.toFixed(6)}
             </p>
           </div>
         </div>
         
         {story.category && (
-          <div className="flex items-start gap-2">
+          <div className="flex items-start gap-3">
             <svg className="w-4 h-4 text-muted mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
             </svg>
-            <div className="text-sm">
-              <p className="font-medium text-foreground capitalize">{story.category}</p>
-              <p className="text-xs text-muted">Category</p>
+            <div className="flex-1">
+              <p className="font-mono text-xs font-semibold text-foreground uppercase">{story.category}</p>
+              <p className="font-mono text-xs text-muted mt-0.5">Category</p>
             </div>
           </div>
         )}
         
-        <div className="flex items-start gap-2">
+        <div className="flex items-start gap-3">
           <svg className="w-4 h-4 text-muted mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <div className="text-sm">
-            <p className="font-medium text-foreground">
+          <div className="flex-1">
+            <p className="font-mono text-xs font-semibold text-foreground">
               {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
             </p>
-            <p className="text-xs text-muted">Active Period</p>
+            <p className="font-mono text-xs text-muted mt-0.5">Active Period</p>
           </div>
         </div>
       </div>
       
       {story.description && (
-        <div className="pt-3 border-t border-border">
-          <h5 className="text-xs font-semibold text-muted uppercase tracking-wider mb-2">Historical Context</h5>
-          <p className="text-sm text-foreground leading-relaxed">{story.description}</p>
+        <div className="pt-4 border-t border-border">
+          <h5 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">Historical Context</h5>
+          <p className="font-mono text-xs text-foreground leading-relaxed">{story.description}</p>
         </div>
       )}
       
-      <div className="flex gap-2 pt-3">
-        <button className="flex-1 text-xs py-2 px-3 bg-gray-100 dark:bg-slate-800 text-foreground rounded-lg hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+      <div className="flex gap-3 pt-4">
+        <button className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 bg-white dark:bg-slate-800 text-foreground border border-border hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-sm hover:shadow uppercase tracking-wide">
           View Sources
         </button>
-        <button className="flex-1 text-xs py-2 px-3 bg-primary text-white rounded-lg hover:bg-primary-light transition-colors">
+        <button className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 bg-primary text-white border border-primary hover:bg-primary-light transition-all shadow-sm hover:shadow uppercase tracking-wide">
           Share Story
         </button>
       </div>

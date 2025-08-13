@@ -41,23 +41,21 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
     <div className="space-y-4">
       {allMedia.length > 0 && (
         <div className="space-y-2">
-          <div className="relative w-full h-48 overflow-hidden bg-[#4a4a57]">
+          <div className="relative w-full min-h-[12rem] max-h-[24rem] bg-[#4a4a57]">
             {currentMedia?.type === 'video' ? (
               <video
                 src={currentMedia.url}
                 controls
-                className="w-full h-full object-cover"
+                className="w-full h-auto max-h-[24rem] object-contain"
                 poster={currentMedia.url.replace(/\.(mp4|webm)$/, '.jpg')}
               >
                 Your browser does not support the video tag.
               </video>
             ) : (
-              <Image
+              <img
                 src={currentMedia?.url || ''}
                 alt={currentMedia?.caption || `${story.title} - Media ${selectedMediaIndex + 1}`}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover transition-opacity duration-300"
+                className="w-full h-auto max-h-[24rem] object-contain"
               />
             )}
             

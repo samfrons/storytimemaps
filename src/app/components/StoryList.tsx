@@ -399,7 +399,10 @@ const StoryList: React.FC<StoryListProps> = ({
             } ${getStatusColor(story)}`}
             style={{
               backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.4)',
-              borderColor: 'var(--border)',
+              borderTopColor: 'var(--border)',
+              borderRightColor: 'var(--border)',
+              borderBottomColor: 'var(--border)',
+              borderLeftColor: 'var(--border)',
               ...getActiveStoryStyle(story, story.id === activeStoryId)
             }}
             onClick={() => handleStoryClick(story.id)}
@@ -419,7 +422,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 </h3>
                 <p className={`text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed ${
                   story.id === activeStoryId ? 
-                    (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white/80' : 'text-[#2a2a2a]/80') :
+                    (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white' : 'text-[#2a2a2a]') :
                     ''
                 }`}
                 style={{
@@ -429,11 +432,11 @@ const StoryList: React.FC<StoryListProps> = ({
                 <div className="flex items-center gap-4 mt-3 text-xs font-mono">
                   <span className={`${
                     story.id === activeStoryId ? 
-                      (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white/90' : 'text-[#2a2a2a]/90') :
+                      (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white' : 'text-[#2a2a2a]') :
                       ''
                   }`}
                   style={{
-                    color: story.id === activeStoryId ? undefined : 'var(--accent-orange)'
+                    color: story.id === activeStoryId ? undefined : 'var(--foreground)'
                   }}>
                     {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
                   </span>
@@ -445,7 +448,7 @@ const StoryList: React.FC<StoryListProps> = ({
                     }`}
                     style={{
                       backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.5)',
-                      color: story.id === activeStoryId ? undefined : 'var(--accent-orange)'
+                      color: story.id === activeStoryId ? undefined : 'var(--foreground)'
                     }}>
                       {story.businessType || story.category}
                     </span>

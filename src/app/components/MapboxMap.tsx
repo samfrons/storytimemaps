@@ -496,6 +496,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   // Get cluster style based on theme
   const getClusterStyle = () => {
     switch(theme) {
+      case 'moody':
+        return {
+          backgroundColor: '#f5cdb4',
+          border: '3px solid #6b6275',
+          color: '#2a2a2a'
+        }
       case 'cool':
         return {
           backgroundColor: '#4a90e2',
@@ -534,8 +540,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       default: // moody
         return {
-          backgroundColor: '#97d8c0',
-          border: '3px solid white',
+          backgroundColor: '#f5cdb4',
+          border: '3px solid #6b6275',
           color: '#2a2a2a'
         }
     }

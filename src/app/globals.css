@@ -11,15 +11,15 @@
   --warning: #ffcb51;
   --danger: #ee5760;
   --success: #97d8c0;
-  --background: #3b3340;
-  --background-rgb: 59, 51, 64;
+  --background: #4a4a57;
+  --background-rgb: 74, 74, 87;
   --foreground: #f5cdb4;
   --foreground-muted: #f5cdb4cc;
   --muted: #6b6275;
   --border: #6b6275;
   --shadow: rgba(0, 0, 0, 0.3);
   --map-overlay: rgba(59, 51, 64, 0.1);
-  --accent-orange: #ffcb51;
+  --accent-orange: #eca27d;
   --accent-yellow: #ffcb51;
   --accent-purple: #9dc8fc;
   --accent-coral: #ee5760;

@@ -91,7 +91,7 @@ export default function JewishBusinessesPage() {
   const markers = filteredBusinesses?.features.map(feature => ({
     id: feature.properties.name,
     position: [feature.geometry.coordinates[1], feature.geometry.coordinates[0]] as [number, number],
-    popup: feature.properties.name,
+    popup: feature.properties.category || feature.properties.business_type || 'Business',
     state: getBusinessState(feature.properties)
   })) || []
 
@@ -116,7 +116,7 @@ export default function JewishBusinessesPage() {
       {/* Sidebar */}
       <div className="w-96 border-r border-border overflow-y-auto bg-card">
         <div className="p-6 border-b border-border">
-          <h1 className="text-2xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl font-bold mb-2" style={{ color: '#2d3748' }}>
             Jewish Businesses in Berlin
           </h1>
           <p className="text-sm text-muted-foreground mb-4">
@@ -158,9 +158,13 @@ export default function JewishBusinessesPage() {
                 onClick={() => setSelectedBusiness(feature.properties.name)}
                 className={`p-4 rounded-lg border cursor-pointer transition-all ${
                   selectedBusiness === feature.properties.name
-                    ? 'border-primary bg-primary/5'
-                    : 'border-border hover:border-primary/50 hover:bg-accent'
+                    ? 'border-2'
+                    : 'border-border hover:shadow-sm'
                 }`}
+                style={{
+                  borderColor: selectedBusiness === feature.properties.name ? '#d4a574' : undefined,
+                  backgroundColor: selectedBusiness === feature.properties.name ? 'rgba(212, 165, 116, 0.05)' : undefined
+                }}
               >
                 <h3 className="font-semibold text-foreground mb-1">
                   {feature.properties.name}
@@ -173,7 +177,7 @@ export default function JewishBusinessesPage() {
                   {feature.properties.address}
                 </p>
                 {feature.properties.date_range && (
-                  <p className="text-xs text-primary mt-1">
+                  <p className="text-xs mt-1" style={{ color: '#d4a574' }}>
                     {feature.properties.date_range}
                   </p>
                 )}
@@ -234,7 +238,7 @@ export default function JewishBusinessesPage() {
               {selectedBusinessData.properties.date_range && (
                 <div>
                   <span className="text-muted-foreground">Active: </span>
-                  <span className="text-foreground">{selectedBusinessData.properties.date_range}</span>
+                  <span style={{ color: '#d4a574', fontWeight: 500 }}>{selectedBusinessData.properties.date_range}</span>
                 </div>
               )}
             </div>
@@ -246,15 +250,15 @@ export default function JewishBusinessesPage() {
           <h4 className="text-xs font-semibold text-foreground mb-2">Business Status</h4>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#4a5f7a]"></div>
+              <div className="w-3 h-3 rounded-full bg-[#5a6b84]"></div>
               <span className="text-xs text-muted-foreground">Active</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#c4a574]"></div>
+              <div className="w-3 h-3 rounded-full bg-[#d4a574]"></div>
               <span className="text-xs text-muted-foreground">Ownership Changed</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#9b6b6b]"></div>
+              <div className="w-3 h-3 rounded-full bg-[#a67c8a]"></div>
               <span className="text-xs text-muted-foreground">Closed/Liquidated</span>
             </div>
           </div>

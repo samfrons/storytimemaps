@@ -38,9 +38,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   const [mapLoaded, setMapLoaded] = useState(false)
 
   const colors = {
-    active: '#4a5f7a',
-    declining: '#c4a574',
-    closed: '#9b6b6b',
+    active: '#5a6b84',
+    declining: '#d4a574',
+    closed: '#a67c8a',
     future: '#8a8d91'
   }
 
@@ -173,7 +173,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           <div
             className="mapbox-cluster-marker"
             style={{
-              background: 'linear-gradient(135deg, #4a5f7a 0%, #6b82a0 100%)',
+              background: 'linear-gradient(135deg, #5a6b84 0%, #7a8ca8 100%)',
               color: 'white',
               width: '44px',
               height: '44px',
@@ -181,8 +181,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontWeight: 600,
-              fontSize: '15px',
+              fontFamily: 'Inter, -apple-system, sans-serif',
+              fontWeight: 500,
+              fontSize: '14px',
               border: '2px solid white',
               boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
               cursor: 'pointer',

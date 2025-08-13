@@ -6,7 +6,7 @@ import Image from 'next/image';
 import React, { useState, useEffect, useRef } from 'react';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';
-import StoryDetail from './StoryDetail';
+import BusinessDetailModal from './BusinessDetailModal';
 
 interface StoryListProps {
   visibleStories: StoryMap[];
@@ -27,7 +27,9 @@ const StoryList: React.FC<StoryListProps> = ({
   setCurrentDate,
   onStoryClick
 }) => {
-  const [selectedStoryId, setSelectedStoryId] = useState<string | null>(null);
+  const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -36,8 +38,19 @@ const StoryList: React.FC<StoryListProps> = ({
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const handleViewDetails = (storyId: string) => {
-    setSelectedStoryId(prevId => prevId === storyId ? null : storyId);
+  const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
+    const rect = element.getBoundingClientRect();
+    setOriginRect(rect);
+    setSelectedStory(story);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setTimeout(() => {
+      setSelectedStory(null);
+      setOriginRect(null);
+    }, 600);
   };
 
   const handleStoryClick = (storyId: string) => {
@@ -108,15 +121,15 @@ const StoryList: React.FC<StoryListProps> = ({
     const start = story.startDate ? new Date(story.startDate).getTime() : 0;
     const end = story.endDate ? new Date(story.endDate).getTime() : Infinity;
     
-    if (now < start) return 'border-l-muted opacity-60';  // Future - not yet opened
-    if (now > end) return 'border-l-danger opacity-75';  // Closed
+    if (now < start) return 'border-l-muted';  // Future - not yet opened
+    if (now > end) return 'border-l-danger';  // Closed
     if (story.midDate && now > new Date(story.midDate).getTime()) return 'border-l-warning';  // Declining
     return 'border-l-primary';  // Active
   };
 
   return (
-    <div className="w-full h-full bg-[#3b3340] flex flex-col">
-      <div className={`border-b border-[#564b5a] bg-[#3b3340]/95 backdrop-blur transition-all duration-300 ${
+    <div className="w-full h-full bg-[#4a4a57] flex flex-col">
+      <div className={`border-b border-[#6b6275] bg-[#4a4a57]/95 backdrop-blur transition-all duration-300 ${
         isHeaderCollapsed ? 'p-3 md:p-6' : 'p-4 md:p-6'
       }`}>
         <div className="flex items-center justify-between">
@@ -130,7 +143,7 @@ const StoryList: React.FC<StoryListProps> = ({
           <div className="flex items-center gap-2 md:hidden">
             <button
               onClick={() => setShowSearchFilter(!showSearchFilter)}
-              className="p-2 hover:bg-[#564b5a] transition-colors"
+              className="p-2 hover:bg-[#6b6275] transition-colors"
               aria-label="Toggle search and filters"
             >
               <svg className="w-5 h-5 text-[#97d8c0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,7 +153,7 @@ const StoryList: React.FC<StoryListProps> = ({
             
             <button
               onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
-              className="p-2 hover:bg-[#564b5a] transition-colors"
+              className="p-2 hover:bg-[#6b6275] transition-colors"
               aria-label="Toggle header"
             >
               <svg 
@@ -165,7 +178,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 placeholder="Search stories..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-3 py-2.5 pl-9 bg-[#564b5a]/50 border border-[#564b5a] focus:outline-none focus:ring-2 focus:ring-[#97d8c0] focus:border-transparent text-[#f5cdb4] placeholder-[#8b7d8e] text-xs font-mono transition-all"
+                className="w-full px-3 py-2.5 pl-9 bg-[#6b6275]/50 border border-[#6b6275] focus:outline-none text-[#f5cdb4] placeholder-[#8b7d8e] text-xs font-mono transition-all"
               />
               <svg className="absolute left-3 top-2.5 w-4 h-4 text-[#8b7d8e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -175,7 +188,7 @@ const StoryList: React.FC<StoryListProps> = ({
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2.5 bg-[#564b5a]/50 border border-[#564b5a] focus:outline-none focus:ring-2 focus:ring-[#97d8c0] focus:border-transparent text-[#f5cdb4] text-xs font-mono transition-all"
+              className="w-full px-3 py-2.5 bg-[#6b6275]/50 border border-[#6b6275] focus:outline-none text-[#f5cdb4] text-xs font-mono transition-all"
             >
               <option value="all">All Categories</option>
               <option value="business">Businesses</option>
@@ -204,15 +217,15 @@ const StoryList: React.FC<StoryListProps> = ({
           <div 
             key={story.id}
             ref={(el) => { storyRefs.current[story.id] = el; }}
-            className={`group bg-[#564b5a]/30 backdrop-blur border border-l-4 border-[#564b5a] transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
-              story.id === activeStoryId ? 'shadow-xl scale-[1.02] bg-[#564b5a]/50' : 'hover:bg-[#564b5a]/40'
+            className={`group bg-[#6b6275]/40 backdrop-blur border border-l-4 border-[#6b6275] transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
+              story.id === activeStoryId ? 'shadow-xl scale-[1.02] bg-[#97d8c0]/20 border-l-[#97d8c0]' : 'hover:bg-[#6b6275]/50'
             } ${getStatusColor(story)}`}
             style={{
               borderLeftColor: story.id === activeStoryId ? '#97d8c0' : undefined
             }}
             onClick={() => handleStoryClick(story.id)}
           >
-            <div className={`p-4 transition-all duration-300 ${selectedStoryId === story.id ? 'pb-2' : ''}`}>
+            <div className="p-4">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <h3 className="font-mono font-semibold text-[#f5cdb4] text-sm group-hover:text-[#97d8c0] transition-colors">
@@ -225,7 +238,7 @@ const StoryList: React.FC<StoryListProps> = ({
                     {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
                   </span>
                   {story.category && (
-                    <span className="px-2 py-1 bg-[#564b5a]/50 text-[#eca27d] text-xs font-mono uppercase tracking-wide">
+                    <span className="px-2 py-1 bg-[#6b6275]/50 text-[#eca27d] text-xs font-mono uppercase tracking-wide">
                       {story.category}
                     </span>
                   )}
@@ -249,28 +262,28 @@ const StoryList: React.FC<StoryListProps> = ({
               className="mt-3 text-xs font-mono text-[#f5cdb4] hover:text-[#97d8c0] transition-colors uppercase tracking-wider font-semibold"
               onClick={(e) => {
                 e.stopPropagation();
-                handleViewDetails(story.id);
+                const element = storyRefs.current[story.id];
+                if (element) {
+                  handleViewDetails(story, element);
+                }
               }}
             >
-              {selectedStoryId === story.id ? '− Hide Details' : '+ View Details'}
+              + View Details
             </button>
-            </div>
-            
-            {/* Modal-like expanded content */}
-            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-              selectedStoryId === story.id ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
-            }`}>
-              {selectedStoryId === story.id && (
-                <div className="px-4 pb-4 animate-fade-in">
-                  <div className="pt-4 border-t border-border">
-                    <StoryDetail story={story} />
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         ))}
       </div>
+      
+      {/* Business Detail Modal */}
+      {selectedStory && (
+        <BusinessDetailModal
+          story={selectedStory}
+          isOpen={modalOpen}
+          onClose={closeModal}
+          originRect={originRect}
+        />
+      )}
     </div>
   );
 };

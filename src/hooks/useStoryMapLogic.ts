@@ -36,8 +36,8 @@ export const useStoryMapLogic = () => {
   const [enrichedStories, setEnrichedStories] = useState<StoryMap[]>([]);
   const [visibleStories, setVisibleStories] = useState<StoryMap[]>([]);
   const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
-  const [currentDate, setCurrentDate] = useState<Date>(new Date('1930-01-01'));
-  const [minDate] = useState<Date>(new Date('1900-01-01'));
+  const [currentDate, setCurrentDate] = useState<Date>(new Date('1920-01-01'));
+  const [minDate] = useState<Date>(new Date('1920-01-01'));
   const [maxDate] = useState<Date>(new Date('1945-12-31'));
 
   useEffect(() => {

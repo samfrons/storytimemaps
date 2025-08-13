@@ -296,7 +296,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }
 
   return (
-    <div className="relative h-full w-full overflow-hidden border-l border-[#564b5a]">
+    <div className="relative h-full w-full overflow-hidden border-l border-[#6b6275]">
       <Map
         ref={mapRef}
         {...viewState}
@@ -318,7 +318,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 try {
                   // Water layers
                   if (layer.id.includes('water') && layer.type === 'fill') {
-                    map.setPaintProperty(layer.id, 'fill-color', '#4a4156')
+                    map.setPaintProperty(layer.id, 'fill-color', '#5a5766')
                   }
                   
                   // Park/landuse layers
@@ -388,7 +388,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomIn()
           }}
-          className="bg-[#564b5a]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#564b5a]"
+          className="bg-[#6b6275]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#6b6275]"
           aria-label="Zoom in"
         >
           <svg className="w-5 h-5 text-[#f5cdb4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -399,7 +399,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomOut()
           }}
-          className="bg-[#564b5a]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#564b5a]"
+          className="bg-[#6b6275]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#6b6275]"
           aria-label="Zoom out"
         >
           <svg className="w-5 h-5 text-[#f5cdb4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

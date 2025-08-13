@@ -49,7 +49,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
         <div className="flex items-center gap-2">
           <button
             onClick={handlePlayPause}
-            className="p-2 bg-[#564b5a]/50 border border-[#564b5a] hover:bg-[#564b5a]/70 transition-all shadow-sm hover:shadow-md"
+            className="p-2 bg-[#6b6275]/50 border border-[#6b6275] hover:bg-[#6b6275]/70 transition-all shadow-sm hover:shadow-md"
             aria-label={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (
@@ -63,18 +63,18 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
               </svg>
             )}
           </button>
-          <span className="text-xs font-mono font-bold text-[#f5cdb4] bg-[#564b5a]/50 px-3 py-1.5 border border-[#564b5a] shadow-sm uppercase tracking-wide">
+          <span className="text-xs font-mono font-bold text-[#f5cdb4] bg-[#6b6275]/50 px-3 py-1.5 border border-[#6b6275] shadow-sm uppercase tracking-wide">
             {currentDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
           </span>
         </div>
       </div>
       
       <div className="relative flex items-center gap-4">
-        <span className="text-xs font-mono text-[#ffcb51] font-semibold">{minDate.getFullYear()}</span>
+        <span className="text-xs font-mono text-[#ffcb51] font-semibold">1920</span>
         
         <div className="relative flex-1">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full h-4 bg-[#564b5a]/50 overflow-hidden">
+            <div className="w-full h-4 bg-[#6b6275]/50 overflow-hidden">
               <div 
                 className="h-full bg-[#ee5760] transition-all duration-300 ease-out"
                 style={{ width: `${percentage}%` }}
@@ -111,7 +111,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
           />
         </div>
         
-        <span className="text-xs font-mono text-[#ffcb51] font-semibold">{maxDate.getFullYear()}</span>
+        <span className="text-xs font-mono text-[#ffcb51] font-semibold">1945</span>
       </div>
       
       <div className="flex justify-between mt-2">

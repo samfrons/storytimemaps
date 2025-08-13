@@ -70,7 +70,7 @@ const MethodologySection: React.FC = () => {
             <div>
               <h4 className="font-['Inter'] font-semibold text-[#97d8c0] text-lg mb-3">Research Foundation</h4>
               <p className="text-[#f5cdb4] font-['Inter'] text-lg leading-relaxed">
-                This work builds upon <strong>Dr. Christoph Kreutzmüller's</strong> comprehensive research at the <strong>Leo Baeck Institute</strong>, documenting the systematic destruction of Jewish commercial life in Nazi Germany through meticulous analysis of archival materials and survivor testimonies.
+                This work builds upon <strong>Dr. Christoph Kreutzmüller&apos;s</strong> comprehensive research at the <strong>Leo Baeck Institute</strong>, documenting the systematic destruction of Jewish commercial life in Nazi Germany through meticulous analysis of archival materials and survivor testimonies.
               </p>
             </div>
           </div>

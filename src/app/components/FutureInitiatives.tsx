@@ -47,7 +47,7 @@ const FutureInitiatives: React.FC = () => {
             <div className="bg-[#ee5760]/10 p-6 border border-[#ee5760]/30 mb-6">
               <h4 className="font-['Inter'] font-semibold text-[#ee5760] mb-3">🪨 Inspired by Stolpersteine</h4>
               <p className="text-[#f5cdb4] font-['Inter'] mb-4">
-                Like Gunter Demnig's powerful Stolpersteine project, which commemorates individuals, 
+                Like Gunter Demnig&apos;s powerful Stolpersteine project, which commemorates individuals, 
                 our memorial plaques would honor the <strong>commercial spaces</strong> where Jewish families 
                 built their livelihoods and served their communities.
               </p>
@@ -119,7 +119,7 @@ const FutureInitiatives: React.FC = () => {
             Help Bring These Memorials to Life
           </h4>
           <p className="text-[#f5cdb4]/90 font-['Inter'] text-lg mb-6 max-w-3xl mx-auto">
-            We're seeking partnerships with Berlin's cultural institutions, educational organizations, 
+            We&apos;re seeking partnerships with Berlin&apos;s cultural institutions, educational organizations, 
             and community groups to make memorial plaques a reality. This initiative requires collaboration 
             with city planning, historical preservation, and Jewish community organizations.
           </p>

@@ -256,8 +256,8 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
             Ready to Explore?
           </h2>
           <p className="text-xl md:text-2xl text-[#97d8c0] font-['Inter'] font-light mb-12 max-w-3xl mx-auto leading-relaxed">
-            Step into Berlin's past and discover the stories of thousands of Jewish businesses 
-            that once formed the heart of the city's commercial life.
+            Step into Berlin&apos;s past and discover the stories of thousands of Jewish businesses 
+            that once formed the heart of the city&apos;s commercial life.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
@@ -288,8 +288,8 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
 
           <div className="bg-[#2a2a2a]/60 backdrop-blur-sm p-8 border border-[#6b6275]/30">
             <p className="text-[#f5cdb4]/80 font-['Inter'] text-lg leading-relaxed">
-              This project is part of <strong className="text-[#97d8c0]">StoryTimeMaps'</strong> ongoing work to make historical data accessible. 
-              For academic use and citations, please reference <strong className="text-[#ffcb51]">Dr. Kreutzmüller's</strong> original research.
+              This project is part of <strong className="text-[#97d8c0]">StoryTimeMaps&apos;</strong> ongoing work to make historical data accessible. 
+              For academic use and citations, please reference <strong className="text-[#ffcb51]">Dr. Kreutzmüller&apos;s</strong> original research.
             </p>
           </div>
         </div>

@@ -52,9 +52,11 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
                 Your browser does not support the video tag.
               </video>
             ) : (
-              <img
+              <Image
                 src={currentMedia?.url || ''}
                 alt={currentMedia?.caption || `${story.title} - Media ${selectedMediaIndex + 1}`}
+                width={800}
+                height={400}
                 className="w-full h-auto max-h-[24rem] object-contain"
               />
             )}

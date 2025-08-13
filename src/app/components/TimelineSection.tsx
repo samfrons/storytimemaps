@@ -20,13 +20,14 @@ const TimelineSection: React.FC = () => {
       { threshold: 0.2 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -128,7 +129,7 @@ const TimelineSection: React.FC = () => {
           <p className="text-[#8b7d8e] font-['Inter'] text-sm max-w-3xl mx-auto">
             This timeline represents the systematic dismantling of Jewish economic life in Berlin. 
             Each event marked a further step in the destruction of a community that had been integral 
-            to the city's commercial and cultural fabric for generations.
+            to the city&apos;s commercial and cultural fabric for generations.
           </p>
         </div>
       </div>

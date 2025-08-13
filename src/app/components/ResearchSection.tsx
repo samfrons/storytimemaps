@@ -45,7 +45,7 @@ const ResearchSection: React.FC = () => {
             <div className="bg-[#97d8c0]/10 p-6 border border-[#97d8c0]/30">
               <h4 className="font-['Inter'] font-semibold text-[#97d8c0] mb-3">📖 Essential Reading</h4>
               <p className="text-[#f5cdb4] font-['Inter'] mb-4">
-                <strong>"Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany"</strong> (2015)
+                <strong>&quot;Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany&quot;</strong> (2015)
               </p>
               <a 
                 href="https://www.berghahnbooks.com/title/KreutzmllerFinal"

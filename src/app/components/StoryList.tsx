@@ -221,10 +221,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 <p className="text-xs font-mono text-[#8b7d8e] mt-1.5 line-clamp-2 leading-relaxed">{story.description}</p>
                 
                 <div className="flex items-center gap-4 mt-3 text-xs font-mono text-muted">
-                  <span className="flex items-center gap-1 text-[#9dc8fc]">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
+                  <span className="text-[#eca27d]">
                     {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
                   </span>
                   {story.category && (
@@ -249,7 +246,7 @@ const StoryList: React.FC<StoryListProps> = ({
             </div>
             
             <button
-              className="mt-3 text-xs font-mono text-[#ee5760] hover:text-[#97d8c0] transition-colors uppercase tracking-wider font-semibold"
+              className="mt-3 text-xs font-mono text-[#f5cdb4] hover:text-[#97d8c0] transition-colors uppercase tracking-wider font-semibold"
               onClick={(e) => {
                 e.stopPropagation();
                 handleViewDetails(story.id);

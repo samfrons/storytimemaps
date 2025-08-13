@@ -45,8 +45,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-mono text-[#ffcb51] font-semibold">{minDate.getFullYear()}</span>
+      <div className="flex items-center justify-center mb-2">
         <div className="flex items-center gap-2">
           <button
             onClick={handlePlayPause}
@@ -68,48 +67,51 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
             {currentDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
           </span>
         </div>
-        <span className="text-xs font-mono text-[#ffcb51] font-semibold">{maxDate.getFullYear()}</span>
       </div>
       
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full h-1.5 bg-[#564b5a]/50 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-[#97d8c0] via-[#ffcb51] to-[#ee5760] transition-all duration-300 ease-out"
-              style={{ width: `${percentage}%` }}
-            />
+      <div className="relative flex items-center gap-4">
+        <span className="text-xs font-mono text-[#ffcb51] font-semibold">{minDate.getFullYear()}</span>
+        
+        <div className="relative flex-1">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full h-4 bg-[#564b5a]/50 overflow-hidden">
+              <div 
+                className="h-full bg-[#ee5760] transition-all duration-300 ease-out"
+                style={{ width: `${percentage}%` }}
+              />
+            </div>
           </div>
+          
+          <input
+            type="range"
+            min={minDate.getTime()}
+            max={maxDate.getTime()}
+            value={currentDate.getTime()}
+            onChange={handleChange}
+            className="relative w-full h-4 bg-transparent appearance-none cursor-pointer z-10
+              [&::-webkit-slider-thumb]:appearance-none
+              [&::-webkit-slider-thumb]:w-5
+              [&::-webkit-slider-thumb]:h-5
+              [&::-webkit-slider-thumb]:bg-[#f5cdb4]
+              [&::-webkit-slider-thumb]:border-2
+              [&::-webkit-slider-thumb]:border-white
+              [&::-webkit-slider-thumb]:shadow-md
+              [&::-webkit-slider-thumb]:cursor-pointer
+              [&::-webkit-slider-thumb]:transition-all
+              [&::-webkit-slider-thumb]:hover:scale-125
+              [&::-moz-range-thumb]:w-5
+              [&::-moz-range-thumb]:h-5
+              [&::-moz-range-thumb]:bg-[#f5cdb4]
+              [&::-moz-range-thumb]:border-2
+              [&::-moz-range-thumb]:border-white
+              [&::-moz-range-thumb]:shadow-md
+              [&::-moz-range-thumb]:cursor-pointer
+              [&::-moz-range-thumb]:transition-all
+              [&::-moz-range-thumb]:hover:scale-125"
+          />
         </div>
         
-        <input
-          type="range"
-          min={minDate.getTime()}
-          max={maxDate.getTime()}
-          value={currentDate.getTime()}
-          onChange={handleChange}
-          className="relative w-full h-2 bg-transparent appearance-none cursor-pointer z-10
-            [&::-webkit-slider-thumb]:appearance-none
-            [&::-webkit-slider-thumb]:w-3.5
-            [&::-webkit-slider-thumb]:h-3.5
-            [&::-webkit-slider-thumb]:rounded-full
-            [&::-webkit-slider-thumb]:bg-[#ee5760]
-            [&::-webkit-slider-thumb]:border-2
-            [&::-webkit-slider-thumb]:border-white
-            [&::-webkit-slider-thumb]:shadow-md
-            [&::-webkit-slider-thumb]:cursor-pointer
-            [&::-webkit-slider-thumb]:transition-all
-            [&::-webkit-slider-thumb]:hover:scale-125
-            [&::-moz-range-thumb]:w-3.5
-            [&::-moz-range-thumb]:h-3.5
-            [&::-moz-range-thumb]:rounded-full
-            [&::-moz-range-thumb]:bg-[#ee5760]
-            [&::-moz-range-thumb]:border-2
-            [&::-moz-range-thumb]:border-white
-            [&::-moz-range-thumb]:shadow-md
-            [&::-moz-range-thumb]:cursor-pointer
-            [&::-moz-range-thumb]:transition-all
-            [&::-moz-range-thumb]:hover:scale-125"
-        />
+        <span className="text-xs font-mono text-[#ffcb51] font-semibold">{maxDate.getFullYear()}</span>
       </div>
       
       <div className="flex justify-between mt-2">

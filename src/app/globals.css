@@ -106,6 +106,8 @@ body {
   .tooltip-label {
     @apply px-2 py-1 text-xs font-mono shadow-lg backdrop-blur-sm border;
     letter-spacing: 0.02em;
+    z-index: 999999 !important;
+    position: relative !important;
   }
   
   .tooltip-label-active {

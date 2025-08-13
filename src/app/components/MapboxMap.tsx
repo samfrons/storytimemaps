@@ -224,15 +224,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {/* Enhanced Tooltip when active, regular tooltip otherwise */}
           <div 
-            className={`text-xs font-mono shadow-lg backdrop-blur-sm border mb-1 transition-all duration-300 ${
+            className={`text-xs font-mono shadow-lg backdrop-blur-sm border transition-all duration-300 tooltip-label ${
               properties.state === 'declining' ? 'tooltip-label-declining' : 
               properties.state === 'closed' ? 'tooltip-label-closed' : 
               'tooltip-label-active'
             } ${showEnhanced ? 'p-3 max-w-xs' : 'px-2 py-1 whitespace-nowrap'}`}
             style={{
               letterSpacing: '0.02em',
-              zIndex: isHovered || isActive ? 10000 : 9999,
-              transform: showEnhanced ? 'scale(1.05)' : 'scale(1)'
+              transform: showEnhanced ? 'scale(1.05)' : 'scale(1)',
+              marginBottom: '0px'
             }}
           >
             <div className="font-semibold">{properties.popup}</div>
@@ -255,33 +255,39 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             )}
           </div>
           
-          {/* Marker */}
-          <div
-            className="mapbox-marker"
-            style={{
-              backgroundColor: color,
-              width: `${size}px`,
-              height: `${size}px`,
-              borderRadius: '50%',
-              border: '2px solid white',
-              boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transform: isHovered ? 'scale(1.1)' : 'scale(1)'
-            }}
-            onMouseEnter={() => setHoveredMarkerId(properties.id || null)}
-            onMouseLeave={() => setHoveredMarkerId(null)}
-          >
+          {/* Connected line and dot pointer */}
+          <div style={{ position: 'relative' }}>
+            {/* Angled line pointer */}
+            <div 
+              style={{
+                width: '3px',
+                height: '20px',
+                backgroundColor: properties.state === 'declining' ? '#ffcb51' : 
+                                properties.state === 'closed' ? '#ee5760' : '#97d8c0',
+                transform: 'rotate(15deg)',
+                transformOrigin: 'bottom',
+                opacity: 0.95
+              }}
+            />
+            
+            {/* Precise location dot - positioned at the bottom of the line */}
             <div
               style={{
-                backgroundColor: 'white',
-                width: `${size * 0.3}px`,
-                height: `${size * 0.3}px`,
-                borderRadius: '50%'
+                backgroundColor: properties.state === 'declining' ? '#ffcb51' : 
+                                properties.state === 'closed' ? '#ee5760' : '#97d8c0',
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.5)',
+                cursor: 'pointer',
+                position: 'absolute',
+                bottom: '-4px',
+                left: '50%',
+                transform: 'translateX(-50%)'
               }}
+              onMouseEnter={() => setHoveredMarkerId(properties.id || null)}
+              onMouseLeave={() => setHoveredMarkerId(null)}
+              onClick={() => onMarkerClick(properties.id!)}
             />
           </div>
         </div>

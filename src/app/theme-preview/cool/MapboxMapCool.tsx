@@ -350,17 +350,28 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
               {popupInfo.properties && (
                 <>
                   <div className="text-xs mb-2" style={{ color: '#7f8c8d' }}>
-                    {popupInfo.properties.startDate && 
-                     popupInfo.properties.endDate && 
-                      `${new Date(popupInfo.properties.startDate).getFullYear()} - 
-                       ${new Date(popupInfo.properties.endDate).getFullYear()}`
-                    }
+                    {(() => {
+                      const startDate = popupInfo.properties.startDate as string;
+                      const endDate = popupInfo.properties.endDate as string;
+                      if (startDate && endDate) {
+                        const startYear = new Date(startDate).getFullYear();
+                        const endYear = new Date(endDate).getFullYear();
+                        return `${startYear} - ${endYear}`;
+                      }
+                      return null;
+                    })()}
                   </div>
-                  {popupInfo.properties.description && (
-                    <p className="text-xs line-clamp-3 mb-3" style={{ color: '#2c3e50' }}>
-                      {popupInfo.properties.description}
-                    </p>
-                  )}
+                  {(() => {
+                    const description = popupInfo.properties.description as string;
+                    if (description) {
+                      return (
+                        <p className="text-xs line-clamp-3 mb-3" style={{ color: '#2c3e50' }}>
+                          {description}
+                        </p>
+                      );
+                    }
+                    return null;
+                  })()}
                   <div 
                     className="text-xs font-bold cursor-pointer"
                     style={{

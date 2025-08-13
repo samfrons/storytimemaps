@@ -421,17 +421,28 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
               {popupInfo.properties && (
                 <>
                   <div className="text-xs mb-2 font-bold" style={{ color: '#666666' }}>
-                    {popupInfo.properties.startDate && 
-                     popupInfo.properties.endDate && 
-                      `${new Date(popupInfo.properties.startDate).getFullYear()} - 
-                       ${new Date(popupInfo.properties.endDate).getFullYear()}`
-                    }
+                    {(() => {
+                      const startDate = popupInfo.properties.startDate as string;
+                      const endDate = popupInfo.properties.endDate as string;
+                      if (startDate && endDate) {
+                        const startYear = new Date(startDate).getFullYear();
+                        const endYear = new Date(endDate).getFullYear();
+                        return `${startYear} - ${endYear}`;
+                      }
+                      return null;
+                    })()}
                   </div>
-                  {popupInfo.properties.description && (
-                    <p className="text-xs line-clamp-3 mb-4" style={{ color: '#000000' }}>
-                      {popupInfo.properties.description}
-                    </p>
-                  )}
+                  {(() => {
+                    const description = popupInfo.properties.description as string;
+                    if (description) {
+                      return (
+                        <p className="text-xs line-clamp-3 mb-4" style={{ color: '#000000' }}>
+                          {description}
+                        </p>
+                      );
+                    }
+                    return null;
+                  })()}
                   <button
                     className="text-xs font-black uppercase px-4 py-2"
                     style={{

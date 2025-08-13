@@ -29,10 +29,10 @@ const StoryList: React.FC<StoryListProps> = ({
   onStoryClick
 }) => {
   const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null);
+  const [nextStory, setNextStory] = useState<StoryMap | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionDirection, setTransitionDirection] = useState<'left' | 'right' | null>(null);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -51,9 +51,9 @@ const StoryList: React.FC<StoryListProps> = ({
     setModalOpen(false);
     setTimeout(() => {
       setSelectedStory(null);
+      setNextStory(null);
       setOriginRect(null);
-      setIsTransitioning(false);
-      setTransitionDirection(null);
+      setSlideDirection(null);
     }, 600);
   };
 
@@ -66,20 +66,16 @@ const StoryList: React.FC<StoryListProps> = ({
     if (targetIndex >= 0 && targetIndex < filteredStories.length) {
       const targetStory = filteredStories[targetIndex];
       
-      // Start transition
-      setIsTransitioning(true);
-      setTransitionDirection(direction === 'prev' ? 'right' : 'left');
+      // Set up the next story and direction
+      setNextStory(targetStory);
+      setSlideDirection(direction === 'prev' ? 'right' : 'left');
       
-      // Switch story after a brief delay
+      // After slide animation completes, swap stories
       setTimeout(() => {
         setSelectedStory(targetStory);
-        
-        // End transition
-        setTimeout(() => {
-          setIsTransitioning(false);
-          setTransitionDirection(null);
-        }, 400);
-      }, 200);
+        setNextStory(null);
+        setSlideDirection(null);
+      }, 500);
     }
   };
 
@@ -294,7 +290,7 @@ const StoryList: React.FC<StoryListProps> = ({
         ))}
       </div>
       
-      {/* Business Detail Modal */}
+      {/* Business Detail Modals - Current and Next for transitions */}
       {selectedStory && (
         <BusinessDetailModal
           story={selectedStory}
@@ -304,8 +300,21 @@ const StoryList: React.FC<StoryListProps> = ({
           onNavigate={handleModalNavigation}
           hasPrevious={filteredStories.findIndex(s => s.id === selectedStory.id) > 0}
           hasNext={filteredStories.findIndex(s => s.id === selectedStory.id) < filteredStories.length - 1}
-          isTransitioning={isTransitioning}
-          transitionDirection={transitionDirection}
+          slideDirection={slideDirection === 'left' ? 'left' : null}
+        />
+      )}
+      
+      {/* Next modal sliding in */}
+      {nextStory && slideDirection && (
+        <BusinessDetailModal
+          story={nextStory}
+          isOpen={true}
+          onClose={closeModal}
+          originRect={originRect}
+          onNavigate={handleModalNavigation}
+          hasPrevious={filteredStories.findIndex(s => s.id === nextStory.id) > 0}
+          hasNext={filteredStories.findIndex(s => s.id === nextStory.id) < filteredStories.length - 1}
+          slideDirection={slideDirection === 'left' ? 'right' : 'left'}
         />
       )}
     </div>

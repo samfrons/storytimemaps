@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
-import Map, { Marker, NavigationControl } from 'react-map-gl/mapbox'
+import Map, { Marker, NavigationControl, Popup } from 'react-map-gl/mapbox'
 import Supercluster from 'supercluster'
 
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
@@ -41,7 +41,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   })
   const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null)
   const [mapLoaded, setMapLoaded] = useState(false)
-  const [activeTooltipCoords, setActiveTooltipCoords] = useState<[number, number] | null>(null)
+  const [popupInfo, setPopupInfo] = useState<{
+    longitude: number
+    latitude: number
+    properties: any
+  } | null>(null)
 
   const colors = {
     active: '#97d8c0',     // Mint green (parks)
@@ -134,33 +138,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
   }, [activeMarkerId, markers])
 
-  // Hide map labels near active tooltips
-  useEffect(() => {
-    if (!mapRef.current || !mapLoaded) return
-    
-    const map = mapRef.current.getMap()
-    if (!map) return
-    
-    const style = map.getStyle()
-    if (!style || !style.layers) return
-    
-    // Find all text/symbol layers
-    const textLayers = style.layers.filter(layer => layer.type === 'symbol')
-    
-    textLayers.forEach(layer => {
-      try {
-        if (activeTooltipCoords || hoveredMarkerId) {
-          // Reduce opacity of text labels when tooltip is active
-          map.setLayoutProperty(layer.id, 'text-opacity', 0.2)
-        } else {
-          // Restore full opacity when no tooltip
-          map.setLayoutProperty(layer.id, 'text-opacity', 1)
-        }
-      } catch (err) {
-        // Some layers might not support this property
-      }
-    })
-  }, [activeTooltipCoords, hoveredMarkerId, mapLoaded])
 
   const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
     const expansionZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id)
@@ -214,108 +191,78 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
     // Render individual marker
     const isActive = properties.id === activeMarkerId
-    const isHovered = properties.id === hoveredMarkerId
     const color = colors[properties.state as keyof typeof colors] || colors.active
-    const size = isActive || isHovered ? 36 : 28
-    
-    // Get enriched story data for enhanced tooltip
-    const enrichedStory = enrichedStories.find(s => s.id === properties.id)
-    const showEnhanced = isActive && enrichedStory
 
-    return (
+    const enrichedStory = enrichedStories.find(s => s.id === properties.id)
+    
+    return [
+      // Always visible label as a Popup
+      <Popup
+        key={`label-${properties.id}`}
+        longitude={lng}
+        latitude={lat}
+        closeButton={false}
+        anchor="bottom"
+        offset={[0, -5]}
+        className="mapbox-label-popup"
+      >
+        <div 
+          className={`px-2 py-1 text-xs font-mono font-bold whitespace-nowrap cursor-pointer`}
+          style={{
+            background: properties.state === 'declining' ? 'rgba(255, 203, 81, 0.98)' :
+                       properties.state === 'closed' ? 'rgba(238, 87, 96, 0.98)' :
+                       'rgba(151, 216, 192, 0.98)',
+            color: properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+            border: `1px solid ${
+              properties.state === 'declining' ? '#ffcb51' :
+              properties.state === 'closed' ? '#ee5760' :
+              '#97d8c0'
+            }`,
+            boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+          }}
+          onClick={() => {
+            onMarkerClick(properties.id!)
+            setPopupInfo({
+              longitude: lng,
+              latitude: lat,
+              properties
+            })
+          }}
+        >
+          {properties.popup}
+        </div>
+      </Popup>,
+      
+      // Marker dot
       <Marker
-        key={properties.id}
+        key={`marker-${properties.id}`}
         longitude={lng}
         latitude={lat}
         onClick={() => {
           onMarkerClick(properties.id!)
-          setActiveTooltipCoords([lng, lat])
+          setPopupInfo({
+            longitude: lng,
+            latitude: lat,
+            properties
+          })
         }}
-        anchor="bottom"
+        anchor="center"
       >
-        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {/* Enhanced Tooltip when active, regular tooltip otherwise */}
-          <div 
-            className={`text-xs font-mono shadow-lg backdrop-blur-sm border transition-all duration-300 tooltip-label ${
-              properties.state === 'declining' ? 'tooltip-label-declining' : 
-              properties.state === 'closed' ? 'tooltip-label-closed' : 
-              'tooltip-label-active'
-            } ${showEnhanced ? 'p-3 max-w-xs' : 'px-2 py-1 whitespace-nowrap'}`}
-            style={{
-              letterSpacing: '0.02em',
-              transform: showEnhanced ? 'scale(1.05)' : 'scale(1)',
-              marginBottom: '0px',
-              zIndex: 999999,
-              position: 'relative'
-            }}
-          >
-            <div className="font-bold" style={{ color: 'inherit', opacity: 1 }}>{properties.popup}</div>
-            {showEnhanced && (
-              <>
-                <div className="text-xs text-muted mt-1">
-                  {enrichedStory.startDate && enrichedStory.endDate && 
-                    `${new Date(enrichedStory.startDate).getFullYear()} - ${new Date(enrichedStory.endDate).getFullYear()}`
-                  }
-                </div>
-                {enrichedStory.description && (
-                  <div className="text-xs mt-2 text-foreground line-clamp-3">
-                    {enrichedStory.description}
-                  </div>
-                )}
-                <div className="text-xs mt-2 text-[#97d8c0] font-semibold cursor-pointer hover:underline">
-                  View in list →
-                </div>
-              </>
-            )}
-          </div>
-          
-          {/* Connected line and dot pointer */}
-          <div style={{ position: 'relative' }}>
-            {/* Angled line pointer */}
-            <div 
-              style={{
-                width: '3px',
-                height: '20px',
-                backgroundColor: color,
-                transform: 'rotate(15deg)',
-                transformOrigin: 'bottom',
-                opacity: 0.95
-              }}
-            />
-            
-            {/* Precise location dot - positioned at the bottom of the line */}
-            <div
-              style={{
-                backgroundColor: color,
-                width: `${size / 3}px`,
-                height: `${size / 3}px`,
-                borderRadius: '50%',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.5)',
-                cursor: 'pointer',
-                position: 'absolute',
-                bottom: '-4px',
-                left: '50%',
-                transform: 'translateX(-50%)'
-              }}
-              onMouseEnter={() => {
-                setHoveredMarkerId(properties.id || null)
-                setActiveTooltipCoords([lng, lat])
-              }}
-              onMouseLeave={() => {
-                setHoveredMarkerId(null)
-                if (!activeMarkerId || activeMarkerId !== properties.id) {
-                  setActiveTooltipCoords(null)
-                }
-              }}
-              onClick={() => {
-                onMarkerClick(properties.id!)
-                setActiveTooltipCoords([lng, lat])
-              }}
-            />
-          </div>
-        </div>
+        <div
+          style={{
+            backgroundColor: color,
+            width: '8px',
+            height: '8px',
+            borderRadius: '50%',
+            border: '2px solid white',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            transition: 'transform 0.2s',
+            transform: isActive ? 'scale(1.5)' : 'scale(1)'
+          }}
+        />
       </Marker>
-    )
+    ]
   }
 
   return (
@@ -393,7 +340,57 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         minZoom={3}
       >
         {/* Render all markers and clusters */}
-        {clusters.map(cluster => renderMarker(cluster))}
+        {clusters.flatMap(cluster => renderMarker(cluster))}
+        
+        {/* Detailed popup on click */}
+        {popupInfo && (
+          <Popup
+            longitude={popupInfo.longitude}
+            latitude={popupInfo.latitude}
+            onClose={() => setPopupInfo(null)}
+            closeButton={true}
+            anchor="top"
+            offset={15}
+            className="mapbox-detail-popup"
+          >
+            <div 
+              style={{
+                minWidth: '200px',
+                maxWidth: '300px',
+                padding: '12px',
+                background: 'rgba(255, 255, 255, 0.98)',
+                color: '#2a2a2a',
+                fontFamily: 'Inter, sans-serif'
+              }}
+            >
+              <h3 className="font-bold text-sm mb-2" style={{ color: '#2a2a2a' }}>
+                {popupInfo.properties.popup}
+              </h3>
+              {enrichedStories.find(s => s.id === popupInfo.properties.id) && (
+                <>
+                  <div className="text-xs text-gray-600 mb-2">
+                    {enrichedStories.find(s => s.id === popupInfo.properties.id)?.startDate && 
+                     enrichedStories.find(s => s.id === popupInfo.properties.id)?.endDate && 
+                      `${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.startDate!).getFullYear()} - 
+                       ${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.endDate!).getFullYear()}`
+                    }
+                  </div>
+                  {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description && (
+                    <p className="text-xs text-gray-700 line-clamp-3">
+                      {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description}
+                    </p>
+                  )}
+                  <button 
+                    className="text-xs mt-3 text-blue-600 hover:underline cursor-pointer"
+                    onClick={() => onMarkerClick(popupInfo.properties.id!)}
+                  >
+                    View in list →
+                  </button>
+                </>
+              )}
+            </div>
+          </Popup>
+        )}
         
         {/* Navigation controls hidden - using custom controls */}
         <NavigationControl 

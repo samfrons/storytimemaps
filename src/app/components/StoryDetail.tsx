@@ -15,7 +15,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
     <div className="space-y-4">
       {story.imageUrls && story.imageUrls.length > 0 && (
         <div className="space-y-2">
-          <div className="relative w-full h-48 rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800">
+          <div className="relative w-full h-48 overflow-hidden bg-gray-100 dark:bg-slate-800">
             <Image
               src={story.imageUrls[selectedImage]}
               alt={`${story.title} - Image ${selectedImage + 1}`}
@@ -31,7 +31,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden border-2 transition-all ${
+                  className={`relative w-16 h-16 flex-shrink-0 overflow-hidden border-2 transition-all ${
                     selectedImage === index ? 'border-primary ring-2 ring-primary ring-opacity-50' : 'border-transparent opacity-70 hover:opacity-100'
                   }`}
                 >

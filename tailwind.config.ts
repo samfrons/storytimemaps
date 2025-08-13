@@ -5,6 +5,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/hooks/**/*.{js,ts}",
   ],
   theme: {
     extend: {
@@ -21,7 +22,8 @@ const config: Config = {
         border: "var(--border)",
       },
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        sans: ['var(--font-inter)', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        mono: ['var(--font-space-mono)', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',

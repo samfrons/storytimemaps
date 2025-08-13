@@ -76,40 +76,32 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     return index
   }, [markers])
 
-  // Get clusters for current viewport
+  // Pre-compute initial markers for fallback
+  const initialMarkers = useMemo(() => {
+    return markers.slice(0, 40).map(marker => ({
+      type: 'Feature' as const,
+      properties: {
+        id: marker.id,
+        popup: marker.popup,
+        state: marker.state || 'active'
+      },
+      geometry: {
+        type: 'Point' as const,
+        coordinates: [marker.position[1], marker.position[0]]
+      }
+    }))
+  }, [markers])
+
+  // Get clusters for current viewport with optimized recalculation
   const clusters = useMemo(() => {
-    // For initial load, show all markers if map isn't ready yet
+    // For initial load, show pre-computed markers if map isn't ready yet
     if (!mapLoaded || !mapRef.current) {
-      // Return first 40 markers as individual points for immediate display
-      return markers.slice(0, 40).map(marker => ({
-        type: 'Feature' as const,
-        properties: {
-          id: marker.id,
-          popup: marker.popup,
-          state: marker.state || 'active'
-        },
-        geometry: {
-          type: 'Point' as const,
-          coordinates: [marker.position[1], marker.position[0]]
-        }
-      }))
+      return initialMarkers
     }
     
     const bounds = mapRef.current.getBounds()
     if (!bounds) {
-      // If bounds aren't available yet, return initial markers
-      return markers.slice(0, 40).map(marker => ({
-        type: 'Feature' as const,
-        properties: {
-          id: marker.id,
-          popup: marker.popup,
-          state: marker.state || 'active'
-        },
-        geometry: {
-          type: 'Point' as const,
-          coordinates: [marker.position[1], marker.position[0]]
-        }
-      }))
+      return initialMarkers
     }
     
     try {
@@ -123,21 +115,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       return supercluster.getClusters(bbox, Math.floor(viewState.zoom))
     } catch (error) {
       console.warn('Error getting clusters:', error)
-      // Fallback to showing raw markers
-      return markers.slice(0, 40).map(marker => ({
-        type: 'Feature' as const,
-        properties: {
-          id: marker.id,
-          popup: marker.popup,
-          state: marker.state || 'active'
-        },
-        geometry: {
-          type: 'Point' as const,
-          coordinates: [marker.position[1], marker.position[0]]
-        }
-      }))
+      return initialMarkers
     }
-  }, [supercluster, viewState, mapLoaded, markers])
+  }, [supercluster, viewState.zoom, mapLoaded, initialMarkers])
 
   // Focus on active marker
   useEffect(() => {
@@ -411,4 +391,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   )
 }
 
-export default MapboxMap
+export default React.memo(MapboxMap, (prevProps, nextProps) => {
+  return (
+    prevProps.center[0] === nextProps.center[0] &&
+    prevProps.center[1] === nextProps.center[1] &&
+    prevProps.zoom === nextProps.zoom &&
+    prevProps.activeMarkerId === nextProps.activeMarkerId &&
+    prevProps.currentDate?.getTime() === nextProps.currentDate?.getTime() &&
+    JSON.stringify(prevProps.markers) === JSON.stringify(nextProps.markers) &&
+    JSON.stringify(prevProps.enrichedStories) === JSON.stringify(nextProps.enrichedStories)
+  )
+})

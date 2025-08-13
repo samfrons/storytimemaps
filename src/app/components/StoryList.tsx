@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';
 import BusinessDetailModal from './BusinessDetailModal';
+import { throttle } from '../../utils/performance';
 
 interface StoryListProps {
   visibleStories: StoryMap[];
@@ -35,7 +36,6 @@ const StoryList: React.FC<StoryListProps> = ({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
   const [showSearchFilter, setShowSearchFilter] = useState(false);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
@@ -79,32 +79,21 @@ const StoryList: React.FC<StoryListProps> = ({
   }, [activeStoryId]);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       if (!listRef.current) return;
-      
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      
-      scrollTimeoutRef.current = setTimeout(() => {
-        // Scroll ended
-      }, 150);
       
       if (window.innerWidth <= 768) {
         if (listRef.current.scrollTop > 50 && !isHeaderCollapsed) {
           setIsHeaderCollapsed(true);
         }
       }
-    };
+    }, 100);
 
     const listElement = listRef.current;
     if (listElement) {
-      listElement.addEventListener('scroll', handleScroll);
+      listElement.addEventListener('scroll', handleScroll, { passive: true });
       return () => {
         listElement.removeEventListener('scroll', handleScroll);
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
       };
     }
   }, [isHeaderCollapsed]);
@@ -288,4 +277,12 @@ const StoryList: React.FC<StoryListProps> = ({
   );
 };
 
-export default StoryList;
+export default React.memo(StoryList, (prevProps, nextProps) => {
+  return (
+    prevProps.activeStoryId === nextProps.activeStoryId &&
+    prevProps.currentDate.getTime() === nextProps.currentDate.getTime() &&
+    prevProps.minDate.getTime() === nextProps.minDate.getTime() &&
+    prevProps.maxDate.getTime() === nextProps.maxDate.getTime() &&
+    JSON.stringify(prevProps.visibleStories) === JSON.stringify(nextProps.visibleStories)
+  );
+});

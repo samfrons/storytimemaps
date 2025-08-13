@@ -5,7 +5,14 @@ import dynamic from 'next/dynamic';
 import StoryList from './components/StoryList';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
 
-const MapboxMap = dynamic(() => import('./components/MapboxMap'), { ssr: false });
+const MapboxMap = dynamic(() => import('./components/MapboxMap'), { 
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-[#4a4a57] flex items-center justify-center">
+      <div className="text-[#97d8c0] font-mono">Loading map...</div>
+    </div>
+  )
+});
 
 export default function Home() {
   const {

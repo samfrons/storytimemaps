@@ -64,7 +64,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
             )}
           </button>
           <span className="text-xs font-mono font-bold text-[#f5cdb4] bg-[#6b6275]/50 px-3 py-1.5 border border-[#6b6275] shadow-sm uppercase tracking-wide">
-            {currentDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+            {`${String(currentDate.getMonth() + 1).padStart(2, '0')}.${currentDate.getFullYear()}`}
           </span>
         </div>
       </div>
@@ -134,4 +134,10 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
   );
 };
 
-export default TimeSlider;
+export default React.memo(TimeSlider, (prevProps, nextProps) => {
+  return (
+    prevProps.minDate.getTime() === nextProps.minDate.getTime() &&
+    prevProps.maxDate.getTime() === nextProps.maxDate.getTime() &&
+    prevProps.currentDate.getTime() === nextProps.currentDate.getTime()
+  );
+});

@@ -231,7 +231,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             } ${showEnhanced ? 'p-3 max-w-xs' : 'px-2 py-1 whitespace-nowrap'}`}
             style={{
               letterSpacing: '0.02em',
-              zIndex: isHovered || isActive ? 1000 : 999,
+              zIndex: isHovered || isActive ? 10000 : 9999,
               transform: showEnhanced ? 'scale(1.05)' : 'scale(1)'
             }}
           >
@@ -297,72 +297,64 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         onMove={evt => setViewState(evt.viewState)}
         onLoad={() => {
           setMapLoaded(true)
-          // Apply custom style to match Snazzy Maps colors
+          // Apply custom style to match color scheme
           const map = mapRef.current?.getMap()
           if (map) {
-            // Get all layers to understand the structure
-            const style = map.getStyle()
-            const layers = style.layers
-            
-            // Background color
-            if (map.getLayer('background')) {
-              map.setPaintProperty('background', 'background-color', '#3b3340')
-            }
-            
-            // Water bodies - check for various water layer names
-            const waterLayers = ['water', 'water-shadow', 'waterway']
-            waterLayers.forEach(layer => {
-              if (map.getLayer(layer)) {
-                map.setPaintProperty(layer, 'fill-color', '#4a4156')
-              }
-            })
-            
-            // Parks and green spaces - check various park layer names
-            const parkLayers = ['park', 'landcover', 'landuse', 'landuse_park', 'landuse_overlay', 'national_park']
-            parkLayers.forEach(layer => {
-              if (map.getLayer(layer)) {
-                map.setPaintProperty(layer, 'fill-color', '#97d8c0')
-                map.setPaintProperty(layer, 'fill-opacity', 0.3)
-              }
-            })
-            
-            // Roads - find all road layers dynamically
-            layers.forEach(layer => {
-              if (layer.id.includes('road') || layer.id.includes('street') || layer.id.includes('path')) {
-                if (layer.type === 'line') {
-                  // Highways - coral
-                  if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
-                    map.setPaintProperty(layer.id, 'line-color', '#ee5760')
+            try {
+              // Get all layers safely
+              const style = map.getStyle()
+              if (!style || !style.layers) return
+              
+              const layers = style.layers
+              
+              // Apply custom colors to layers
+              layers.forEach(layer => {
+                try {
+                  // Water layers
+                  if (layer.id.includes('water') && layer.type === 'fill') {
+                    map.setPaintProperty(layer.id, 'fill-color', '#4a4156')
                   }
-                  // Primary roads - golden yellow
-                  else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
-                    map.setPaintProperty(layer.id, 'line-color', '#ffcb51')
+                  
+                  // Park/landuse layers
+                  if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
+                    map.setPaintProperty(layer.id, 'fill-color', '#97d8c0')
+                    map.setPaintProperty(layer.id, 'fill-opacity', 0.2)
                   }
-                  // Local roads - light peach
-                  else {
-                    map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
+                  
+                  // Road layers
+                  if (layer.id.includes('road') && layer.type === 'line') {
+                    if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
+                      map.setPaintProperty(layer.id, 'line-color', '#ee5760')
+                    } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
+                      map.setPaintProperty(layer.id, 'line-color', '#ffcb51')
+                    } else {
+                      map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
+                      map.setPaintProperty(layer.id, 'line-opacity', 0.6)
+                    }
                   }
+                  
+                  // Building layers
+                  if (layer.id.includes('building') && layer.type === 'fill') {
+                    map.setPaintProperty(layer.id, 'fill-color', '#564b5a')
+                    map.setPaintProperty(layer.id, 'fill-opacity', 0.6)
+                  }
+                  
+                  // Text labels
+                  if (layer.type === 'symbol') {
+                    if (layer.paint) {
+                      map.setPaintProperty(layer.id, 'text-color', '#f5cdb4')
+                      map.setPaintProperty(layer.id, 'text-halo-color', '#3b3340')
+                      map.setPaintProperty(layer.id, 'text-halo-width', 1)
+                    }
+                  }
+                } catch (err) {
+                  // Silently skip layers that can't be modified
+                  console.debug('Could not modify layer:', layer.id)
                 }
-              }
-              
-              // Transit lines
-              if (layer.id.includes('transit') && layer.type === 'line') {
-                map.setPaintProperty(layer.id, 'line-color', '#eca27d')
-              }
-              
-              // Buildings
-              if (layer.id.includes('building') && layer.type === 'fill') {
-                map.setPaintProperty(layer.id, 'fill-color', '#564b5a')
-                map.setPaintProperty(layer.id, 'fill-opacity', 0.7)
-              }
-              
-              // Labels and text
-              if (layer.type === 'symbol' && layer.layout && layer.layout['text-field']) {
-                map.setPaintProperty(layer.id, 'text-color', '#f5cdb4')
-                map.setPaintProperty(layer.id, 'text-halo-color', '#3b3340')
-                map.setPaintProperty(layer.id, 'text-halo-width', 1)
-              }
-            })
+              })
+            } catch (err) {
+              console.warn('Could not apply custom map styles:', err)
+            }
           }
         }}
         mapStyle="mapbox://styles/mapbox/dark-v11"

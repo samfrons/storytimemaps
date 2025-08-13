@@ -262,8 +262,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               style={{
                 width: '3px',
                 height: '20px',
-                backgroundColor: properties.state === 'declining' ? '#ffcb51' : 
-                                properties.state === 'closed' ? '#ee5760' : '#97d8c0',
+                backgroundColor: color,
                 transform: 'rotate(15deg)',
                 transformOrigin: 'bottom',
                 opacity: 0.95
@@ -273,17 +272,17 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             {/* Precise location dot - positioned at the bottom of the line */}
             <div
               style={{
-                backgroundColor: properties.state === 'declining' ? '#ffcb51' : 
-                                properties.state === 'closed' ? '#ee5760' : '#97d8c0',
-                width: '8px',
-                height: '8px',
+                backgroundColor: color,
+                width: `${size / 3}px`,
+                height: `${size / 3}px`,
                 borderRadius: '50%',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.5)',
+                boxShadow: isActive || isHovered ? '0 2px 6px rgba(0,0,0,0.7)' : '0 1px 3px rgba(0,0,0,0.5)',
                 cursor: 'pointer',
                 position: 'absolute',
                 bottom: '-4px',
                 left: '50%',
-                transform: 'translateX(-50%)'
+                transform: 'translateX(-50%)',
+                transition: 'all 0.2s ease'
               }}
               onMouseEnter={() => setHoveredMarkerId(properties.id || null)}
               onMouseLeave={() => setHoveredMarkerId(null)}

@@ -19,9 +19,9 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
             <Image
               src={story.imageUrls[selectedImage]}
               alt={`${story.title} - Image ${selectedImage + 1}`}
-              layout="fill"
-              objectFit="cover"
-              className="transition-opacity duration-300"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover transition-opacity duration-300"
             />
           </div>
           
@@ -38,8 +38,9 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
                   <Image
                     src={url}
                     alt={`Thumbnail ${index + 1}`}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    sizes="64px"
+                    className="object-cover"
                   />
                 </button>
               ))}

@@ -104,7 +104,7 @@
 
 ### Frontend Stack
 
-- **Framework:** Next.js 15 (or 14 if 15 has issues) with App Router
+- **Framework:** Next.js  15.4.6 with App Router
 - **Styling:** Tailwind CSS with custom design system
 - **State Management:** Zustand for global state
 - **Maps:** Mapbox GL JS with custom clustering

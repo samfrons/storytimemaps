@@ -1,0 +1,2113 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4058639,
+          52.5112193
+        ]
+      },
+      "properties": {
+        "name": "A. & B. Cohn",
+        "alternative_names": [
+          "A. & B. Cohn",
+          "A. & B. Cohn (01.07.1931)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Wallstr. 9/10,  Berlin",
+        "date_range": "1931",
+        "registration_date": "1931",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4029807,
+          52.5214194
+        ]
+      },
+      "properties": {
+        "name": "A. & B. Elkisch",
+        "alternative_names": [
+          "A. & B. Elkisch"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Neue Friedrichstr. 44,  Berlin",
+        "date_range": "1870",
+        "registration_date": "1870",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.20759174723523172
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3266454,
+          52.4665423
+        ]
+      },
+      "properties": {
+        "name": "A. & B. Kahane",
+        "alternative_names": [
+          "A. & B. Kahane",
+          "A. & B. Kahane (09.02.1934)"
+        ],
+        "business_type": "publishing and printing",
+        "category": "Handicraft",
+        "address": "Büsingstr. 6,  Berlin",
+        "date_range": "1921",
+        "registration_date": "1921",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3505469,
+          52.5017319
+        ]
+      },
+      "properties": {
+        "name": "A. & B. Munter's Elektro-Engros-Haus",
+        "alternative_names": [
+          "A. & B. Munter's Elektro-Engros-Haus"
+        ],
+        "business_type": "electrical goods",
+        "category": "Trade",
+        "address": "Courbièrestr. 16,  Berlin",
+        "date_range": "1928",
+        "registration_date": "1928",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.1722668,
+          52.4180929
+        ]
+      },
+      "properties": {
+        "name": "A. & B. Schlochauer Grundbesitz AG",
+        "alternative_names": [
+          "A. & B. Schlochauer Grundbesitz AG"
+        ],
+        "business_type": "",
+        "category": "",
+        "address": "Bismarckstr. 5,  Berlin",
+        "date_range": "1923",
+        "registration_date": "1923",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3298936,
+          52.5035832
+        ]
+      },
+      "properties": {
+        "name": "A. & H. Kovács",
+        "alternative_names": [
+          "A. & H. Kovács"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Handicraft",
+        "address": "Kurfürstendamm 40/41,  Berlin",
+        "date_range": "1924",
+        "registration_date": "1924",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.4914112718388304
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4234401,
+          52.5277896
+        ]
+      },
+      "properties": {
+        "name": "A. & I. Schmill",
+        "alternative_names": [
+          "A. & I. Schmill",
+          "A. & I. Schmill"
+        ],
+        "business_type": "other",
+        "category": "Trade",
+        "address": "Neue Königstr. 61/62,  Berlin",
+        "date_range": "1910",
+        "registration_date": "1910",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.28651547523719245
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2997227,
+          52.5018158
+        ]
+      },
+      "properties": {
+        "name": "A. & L. Gumpert",
+        "alternative_names": [
+          "A. & L. Gumpert"
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Trade",
+        "address": "Sybelstr. 43,  Berlin",
+        "date_range": "1927",
+        "registration_date": "1927",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3988991,
+          52.53124
+        ]
+      },
+      "properties": {
+        "name": "A. & Leopold Reichmann",
+        "alternative_names": [
+          "A. & Leopold Reichmann"
+        ],
+        "business_type": "metals and metal goods",
+        "category": "Trade",
+        "address": "Brunnenstr. 185,  Berlin",
+        "date_range": "1903",
+        "registration_date": "1903",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2077354,
+          52.5471732
+        ]
+      },
+      "properties": {
+        "name": "A. & M. Rosanis",
+        "alternative_names": [
+          "A. & M. Rosanis"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Kurstr. 34/35,  Berlin",
+        "date_range": "1922",
+        "registration_date": "1922",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.614358,
+          52.4925443
+        ]
+      },
+      "properties": {
+        "name": "A. & S. Goldmann",
+        "alternative_names": [
+          "A. & S. Goldmann"
+        ],
+        "business_type": "other",
+        "category": "Trade",
+        "address": "Langenbeckstr. 1,  Berlin",
+        "date_range": "1908",
+        "registration_date": "1908",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2932509,
+          52.4386254
+        ]
+      },
+      "properties": {
+        "name": "A. & S. Segall",
+        "alternative_names": [
+          "A. & S. Segall (05.05.1939)",
+          "Erich Bernd Reichow vormals A. & S. Segall (15.06.1940)",
+          "A. & S. Segall"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Industry",
+        "address": "Kommandantenstr. 20/21,  Berlin",
+        "date_range": "1901",
+        "registration_date": "1901",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4234401,
+          52.5277896
+        ]
+      },
+      "properties": {
+        "name": "A. Ackerhalt",
+        "alternative_names": [],
+        "business_type": "",
+        "category": "",
+        "address": "Neue Königstr.  11,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.28651547523719245
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.380006,
+          52.5148529
+        ]
+      },
+      "properties": {
+        "name": "A. Asher & Co",
+        "alternative_names": [
+          "Adolf Geipel vormals A. Asher & Co (26.04.1938)",
+          "Adolf Geipel (14.07.1941)",
+          "A. Asher & Co (03.07.1933)",
+          "A. Asher & Co"
+        ],
+        "business_type": "books and art",
+        "category": "Trade",
+        "address": "Behrenstr. 17,  Berlin",
+        "date_range": "1900",
+        "registration_date": "1900",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.3330873891249597
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3913027,
+          52.5029187
+        ]
+      },
+      "properties": {
+        "name": "A. B. C. Apotheken-Bedarfs-Contor, Vertrieb chemischer und pharmazeutischer Präparate Dr. Erwin Schwarz",
+        "alternative_names": [
+          "A. B. C. Apotheken-Bedarfs-Contor, Vertrieb chemischer und pharmazeutischer Präparate Dr. Erwin Schwarz"
+        ],
+        "business_type": "chemicals and pharmaceuticals",
+        "category": "Trade",
+        "address": "Friedrichstr. 19,  Berlin",
+        "date_range": "1920",
+        "registration_date": "1920",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.398796,
+          52.5155992
+        ]
+      },
+      "properties": {
+        "name": "A. B. Citroen",
+        "alternative_names": [
+          "A. B. Citroen (07.02.1933)",
+          "A. B. Citroen"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Werderscher Markt 7,  Berlin",
+        "date_range": "1901",
+        "registration_date": "1901",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.28497987882587833
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.411976,
+          52.5013605
+        ]
+      },
+      "properties": {
+        "name": "A. Baum",
+        "alternative_names": [
+          "A. Baum Inh. Dr. Erich Hering (10.08.1940)",
+          "A. Baum (22.09.1938)",
+          "A. Baum",
+          "Erich Hering (28.10.1940)"
+        ],
+        "business_type": "metals and metal goods",
+        "category": "Trade",
+        "address": "Ritterstr. 9/10,  Berlin",
+        "date_range": "1904",
+        "registration_date": "1904",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.15464506754860552
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.5035076,
+          52.4213723
+        ]
+      },
+      "properties": {
+        "name": "A. Baumert-Export",
+        "alternative_names": [
+          "A. Baumert-Export"
+        ],
+        "business_type": "chemicals and pharmaceuticals",
+        "category": "Trade",
+        "address": "Köpenicker Str. 128,  Berlin",
+        "date_range": "1920",
+        "registration_date": "1920",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4006284,
+          52.5220276
+        ]
+      },
+      "properties": {
+        "name": "A. Becker & Co",
+        "alternative_names": [
+          "A. Becker & Co"
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Trade",
+        "address": "Burgstr. 29,  Berlin",
+        "date_range": "1913",
+        "registration_date": "1913",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4117641,
+          52.5535321
+        ]
+      },
+      "properties": {
+        "name": "A. Benver GmbH",
+        "alternative_names": [
+          "A. Benver GmbH"
+        ],
+        "business_type": "metals and metal goods",
+        "category": "Trade",
+        "address": "Bornholmer Str. 89,  Berlin",
+        "date_range": "1921",
+        "registration_date": "1921",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3007191,
+          52.4363936
+        ]
+      },
+      "properties": {
+        "name": "A. Bergmann & Co",
+        "alternative_names": [
+          "A. Bergmann & Co"
+        ],
+        "business_type": "machines, motor vehicles & technical articles",
+        "category": "Industry",
+        "address": "Potsdamer Str. 56,  Berlin",
+        "date_range": "1920",
+        "registration_date": "1920",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.253396,
+          52.4336251
+        ]
+      },
+      "properties": {
+        "name": "A. Bieber & Sohn AG",
+        "alternative_names": [
+          "A. Bieber & Sohn AG"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Königstr. 40,  Berlin",
+        "date_range": "1922",
+        "registration_date": "1922",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3698445,
+          52.5054916
+        ]
+      },
+      "properties": {
+        "name": "A. Blumenreich GmbH",
+        "alternative_names": [
+          "A. Blumenreich GmbH"
+        ],
+        "business_type": "books and art",
+        "category": "Trade",
+        "address": "Schöneberger Ufer 44,  Berlin",
+        "date_range": "1919",
+        "registration_date": "1919",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.378177,
+          52.5078248
+        ]
+      },
+      "properties": {
+        "name": "A. Bodenheimer & Cie GmbH",
+        "alternative_names": [
+          "A. Bodenheimer & Cie."
+        ],
+        "business_type": "metals and metal goods",
+        "category": "Industry",
+        "address": "Stresemannstr. 6-8,  Berlin",
+        "date_range": "1925",
+        "registration_date": "1925",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.3031433907580771
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4163756,
+          52.5255126
+        ]
+      },
+      "properties": {
+        "name": "A. Bores",
+        "alternative_names": [],
+        "business_type": "textiles and clothing",
+        "category": "",
+        "address": "Keibelstr.  5,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3324211,
+          52.4975077
+        ]
+      },
+      "properties": {
+        "name": "A. Bornstein & Co",
+        "alternative_names": [
+          "A. Bornstein & Co (22.06.1937)",
+          "A. Bornstein & Co"
+        ],
+        "business_type": "chemicals and pharmaceuticals",
+        "category": "Trade",
+        "address": "Spichernstr. 7,  Berlin",
+        "date_range": "1925",
+        "registration_date": "1925",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.336413,
+          52.5026375
+        ]
+      },
+      "properties": {
+        "name": "A. Breslauer",
+        "alternative_names": [
+          "A. Breslauer"
+        ],
+        "business_type": "restaurants",
+        "category": "Services",
+        "address": "Marburger Str. 5,  Berlin",
+        "date_range": "1900",
+        "registration_date": "1900",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4636464,
+          52.5512491
+        ]
+      },
+      "properties": {
+        "name": "A. Brünn j.",
+        "alternative_names": [
+          "A. Brünn j."
+        ],
+        "business_type": "retail shops and department stores",
+        "category": "Trade",
+        "address": "Berliner Allee 29/31,  Berlin",
+        "date_range": "1886",
+        "registration_date": "1886",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.2792976647232802
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3904735,
+          52.5147135
+        ]
+      },
+      "properties": {
+        "name": "A. Busse & Co AG",
+        "alternative_names": [
+          "A. Busse & Co AG"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Französische Str. 24,  Berlin",
+        "date_range": "1900",
+        "registration_date": "1900",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3409275,
+          52.4921479
+        ]
+      },
+      "properties": {
+        "name": "A. Caminer & Co",
+        "alternative_names": [
+          "A. Caminer & Co (01.09.1938)",
+          "A. Caminer & Co (01.12.1937)"
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Trade",
+        "address": "Barbarossastr. 41,  Berlin",
+        "date_range": "1937",
+        "registration_date": "1937",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3989367,
+          52.510885
+        ]
+      },
+      "properties": {
+        "name": "A. Christ GmbH",
+        "alternative_names": [
+          "A. Christ GmbH"
+        ],
+        "business_type": "",
+        "category": "",
+        "address": ",  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.840425236063765
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4032424,
+          52.5245938
+        ]
+      },
+      "properties": {
+        "name": "A. Damitt",
+        "alternative_names": [
+          "A. Damitt GmbH (03.03.1932)",
+          "A. Damitt"
+        ],
+        "business_type": "Möbel",
+        "category": "Trade",
+        "address": "Rosenthaler Str. 46/47,  Berlin",
+        "date_range": "1901",
+        "registration_date": "1901",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.1701980914815837
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4032104,
+          52.5244635
+        ]
+      },
+      "properties": {
+        "name": "A. Damitt Inkasso GmbH",
+        "alternative_names": [
+          "A. Damitt Inkasso GmbH"
+        ],
+        "business_type": "Möbel",
+        "category": "Trade",
+        "address": "Rosenthaler Str. 46,  Berlin",
+        "date_range": "1931",
+        "registration_date": "1931",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.367041,
+          52.5051329
+        ]
+      },
+      "properties": {
+        "name": "A. Davidoff & Co",
+        "alternative_names": [
+          "Nikolai Lasoff (31.05.1941)",
+          "A. Davidoff & Co (28.07.1936)",
+          "A. Davidoff & Co",
+          "A. Davidoff & Co (20.10.1933)"
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Industry",
+        "address": "Potsdamer Str. 64,  Berlin",
+        "date_range": "1908",
+        "registration_date": "1908",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3275488,
+          52.4717873
+        ]
+      },
+      "properties": {
+        "name": "A. E. Wassermann",
+        "alternative_names": [
+          "A. E. Wassermann (13.04.1935)",
+          "A. E. Wassermann"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Wilhelmplatz 7,  Berlin",
+        "date_range": "1900",
+        "registration_date": "1900",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4300612,
+          52.517482
+        ]
+      },
+      "properties": {
+        "name": "A. Englard & Co KG",
+        "alternative_names": [
+          "A. Englard & Co KG"
+        ],
+        "business_type": "other",
+        "category": "Trade",
+        "address": "Blumenstr. 81,  Berlin",
+        "date_range": "1920",
+        "registration_date": "1920",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.19934751714046123
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4015005,
+          52.52333
+        ]
+      },
+      "properties": {
+        "name": "A. Ephraim",
+        "alternative_names": [
+          "A. Ephraim"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Große Präsidentenstr. 9,  Berlin",
+        "date_range": "1903",
+        "registration_date": "1903",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3895655,
+          52.5132825
+        ]
+      },
+      "properties": {
+        "name": "A. F. Gohlicke",
+        "alternative_names": [
+          "A. F. Gohlicke"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Handicraft",
+        "address": "Friedrichstr. 72,  Berlin",
+        "date_range": "1903",
+        "registration_date": "1903",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3500105,
+          52.5092499
+        ]
+      },
+      "properties": {
+        "name": "A. Falkenburger & Co",
+        "alternative_names": [
+          "A. Falkenburger & Co"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Stülerstr. 13,  Berlin",
+        "date_range": "1919",
+        "registration_date": "1919",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2052423,
+          52.5356605
+        ]
+      },
+      "properties": {
+        "name": "A. Falkowitz & Co",
+        "alternative_names": [
+          "A. Falkowitz & Co (10.01.1935)",
+          "A. Falkowitz & Co (27.02.1935)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Charlottenstr. 28,  Berlin",
+        "date_range": "1935",
+        "registration_date": "1935",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3548299,
+          52.4831833
+        ]
+      },
+      "properties": {
+        "name": "A. Feurig Apotheke Karl Meyer",
+        "alternative_names": [
+          "A. Feurig Apotheke Karl Meyer"
+        ],
+        "business_type": "pharmacies",
+        "category": "Trade",
+        "address": "Albertstr. 6,  Berlin",
+        "date_range": "1911",
+        "registration_date": "1911",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3789249,
+          52.5109022
+        ]
+      },
+      "properties": {
+        "name": "A. Fricke & Co",
+        "alternative_names": [
+          "A. Fricke & Co (05.07.1938)",
+          "A. Fricke & Co"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Voßstr. 45,  Berlin",
+        "date_range": "1919",
+        "registration_date": "1919",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.34137582715177667
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2932509,
+          52.4386254
+        ]
+      },
+      "properties": {
+        "name": "A. Goldbruch",
+        "alternative_names": [],
+        "business_type": "leather and shoes",
+        "category": "",
+        "address": "Kommandantenstr.  66,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2927002,
+          52.4352868
+        ]
+      },
+      "properties": {
+        "name": "A. Goldstein KG",
+        "alternative_names": [
+          "A. Goldstein KG (01.01.1935)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Kommandantenstr. 19,  Berlin",
+        "date_range": "1935",
+        "registration_date": "1935",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.340773,
+          52.4336728
+        ]
+      },
+      "properties": {
+        "name": "A. Gompertz GmbH",
+        "alternative_names": [
+          "A. Gompertz GmbH (29.04.1932)",
+          "A. Gompertz (04.03.1936)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Industry",
+        "address": "Kaiser-Wilhelm-Str. 50,  Berlin",
+        "date_range": "1932",
+        "registration_date": "1932",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.6015588,
+          52.4451887
+        ]
+      },
+      "properties": {
+        "name": "A. Grün & Sohn",
+        "alternative_names": [
+          "A. Grün & Sohn"
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Trade",
+        "address": "Birkenstr. 14,  Berlin",
+        "date_range": "1919",
+        "registration_date": "1919",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3888652,
+          52.5186113
+        ]
+      },
+      "properties": {
+        "name": "A. H. Heymann & Co",
+        "alternative_names": [
+          "A. H. Heymann & Co"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Dorotheenstr. 43,  Berlin",
+        "date_range": "1901",
+        "registration_date": "1901",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4628968,
+          52.4981172
+        ]
+      },
+      "properties": {
+        "name": "A. Haendler & Co",
+        "alternative_names": [
+          "A. Haendler & Co (01.04.1936)"
+        ],
+        "business_type": "chemicals and pharmaceuticals",
+        "category": "Trade",
+        "address": "Stralauer Allee 17 F,  Berlin",
+        "date_range": "1936",
+        "registration_date": "1936",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2925709,
+          52.4356892
+        ]
+      },
+      "properties": {
+        "name": "A. Haubenschild",
+        "alternative_names": [
+          "A. Haubenschild",
+          "A. Haubenschild (01.11.1938)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Kommandantenstr. 17,  Berlin",
+        "date_range": "1912",
+        "registration_date": "1912",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.367747,
+          52.5050308
+        ]
+      },
+      "properties": {
+        "name": "A. Hefter Fleischwaren-GmbH",
+        "alternative_names": [
+          "A. Hefter Fleischwaren-GmbH (07.06.1932)"
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Trade",
+        "address": "Potsdamer Str. 76b,  Berlin",
+        "date_range": "1932",
+        "registration_date": "1932",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.1748723,
+          52.5135268
+        ]
+      },
+      "properties": {
+        "name": "A. Heinemann & Co GmbH",
+        "alternative_names": [
+          "A. Heinemann & Co GmbH"
+        ],
+        "business_type": "Möbel",
+        "category": "Trade",
+        "address": "Wilhelmstr. 106,  Berlin",
+        "date_range": "1913",
+        "registration_date": "1913",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3089197,
+          52.5005721
+        ]
+      },
+      "properties": {
+        "name": "A. Helfgott",
+        "alternative_names": [],
+        "business_type": "textiles and clothing",
+        "category": "",
+        "address": "Kurfürstendamm  67,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4181965,
+          52.5189267
+        ]
+      },
+      "properties": {
+        "name": "A. Hoffmann & Co",
+        "alternative_names": [
+          "A. Hoffmann & Co (19.06.1924)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Alexanderstr. 27,  Berlin",
+        "date_range": "1924",
+        "registration_date": "1924",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4242216,
+          52.5175592
+        ]
+      },
+      "properties": {
+        "name": "A. Hoffmann's Verlag Theater-Buch- und Musikalien-Literatur, GmbH",
+        "alternative_names": [
+          "A. Hoffmann's Verlag Theater-Buch- und Musikalien-Literatur, GmbH"
+        ],
+        "business_type": "publishing and printing",
+        "category": "Industry",
+        "address": "Blumenstr. 22,  Berlin",
+        "date_range": "1918",
+        "registration_date": "1918",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3825103,
+          52.5140405
+        ]
+      },
+      "properties": {
+        "name": "A. J. Bernstein & Sohn, KG",
+        "alternative_names": [
+          "A. J. Bernstein & Sohn, KG"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Französische Str. 13/14,  Berlin",
+        "date_range": "1912",
+        "registration_date": "1912",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.3065685497365947
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.5529044,
+          52.667937
+        ]
+      },
+      "properties": {
+        "name": "A. J. Brodtmann",
+        "alternative_names": [
+          "A. J. Brodtmann"
+        ],
+        "business_type": "retail shops and department stores",
+        "category": "Trade",
+        "address": "Havelstr. 1,  Berlin",
+        "date_range": "1919",
+        "registration_date": "1919",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 4.90997177080494e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4032861,
+          52.510452
+        ]
+      },
+      "properties": {
+        "name": "A. Jacobsohn & Co",
+        "alternative_names": [
+          "A. Jacobsohn & Co"
+        ],
+        "business_type": "Möbel",
+        "category": "Trade",
+        "address": "Seydelstr. 30,  Berlin",
+        "date_range": "1902",
+        "registration_date": "1902",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.14170341258693808
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3895332,
+          52.5094155
+        ]
+      },
+      "properties": {
+        "name": "A. Jandorf & Co",
+        "alternative_names": [
+          "A. Jandorf & Co"
+        ],
+        "business_type": "retail shops and department stores",
+        "category": "Trade",
+        "address": "Krausenstr. 46/47,  Berlin",
+        "date_range": "1900",
+        "registration_date": "1900",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4096557,
+          52.5312012
+        ]
+      },
+      "properties": {
+        "name": "A. Kalenscher",
+        "alternative_names": [],
+        "business_type": "textiles and clothing",
+        "category": "",
+        "address": "Fehrbelliner Str.  7,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4113815,
+          52.5186603
+        ]
+      },
+      "properties": {
+        "name": "A. Kaminsky",
+        "alternative_names": [
+          "A. Kaminsky"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Klosterstr. 97,  Berlin",
+        "date_range": "1902",
+        "registration_date": "1902",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.33382026067444703
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3885045,
+          52.5102638
+        ]
+      },
+      "properties": {
+        "name": "A. Kariel & Co",
+        "alternative_names": [
+          "A. Kariel & Co"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Leipziger Str. 101/102,  Berlin",
+        "date_range": "1902",
+        "registration_date": "1902",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.4174145723816278
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.5770655,
+          52.4458223
+        ]
+      },
+      "properties": {
+        "name": "A. Krojanker Schuhfabrik Burg GmbH",
+        "alternative_names": [
+          "A. Krojanker Schuhfabrik Burg GmbH",
+          "Akro Verwaltungs-GmbH (19.05.1934)"
+        ],
+        "business_type": "leather and shoes",
+        "category": "Industry",
+        "address": "Rosenstr. 15,  Berlin",
+        "date_range": "1924",
+        "registration_date": "1924",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3853564,
+          52.5164745
+        ]
+      },
+      "properties": {
+        "name": "A. Lucae",
+        "alternative_names": [
+          "A. Lucae",
+          "A. Lucae's Apotheke Hans Wehrmann (12.12.1939)",
+          "A. Lucae"
+        ],
+        "business_type": "pharmacies",
+        "category": "Trade",
+        "address": "Unter den Linden 53,  Berlin",
+        "date_range": "1900",
+        "registration_date": "1900",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.6126811,
+          52.5169
+        ]
+      },
+      "properties": {
+        "name": "A. Löwi",
+        "alternative_names": [],
+        "business_type": "",
+        "category": "",
+        "address": "Markgrafenstr.  6,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3737195,
+          52.5114792
+        ]
+      },
+      "properties": {
+        "name": "A. Maaß Söhne, Bankgeschäft",
+        "alternative_names": [
+          "A. Maaß Söhne, Bankgeschäft",
+          "A. Maaß Söhne, Bankgeschäft (10.09.1932)"
+        ],
+        "business_type": "banks and insurance",
+        "category": "Trade",
+        "address": "Lennéstr. 4,  Berlin",
+        "date_range": "1902",
+        "registration_date": "1902",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4130905,
+          52.5872649
+        ]
+      },
+      "properties": {
+        "name": "A. Mustroph",
+        "alternative_names": [
+          "A. Mustroph"
+        ],
+        "business_type": "jewelry and precious metals",
+        "category": "Industry",
+        "address": "Charlottenstr. 6,  Berlin",
+        "date_range": "1902",
+        "registration_date": "1902",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3630907,
+          52.4994583
+        ]
+      },
+      "properties": {
+        "name": "A. Müller u. A. Müller",
+        "alternative_names": [
+          "A. Müller u. A. Müller"
+        ],
+        "business_type": "machines, motor vehicles & technical articles",
+        "category": "Trade",
+        "address": "Potsdamer Str. 111,  Berlin",
+        "date_range": "1926",
+        "registration_date": "1926",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3838459,
+          52.5101116
+        ]
+      },
+      "properties": {
+        "name": "A. N. Schmidt & Co GmbH",
+        "alternative_names": [
+          "A. N. Schmidt & Co GmbH 5 P/S Lederwaren Reiseartikel (31.05.1932)",
+          "A. N. Schmidt & Co GmbH"
+        ],
+        "business_type": "leather and shoes",
+        "category": "Trade",
+        "address": "Leipziger Str. 124,  Berlin",
+        "date_range": "1922",
+        "registration_date": "1922",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2052423,
+          52.5356605
+        ]
+      },
+      "properties": {
+        "name": "A. Neumann & Söhne",
+        "alternative_names": [
+          "A. Neumann & Söhne"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Charlottenstr. 28,  Berlin",
+        "date_range": "1910",
+        "registration_date": "1910",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3308958,
+          52.503445
+        ]
+      },
+      "properties": {
+        "name": "A. Oehlrich & Co",
+        "alternative_names": [
+          "A. Oehlrich & Co",
+          "A. Oehlrich & Co (12.06.1939)"
+        ],
+        "business_type": "construction materials and fuel",
+        "category": "Trade",
+        "address": "Joachimsthaler Str. 10,  Berlin",
+        "date_range": "1927",
+        "registration_date": "1927",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4019817,
+          52.5250039
+        ]
+      },
+      "properties": {
+        "name": "A. Offenberg & Söhne",
+        "alternative_names": [
+          "A. Offenberg & Söhne"
+        ],
+        "business_type": "machines, motor vehicles & technical articles",
+        "category": "Trade",
+        "address": "Rosenthaler Str. 40/41,  Berlin",
+        "date_range": "1916",
+        "registration_date": "1916",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3970004,
+          52.4939207
+        ]
+      },
+      "properties": {
+        "name": "A. Palis Nachf.",
+        "alternative_names": [
+          "A. Palis Nachf."
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Trade",
+        "address": "Mittenwalder Str. 6,  Berlin",
+        "date_range": "1900",
+        "registration_date": "1900",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2987807,
+          52.5018128
+        ]
+      },
+      "properties": {
+        "name": "A. Palm & Co",
+        "alternative_names": [
+          "A. Palm & Co",
+          "A. Palm & Co"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Sybelstr. 40,  Berlin",
+        "date_range": "1929",
+        "registration_date": "1929",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.6126971,
+          52.5166199
+        ]
+      },
+      "properties": {
+        "name": "A. Racusin & Co",
+        "alternative_names": [
+          "A. Racusin & Co (05.02.1919)",
+          "A. Racusin & Co (07.03.1929)"
+        ],
+        "business_type": "metals and metal goods",
+        "category": "Trade",
+        "address": "Markgrafenstr. 21,  Berlin",
+        "date_range": "1919",
+        "registration_date": "1919",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.343395,
+          52.5009922
+        ]
+      },
+      "properties": {
+        "name": "A. Reich & Co",
+        "alternative_names": [
+          "A. Reich & Co (01.09.1935)"
+        ],
+        "business_type": "Nahrungs- und Genussmittel",
+        "category": "Industry",
+        "address": "Bayreuther Str. 12,  Berlin",
+        "date_range": "1935",
+        "registration_date": "1935",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3417042,
+          52.4337191
+        ]
+      },
+      "properties": {
+        "name": "A. Rosenthal Nachf.",
+        "alternative_names": [
+          "A. Rosenthal Nachf."
+        ],
+        "business_type": "paper and paper goods",
+        "category": "Trade",
+        "address": "Kaiser-Wilhelm-Str. 53,  Berlin",
+        "date_range": "1901",
+        "registration_date": "1901",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3847578,
+          52.511298
+        ]
+      },
+      "properties": {
+        "name": "A. Saalfeld & Co",
+        "alternative_names": [
+          "A. Saalfeld & Co (01.06.1934)",
+          "A. Saalfeld & Co (27.10.1934)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Industry",
+        "address": "Mohrenstr. 29/30,  Berlin",
+        "date_range": "1934",
+        "registration_date": "1934",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.32314590312055647
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3908887,
+          52.5043546
+        ]
+      },
+      "properties": {
+        "name": "A. Schreiber & Co",
+        "alternative_names": [
+          "A. Schreiber & Co (15.10.1935)"
+        ],
+        "business_type": "metals and metal goods",
+        "category": "Trade",
+        "address": "Friedrichstr. 187/188,  Berlin",
+        "date_range": "1937",
+        "registration_date": "1937",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.4683814607413573
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3175281,
+          52.4856913
+        ]
+      },
+      "properties": {
+        "name": "A. Schäfer Spedition & Möbeltransport",
+        "alternative_names": [
+          "A. Schäfer Spedition & Möbeltransport",
+          "A. Schäfer Spedition & Möbeltransport (24.06.1939)"
+        ],
+        "business_type": "transportation",
+        "category": "Services",
+        "address": "Wilhelmsaue 36,  Berlin",
+        "date_range": "1851",
+        "registration_date": "1851",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4052895,
+          52.5245831
+        ]
+      },
+      "properties": {
+        "name": "A. Schön & Co",
+        "alternative_names": [
+          "A. Schön & Co Alleininhaber Jacob Silbermann (28.01.1936)",
+          "A. Schön & Co (08.12.1933)"
+        ],
+        "business_type": "leather and shoes",
+        "category": "Trade",
+        "address": "Neue Schönhauser Str. 16,  Berlin",
+        "date_range": "1933",
+        "registration_date": "1933",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2158612,
+          52.5268906
+        ]
+      },
+      "properties": {
+        "name": "A. Seydel & Cie AG",
+        "alternative_names": [
+          "A. Seydel & Cie AG"
+        ],
+        "business_type": "publishing and printing",
+        "category": "Industry",
+        "address": "Teltower Str. 29/30,  Berlin",
+        "date_range": "1922",
+        "registration_date": "1922",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3360716,
+          52.4956628
+        ]
+      },
+      "properties": {
+        "name": "A. Spörer & Co",
+        "alternative_names": [
+          "A. Spörer & Co"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Trade",
+        "address": "Regensburger Str. 27,  Berlin",
+        "date_range": "1916",
+        "registration_date": "1916",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4234401,
+          52.5277896
+        ]
+      },
+      "properties": {
+        "name": "A. Steiner",
+        "alternative_names": [],
+        "business_type": "",
+        "category": "",
+        "address": "Neue Königstr.  83,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.28651547523719245
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3387133,
+          52.4319641
+        ]
+      },
+      "properties": {
+        "name": "A. Suponitzki & Co",
+        "alternative_names": [
+          "A. Suponitzki & Co (01.03.1935)"
+        ],
+        "business_type": "textiles and clothing",
+        "category": "Industry",
+        "address": "Kaiser-Wilhelm-Str. 33,  Berlin",
+        "date_range": "1935",
+        "registration_date": "1935",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3988226,
+          52.5259418
+        ]
+      },
+      "properties": {
+        "name": "A. Sylbertrest",
+        "alternative_names": [],
+        "business_type": "leather and shoes",
+        "category": "",
+        "address": "Gr. Hamburger Str.  34,  Berlin",
+        "date_range": "",
+        "registration_date": "",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 8.875486381318407e-05
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.2652277,
+          52.4270961
+        ]
+      },
+      "properties": {
+        "name": "A. Ullendorff & Co",
+        "alternative_names": [
+          "A. Ullendorff & Co",
+          "A. Ullendorff & Co (15.08.1919)"
+        ],
+        "business_type": "chemicals and pharmaceuticals",
+        "category": "Trade",
+        "address": "Prinz-Handjery-Str. 78/80,  Berlin",
+        "date_range": "1919",
+        "registration_date": "1919",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.05342208819714653
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3310627,
+          52.5017981
+        ]
+      },
+      "properties": {
+        "name": "A. V. G. Autoreifen-Vertriebs-Gesellschaft mbH",
+        "alternative_names": [
+          "Osias und Saul Riebenfeld GmbH (25.11.1938)",
+          "A. V. G. Autoreifen-Vertriebs-Gesellschaft mbH"
+        ],
+        "business_type": "machines, motor vehicles & technical articles",
+        "category": "Trade",
+        "address": "Joachimsthaler Str. 22/23,  Berlin",
+        "date_range": "1930",
+        "registration_date": "1930",
+        "takeover_date": "",
+        "liquidation_date": "",
+        "geocode_confidence": 0.2880153568463523
+      }
+    }
+  ]
+}

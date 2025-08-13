@@ -139,8 +139,9 @@ const StoryList: React.FC<StoryListProps> = ({
                   <Image
                     src={story.imageUrls[0]}
                     alt={story.title}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    sizes="64px"
+                    className="object-cover"
                   />
                 </div>
               )}

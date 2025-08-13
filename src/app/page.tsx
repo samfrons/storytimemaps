@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import StoryList from './components/StoryList';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
 
-const Map = dynamic(() => import('./components/Map'), { ssr: false });
+const MapboxMap = dynamic(() => import('./components/MapboxMap'), { ssr: false });
 
 export default function Home() {
   const {
@@ -39,7 +39,7 @@ export default function Home() {
         />
       </div>
       <div className="w-full md:w-2/3 h-1/2 md:h-screen order-1 md:order-2 relative">
-        <Map
+        <MapboxMap
           center={berlinCoordinates}
           zoom={defaultZoom}
           markers={testMarkers}

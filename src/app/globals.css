@@ -114,3 +114,28 @@ body {
     border-opacity: 0.5;
   }
 }
+
+/* Mapbox popup styling */
+.mapbox-popup .mapboxgl-popup-content {
+  @apply bg-white dark:bg-slate-800 shadow-lg border border-border rounded-lg px-3 py-2;
+}
+
+.mapbox-popup .mapboxgl-popup-tip {
+  @apply border-t-white dark:border-t-slate-800;
+}
+
+.mapbox-marker {
+  @apply transition-transform duration-200 ease-out;
+}
+
+.mapbox-marker:hover {
+  @apply scale-110;
+}
+
+.mapbox-cluster-marker {
+  @apply cursor-pointer transition-transform duration-200 ease-out;
+}
+
+.mapbox-cluster-marker:hover {
+  @apply scale-110;
+}

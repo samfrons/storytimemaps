@@ -43,11 +43,23 @@ export const useStoryMapLogic = () => {
     setActiveStoryId(storyId);
   };
 
-  const testMarkers = visibleStories.map(story => ({
-    id: story.id,
-    position: [story.lat, story.lng] as [number, number],
-    popup: story.title
-  }));
+  const testMarkers = visibleStories.map(story => {
+    const now = currentDate.getTime();
+    const start = new Date(story.startDate).getTime();
+    const end = new Date(story.endDate).getTime();
+    
+    let state = 'active';
+    if (now < start) state = 'future';
+    else if (now > end) state = 'closed';
+    else if (story.midDate && now > new Date(story.midDate).getTime()) state = 'declining';
+    
+    return {
+      id: story.id,
+      position: [story.lat, story.lng] as [number, number],
+      popup: story.title,
+      state
+    };
+  });
 
   return {
     storyMaps,

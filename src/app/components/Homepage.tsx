@@ -6,7 +6,13 @@ import { useTranslation } from '../../i18n/useTranslation';
 import LanguageToggle from './LanguageToggle';
 import AnimatedBusinessCarousel from './AnimatedBusinessCarousel';
 import StatisticsSection from './StatisticsSection';
-import BerlinMapGraphic from './BerlinMapGraphic';
+import BerlinMapPreview from './BerlinMapPreview';
+import MethodologySection from './MethodologySection';
+import TimelineSection from './TimelineSection';
+import InsightsSection from './InsightsSection';
+import NavigationGuide from './NavigationGuide';
+import ResearchSection from './ResearchSection';
+import FutureInitiatives from './FutureInitiatives';
 
 interface BusinessFeature {
   properties: {
@@ -122,54 +128,73 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
   return (
     <div className="min-h-screen bg-[#4a4a57]">
       {/* Hero Section */}
-      <header className="relative">
+      <header className="relative bg-gradient-to-br from-[#4a4a57] via-[#3b3340] to-[#2a2a2a] overflow-hidden">
+        {/* Decorative grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(245, 205, 180, 0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(245, 205, 180, 0.1) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }} />
+        </div>
+        
         <div className="absolute top-4 right-4 z-10">
           <LanguageToggle />
         </div>
         
-        <div className="pt-20 pb-16 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-mono text-[#f5cdb4] mb-4 animate-fadeIn">
+        <div className="relative pt-24 pb-20 px-4">
+          <div className="max-w-5xl mx-auto text-center">
+            <h1 className="text-5xl md:text-7xl font-['Inter'] font-light text-[#f5cdb4] mb-6 animate-fadeIn tracking-tight leading-none">
               {t('hero.title')}
             </h1>
-            <p className="text-xl md:text-2xl text-[#8b7d8e] font-mono mb-2 animate-fadeIn animation-delay-200">
+            <p className="text-2xl md:text-3xl text-[#97d8c0] font-['Inter'] font-light mb-4 animate-fadeIn animation-delay-200">
               {t('hero.subtitle')}
             </p>
-            <p className="text-lg text-[#97d8c0] font-mono animate-fadeIn animation-delay-400">
-              {t('hero.period')}
-            </p>
+            <div className="inline-block bg-[#97d8c0]/10 border border-[#97d8c0]/30 px-6 py-2 animate-fadeIn animation-delay-400">
+              <p className="text-xl text-[#97d8c0] font-mono font-bold tracking-wider">
+                {t('hero.period')}
+              </p>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Introduction Section with Map Graphic */}
-      <section className="py-16 px-4 bg-[#3b3340]/10">
+      <section className="py-20 px-4 bg-gradient-to-r from-[#f5cdb4]/5 to-[#97d8c0]/5 relative">
+        {/* Decorative accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#97d8c0] via-[#ffcb51] to-[#eca27d]"></div>
+        
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-mono text-[#f5cdb4] mb-8 text-center">
-            {t('intro.title')}
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-['Inter'] font-light text-[#f5cdb4] mb-4">
+              {t('intro.title')}
+            </h2>
+            <div className="w-24 h-1 bg-[#97d8c0] mx-auto"></div>
+          </div>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             {/* Text Content */}
-            <div className="space-y-6 text-[#f5cdb4]/90 leading-relaxed font-['Inter'] text-base">
-              <p className="animate-fadeIn animation-delay-600">
+            <div className="space-y-8">
+              <p className="text-lg leading-relaxed font-['Inter'] text-[#f5cdb4] animate-fadeIn animation-delay-600">
                 {t('intro.paragraph1')}
               </p>
-              <p className="animate-fadeIn animation-delay-800">
+              <p className="text-lg leading-relaxed font-['Inter'] text-[#f5cdb4]/90 animate-fadeIn animation-delay-800">
                 {t('intro.paragraph2')}
               </p>
-              <p className="animate-fadeIn animation-delay-1000">
+              <p className="text-lg leading-relaxed font-['Inter'] text-[#f5cdb4]/90 animate-fadeIn animation-delay-1000">
                 {t('intro.paragraph3')}
               </p>
             </div>
             
             {/* Map Graphic */}
             <div className="animate-fadeIn animation-delay-800">
-              <h3 className="text-xl font-mono text-[#97d8c0] mb-4 text-center">
-                {t('intro.mapTitle')}
-              </h3>
-              <div className="h-[400px] bg-[#3b3340]/20 border border-[#6b6275] p-4">
-                <BerlinMapGraphic />
+              <div className="bg-[#2a2a2a] p-6 border-l-4 border-[#97d8c0] shadow-2xl">
+                <h3 className="text-2xl font-['Inter'] font-medium text-[#97d8c0] mb-6 text-center">
+                  {t('intro.mapTitle')}
+                </h3>
+                <div className="h-[400px] bg-[#1a1a1a] border border-[#6b6275] overflow-hidden">
+                  <BerlinMapPreview />
+                </div>
               </div>
             </div>
           </div>
@@ -177,14 +202,22 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
       </section>
 
       {/* Preview Carousel Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-mono text-[#f5cdb4] mb-4 text-center">
-            {t('preview.title')}
-          </h2>
-          <p className="text-center text-[#8b7d8e] mb-12">
-            {t('preview.subtitle')}
-          </p>
+      <section className="py-20 px-4 bg-gradient-to-br from-[#2a2a2a] to-[#4a4a57] relative overflow-hidden">
+        {/* Decorative pattern */}
+        <div className="absolute top-0 right-0 w-96 h-96 opacity-10">
+          <div className="w-full h-full bg-gradient-to-bl from-[#97d8c0] to-transparent transform rotate-45"></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-['Inter'] font-light text-[#f5cdb4] mb-4">
+              {t('preview.title')}
+            </h2>
+            <p className="text-xl text-[#97d8c0] font-['Inter'] font-light">
+              {t('preview.subtitle')}
+            </p>
+            <div className="w-32 h-1 bg-gradient-to-r from-[#97d8c0] to-[#ffcb51] mx-auto mt-6"></div>
+          </div>
           <AnimatedBusinessCarousel businesses={carouselBusinesses} />
         </div>
       </section>
@@ -192,15 +225,73 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
       {/* Statistics Section */}
       <StatisticsSection {...statistics} />
 
-      {/* Call to Action */}
-      <section className="py-20 px-4 text-center">
-        <div className="max-w-2xl mx-auto">
-          <Link 
-            href="/"
-            className="inline-block px-8 py-4 bg-[#97d8c0] text-[#2a2a2a] font-mono text-lg hover:bg-[#a9e2d0] transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-transform"
-          >
-            {t('cta.exploreMap')}
-          </Link>
+      {/* Methodology Section */}
+      <MethodologySection />
+
+      {/* Timeline Section */} 
+      <TimelineSection />
+
+      {/* Data Insights Section */}
+      <InsightsSection />
+
+      {/* Navigation Guide */}
+      <NavigationGuide />
+
+      {/* Research Foundation */}
+      <ResearchSection />
+
+      {/* Future Initiatives */}
+      <FutureInitiatives />
+
+      {/* Enhanced Call to Action */}
+      <section className="py-24 px-4 bg-gradient-to-br from-[#97d8c0]/10 via-[#4a4a57] to-[#2a2a2a] relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-[#97d8c0] to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-tl from-[#ffcb51] to-transparent rounded-full blur-2xl"></div>
+        </div>
+        
+        <div className="max-w-5xl mx-auto text-center relative">
+          <h2 className="text-5xl md:text-6xl font-['Inter'] font-light text-[#f5cdb4] mb-8 leading-tight">
+            Ready to Explore?
+          </h2>
+          <p className="text-xl md:text-2xl text-[#97d8c0] font-['Inter'] font-light mb-12 max-w-3xl mx-auto leading-relaxed">
+            Step into Berlin's past and discover the stories of thousands of Jewish businesses 
+            that once formed the heart of the city's commercial life.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <Link 
+              href="/"
+              className="group inline-block px-12 py-5 bg-gradient-to-r from-[#97d8c0] to-[#a9e2d0] text-[#1a1a1a] font-['Inter'] font-semibold text-xl hover:from-[#a9e2d0] hover:to-[#97d8c0] transition-all duration-300 shadow-2xl hover:shadow-[#97d8c0]/25 transform hover:-translate-y-2 hover:scale-105"
+            >
+              <span className="flex items-center gap-3">
+                {t('cta.exploreMap')}
+                <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </Link>
+            
+            <Link 
+              href="/jewish-businesses"
+              className="group inline-block px-12 py-5 bg-transparent border-3 border-[#f5cdb4] text-[#f5cdb4] font-['Inter'] font-semibold text-xl hover:bg-[#f5cdb4] hover:text-[#2a2a2a] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              <span className="flex items-center gap-3">
+                {t('cta.viewData')}
+                <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </span>
+            </Link>
+          </div>
+
+          <div className="bg-[#2a2a2a]/60 backdrop-blur-sm p-8 border border-[#6b6275]/30">
+            <p className="text-[#f5cdb4]/80 font-['Inter'] text-lg leading-relaxed">
+              This project is part of <strong className="text-[#97d8c0]">StoryTimeMaps'</strong> ongoing work to make historical data accessible. 
+              For academic use and citations, please reference <strong className="text-[#ffcb51]">Dr. Kreutzmüller's</strong> original research.
+            </p>
+          </div>
         </div>
       </section>
 

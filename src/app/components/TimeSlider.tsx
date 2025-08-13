@@ -51,7 +51,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
             onClick={handlePlayPause}
             className="p-2 border transition-all shadow-sm hover:shadow-md"
             style={{
-              backgroundColor: 'var(--muted)',
+              backgroundColor: 'var(--input-bg, #ffffff)',
               borderColor: 'var(--border)',
             }}
             aria-label={isPlaying ? "Pause" : "Play"}
@@ -69,7 +69,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
           </button>
           <span className="text-xs font-mono font-bold px-3 py-1.5 border shadow-sm uppercase tracking-wide" style={{
             color: 'var(--foreground)',
-            backgroundColor: 'var(--muted)',
+            backgroundColor: 'var(--input-bg, #ffffff)',
             borderColor: 'var(--border)'
           }}>
             {`${String(currentDate.getMonth() + 1).padStart(2, '0')}.${currentDate.getFullYear()}`}
@@ -82,7 +82,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
         
         <div className="relative flex-1">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full h-4 overflow-hidden" style={{backgroundColor: 'var(--muted)'}}>
+            <div className="w-full h-4 overflow-hidden" style={{backgroundColor: 'var(--input-bg, #ffffff)', border: '1px solid var(--border)'}}>
               <div 
                 className="h-full transition-all duration-300 ease-out"
                 style={{ width: `${percentage}%`, backgroundColor: 'var(--danger)' }}

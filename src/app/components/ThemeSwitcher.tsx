@@ -44,7 +44,7 @@ const ThemeSwitcher: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 hover:opacity-80 border text-xs font-mono transition-all uppercase tracking-wide"
         style={{
-          backgroundColor: 'rgba(107, 98, 117, 0.5)',
+          backgroundColor: 'var(--input-bg, rgba(107, 98, 117, 0.5))',
           borderColor: 'var(--border)',
           color: 'var(--foreground)'
         }}
@@ -67,7 +67,7 @@ const ThemeSwitcher: React.FC = () => {
       {isOpen && (
         <div className="absolute top-full left-0 mt-1 border backdrop-blur-sm shadow-lg min-w-full" 
              style={{
-               backgroundColor: 'var(--border)',
+               backgroundColor: 'var(--dropdown-bg, var(--border))',
                borderColor: 'var(--border)'
              }}>
           {themes?.filter(t => t !== 'system').map((themeName) => (

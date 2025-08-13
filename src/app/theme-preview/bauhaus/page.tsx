@@ -180,10 +180,13 @@ export default function BauhausTheme() {
           onStoryClick={handleMarkerClick}
         />
         
-        {/* Geometric decorations */}
+        {/* Enhanced Geometric decorations */}
         <div className="absolute top-20 right-4 w-12 h-12 bg-[#ff0000] transform rotate-45"></div>
-        <div className="absolute bottom-20 left-4 w-16 h-16 bg-[#0066ff] rounded-full"></div>
+        <div className="absolute bottom-20 left-4 w-16 h-16 bg-[#0066ff]"></div>
         <div className="absolute top-1/2 right-8 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[40px] border-b-[#ffcc00]"></div>
+        <div className="absolute top-32 left-6 w-8 h-24 bg-[#000000]"></div>
+        <div className="absolute bottom-40 right-6 w-20 h-6 bg-[#ffcc00]"></div>
+        <div className="absolute top-1/3 left-2 w-0 h-0 border-r-[20px] border-r-[#ff0000] border-t-[20px] border-t-transparent border-b-[20px] border-b-transparent"></div>
       </div>
       
       {/* Map */}

@@ -123,10 +123,10 @@
   --accent-chartreuse: #4db6ac;
 }
 
-/* Bauhaus Theme - Primary colors, black/white */
+/* Bauhaus Theme - Primary colors, black/white with light backgrounds */
 [data-theme="bauhaus"] {
-  --primary: #000000;
-  --primary-light: #333333;
+  --primary: #0066ff;
+  --primary-light: #3388ff;
   --secondary: #ff0000;
   --warning: #ffcc00;
   --danger: #ff0000;
@@ -145,6 +145,12 @@
   --accent-coral: #ff0000;
   --accent-navy: #000066;
   --accent-chartreuse: #00cc66;
+  --dropdown-bg: #ffffff;
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: #ffffff;
+  --card-bg-rgb: 255, 255, 255;
+  --input-bg: #ffffff;
+  --input-bg-rgb: 255, 255, 255;
 }
 
 /* Art Nouveau Theme - Muted greens, browns, golds */
@@ -171,15 +177,16 @@
   --accent-chartreuse: #689f38;
 }
 
-/* Mapbox popup arrow styling - default green for active state */
+/* Mapbox popup arrow styling - default blue for active state */
 .popup-state-active .mapboxgl-popup-tip,
 .popup-state-future .mapboxgl-popup-tip,
 .mapbox-detail-popup .mapboxgl-popup-tip {
-  border-top-color: rgba(151, 216, 192, 0.98) !important;
-  border-bottom-color: rgba(151, 216, 192, 0.98) !important;
-  border-left-color: rgba(151, 216, 192, 0.98) !important;
-  border-right-color: rgba(151, 216, 192, 0.98) !important;
+  border-top-color: #3388ff !important;
+  border-bottom-color: #3388ff !important;
+  border-left-color: #3388ff !important;
+  border-right-color: #3388ff !important;
 }
+/* Preserved seagreen for future use: rgba(151, 216, 192, 0.98) */
 
 /* Yellow arrow for declining state */
 .popup-state-declining .mapboxgl-popup-tip {
@@ -283,11 +290,12 @@ select:focus-visible {
   }
   
   .tooltip-label-active {
-    background: rgba(151, 216, 192, 0.98);
-    color: #2a2a2a;
-    border: 1px solid #97d8c0;
+    background: #3388ff;
+    color: #ffffff;
+    border: 1px solid #3388ff;
     font-weight: 600;
   }
+  /* Preserved seagreen for future use: rgba(151, 216, 192, 0.98) */
   
   .tooltip-label-declining {
     background: rgba(255, 203, 81, 0.98);
@@ -371,7 +379,7 @@ select:focus-visible {
 }
 
 .mapbox-detail-popup .mapboxgl-popup-tip {
-  border-top-color: #97d8c0 !important;
+  border-top-color: #3388ff !important;
 }
 
 .mapbox-marker {

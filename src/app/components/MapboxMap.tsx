@@ -467,7 +467,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       const popupTips = document.querySelectorAll('.mapboxgl-popup-tip')
       const state = popupInfo.properties.state || 'active'
       
-      let color = 'rgba(151, 216, 192, 0.98)' // default green
+      let color = '#3388ff' // default blue (matches active state)
+      // Preserved seagreen for future use: rgba(151, 216, 192, 0.98)
       if (state === 'declining') color = 'rgba(255, 203, 81, 0.98)'
       if (state === 'closed') color = 'rgba(238, 87, 96, 0.98)'
       

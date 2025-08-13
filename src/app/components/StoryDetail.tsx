@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { StoryMap } from '../types';
+import { StoryMap } from '../../types';
 
 interface StoryDetailProps {
   story: StoryMap;
@@ -81,7 +81,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
           </svg>
           <div className="text-sm">
             <p className="font-medium text-foreground">
-              {new Date(story.startDate).getFullYear()} - {new Date(story.endDate).getFullYear()}
+              {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
             </p>
             <p className="text-xs text-muted">Active Period</p>
           </div>

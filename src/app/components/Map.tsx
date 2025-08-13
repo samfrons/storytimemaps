@@ -2,13 +2,12 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import L from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup, useMap, Tooltip } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, useMap, Tooltip } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { useMapFocus } from '../../hooks/useMapFocus'
-import { useMarkerStates } from '../../hooks/useMarkerStates'
 import 'leaflet/dist/leaflet.css'
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl;
 
 const createCustomIcon = (state: string, isActive: boolean, hasImage?: boolean) => {
   const colors = {
@@ -18,7 +17,7 @@ const createCustomIcon = (state: string, isActive: boolean, hasImage?: boolean) 
     future: '#8a8d91'
   };
   
-  const color = colors[state] || colors.active;
+  const color = colors[state as keyof typeof colors] || colors.active;
   const size = isActive ? 36 : 28;
   
   if (hasImage) {
@@ -121,7 +120,7 @@ function ZoomControls() {
   );
 }
 
-function MapContent({ markers, onMarkerClick, activeMarkerId, currentDate }: Omit<MapProps, 'center' | 'zoom'>) {
+function MapContent({ markers, onMarkerClick, activeMarkerId }: Omit<MapProps, 'center' | 'zoom'>) {
   useMapFocus(activeMarkerId, markers || []);
   const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null);
 
@@ -177,7 +176,7 @@ function MapContent({ markers, onMarkerClick, activeMarkerId, currentDate }: Omi
         maxClusterRadius={60}
         spiderfyOnMaxZoom
         showCoverageOnHover={false}
-        iconCreateFunction={(cluster) => {
+        iconCreateFunction={(cluster: { getChildCount: () => number }) => {
           const count = cluster.getChildCount();
           return L.divIcon({
             html: `<div class="cluster-marker" style="

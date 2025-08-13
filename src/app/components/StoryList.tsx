@@ -5,7 +5,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import TimeSlider from './TimeSlider';
-import { StoryMap } from '../types';
+import { StoryMap } from '../../types';
 import StoryDetail from './StoryDetail';
 
 interface StoryListProps {
@@ -41,15 +41,15 @@ const StoryList: React.FC<StoryListProps> = ({
 
   const filteredStories = visibleStories.filter(story => {
     const matchesSearch = story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          story.description.toLowerCase().includes(searchQuery.toLowerCase());
+                          (story.description?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
     const matchesCategory = selectedCategory === 'all' || story.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const getStatusColor = (story: StoryMap) => {
     const now = currentDate.getTime();
-    const start = new Date(story.startDate).getTime();
-    const end = new Date(story.endDate).getTime();
+    const start = story.startDate ? new Date(story.startDate).getTime() : 0;
+    const end = story.endDate ? new Date(story.endDate).getTime() : Infinity;
     
     if (now < start) return 'border-l-muted opacity-60';  // Future - not yet opened
     if (now > end) return 'border-l-danger opacity-75';  // Closed
@@ -124,7 +124,7 @@ const StoryList: React.FC<StoryListProps> = ({
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {new Date(story.startDate).getFullYear()} - {new Date(story.endDate).getFullYear()}
+                    {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
                   </span>
                   {story.category && (
                     <span className="px-2 py-1 bg-gray-100 dark:bg-slate-700/50 text-muted text-xs font-mono uppercase tracking-wide">

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
-import Map, { Marker, NavigationControl, Source, Layer } from 'react-map-gl/mapbox'
+import Map, { Marker, NavigationControl } from 'react-map-gl/mapbox'
 import Supercluster from 'supercluster'
 
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
@@ -25,10 +25,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   zoom,
   markers = [],
   onMarkerClick,
-  activeMarkerId,
-  currentDate
+  activeMarkerId
 }) => {
-  const mapRef = useRef<any>(null)
+  const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
   const [viewState, setViewState] = useState({
     longitude: center[1],
     latitude: center[0],
@@ -53,7 +52,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     })
 
     if (markers.length > 0) {
-      const points: GeoJSON.Feature<GeoJSON.Point>[] = markers.map(marker => ({
+      const points: GeoJSON.Feature<GeoJSON.Point, { id: string; popup: string; state: string }>[] = markers.map(marker => ({
         type: 'Feature',
         properties: {
           id: marker.id,
@@ -65,7 +64,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           coordinates: [marker.position[1], marker.position[0]]
         }
       }))
-      index.load(points)
+      index.load(points as Supercluster.PointFeature<Supercluster.AnyProps>[])
     }
 
     return index
@@ -148,7 +147,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
   }, [activeMarkerId, markers])
 
-  const handleClusterClick = useCallback((cluster: any, lng: number, lat: number) => {
+  const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
     const expansionZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id)
     mapRef.current?.flyTo({
       center: [lng, lat],
@@ -157,7 +156,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     })
   }, [supercluster])
 
-  const renderMarker = (feature: any) => {
+  const renderMarker = (feature: GeoJSON.Feature<GeoJSON.Point, { cluster?: boolean; cluster_id?: number; point_count?: number; id?: string; popup?: string; state?: string }>) => {
     const [lng, lat] = feature.geometry.coordinates
     const properties = feature.properties
 
@@ -168,7 +167,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           key={`cluster-${properties.cluster_id}`}
           longitude={lng}
           latitude={lat}
-          onClick={() => handleClusterClick(feature, lng, lat)}
+          onClick={() => handleClusterClick({ properties: { cluster_id: properties.cluster_id! } }, lng, lat)}
         >
           <div
             className="mapbox-cluster-marker"
@@ -208,7 +207,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         key={properties.id}
         longitude={lng}
         latitude={lat}
-        onClick={() => onMarkerClick(properties.id)}
+        onClick={() => onMarkerClick(properties.id!)}
         anchor="bottom"
       >
         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -244,7 +243,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               cursor: 'pointer',
               transform: isHovered ? 'scale(1.1)' : 'scale(1)'
             }}
-            onMouseEnter={() => setHoveredMarkerId(properties.id)}
+            onMouseEnter={() => setHoveredMarkerId(properties.id || null)}
             onMouseLeave={() => setHoveredMarkerId(null)}
           >
             <div

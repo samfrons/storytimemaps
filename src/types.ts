@@ -1,3 +1,9 @@
+export interface MediaItem {
+  url: string;
+  caption?: string;
+  type?: 'image' | 'video';
+}
+
 export interface StoryMap {
   id: string;
   title: string;
@@ -14,9 +20,6 @@ export interface StoryMap {
   mediaLink?: string;
   imageUrls?: string[]; 
 }
-
-
-
 
 export interface MarkerData {
   id: string;

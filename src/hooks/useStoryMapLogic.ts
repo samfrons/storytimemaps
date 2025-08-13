@@ -21,7 +21,10 @@ export const useStoryMapLogic = () => {
         const data = await response.json();
         setStoryMaps(data);
         
-        const dates = data.flatMap(story => [new Date(story.startDate), new Date(story.endDate)]);
+        const dates = data.flatMap((story: StoryMap) => [
+          story.startDate ? new Date(story.startDate) : new Date(),
+          story.endDate ? new Date(story.endDate) : new Date()
+        ].filter(date => !isNaN(date.getTime())));
         setMinDate(new Date(Math.min(...dates)));
         setMaxDate(new Date(Math.max(...dates)));
       } catch (error) {
@@ -44,8 +47,8 @@ export const useStoryMapLogic = () => {
 
   const testMarkers = visibleStories.map(story => {
     const now = currentDate.getTime();
-    const start = new Date(story.startDate).getTime();
-    const end = new Date(story.endDate).getTime();
+    const start = story.startDate ? new Date(story.startDate).getTime() : 0;
+    const end = story.endDate ? new Date(story.endDate).getTime() : Infinity;
     
     let state = 'active';
     if (now < start) {

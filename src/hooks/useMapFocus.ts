@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import { MarkerData } from '../types'; // Assuming you have a types file
 
-export const useMapFocus = (activeMarkerId: string | null, markers: MarkerData[], zoomLevel: number = 15) => {
+export const useMapFocus = (activeMarkerId: string | null | undefined, markers: MarkerData[], zoomLevel: number = 15) => {
   const map = useMap();
 
   useEffect(() => {
@@ -12,10 +12,10 @@ export const useMapFocus = (activeMarkerId: string | null, markers: MarkerData[]
         map.setView(activeMarker.position, zoomLevel);
         
         // Open popup for the active marker
-        const leafletMarkers = (map as any)._layers;
+        const leafletMarkers = (map as unknown as { _layers: Record<string, { options?: { id?: string }; openPopup?: () => void }> })._layers;
         Object.keys(leafletMarkers).forEach(key => {
           const layer = leafletMarkers[key];
-          if (layer.options && layer.options.id === activeMarkerId) {
+          if (layer.options && layer.options.id === activeMarkerId && layer.openPopup) {
             layer.openPopup();
           }
         });

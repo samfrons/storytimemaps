@@ -1,5 +1,5 @@
 // hooks/useMarkerStates.ts
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { StoryMap } from '../types';
 
 export const useMarkerStates = (stories: StoryMap[], currentDate: Date) => {

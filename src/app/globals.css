@@ -5,34 +5,42 @@
 @tailwind utilities;
 
 :root {
-  --primary: #4a5f7a;
-  --primary-light: #6b82a0;
-  --secondary: #8b9dc3;
-  --warning: #c4a574;
-  --danger: #9b6b6b;
+  --primary: #8b7aa8;
+  --primary-light: #a392c1;
+  --secondary: #e8a744;
+  --warning: #f4b643;
+  --danger: #d67b5a;
   --success: #7a9c89;
-  --background: #f7f6f4;
+  --background: #fef8f3;
   --foreground: #3a3f47;
-  --muted: #8a8d91;
-  --border: #e2e0dd;
+  --muted: #8a7d71;
+  --border: #f4d4b4;
   --shadow: rgba(0, 0, 0, 0.06);
-  --map-overlay: rgba(74, 95, 122, 0.03);
+  --map-overlay: rgba(244, 182, 67, 0.08);
+  --accent-orange: #ff9f40;
+  --accent-yellow: #ffd93d;
+  --accent-purple: #8b7aa8;
+  --accent-coral: #ff6b6b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: #6b82a0;
-    --primary-light: #8b9dc3;
-    --secondary: #a4b5d3;
-    --warning: #d4b074;
-    --danger: #c87474;
+    --primary: #9b7aaa;
+    --primary-light: #b39ac3;
+    --secondary: #f4b643;
+    --warning: #ffcc5c;
+    --danger: #e89b7a;
     --success: #8aac9a;
-    --background: #1e2128;
+    --background: #2a1f3e;
     --foreground: #e8eaed;
-    --muted: #9ca3af;
-    --border: #2e343d;
+    --muted: #b49ca8;
+    --border: #4a3e5c;
     --shadow: rgba(0, 0, 0, 0.2);
-    --map-overlay: rgba(107, 130, 160, 0.05);
+    --map-overlay: rgba(155, 93, 229, 0.1);
+    --accent-orange: #ffb366;
+    --accent-yellow: #ffe566;
+    --accent-purple: #b37ce8;
+    --accent-coral: #ff8585;
   }
 }
 
@@ -97,21 +105,21 @@ body {
   }
   
   .tooltip-label-active {
-    @apply text-primary border-primary;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-opacity: 0.3;
+    background-color: rgba(139, 122, 168, 0.9);
+    color: white;
+    border: 1px solid rgba(244, 182, 67, 0.4);
   }
   
   .tooltip-label-declining {
-    @apply text-yellow-900 dark:text-yellow-100 border-warning;
-    background-color: rgba(255, 251, 235, 0.95);
-    border-opacity: 0.5;
+    background-color: rgba(255, 159, 64, 0.9);
+    color: white;
+    border: 1px solid rgba(255, 217, 61, 0.5);
   }
   
   .tooltip-label-closed {
-    @apply text-red-900 dark:text-red-100 border-danger;
-    background-color: rgba(254, 242, 242, 0.95);
-    border-opacity: 0.5;
+    background-color: rgba(214, 123, 90, 0.9);
+    color: white;
+    border: 1px solid rgba(255, 107, 107, 0.4);
   }
 }
 

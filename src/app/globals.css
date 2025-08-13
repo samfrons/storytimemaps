@@ -5,42 +5,46 @@
 @tailwind utilities;
 
 :root {
-  --primary: #8b7aa8;
-  --primary-light: #a392c1;
-  --secondary: #e8a744;
-  --warning: #f4b643;
-  --danger: #d67b5a;
-  --success: #7a9c89;
-  --background: #fef8f3;
-  --foreground: #3a3f47;
-  --muted: #8a7d71;
-  --border: #f4d4b4;
-  --shadow: rgba(0, 0, 0, 0.06);
-  --map-overlay: rgba(244, 182, 67, 0.08);
-  --accent-orange: #ff9f40;
-  --accent-yellow: #ffd93d;
-  --accent-purple: #8b7aa8;
-  --accent-coral: #ff6b6b;
+  --primary: #97d8c0;
+  --primary-light: #a9e2d0;
+  --secondary: #ee5760;
+  --warning: #ffcb51;
+  --danger: #ee5760;
+  --success: #97d8c0;
+  --background: #3b3340;
+  --foreground: #f5cdb4;
+  --muted: #8b7d8e;
+  --border: #564b5a;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --map-overlay: rgba(59, 51, 64, 0.1);
+  --accent-orange: #eca27d;
+  --accent-yellow: #ffcb51;
+  --accent-purple: #9dc8fc;
+  --accent-coral: #ee5760;
+  --accent-navy: #3b3340;
+  --accent-chartreuse: #97d8c0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: #9b7aaa;
-    --primary-light: #b39ac3;
-    --secondary: #f4b643;
-    --warning: #ffcc5c;
-    --danger: #e89b7a;
-    --success: #8aac9a;
-    --background: #2a1f3e;
-    --foreground: #e8eaed;
-    --muted: #b49ca8;
-    --border: #4a3e5c;
-    --shadow: rgba(0, 0, 0, 0.2);
-    --map-overlay: rgba(155, 93, 229, 0.1);
-    --accent-orange: #ffb366;
-    --accent-yellow: #ffe566;
-    --accent-purple: #b37ce8;
-    --accent-coral: #ff8585;
+    --primary: #97d8c0;
+    --primary-light: #a9e2d0;
+    --secondary: #ee5760;
+    --warning: #ffcb51;
+    --danger: #ee5760;
+    --success: #97d8c0;
+    --background: #3b3340;
+    --foreground: #f5cdb4;
+    --muted: #8b7d8e;
+    --border: #564b5a;
+    --shadow: rgba(0, 0, 0, 0.4);
+    --map-overlay: rgba(59, 51, 64, 0.1);
+    --accent-orange: #eca27d;
+    --accent-yellow: #ffcb51;
+    --accent-purple: #9dc8fc;
+    --accent-coral: #ee5760;
+    --accent-navy: #3b3340;
+    --accent-chartreuse: #97d8c0;
   }
 }
 
@@ -105,21 +109,57 @@ body {
   }
   
   .tooltip-label-active {
-    background-color: rgba(122, 133, 153, 0.95);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(151, 216, 192, 0.95);
+    color: #3b3340;
+    border: 1px solid rgba(151, 216, 192, 0.6);
+    font-weight: 500;
+    backdrop-filter: blur(8px);
   }
   
   .tooltip-label-declining {
-    background-color: rgba(244, 182, 67, 0.95);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 203, 81, 0.95);
+    color: #3b3340;
+    border: 1px solid rgba(255, 203, 81, 0.6);
+    font-weight: 500;
+    backdrop-filter: blur(8px);
   }
   
   .tooltip-label-closed {
-    background-color: rgba(232, 155, 122, 0.95);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(238, 87, 96, 0.95);
+    color: #ffffff;
+    border: 1px solid rgba(238, 87, 96, 0.6);
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  @keyframes expand-modal {
+    from {
+      max-height: 0;
+      opacity: 0;
+    }
+    to {
+      max-height: 600px;
+      opacity: 1;
+    }
+  }
+  
+  .modal-expand {
+    animation: expand-modal 0.5s ease-out forwards;
   }
 }
 

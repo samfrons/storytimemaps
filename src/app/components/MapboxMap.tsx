@@ -14,10 +14,14 @@ interface MapboxMapProps {
     position: [number, number]
     popup: string
     state?: string
+    description?: string
+    startDate?: string
+    endDate?: string
   }>
   onMarkerClick: (id: string) => void
   activeMarkerId?: string | null
   currentDate?: Date
+  enrichedStories?: Array<{ id: string; startDate?: string | null; endDate?: string | null; description?: string | null }>
 }
 
 const MapboxMap: React.FC<MapboxMapProps> = ({
@@ -25,7 +29,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   zoom,
   markers = [],
   onMarkerClick,
-  activeMarkerId
+  activeMarkerId,
+  currentDate, // eslint-disable-line @typescript-eslint/no-unused-vars
+  enrichedStories = []
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
   const [viewState, setViewState] = useState({
@@ -37,10 +43,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   const [mapLoaded, setMapLoaded] = useState(false)
 
   const colors = {
-    active: '#7a8599',
-    declining: '#f4b643',
-    closed: '#e89b7a',
-    future: '#8a8d91'
+    active: '#97d8c0',     // Mint green (parks)
+    declining: '#ffcb51',  // Golden yellow (arterial roads)
+    closed: '#ee5760',     // Coral red (highways)
+    future: '#f5cdb4'      // Light peach (local roads)
   }
 
   // Initialize Supercluster for clustering
@@ -172,17 +178,17 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           <div
             className="mapbox-cluster-marker"
             style={{
-              backgroundColor: '#f4b643',
+              backgroundColor: '#eca27d',  // Orange (transit) for clusters
               color: 'white',
-              width: '44px',
-              height: '44px',
+              width: '32px',
+              height: '32px',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontFamily: 'Inter, -apple-system, sans-serif',
-              fontWeight: 500,
-              fontSize: '14px',
+              fontFamily: "'Space Mono', monospace",
+              fontWeight: 700,
+              fontSize: '12px',
               border: '2px solid white',
               boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
               cursor: 'pointer',
@@ -202,6 +208,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const isHovered = properties.id === hoveredMarkerId
     const color = colors[properties.state as keyof typeof colors] || colors.active
     const size = isActive || isHovered ? 36 : 28
+    
+    // Get enriched story data for enhanced tooltip
+    const enrichedStory = enrichedStories.find(s => s.id === properties.id)
+    const showEnhanced = isActive && enrichedStory
 
     return (
       <Marker
@@ -212,19 +222,37 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         anchor="bottom"
       >
         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {/* Tooltip - always visible */}
+          {/* Enhanced Tooltip when active, regular tooltip otherwise */}
           <div 
-            className={`px-2 py-1 text-xs font-mono shadow-lg backdrop-blur-sm border whitespace-nowrap mb-1 ${
+            className={`text-xs font-mono shadow-lg backdrop-blur-sm border mb-1 transition-all duration-300 ${
               properties.state === 'declining' ? 'tooltip-label-declining' : 
               properties.state === 'closed' ? 'tooltip-label-closed' : 
               'tooltip-label-active'
-            }`}
+            } ${showEnhanced ? 'p-3 max-w-xs' : 'px-2 py-1 whitespace-nowrap'}`}
             style={{
               letterSpacing: '0.02em',
-              zIndex: isHovered || isActive ? 1000 : 999
+              zIndex: isHovered || isActive ? 1000 : 999,
+              transform: showEnhanced ? 'scale(1.05)' : 'scale(1)'
             }}
           >
-            <div className="font-medium">{properties.popup}</div>
+            <div className="font-semibold">{properties.popup}</div>
+            {showEnhanced && (
+              <>
+                <div className="text-xs text-muted mt-1">
+                  {enrichedStory.startDate && enrichedStory.endDate && 
+                    `${new Date(enrichedStory.startDate).getFullYear()} - ${new Date(enrichedStory.endDate).getFullYear()}`
+                  }
+                </div>
+                {enrichedStory.description && (
+                  <div className="text-xs mt-2 text-foreground line-clamp-3">
+                    {enrichedStory.description}
+                  </div>
+                )}
+                <div className="text-xs mt-2 text-[#97d8c0] font-semibold cursor-pointer hover:underline">
+                  View in list →
+                </div>
+              </>
+            )}
           </div>
           
           {/* Marker */}
@@ -262,13 +290,82 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }
 
   return (
-    <div className="relative h-full w-full overflow-hidden border-l border-border">
+    <div className="relative h-full w-full overflow-hidden border-l border-[#564b5a]">
       <Map
         ref={mapRef}
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
-        onLoad={() => setMapLoaded(true)}
-        mapStyle="mapbox://styles/mapbox/light-v11"
+        onLoad={() => {
+          setMapLoaded(true)
+          // Apply custom style to match Snazzy Maps colors
+          const map = mapRef.current?.getMap()
+          if (map) {
+            // Get all layers to understand the structure
+            const style = map.getStyle()
+            const layers = style.layers
+            
+            // Background color
+            if (map.getLayer('background')) {
+              map.setPaintProperty('background', 'background-color', '#3b3340')
+            }
+            
+            // Water bodies - check for various water layer names
+            const waterLayers = ['water', 'water-shadow', 'waterway']
+            waterLayers.forEach(layer => {
+              if (map.getLayer(layer)) {
+                map.setPaintProperty(layer, 'fill-color', '#4a4156')
+              }
+            })
+            
+            // Parks and green spaces - check various park layer names
+            const parkLayers = ['park', 'landcover', 'landuse', 'landuse_park', 'landuse_overlay', 'national_park']
+            parkLayers.forEach(layer => {
+              if (map.getLayer(layer)) {
+                map.setPaintProperty(layer, 'fill-color', '#97d8c0')
+                map.setPaintProperty(layer, 'fill-opacity', 0.3)
+              }
+            })
+            
+            // Roads - find all road layers dynamically
+            layers.forEach(layer => {
+              if (layer.id.includes('road') || layer.id.includes('street') || layer.id.includes('path')) {
+                if (layer.type === 'line') {
+                  // Highways - coral
+                  if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
+                    map.setPaintProperty(layer.id, 'line-color', '#ee5760')
+                  }
+                  // Primary roads - golden yellow
+                  else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
+                    map.setPaintProperty(layer.id, 'line-color', '#ffcb51')
+                  }
+                  // Local roads - light peach
+                  else {
+                    map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
+                  }
+                }
+              }
+              
+              // Transit lines
+              if (layer.id.includes('transit') && layer.type === 'line') {
+                map.setPaintProperty(layer.id, 'line-color', '#eca27d')
+              }
+              
+              // Buildings
+              if (layer.id.includes('building') && layer.type === 'fill') {
+                map.setPaintProperty(layer.id, 'fill-color', '#564b5a')
+                map.setPaintProperty(layer.id, 'fill-opacity', 0.7)
+              }
+              
+              // Labels and text
+              if (layer.type === 'symbol' && layer.layout && layer.layout['text-field']) {
+                map.setPaintProperty(layer.id, 'text-color', '#f5cdb4')
+                map.setPaintProperty(layer.id, 'text-halo-color', '#3b3340')
+                map.setPaintProperty(layer.id, 'text-halo-width', 1)
+              }
+            })
+          }
+        }}
+        mapStyle="mapbox://styles/mapbox/dark-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
         style={{ width: '100%', height: '100%' }}
         maxZoom={20}
@@ -293,10 +390,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomIn()
           }}
-          className="bg-white dark:bg-slate-800 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-border"
+          className="bg-[#564b5a]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#564b5a]"
           aria-label="Zoom in"
         >
-          <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-[#f5cdb4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </button>
@@ -304,10 +401,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomOut()
           }}
-          className="bg-white dark:bg-slate-800 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-border"
+          className="bg-[#564b5a]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#564b5a]"
           aria-label="Zoom out"
         >
-          <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-[#f5cdb4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
           </svg>
         </button>

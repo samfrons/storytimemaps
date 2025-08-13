@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import Map, { Marker, NavigationControl, Popup } from 'react-map-gl/mapbox'
 import Supercluster from 'supercluster'
+import { useTheme } from 'next-themes'
 
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
 
@@ -34,6 +35,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   enrichedStories = []
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
+  const { theme } = useTheme()
   const [viewState, setViewState] = useState({
     longitude: center[1],
     latitude: center[0],
@@ -55,12 +57,62 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   } | null>(null)
   const [labelOpacity, setLabelOpacity] = useState(1)
 
-  const colors = {
-    active: '#97d8c0',     // Mint green (parks)
-    declining: '#ffcb51',  // Golden yellow (arterial roads)
-    closed: '#ee5760',     // Coral red (highways)
-    future: '#f5cdb4'      // Light peach (local roads)
+  // Theme-specific colors
+  const getThemeColors = () => {
+    switch(theme) {
+      case 'cool':
+        return {
+          active: '#4a90e2',
+          declining: '#f5a623',
+          closed: '#d0021b',
+          future: '#95a5a6'
+        }
+      case 'warm':
+        return {
+          active: '#d67b5a',
+          declining: '#ff8c00',
+          closed: '#cd5c5c',
+          future: '#bcaaa4'
+        }
+      case 'hot':
+        return {
+          active: '#ff4444',
+          declining: '#ff6600',
+          closed: '#cc0000',
+          future: '#ffc1cc'
+        }
+      case 'cold':
+        return {
+          active: '#64b5f6',
+          declining: '#90a4ae',
+          closed: '#607d8b',
+          future: '#b0bec5'
+        }
+      case 'bauhaus':
+        return {
+          active: '#0066ff',
+          declining: '#ffcc00',
+          closed: '#ff0000',
+          future: '#666666'
+        }
+      case 'art-nouveau':
+        return {
+          active: '#8b7355',
+          declining: '#daa520',
+          closed: '#704214',
+          future: '#a1887f'
+        }
+      default: // moody
+        return {
+          active: '#97d8c0',
+          declining: '#ffcb51',
+          closed: '#ee5760',
+          future: '#f5cdb4'
+        }
+    }
   }
+
+  const colors = getThemeColors()
 
   // Initialize Supercluster for clustering
   const supercluster = useMemo(() => {
@@ -173,6 +225,139 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     setLabelOpacity(popupInfo ? 0.6 : 1)
   }, [popupInfo, mapLoaded])
 
+  // Re-apply theme colors when theme changes
+  useEffect(() => {
+    if (!mapLoaded || !mapRef.current) return
+    
+    const map = mapRef.current.getMap()
+    if (!map) return
+    
+    try {
+      const style = map.getStyle()
+      if (!style || !style.layers) return
+      
+      const layers = style.layers
+      
+      // Get theme-specific map colors
+      const getMapColors = () => {
+        switch(theme) {
+          case 'cool':
+            return {
+              water: '#4a90e2',
+              park: '#7ed321',
+              road: '#2c3e50',
+              background: '#f0f4f8'
+            }
+          case 'warm':
+            return {
+              water: '#8b4513',
+              park: '#9acd32',
+              road: '#5d4037',
+              background: '#f4f1e8'
+            }
+          case 'hot':
+            return {
+              water: '#ff4444',
+              park: '#ff9500',
+              road: '#8b0000',
+              background: '#fff5f5'
+            }
+          case 'cold':
+            return {
+              water: '#64b5f6',
+              park: '#81c784',
+              road: '#263238',
+              background: '#e8f4f8'
+            }
+          case 'bauhaus':
+            return {
+              water: '#0066ff',
+              park: '#ffcc00',
+              road: '#000000',
+              background: '#f5f5f0'
+            }
+          case 'art-nouveau':
+            return {
+              water: '#556b2f',
+              park: '#6b8e23',
+              road: '#3e2723',
+              background: '#f8f6f0'
+            }
+          default: // moody
+            return {
+              water: '#5a5766',
+              park: '#97d8c0',
+              road: '#4a4a57',
+              background: '#4a4a57'
+            }
+        }
+      }
+      
+      const mapColors = getMapColors()
+      
+      // Apply custom colors to layers
+      layers.forEach(layer => {
+        try {
+          // Water layers
+          if (layer.id.includes('water') && layer.type === 'fill') {
+            map.setPaintProperty(layer.id, 'fill-color', mapColors.water)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.4 : 0.8)
+          }
+          
+          // Park/landuse layers
+          if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
+            map.setPaintProperty(layer.id, 'fill-color', mapColors.park)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.3 : 0.2)
+          }
+          
+          // Road layers  
+          if (layer.id.includes('road') && layer.type === 'line') {
+            if (theme === 'moody') {
+              // Use original colors for moody theme
+              if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
+                map.setPaintProperty(layer.id, 'line-color', '#ee5760')
+              } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
+                map.setPaintProperty(layer.id, 'line-color', '#ffcb51')
+              } else {
+                map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
+                map.setPaintProperty(layer.id, 'line-opacity', 0.6)
+              }
+            } else {
+              // Use theme colors for other themes
+              if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
+                map.setPaintProperty(layer.id, 'line-color', colors.closed)
+              } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
+                map.setPaintProperty(layer.id, 'line-color', colors.declining)
+              } else {
+                map.setPaintProperty(layer.id, 'line-color', mapColors.road)
+                map.setPaintProperty(layer.id, 'line-opacity', 0.6)
+              }
+            }
+          }
+          
+          // Building layers
+          if (layer.id.includes('building') && layer.type === 'fill') {
+            map.setPaintProperty(layer.id, 'fill-color', '#564b5a')
+            map.setPaintProperty(layer.id, 'fill-opacity', 0.6)
+          }
+          
+          // Text labels
+          if (layer.type === 'symbol') {
+            if (layer.paint) {
+              map.setPaintProperty(layer.id, 'text-color', '#f5cdb4')
+              map.setPaintProperty(layer.id, 'text-halo-color', '#3b3340')
+              map.setPaintProperty(layer.id, 'text-halo-width', 1)
+            }
+          }
+        } catch (e) {
+          // Silently ignore layer errors
+        }
+      })
+    } catch (e) {
+      console.warn('Error updating map theme:', e)
+    }
+  }, [theme, mapLoaded, colors])
+
   // Fix popup arrow color after popup renders
   useEffect(() => {
     if (!popupInfo) return
@@ -264,14 +449,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         <div 
           className={`px-2 py-1 text-xs font-mono font-bold whitespace-nowrap cursor-pointer transition-opacity duration-200`}
           style={{
-            background: properties.state === 'declining' ? 'rgba(255, 203, 81, 0.98)' :
-                       properties.state === 'closed' ? 'rgba(238, 87, 96, 0.98)' :
-                       'rgba(151, 216, 192, 0.98)',
+            background: properties.state === 'declining' ? `${colors.declining}e8` :
+                       properties.state === 'closed' ? `${colors.closed}e8` :
+                       `${colors.active}e8`,
             color: properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
             border: `1px solid ${
-              properties.state === 'declining' ? '#ffcb51' :
-              properties.state === 'closed' ? '#ee5760' :
-              '#97d8c0'
+              properties.state === 'declining' ? colors.declining :
+              properties.state === 'closed' ? colors.closed :
+              colors.active
             }`,
             boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
             opacity: labelOpacity,
@@ -331,6 +516,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     ]
   }
 
+
   return (
     <div className="relative h-full w-full overflow-hidden border-l border-[#6b6275]">
       <Map
@@ -359,18 +545,76 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               
               const layers = style.layers
               
+              // Get theme-specific map colors
+              const getMapColors = () => {
+                switch(theme) {
+                  case 'cool':
+                    return {
+                      water: '#4a90e2',
+                      park: '#7ed321',
+                      road: '#2c3e50',
+                      background: '#f0f4f8'
+                    }
+                  case 'warm':
+                    return {
+                      water: '#8b4513',
+                      park: '#9acd32',
+                      road: '#5d4037',
+                      background: '#f4f1e8'
+                    }
+                  case 'hot':
+                    return {
+                      water: '#ff4444',
+                      park: '#ff9500',
+                      road: '#8b0000',
+                      background: '#fff5f5'
+                    }
+                  case 'cold':
+                    return {
+                      water: '#64b5f6',
+                      park: '#81c784',
+                      road: '#263238',
+                      background: '#e8f4f8'
+                    }
+                  case 'bauhaus':
+                    return {
+                      water: '#0066ff',
+                      park: '#ffcc00',
+                      road: '#000000',
+                      background: '#f5f5f0'
+                    }
+                  case 'art-nouveau':
+                    return {
+                      water: '#556b2f',
+                      park: '#6b8e23',
+                      road: '#3e2723',
+                      background: '#f8f6f0'
+                    }
+                  default: // moody
+                    return {
+                      water: '#5a5766',
+                      park: '#97d8c0',
+                      road: '#4a4a57',
+                      background: '#4a4a57'
+                    }
+                }
+              }
+              
+              const mapColors = getMapColors()
+              
               // Apply custom colors to layers
               layers.forEach(layer => {
                 try {
                   // Water layers
                   if (layer.id.includes('water') && layer.type === 'fill') {
-                    map.setPaintProperty(layer.id, 'fill-color', '#5a5766')
+                    map.setPaintProperty(layer.id, 'fill-color', mapColors.water)
+                    map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.4 : 0.8)
                   }
                   
                   // Park/landuse layers
                   if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
-                    map.setPaintProperty(layer.id, 'fill-color', '#97d8c0')
-                    map.setPaintProperty(layer.id, 'fill-opacity', 0.2)
+                    map.setPaintProperty(layer.id, 'fill-color', mapColors.park)
+                    map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.3 : 0.2)
                   }
                   
                   // Road layers
@@ -434,15 +678,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 minWidth: '200px',
                 maxWidth: '300px',
                 padding: '14px',
-                background: popupInfo.properties.state === 'declining' ? 'rgba(255, 203, 81, 0.98)' :
-                           popupInfo.properties.state === 'closed' ? 'rgba(238, 87, 96, 0.98)' :
-                           'rgba(151, 216, 192, 0.98)',
+                background: popupInfo.properties.state === 'declining' ? `${colors.declining}fa` :
+                           popupInfo.properties.state === 'closed' ? `${colors.closed}fa` :
+                           `${colors.active}fa`,
                 color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
                 fontFamily: 'Space Mono, monospace',
                 border: `2px solid ${
-                  popupInfo.properties.state === 'declining' ? '#ffcb51' :
-                  popupInfo.properties.state === 'closed' ? '#ee5760' :
-                  '#97d8c0'
+                  popupInfo.properties.state === 'declining' ? colors.declining :
+                  popupInfo.properties.state === 'closed' ? colors.closed :
+                  colors.active
                 }`
               }}
             >

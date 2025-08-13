@@ -35,6 +35,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     zoom: zoom
   })
   const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null)
+  const [mapLoaded, setMapLoaded] = useState(false)
 
   const colors = {
     active: '#4a5f7a',
@@ -72,20 +73,66 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   // Get clusters for current viewport
   const clusters = useMemo(() => {
-    if (!mapRef.current) return []
+    // For initial load, show all markers if map isn't ready yet
+    if (!mapLoaded || !mapRef.current) {
+      // Return first 40 markers as individual points for immediate display
+      return markers.slice(0, 40).map(marker => ({
+        type: 'Feature' as const,
+        properties: {
+          id: marker.id,
+          popup: marker.popup,
+          state: marker.state || 'active'
+        },
+        geometry: {
+          type: 'Point' as const,
+          coordinates: [marker.position[1], marker.position[0]]
+        }
+      }))
+    }
     
     const bounds = mapRef.current.getBounds()
-    if (!bounds) return []
+    if (!bounds) {
+      // If bounds aren't available yet, return initial markers
+      return markers.slice(0, 40).map(marker => ({
+        type: 'Feature' as const,
+        properties: {
+          id: marker.id,
+          popup: marker.popup,
+          state: marker.state || 'active'
+        },
+        geometry: {
+          type: 'Point' as const,
+          coordinates: [marker.position[1], marker.position[0]]
+        }
+      }))
+    }
     
-    const bbox: [number, number, number, number] = [
-      bounds.getWest(),
-      bounds.getSouth(),
-      bounds.getEast(),
-      bounds.getNorth()
-    ]
-    
-    return supercluster.getClusters(bbox, Math.floor(viewState.zoom))
-  }, [supercluster, viewState])
+    try {
+      const bbox: [number, number, number, number] = [
+        bounds.getWest(),
+        bounds.getSouth(),
+        bounds.getEast(),
+        bounds.getNorth()
+      ]
+      
+      return supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+    } catch (error) {
+      console.warn('Error getting clusters:', error)
+      // Fallback to showing raw markers
+      return markers.slice(0, 40).map(marker => ({
+        type: 'Feature' as const,
+        properties: {
+          id: marker.id,
+          popup: marker.popup,
+          state: marker.state || 'active'
+        },
+        geometry: {
+          type: 'Point' as const,
+          coordinates: [marker.position[1], marker.position[0]]
+        }
+      }))
+    }
+  }, [supercluster, viewState, mapLoaded, markers])
 
   // Focus on active marker
   useEffect(() => {
@@ -162,34 +209,53 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         longitude={lng}
         latitude={lat}
         onClick={() => onMarkerClick(properties.id)}
+        anchor="bottom"
       >
-        <div
-          className="mapbox-marker"
-          style={{
-            backgroundColor: color,
-            width: `${size}px`,
-            height: `${size}px`,
-            borderRadius: '50%',
-            border: '2px solid white',
-            boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
-            transition: 'all 0.3s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            transform: isHovered ? 'scale(1.1)' : 'scale(1)'
-          }}
-          onMouseEnter={() => setHoveredMarkerId(properties.id)}
-          onMouseLeave={() => setHoveredMarkerId(null)}
-        >
-          <div
+        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {/* Tooltip - always visible */}
+          <div 
+            className={`px-2 py-1 text-xs font-mono shadow-lg backdrop-blur-sm border whitespace-nowrap mb-1 ${
+              properties.state === 'declining' ? 'tooltip-label-declining' : 
+              properties.state === 'closed' ? 'tooltip-label-closed' : 
+              'tooltip-label-active'
+            }`}
             style={{
-              backgroundColor: 'white',
-              width: `${size * 0.3}px`,
-              height: `${size * 0.3}px`,
-              borderRadius: '50%'
+              letterSpacing: '0.02em',
+              zIndex: isHovered || isActive ? 1000 : 999
             }}
-          />
+          >
+            <div className="font-medium">{properties.popup}</div>
+          </div>
+          
+          {/* Marker */}
+          <div
+            className="mapbox-marker"
+            style={{
+              backgroundColor: color,
+              width: `${size}px`,
+              height: `${size}px`,
+              borderRadius: '50%',
+              border: '2px solid white',
+              boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+            }}
+            onMouseEnter={() => setHoveredMarkerId(properties.id)}
+            onMouseLeave={() => setHoveredMarkerId(null)}
+          >
+            <div
+              style={{
+                backgroundColor: 'white',
+                width: `${size * 0.3}px`,
+                height: `${size * 0.3}px`,
+                borderRadius: '50%'
+              }}
+            />
+          </div>
         </div>
       </Marker>
     )
@@ -201,6 +267,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         ref={mapRef}
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
+        onLoad={() => setMapLoaded(true)}
         mapStyle="mapbox://styles/mapbox/light-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
         style={{ width: '100%', height: '100%' }}

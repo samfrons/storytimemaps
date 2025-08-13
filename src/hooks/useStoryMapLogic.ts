@@ -33,10 +33,9 @@ export const useStoryMapLogic = () => {
   }, []);
 
   useEffect(() => {
-    const filteredStories = storyMaps.filter(story => 
-      new Date(story.startDate) <= currentDate && new Date(story.endDate) >= currentDate
-    );
-    setVisibleStories(filteredStories);
+    // Show ALL stories, don't filter them out
+    // The visual state will change based on the current date
+    setVisibleStories(storyMaps);
   }, [storyMaps, currentDate]);
 
   const handleMarkerClick = (storyId: string) => {
@@ -49,9 +48,14 @@ export const useStoryMapLogic = () => {
     const end = new Date(story.endDate).getTime();
     
     let state = 'active';
-    if (now < start) state = 'future';
-    else if (now > end) state = 'closed';
-    else if (story.midDate && now > new Date(story.midDate).getTime()) state = 'declining';
+    if (now < start) {
+      state = 'future';  // Not yet opened
+    } else if (now > end) {
+      state = 'closed';  // Already closed
+    } else if (story.midDate && now > new Date(story.midDate).getTime()) {
+      state = 'declining';  // In decline phase
+    }
+    // else state remains 'active' - currently operating
     
     return {
       id: story.id,

@@ -51,10 +51,10 @@ const StoryList: React.FC<StoryListProps> = ({
     const start = new Date(story.startDate).getTime();
     const end = new Date(story.endDate).getTime();
     
-    if (now < start) return 'border-muted';
-    if (now > end) return 'border-danger';
-    if (story.midDate && now > new Date(story.midDate).getTime()) return 'border-warning';
-    return 'border-primary';
+    if (now < start) return 'border-l-muted opacity-60';  // Future - not yet opened
+    if (now > end) return 'border-l-danger opacity-75';  // Closed
+    if (story.midDate && now > new Date(story.midDate).getTime()) return 'border-l-warning';  // Declining
+    return 'border-l-primary';  // Active
   };
 
   return (
@@ -107,9 +107,9 @@ const StoryList: React.FC<StoryListProps> = ({
         {filteredStories.map((story) => (
           <div 
             key={story.id}
-            className={`group bg-white dark:bg-slate-800 p-4 border transition-all duration-200 hover:shadow-md cursor-pointer ${
+            className={`group bg-white dark:bg-slate-800 p-4 border border-l-4 transition-all duration-200 hover:shadow-md cursor-pointer ${
               story.id === activeStoryId ? 'ring-2 ring-primary/50 shadow-md border-primary/30' : 'border-border'
-            }`}
+            } ${getStatusColor(story)}`}
             onClick={() => handleStoryClick(story.id)}
           >
             <div className="flex items-start justify-between">

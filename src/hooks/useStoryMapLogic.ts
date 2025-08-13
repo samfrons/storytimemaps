@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { StoryMap } from '../types';
 
 interface JewishBusiness {
@@ -22,14 +22,23 @@ interface BusinessFeature {
   properties: JewishBusiness;
 }
 
+interface Marker {
+  id: string;
+  position: [number, number];
+  popup: string;
+  state: string;
+  hasEnrichedData?: boolean;
+  businessType?: string;
+}
+
 export const useStoryMapLogic = () => {
   const [jewishBusinesses, setJewishBusinesses] = useState<BusinessFeature[]>([]);
   const [enrichedStories, setEnrichedStories] = useState<StoryMap[]>([]);
   const [visibleStories, setVisibleStories] = useState<StoryMap[]>([]);
   const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState<Date>(new Date('1930-01-01'));
-  const [minDate, setMinDate] = useState<Date>(new Date('1900-01-01'));
-  const [maxDate, setMaxDate] = useState<Date>(new Date('1945-12-31'));
+  const [minDate] = useState<Date>(new Date('1900-01-01'));
+  const [maxDate] = useState<Date>(new Date('1945-12-31'));
 
   useEffect(() => {
     // Fetch Jewish businesses data as the primary data source
@@ -73,7 +82,7 @@ export const useStoryMapLogic = () => {
 
   // Create markers from both enriched stories and Jewish businesses database
   const testMarkers = useMemo(() => {
-    const markers = [];
+    const markers: Marker[] = [];
     const year = currentDate.getFullYear();
     
     // First, add markers from enriched stories (these have proper lat/lng)

@@ -120,14 +120,11 @@ export default function JewishBusinessesPage() {
           backgroundColor: 'rgba(244, 182, 67, 0.03)',
           mixBlendMode: 'overlay'
         }} />
-        <div className="p-6 border-b relative" style={{
-          backgroundColor: '#8b7aa8',
-          borderBottomColor: '#a392c1'
-        }}>
-          <h1 className="text-2xl font-bold mb-2" style={{ color: 'white' }}>
+        <div className="p-6 border-b border-border">
+          <h1 className="text-2xl font-bold mb-2 text-foreground">
             Jewish Businesses in Berlin
           </h1>
-          <p className="text-sm mb-4" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+          <p className="text-sm mb-4 text-muted-foreground">
             Historical database of Jewish-owned businesses (1900-1945)
           </p>
           
@@ -137,24 +134,14 @@ export default function JewishBusinessesPage() {
             placeholder="Search businesses..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 mb-3"
-            style={{ 
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              borderColor: 'rgba(255, 255, 255, 0.3)',
-              color: '#2d3748'
-            }}
+            className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground placeholder-muted-foreground focus:outline-none mb-3"
           />
           
           {/* Category Filter */}
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg text-foreground focus:outline-none focus:ring-2"
-            style={{ 
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              borderColor: 'rgba(255, 255, 255, 0.3)',
-              color: '#2d3748'
-            }}
+            className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none"
           >
             <option value="all">All Categories</option>
             {categories.map(cat => (
@@ -174,17 +161,13 @@ export default function JewishBusinessesPage() {
               <div
                 key={feature.properties.name}
                 onClick={() => setSelectedBusiness(feature.properties.name)}
-                className={`p-4 rounded-lg border cursor-pointer transition-all ${
-                  selectedBusiness === feature.properties.name
-                    ? 'border-2'
-                    : 'border-border hover:shadow-sm'
-                }`}
+                className="p-4 rounded-lg cursor-pointer transition-all hover:shadow-sm"
                 style={{
-                  borderColor: selectedBusiness === feature.properties.name ? '#f4b643' : undefined,
-                  backgroundColor: selectedBusiness === feature.properties.name ? 'rgba(244, 182, 67, 0.08)' : undefined
+                  border: '1px solid #e2e0dd',
+                  backgroundColor: selectedBusiness === feature.properties.name ? '#fff4e6' : 'white'
                 }}
               >
-                <h3 className="font-semibold mb-1" style={{ color: selectedBusiness === feature.properties.name ? '#8b7aa8' : '#2d3748' }}>
+                <h3 className="font-semibold mb-1" style={{ color: selectedBusiness === feature.properties.name ? '#d67b5a' : '#2d3748' }}>
                   {feature.properties.name}
                 </h3>
                 <p className="text-sm mb-1" style={{ color: '#8a7d71' }}>
@@ -284,7 +267,7 @@ export default function JewishBusinessesPage() {
           <h4 className="text-xs font-semibold text-foreground mb-2">Business Status</h4>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#8b7aa8' }}></div>
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#7a8599' }}></div>
               <span className="text-xs text-muted-foreground">Active</span>
             </div>
             <div className="flex items-center gap-2">
@@ -292,7 +275,7 @@ export default function JewishBusinessesPage() {
               <span className="text-xs text-muted-foreground">Ownership Changed</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#d67b5a' }}></div>
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#e89b7a' }}></div>
               <span className="text-xs text-muted-foreground">Closed/Liquidated</span>
             </div>
           </div>

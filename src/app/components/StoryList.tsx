@@ -32,7 +32,6 @@ const StoryList: React.FC<StoryListProps> = ({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
   const [showSearchFilter, setShowSearchFilter] = useState(false);
-  const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -48,14 +47,12 @@ const StoryList: React.FC<StoryListProps> = ({
     const handleScroll = () => {
       if (!listRef.current) return;
       
-      setIsScrolling(true);
-      
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
       
       scrollTimeoutRef.current = setTimeout(() => {
-        setIsScrolling(false);
+        // Scroll ended
       }, 150);
       
       if (window.innerWidth <= 768) {

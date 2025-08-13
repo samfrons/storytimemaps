@@ -25,8 +25,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   zoom,
   markers = [],
   onMarkerClick,
-  activeMarkerId,
-  currentDate
+  activeMarkerId
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
   const [viewState, setViewState] = useState({
@@ -38,9 +37,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   const [mapLoaded, setMapLoaded] = useState(false)
 
   const colors = {
-    active: '#8b7aa8',
+    active: '#7a8599',
     declining: '#f4b643',
-    closed: '#d67b5a',
+    closed: '#e89b7a',
     future: '#8a8d91'
   }
 
@@ -69,7 +68,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [markers, currentDate])
+  }, [markers])
 
   // Get clusters for current viewport
   const clusters = useMemo(() => {
@@ -132,7 +131,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       }))
     }
-  }, [supercluster, viewState, mapLoaded, markers, currentDate])
+  }, [supercluster, viewState, mapLoaded, markers])
 
   // Focus on active marker
   useEffect(() => {
@@ -174,7 +173,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             className="mapbox-cluster-marker"
             style={{
               backgroundColor: '#f4b643',
-              boxShadow: '0 4px 12px rgba(244, 182, 67, 0.3)',
               color: 'white',
               width: '44px',
               height: '44px',
@@ -288,22 +286,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         />
       </Map>
       
-      {/* Vintage sepia and color overlays */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundColor: 'rgba(244, 182, 67, 0.15)',
-        mixBlendMode: 'color',
-        zIndex: 1
-      }} />
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(circle at center, transparent 40%, rgba(139, 122, 168, 0.2) 100%)',
-        mixBlendMode: 'multiply',
-        zIndex: 2
-      }} />
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundColor: 'rgba(214, 123, 90, 0.08)',
-        mixBlendMode: 'soft-light',
-        zIndex: 3
-      }} />
       
       {/* Custom Zoom Controls */}
       <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">

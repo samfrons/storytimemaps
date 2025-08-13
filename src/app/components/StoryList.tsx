@@ -31,6 +31,8 @@ const StoryList: React.FC<StoryListProps> = ({
   const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionDirection, setTransitionDirection] = useState<'left' | 'right' | null>(null);
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -50,7 +52,35 @@ const StoryList: React.FC<StoryListProps> = ({
     setTimeout(() => {
       setSelectedStory(null);
       setOriginRect(null);
+      setIsTransitioning(false);
+      setTransitionDirection(null);
     }, 600);
+  };
+
+  const handleModalNavigation = (direction: 'prev' | 'next') => {
+    if (!selectedStory) return;
+    
+    const currentIndex = filteredStories.findIndex(s => s.id === selectedStory.id);
+    const targetIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
+    
+    if (targetIndex >= 0 && targetIndex < filteredStories.length) {
+      const targetStory = filteredStories[targetIndex];
+      
+      // Start transition
+      setIsTransitioning(true);
+      setTransitionDirection(direction === 'prev' ? 'right' : 'left');
+      
+      // Switch story after a brief delay
+      setTimeout(() => {
+        setSelectedStory(targetStory);
+        
+        // End transition
+        setTimeout(() => {
+          setIsTransitioning(false);
+          setTransitionDirection(null);
+        }, 400);
+      }, 200);
+    }
   };
 
   const handleStoryClick = (storyId: string) => {
@@ -271,6 +301,11 @@ const StoryList: React.FC<StoryListProps> = ({
           isOpen={modalOpen}
           onClose={closeModal}
           originRect={originRect}
+          onNavigate={handleModalNavigation}
+          hasPrevious={filteredStories.findIndex(s => s.id === selectedStory.id) > 0}
+          hasNext={filteredStories.findIndex(s => s.id === selectedStory.id) < filteredStories.length - 1}
+          isTransitioning={isTransitioning}
+          transitionDirection={transitionDirection}
         />
       )}
     </div>

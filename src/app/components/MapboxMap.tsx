@@ -41,6 +41,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   })
   const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null)
   const [mapLoaded, setMapLoaded] = useState(false)
+  const [activeTooltipCoords, setActiveTooltipCoords] = useState<[number, number] | null>(null)
 
   const colors = {
     active: '#97d8c0',     // Mint green (parks)
@@ -133,6 +134,34 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
   }, [activeMarkerId, markers])
 
+  // Hide map labels near active tooltips
+  useEffect(() => {
+    if (!mapRef.current || !mapLoaded) return
+    
+    const map = mapRef.current.getMap()
+    if (!map) return
+    
+    const style = map.getStyle()
+    if (!style || !style.layers) return
+    
+    // Find all text/symbol layers
+    const textLayers = style.layers.filter(layer => layer.type === 'symbol')
+    
+    textLayers.forEach(layer => {
+      try {
+        if (activeTooltipCoords || hoveredMarkerId) {
+          // Reduce opacity of text labels when tooltip is active
+          map.setLayoutProperty(layer.id, 'text-opacity', 0.2)
+        } else {
+          // Restore full opacity when no tooltip
+          map.setLayoutProperty(layer.id, 'text-opacity', 1)
+        }
+      } catch (err) {
+        // Some layers might not support this property
+      }
+    })
+  }, [activeTooltipCoords, hoveredMarkerId, mapLoaded])
+
   const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
     const expansionZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id)
     mapRef.current?.flyTo({
@@ -198,7 +227,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         key={properties.id}
         longitude={lng}
         latitude={lat}
-        onClick={() => onMarkerClick(properties.id!)}
+        onClick={() => {
+          onMarkerClick(properties.id!)
+          setActiveTooltipCoords([lng, lat])
+        }}
         anchor="bottom"
       >
         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -265,9 +297,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 left: '50%',
                 transform: 'translateX(-50%)'
               }}
-              onMouseEnter={() => setHoveredMarkerId(properties.id || null)}
-              onMouseLeave={() => setHoveredMarkerId(null)}
-              onClick={() => onMarkerClick(properties.id!)}
+              onMouseEnter={() => {
+                setHoveredMarkerId(properties.id || null)
+                setActiveTooltipCoords([lng, lat])
+              }}
+              onMouseLeave={() => {
+                setHoveredMarkerId(null)
+                if (!activeMarkerId || activeMarkerId !== properties.id) {
+                  setActiveTooltipCoords(null)
+                }
+              }}
+              onClick={() => {
+                onMarkerClick(properties.id!)
+                setActiveTooltipCoords([lng, lat])
+              }}
             />
           </div>
         </div>

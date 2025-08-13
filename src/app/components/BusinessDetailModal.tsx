@@ -9,13 +9,23 @@ interface BusinessDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   originRect: DOMRect | null;
+  onNavigate?: (direction: 'prev' | 'next') => void;
+  hasPrevious?: boolean;
+  hasNext?: boolean;
+  isTransitioning?: boolean;
+  transitionDirection?: 'left' | 'right' | null;
 }
 
 const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({ 
   story, 
   isOpen, 
   onClose, 
-  originRect 
+  originRect,
+  onNavigate,
+  hasPrevious = false,
+  hasNext = false,
+  isTransitioning = false,
+  transitionDirection = null
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -23,7 +33,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen && originRect) {
+    if (isOpen && originRect && !isTransitioning) {
       setIsVisible(true);
       // Start expansion after a frame
       requestAnimationFrame(() => {
@@ -33,28 +43,34 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           setTimeout(() => setShowContent(true), 300);
         });
       });
-    } else if (!isOpen) {
+    } else if (!isOpen && !isTransitioning) {
       setShowContent(false);
       setIsExpanded(false);
       setTimeout(() => setIsVisible(false), 500);
     }
-  }, [isOpen, originRect]);
+  }, [isOpen, originRect, isTransitioning]);
+
+  // Handle content transition for navigation
+  useEffect(() => {
+    if (isTransitioning) {
+      setShowContent(false);
+      setTimeout(() => setShowContent(true), 400);
+    }
+  }, [story.id, isTransitioning]);
 
   if (!isVisible || !originRect) return null;
 
   // Calculate the transform origin and initial position
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
-  const modalWidth = Math.min(672, viewportWidth - 32); // max-w-2xl with padding
-  const modalHeight = Math.min(viewportHeight * 0.9, 700);
-  
-  const finalX = (viewportWidth - modalWidth) / 2;
-  const finalY = (viewportHeight - modalHeight) / 2;
+  const modalWidth = Math.min(800, viewportWidth * 0.9); // 90% of viewport width, max 800px
+  const modalHeight = viewportHeight * 0.95; // 95% of viewport height
   
   const initialScaleX = originRect.width / modalWidth;
   const initialScaleY = originRect.height / modalHeight;
-  const initialX = originRect.left - finalX;
-  const initialY = originRect.top - finalY;
+
+  // Calculate slide offset for transitions
+  const slideOffset = transitionDirection === 'left' ? -100 : transitionDirection === 'right' ? 100 : 0;
 
   return (
     <div className="fixed inset-0 z-50">
@@ -69,16 +85,18 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
       {/* Expanding Modal */}
       <div 
         ref={modalRef}
-        className={`absolute bg-[#4a4a57] border border-[#6b6275] shadow-2xl transition-all duration-700 ease-out overflow-hidden`}
+        className={`fixed bg-[#4a4a57] border border-[#6b6275] shadow-2xl transition-all ease-out overflow-hidden ${
+          isTransitioning ? 'duration-400' : 'duration-700'
+        }`}
         style={{
           width: `${modalWidth}px`,
           height: `${modalHeight}px`,
-          left: `${finalX}px`,
-          top: `${finalY}px`,
+          left: '50%',
+          top: '50%',
           transform: isExpanded 
-            ? 'translate(0, 0) scale(1)' 
-            : `translate(${initialX}px, ${initialY}px) scale(${initialScaleX}, ${initialScaleY})`,
-          transformOrigin: 'top left',
+            ? `translate(-50%, -50%) translate(${isTransitioning ? slideOffset : 0}px, 0) scale(1)` 
+            : `translate(-50%, -50%) translate(${(originRect.left + originRect.width/2 - viewportWidth/2)}px, ${(originRect.top + originRect.height/2 - viewportHeight/2)}px) scale(${initialScaleX}, ${initialScaleY})`,
+          transformOrigin: 'center',
           transitionTimingFunction: isExpanded 
             ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' 
             : 'cubic-bezier(0.4, 0, 0.2, 1)'
@@ -111,20 +129,61 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           </button>
         </div>
         
-        {/* Content */}
-        <div className={`p-6 overflow-y-auto h-[calc(100%-88px)] transition-opacity duration-500 ${
-          showContent ? 'opacity-100' : 'opacity-0'
-        }`}>
+        {/* Content with slide transition */}
+        <div 
+          className={`p-6 overflow-y-auto h-[calc(100%-88px)] transition-all ${
+            isTransitioning ? 'duration-400' : 'duration-500'
+          } ${showContent ? 'opacity-100' : 'opacity-0'}`}
+          style={{
+            transform: `translateX(${isTransitioning ? -slideOffset : 0}px)`,
+          }}
+        >
           <StoryDetail story={story} />
           
-          {/* Action Buttons */}
-          <div className="flex gap-3 mt-6 pt-6 border-t border-[#6b6275]">
-            <button className="flex-1 font-mono text-xs font-semibold py-3 px-4 bg-[#4a4a57] border border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wide">
-              View on Map
-            </button>
-            <button className="flex-1 font-mono text-xs font-semibold py-3 px-4 bg-[#97d8c0] text-[#4a4a57] border border-[#97d8c0] hover:bg-[#a9e2d0] transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wide">
-              Share Location
-            </button>
+          {/* Navigation and Action Buttons */}
+          <div className="mt-6 pt-6 border-t border-[#6b6275] space-y-3">
+            {/* Navigation Buttons */}
+            <div className="flex gap-3">
+              <button 
+                onClick={() => onNavigate?.('prev')}
+                disabled={!hasPrevious}
+                className={`flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 ${
+                  hasPrevious 
+                    ? 'bg-[#4a4a57] border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer' 
+                    : 'bg-[#4a4a57]/50 border-[#6b6275]/30 text-[#8b7d8e]/50 cursor-not-allowed'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Previous
+              </button>
+              
+              <button 
+                onClick={() => onNavigate?.('next')}
+                disabled={!hasNext}
+                className={`flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 ${
+                  hasNext 
+                    ? 'bg-[#4a4a57] border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer' 
+                    : 'bg-[#4a4a57]/50 border-[#6b6275]/30 text-[#8b7d8e]/50 cursor-not-allowed'
+                }`}
+              >
+                Next
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <button className="flex-1 font-mono text-xs font-semibold py-3 px-4 bg-[#4a4a57] border border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wide">
+                View on Map
+              </button>
+              <button className="flex-1 font-mono text-xs font-semibold py-3 px-4 bg-[#97d8c0] text-[#4a4a57] border border-[#97d8c0] hover:bg-[#a9e2d0] transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wide">
+                Share Location
+              </button>
+            </div>
           </div>
         </div>
       </div>

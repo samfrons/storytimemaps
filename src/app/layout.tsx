@@ -2,6 +2,7 @@ import './globals.css'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import type { Metadata } from 'next'
 import { Inter, Space_Mono } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -30,8 +31,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceMono.variable}`}>
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={`${inter.variable} ${spaceMono.variable}`} suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="moody"
+          themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau']}
+          enableSystem={false}
+          storageKey="storymap-theme"
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* Default/Moody Theme */
+:root,
+[data-theme="moody"] {
   --primary: #97d8c0;
   --primary-light: #a9e2d0;
   --secondary: #ee5760;
@@ -10,7 +12,9 @@
   --danger: #ee5760;
   --success: #97d8c0;
   --background: #4a4a57;
+  --background-rgb: 74, 74, 87;
   --foreground: #f5cdb4;
+  --foreground-muted: rgb(245 205 180);
   --muted: #8b7d8e;
   --border: #6b6275;
   --shadow: rgba(0, 0, 0, 0.3);
@@ -23,27 +27,142 @@
   --accent-chartreuse: #97d8c0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #97d8c0;
-    --primary-light: #a9e2d0;
-    --secondary: #ee5760;
-    --warning: #ffcb51;
-    --danger: #ee5760;
-    --success: #97d8c0;
-    --background: #4a4a57;
-    --foreground: #f5cdb4;
-    --muted: #8b7d8e;
-    --border: #6b6275;
-    --shadow: rgba(0, 0, 0, 0.4);
-    --map-overlay: rgba(59, 51, 64, 0.1);
-    --accent-orange: #eca27d;
-    --accent-yellow: #ffcb51;
-    --accent-purple: #9dc8fc;
-    --accent-coral: #ee5760;
-    --accent-navy: #3b3340;
-    --accent-chartreuse: #97d8c0;
-  }
+/* Cool Theme - Light blues and teals */
+[data-theme="cool"] {
+  --primary: #4a90e2;
+  --primary-light: #6ba3e7;
+  --secondary: #2c5aa0;
+  --warning: #f5a623;
+  --danger: #d0021b;
+  --success: #7ed321;
+  --background: #f0f4f8;
+  --foreground: #2c3e50;
+  --foreground-muted: #34495e;
+  --muted: #7f8c8d;
+  --border: #bdc3c7;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --map-overlay: rgba(240, 244, 248, 0.1);
+  --accent-orange: #f39c12;
+  --accent-yellow: #f1c40f;
+  --accent-purple: #9b59b6;
+  --accent-coral: #e74c3c;
+  --accent-navy: #34495e;
+  --accent-chartreuse: #27ae60;
+}
+
+/* Warm Theme - Oranges, browns, earthy */
+[data-theme="warm"] {
+  --primary: #d67b5a;
+  --primary-light: #e8956f;
+  --secondary: #8b4513;
+  --warning: #ff8c00;
+  --danger: #cd5c5c;
+  --success: #9acd32;
+  --background: #f4f1e8;
+  --foreground: #5d4037;
+  --foreground-muted: #6d4c41;
+  --muted: #8d6e63;
+  --border: #bcaaa4;
+  --shadow: rgba(0, 0, 0, 0.15);
+  --map-overlay: rgba(244, 241, 232, 0.1);
+  --accent-orange: #ff7043;
+  --accent-yellow: #ffb74d;
+  --accent-purple: #ba68c8;
+  --accent-coral: #f4511e;
+  --accent-navy: #37474f;
+  --accent-chartreuse: #689f38;
+}
+
+/* Hot Theme - Reds, bright oranges */
+[data-theme="hot"] {
+  --primary: #ff4444;
+  --primary-light: #ff6666;
+  --secondary: #ff8800;
+  --warning: #ff6600;
+  --danger: #cc0000;
+  --success: #ff9500;
+  --background: #fff5f5;
+  --foreground: #8b0000;
+  --foreground-muted: #a00000;
+  --muted: #cd5c5c;
+  --border: #ffc1cc;
+  --shadow: rgba(255, 0, 0, 0.2);
+  --map-overlay: rgba(255, 245, 245, 0.1);
+  --accent-orange: #ff5722;
+  --accent-yellow: #ffc107;
+  --accent-purple: #e91e63;
+  --accent-coral: #f44336;
+  --accent-navy: #b71c1c;
+  --accent-chartreuse: #ff9800;
+}
+
+/* Cold Theme - Icy blues, grays */
+[data-theme="cold"] {
+  --primary: #64b5f6;
+  --primary-light: #90caf9;
+  --secondary: #455a64;
+  --warning: #90a4ae;
+  --danger: #607d8b;
+  --success: #81c784;
+  --background: #e8f4f8;
+  --foreground: #263238;
+  --foreground-muted: #37474f;
+  --muted: #78909c;
+  --border: #b0bec5;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --map-overlay: rgba(232, 244, 248, 0.1);
+  --accent-orange: #546e7a;
+  --accent-yellow: #90a4ae;
+  --accent-purple: #7986cb;
+  --accent-coral: #5c6bc0;
+  --accent-navy: #37474f;
+  --accent-chartreuse: #4db6ac;
+}
+
+/* Bauhaus Theme - Primary colors, black/white */
+[data-theme="bauhaus"] {
+  --primary: #000000;
+  --primary-light: #333333;
+  --secondary: #ff0000;
+  --warning: #ffcc00;
+  --danger: #ff0000;
+  --success: #0066ff;
+  --background: #f5f5f0;
+  --foreground: #000000;
+  --foreground-muted: #333333;
+  --muted: #666666;
+  --border: #000000;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --map-overlay: rgba(245, 245, 240, 0.1);
+  --accent-orange: #ff8800;
+  --accent-yellow: #ffcc00;
+  --accent-purple: #6600cc;
+  --accent-coral: #ff0000;
+  --accent-navy: #000066;
+  --accent-chartreuse: #00cc66;
+}
+
+/* Art Nouveau Theme - Muted greens, browns, golds */
+[data-theme="art-nouveau"] {
+  --primary: #8b7355;
+  --primary-light: #a0916b;
+  --secondary: #556b2f;
+  --warning: #daa520;
+  --danger: #704214;
+  --success: #6b8e23;
+  --background: #f8f6f0;
+  --foreground: #3e2723;
+  --foreground-muted: #4e342e;
+  --muted: #8d6e63;
+  --border: #a1887f;
+  --shadow: rgba(62, 39, 35, 0.2);
+  --map-overlay: rgba(248, 246, 240, 0.1);
+  --accent-orange: #d4862a;
+  --accent-yellow: #f9a825;
+  --accent-purple: #8e24aa;
+  --accent-coral: #bf360c;
+  --accent-navy: #263238;
+  --accent-chartreuse: #689f38;
 }
 
 /* Mapbox popup arrow styling - default green for active state */

@@ -5,6 +5,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import TimeSlider from './TimeSlider';
+import ThemeSwitcher from './ThemeSwitcher';
 import { StoryMap } from '../../types';
 import BusinessDetailModal from './BusinessDetailModal';
 import { throttle } from '../../utils/performance';
@@ -227,43 +228,50 @@ const StoryList: React.FC<StoryListProps> = ({
   };
 
   return (
-    <div className="w-full h-full bg-[#4a4a57] flex flex-col">
-      <div className={`border-b border-[#6b6275] bg-[#4a4a57]/95 backdrop-blur transition-all duration-300 z-[1] relative ${
+    <div className="w-full h-full bg-background flex flex-col" style={{backgroundColor: 'var(--background)'}}>
+      <div className={`border-b backdrop-blur transition-all duration-300 z-[1] relative ${
         isHeaderCollapsed ? 'p-3 md:p-6' : 'p-4 md:p-6'
-      }`}>
+      }`} style={{borderBottomColor: 'var(--border)', backgroundColor: 'rgba(var(--background-rgb), 0.95)'}}>
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <h1 className="text-lg font-mono font-bold text-[#97d8c0] mb-1 tracking-tight uppercase">Bygone Berlin Businesses</h1>
+            <h1 className="text-lg font-mono font-bold mb-1 tracking-tight uppercase" style={{color: 'var(--primary)'}}>Bygone Berlin Businesses</h1>
             {!isHeaderCollapsed && (
-              <p className="text-xs font-mono text-[#ffcb51] uppercase tracking-wide">Berlin · 1900-1945</p>
+              <p className="text-xs font-mono uppercase tracking-wide" style={{color: 'var(--warning)'}}>Berlin · 1900-1945</p>
             )}
           </div>
           
-          <div className="flex items-center gap-2 md:hidden">
-            <button
-              onClick={() => setShowSearchFilter(!showSearchFilter)}
-              className="p-2 hover:bg-[#6b6275] transition-colors"
-              aria-label="Toggle search and filters"
-            >
-              <svg className="w-5 h-5 text-[#97d8c0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </button>
+          <div className="flex items-center gap-2">
+            <div className="hidden md:block">
+              <ThemeSwitcher />
+            </div>
             
-            <button
-              onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
-              className="p-2 hover:bg-[#6b6275] transition-colors"
-              aria-label="Toggle header"
-            >
-              <svg 
-                className={`w-5 h-5 text-[#97d8c0] transition-transform duration-200 ${isHeaderCollapsed ? 'rotate-180' : ''}`} 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
+            <div className="flex items-center gap-2 md:hidden">
+              <button
+                onClick={() => setShowSearchFilter(!showSearchFilter)}
+                className="p-2 transition-colors hover:bg-[var(--border)]"
+                aria-label="Toggle search and filters"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{color: 'var(--primary)'}}>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+              
+              <button
+                onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
+                className="p-2 transition-colors hover:bg-[var(--border)]"
+                aria-label="Toggle header"
+              >
+                <svg 
+                  className={`w-5 h-5 transition-transform duration-200 ${isHeaderCollapsed ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  style={{color: 'var(--primary)'}}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
         
@@ -271,38 +279,56 @@ const StoryList: React.FC<StoryListProps> = ({
           isHeaderCollapsed && !showSearchFilter ? 'max-h-0 opacity-0 mt-0' : 'max-h-96 opacity-100 mt-4'
         } md:max-h-96 md:opacity-100 md:mt-4`}>
           <div className="space-y-3">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search stories..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-3 py-2.5 pl-9 bg-[#6b6275]/50 border border-[#6b6275] focus:outline-none text-[#f5cdb4] placeholder-[#8b7d8e] text-xs font-mono transition-all"
-              />
-              <svg className="absolute left-3 top-2.5 w-4 h-4 text-[#8b7d8e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+            <div className="flex gap-2 md:block">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  placeholder="Search stories..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-3 py-2.5 pl-9 focus:outline-none text-xs font-mono transition-all"
+                  style={{
+                    backgroundColor: 'rgba(107, 98, 117, 0.5)',
+                    borderColor: 'var(--border)',
+                    color: 'var(--foreground)'
+                  }}
+                />
+                <svg className="absolute left-3 top-2.5 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{color: 'var(--muted)'}}>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <div className="md:hidden">
+                <ThemeSwitcher />
+              </div>
             </div>
             
             <div ref={dropdownRef} className="relative z-[100000]">
               <button
                 onClick={handleDropdownToggle}
-                className="w-full px-3 py-2.5 bg-[#6b6275]/50 border border-[#6b6275] focus:outline-none focus:ring-2 focus:ring-[#97d8c0] focus:border-transparent text-[#f5cdb4] text-xs font-mono transition-all text-left flex items-center justify-between cursor-pointer hover:bg-[#6b6275]/60"
+                className="w-full px-3 py-2.5 border focus:outline-none text-xs font-mono transition-all text-left flex items-center justify-between cursor-pointer"
+                style={{
+                  backgroundColor: 'rgba(107, 98, 117, 0.5)',
+                  borderColor: 'var(--border)',
+                  color: 'var(--foreground)'
+                }}
               >
                 <span>{selectedCategory === 'all' ? 'All Categories' : selectedCategory}</span>
                 <svg 
-                  className={`w-4 h-4 text-[#8b7d8e] transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                  className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
+                  style={{color: 'var(--muted)'}}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               
               {isDropdownOpen && (
-                <div className="md:fixed absolute top-full left-0 right-0 md:bg-[#6b6275]/95 bg-[#6b6275] border border-[#6b6275] backdrop-blur-sm z-[99999] max-h-[600px] overflow-y-auto shadow-lg mt-1" 
+                <div className="md:fixed absolute top-full left-0 right-0 border backdrop-blur-sm z-[99999] max-h-[600px] overflow-y-auto shadow-lg mt-1" 
                      style={{
+                       backgroundColor: window.innerWidth >= 768 ? 'rgba(107, 98, 117, 0.95)' : 'var(--border)',
+                       borderColor: 'var(--border)',
                        top: window.innerWidth >= 768 ? `${dropdownPosition.top}px` : undefined,
                        left: window.innerWidth >= 768 ? `${dropdownPosition.left}px` : undefined,
                        width: window.innerWidth >= 768 ? `${dropdownPosition.width}px` : undefined
@@ -312,9 +338,14 @@ const StoryList: React.FC<StoryListProps> = ({
                       setSelectedCategory('all');
                       setIsDropdownOpen(false);
                     }}
-                    className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:bg-[#6b6275]/70 ${
-                      selectedCategory === 'all' ? 'bg-[#97d8c0]/20 text-[#97d8c0] border-l-2 border-l-[#97d8c0]' : 'text-[#f5cdb4] hover:text-[#97d8c0]'
+                    className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors ${
+                      selectedCategory === 'all' ? 'border-l-2' : ''
                     }`}
+                    style={{
+                      backgroundColor: selectedCategory === 'all' ? 'rgba(151, 216, 192, 0.2)' : 'transparent',
+                      color: selectedCategory === 'all' ? 'var(--primary)' : 'var(--foreground)',
+                      borderLeftColor: selectedCategory === 'all' ? 'var(--primary)' : 'transparent'
+                    }}
                   >
                     All Categories
                   </button>
@@ -325,9 +356,14 @@ const StoryList: React.FC<StoryListProps> = ({
                         setSelectedCategory(category);
                         setIsDropdownOpen(false);
                       }}
-                      className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:bg-[#6b6275]/70 ${
-                        selectedCategory === category ? 'bg-[#97d8c0]/20 text-[#97d8c0] border-l-2 border-l-[#97d8c0]' : 'text-[#f5cdb4] hover:text-[#97d8c0]'
+                      className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors ${
+                        selectedCategory === category ? 'border-l-2' : ''
                       }`}
+                      style={{
+                        backgroundColor: selectedCategory === category ? 'rgba(151, 216, 192, 0.2)' : 'transparent',
+                        color: selectedCategory === category ? 'var(--primary)' : 'var(--foreground)',
+                        borderLeftColor: selectedCategory === category ? 'var(--primary)' : 'transparent'
+                      }}
                     >
                       {category}
                     </button>
@@ -349,7 +385,7 @@ const StoryList: React.FC<StoryListProps> = ({
       </div>
       
       <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3">
-        <div className="text-xs font-mono text-[#ffcb51] mb-3 uppercase tracking-wide font-semibold">
+        <div className="text-xs font-mono mb-3 uppercase tracking-wide font-semibold" style={{color: 'var(--warning)'}}>
           {filteredStories.length} locations found
         </div>
         
@@ -358,10 +394,12 @@ const StoryList: React.FC<StoryListProps> = ({
             key={story.id}
             ref={(el) => { storyRefs.current[story.id] = el; }}
             data-story-id={story.id}
-            className={`group bg-[#6b6275]/40 backdrop-blur border border-l-4 border-[#6b6275] transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
-              story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : 'hover:bg-[#6b6275]/50'
+            className={`group backdrop-blur border border-l-4 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
+              story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : ''
             } ${getStatusColor(story)}`}
             style={{
+              backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.4)',
+              borderColor: 'var(--border)',
               ...getActiveStoryStyle(story, story.id === activeStoryId)
             }}
             onClick={() => handleStoryClick(story.id)}
@@ -372,30 +410,43 @@ const StoryList: React.FC<StoryListProps> = ({
                 <h3 className={`font-mono font-semibold text-sm transition-colors ${
                   story.id === activeStoryId ? 
                     (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white' : 'text-[#2a2a2a]') :
-                    'text-[#f5cdb4] group-hover:text-[#97d8c0]'
-                }`}>
+                    ''
+                }`}
+                style={{
+                  color: story.id === activeStoryId ? undefined : 'var(--foreground)'
+                }}>
                   {story.title}
                 </h3>
                 <p className={`text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed ${
                   story.id === activeStoryId ? 
                     (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white/80' : 'text-[#2a2a2a]/80') :
-                    'text-[#f5cdb4]'
-                }`}>{story.description}</p>
+                    ''
+                }`}
+                style={{
+                  color: story.id === activeStoryId ? undefined : 'var(--foreground-muted)'
+                }}>{story.description}</p>
                 
                 <div className="flex items-center gap-4 mt-3 text-xs font-mono">
                   <span className={`${
                     story.id === activeStoryId ? 
                       (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white/90' : 'text-[#2a2a2a]/90') :
-                      'text-[#eca27d]'
-                  }`}>
+                      ''
+                  }`}
+                  style={{
+                    color: story.id === activeStoryId ? undefined : 'var(--accent-orange)'
+                  }}>
                     {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
                   </span>
                   {(story.businessType || story.category) && (
                     <span className={`px-2 py-1 text-xs font-mono uppercase tracking-wide ${
                       story.id === activeStoryId ? 
                         'bg-black/20 text-current' :
-                        'bg-[#6b6275]/50 text-[#eca27d]'
-                    }`}>
+                        ''
+                    }`}
+                    style={{
+                      backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.5)',
+                      color: story.id === activeStoryId ? undefined : 'var(--accent-orange)'
+                    }}>
                       {story.businessType || story.category}
                     </span>
                   )}
@@ -416,7 +467,15 @@ const StoryList: React.FC<StoryListProps> = ({
             </div>
             
             <button
-              className="view-details-button mt-3 text-xs font-mono text-[#f5cdb4] hover:text-[#97d8c0] transition-colors uppercase tracking-wider font-semibold"
+              className={`view-details-button mt-3 px-3 py-1.5 text-xs font-mono bg-transparent border transition-all uppercase tracking-wider font-semibold inline-block ${
+                story.id === activeStoryId 
+                  ? 'hover:opacity-80'
+                  : 'hover:bg-[#f5cdb4] hover:text-[#2a2a2a]'
+              }`}
+              style={{
+                color: story.id === activeStoryId ? '#2a2a2a' : '#f5cdb4',
+                borderColor: story.id === activeStoryId ? '#2a2a2a' : '#f5cdb4'
+              }}
               onClick={(e) => {
                 e.stopPropagation();
                 const element = storyRefs.current[story.id];

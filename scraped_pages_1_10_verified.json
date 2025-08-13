@@ -1,0 +1,1591 @@
+{
+  "A. & B. Cohn": {
+    "name": "A. & B. Cohn",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1931",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1931Erloschen 1937",
+        "Wallstr. 9/10,  Berlin"
+      ]
+    }
+  },
+  "A. & B. Elkisch": {
+    "name": "A. & B. Elkisch",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1870",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": "1930",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1870Liquidation ab 1930-12-30 00:00:00Erloschen 1938",
+        "Neue Friedrichstr. 44,  Berlin"
+      ]
+    }
+  },
+  "A. & B. Kahane": {
+    "name": "A. & B. Kahane",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1921",
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1921",
+        "Büsingstr. 6,  Berlin"
+      ]
+    }
+  },
+  "A. & B. Kuttner": {
+    "name": "A. & B. Kuttner",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1904",
+      "dissolution_date": "1938",
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1904Besitzübernahme 1938Erloschen 1938",
+        "Lothringer Str. 81,  Berlin"
+      ]
+    }
+  },
+  "A. & B. Munter's Elektro-Engros-Haus": {
+    "name": "A. & B. Munter's Elektro-Engros-Haus",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1928",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1928Erloschen 1940",
+        "Courbièrestr. 16,  Berlin"
+      ]
+    }
+  },
+  "A. & B. Schlochauer Grundbesitz AG": {
+    "name": "A. & B. Schlochauer Grundbesitz AG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1923",
+      "dissolution_date": "1932",
+      "takeover_date": null,
+      "liquidation_date": "1932",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1923Liquidation ab 1932-03-17 00:00:00Erloschen 1932",
+        "Bismarckstr. 5,  Berlin"
+      ]
+    }
+  },
+  "A. & H. Bukofzer": {
+    "name": "A. & H. Bukofzer",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1922",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": "1939",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1922Liquidation ab 1939-01-31 00:00:00Erloschen 1939",
+        "Probststr. 10/11,  Berlin"
+      ]
+    }
+  },
+  "A. & H. Kovács": {
+    "name": "A. & H. Kovács",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1924",
+      "dissolution_date": "1932",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1924Erloschen 1932",
+        "Kurfürstendamm 40/41,  Berlin"
+      ]
+    }
+  },
+  "A. & I. Schmill": {
+    "name": "A. & I. Schmill",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1910",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1910Erloschen 1939",
+        "Neue Königstr. 61/62,  Berlin"
+      ]
+    }
+  },
+  "A. & L. Gumpert": {
+    "name": "A. & L. Gumpert",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1927",
+      "dissolution_date": "1941",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1927Erloschen 1941",
+        "Sybelstr. 43,  Berlin"
+      ]
+    }
+  },
+  "A. & Leopold Reichmann": {
+    "name": "A. & Leopold Reichmann",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1903",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1903Erloschen 1940",
+        "Brunnenstr. 185,  Berlin"
+      ]
+    }
+  },
+  "A. & M. Rosanis": {
+    "name": "A. & M. Rosanis",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1922",
+      "dissolution_date": "1935",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1922Erloschen 1935",
+        "Kurstr. 34/35,  Berlin"
+      ]
+    }
+  },
+  "A. & S. Goldmann": {
+    "name": "A. & S. Goldmann",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1908",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1908Erloschen 1938",
+        "Langenbeckstr. 1,  Berlin"
+      ]
+    }
+  },
+  "A. & S. Segall": {
+    "name": "A. & S. Segall",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1901",
+      "dissolution_date": null,
+      "takeover_date": "1939",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1901Besitzübernahme 1939",
+        "Kommandantenstr. 20/21,  Berlin"
+      ]
+    }
+  },
+  "A. Ackerhalt": {
+    "name": "A. Ackerhalt",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Neue Königstr.  11,  Berlin"
+      ]
+    }
+  },
+  "A. Alves Augusta Apotheke": {
+    "name": "A. Alves Augusta Apotheke",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1902",
+      "dissolution_date": null,
+      "takeover_date": "1937",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1902Besitzübernahme 1937",
+        "Königin-Augusta-Str. 22,  Berlin"
+      ]
+    }
+  },
+  "A. Asher & Co": {
+    "name": "A. Asher & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1900",
+      "dissolution_date": null,
+      "takeover_date": "1933",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1900Besitzübernahme 1933",
+        "Behrenstr. 17,  Berlin"
+      ]
+    }
+  },
+  "A. B. C. Apotheken-Bedarfs-Contor, Vertrieb chemischer und pharmazeutischer Präparate Dr. Erwin Schwarz": {
+    "name": "A. B. C. Apotheken-Bedarfs-Contor, Vertrieb chemischer und pharmazeutischer Präparate Dr. Erwin Schwarz",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1920",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1920Erloschen 1939",
+        "Friedrichstr. 19,  Berlin"
+      ]
+    }
+  },
+  "A. B. Citroen": {
+    "name": "A. B. Citroen",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1901",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1901Erloschen 1940",
+        "Werderscher Markt 7,  Berlin"
+      ]
+    }
+  },
+  "A. Baum": {
+    "name": "A. Baum",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1904",
+      "dissolution_date": null,
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1904Besitzübernahme 1938",
+        "Ritterstr. 9/10,  Berlin"
+      ]
+    }
+  },
+  "A. Baumert-Export": {
+    "name": "A. Baumert-Export",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1920",
+      "dissolution_date": null,
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1920Besitzübernahme 1938",
+        "Köpenicker Str. 128,  Berlin"
+      ]
+    }
+  },
+  "A. Becker & Co": {
+    "name": "A. Becker & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1913",
+      "dissolution_date": "1936",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1913Erloschen 1936",
+        "Burgstr. 29,  Berlin"
+      ]
+    }
+  },
+  "A. Benver GmbH": {
+    "name": "A. Benver GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1921",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1921Erloschen 1939",
+        "Bornholmer Str. 89,  Berlin"
+      ]
+    }
+  },
+  "A. Bergmann & Co": {
+    "name": "A. Bergmann & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1920",
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1920",
+        "Potsdamer Str. 56,  Berlin"
+      ]
+    }
+  },
+  "A. Bieber & Sohn AG": {
+    "name": "A. Bieber & Sohn AG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1922",
+      "dissolution_date": "1933",
+      "takeover_date": null,
+      "liquidation_date": "1930",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1922Liquidation ab 1930-12-31 00:00:00Erloschen 1933",
+        "Königstr. 40,  Berlin"
+      ]
+    }
+  },
+  "A. Blumenreich GmbH": {
+    "name": "A. Blumenreich GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1919",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1919Erloschen 1939",
+        "Schöneberger Ufer 44,  Berlin"
+      ]
+    }
+  },
+  "A. Bodenheimer & Cie GmbH": {
+    "name": "A. Bodenheimer & Cie GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1925",
+      "dissolution_date": "1932",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1925Erloschen 1932",
+        "Stresemannstr. 6-8,  Berlin"
+      ]
+    }
+  },
+  "A. Bores": {
+    "name": "A. Bores",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Keibelstr.  5,  Berlin"
+      ]
+    }
+  },
+  "A. Bornstein & Co": {
+    "name": "A. Bornstein & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1925",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1925Erloschen 1938",
+        "Spichernstr. 7,  Berlin"
+      ]
+    }
+  },
+  "A. Breslauer": {
+    "name": "A. Breslauer",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1900",
+      "dissolution_date": "1933",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1900Erloschen 1933",
+        "Marburger Str. 5,  Berlin"
+      ]
+    }
+  },
+  "A. Bromberger & Co": {
+    "name": "A. Bromberger & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1926",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1926Erloschen 1938",
+        "Bischofstr. 2/3,  Berlin"
+      ]
+    }
+  },
+  "A. Brünn j.": {
+    "name": "A. Brünn j.",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1886",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1886Erloschen 1940",
+        "Berliner Allee 29/31,  Berlin"
+      ]
+    }
+  },
+  "A. Busse & Co AG": {
+    "name": "A. Busse & Co AG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1900",
+      "dissolution_date": null,
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1900Besitzübernahme 1938",
+        "Französische Str. 24,  Berlin"
+      ]
+    }
+  },
+  "A. Caminer & Co": {
+    "name": "A. Caminer & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1937",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1937Erloschen 1939",
+        "Barbarossastr. 41,  Berlin"
+      ]
+    }
+  },
+  "A. Chill & Co": {
+    "name": "A. Chill & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1921",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1921Erloschen 1938",
+        "Hollmannstr. 16,  Berlin \n    \n                                                                                          Ritterstr. 126,   \n    \n                                                                                          Gipsstr. 11,   \n    \n                                                                                          Grimmstr. 21,   \n    \n                                                                                          Willdenwostr. 22,   \n    \n                                                                                          An der Spandauer Brücke 13,"
+      ]
+    }
+  },
+  "A. Christ GmbH": {
+    "name": "A. Christ GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Erloschen 1939",
+        ",  Berlin"
+      ]
+    }
+  },
+  "A. Damitt": {
+    "name": "A. Damitt",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1901",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1901Erloschen 1939",
+        "Rosenthaler Str. 46/47,  Berlin"
+      ]
+    }
+  },
+  "A. Damitt Inkasso GmbH": {
+    "name": "A. Damitt Inkasso GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1931",
+      "dissolution_date": "1938",
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1931Besitzübernahme 1938Erloschen 1938",
+        "Rosenthaler Str. 46,  Berlin"
+      ]
+    }
+  },
+  "A. Davidoff & Co": {
+    "name": "A. Davidoff & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1908",
+      "dissolution_date": null,
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1908Besitzübernahme 1938",
+        "Potsdamer Str. 64,  Berlin"
+      ]
+    }
+  },
+  "A. E. Wassermann": {
+    "name": "A. E. Wassermann",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1900",
+      "dissolution_date": null,
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1900Besitzübernahme 1938",
+        "Wilhelmplatz 7,  Berlin"
+      ]
+    }
+  },
+  "A. Englard & Co KG": {
+    "name": "A. Englard & Co KG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1920",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1920Erloschen 1937",
+        "Blumenstr. 81,  Berlin"
+      ]
+    }
+  },
+  "A. Ephraim": {
+    "name": "A. Ephraim",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1903",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1903Erloschen 1937",
+        "Große Präsidentenstr. 9,  Berlin"
+      ]
+    }
+  },
+  "A. F. Gohlicke": {
+    "name": "A. F. Gohlicke",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1903",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1903Erloschen 1938",
+        "Friedrichstr. 72,  Berlin"
+      ]
+    }
+  },
+  "A. Falkenburger & Co": {
+    "name": "A. Falkenburger & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1919",
+      "dissolution_date": "1935",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1919Erloschen 1935",
+        "Stülerstr. 13,  Berlin"
+      ]
+    }
+  },
+  "A. Falkowitz & Co": {
+    "name": "A. Falkowitz & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1935",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1935Erloschen 1940",
+        "Charlottenstr. 28,  Berlin"
+      ]
+    }
+  },
+  "A. Feurig Apotheke Karl Meyer": {
+    "name": "A. Feurig Apotheke Karl Meyer",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1911",
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1911",
+        "Albertstr. 6,  Berlin"
+      ]
+    }
+  },
+  "A. Fricke & Co": {
+    "name": "A. Fricke & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1919",
+      "dissolution_date": null,
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1919Besitzübernahme 1938",
+        "Voßstr. 45,  Berlin"
+      ]
+    }
+  },
+  "A. Goldbruch": {
+    "name": "A. Goldbruch",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Kommandantenstr.  66,  Berlin"
+      ]
+    }
+  },
+  "A. Goldmann KG": {
+    "name": "A. Goldmann KG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1911",
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1911",
+        "Harzburgstr. 3,  Berlin"
+      ]
+    }
+  },
+  "A. Goldstein KG": {
+    "name": "A. Goldstein KG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1935",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": "1938",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1935Liquidation ab 1938-07-06 00:00:00Erloschen 1939",
+        "Kommandantenstr. 19,  Berlin"
+      ]
+    }
+  },
+  "A. Gompertz GmbH": {
+    "name": "A. Gompertz GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1932",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1932Erloschen 1939",
+        "Kaiser-Wilhelm-Str. 50,  Berlin"
+      ]
+    }
+  },
+  "A. Grün": {
+    "name": "A. Grün",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Kurt-Eckert-Str., Hohenschönhausen ,  Berlin"
+      ]
+    }
+  },
+  "A. Grün & Sohn": {
+    "name": "A. Grün & Sohn",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1919",
+      "dissolution_date": "1942",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1919Erloschen 1942",
+        "Birkenstr. 14,  Berlin"
+      ]
+    }
+  },
+  "A. H. Heymann & Co": {
+    "name": "A. H. Heymann & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1901",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1901Erloschen 1937",
+        "Dorotheenstr. 43,  Berlin"
+      ]
+    }
+  },
+  "A. Haendler & Co": {
+    "name": "A. Haendler & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1936",
+      "dissolution_date": "1943",
+      "takeover_date": "1938",
+      "liquidation_date": "1938",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1936Besitzübernahme 1938Liquidation ab 1938-11-19 00:00:00Erloschen 1943",
+        "Stralauer Allee 17 F,  Berlin"
+      ]
+    }
+  },
+  "A. Haubenschild": {
+    "name": "A. Haubenschild",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1912",
+      "dissolution_date": null,
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1912Besitzübernahme 1938",
+        "Kommandantenstr. 17,  Berlin"
+      ]
+    }
+  },
+  "A. Hefter Fleischwaren-GmbH": {
+    "name": "A. Hefter Fleischwaren-GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1932",
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1932",
+        "Potsdamer Str. 76b,  Berlin"
+      ]
+    }
+  },
+  "A. Heinemann & Co GmbH": {
+    "name": "A. Heinemann & Co GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1913",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1913Erloschen 1940",
+        "Wilhelmstr. 106,  Berlin"
+      ]
+    }
+  },
+  "A. Helfgott": {
+    "name": "A. Helfgott",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Kurfürstendamm  67,  Berlin"
+      ]
+    }
+  },
+  "A. Herrmann Herstellung von Spezialnähmaschinen GmbH": {
+    "name": "A. Herrmann Herstellung von Spezialnähmaschinen GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1933",
+      "dissolution_date": null,
+      "takeover_date": "1939",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1933Besitzübernahme 1939",
+        "Paul-Singer-Str. (Grüner Weg - Brauner Weg) 109,  Berlin"
+      ]
+    }
+  },
+  "A. Hoffmann & Co": {
+    "name": "A. Hoffmann & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1924",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1924Erloschen 1940",
+        "Alexanderstr. 27,  Berlin"
+      ]
+    }
+  },
+  "A. Hoffmann's Verlag Theater-Buch- und Musikalien-Literatur, GmbH": {
+    "name": "A. Hoffmann's Verlag Theater-Buch- und Musikalien-Literatur, GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1918",
+      "dissolution_date": "1934",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1918Erloschen 1934",
+        "Blumenstr. 22,  Berlin"
+      ]
+    }
+  },
+  "A. J. Bernstein & Sohn, KG": {
+    "name": "A. J. Bernstein & Sohn, KG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1912",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": "1936",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1912Liquidation ab 1936-08-26 00:00:00Erloschen 1939",
+        "Französische Str. 13/14,  Berlin"
+      ]
+    }
+  },
+  "A. J. Brodtmann": {
+    "name": "A. J. Brodtmann",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1919",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1919Erloschen 1937",
+        "Havelstr. 1,  Berlin"
+      ]
+    }
+  },
+  "A. Jacobsohn & Co": {
+    "name": "A. Jacobsohn & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1902",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1902Erloschen 1940",
+        "Seydelstr. 30,  Berlin"
+      ]
+    }
+  },
+  "A. Jandorf & Co": {
+    "name": "A. Jandorf & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1900",
+      "dissolution_date": "1935",
+      "takeover_date": null,
+      "liquidation_date": "1930",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1900Liquidation ab 1930-12-31 00:00:00Erloschen 1935",
+        "Krausenstr. 46/47,  Berlin"
+      ]
+    }
+  },
+  "A. Kalenscher": {
+    "name": "A. Kalenscher",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Fehrbelliner Str.  7,  Berlin"
+      ]
+    }
+  },
+  "A. Kaminsky": {
+    "name": "A. Kaminsky",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1902",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1902Erloschen 1940",
+        "Klosterstr. 97,  Berlin"
+      ]
+    }
+  },
+  "A. Kariel & Co": {
+    "name": "A. Kariel & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1902",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": "1938",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1902Liquidation ab 1938-12-15 00:00:00Erloschen 1938",
+        "Leipziger Str. 101/102,  Berlin"
+      ]
+    }
+  },
+  "A. Krojanker Schuhfabrik Burg GmbH": {
+    "name": "A. Krojanker Schuhfabrik Burg GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1924",
+      "dissolution_date": null,
+      "takeover_date": "1934",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1924Besitzübernahme 1934",
+        "Rosenstr. 15,  Berlin"
+      ]
+    }
+  },
+  "A. Kuhmercker": {
+    "name": "A. Kuhmercker",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Maikowskistr.  69,  Berlin"
+      ]
+    }
+  },
+  "A. Lucae": {
+    "name": "A. Lucae",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1900",
+      "dissolution_date": null,
+      "takeover_date": "1936",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1900Besitzübernahme 1936",
+        "Unter den Linden 53,  Berlin"
+      ]
+    }
+  },
+  "A. Löwi": {
+    "name": "A. Löwi",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Markgrafenstr.  6,  Berlin"
+      ]
+    }
+  },
+  "A. Maaß Söhne, Bankgeschäft": {
+    "name": "A. Maaß Söhne, Bankgeschäft",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1902",
+      "dissolution_date": "1934",
+      "takeover_date": null,
+      "liquidation_date": "1933",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1902Liquidation ab 1933-12-16 00:00:00Erloschen 1934",
+        "Lennéstr. 4,  Berlin"
+      ]
+    }
+  },
+  "A. Magnus": {
+    "name": "A. Magnus",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Dircksenstr., Stadtbahnbogen 137,  Berlin"
+      ]
+    }
+  },
+  "A. Marcuse & Co": {
+    "name": "A. Marcuse & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1901",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1901Erloschen 1939",
+        "Kottbusser Ufer 43,  Berlin"
+      ]
+    }
+  },
+  "A. Mustroph": {
+    "name": "A. Mustroph",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1902",
+      "dissolution_date": "1935",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1902Erloschen 1935",
+        "Charlottenstr. 6,  Berlin"
+      ]
+    }
+  },
+  "A. Müller u. A. Müller": {
+    "name": "A. Müller u. A. Müller",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1926",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1926Erloschen 1937",
+        "Potsdamer Str. 111,  Berlin"
+      ]
+    }
+  },
+  "A. N. Schmidt & Co GmbH": {
+    "name": "A. N. Schmidt & Co GmbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1922",
+      "dissolution_date": "1940",
+      "takeover_date": "1938",
+      "liquidation_date": "1939",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1922Besitzübernahme 1938Liquidation ab 1939-03-13 00:00:00Erloschen 1940",
+        "Leipziger Str. 124,  Berlin"
+      ]
+    }
+  },
+  "A. Neumann & Co": {
+    "name": "A. Neumann & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1902",
+      "dissolution_date": "1936",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1902Erloschen 1936",
+        "Gudrunstr. Platz 11,  Berlin"
+      ]
+    }
+  },
+  "A. Neumann & Söhne": {
+    "name": "A. Neumann & Söhne",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1910",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1910Erloschen 1939",
+        "Charlottenstr. 28,  Berlin"
+      ]
+    }
+  },
+  "A. Oehlrich & Co": {
+    "name": "A. Oehlrich & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1927",
+      "dissolution_date": "1941",
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1927Besitzübernahme 1938Erloschen 1941",
+        "Joachimsthaler Str. 10,  Berlin"
+      ]
+    }
+  },
+  "A. Offenberg & Söhne": {
+    "name": "A. Offenberg & Söhne",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1916",
+      "dissolution_date": "1941",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1916Erloschen 1941",
+        "Rosenthaler Str. 40/41,  Berlin"
+      ]
+    }
+  },
+  "A. Palis Nachf.": {
+    "name": "A. Palis Nachf.",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1900",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1900Erloschen 1939",
+        "Mittenwalder Str. 6,  Berlin"
+      ]
+    }
+  },
+  "A. Palm & Co": {
+    "name": "A. Palm & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1929",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1929Erloschen 1937",
+        "Sybelstr. 40,  Berlin"
+      ]
+    }
+  },
+  "A. Racusin & Co": {
+    "name": "A. Racusin & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1919",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": "1939",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1919Liquidation ab 1939-03-17 00:00:00Erloschen 1940",
+        "Markgrafenstr. 21,  Berlin"
+      ]
+    }
+  },
+  "A. Reich & Co": {
+    "name": "A. Reich & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1935",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1935Erloschen 1940",
+        "Bayreuther Str. 12,  Berlin"
+      ]
+    }
+  },
+  "A. Ritter Nachfolger Apotheker Otto Kraushaar": {
+    "name": "A. Ritter Nachfolger Apotheker Otto Kraushaar",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1903",
+      "dissolution_date": "1936",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1903Erloschen 1936",
+        "Königgrätzer Str.  (Saarlandstr.) 105,  Berlin"
+      ]
+    }
+  },
+  "A. Rosenthal Nachf.": {
+    "name": "A. Rosenthal Nachf.",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1901",
+      "dissolution_date": "1938",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1901Erloschen 1938",
+        "Kaiser-Wilhelm-Str. 53,  Berlin"
+      ]
+    }
+  },
+  "A. Saalfeld & Co": {
+    "name": "A. Saalfeld & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1934",
+      "dissolution_date": "1936",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1934Erloschen 1936",
+        "Mohrenstr. 29/30,  Berlin"
+      ]
+    }
+  },
+  "A. Schreiber & Co": {
+    "name": "A. Schreiber & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1937",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1937Erloschen 1940",
+        "Friedrichstr. 187/188,  Berlin"
+      ]
+    }
+  },
+  "A. Schäfer Spedition & Möbeltransport": {
+    "name": "A. Schäfer Spedition & Möbeltransport",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1851",
+      "dissolution_date": null,
+      "takeover_date": "1939",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1851Besitzübernahme 1939",
+        "Wilhelmsaue 36,  Berlin"
+      ]
+    }
+  },
+  "A. Schön & Co": {
+    "name": "A. Schön & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1933",
+      "dissolution_date": "1940",
+      "takeover_date": null,
+      "liquidation_date": "1938",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1933Liquidation ab 1938-10-09 00:00:00Erloschen 1940",
+        "Neue Schönhauser Str. 16,  Berlin"
+      ]
+    }
+  },
+  "A. Seydel & Cie AG": {
+    "name": "A. Seydel & Cie AG",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1922",
+      "dissolution_date": "1937",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1922Erloschen 1937",
+        "Teltower Str. 29/30,  Berlin"
+      ]
+    }
+  },
+  "A. Spörer & Co": {
+    "name": "A. Spörer & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1916",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1916Erloschen 1939",
+        "Regensburger Str. 27,  Berlin"
+      ]
+    }
+  },
+  "A. Steiner": {
+    "name": "A. Steiner",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Neue Königstr.  83,  Berlin"
+      ]
+    }
+  },
+  "A. Suponitzki & Co": {
+    "name": "A. Suponitzki & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1935",
+      "dissolution_date": "1939",
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1935Erloschen 1939",
+        "Kaiser-Wilhelm-Str. 33,  Berlin"
+      ]
+    }
+  },
+  "A. Sylbertrest": {
+    "name": "A. Sylbertrest",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": null,
+      "dissolution_date": null,
+      "takeover_date": null,
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Gr. Hamburger Str.  34,  Berlin"
+      ]
+    }
+  },
+  "A. Ullendorff & Co": {
+    "name": "A. Ullendorff & Co",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1919",
+      "dissolution_date": "1942",
+      "takeover_date": "1938",
+      "liquidation_date": null,
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1919Besitzübernahme 1938Erloschen 1942",
+        "Prinz-Handjery-Str. 78/80,  Berlin"
+      ]
+    }
+  },
+  "A. V. G. Autoreifen-Vertriebs-Gesellschaft mbH": {
+    "name": "A. V. G. Autoreifen-Vertriebs-Gesellschaft mbH",
+    "business_type": null,
+    "address": null,
+    "dates": {
+      "registration_date": "1930",
+      "dissolution_date": "1940",
+      "takeover_date": "1938",
+      "liquidation_date": "1938",
+      "deletion_date": null,
+      "all_date_texts": [
+        "Eingetragen im Handelsregister/ Gründung 1930Besitzübernahme 1938Liquidation ab 1938-01-25 00:00:00Erloschen 1940",
+        "Joachimsthaler Str. 22/23,  Berlin"
+      ]
+    }
+  }
+}

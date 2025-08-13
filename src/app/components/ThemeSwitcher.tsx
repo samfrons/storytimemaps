@@ -42,7 +42,12 @@ const ThemeSwitcher: React.FC = () => {
     <div ref={dropdownRef} className="relative z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 bg-[#6b6275]/50 hover:bg-[#6b6275]/70 border border-[#6b6275] text-[#f5cdb4] text-xs font-mono transition-all uppercase tracking-wide"
+        className="flex items-center gap-2 px-3 py-2 hover:opacity-80 border text-xs font-mono transition-all uppercase tracking-wide"
+        style={{
+          backgroundColor: 'rgba(107, 98, 117, 0.5)',
+          borderColor: 'var(--border)',
+          color: 'var(--foreground)'
+        }}
         aria-label="Switch theme"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +65,11 @@ const ThemeSwitcher: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 bg-[#6b6275]/95 border border-[#6b6275] backdrop-blur-sm shadow-lg min-w-full">
+        <div className="absolute top-full left-0 mt-1 border backdrop-blur-sm shadow-lg min-w-full" 
+             style={{
+               backgroundColor: 'var(--border)',
+               borderColor: 'var(--border)'
+             }}>
           {themes?.filter(t => t !== 'system').map((themeName) => (
             <button
               key={themeName}
@@ -68,11 +77,14 @@ const ThemeSwitcher: React.FC = () => {
                 setTheme(themeName);
                 setIsOpen(false);
               }}
-              className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:bg-[#6b6275]/70 uppercase tracking-wide ${
-                theme === themeName 
-                  ? 'bg-[#97d8c0]/20 text-[#97d8c0] border-l-2 border-l-[#97d8c0]' 
-                  : 'text-[#f5cdb4] hover:text-[#97d8c0]'
+              className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:opacity-80 uppercase tracking-wide ${
+                theme === themeName ? 'border-l-2' : ''
               }`}
+              style={{
+                backgroundColor: theme === themeName ? 'var(--border)' : 'transparent',
+                color: theme === themeName ? 'var(--primary)' : 'var(--foreground)',
+                borderLeftColor: theme === themeName ? 'var(--primary)' : 'transparent'
+              }}
             >
               {themeDisplayNames[themeName] || themeName}
             </button>

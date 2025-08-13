@@ -228,7 +228,7 @@ const StoryList: React.FC<StoryListProps> = ({
   };
 
   return (
-    <div className="w-full h-full bg-background flex flex-col" style={{backgroundColor: 'var(--background)'}}>
+    <div className="w-full h-full flex flex-col" style={{backgroundColor: 'var(--background)'}}>
       <div className={`border-b backdrop-blur transition-all duration-300 z-[1] relative ${
         isHeaderCollapsed ? 'p-3 md:p-6' : 'p-4 md:p-6'
       }`} style={{borderBottomColor: 'var(--border)', backgroundColor: 'rgba(var(--background-rgb), 0.95)'}}>
@@ -286,7 +286,7 @@ const StoryList: React.FC<StoryListProps> = ({
                   placeholder="Search stories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-3 py-2.5 pl-9 focus:outline-none text-xs font-mono transition-all"
+                    className="w-full px-3 py-2.5 pl-9 focus:outline-none text-xs font-mono transition-all border"
                   style={{
                     backgroundColor: 'rgba(107, 98, 117, 0.5)',
                     borderColor: 'var(--border)',
@@ -305,7 +305,7 @@ const StoryList: React.FC<StoryListProps> = ({
             <div ref={dropdownRef} className="relative z-[100000]">
               <button
                 onClick={handleDropdownToggle}
-                className="w-full px-3 py-2.5 border focus:outline-none text-xs font-mono transition-all text-left flex items-center justify-between cursor-pointer"
+                className="w-full px-3 py-2.5 border focus:outline-none text-xs font-mono transition-all text-left flex items-center justify-between cursor-pointer hover:opacity-80"
                 style={{
                   backgroundColor: 'rgba(107, 98, 117, 0.5)',
                   borderColor: 'var(--border)',
@@ -342,7 +342,7 @@ const StoryList: React.FC<StoryListProps> = ({
                       selectedCategory === 'all' ? 'border-l-2' : ''
                     }`}
                     style={{
-                      backgroundColor: selectedCategory === 'all' ? 'rgba(151, 216, 192, 0.2)' : 'transparent',
+                      backgroundColor: selectedCategory === 'all' ? 'var(--border)' : 'transparent',
                       color: selectedCategory === 'all' ? 'var(--primary)' : 'var(--foreground)',
                       borderLeftColor: selectedCategory === 'all' ? 'var(--primary)' : 'transparent'
                     }}
@@ -360,7 +360,7 @@ const StoryList: React.FC<StoryListProps> = ({
                         selectedCategory === category ? 'border-l-2' : ''
                       }`}
                       style={{
-                        backgroundColor: selectedCategory === category ? 'rgba(151, 216, 192, 0.2)' : 'transparent',
+                        backgroundColor: selectedCategory === category ? 'var(--border)' : 'transparent',
                         color: selectedCategory === category ? 'var(--primary)' : 'var(--foreground)',
                         borderLeftColor: selectedCategory === category ? 'var(--primary)' : 'transparent'
                       }}
@@ -398,7 +398,7 @@ const StoryList: React.FC<StoryListProps> = ({
               story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : ''
             } ${getStatusColor(story)}`}
             style={{
-              backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.4)',
+              backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.5)',
               borderColor: 'var(--border)',
               ...getActiveStoryStyle(story, story.id === activeStoryId)
             }}
@@ -435,7 +435,7 @@ const StoryList: React.FC<StoryListProps> = ({
                   style={{
                     color: story.id === activeStoryId ? undefined : 'var(--accent-orange)'
                   }}>
-                    {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
+                    {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
                   </span>
                   {(story.businessType || story.category) && (
                     <span className={`px-2 py-1 text-xs font-mono uppercase tracking-wide ${
@@ -444,7 +444,7 @@ const StoryList: React.FC<StoryListProps> = ({
                         ''
                     }`}
                     style={{
-                      backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.5)',
+                      backgroundColor: story.id === activeStoryId ? undefined : 'var(--muted)',
                       color: story.id === activeStoryId ? undefined : 'var(--accent-orange)'
                     }}>
                       {story.businessType || story.category}

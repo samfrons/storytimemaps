@@ -134,7 +134,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
           </svg>
           <div className="flex-1">
             <p className="font-mono text-xs font-semibold text-foreground">
-              {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
+              {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
             </p>
             <p className="font-mono text-xs text-muted mt-0.5">Active Period</p>
           </div>

@@ -49,35 +49,43 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
         <div className="flex items-center gap-2">
           <button
             onClick={handlePlayPause}
-            className="p-2 bg-[#6b6275]/50 border border-[#6b6275] hover:bg-[#6b6275]/70 transition-all shadow-sm hover:shadow-md"
+            className="p-2 border transition-all shadow-sm hover:shadow-md"
+            style={{
+              backgroundColor: 'var(--muted)',
+              borderColor: 'var(--border)',
+            }}
             aria-label={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (
-              <svg className="w-4 h-4 text-[#97d8c0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{color: 'var(--primary)'}}>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             ) : (
-              <svg className="w-4 h-4 text-[#97d8c0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{color: 'var(--primary)'}}>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             )}
           </button>
-          <span className="text-xs font-mono font-bold text-[#f5cdb4] bg-[#6b6275]/50 px-3 py-1.5 border border-[#6b6275] shadow-sm uppercase tracking-wide">
+          <span className="text-xs font-mono font-bold px-3 py-1.5 border shadow-sm uppercase tracking-wide" style={{
+            color: 'var(--foreground)',
+            backgroundColor: 'var(--muted)',
+            borderColor: 'var(--border)'
+          }}>
             {`${String(currentDate.getMonth() + 1).padStart(2, '0')}.${currentDate.getFullYear()}`}
           </span>
         </div>
       </div>
       
       <div className="relative flex items-center gap-4">
-        <span className="text-xs font-mono text-[#ffcb51] font-semibold">1920</span>
+        <span className="text-xs font-mono font-semibold" style={{color: 'var(--warning)'}}>1920</span>
         
         <div className="relative flex-1">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full h-4 bg-[#6b6275]/50 overflow-hidden">
+            <div className="w-full h-4 overflow-hidden" style={{backgroundColor: 'var(--muted)'}}>
               <div 
-                className="h-full bg-[#ee5760] transition-all duration-300 ease-out"
-                style={{ width: `${percentage}%` }}
+                className="h-full transition-all duration-300 ease-out"
+                style={{ width: `${percentage}%`, backgroundColor: 'var(--danger)' }}
               />
             </div>
           </div>
@@ -92,7 +100,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
               [&::-webkit-slider-thumb]:appearance-none
               [&::-webkit-slider-thumb]:w-5
               [&::-webkit-slider-thumb]:h-5
-              [&::-webkit-slider-thumb]:bg-[#f5cdb4]
+              [&::-webkit-slider-thumb]:bg-[var(--foreground)]
               [&::-webkit-slider-thumb]:border-2
               [&::-webkit-slider-thumb]:border-white
               [&::-webkit-slider-thumb]:shadow-md
@@ -101,7 +109,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
               [&::-webkit-slider-thumb]:hover:scale-125
               [&::-moz-range-thumb]:w-5
               [&::-moz-range-thumb]:h-5
-              [&::-moz-range-thumb]:bg-[#f5cdb4]
+              [&::-moz-range-thumb]:bg-[var(--foreground)]
               [&::-moz-range-thumb]:border-2
               [&::-moz-range-thumb]:border-white
               [&::-moz-range-thumb]:shadow-md
@@ -111,22 +119,22 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
           />
         </div>
         
-        <span className="text-xs font-mono text-[#ffcb51] font-semibold">1945</span>
+        <span className="text-xs font-mono font-semibold" style={{color: 'var(--warning)'}}>1945</span>
       </div>
       
       <div className="flex justify-between mt-2">
         <div className="flex gap-3 text-xs font-mono">
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#97d8c0' }}></span>
-            <span className="text-[#f5cdb4]">Active</span>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--primary)' }}></span>
+            <span style={{ color: 'var(--foreground)' }}>Active</span>
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#ffcb51' }}></span>
-            <span className="text-[#f5cdb4]">Declining</span>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--warning)' }}></span>
+            <span style={{ color: 'var(--foreground)' }}>Declining</span>
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#ee5760' }}></span>
-            <span className="text-[#f5cdb4]">Closed</span>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--danger)' }}></span>
+            <span style={{ color: 'var(--foreground)' }}>Closed</span>
           </span>
         </div>
       </div>

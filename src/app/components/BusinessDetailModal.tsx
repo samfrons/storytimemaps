@@ -110,7 +110,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
             <h2 className="text-xl font-mono font-bold text-[#97d8c0] mb-1">{story.title}</h2>
             <div className="flex items-center gap-4 text-xs font-mono text-[#8b7d8e]">
               <span className="text-[#eca27d]">
-                {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
+                {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
               </span>
               {story.category && (
                 <span className="px-2 py-1 bg-[#6b6275]/50 text-[#eca27d] uppercase tracking-wide">

@@ -11,15 +11,15 @@
   --warning: #ffcb51;
   --danger: #ee5760;
   --success: #97d8c0;
-  --background: #4a4a57;
-  --background-rgb: 74, 74, 87;
+  --background: #3b3340;
+  --background-rgb: 59, 51, 64;
   --foreground: #f5cdb4;
-  --foreground-muted: rgb(245 205 180);
-  --muted: #8b7d8e;
+  --foreground-muted: #f5cdb4cc;
+  --muted: #6b6275;
   --border: #6b6275;
   --shadow: rgba(0, 0, 0, 0.3);
   --map-overlay: rgba(59, 51, 64, 0.1);
-  --accent-orange: #eca27d;
+  --accent-orange: #ffcb51;
   --accent-yellow: #ffcb51;
   --accent-purple: #9dc8fc;
   --accent-coral: #ee5760;
@@ -36,6 +36,7 @@
   --danger: #d0021b;
   --success: #7ed321;
   --background: #f0f4f8;
+  --background-rgb: 240, 244, 248;
   --foreground: #2c3e50;
   --foreground-muted: #34495e;
   --muted: #7f8c8d;
@@ -59,6 +60,7 @@
   --danger: #cd5c5c;
   --success: #9acd32;
   --background: #f4f1e8;
+  --background-rgb: 244, 241, 232;
   --foreground: #5d4037;
   --foreground-muted: #6d4c41;
   --muted: #8d6e63;
@@ -82,6 +84,7 @@
   --danger: #cc0000;
   --success: #ff9500;
   --background: #fff5f5;
+  --background-rgb: 255, 245, 245;
   --foreground: #8b0000;
   --foreground-muted: #a00000;
   --muted: #cd5c5c;
@@ -105,6 +108,7 @@
   --danger: #607d8b;
   --success: #81c784;
   --background: #e8f4f8;
+  --background-rgb: 232, 244, 248;
   --foreground: #263238;
   --foreground-muted: #37474f;
   --muted: #78909c;
@@ -128,6 +132,7 @@
   --danger: #ff0000;
   --success: #0066ff;
   --background: #f5f5f0;
+  --background-rgb: 245, 245, 240;
   --foreground: #000000;
   --foreground-muted: #333333;
   --muted: #666666;
@@ -151,6 +156,7 @@
   --danger: #704214;
   --success: #6b8e23;
   --background: #f8f6f0;
+  --background-rgb: 248, 246, 240;
   --foreground: #3e2723;
   --foreground-muted: #4e342e;
   --muted: #8d6e63;

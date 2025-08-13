@@ -68,7 +68,11 @@ const StoryList: React.FC<StoryListProps> = ({
       
       // Set up the next story and direction
       setNextStory(targetStory);
-      setSlideDirection(direction === 'prev' ? 'right' : 'left');
+      if (direction === 'next') {
+        setSlideDirection('left'); // Current slides left, next slides from right
+      } else {
+        setSlideDirection('right-out'); // Current slides right, next slides from left
+      }
       
       // After slide animation completes, swap stories
       setTimeout(() => {
@@ -232,6 +236,7 @@ const StoryList: React.FC<StoryListProps> = ({
           <div 
             key={story.id}
             ref={(el) => { storyRefs.current[story.id] = el; }}
+            data-story-id={story.id}
             className={`group bg-[#6b6275]/40 backdrop-blur border border-l-4 border-[#6b6275] transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
               story.id === activeStoryId ? 'shadow-xl scale-[1.02] bg-[#97d8c0]/20 border-l-[#97d8c0]' : 'hover:bg-[#6b6275]/50'
             } ${getStatusColor(story)}`}
@@ -274,7 +279,7 @@ const StoryList: React.FC<StoryListProps> = ({
             </div>
             
             <button
-              className="mt-3 text-xs font-mono text-[#f5cdb4] hover:text-[#97d8c0] transition-colors uppercase tracking-wider font-semibold"
+              className="view-details-button mt-3 text-xs font-mono text-[#f5cdb4] hover:text-[#97d8c0] transition-colors uppercase tracking-wider font-semibold"
               onClick={(e) => {
                 e.stopPropagation();
                 const element = storyRefs.current[story.id];
@@ -300,7 +305,7 @@ const StoryList: React.FC<StoryListProps> = ({
           onNavigate={handleModalNavigation}
           hasPrevious={filteredStories.findIndex(s => s.id === selectedStory.id) > 0}
           hasNext={filteredStories.findIndex(s => s.id === selectedStory.id) < filteredStories.length - 1}
-          slideDirection={slideDirection === 'left' ? 'left' : null}
+          slideDirection={slideDirection === 'left' ? 'left' : slideDirection === 'right-out' ? 'right-out' : null}
         />
       )}
       
@@ -314,7 +319,7 @@ const StoryList: React.FC<StoryListProps> = ({
           onNavigate={handleModalNavigation}
           hasPrevious={filteredStories.findIndex(s => s.id === nextStory.id) > 0}
           hasNext={filteredStories.findIndex(s => s.id === nextStory.id) < filteredStories.length - 1}
-          slideDirection={slideDirection === 'left' ? 'right' : 'left'}
+          slideDirection={slideDirection === 'left' ? 'right' : slideDirection === 'right-out' ? 'left-in' : null}
         />
       )}
     </div>

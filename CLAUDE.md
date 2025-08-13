@@ -10,7 +10,13 @@ This is a historical data visualization project showing Jewish businesses in Ber
 - Default to sharp, rectangular edges for all UI elements (cards, buttons, inputs, modals, etc.)
 - This is a deliberate design choice for a more professional, document-like appearance
 
-### 2. Color Palette (Snazzy Maps Inspired)
+### 2. NO BLUE FOCUS OUTLINES
+- **ALWAYS** remove default blue focus outlines from all interactive elements
+- Use `outline: none` and `box-shadow: none` on focus states
+- This includes buttons, links, inputs, and any clickable elements
+- Replace with custom focus indicators if needed (using border or background color changes)
+
+### 3. Color Palette (Snazzy Maps Inspired)
 Always use these specific colors:
 - Background: `#4a4a57`
 - Borders: `#6b6275`
@@ -21,7 +27,7 @@ Always use these specific colors:
 - Text Secondary: `#8b7d8e` (muted purple)
 - Accent: `#eca27d` (orange)
 
-### 3. Typography
+### 4. Typography
 - Monospace fonts: Use 'Space Mono' for all data displays, labels, and technical text
 - Body text: Use 'Inter' for descriptions and longer content
 - Font weights: 400 for regular, 600-700 for emphasis

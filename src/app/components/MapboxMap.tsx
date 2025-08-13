@@ -39,13 +39,21 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     latitude: center[0],
     zoom: zoom
   })
-  const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null)
   const [mapLoaded, setMapLoaded] = useState(false)
   const [popupInfo, setPopupInfo] = useState<{
     longitude: number
     latitude: number
-    properties: any
+    properties: {
+      id?: string
+      popup?: string
+      state?: string
+      description?: string | null
+      startDate?: string | null
+      endDate?: string | null
+      [key: string]: unknown
+    }
   } | null>(null)
+  const [labelOpacity, setLabelOpacity] = useState(1)
 
   const colors = {
     active: '#97d8c0',     // Mint green (parks)
@@ -99,7 +107,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   // Get clusters for current viewport with optimized recalculation
   const clusters = useMemo(() => {
-    // For initial load, show pre-computed markers if map isn't ready yet
+    // Always return initial markers if map is not ready
     if (!mapLoaded || !mapRef.current) {
       return initialMarkers
     }
@@ -117,26 +125,53 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         bounds.getNorth()
       ]
       
-      return supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+      const clusteredMarkers = supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+      // Ensure we always have markers to render
+      return clusteredMarkers.length > 0 ? clusteredMarkers : initialMarkers
     } catch (error) {
       console.warn('Error getting clusters:', error)
       return initialMarkers
     }
   }, [supercluster, viewState.zoom, mapLoaded, initialMarkers])
 
-  // Focus on active marker
+  // Focus on active marker and open popup when list item is clicked
   useEffect(() => {
     if (!activeMarkerId || !mapRef.current) return
 
     const activeMarker = markers.find(m => m.id === activeMarkerId)
     if (activeMarker) {
+      // Fly to the marker
       mapRef.current.flyTo({
         center: [activeMarker.position[1], activeMarker.position[0]],
         zoom: 14,
         duration: 800
       })
+      
+      // Open the popup for this marker
+      const enrichedStory = enrichedStories.find(s => s.id === activeMarkerId)
+      setPopupInfo({
+        longitude: activeMarker.position[1],
+        latitude: activeMarker.position[0],
+        properties: {
+          id: activeMarker.id,
+          popup: activeMarker.popup,
+          state: activeMarker.state,
+          ...enrichedStory
+        }
+      })
     }
-  }, [activeMarkerId, markers])
+  }, [activeMarkerId, markers, enrichedStories])
+
+  // Fade labels when popup is open - removed to prevent labels disappearing
+  useEffect(() => {
+    if (!mapRef.current || !mapLoaded) return
+    
+    const map = mapRef.current.getMap()
+    if (!map) return
+    
+    // Set label opacity based on popup state
+    setLabelOpacity(popupInfo ? 0.6 : 1)
+  }, [popupInfo, mapLoaded])
 
 
   const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
@@ -193,21 +228,17 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const isActive = properties.id === activeMarkerId
     const color = colors[properties.state as keyof typeof colors] || colors.active
 
-    const enrichedStory = enrichedStories.find(s => s.id === properties.id)
-    
     return [
-      // Always visible label as a Popup
-      <Popup
+      // Always visible label as a Marker
+      <Marker
         key={`label-${properties.id}`}
         longitude={lng}
         latitude={lat}
-        closeButton={false}
         anchor="bottom"
-        offset={[0, -5]}
-        className="mapbox-label-popup"
+        offset={[0, -10]}
       >
         <div 
-          className={`px-2 py-1 text-xs font-mono font-bold whitespace-nowrap cursor-pointer`}
+          className={`px-2 py-1 text-xs font-mono font-bold whitespace-nowrap cursor-pointer transition-opacity duration-200`}
           style={{
             background: properties.state === 'declining' ? 'rgba(255, 203, 81, 0.98)' :
                        properties.state === 'closed' ? 'rgba(238, 87, 96, 0.98)' :
@@ -218,20 +249,27 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               properties.state === 'closed' ? '#ee5760' :
               '#97d8c0'
             }`,
-            boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+            opacity: labelOpacity,
+            pointerEvents: 'auto'
           }}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             onMarkerClick(properties.id!)
+            const enrichedStory = enrichedStories.find(s => s.id === properties.id) || {}
             setPopupInfo({
               longitude: lng,
               latitude: lat,
-              properties
+              properties: {
+                ...properties,
+                ...enrichedStory
+              }
             })
           }}
         >
           {properties.popup}
         </div>
-      </Popup>,
+      </Marker>,
       
       // Marker dot
       <Marker
@@ -240,10 +278,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         latitude={lat}
         onClick={() => {
           onMarkerClick(properties.id!)
+          const enrichedStory = enrichedStories.find(s => s.id === properties.id)
           setPopupInfo({
             longitude: lng,
             latitude: lat,
-            properties
+            properties: {
+              ...properties,
+              ...enrichedStory
+            }
           })
         }}
         anchor="center"
@@ -271,6 +313,16 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         ref={mapRef}
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
+        onClick={(evt) => {
+          // Only close popup if clicking on empty map area (not on markers)
+          if (!evt.features || evt.features.length === 0) {
+            // Don't do anything that would cause re-render and lose labels
+            // Just optionally close the popup
+            if (popupInfo) {
+              setPopupInfo(null)
+            }
+          }
+        }}
         onLoad={() => {
           setMapLoaded(true)
           // Apply custom style to match color scheme
@@ -357,35 +409,69 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               style={{
                 minWidth: '200px',
                 maxWidth: '300px',
-                padding: '12px',
-                background: 'rgba(255, 255, 255, 0.98)',
-                color: '#2a2a2a',
-                fontFamily: 'Inter, sans-serif'
+                padding: '14px',
+                background: popupInfo.properties.state === 'declining' ? 'rgba(255, 203, 81, 0.98)' :
+                           popupInfo.properties.state === 'closed' ? 'rgba(238, 87, 96, 0.98)' :
+                           'rgba(151, 216, 192, 0.98)',
+                color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                fontFamily: 'Space Mono, monospace',
+                border: `2px solid ${
+                  popupInfo.properties.state === 'declining' ? '#ffcb51' :
+                  popupInfo.properties.state === 'closed' ? '#ee5760' :
+                  '#97d8c0'
+                }`
               }}
             >
-              <h3 className="font-bold text-sm mb-2" style={{ color: '#2a2a2a' }}>
+              <h3 className="font-bold text-base mb-2" style={{ 
+                color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                fontFamily: 'Space Mono, monospace'
+              }}>
                 {popupInfo.properties.popup}
               </h3>
-              {enrichedStories.find(s => s.id === popupInfo.properties.id) && (
+              {popupInfo.properties && (
                 <>
-                  <div className="text-xs text-gray-600 mb-2">
-                    {enrichedStories.find(s => s.id === popupInfo.properties.id)?.startDate && 
-                     enrichedStories.find(s => s.id === popupInfo.properties.id)?.endDate && 
-                      `${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.startDate!).getFullYear()} - 
-                       ${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.endDate!).getFullYear()}`
+                  <div className="text-xs mb-2" style={{ 
+                    opacity: 0.8,
+                    color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a'
+                  }}>
+                    {popupInfo.properties.startDate && 
+                     popupInfo.properties.endDate && 
+                      `${new Date(popupInfo.properties.startDate).getFullYear()} - 
+                       ${new Date(popupInfo.properties.endDate).getFullYear()}`
                     }
                   </div>
-                  {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description && (
-                    <p className="text-xs text-gray-700 line-clamp-3">
-                      {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description}
+                  {popupInfo.properties.description && (
+                    <p className="text-xs line-clamp-3" style={{ 
+                      color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                      opacity: 0.9
+                    }}>
+                      {popupInfo.properties.description}
                     </p>
                   )}
-                  <button 
-                    className="text-xs mt-3 text-blue-600 hover:underline cursor-pointer"
-                    onClick={() => onMarkerClick(popupInfo.properties.id!)}
+                  <div 
+                    className="text-xs mt-3 font-bold cursor-pointer"
+                    style={{
+                      color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                      textDecoration: 'underline',
+                      border: 'none',
+                      outline: 'none',
+                      background: 'transparent',
+                      padding: 0
+                    }}
+                    onClick={() => {
+                      // Find the story in the list and trigger view details
+                      const storyElement = document.querySelector(`[data-story-id="${popupInfo.properties.id}"]`);
+                      if (storyElement) {
+                        const viewDetailsButton = storyElement.querySelector('.view-details-button') as HTMLElement;
+                        if (viewDetailsButton) {
+                          viewDetailsButton.click();
+                        }
+                      }
+                      setPopupInfo(null);
+                    }}
                   >
-                    View in list →
-                  </button>
+                    View more →
+                  </div>
                 </>
               )}
             </div>

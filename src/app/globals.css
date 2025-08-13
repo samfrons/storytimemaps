@@ -57,6 +57,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Remove default blue focus outlines globally */
+*:focus {
+  outline: none !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+}
+
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible,
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -174,18 +197,30 @@ body {
 
 .mapbox-detail-popup .mapboxgl-popup-content {
   padding: 0 !important;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+  border-radius: 0px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button {
-  padding: 4px;
-  font-size: 16px;
-  color: #666;
+  padding: 4px 6px;
+  font-size: 18px;
+  color: #2a2a2a;
+  font-weight: bold;
+  outline: none !important;
+  border: none !important;
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button:hover {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0,0,0,0.1);
+}
+
+.mapbox-detail-popup .mapboxgl-popup-close-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.mapbox-detail-popup .mapboxgl-popup-tip {
+  border-top-color: #97d8c0 !important;
 }
 
 .mapbox-marker {

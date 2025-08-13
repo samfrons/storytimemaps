@@ -12,7 +12,7 @@ interface BusinessDetailModalProps {
   onNavigate?: (direction: 'prev' | 'next') => void;
   hasPrevious?: boolean;
   hasNext?: boolean;
-  slideDirection?: 'left' | 'right' | null;
+  slideDirection?: 'left' | 'right' | 'left-in' | 'right-out' | null;
 }
 
 const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({ 
@@ -73,17 +73,36 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   useEffect(() => {
     const viewportWidth = window.innerWidth;
     
-    if (slideDirection === 'right' && !isExpanded) {
-      // Start from right side
-      setCurrentSlideX(viewportWidth);
-    } else if (slideDirection === 'left' && isExpanded) {
-      // Slide out to left
-      setCurrentSlideX(-viewportWidth);
-    } else if (slideDirection === 'right' && isExpanded) {
-      // Slide to center from right
-      requestAnimationFrame(() => {
-        setCurrentSlideX(0);
-      });
+    if (slideDirection === 'left') {
+      // This modal is sliding OUT to the left
+      if (isExpanded) {
+        requestAnimationFrame(() => {
+          setCurrentSlideX(-viewportWidth);
+        });
+      }
+    } else if (slideDirection === 'right') {
+      // This modal is sliding IN from the right
+      setCurrentSlideX(viewportWidth); // Start off-screen right
+      if (isExpanded) {
+        requestAnimationFrame(() => {
+          setCurrentSlideX(0); // Animate to center
+        });
+      }
+    } else if (slideDirection === 'left-in') {
+      // This modal is sliding IN from the left (for previous)
+      setCurrentSlideX(-viewportWidth); // Start off-screen left
+      if (isExpanded) {
+        requestAnimationFrame(() => {
+          setCurrentSlideX(0); // Animate to center
+        });
+      }
+    } else if (slideDirection === 'right-out') {
+      // This modal is sliding OUT to the right (for previous)
+      if (isExpanded) {
+        requestAnimationFrame(() => {
+          setCurrentSlideX(viewportWidth);
+        });
+      }
     } else if (!slideDirection && isExpanded) {
       setCurrentSlideX(0);
     }

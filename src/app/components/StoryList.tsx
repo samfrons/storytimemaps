@@ -379,7 +379,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 <p className={`text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed ${
                   story.id === activeStoryId ? 
                     (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white/80' : 'text-[#2a2a2a]/80') :
-                    'text-[#8b7d8e]'
+                    'text-[#f5cdb4]'
                 }`}>{story.description}</p>
                 
                 <div className="flex items-center gap-4 mt-3 text-xs font-mono">

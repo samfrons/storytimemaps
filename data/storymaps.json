@@ -256,7 +256,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1931-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -272,8 +272,8 @@
     "category": "business",
     "businessType": "textiles and clothing",
     "startDate": "1870-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1930-12-30",
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -290,7 +290,7 @@
     "businessType": "publishing and printing",
     "startDate": "1921-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -307,7 +307,7 @@
     "businessType": "electrical goods",
     "startDate": "1928-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -323,8 +323,8 @@
     "category": "business",
     "businessType": "",
     "startDate": "1923-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1932-01-01",
+    "endDate": "1932-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -341,7 +341,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1924-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1932-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -358,7 +358,7 @@
     "businessType": "other",
     "startDate": "1910-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -375,7 +375,7 @@
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1927-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1941-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -392,7 +392,7 @@
     "businessType": "metals and metal goods",
     "startDate": "1903-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -409,7 +409,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1922-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1935-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -426,7 +426,7 @@
     "businessType": "other",
     "startDate": "1908-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -442,8 +442,8 @@
     "category": "business",
     "businessType": "textiles and clothing",
     "startDate": "1901-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1939-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -460,7 +460,7 @@
     "businessType": "",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -476,8 +476,8 @@
     "category": "business",
     "businessType": "books and art",
     "startDate": "1900-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1933-01-01",
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -494,7 +494,7 @@
     "businessType": "chemicals and pharmaceuticals",
     "startDate": "1920-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -511,7 +511,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1901-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -527,8 +527,8 @@
     "category": "business",
     "businessType": "metals and metal goods",
     "startDate": "1904-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -544,8 +544,8 @@
     "category": "business",
     "businessType": "chemicals and pharmaceuticals",
     "startDate": "1920-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -562,7 +562,7 @@
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1913-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1936-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -579,7 +579,7 @@
     "businessType": "metals and metal goods",
     "startDate": "1921-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -596,7 +596,7 @@
     "businessType": "machines, motor vehicles & technical articles",
     "startDate": "1920-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -612,8 +612,8 @@
     "category": "business",
     "businessType": "textiles and clothing",
     "startDate": "1922-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1930-01-01",
+    "endDate": "1933-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -630,7 +630,7 @@
     "businessType": "books and art",
     "startDate": "1919-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -647,7 +647,7 @@
     "businessType": "metals and metal goods",
     "startDate": "1925-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1932-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -664,7 +664,7 @@
     "businessType": "textiles and clothing",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -681,7 +681,7 @@
     "businessType": "chemicals and pharmaceuticals",
     "startDate": "1925-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -698,7 +698,7 @@
     "businessType": "restaurants",
     "startDate": "1900-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1933-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -715,7 +715,7 @@
     "businessType": "retail shops and department stores",
     "startDate": "1886-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -731,8 +731,8 @@
     "category": "business",
     "businessType": "banks and insurance",
     "startDate": "1900-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -749,7 +749,7 @@
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1937-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -766,7 +766,7 @@
     "businessType": "",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -783,7 +783,7 @@
     "businessType": "Möbel",
     "startDate": "1901-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -799,8 +799,8 @@
     "category": "business",
     "businessType": "Möbel",
     "startDate": "1931-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -816,8 +816,8 @@
     "category": "business",
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1908-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -833,8 +833,8 @@
     "category": "business",
     "businessType": "banks and insurance",
     "startDate": "1900-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -851,7 +851,7 @@
     "businessType": "other",
     "startDate": "1920-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -868,7 +868,7 @@
     "businessType": "banks and insurance",
     "startDate": "1903-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -885,7 +885,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1903-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -902,7 +902,7 @@
     "businessType": "banks and insurance",
     "startDate": "1919-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1935-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -919,7 +919,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1935-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -936,7 +936,7 @@
     "businessType": "pharmacies",
     "startDate": "1911-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -952,8 +952,8 @@
     "category": "business",
     "businessType": "banks and insurance",
     "startDate": "1919-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -970,7 +970,7 @@
     "businessType": "leather and shoes",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -986,8 +986,8 @@
     "category": "business",
     "businessType": "textiles and clothing",
     "startDate": "1935-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1004,7 +1004,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1932-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1021,7 +1021,7 @@
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1919-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1942-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1038,7 +1038,7 @@
     "businessType": "banks and insurance",
     "startDate": "1901-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1054,8 +1054,8 @@
     "category": "business",
     "businessType": "chemicals and pharmaceuticals",
     "startDate": "1936-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1943-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1071,8 +1071,8 @@
     "category": "business",
     "businessType": "textiles and clothing",
     "startDate": "1912-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1089,7 +1089,7 @@
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1932-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1106,7 +1106,7 @@
     "businessType": "Möbel",
     "startDate": "1913-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1123,7 +1123,7 @@
     "businessType": "textiles and clothing",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1140,7 +1140,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1924-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1157,7 +1157,7 @@
     "businessType": "publishing and printing",
     "startDate": "1918-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1934-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1173,8 +1173,8 @@
     "category": "business",
     "businessType": "banks and insurance",
     "startDate": "1912-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1936-01-01",
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1191,7 +1191,7 @@
     "businessType": "retail shops and department stores",
     "startDate": "1919-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1208,7 +1208,7 @@
     "businessType": "Möbel",
     "startDate": "1902-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1224,8 +1224,8 @@
     "category": "business",
     "businessType": "retail shops and department stores",
     "startDate": "1900-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1930-01-01",
+    "endDate": "1935-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1242,7 +1242,7 @@
     "businessType": "textiles and clothing",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1259,7 +1259,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1902-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1275,8 +1275,8 @@
     "category": "business",
     "businessType": "textiles and clothing",
     "startDate": "1902-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1292,8 +1292,8 @@
     "category": "business",
     "businessType": "leather and shoes",
     "startDate": "1924-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1934-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1309,8 +1309,8 @@
     "category": "business",
     "businessType": "pharmacies",
     "startDate": "1900-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1936-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1327,7 +1327,7 @@
     "businessType": "",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1343,8 +1343,8 @@
     "category": "business",
     "businessType": "banks and insurance",
     "startDate": "1902-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1933-01-01",
+    "endDate": "1934-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1361,7 +1361,7 @@
     "businessType": "jewelry and precious metals",
     "startDate": "1902-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1935-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1378,7 +1378,7 @@
     "businessType": "machines, motor vehicles & technical articles",
     "startDate": "1926-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1394,8 +1394,8 @@
     "category": "business",
     "businessType": "leather and shoes",
     "startDate": "1922-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1412,7 +1412,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1910-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1428,8 +1428,8 @@
     "category": "business",
     "businessType": "construction materials and fuel",
     "startDate": "1927-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1941-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1446,7 +1446,7 @@
     "businessType": "machines, motor vehicles & technical articles",
     "startDate": "1916-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1941-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1463,7 +1463,7 @@
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1900-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1480,7 +1480,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1929-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1496,8 +1496,8 @@
     "category": "business",
     "businessType": "metals and metal goods",
     "startDate": "1919-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1939-01-01",
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1514,7 +1514,7 @@
     "businessType": "Nahrungs- und Genussmittel",
     "startDate": "1935-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1531,7 +1531,7 @@
     "businessType": "paper and paper goods",
     "startDate": "1901-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1938-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1548,7 +1548,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1934-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1936-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1565,7 +1565,7 @@
     "businessType": "metals and metal goods",
     "startDate": "1937-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1581,8 +1581,8 @@
     "category": "business",
     "businessType": "transportation",
     "startDate": "1851-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1939-01-01",
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1598,8 +1598,8 @@
     "category": "business",
     "businessType": "leather and shoes",
     "startDate": "1933-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1616,7 +1616,7 @@
     "businessType": "publishing and printing",
     "startDate": "1922-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1937-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1633,7 +1633,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1916-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1650,7 +1650,7 @@
     "businessType": "",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1667,7 +1667,7 @@
     "businessType": "textiles and clothing",
     "startDate": "1935-01-01",
     "midDate": null,
-    "endDate": null,
+    "endDate": "1939-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1684,7 +1684,7 @@
     "businessType": "leather and shoes",
     "startDate": null,
     "midDate": null,
-    "endDate": null,
+    "endDate": "Unknown",
     "media": null,
     "imageUrls": []
   },
@@ -1700,8 +1700,8 @@
     "category": "business",
     "businessType": "chemicals and pharmaceuticals",
     "startDate": "1919-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1942-01-01",
     "media": null,
     "imageUrls": []
   },
@@ -1717,8 +1717,8 @@
     "category": "business",
     "businessType": "machines, motor vehicles & technical articles",
     "startDate": "1930-01-01",
-    "midDate": null,
-    "endDate": null,
+    "midDate": "1938-01-01",
+    "endDate": "1940-01-01",
     "media": null,
     "imageUrls": []
   }

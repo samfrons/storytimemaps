@@ -19,11 +19,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Wallstr. 9/10,  Berlin",
-        "date_range": "1931",
+        "date_range": "1931-1937",
         "registration_date": "1931",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -43,11 +44,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Neue Friedrichstr. 44,  Berlin",
-        "date_range": "1870",
+        "date_range": "1870-1938",
         "registration_date": "1870",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 0.20759174723523172
+        "liquidation_date": "1930",
+        "geocode_confidence": 0.20759174723523172,
+        "dissolution_date": "1938"
       }
     },
     {
@@ -68,7 +70,7 @@
         "business_type": "publishing and printing",
         "category": "Handicraft",
         "address": "Büsingstr. 6,  Berlin",
-        "date_range": "1921",
+        "date_range": "1921-?",
         "registration_date": "1921",
         "takeover_date": "",
         "liquidation_date": "",
@@ -92,11 +94,12 @@
         "business_type": "electrical goods",
         "category": "Trade",
         "address": "Courbièrestr. 16,  Berlin",
-        "date_range": "1928",
+        "date_range": "1928-1940",
         "registration_date": "1928",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -116,11 +119,12 @@
         "business_type": "",
         "category": "",
         "address": "Bismarckstr. 5,  Berlin",
-        "date_range": "1923",
+        "date_range": "1923-1932",
         "registration_date": "1923",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "liquidation_date": "1932",
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1932"
       }
     },
     {
@@ -140,11 +144,12 @@
         "business_type": "textiles and clothing",
         "category": "Handicraft",
         "address": "Kurfürstendamm 40/41,  Berlin",
-        "date_range": "1924",
+        "date_range": "1924-1932",
         "registration_date": "1924",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.4914112718388304
+        "geocode_confidence": 0.4914112718388304,
+        "dissolution_date": "1932"
       }
     },
     {
@@ -165,11 +170,12 @@
         "business_type": "other",
         "category": "Trade",
         "address": "Neue Königstr. 61/62,  Berlin",
-        "date_range": "1910",
+        "date_range": "1910-1939",
         "registration_date": "1910",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.28651547523719245
+        "geocode_confidence": 0.28651547523719245,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -189,11 +195,12 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Trade",
         "address": "Sybelstr. 43,  Berlin",
-        "date_range": "1927",
+        "date_range": "1927-1941",
         "registration_date": "1927",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1941"
       }
     },
     {
@@ -213,11 +220,12 @@
         "business_type": "metals and metal goods",
         "category": "Trade",
         "address": "Brunnenstr. 185,  Berlin",
-        "date_range": "1903",
+        "date_range": "1903-1940",
         "registration_date": "1903",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -237,11 +245,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Kurstr. 34/35,  Berlin",
-        "date_range": "1922",
+        "date_range": "1922-1935",
         "registration_date": "1922",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1935"
       }
     },
     {
@@ -261,11 +270,12 @@
         "business_type": "other",
         "category": "Trade",
         "address": "Langenbeckstr. 1,  Berlin",
-        "date_range": "1908",
+        "date_range": "1908-1938",
         "registration_date": "1908",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1938"
       }
     },
     {
@@ -287,9 +297,9 @@
         "business_type": "textiles and clothing",
         "category": "Industry",
         "address": "Kommandantenstr. 20/21,  Berlin",
-        "date_range": "1901",
+        "date_range": "1901-?",
         "registration_date": "1901",
-        "takeover_date": "",
+        "takeover_date": "1939",
         "liquidation_date": "",
         "geocode_confidence": 0.05342208819714653
       }
@@ -336,9 +346,9 @@
         "business_type": "books and art",
         "category": "Trade",
         "address": "Behrenstr. 17,  Berlin",
-        "date_range": "1900",
+        "date_range": "1900-?",
         "registration_date": "1900",
-        "takeover_date": "",
+        "takeover_date": "1933",
         "liquidation_date": "",
         "geocode_confidence": 0.3330873891249597
       }
@@ -360,11 +370,12 @@
         "business_type": "chemicals and pharmaceuticals",
         "category": "Trade",
         "address": "Friedrichstr. 19,  Berlin",
-        "date_range": "1920",
+        "date_range": "1920-1939",
         "registration_date": "1920",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -385,11 +396,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Werderscher Markt 7,  Berlin",
-        "date_range": "1901",
+        "date_range": "1901-1940",
         "registration_date": "1901",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.28497987882587833
+        "geocode_confidence": 0.28497987882587833,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -412,9 +424,9 @@
         "business_type": "metals and metal goods",
         "category": "Trade",
         "address": "Ritterstr. 9/10,  Berlin",
-        "date_range": "1904",
+        "date_range": "1904-?",
         "registration_date": "1904",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
         "geocode_confidence": 0.15464506754860552
       }
@@ -436,9 +448,9 @@
         "business_type": "chemicals and pharmaceuticals",
         "category": "Trade",
         "address": "Köpenicker Str. 128,  Berlin",
-        "date_range": "1920",
+        "date_range": "1920-?",
         "registration_date": "1920",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -460,11 +472,12 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Trade",
         "address": "Burgstr. 29,  Berlin",
-        "date_range": "1913",
+        "date_range": "1913-1936",
         "registration_date": "1913",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1936"
       }
     },
     {
@@ -484,11 +497,12 @@
         "business_type": "metals and metal goods",
         "category": "Trade",
         "address": "Bornholmer Str. 89,  Berlin",
-        "date_range": "1921",
+        "date_range": "1921-1939",
         "registration_date": "1921",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -508,7 +522,7 @@
         "business_type": "machines, motor vehicles & technical articles",
         "category": "Industry",
         "address": "Potsdamer Str. 56,  Berlin",
-        "date_range": "1920",
+        "date_range": "1920-?",
         "registration_date": "1920",
         "takeover_date": "",
         "liquidation_date": "",
@@ -532,11 +546,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Königstr. 40,  Berlin",
-        "date_range": "1922",
+        "date_range": "1922-1933",
         "registration_date": "1922",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "liquidation_date": "1930",
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1933"
       }
     },
     {
@@ -556,11 +571,12 @@
         "business_type": "books and art",
         "category": "Trade",
         "address": "Schöneberger Ufer 44,  Berlin",
-        "date_range": "1919",
+        "date_range": "1919-1939",
         "registration_date": "1919",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -580,11 +596,12 @@
         "business_type": "metals and metal goods",
         "category": "Industry",
         "address": "Stresemannstr. 6-8,  Berlin",
-        "date_range": "1925",
+        "date_range": "1925-1932",
         "registration_date": "1925",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.3031433907580771
+        "geocode_confidence": 0.3031433907580771,
+        "dissolution_date": "1932"
       }
     },
     {
@@ -627,11 +644,12 @@
         "business_type": "chemicals and pharmaceuticals",
         "category": "Trade",
         "address": "Spichernstr. 7,  Berlin",
-        "date_range": "1925",
+        "date_range": "1925-1938",
         "registration_date": "1925",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1938"
       }
     },
     {
@@ -651,11 +669,12 @@
         "business_type": "restaurants",
         "category": "Services",
         "address": "Marburger Str. 5,  Berlin",
-        "date_range": "1900",
+        "date_range": "1900-1933",
         "registration_date": "1900",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1933"
       }
     },
     {
@@ -675,11 +694,12 @@
         "business_type": "retail shops and department stores",
         "category": "Trade",
         "address": "Berliner Allee 29/31,  Berlin",
-        "date_range": "1886",
+        "date_range": "1886-1940",
         "registration_date": "1886",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.2792976647232802
+        "geocode_confidence": 0.2792976647232802,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -699,9 +719,9 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Französische Str. 24,  Berlin",
-        "date_range": "1900",
+        "date_range": "1900-?",
         "registration_date": "1900",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -724,11 +744,12 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Trade",
         "address": "Barbarossastr. 41,  Berlin",
-        "date_range": "1937",
+        "date_range": "1937-1939",
         "registration_date": "1937",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -748,11 +769,12 @@
         "business_type": "",
         "category": "",
         "address": ",  Berlin",
-        "date_range": "",
+        "date_range": "?-1939",
         "registration_date": "",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.840425236063765
+        "geocode_confidence": 0.840425236063765,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -773,11 +795,12 @@
         "business_type": "Möbel",
         "category": "Trade",
         "address": "Rosenthaler Str. 46/47,  Berlin",
-        "date_range": "1901",
+        "date_range": "1901-1939",
         "registration_date": "1901",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.1701980914815837
+        "geocode_confidence": 0.1701980914815837,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -797,11 +820,12 @@
         "business_type": "Möbel",
         "category": "Trade",
         "address": "Rosenthaler Str. 46,  Berlin",
-        "date_range": "1931",
+        "date_range": "1931-1938",
         "registration_date": "1931",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1938"
       }
     },
     {
@@ -824,9 +848,9 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Industry",
         "address": "Potsdamer Str. 64,  Berlin",
-        "date_range": "1908",
+        "date_range": "1908-?",
         "registration_date": "1908",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -849,9 +873,9 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Wilhelmplatz 7,  Berlin",
-        "date_range": "1900",
+        "date_range": "1900-?",
         "registration_date": "1900",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -873,11 +897,12 @@
         "business_type": "other",
         "category": "Trade",
         "address": "Blumenstr. 81,  Berlin",
-        "date_range": "1920",
+        "date_range": "1920-1937",
         "registration_date": "1920",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.19934751714046123
+        "geocode_confidence": 0.19934751714046123,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -897,11 +922,12 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Große Präsidentenstr. 9,  Berlin",
-        "date_range": "1903",
+        "date_range": "1903-1937",
         "registration_date": "1903",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -921,11 +947,12 @@
         "business_type": "textiles and clothing",
         "category": "Handicraft",
         "address": "Friedrichstr. 72,  Berlin",
-        "date_range": "1903",
+        "date_range": "1903-1938",
         "registration_date": "1903",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1938"
       }
     },
     {
@@ -945,11 +972,12 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Stülerstr. 13,  Berlin",
-        "date_range": "1919",
+        "date_range": "1919-1935",
         "registration_date": "1919",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1935"
       }
     },
     {
@@ -970,11 +998,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Charlottenstr. 28,  Berlin",
-        "date_range": "1935",
+        "date_range": "1935-1940",
         "registration_date": "1935",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -994,7 +1023,7 @@
         "business_type": "pharmacies",
         "category": "Trade",
         "address": "Albertstr. 6,  Berlin",
-        "date_range": "1911",
+        "date_range": "1911-?",
         "registration_date": "1911",
         "takeover_date": "",
         "liquidation_date": "",
@@ -1019,9 +1048,9 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Voßstr. 45,  Berlin",
-        "date_range": "1919",
+        "date_range": "1919-?",
         "registration_date": "1919",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
         "geocode_confidence": 0.34137582715177667
       }
@@ -1065,11 +1094,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Kommandantenstr. 19,  Berlin",
-        "date_range": "1935",
+        "date_range": "1935-1939",
         "registration_date": "1935",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "liquidation_date": "1938",
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -1090,11 +1120,12 @@
         "business_type": "textiles and clothing",
         "category": "Industry",
         "address": "Kaiser-Wilhelm-Str. 50,  Berlin",
-        "date_range": "1932",
+        "date_range": "1932-1939",
         "registration_date": "1932",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -1114,11 +1145,12 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Trade",
         "address": "Birkenstr. 14,  Berlin",
-        "date_range": "1919",
+        "date_range": "1919-1942",
         "registration_date": "1919",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1942"
       }
     },
     {
@@ -1138,11 +1170,12 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Dorotheenstr. 43,  Berlin",
-        "date_range": "1901",
+        "date_range": "1901-1937",
         "registration_date": "1901",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -1162,11 +1195,12 @@
         "business_type": "chemicals and pharmaceuticals",
         "category": "Trade",
         "address": "Stralauer Allee 17 F,  Berlin",
-        "date_range": "1936",
+        "date_range": "1936-1943",
         "registration_date": "1936",
-        "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "takeover_date": "1938",
+        "liquidation_date": "1938",
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1943"
       }
     },
     {
@@ -1187,9 +1221,9 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Kommandantenstr. 17,  Berlin",
-        "date_range": "1912",
+        "date_range": "1912-?",
         "registration_date": "1912",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -1211,7 +1245,7 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Trade",
         "address": "Potsdamer Str. 76b,  Berlin",
-        "date_range": "1932",
+        "date_range": "1932-?",
         "registration_date": "1932",
         "takeover_date": "",
         "liquidation_date": "",
@@ -1235,11 +1269,12 @@
         "business_type": "Möbel",
         "category": "Trade",
         "address": "Wilhelmstr. 106,  Berlin",
-        "date_range": "1913",
+        "date_range": "1913-1940",
         "registration_date": "1913",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1281,11 +1316,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Alexanderstr. 27,  Berlin",
-        "date_range": "1924",
+        "date_range": "1924-1940",
         "registration_date": "1924",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1305,11 +1341,12 @@
         "business_type": "publishing and printing",
         "category": "Industry",
         "address": "Blumenstr. 22,  Berlin",
-        "date_range": "1918",
+        "date_range": "1918-1934",
         "registration_date": "1918",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1934"
       }
     },
     {
@@ -1329,11 +1366,12 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Französische Str. 13/14,  Berlin",
-        "date_range": "1912",
+        "date_range": "1912-1939",
         "registration_date": "1912",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 0.3065685497365947
+        "liquidation_date": "1936",
+        "geocode_confidence": 0.3065685497365947,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -1353,11 +1391,12 @@
         "business_type": "retail shops and department stores",
         "category": "Trade",
         "address": "Havelstr. 1,  Berlin",
-        "date_range": "1919",
+        "date_range": "1919-1937",
         "registration_date": "1919",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 4.90997177080494e-05
+        "geocode_confidence": 4.90997177080494e-05,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -1377,11 +1416,12 @@
         "business_type": "Möbel",
         "category": "Trade",
         "address": "Seydelstr. 30,  Berlin",
-        "date_range": "1902",
+        "date_range": "1902-1940",
         "registration_date": "1902",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.14170341258693808
+        "geocode_confidence": 0.14170341258693808,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1401,11 +1441,12 @@
         "business_type": "retail shops and department stores",
         "category": "Trade",
         "address": "Krausenstr. 46/47,  Berlin",
-        "date_range": "1900",
+        "date_range": "1900-1935",
         "registration_date": "1900",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "liquidation_date": "1930",
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1935"
       }
     },
     {
@@ -1447,11 +1488,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Klosterstr. 97,  Berlin",
-        "date_range": "1902",
+        "date_range": "1902-1940",
         "registration_date": "1902",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.33382026067444703
+        "geocode_confidence": 0.33382026067444703,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1471,11 +1513,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Leipziger Str. 101/102,  Berlin",
-        "date_range": "1902",
+        "date_range": "1902-1938",
         "registration_date": "1902",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 0.4174145723816278
+        "liquidation_date": "1938",
+        "geocode_confidence": 0.4174145723816278,
+        "dissolution_date": "1938"
       }
     },
     {
@@ -1496,9 +1539,9 @@
         "business_type": "leather and shoes",
         "category": "Industry",
         "address": "Rosenstr. 15,  Berlin",
-        "date_range": "1924",
+        "date_range": "1924-?",
         "registration_date": "1924",
-        "takeover_date": "",
+        "takeover_date": "1934",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -1522,9 +1565,9 @@
         "business_type": "pharmacies",
         "category": "Trade",
         "address": "Unter den Linden 53,  Berlin",
-        "date_range": "1900",
+        "date_range": "1900-?",
         "registration_date": "1900",
-        "takeover_date": "",
+        "takeover_date": "1936",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -1569,11 +1612,12 @@
         "business_type": "banks and insurance",
         "category": "Trade",
         "address": "Lennéstr. 4,  Berlin",
-        "date_range": "1902",
+        "date_range": "1902-1934",
         "registration_date": "1902",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "liquidation_date": "1933",
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1934"
       }
     },
     {
@@ -1593,11 +1637,12 @@
         "business_type": "jewelry and precious metals",
         "category": "Industry",
         "address": "Charlottenstr. 6,  Berlin",
-        "date_range": "1902",
+        "date_range": "1902-1935",
         "registration_date": "1902",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1935"
       }
     },
     {
@@ -1617,11 +1662,12 @@
         "business_type": "machines, motor vehicles & technical articles",
         "category": "Trade",
         "address": "Potsdamer Str. 111,  Berlin",
-        "date_range": "1926",
+        "date_range": "1926-1937",
         "registration_date": "1926",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -1642,11 +1688,12 @@
         "business_type": "leather and shoes",
         "category": "Trade",
         "address": "Leipziger Str. 124,  Berlin",
-        "date_range": "1922",
+        "date_range": "1922-1940",
         "registration_date": "1922",
-        "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "takeover_date": "1938",
+        "liquidation_date": "1939",
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1666,11 +1713,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Charlottenstr. 28,  Berlin",
-        "date_range": "1910",
+        "date_range": "1910-1939",
         "registration_date": "1910",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -1691,11 +1739,12 @@
         "business_type": "construction materials and fuel",
         "category": "Trade",
         "address": "Joachimsthaler Str. 10,  Berlin",
-        "date_range": "1927",
+        "date_range": "1927-1941",
         "registration_date": "1927",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1941"
       }
     },
     {
@@ -1715,11 +1764,12 @@
         "business_type": "machines, motor vehicles & technical articles",
         "category": "Trade",
         "address": "Rosenthaler Str. 40/41,  Berlin",
-        "date_range": "1916",
+        "date_range": "1916-1941",
         "registration_date": "1916",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1941"
       }
     },
     {
@@ -1739,11 +1789,12 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Trade",
         "address": "Mittenwalder Str. 6,  Berlin",
-        "date_range": "1900",
+        "date_range": "1900-1939",
         "registration_date": "1900",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -1764,11 +1815,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Sybelstr. 40,  Berlin",
-        "date_range": "1929",
+        "date_range": "1929-1937",
         "registration_date": "1929",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -1789,11 +1841,12 @@
         "business_type": "metals and metal goods",
         "category": "Trade",
         "address": "Markgrafenstr. 21,  Berlin",
-        "date_range": "1919",
+        "date_range": "1919-1940",
         "registration_date": "1919",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "liquidation_date": "1939",
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1813,11 +1866,12 @@
         "business_type": "Nahrungs- und Genussmittel",
         "category": "Industry",
         "address": "Bayreuther Str. 12,  Berlin",
-        "date_range": "1935",
+        "date_range": "1935-1940",
         "registration_date": "1935",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1837,11 +1891,12 @@
         "business_type": "paper and paper goods",
         "category": "Trade",
         "address": "Kaiser-Wilhelm-Str. 53,  Berlin",
-        "date_range": "1901",
+        "date_range": "1901-1938",
         "registration_date": "1901",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1938"
       }
     },
     {
@@ -1862,11 +1917,12 @@
         "business_type": "textiles and clothing",
         "category": "Industry",
         "address": "Mohrenstr. 29/30,  Berlin",
-        "date_range": "1934",
+        "date_range": "1934-1936",
         "registration_date": "1934",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.32314590312055647
+        "geocode_confidence": 0.32314590312055647,
+        "dissolution_date": "1936"
       }
     },
     {
@@ -1886,11 +1942,12 @@
         "business_type": "metals and metal goods",
         "category": "Trade",
         "address": "Friedrichstr. 187/188,  Berlin",
-        "date_range": "1937",
+        "date_range": "1937-1940",
         "registration_date": "1937",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.4683814607413573
+        "geocode_confidence": 0.4683814607413573,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1911,9 +1968,9 @@
         "business_type": "transportation",
         "category": "Services",
         "address": "Wilhelmsaue 36,  Berlin",
-        "date_range": "1851",
+        "date_range": "1851-?",
         "registration_date": "1851",
-        "takeover_date": "",
+        "takeover_date": "1939",
         "liquidation_date": "",
         "geocode_confidence": 8.875486381318407e-05
       }
@@ -1936,11 +1993,12 @@
         "business_type": "leather and shoes",
         "category": "Trade",
         "address": "Neue Schönhauser Str. 16,  Berlin",
-        "date_range": "1933",
+        "date_range": "1933-1940",
         "registration_date": "1933",
         "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "liquidation_date": "1938",
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1940"
       }
     },
     {
@@ -1960,11 +2018,12 @@
         "business_type": "publishing and printing",
         "category": "Industry",
         "address": "Teltower Str. 29/30,  Berlin",
-        "date_range": "1922",
+        "date_range": "1922-1937",
         "registration_date": "1922",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1937"
       }
     },
     {
@@ -1984,11 +2043,12 @@
         "business_type": "textiles and clothing",
         "category": "Trade",
         "address": "Regensburger Str. 27,  Berlin",
-        "date_range": "1916",
+        "date_range": "1916-1939",
         "registration_date": "1916",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -2030,11 +2090,12 @@
         "business_type": "textiles and clothing",
         "category": "Industry",
         "address": "Kaiser-Wilhelm-Str. 33,  Berlin",
-        "date_range": "1935",
+        "date_range": "1935-1939",
         "registration_date": "1935",
         "takeover_date": "",
         "liquidation_date": "",
-        "geocode_confidence": 8.875486381318407e-05
+        "geocode_confidence": 8.875486381318407e-05,
+        "dissolution_date": "1939"
       }
     },
     {
@@ -2077,11 +2138,12 @@
         "business_type": "chemicals and pharmaceuticals",
         "category": "Trade",
         "address": "Prinz-Handjery-Str. 78/80,  Berlin",
-        "date_range": "1919",
+        "date_range": "1919-1942",
         "registration_date": "1919",
-        "takeover_date": "",
+        "takeover_date": "1938",
         "liquidation_date": "",
-        "geocode_confidence": 0.05342208819714653
+        "geocode_confidence": 0.05342208819714653,
+        "dissolution_date": "1942"
       }
     },
     {
@@ -2102,11 +2164,12 @@
         "business_type": "machines, motor vehicles & technical articles",
         "category": "Trade",
         "address": "Joachimsthaler Str. 22/23,  Berlin",
-        "date_range": "1930",
+        "date_range": "1930-1940",
         "registration_date": "1930",
-        "takeover_date": "",
-        "liquidation_date": "",
-        "geocode_confidence": 0.2880153568463523
+        "takeover_date": "1938",
+        "liquidation_date": "1938",
+        "geocode_confidence": 0.2880153568463523,
+        "dissolution_date": "1940"
       }
     }
   ]

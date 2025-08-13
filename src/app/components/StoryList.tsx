@@ -398,7 +398,7 @@ const StoryList: React.FC<StoryListProps> = ({
               story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : ''
             } ${getStatusColor(story)}`}
             style={{
-              backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.5)',
+              backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.4)',
               borderColor: 'var(--border)',
               ...getActiveStoryStyle(story, story.id === activeStoryId)
             }}
@@ -444,7 +444,7 @@ const StoryList: React.FC<StoryListProps> = ({
                         ''
                     }`}
                     style={{
-                      backgroundColor: story.id === activeStoryId ? undefined : 'var(--muted)',
+                      backgroundColor: story.id === activeStoryId ? undefined : 'rgba(107, 98, 117, 0.5)',
                       color: story.id === activeStoryId ? undefined : 'var(--accent-orange)'
                     }}>
                       {story.businessType || story.category}

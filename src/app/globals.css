@@ -104,34 +104,31 @@ body {
   }
   
   .tooltip-label {
-    @apply px-2 py-1 text-xs font-mono shadow-lg backdrop-blur-sm border;
+    @apply px-2 py-1 text-xs font-mono shadow-lg border;
     letter-spacing: 0.02em;
     z-index: 999999 !important;
     position: relative !important;
   }
   
   .tooltip-label-active {
-    background: rgba(151, 216, 192, 0.95);
-    color: #3b3340;
-    border: 1px solid rgba(151, 216, 192, 0.6);
-    font-weight: 500;
-    backdrop-filter: blur(8px);
+    background: rgba(151, 216, 192, 0.98);
+    color: #2a2a2a;
+    border: 1px solid #97d8c0;
+    font-weight: 600;
   }
   
   .tooltip-label-declining {
-    background: rgba(255, 203, 81, 0.95);
-    color: #3b3340;
-    border: 1px solid rgba(255, 203, 81, 0.6);
-    font-weight: 500;
-    backdrop-filter: blur(8px);
+    background: rgba(255, 203, 81, 0.98);
+    color: #2a2a2a;
+    border: 1px solid #ffcb51;
+    font-weight: 600;
   }
   
   .tooltip-label-closed {
-    background: rgba(238, 87, 96, 0.95);
+    background: rgba(238, 87, 96, 0.98);
     color: #ffffff;
-    border: 1px solid rgba(238, 87, 96, 0.6);
-    font-weight: 500;
-    backdrop-filter: blur(8px);
+    border: 1px solid #ee5760;
+    font-weight: 600;
   }
   
   @keyframes fade-in {

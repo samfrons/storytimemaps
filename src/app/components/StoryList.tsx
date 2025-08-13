@@ -3,7 +3,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';
 import BusinessDetailModal from './BusinessDetailModal';
@@ -29,16 +29,17 @@ const StoryList: React.FC<StoryListProps> = ({
   onStoryClick
 }) => {
   const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null);
-  const [nextStory, setNextStory] = useState<StoryMap | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
   const [showSearchFilter, setShowSearchFilter] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const listRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
     const rect = element.getBoundingClientRect();
@@ -51,11 +52,38 @@ const StoryList: React.FC<StoryListProps> = ({
     setModalOpen(false);
     setTimeout(() => {
       setSelectedStory(null);
-      setNextStory(null);
       setOriginRect(null);
-      setSlideDirection(null);
     }, 600);
   };
+
+  const handleDropdownToggle = () => {
+    if (!isDropdownOpen && dropdownRef.current) {
+      const rect = dropdownRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width
+      });
+    }
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Update dropdown position on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (isDropdownOpen && dropdownRef.current) {
+        const rect = dropdownRef.current.getBoundingClientRect();
+        setDropdownPosition({
+          top: rect.bottom + 4,
+          left: rect.left,
+          width: rect.width
+        });
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isDropdownOpen]);
 
   const handleModalNavigation = (direction: 'prev' | 'next') => {
     if (!selectedStory) return;
@@ -65,21 +93,7 @@ const StoryList: React.FC<StoryListProps> = ({
     
     if (targetIndex >= 0 && targetIndex < filteredStories.length) {
       const targetStory = filteredStories[targetIndex];
-      
-      // Set up the next story and direction
-      setNextStory(targetStory);
-      if (direction === 'next') {
-        setSlideDirection('left'); // Current slides left, next slides from right
-      } else {
-        setSlideDirection('right-out'); // Current slides right, next slides from left
-      }
-      
-      // After slide animation completes, swap stories
-      setTimeout(() => {
-        setSelectedStory(targetStory);
-        setNextStory(null);
-        setSlideDirection(null);
-      }, 500);
+      setSelectedStory(targetStory);
     }
   };
 
@@ -128,10 +142,38 @@ const StoryList: React.FC<StoryListProps> = ({
     }
   }, [isHeaderCollapsed]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Get unique business types from stories for dynamic categories
+  const availableCategories = useMemo(() => {
+    const categories = new Set<string>();
+    visibleStories.forEach(story => {
+      if (story.businessType) {
+        categories.add(story.businessType);
+      } else if (story.category) {
+        categories.add(story.category);
+      }
+    });
+    return Array.from(categories).sort();
+  }, [visibleStories]);
+
   const filteredStories = visibleStories.filter(story => {
     const matchesSearch = story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           (story.description?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
-    const matchesCategory = selectedCategory === 'all' || story.category === selectedCategory;
+    const storyCategory = story.businessType || story.category || '';
+    const matchesCategory = selectedCategory === 'all' || storyCategory === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -146,9 +188,47 @@ const StoryList: React.FC<StoryListProps> = ({
     return 'border-l-primary';  // Active
   };
 
+  const getStoryState = (story: StoryMap) => {
+    const now = currentDate.getTime();
+    const start = story.startDate ? new Date(story.startDate).getTime() : 0;
+    const end = story.endDate ? new Date(story.endDate).getTime() : Infinity;
+    
+    if (now < start) return 'future';
+    if (now > end) return 'closed';
+    if (story.midDate && now > new Date(story.midDate).getTime()) return 'declining';
+    return 'active';
+  };
+
+  const getActiveStoryStyle = (story: StoryMap, isActive: boolean) => {
+    if (!isActive) return {};
+    
+    const state = getStoryState(story);
+    switch (state) {
+      case 'declining':
+        return {
+          backgroundColor: 'rgba(255, 203, 81, 0.85)',
+          borderLeftColor: '#ffcb51',
+          color: '#2a2a2a'
+        };
+      case 'closed':
+        return {
+          backgroundColor: 'rgba(238, 87, 96, 0.85)',
+          borderLeftColor: '#ee5760',
+          color: '#ffffff'
+        };
+      case 'active':
+      default:
+        return {
+          backgroundColor: 'rgba(151, 216, 192, 0.85)',
+          borderLeftColor: '#97d8c0',
+          color: '#2a2a2a'
+        };
+    }
+  };
+
   return (
     <div className="w-full h-full bg-[#4a4a57] flex flex-col">
-      <div className={`border-b border-[#6b6275] bg-[#4a4a57]/95 backdrop-blur transition-all duration-300 ${
+      <div className={`border-b border-[#6b6275] bg-[#4a4a57]/95 backdrop-blur transition-all duration-300 z-[1] relative ${
         isHeaderCollapsed ? 'p-3 md:p-6' : 'p-4 md:p-6'
       }`}>
         <div className="flex items-center justify-between">
@@ -187,7 +267,7 @@ const StoryList: React.FC<StoryListProps> = ({
           </div>
         </div>
         
-        <div className={`transition-all duration-300 overflow-hidden ${
+        <div className={`transition-all duration-300 overflow-hidden z-[1] relative ${
           isHeaderCollapsed && !showSearchFilter ? 'max-h-0 opacity-0 mt-0' : 'max-h-96 opacity-100 mt-4'
         } md:max-h-96 md:opacity-100 md:mt-4`}>
           <div className="space-y-3">
@@ -204,16 +284,57 @@ const StoryList: React.FC<StoryListProps> = ({
               </svg>
             </div>
             
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2.5 bg-[#6b6275]/50 border border-[#6b6275] focus:outline-none text-[#f5cdb4] text-xs font-mono transition-all"
-            >
-              <option value="all">All Categories</option>
-              <option value="business">Businesses</option>
-              <option value="institution">Institutions</option>
-              <option value="residence">Residences</option>
-            </select>
+            <div ref={dropdownRef} className="relative z-[100000]">
+              <button
+                onClick={handleDropdownToggle}
+                className="w-full px-3 py-2.5 bg-[#6b6275]/50 border border-[#6b6275] focus:outline-none focus:ring-2 focus:ring-[#97d8c0] focus:border-transparent text-[#f5cdb4] text-xs font-mono transition-all text-left flex items-center justify-between cursor-pointer hover:bg-[#6b6275]/60"
+              >
+                <span>{selectedCategory === 'all' ? 'All Categories' : selectedCategory}</span>
+                <svg 
+                  className={`w-4 h-4 text-[#8b7d8e] transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isDropdownOpen && (
+                <div className="md:fixed absolute top-full left-0 right-0 md:bg-[#6b6275]/95 bg-[#6b6275] border border-[#6b6275] backdrop-blur-sm z-[99999] max-h-[600px] overflow-y-auto shadow-lg mt-1" 
+                     style={{
+                       top: window.innerWidth >= 768 ? `${dropdownPosition.top}px` : undefined,
+                       left: window.innerWidth >= 768 ? `${dropdownPosition.left}px` : undefined,
+                       width: window.innerWidth >= 768 ? `${dropdownPosition.width}px` : undefined
+                     }}>
+                  <button
+                    onClick={() => {
+                      setSelectedCategory('all');
+                      setIsDropdownOpen(false);
+                    }}
+                    className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:bg-[#6b6275]/70 ${
+                      selectedCategory === 'all' ? 'bg-[#97d8c0]/20 text-[#97d8c0] border-l-2 border-l-[#97d8c0]' : 'text-[#f5cdb4] hover:text-[#97d8c0]'
+                    }`}
+                  >
+                    All Categories
+                  </button>
+                  {availableCategories.map(category => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:bg-[#6b6275]/70 ${
+                        selectedCategory === category ? 'bg-[#97d8c0]/20 text-[#97d8c0] border-l-2 border-l-[#97d8c0]' : 'text-[#f5cdb4] hover:text-[#97d8c0]'
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           
           <div className={`transition-all duration-300 ${isHeaderCollapsed && !showSearchFilter ? 'mt-0' : 'mt-4'}`}>
@@ -238,28 +359,44 @@ const StoryList: React.FC<StoryListProps> = ({
             ref={(el) => { storyRefs.current[story.id] = el; }}
             data-story-id={story.id}
             className={`group bg-[#6b6275]/40 backdrop-blur border border-l-4 border-[#6b6275] transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
-              story.id === activeStoryId ? 'shadow-xl scale-[1.02] bg-[#97d8c0]/20 border-l-[#97d8c0]' : 'hover:bg-[#6b6275]/50'
+              story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : 'hover:bg-[#6b6275]/50'
             } ${getStatusColor(story)}`}
             style={{
-              borderLeftColor: story.id === activeStoryId ? '#97d8c0' : undefined
+              ...getActiveStoryStyle(story, story.id === activeStoryId)
             }}
             onClick={() => handleStoryClick(story.id)}
           >
             <div className="p-4">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h3 className="font-mono font-semibold text-[#f5cdb4] text-sm group-hover:text-[#97d8c0] transition-colors">
+                <h3 className={`font-mono font-semibold text-sm transition-colors ${
+                  story.id === activeStoryId ? 
+                    (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white' : 'text-[#2a2a2a]') :
+                    'text-[#f5cdb4] group-hover:text-[#97d8c0]'
+                }`}>
                   {story.title}
                 </h3>
-                <p className="text-xs font-mono text-[#8b7d8e] mt-1.5 line-clamp-2 leading-relaxed">{story.description}</p>
+                <p className={`text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed ${
+                  story.id === activeStoryId ? 
+                    (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white/80' : 'text-[#2a2a2a]/80') :
+                    'text-[#8b7d8e]'
+                }`}>{story.description}</p>
                 
-                <div className="flex items-center gap-4 mt-3 text-xs font-mono text-muted">
-                  <span className="text-[#eca27d]">
+                <div className="flex items-center gap-4 mt-3 text-xs font-mono">
+                  <span className={`${
+                    story.id === activeStoryId ? 
+                      (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white/90' : 'text-[#2a2a2a]/90') :
+                      'text-[#eca27d]'
+                  }`}>
                     {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate ? new Date(story.endDate).getFullYear() : 'Present'}
                   </span>
-                  {story.category && (
-                    <span className="px-2 py-1 bg-[#6b6275]/50 text-[#eca27d] text-xs font-mono uppercase tracking-wide">
-                      {story.category}
+                  {(story.businessType || story.category) && (
+                    <span className={`px-2 py-1 text-xs font-mono uppercase tracking-wide ${
+                      story.id === activeStoryId ? 
+                        'bg-black/20 text-current' :
+                        'bg-[#6b6275]/50 text-[#eca27d]'
+                    }`}>
+                      {story.businessType || story.category}
                     </span>
                   )}
                 </div>
@@ -295,7 +432,7 @@ const StoryList: React.FC<StoryListProps> = ({
         ))}
       </div>
       
-      {/* Business Detail Modals - Current and Next for transitions */}
+      {/* Business Detail Modal */}
       {selectedStory && (
         <BusinessDetailModal
           story={selectedStory}
@@ -305,21 +442,6 @@ const StoryList: React.FC<StoryListProps> = ({
           onNavigate={handleModalNavigation}
           hasPrevious={filteredStories.findIndex(s => s.id === selectedStory.id) > 0}
           hasNext={filteredStories.findIndex(s => s.id === selectedStory.id) < filteredStories.length - 1}
-          slideDirection={slideDirection === 'left' ? 'left' : slideDirection === 'right-out' ? 'right-out' : null}
-        />
-      )}
-      
-      {/* Next modal sliding in */}
-      {nextStory && slideDirection && (
-        <BusinessDetailModal
-          story={nextStory}
-          isOpen={true}
-          onClose={closeModal}
-          originRect={originRect}
-          onNavigate={handleModalNavigation}
-          hasPrevious={filteredStories.findIndex(s => s.id === nextStory.id) > 0}
-          hasNext={filteredStories.findIndex(s => s.id === nextStory.id) < filteredStories.length - 1}
-          slideDirection={slideDirection === 'left' ? 'right' : slideDirection === 'right-out' ? 'left-in' : null}
         />
       )}
     </div>

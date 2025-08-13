@@ -13,6 +13,7 @@ export interface StoryMap {
   lng: number;
   address?: string;
   category?: 'business' | 'institution' | 'residence';
+  businessType?: string;
   startDate: string | null;
   midDate: string | null;
   endDate: string | null;

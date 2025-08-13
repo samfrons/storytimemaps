@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 // Sample business data
 interface BusinessData {
@@ -146,11 +147,12 @@ const ModalOverlay: React.FC<{
           <div className="space-y-6">
             {/* Image */}
             {business.image && (
-              <div className="w-full h-48 bg-muted/20 border border-border overflow-hidden">
-                <img
+              <div className="w-full h-48 bg-muted/20 border border-border overflow-hidden relative">
+                <Image
                   src={business.image}
                   alt={business.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
             )}
@@ -295,11 +297,12 @@ const SlidingPanel: React.FC<{
           <div className="space-y-6">
             {/* Image */}
             {business.image && (
-              <div className="w-full h-48 bg-muted/20 border border-border overflow-hidden">
-                <img
+              <div className="w-full h-48 bg-muted/20 border border-border overflow-hidden relative">
+                <Image
                   src={business.image}
                   alt={business.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
             )}
@@ -388,11 +391,12 @@ const BusinessCard: React.FC<{
     >
       <div className="flex items-start gap-4">
         {business.image && (
-          <div className="w-16 h-16 bg-muted/20 border border-border overflow-hidden flex-shrink-0">
-            <img
+          <div className="w-16 h-16 bg-muted/20 border border-border overflow-hidden flex-shrink-0 relative">
+            <Image
               src={business.image}
               alt={business.name}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           </div>
         )}

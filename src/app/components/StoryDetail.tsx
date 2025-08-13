@@ -9,39 +9,92 @@ interface StoryDetailProps {
 }
 
 const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
-  const [selectedImage, setSelectedImage] = React.useState(0);
+  const [selectedMediaIndex, setSelectedMediaIndex] = React.useState(0);
+  const [showFullDescription, setShowFullDescription] = React.useState(false);
+  
+  // Combine legacy imageUrls with new media array
+  const allMedia = React.useMemo(() => {
+    const mediaItems = [];
+    
+    // Add new media array items first (higher priority)
+    if (story.media && story.media.length > 0) {
+      mediaItems.push(...story.media);
+    }
+    
+    // Add legacy imageUrls as image media items
+    if (story.imageUrls && story.imageUrls.length > 0) {
+      story.imageUrls.forEach((url, index) => {
+        mediaItems.push({
+          url,
+          type: 'image' as const,
+          caption: `Image ${index + 1}`
+        });
+      });
+    }
+    
+    return mediaItems;
+  }, [story.media, story.imageUrls]);
+  
+  const currentMedia = allMedia[selectedMediaIndex];
   
   return (
     <div className="space-y-4">
-      {story.imageUrls && story.imageUrls.length > 0 && (
+      {allMedia.length > 0 && (
         <div className="space-y-2">
-          <div className="relative w-full h-48 overflow-hidden bg-gray-100 dark:bg-slate-800">
-            <Image
-              src={story.imageUrls[selectedImage]}
-              alt={`${story.title} - Image ${selectedImage + 1}`}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition-opacity duration-300"
-            />
+          <div className="relative w-full h-48 overflow-hidden bg-[#4a4a57]">
+            {currentMedia?.type === 'video' ? (
+              <video
+                src={currentMedia.url}
+                controls
+                className="w-full h-full object-cover"
+                poster={currentMedia.url.replace(/\.(mp4|webm)$/, '.jpg')}
+              >
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <Image
+                src={currentMedia?.url || ''}
+                alt={currentMedia?.caption || `${story.title} - Media ${selectedMediaIndex + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-opacity duration-300"
+              />
+            )}
+            
+            {currentMedia?.caption && (
+              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-2">
+                <p className="text-xs font-mono">{currentMedia.caption}</p>
+              </div>
+            )}
           </div>
           
-          {story.imageUrls.length > 1 && (
+          {allMedia.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-2">
-              {story.imageUrls.map((url, index) => (
+              {allMedia.map((mediaItem, index) => (
                 <button
                   key={index}
-                  onClick={() => setSelectedImage(index)}
+                  onClick={() => setSelectedMediaIndex(index)}
                   className={`relative w-16 h-16 flex-shrink-0 overflow-hidden border-2 transition-all ${
-                    selectedImage === index ? 'border-primary ring-2 ring-primary ring-opacity-50' : 'border-transparent opacity-70 hover:opacity-100'
+                    selectedMediaIndex === index 
+                      ? 'border-[#97d8c0] ring-2 ring-[#97d8c0] ring-opacity-50' 
+                      : 'border-transparent opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <Image
-                    src={url}
-                    alt={`Thumbnail ${index + 1}`}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
+                  {mediaItem.type === 'video' ? (
+                    <div className="w-full h-full bg-[#6b6275] flex items-center justify-center">
+                      <svg className="w-6 h-6 text-[#f5cdb4]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                  ) : (
+                    <Image
+                      src={mediaItem.url}
+                      alt={`Thumbnail ${index + 1}`}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  )}
                 </button>
               ))}
             </div>
@@ -88,18 +141,45 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
         </div>
       </div>
       
-      {story.description && (
-        <div className="pt-4 border-t border-border">
-          <h5 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">Historical Context</h5>
-          <p className="font-mono text-xs text-foreground leading-relaxed">{story.description}</p>
+      {(story.description || story.longDescription) && (
+        <div className="pt-4 border-t border-[#6b6275]">
+          <h5 className="font-mono text-xs font-bold text-[#8b7d8e] uppercase tracking-wider mb-3">Historical Context</h5>
+          
+          {story.description && (
+            <p className="font-mono text-xs text-[#f5cdb4] leading-relaxed mb-3">
+              {story.description}
+            </p>
+          )}
+          
+          {story.longDescription && (
+            <div className="space-y-3">
+              <div className={`font-mono text-xs text-[#f5cdb4] leading-relaxed ${!showFullDescription ? 'line-clamp-4' : ''}`}>
+                {story.longDescription}
+              </div>
+              
+              <button
+                onClick={() => setShowFullDescription(!showFullDescription)}
+                className="text-xs font-mono font-semibold text-[#97d8c0] hover:text-[#ffcb51] transition-colors cursor-pointer"
+              >
+                {showFullDescription ? 'Read less' : 'Read more'} →
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+      
+      {story.businessType && (
+        <div className="pt-4 border-t border-[#6b6275]">
+          <h5 className="font-mono text-xs font-bold text-[#8b7d8e] uppercase tracking-wider mb-2">Business Type</h5>
+          <p className="font-mono text-xs text-[#f5cdb4] capitalize">{story.businessType}</p>
         </div>
       )}
       
       <div className="flex gap-3 pt-4">
-        <button className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 bg-white dark:bg-slate-800 text-foreground border border-border hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-sm hover:shadow uppercase tracking-wide">
+        <button className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 bg-[#4a4a57] text-[#f5cdb4] border border-[#6b6275] hover:bg-[#6b6275] transition-all shadow-sm hover:shadow uppercase tracking-wide">
           View Sources
         </button>
-        <button className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 bg-primary text-white border border-primary hover:bg-primary-light transition-all shadow-sm hover:shadow uppercase tracking-wide">
+        <button className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 bg-[#97d8c0] text-[#2a2a2a] border border-[#97d8c0] hover:bg-[#ffcb51] hover:border-[#ffcb51] transition-all shadow-sm hover:shadow uppercase tracking-wide">
           Share Story
         </button>
       </div>

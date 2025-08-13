@@ -7,7 +7,8 @@ import Supercluster from 'supercluster'
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
 
 // Bauhaus-inspired map style with geometric patterns
-const bauhausMapStyle = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const bauhausMapStyle: any = {
   version: 8,
   sources: {
     'mapbox': {
@@ -78,6 +79,7 @@ interface MapboxMapProps {
   }>
   onMarkerClick: (id: string) => void
   activeMarkerId: string | null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   enrichedStories?: any[]
 }
 
@@ -99,8 +101,14 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
   const [popupInfo, setPopupInfo] = useState<{
     longitude: number
     latitude: number
-    properties: any
+    properties: {
+      id: string
+      popup: string
+      state?: string
+      [key: string]: unknown
+    }
   } | null>(null)
+  const [labelOpacity, setLabelOpacity] = useState(1)
 
   // Bauhaus primary colors
   const colors = {
@@ -113,9 +121,9 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
   // Create supercluster instance
   const supercluster = useMemo(() => {
     const index = new Supercluster({
-      radius: 40,
+      radius: 60,
       maxZoom: 16,
-      minPoints: 3
+      minPoints: 2
     })
     
     if (markers.length > 0) {
@@ -172,7 +180,8 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
         bounds.getNorth()
       ]
       
-      return supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+      const clusteredMarkers = supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+      return clusteredMarkers.length > 0 ? clusteredMarkers : initialMarkers
     } catch (error) {
       console.warn('Error getting clusters:', error)
       return initialMarkers
@@ -205,6 +214,11 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
     }
   }, [activeMarkerId, markers, enrichedStories])
 
+  // Set label opacity based on popup state
+  useEffect(() => {
+    setLabelOpacity(popupInfo ? 0.6 : 1)
+  }, [popupInfo])
+
   const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
     const expansionZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id)
     mapRef.current?.flyTo({
@@ -214,17 +228,28 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
     })
   }, [supercluster])
 
-  const renderMarker = (cluster: any) => {
+  const renderMarker = (cluster: {
+    id?: string | number
+    geometry: { coordinates: [number, number] }
+    properties: {
+      cluster?: boolean
+      cluster_id?: number
+      point_count?: number
+      id?: string
+      popup?: string
+      state?: string
+    }
+  }) => {
     const [lng, lat] = cluster.geometry.coordinates
     const { cluster: isCluster, point_count } = cluster.properties
 
     // Render cluster as geometric shape
-    if (isCluster) {
+    if (isCluster && point_count) {
       const size = 40 + (point_count / markers.length) * 40
       return (
         <Marker key={`cluster-${cluster.id}`} longitude={lng} latitude={lat}>
           <div
-            onClick={() => handleClusterClick(cluster, lng, lat)}
+            onClick={() => handleClusterClick({ properties: { cluster_id: cluster.properties.cluster_id || 0 } }, lng, lat)}
             style={{
               width: `${size}px`,
               height: `${size}px`,
@@ -265,37 +290,44 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
     }
     
     return [
-      // Label with stark geometric style
-      <Popup
+      // Label with stark geometric style as a Marker
+      <Marker
         key={`label-${properties.id}`}
         longitude={lng}
         latitude={lat}
-        closeButton={false}
         anchor="bottom"
-        offset={[0, -8]}
-        className="mapbox-label-popup"
+        offset={[0, -10]}
       >
         <div 
-          className={`px-3 py-1 text-xs font-mono font-black uppercase whitespace-nowrap cursor-pointer`}
+          className={`px-3 py-1 text-xs font-mono font-black uppercase whitespace-nowrap cursor-pointer transition-opacity duration-200`}
           style={{
             background: '#ffffff',
             color: color,
             border: `3px solid ${color}`,
             boxShadow: '3px 3px 0px #000000',
-            letterSpacing: '0.1em'
+            letterSpacing: '0.1em',
+            opacity: labelOpacity,
+            pointerEvents: 'auto'
           }}
-          onClick={() => {
-            onMarkerClick(properties.id!)
-            setPopupInfo({
-              longitude: lng,
-              latitude: lat,
-              properties
-            })
+          onClick={(e) => {
+            e.stopPropagation()
+            if (properties.id && properties.popup) {
+              onMarkerClick(properties.id)
+              const enrichedStory = enrichedStories.find(s => s.id === properties.id) || {}
+              setPopupInfo({
+                longitude: lng,
+                latitude: lat,
+                properties: {
+                  ...properties,
+                  ...enrichedStory
+                }
+              })
+            }
           }}
         >
           {properties.popup}
         </div>
-      </Popup>,
+      </Marker>,
       
       // Marker as geometric shape
       <Marker
@@ -303,12 +335,18 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
         longitude={lng}
         latitude={lat}
         onClick={() => {
-          onMarkerClick(properties.id!)
-          setPopupInfo({
-            longitude: lng,
-            latitude: lat,
-            properties
-          })
+          if (properties.id && properties.popup) {
+            onMarkerClick(properties.id)
+            const enrichedStory = enrichedStories.find(s => s.id === properties.id) || {}
+            setPopupInfo({
+              longitude: lng,
+              latitude: lat,
+              properties: {
+                ...properties,
+                ...enrichedStory
+              }
+            })
+          }
         }}
         anchor="center"
       >
@@ -334,6 +372,13 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
         ref={mapRef}
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
+        onClick={(evt) => {
+          if (!evt.features || evt.features.length === 0) {
+            if (popupInfo) {
+              setPopupInfo(null)
+            }
+          }
+        }}
         onLoad={() => setMapLoaded(true)}
         mapStyle={bauhausMapStyle}
         mapboxAccessToken={MAPBOX_TOKEN}
@@ -342,7 +387,8 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
         minZoom={3}
       >
         {/* Render all markers and clusters */}
-        {clusters.flatMap(cluster => renderMarker(cluster))}
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {clusters.flatMap(cluster => renderMarker(cluster as any))}
         
         {/* Detailed popup with Bauhaus styling */}
         {popupInfo && (
@@ -372,18 +418,18 @@ const MapboxMapBauhaus: React.FC<MapboxMapProps> = ({
               }}>
                 {popupInfo.properties.popup}
               </h3>
-              {enrichedStories.find(s => s.id === popupInfo.properties.id) && (
+              {popupInfo.properties && (
                 <>
                   <div className="text-xs mb-2 font-bold" style={{ color: '#666666' }}>
-                    {enrichedStories.find(s => s.id === popupInfo.properties.id)?.startDate && 
-                     enrichedStories.find(s => s.id === popupInfo.properties.id)?.endDate && 
-                      `${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.startDate!).getFullYear()} - 
-                       ${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.endDate!).getFullYear()}`
+                    {popupInfo.properties.startDate && 
+                     popupInfo.properties.endDate && 
+                      `${new Date(popupInfo.properties.startDate).getFullYear()} - 
+                       ${new Date(popupInfo.properties.endDate).getFullYear()}`
                     }
                   </div>
-                  {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description && (
+                  {popupInfo.properties.description && (
                     <p className="text-xs line-clamp-3 mb-4" style={{ color: '#000000' }}>
-                      {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description}
+                      {popupInfo.properties.description}
                     </p>
                   )}
                   <button

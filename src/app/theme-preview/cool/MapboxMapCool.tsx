@@ -17,6 +17,7 @@ interface MapboxMapProps {
   }>
   onMarkerClick: (id: string) => void
   activeMarkerId: string | null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   enrichedStories?: any[]
 }
 
@@ -38,8 +39,17 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
   const [popupInfo, setPopupInfo] = useState<{
     longitude: number
     latitude: number
-    properties: any
+    properties: {
+      id?: string
+      popup?: string
+      state?: string
+      description?: string | null
+      startDate?: string | null
+      endDate?: string | null
+      [key: string]: unknown
+    }
   } | null>(null)
+  const [labelOpacity, setLabelOpacity] = useState(1)
 
   // Cool theme colors - blues and teals
   const colors = {
@@ -52,9 +62,9 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
   // Create supercluster instance
   const supercluster = useMemo(() => {
     const index = new Supercluster({
-      radius: 40,
+      radius: 60,
       maxZoom: 16,
-      minPoints: 3
+      minPoints: 2
     })
     
     if (markers.length > 0) {
@@ -111,7 +121,8 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
         bounds.getNorth()
       ]
       
-      return supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+      const clusteredMarkers = supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+      return clusteredMarkers.length > 0 ? clusteredMarkers : initialMarkers
     } catch (error) {
       console.warn('Error getting clusters:', error)
       return initialMarkers
@@ -144,6 +155,11 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
     }
   }, [activeMarkerId, markers, enrichedStories])
 
+  // Set label opacity based on popup state
+  useEffect(() => {
+    setLabelOpacity(popupInfo ? 0.6 : 1)
+  }, [popupInfo])
+
   const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
     const expansionZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id)
     mapRef.current?.flyTo({
@@ -153,17 +169,28 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
     })
   }, [supercluster])
 
-  const renderMarker = (cluster: any) => {
+  const renderMarker = (cluster: {
+    id?: string | number
+    geometry: { coordinates: [number, number] }
+    properties: {
+      cluster?: boolean
+      cluster_id?: number
+      point_count?: number
+      id?: string
+      popup?: string
+      state?: string
+    }
+  }) => {
     const [lng, lat] = cluster.geometry.coordinates
     const { cluster: isCluster, point_count } = cluster.properties
 
     // Render cluster
-    if (isCluster) {
+    if (isCluster && point_count) {
       const size = 30 + (point_count / markers.length) * 30
       return (
         <Marker key={`cluster-${cluster.id}`} longitude={lng} latitude={lat}>
           <div
-            onClick={() => handleClusterClick(cluster, lng, lat)}
+            onClick={() => handleClusterClick({ properties: { cluster_id: cluster.properties.cluster_id || 0 } }, lng, lat)}
             style={{
               width: `${size}px`,
               height: `${size}px`,
@@ -192,36 +219,43 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
     const color = colors[properties.state as keyof typeof colors] || colors.active
     
     return [
-      // Label popup
-      <Popup
+      // Always visible label as a Marker
+      <Marker
         key={`label-${properties.id}`}
         longitude={lng}
         latitude={lat}
-        closeButton={false}
         anchor="bottom"
-        offset={[0, -5]}
-        className="mapbox-label-popup"
+        offset={[0, -10]}
       >
         <div 
-          className={`px-2 py-1 text-xs font-mono font-semibold whitespace-nowrap cursor-pointer`}
+          className={`px-2 py-1 text-xs font-mono font-semibold whitespace-nowrap cursor-pointer transition-opacity duration-200`}
           style={{
             background: 'rgba(255, 255, 255, 0.95)',
             color: color,
             border: `2px solid ${color}`,
-            boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+            opacity: labelOpacity,
+            pointerEvents: 'auto'
           }}
-          onClick={() => {
-            onMarkerClick(properties.id!)
-            setPopupInfo({
-              longitude: lng,
-              latitude: lat,
-              properties
-            })
+          onClick={(e) => {
+            e.stopPropagation()
+            if (properties.id && properties.popup) {
+              onMarkerClick(properties.id)
+              const enrichedStory = enrichedStories.find(s => s.id === properties.id) || {}
+              setPopupInfo({
+                longitude: lng,
+                latitude: lat,
+                properties: {
+                  ...properties,
+                  ...enrichedStory
+                }
+              })
+            }
           }}
         >
           {properties.popup}
         </div>
-      </Popup>,
+      </Marker>,
       
       // Marker dot
       <Marker
@@ -229,12 +263,18 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
         longitude={lng}
         latitude={lat}
         onClick={() => {
-          onMarkerClick(properties.id!)
-          setPopupInfo({
-            longitude: lng,
-            latitude: lat,
-            properties
-          })
+          if (properties.id && properties.popup) {
+            onMarkerClick(properties.id)
+            const enrichedStory = enrichedStories.find(s => s.id === properties.id) || {}
+            setPopupInfo({
+              longitude: lng,
+              latitude: lat,
+              properties: {
+                ...properties,
+                ...enrichedStory
+              }
+            })
+          }
         }}
         anchor="center"
       >
@@ -261,6 +301,13 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
         ref={mapRef}
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
+        onClick={(evt) => {
+          if (!evt.features || evt.features.length === 0) {
+            if (popupInfo) {
+              setPopupInfo(null)
+            }
+          }
+        }}
         onLoad={() => setMapLoaded(true)}
         mapStyle="mapbox://styles/mapbox/light-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
@@ -269,7 +316,8 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
         minZoom={3}
       >
         {/* Render all markers and clusters */}
-        {clusters.flatMap(cluster => renderMarker(cluster))}
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {clusters.flatMap(cluster => renderMarker(cluster as any))}
         
         {/* Detailed popup on click */}
         {popupInfo && (
@@ -299,18 +347,18 @@ const MapboxMapCool: React.FC<MapboxMapProps> = ({
               }}>
                 {popupInfo.properties.popup}
               </h3>
-              {enrichedStories.find(s => s.id === popupInfo.properties.id) && (
+              {popupInfo.properties && (
                 <>
                   <div className="text-xs mb-2" style={{ color: '#7f8c8d' }}>
-                    {enrichedStories.find(s => s.id === popupInfo.properties.id)?.startDate && 
-                     enrichedStories.find(s => s.id === popupInfo.properties.id)?.endDate && 
-                      `${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.startDate!).getFullYear()} - 
-                       ${new Date(enrichedStories.find(s => s.id === popupInfo.properties.id)!.endDate!).getFullYear()}`
+                    {popupInfo.properties.startDate && 
+                     popupInfo.properties.endDate && 
+                      `${new Date(popupInfo.properties.startDate).getFullYear()} - 
+                       ${new Date(popupInfo.properties.endDate).getFullYear()}`
                     }
                   </div>
-                  {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description && (
+                  {popupInfo.properties.description && (
                     <p className="text-xs line-clamp-3 mb-3" style={{ color: '#2c3e50' }}>
-                      {enrichedStories.find(s => s.id === popupInfo.properties.id)?.description}
+                      {popupInfo.properties.description}
                     </p>
                   )}
                   <div 

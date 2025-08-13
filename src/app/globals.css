@@ -46,6 +46,32 @@
   }
 }
 
+/* Mapbox popup arrow styling - default green for active state */
+.popup-state-active .mapboxgl-popup-tip,
+.popup-state-future .mapboxgl-popup-tip,
+.mapbox-detail-popup .mapboxgl-popup-tip {
+  border-top-color: rgba(151, 216, 192, 0.98) !important;
+  border-bottom-color: rgba(151, 216, 192, 0.98) !important;
+  border-left-color: rgba(151, 216, 192, 0.98) !important;
+  border-right-color: rgba(151, 216, 192, 0.98) !important;
+}
+
+/* Yellow arrow for declining state */
+.popup-state-declining .mapboxgl-popup-tip {
+  border-top-color: rgba(255, 203, 81, 0.98) !important;
+  border-bottom-color: rgba(255, 203, 81, 0.98) !important;
+  border-left-color: rgba(255, 203, 81, 0.98) !important;
+  border-right-color: rgba(255, 203, 81, 0.98) !important;
+}
+
+/* Red arrow for closed state */
+.popup-state-closed .mapboxgl-popup-tip {
+  border-top-color: rgba(238, 87, 96, 0.98) !important;
+  border-bottom-color: rgba(238, 87, 96, 0.98) !important;
+  border-left-color: rgba(238, 87, 96, 0.98) !important;
+  border-right-color: rgba(238, 87, 96, 0.98) !important;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -229,6 +255,24 @@ select:focus-visible {
 
 .mapbox-marker:hover {
   @apply scale-110;
+}
+
+/* Custom select styling to match input fields */
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f5cdb4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem 1rem;
+  padding-right: 2.5rem;
+}
+
+.custom-select option {
+  background-color: #6b6275;
+  color: #f5cdb4;
+  padding: 0.5rem;
 }
 
 .mapbox-cluster-marker {

@@ -12,7 +12,6 @@ interface BusinessDetailModalProps {
   onNavigate?: (direction: 'prev' | 'next') => void;
   hasPrevious?: boolean;
   hasNext?: boolean;
-  slideDirection?: 'left' | 'right' | 'left-in' | 'right-out' | null;
 }
 
 const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({ 
@@ -22,91 +21,42 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   originRect,
   onNavigate,
   hasPrevious = false,
-  hasNext = false,
-  slideDirection = null
+  hasNext = false
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [currentSlideX, setCurrentSlideX] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen && originRect) {
       setIsVisible(true);
-      
-      // If sliding in, start expanded but off-screen
-      if (slideDirection === 'right' || slideDirection === 'left') {
-        setIsExpanded(true);
-        setShowContent(true);
-        // Trigger slide-in animation
+      // Start expansion after a frame
+      requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            // Force reflow to ensure the modal starts off-screen
-          });
+          setIsExpanded(true);
+          // Show content after expansion starts
+          setTimeout(() => setShowContent(true), 300);
         });
-      } else {
-        // Normal expansion from card
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setIsExpanded(true);
-            // Show content after expansion starts
-            setTimeout(() => setShowContent(true), 300);
-          });
-        });
-      }
+      });
     } else if (!isOpen) {
       setShowContent(false);
       setIsExpanded(false);
       setTimeout(() => setIsVisible(false), 500);
     }
-  }, [isOpen, originRect, slideDirection]);
+  }, [isOpen, originRect]);
 
-  // Handle slide animations
+  // Handle story changes with fade transition
   useEffect(() => {
-    if (slideDirection && isExpanded) {
-      // Content will slide with the modal, no need for separate fade
+    if (isTransitioning) {
+      setShowContent(false);
+      setTimeout(() => {
+        setShowContent(true);
+        setIsTransitioning(false);
+      }, 300);
     }
-  }, [slideDirection, isExpanded]);
-
-  // Initialize slide position based on direction
-  useEffect(() => {
-    const viewportWidth = window.innerWidth;
-    
-    if (slideDirection === 'left') {
-      // This modal is sliding OUT to the left
-      if (isExpanded) {
-        requestAnimationFrame(() => {
-          setCurrentSlideX(-viewportWidth);
-        });
-      }
-    } else if (slideDirection === 'right') {
-      // This modal is sliding IN from the right
-      setCurrentSlideX(viewportWidth); // Start off-screen right
-      if (isExpanded) {
-        requestAnimationFrame(() => {
-          setCurrentSlideX(0); // Animate to center
-        });
-      }
-    } else if (slideDirection === 'left-in') {
-      // This modal is sliding IN from the left (for previous)
-      setCurrentSlideX(-viewportWidth); // Start off-screen left
-      if (isExpanded) {
-        requestAnimationFrame(() => {
-          setCurrentSlideX(0); // Animate to center
-        });
-      }
-    } else if (slideDirection === 'right-out') {
-      // This modal is sliding OUT to the right (for previous)
-      if (isExpanded) {
-        requestAnimationFrame(() => {
-          setCurrentSlideX(viewportWidth);
-        });
-      }
-    } else if (!slideDirection && isExpanded) {
-      setCurrentSlideX(0);
-    }
-  }, [slideDirection, isExpanded]);
+  }, [story.id, isTransitioning]);
 
   if (!isVisible || !originRect) return null;
 
@@ -119,12 +69,17 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   const initialScaleX = originRect.width / modalWidth;
   const initialScaleY = originRect.height / modalHeight;
 
+  const handleNavigate = (direction: 'prev' | 'next') => {
+    setIsTransitioning(true);
+    onNavigate?.(direction);
+  };
+
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
       <div 
         className={`absolute inset-0 bg-black backdrop-blur-md transition-all duration-500 ease-out ${
-          isExpanded && !slideDirection ? 'bg-opacity-70' : 'bg-opacity-0'
+          isExpanded ? 'bg-opacity-70' : 'bg-opacity-0'
         }`}
         onClick={onClose}
       />
@@ -132,28 +87,24 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
       {/* Expanding Modal */}
       <div 
         ref={modalRef}
-        className={`fixed bg-[#4a4a57] border border-[#6b6275] shadow-2xl transition-all ease-out overflow-hidden ${
-          slideDirection ? 'duration-500' : 'duration-700'
-        }`}
+        className="fixed bg-[#4a4a57] border border-[#6b6275] shadow-2xl transition-all duration-700 ease-out overflow-hidden"
         style={{
           width: `${modalWidth}px`,
           height: `${modalHeight}px`,
           left: '50%',
           top: '50%',
           transform: isExpanded 
-            ? `translate(-50%, -50%) translateX(${currentSlideX}px) scale(1)` 
+            ? `translate(-50%, -50%) scale(1)` 
             : `translate(-50%, -50%) translate(${(originRect.left + originRect.width/2 - viewportWidth/2)}px, ${(originRect.top + originRect.height/2 - viewportHeight/2)}px) scale(${initialScaleX}, ${initialScaleY})`,
           transformOrigin: 'center',
-          transitionTimingFunction: slideDirection
-            ? 'cubic-bezier(0.4, 0, 0.2, 1)'
-            : isExpanded 
-              ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' 
-              : 'cubic-bezier(0.4, 0, 0.2, 1)'
+          transitionTimingFunction: isExpanded 
+            ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' 
+            : 'cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
         {/* Header */}
         <div className={`flex items-center justify-between p-6 border-b border-[#6b6275] bg-[#4a4a57] transition-opacity duration-300 ${
-          showContent && !slideDirection ? 'opacity-100' : slideDirection ? 'opacity-100' : 'opacity-0'
+          showContent && !isTransitioning ? 'opacity-100' : 'opacity-0'
         }`}>
           <div className="flex-1">
             <h2 className="text-xl font-mono font-bold text-[#97d8c0] mb-1">{story.title}</h2>
@@ -180,8 +131,8 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
         
         {/* Content */}
         <div 
-          className={`p-6 overflow-y-auto h-[calc(100%-88px)] transition-opacity duration-500 ${
-            showContent && !slideDirection ? 'opacity-100' : slideDirection ? 'opacity-100' : 'opacity-0'
+          className={`p-6 overflow-y-auto h-[calc(100%-88px)] transition-opacity duration-300 ${
+            showContent && !isTransitioning ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <StoryDetail story={story} />
@@ -190,10 +141,10 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           <div className="mt-6 pt-6 border-t border-[#6b6275]">
             <div className="flex gap-3">
               <button 
-                onClick={() => onNavigate?.('prev')}
-                disabled={!hasPrevious}
+                onClick={() => handleNavigate('prev')}
+                disabled={!hasPrevious || isTransitioning}
                 className={`flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 ${
-                  hasPrevious 
+                  hasPrevious && !isTransitioning
                     ? 'bg-[#4a4a57] border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer' 
                     : 'bg-[#4a4a57]/50 border-[#6b6275]/30 text-[#8b7d8e]/50 cursor-not-allowed'
                 }`}
@@ -205,10 +156,10 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
               </button>
               
               <button 
-                onClick={() => onNavigate?.('next')}
-                disabled={!hasNext}
+                onClick={() => handleNavigate('next')}
+                disabled={!hasNext || isTransitioning}
                 className={`flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 ${
-                  hasNext 
+                  hasNext && !isTransitioning
                     ? 'bg-[#4a4a57] border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer' 
                     : 'bg-[#4a4a57]/50 border-[#6b6275]/30 text-[#8b7d8e]/50 cursor-not-allowed'
                 }`}

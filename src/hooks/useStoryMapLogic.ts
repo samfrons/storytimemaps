@@ -59,10 +59,68 @@ export const useStoryMapLogic = () => {
     Promise.all([fetchJewishBusinesses(), fetchEnrichedStories()]);
   }, []);
 
+  // Function to extract business type from story title
+  const extractBusinessTypeFromTitle = (title: string): string | undefined => {
+    const businessTypePatterns = [
+      { pattern: /tailor\s*shop/i, type: 'Tailoring' },
+      { pattern: /department\s*store/i, type: 'Department Store' },
+      { pattern: /medical\s*practice/i, type: 'Medical Practice' },
+      { pattern: /photography\s*agency/i, type: 'Photography Agency' },
+      { pattern: /fine\s*foods/i, type: 'Fine Foods' },
+      { pattern: /textiles/i, type: 'Textiles' },
+      { pattern: /bakery/i, type: 'Bakery' },
+      { pattern: /restaurant/i, type: 'Restaurant' },
+      { pattern: /cafe/i, type: 'Café' },
+      { pattern: /theater/i, type: 'Theater' },
+      { pattern: /bookstore/i, type: 'Bookstore' },
+      { pattern: /furrier/i, type: 'Furrier' },
+      { pattern: /bank/i, type: 'Bank' },
+      { pattern: /lawyer/i, type: 'Law Office' },
+      { pattern: /dentist/i, type: 'Dental Practice' },
+      { pattern: /doctor/i, type: 'Medical Practice' },
+      { pattern: /pharmacy/i, type: 'Pharmacy' }
+    ];
+
+    for (const { pattern, type } of businessTypePatterns) {
+      if (pattern.test(title)) {
+        return type;
+      }
+    }
+    return undefined;
+  };
+
   useEffect(() => {
-    // Show enriched stories in the sidebar
-    setVisibleStories(enrichedStories);
-  }, [enrichedStories, currentDate]);
+    // Enhance stories with business type data
+    const enhancedStories = enrichedStories.map(story => {
+      // First try to find matching business in Jewish businesses dataset
+      const matchingBusiness = jewishBusinesses.find(business =>
+        story.title.toLowerCase().includes(business.properties.name.toLowerCase()) ||
+        business.properties.name.toLowerCase().includes(story.title.toLowerCase())
+      );
+      
+      // If found in dataset, use that business type
+      if (matchingBusiness?.properties.business_type) {
+        return {
+          ...story,
+          businessType: matchingBusiness.properties.business_type
+        };
+      }
+      
+      // Otherwise, extract business type from the story title
+      const extractedType = extractBusinessTypeFromTitle(story.title);
+      if (extractedType) {
+        return {
+          ...story,
+          businessType: extractedType
+        };
+      }
+      
+      // Fall back to existing businessType or undefined
+      return story;
+    });
+    
+    setVisibleStories(enhancedStories);
+  }, [enrichedStories, jewishBusinesses, currentDate]);
 
   const handleMarkerClick = useCallback((storyId: string) => {
     setActiveStoryId(storyId);

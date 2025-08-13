@@ -173,6 +173,30 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     setLabelOpacity(popupInfo ? 0.6 : 1)
   }, [popupInfo, mapLoaded])
 
+  // Fix popup arrow color after popup renders
+  useEffect(() => {
+    if (!popupInfo) return
+
+    const timer = setTimeout(() => {
+      const popupTips = document.querySelectorAll('.mapboxgl-popup-tip')
+      const state = popupInfo.properties.state || 'active'
+      
+      let color = 'rgba(151, 216, 192, 0.98)' // default green
+      if (state === 'declining') color = 'rgba(255, 203, 81, 0.98)'
+      if (state === 'closed') color = 'rgba(238, 87, 96, 0.98)'
+      
+      popupTips.forEach(tip => {
+        const tipElement = tip as HTMLElement
+        tipElement.style.borderTopColor = color
+        tipElement.style.borderBottomColor = color  
+        tipElement.style.borderLeftColor = color
+        tipElement.style.borderRightColor = color
+      })
+    }, 50) // Small delay to ensure DOM is ready
+
+    return () => clearTimeout(timer)
+  }, [popupInfo])
+
 
   const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
     const expansionZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id)
@@ -403,7 +427,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             closeButton={true}
             anchor="top"
             offset={15}
-            className="mapbox-detail-popup"
+            className={`mapbox-detail-popup popup-state-${popupInfo.properties.state || 'active'}`}
           >
             <div 
               style={{

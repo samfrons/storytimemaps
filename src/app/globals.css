@@ -6,6 +6,7 @@
 :root,
 [data-theme="moody"] {
   --primary: #97d8c0;
+  --primary-rgb: 151, 216, 192;
   --primary-light: #a9e2d0;
   --secondary: #ee5760;
   --warning: #ffcb51;
@@ -16,6 +17,7 @@
   --foreground: #f5cdb4;
   --foreground-muted: #f5cdb4cc;
   --muted: #6b6275;
+  --muted-rgb: 107, 98, 117;
   --border: #6b6275;
   --shadow: rgba(0, 0, 0, 0.3);
   --map-overlay: rgba(59, 51, 64, 0.1);
@@ -30,6 +32,7 @@
 /* Cool Theme - Light blues and teals */
 [data-theme="cool"] {
   --primary: #4a90e2;
+  --primary-rgb: 74, 144, 226;
   --primary-light: #6ba3e7;
   --secondary: #2c5aa0;
   --warning: #f5a623;
@@ -40,6 +43,7 @@
   --foreground: #2c3e50;
   --foreground-muted: #34495e;
   --muted: #7f8c8d;
+  --muted-rgb: 127, 140, 141;
   --border: #bdc3c7;
   --shadow: rgba(0, 0, 0, 0.1);
   --map-overlay: rgba(240, 244, 248, 0.1);
@@ -54,6 +58,7 @@
 /* Warm Theme - Oranges, browns, earthy */
 [data-theme="warm"] {
   --primary: #d67b5a;
+  --primary-rgb: 214, 123, 90;
   --primary-light: #e8956f;
   --secondary: #8b4513;
   --warning: #ff8c00;
@@ -64,6 +69,7 @@
   --foreground: #5d4037;
   --foreground-muted: #6d4c41;
   --muted: #8d6e63;
+  --muted-rgb: 141, 110, 99;
   --border: #bcaaa4;
   --shadow: rgba(0, 0, 0, 0.15);
   --map-overlay: rgba(244, 241, 232, 0.1);
@@ -78,6 +84,7 @@
 /* Hot Theme - Reds, bright oranges */
 [data-theme="hot"] {
   --primary: #ff4444;
+  --primary-rgb: 255, 68, 68;
   --primary-light: #ff6666;
   --secondary: #ff8800;
   --warning: #ff6600;
@@ -88,6 +95,7 @@
   --foreground: #8b0000;
   --foreground-muted: #a00000;
   --muted: #cd5c5c;
+  --muted-rgb: 205, 92, 92;
   --border: #ffc1cc;
   --shadow: rgba(255, 0, 0, 0.2);
   --map-overlay: rgba(255, 245, 245, 0.1);
@@ -102,6 +110,7 @@
 /* Cold Theme - Icy blues, grays */
 [data-theme="cold"] {
   --primary: #64b5f6;
+  --primary-rgb: 100, 181, 246;
   --primary-light: #90caf9;
   --secondary: #455a64;
   --warning: #90a4ae;
@@ -112,6 +121,7 @@
   --foreground: #263238;
   --foreground-muted: #37474f;
   --muted: #78909c;
+  --muted-rgb: 120, 144, 156;
   --border: #b0bec5;
   --shadow: rgba(0, 0, 0, 0.08);
   --map-overlay: rgba(232, 244, 248, 0.1);
@@ -126,6 +136,7 @@
 /* Bauhaus Theme - Primary colors, black/white with light backgrounds */
 [data-theme="bauhaus"] {
   --primary: #0066ff;
+  --primary-rgb: 0, 102, 255;
   --primary-light: #3388ff;
   --secondary: #ff0000;
   --warning: #ffcc00;
@@ -135,7 +146,8 @@
   --background-rgb: 245, 245, 240;
   --foreground: #000000;
   --foreground-muted: #333333;
-  --muted: #666666;
+  --muted: #ffffff;
+  --muted-rgb: 255, 255, 255;
   --border: #000000;
   --shadow: rgba(0, 0, 0, 0.3);
   --map-overlay: rgba(245, 245, 240, 0.1);
@@ -156,6 +168,7 @@
 /* Art Nouveau Theme - Muted greens, browns, golds */
 [data-theme="art-nouveau"] {
   --primary: #8b7355;
+  --primary-rgb: 139, 115, 85;
   --primary-light: #a0916b;
   --secondary: #556b2f;
   --warning: #daa520;
@@ -166,6 +179,7 @@
   --foreground: #3e2723;
   --foreground-muted: #4e342e;
   --muted: #8d6e63;
+  --muted-rgb: 141, 110, 99;
   --border: #a1887f;
   --shadow: rgba(62, 39, 35, 0.2);
   --map-overlay: rgba(248, 246, 240, 0.1);
@@ -177,16 +191,15 @@
   --accent-chartreuse: #689f38;
 }
 
-/* Mapbox popup arrow styling - default blue for active state */
+/* Mapbox popup arrow styling - uses theme primary color for active state */
 .popup-state-active .mapboxgl-popup-tip,
 .popup-state-future .mapboxgl-popup-tip,
 .mapbox-detail-popup .mapboxgl-popup-tip {
-  border-top-color: #3388ff !important;
-  border-bottom-color: #3388ff !important;
-  border-left-color: #3388ff !important;
-  border-right-color: #3388ff !important;
+  border-top-color: var(--primary) !important;
+  border-bottom-color: var(--primary) !important;
+  border-left-color: var(--primary) !important;
+  border-right-color: var(--primary) !important;
 }
-/* Preserved seagreen for future use: rgba(151, 216, 192, 0.98) */
 
 /* Yellow arrow for declining state */
 .popup-state-declining .mapboxgl-popup-tip {
@@ -290,12 +303,11 @@ select:focus-visible {
   }
   
   .tooltip-label-active {
-    background: #3388ff;
-    color: #ffffff;
-    border: 1px solid #3388ff;
+    background: rgba(var(--primary-rgb), 0.98);
+    color: var(--foreground);
+    border: 1px solid var(--primary);
     font-weight: 600;
   }
-  /* Preserved seagreen for future use: rgba(151, 216, 192, 0.98) */
   
   .tooltip-label-declining {
     background: rgba(255, 203, 81, 0.98);

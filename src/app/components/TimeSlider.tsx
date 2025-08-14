@@ -3,6 +3,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTheme } from 'next-themes';
 
 
 interface TimeSliderProps {
@@ -14,6 +15,7 @@ interface TimeSliderProps {
 
 const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, onChange }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const { theme } = useTheme();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(parseInt(e.target.value));
@@ -51,7 +53,9 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
             onClick={handlePlayPause}
             className="p-2 border transition-all shadow-sm hover:shadow-md"
             style={{
-              backgroundColor: 'var(--input-bg, #ffffff)',
+              backgroundColor: theme === 'bauhaus' ? 'var(--input-bg, #ffffff)' : 
+                              theme === 'moody' || !theme ? 'rgba(var(--muted-rgb, 107, 98, 117), 1)' : 
+                              'var(--input-bg, var(--muted))',
               borderColor: 'var(--border)',
             }}
             aria-label={isPlaying ? "Pause" : "Play"}
@@ -69,7 +73,9 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
           </button>
           <span className="text-xs font-mono font-bold px-3 py-1.5 border shadow-sm uppercase tracking-wide" style={{
             color: 'var(--foreground)',
-            backgroundColor: 'var(--input-bg, #ffffff)',
+            backgroundColor: theme === 'bauhaus' ? 'var(--input-bg, #ffffff)' : 
+                            theme === 'moody' || !theme ? 'rgba(var(--muted-rgb, 107, 98, 117), 1)' : 
+                            'var(--input-bg, var(--muted))',
             borderColor: 'var(--border)'
           }}>
             {`${String(currentDate.getMonth() + 1).padStart(2, '0')}.${currentDate.getFullYear()}`}
@@ -82,7 +88,12 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
         
         <div className="relative flex-1">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full h-4 overflow-hidden" style={{backgroundColor: 'var(--input-bg, #ffffff)', border: '1px solid var(--border)'}}>
+            <div className="w-full h-4 overflow-hidden" style={{
+              backgroundColor: theme === 'bauhaus' ? 'var(--card-bg, #ffffff)' : 
+                              theme === 'moody' || !theme ? 'rgba(var(--muted-rgb, 107, 98, 117), 0.5)' : 
+                              'rgba(var(--muted-rgb), 0.5)',
+              border: '1px solid var(--border)'
+            }}>
               <div 
                 className="h-full transition-all duration-300 ease-out"
                 style={{ width: `${percentage}%`, backgroundColor: 'var(--danger)' }}

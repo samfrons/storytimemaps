@@ -4,6 +4,7 @@
 
 import Image from 'next/image';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useTheme } from 'next-themes';
 import TimeSlider from './TimeSlider';
 import ThemeSwitcher from './ThemeSwitcher';
 import { StoryMap } from '../../types';
@@ -31,6 +32,7 @@ const StoryList: React.FC<StoryListProps> = ({
 }) => {
   const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { theme } = useTheme();
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
@@ -219,12 +221,26 @@ const StoryList: React.FC<StoryListProps> = ({
         };
       case 'active':
       default:
-        return {
-          backgroundColor: '#3388ff',
-          borderLeftColor: '#3388ff',
-          color: '#ffffff'
-        };
-        // Preserved seagreen for future use: rgba(151, 216, 192, 0.85)
+        // Use theme-specific colors
+        if (theme === 'moody' || !theme) {
+          return {
+            backgroundColor: 'rgba(151, 216, 192, 1)',
+            borderLeftColor: '#97d8c0',
+            color: '#2a2a2a'
+          };
+        } else if (theme === 'bauhaus') {
+          return {
+            backgroundColor: 'var(--primary)',
+            borderLeftColor: 'var(--primary)',
+            color: '#ffffff'
+          };
+        } else {
+          return {
+            backgroundColor: 'rgba(var(--primary-rgb), 0.85)',
+            borderLeftColor: 'var(--primary)',
+            color: theme === 'cool' || theme === 'cold' ? '#ffffff' : 'var(--foreground)'
+          };
+        }
     }
   };
 
@@ -476,11 +492,28 @@ const StoryList: React.FC<StoryListProps> = ({
               className={`view-details-button mt-3 px-3 py-1.5 text-xs font-mono bg-transparent border transition-all uppercase tracking-wider font-semibold inline-block ${
                 story.id === activeStoryId 
                   ? 'hover:opacity-80'
-                  : 'hover:bg-[#f5cdb4] hover:text-[#2a2a2a]'
+                  : ''
               }`}
               style={{
-                color: story.id === activeStoryId ? '#2a2a2a' : '#f5cdb4',
-                borderColor: story.id === activeStoryId ? '#2a2a2a' : '#f5cdb4'
+                color: story.id === activeStoryId 
+                  ? (getActiveStoryStyle(story, true).color === '#ffffff' ? '#ffffff' : '#2a2a2a')
+                  : 'var(--foreground)',
+                borderColor: story.id === activeStoryId 
+                  ? (getActiveStoryStyle(story, true).color === '#ffffff' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.3)')
+                  : 'var(--muted)',
+                backgroundColor: story.id === activeStoryId ? 'transparent' : 'transparent'
+              }}
+              onMouseEnter={(e) => {
+                if (story.id !== activeStoryId) {
+                  e.currentTarget.style.backgroundColor = 'var(--muted)';
+                  e.currentTarget.style.color = 'var(--background)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (story.id !== activeStoryId) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'var(--foreground)';
+                }
               }}
               onClick={(e) => {
                 e.stopPropagation();

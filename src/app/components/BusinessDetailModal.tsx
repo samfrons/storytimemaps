@@ -87,8 +87,12 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
       {/* Expanding Modal */}
       <div 
         ref={modalRef}
-        className="fixed bg-[#4a4a57] border border-[#6b6275] shadow-2xl transition-all duration-700 ease-out overflow-hidden"
+        className="fixed shadow-2xl transition-all duration-700 ease-out overflow-hidden"
         style={{
+          backgroundColor: 'var(--background)',
+          borderColor: 'var(--border)',
+          borderWidth: '1px',
+          borderStyle: 'solid',
           width: `${modalWidth}px`,
           height: `${modalHeight}px`,
           left: '50%',
@@ -103,17 +107,37 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
         }}
       >
         {/* Header */}
-        <div className={`flex items-center justify-between p-6 border-b border-[#6b6275] bg-[#4a4a57] transition-opacity duration-300 ${
-          showContent && !isTransitioning ? 'opacity-100' : 'opacity-0'
-        }`}>
+        <div 
+          className={`flex items-center justify-between p-6 border-b transition-opacity duration-300 ${
+            showContent && !isTransitioning ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{
+            borderBottomColor: 'var(--border)',
+            backgroundColor: 'var(--background)'
+          }}
+        >
           <div className="flex-1">
-            <h2 className="text-xl font-mono font-bold text-[#97d8c0] mb-1">{story.title}</h2>
-            <div className="flex items-center gap-4 text-xs font-mono text-[#8b7d8e]">
-              <span className="text-[#eca27d]">
+            <h2 
+              className="text-xl font-mono font-bold mb-1"
+              style={{ color: 'var(--primary)' }}
+            >
+              {story.title}
+            </h2>
+            <div 
+              className="flex items-center gap-4 text-xs font-mono"
+              style={{ color: 'var(--foreground-muted)' }}
+            >
+              <span style={{ color: 'var(--accent-orange)' }}>
                 {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
               </span>
               {story.category && (
-                <span className="px-2 py-1 bg-[#6b6275]/50 text-[#eca27d] uppercase tracking-wide">
+                <span 
+                  className="px-2 py-1 uppercase tracking-wide"
+                  style={{ 
+                    backgroundColor: 'rgba(var(--muted-rgb), 0.5)',
+                    color: 'var(--accent-orange)'
+                  }}
+                >
                   {story.category}
                 </span>
               )}
@@ -121,9 +145,30 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-[#6b6275]/50 transition-all duration-200 hover:scale-110 active:scale-95"
+            className="p-2 transition-all duration-200 hover:scale-110 active:scale-95"
+            style={{
+              backgroundColor: 'transparent'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(var(--muted-rgb), 0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
           >
-            <svg className="w-5 h-5 text-[#8b7d8e] hover:text-[#f5cdb4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg 
+              className="w-5 h-5 transition-colors duration-200" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              style={{ color: 'var(--foreground-muted)' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--foreground)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--foreground-muted)';
+              }}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -138,16 +183,31 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           <StoryDetail story={story} />
           
           {/* Navigation Buttons */}
-          <div className="mt-6 pt-6 border-t border-[#6b6275]">
+          <div 
+            className="mt-6 pt-6 border-t"
+            style={{ borderTopColor: 'var(--border)' }}
+          >
             <div className="flex gap-3">
               <button 
                 onClick={() => handleNavigate('prev')}
                 disabled={!hasPrevious || isTransitioning}
-                className={`flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 ${
-                  hasPrevious && !isTransitioning
-                    ? 'bg-[#4a4a57] border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer' 
-                    : 'bg-[#4a4a57]/50 border-[#6b6275]/30 text-[#8b7d8e]/50 cursor-not-allowed'
-                }`}
+                className="flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  backgroundColor: hasPrevious && !isTransitioning ? 'var(--background)' : 'rgba(var(--background-rgb), 0.5)',
+                  borderColor: hasPrevious && !isTransitioning ? 'var(--border)' : 'rgba(var(--muted-rgb), 0.3)',
+                  color: hasPrevious && !isTransitioning ? 'var(--foreground)' : 'rgba(var(--foreground-muted), 0.5)',
+                  cursor: hasPrevious && !isTransitioning ? 'pointer' : 'not-allowed'
+                }}
+                onMouseEnter={(e) => {
+                  if (hasPrevious && !isTransitioning) {
+                    e.currentTarget.style.backgroundColor = 'rgba(var(--muted-rgb), 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (hasPrevious && !isTransitioning) {
+                    e.currentTarget.style.backgroundColor = 'var(--background)';
+                  }
+                }}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -158,11 +218,23 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
               <button 
                 onClick={() => handleNavigate('next')}
                 disabled={!hasNext || isTransitioning}
-                className={`flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 ${
-                  hasNext && !isTransitioning
-                    ? 'bg-[#4a4a57] border-[#6b6275] text-[#f5cdb4] hover:bg-[#6b6275]/30 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer' 
-                    : 'bg-[#4a4a57]/50 border-[#6b6275]/30 text-[#8b7d8e]/50 cursor-not-allowed'
-                }`}
+                className="flex-1 font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  backgroundColor: hasNext && !isTransitioning ? 'var(--background)' : 'rgba(var(--background-rgb), 0.5)',
+                  borderColor: hasNext && !isTransitioning ? 'var(--border)' : 'rgba(var(--muted-rgb), 0.3)',
+                  color: hasNext && !isTransitioning ? 'var(--foreground)' : 'rgba(var(--foreground-muted), 0.5)',
+                  cursor: hasNext && !isTransitioning ? 'pointer' : 'not-allowed'
+                }}
+                onMouseEnter={(e) => {
+                  if (hasNext && !isTransitioning) {
+                    e.currentTarget.style.backgroundColor = 'rgba(var(--muted-rgb), 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (hasNext && !isTransitioning) {
+                    e.currentTarget.style.backgroundColor = 'var(--background)';
+                  }
+                }}
               >
                 Next
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

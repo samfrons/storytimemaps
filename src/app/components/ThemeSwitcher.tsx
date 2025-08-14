@@ -2,11 +2,13 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 
 const ThemeSwitcher: React.FC = () => {
   const { theme, setTheme, themes } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,13 +30,20 @@ const ThemeSwitcher: React.FC = () => {
 
   const themeDisplayNames: Record<string, string> = {
     moody: 'Moody',
+    bauhaus: 'Bauhaus',
     cool: 'Cool',
     warm: 'Warm',
     hot: 'Hot',
     cold: 'Cold',
-    bauhaus: 'Bauhaus',
     'art-nouveau': 'Art Nouveau'
   };
+
+  // Define custom theme order with Bauhaus right after Moody
+  const themeOrder = ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'];
+  
+  const orderedThemes = themeOrder.filter(themeName => 
+    themes?.includes(themeName)
+  );
 
   const currentThemeName = themeDisplayNames[theme || 'moody'] || 'Moody';
 
@@ -70,12 +79,13 @@ const ThemeSwitcher: React.FC = () => {
                backgroundColor: 'var(--dropdown-bg, var(--border))',
                borderColor: 'var(--border)'
              }}>
-          {themes?.filter(t => t !== 'system').map((themeName) => (
+          {orderedThemes.map((themeName) => (
             <button
               key={themeName}
               onClick={() => {
                 setTheme(themeName);
                 setIsOpen(false);
+                router.push(`/${themeName}`);
               }}
               className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:opacity-80 uppercase tracking-wide ${
                 theme === themeName ? 'border-l-2' : ''

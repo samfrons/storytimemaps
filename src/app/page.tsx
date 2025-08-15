@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import StoryList from './components/StoryList';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
@@ -18,7 +17,6 @@ const MapboxMap = dynamic(() => import('./components/MapboxMap'), {
 
 export default function OverlayTestPage() {
   const { theme, setTheme } = useTheme();
-  const router = useRouter();
   const [showIntro, setShowIntro] = useState(true);
 
   // Check sessionStorage on mount to see if intro was already seen in this session

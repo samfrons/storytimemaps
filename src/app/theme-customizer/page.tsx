@@ -8,7 +8,7 @@ import { useIsMounted } from '@/hooks/useIsMounted';
 export default function ThemeCustomizerPage() {
   const [isOpen, setIsOpen] = useState(false);
   const mounted = useIsMounted();
-  const { theme } = useTheme();
+  useTheme(); // Keep hook call but don't destructure unused theme
 
   useEffect(() => {
     setIsOpen(true);
@@ -28,6 +28,23 @@ export default function ThemeCustomizerPage() {
             </h1>
             <p className="text-sm font-mono" style={{ color: 'var(--foreground-muted)' }}>
               Customize colors for all themes. Changes are saved automatically.
+            </p>
+          </div>
+
+          <div className="mb-6">
+            <button
+              onClick={() => window.open('/', '_blank')}
+              className="px-6 py-3 font-mono text-sm border hover:opacity-80 transition-all"
+              style={{
+                backgroundColor: 'var(--success)',
+                color: 'var(--active-text)',
+                borderColor: 'var(--success)'
+              }}
+            >
+              🔍 Open Live Preview
+            </button>
+            <p className="text-xs font-mono mt-2" style={{ color: 'var(--foreground-muted)' }}>
+              Opens the main app in a new tab. Changes you make here will be visible immediately in the preview.
             </p>
           </div>
 

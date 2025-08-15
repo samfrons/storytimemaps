@@ -704,7 +704,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }, 50) // Small delay to ensure DOM is ready
 
     return () => clearTimeout(timer)
-  }, [popupInfo])
+  }, [popupInfo, colors.active, colors.declining, colors.closed])
 
 
   const handleClusterClick = useCallback((cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {

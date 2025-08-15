@@ -6,7 +6,6 @@ import ColorGroup from './ColorGroup';
 import ExportPanel from './ExportPanel';
 import { getThemeVariables, updateCSSVariable, resetThemeToDefaults } from '../utils/themeStorage';
 import { debounce } from '@/utils/performance';
-import { useIsMounted } from '@/hooks/useIsMounted';
 
 interface ThemeCustomizerProps {
   isOpen: boolean;
@@ -18,7 +17,6 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({ isOpen, onClose }) =>
   const [customVariables, setCustomVariables] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState<'colors' | 'export'>('colors');
   const [isModified, setIsModified] = useState(false);
-  const mounted = useIsMounted();
 
   useEffect(() => {
     if (theme) {

@@ -113,8 +113,8 @@
 
 /* Hot Theme - Bloody Water inspired reds */
 [data-theme="hot"] {
-  --primary: #e4525e;
-  --primary-rgb: 228, 82, 94;
+  --primary: #6b1f2a;
+  --primary-rgb: 107, 31, 42;
   --primary-light: #ff6666;
   --secondary: #ffffff;
   --warning: #ff8c00; /* Orange for declining state - matches popup */

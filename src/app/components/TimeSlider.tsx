@@ -3,7 +3,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useTheme } from 'next-themes';
 
 
 interface TimeSliderProps {
@@ -15,7 +14,6 @@ interface TimeSliderProps {
 
 const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, onChange }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { theme } = useTheme();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(parseInt(e.target.value));

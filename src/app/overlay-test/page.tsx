@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import StoryList from '../components/StoryList';
@@ -290,7 +290,7 @@ export default function OverlayTestPage() {
               <div className="space-y-4 max-w-2xl mx-auto">
                 <p className="text-base sm:text-lg md:text-xl leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
                   Explore the stories of over 8,000 Jewish-owned businesses that once 
-                  formed the backbone of Berlin's commercial life.
+                  formed the backbone of Berlin&apos;s commercial life.
                 </p>
                 <p className="text-sm sm:text-base md:text-lg font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   Navigate through time to witness their rise, struggles, and the tragic 
@@ -308,7 +308,7 @@ export default function OverlayTestPage() {
                     color: 'var(--background)'
                   }}
                 >
-                  <span>Let's Explore</span>
+                  <span>Let&apos;s Explore</span>
                   <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -386,8 +386,8 @@ export default function OverlayTestPage() {
                   <p className="leading-relaxed">
                     Our database contains over 8,000 verified business records, compiled from 
                     historical directories, registration documents, and survivor testimonies. 
-                    Each entry represents not just a business, but a family's livelihood and 
-                    contribution to Berlin's economy.
+                    Each entry represents not just a business, but a family&apos;s livelihood and 
+                    contribution to Berlin&apos;s economy.
                   </p>
                 </div>
 
@@ -422,12 +422,12 @@ export default function OverlayTestPage() {
                   <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Research Team</h3>
                   <p className="leading-relaxed">
                     <strong>Dr. Christoph Kreutzmüller</strong><br />
-                    Historical Research & Data Compilation<br />
+                    Historical Research &amp; Data Compilation<br />
                     <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Humboldt University Berlin</span>
                   </p>
                   <p className="leading-relaxed mt-3">
                     <strong>StoryTimeMaps</strong><br />
-                    Interactive Visualization & Web Development<br />
+                    Interactive Visualization &amp; Web Development<br />
                     <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Making history accessible through technology</span>
                   </p>
                 </div>
@@ -435,7 +435,7 @@ export default function OverlayTestPage() {
                 <div className="pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
                   <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
                     For academic citations, please reference: Kreutzmüller, C. (2024). 
-                    "Jewish Businesses in Berlin 1900-1945: A Digital Archive"
+                    &quot;Jewish Businesses in Berlin 1900-1945: A Digital Archive&quot;
                   </p>
                 </div>
               </div>

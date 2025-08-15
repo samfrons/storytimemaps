@@ -369,8 +369,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           case 'hot':
             return {
               water: '#3d3d4e', // Dark gray/blue for water
-              park: '#7d2633', // Very dark red for parks
-              road: '#d4596a', // Light red/pink roads
+              park: '#6b1f2a', // Very dark red for parks
+              road: '#c85464', // Pink/coral roads
               background: '#8b2635' // Dark red background
             }
           case 'cold':
@@ -412,7 +412,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           // Water layers - Special handling for Bloody Water theme
           if (layer.id.includes('water') && layer.type === 'fill') {
             map.setPaintProperty(layer.id, 'fill-color', mapColors.water)
-            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 0.85 : theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 1 : theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
           }
           
           // Park/landuse layers - Light gray for hot theme
@@ -423,15 +423,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           
           // Special handling for hot theme - Dark red with dark water
           if (theme === 'hot') {
-            // Set all land-related layers to dark red
-            if ((layer.id.includes('land') || layer.id.includes('background')) && layer.type === 'fill') {
-              map.setPaintProperty(layer.id, 'fill-color', '#8b2635')
+            // Set background and land layers to dark red
+            if (layer.id === 'background' && layer.type === 'background') {
+              map.setPaintProperty(layer.id, 'background-color', '#8b2635')
+            }
+            if (layer.id.includes('land') && layer.type === 'fill') {
+              map.setPaintProperty(layer.id, 'fill-color', '#923640')
               map.setPaintProperty(layer.id, 'fill-opacity', 1)
             }
             
-            // Grass and nature areas in very dark red
+            // Grass and nature areas in darker red
             if ((layer.id.includes('grass') || layer.id.includes('wood') || layer.id.includes('forest')) && layer.type === 'fill') {
-              map.setPaintProperty(layer.id, 'fill-color', '#7d2633')
+              map.setPaintProperty(layer.id, 'fill-color', '#6b1f2a')
               map.setPaintProperty(layer.id, 'fill-opacity', 1)
             }
             
@@ -442,23 +445,23 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               map.setPaintProperty(layer.id, 'line-opacity', 1)
             }
             
-            // Administrative boundaries in pink/light red
+            // Administrative boundaries in pink
             if (layer.id.includes('admin') && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#e8919f')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.5)
+              map.setPaintProperty(layer.id, 'line-color', '#c85464')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.4)
               map.setPaintProperty(layer.id, 'line-width', 1)
             }
             
-            // Railway lines in light pink
+            // Railway lines in coral
             if ((layer.id.includes('rail') || layer.id.includes('transit')) && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#d4596a')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.7)
+              map.setPaintProperty(layer.id, 'line-color', '#c85464')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.6)
             }
             
-            // Tunnels and bridges in pink
+            // Tunnels and bridges in coral
             if ((layer.id.includes('tunnel') || layer.id.includes('bridge')) && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#e8919f')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.6)
+              map.setPaintProperty(layer.id, 'line-color', '#c85464')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.5)
             }
             
             // Hide ALL text labels including street names
@@ -480,18 +483,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 map.setPaintProperty(layer.id, 'line-opacity', 0.6)
               }
             } else if (theme === 'hot') {
-              // Dark theme - pink/light red roads
-              map.setPaintProperty(layer.id, 'line-color', '#e8919f')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.8)
+              // Dark theme - coral/pink roads for contrast
+              map.setPaintProperty(layer.id, 'line-color', '#c85464')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.7)
               if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
                 map.setPaintProperty(layer.id, 'line-width', 2)
-                map.setPaintProperty(layer.id, 'line-color', '#f5b3bd')
+                map.setPaintProperty(layer.id, 'line-color', '#d67383')
               } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
                 map.setPaintProperty(layer.id, 'line-width', 1.5)
-                map.setPaintProperty(layer.id, 'line-color', '#e8919f')
+                map.setPaintProperty(layer.id, 'line-color', '#c85464')
               } else {
                 map.setPaintProperty(layer.id, 'line-width', 1)
-                map.setPaintProperty(layer.id, 'line-color', '#d4596a')
+                map.setPaintProperty(layer.id, 'line-color', '#b94455')
               }
             } else if (theme === 'bauhaus') {
               // Bauhaus uses bold black lines
@@ -517,9 +520,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           // Building layers
           if (layer.id.includes('building') && layer.type === 'fill') {
             if (theme === 'hot') {
-              // Dark theme - darkest red buildings
-              map.setPaintProperty(layer.id, 'fill-color', '#5c1a23')
-              map.setPaintProperty(layer.id, 'fill-opacity', 1)
+              // Dark theme - very dark red buildings
+              map.setPaintProperty(layer.id, 'fill-color', '#6b1f2a')
+              map.setPaintProperty(layer.id, 'fill-opacity', 0.95)
               // Building outlines in red
               if (layer.id.includes('outline')) {
                 map.setPaintProperty(layer.id, 'line-color', '#ff9999')
@@ -648,8 +651,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }
 
   const renderMarker = (feature: GeoJSON.Feature<GeoJSON.Point, { cluster?: boolean; cluster_id?: number; point_count?: number; id?: string; popup?: string; state?: string }>) => {
+    if (!feature || !feature.geometry || !feature.geometry.coordinates) {
+      return null
+    }
     const [lng, lat] = feature.geometry.coordinates
-    const properties = feature.properties
+    const properties = feature.properties || {}
 
     if (properties.cluster) {
       const size = 30 + (properties.point_count! / markers.length) * 30
@@ -882,8 +888,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                   case 'hot':
                     return {
                       water: '#3d3d4e',
-                      park: '#7d2633',
-                      road: '#d4596a',
+                      park: '#6b1f2a',
+                      road: '#c85464',
                       background: '#8b2635'
                     }
                   case 'cold':
@@ -996,7 +1002,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         minZoom={3}
       >
         {/* Render all markers and clusters */}
-        {clusters.flatMap(cluster => renderMarker(cluster))}
+        {mapLoaded && clusters && clusters.length > 0 && clusters.flatMap(cluster => renderMarker(cluster))}
         
         {/* Detailed popup on click */}
         {popupInfo && (

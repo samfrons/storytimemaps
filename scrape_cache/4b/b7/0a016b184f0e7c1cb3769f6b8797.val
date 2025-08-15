@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="de" >
+    <head>
+                    <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="Database of Jewish Businesses in Berlin">
+            <meta name="author" content="Dr. Christoph Kreutzmüller">
+                <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link href="/djgb/public/build/bootstrap.min.css" rel="stylesheet">
+        <link href="/djgb/public/build/ckdb.css" rel="stylesheet">
+        
+                                                
+
+
+                            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+                <title>Search - Database of Jewish Businesses in Berlin</title>
+                    </head>
+    <body>
+                <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+		<div class="navbar-header">
+          <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         <a class="navbar-brand" href="/djgb/public/en/find">Database of Jewish Businesses in Berlin</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+          <ul class="nav navbar-nav">
+            <li><a href="/djgb/public/en/find">Database</a></li>
+            <li><a href="/djgb/public/en/about">Project</a></li>
+			<li><a href="/djgb/public/en/book">Publications</a></li>
+            			<li><a href="/djgb/public/en/impressum">Imprint</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            									<li><a href="/djgb/public/de/find?q=&amp;fq=&amp;sort=unternehmenasc&amp;page=67">Deutsch</a></li>
+											
+          </ul>
+        </div>
+    </div>
+</nav>
+
+
+            <div class="container">
+                    <h2>Search</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <div id="search">
+
+                <form class="form-inline" method="post" action="/djgb/public/en/find">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" id="q"  value="" onchange="this.form.fq.value='';this.form.sort[0].selected=true;"/>&nbsp;<input type="submit" value="Search" class="btn btn-primary"/>
+                    </div>
+
+                    <div class="form-group">	<input class="form-control" type="hidden" name="fq" id="fq" value=""/>
+                    </div>
+                                                <div class="form-group pull-right"><div class="down5">Sort by:</div>    <select class="form-control pull-right" id="sort" name="sort" onchange="this.form.submit()"><option value="unternehmenasc"  selected="selected">Company (A-Z)</input><option value="unternehmendesc" >Company (Z-A)</input><option value="relevance" >Relevance</input></select>
+                        </div>
+                                           </div>
+                </form>
+
+                                    <div id="resultsFound">
+                    10121
+                                         records
+                                        found (661 - 670) </div>
+                   
+
+            </div>
+
+            <div class="col-md-4">
+                            </div>
+        </div>
+
+
+                </div>
+            <div class="container">
+                
+        <div class="row">
+            <div class="col-md-8">
+
+                <div id="docs">
+                                    <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Haller</h4>
+                                                                                            
+                                <div><b>
+                                
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                              </div>
+                               <div class="mt5">
+                                                                                                                     Gollnowstr.  13,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-52060</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Heppner</h4>
+                                                                                             <div>
+                                   <b>
+                                           <ul>
+                                                                                  <li>           Anna Heppner (01.12.1937) 
+    </li>
+                                                                                  </ul></b>
+                               </div>
+                                                             
+                                <div><b>
+                                                                chemicals and pharmaceuticals
+                               
+                                                               (<i>Industry</i>)
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                                                                                                                    <i>Eingetragen im Handelsregister/ Gründung 1937</i></br>                                                                                  <i>Erloschen 1939</i>                                                                                                                                        </div>
+                               <div class="mt5">
+                                                                                                                     Niederwallstr. 26/27,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-717</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Hornik</h4>
+                                                                                             <div>
+                                   <b>
+                                           <ul>
+                                                                                  <li>           Anna Hornik (15.06.1923) 
+    </li>
+                                                                                  </ul></b>
+                               </div>
+                                                             
+                                <div><b>
+                                                                textiles and clothing
+                               
+                                                               (<i>Industry</i>)
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                                                                                                                    <i>Eingetragen im Handelsregister/ Gründung 1923</i></br>                                                                                  <i>Erloschen 1940</i>                                                                                                                                        </div>
+                               <div class="mt5">
+                                                                                                                     Frankfurter Allee 87,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-32827</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Jaffé</h4>
+                                                                                             <div>
+                                   <b>
+                                           <ul>
+                                                                                  <li>           Anna Jaffé  
+    </li>
+                                                                                  </ul></b>
+                               </div>
+                                                             
+                                <div><b>
+                                                                paper and paper goods
+                               
+                                                               (<i>Trade</i>)
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                                                                                                                    <i>Eingetragen im Handelsregister/ Gründung 1904</i></br>                                                                                  <i>Erloschen 1938</i>                                                                                                                                        </div>
+                               <div class="mt5">
+                                                                                                                     Kaiserkorso 4,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-15988</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Koritzer</h4>
+                                                                                             <div>
+                                   <b>
+                                           <ul>
+                                                                                  <li>           Anna Koritzer  
+    </li>
+                                                                                  </ul></b>
+                               </div>
+                                                             
+                                <div><b>
+                                                                textiles and clothing
+                               
+                                                               (<i>Trade</i>)
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                                                                                                                    <i>Eingetragen im Handelsregister/ Gründung 1936</i></br>                                                                                  <i>Erloschen 1940</i>                                                                                                                                        </div>
+                               <div class="mt5">
+                                                                                                                     Kaiser-Wilhelm-Str. 26,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-8751</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Michalewsky</h4>
+                                                                                            
+                                <div><b>
+                                                                textiles and clothing
+                               
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                              </div>
+                               <div class="mt5">
+                                                                                                                     Tharandter Str.  5,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-52396</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Planitz</h4>
+                                                                                             <div>
+                                   <b>
+                                           <ul>
+                                                                                  <li>           Anna Planitz  
+    </li>
+                                                                                  </ul></b>
+                               </div>
+                                                             
+                                <div><b>
+                                                                Möbel
+                               
+                                                               (<i>Trade</i>)
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                                                                                                                    <i>Eingetragen im Handelsregister/ Gründung 1915</i></br>                                                                                  <i>Erloschen 1940</i>                                                                                                                                        </div>
+                               <div class="mt5">
+                                                                                                                     Alexandrinenstr. 87,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-14502</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Streit</h4>
+                                                                                            
+                                <div><b>
+                                
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                              </div>
+                               <div class="mt5">
+                                                                                                                     Sedanstr.  14,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-52061</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anna Wagner Neuheitenvertrieb</h4>
+                                                                                             <div>
+                                   <b>
+                                           <ul>
+                                                                                  <li>           Anna Wagner Neuheitenvertrieb (27.04.1938) 
+    </li>
+                                                                                  </ul></b>
+                               </div>
+                                                             
+                                <div><b>
+                                                                other
+                               
+                                                               (<i>Trade</i>)
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                                                                                                                    <i>Eingetragen im Handelsregister/ Gründung 1938</i></br>                                                                                  <i>Erloschen 1940</i>                                                                                                                                        </div>
+                               <div class="mt5">
+                                                                                                                     Ludwigkirchstr. 14,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-1981</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                         <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                                              <h4>Anni Wolff</h4>
+                                                                                             <div>
+                                   <b>
+                                           <ul>
+                                                                                                                         <li>           Anni Wolff (01.01.1936) 
+    </li>
+
+                                                                                       <li>           Anni Wolff (28.02.1934) 
+    </li>
+
+                                                                                                                              </ul></b>
+                               </div>
+                                                             
+                                <div><b>
+                                                                textiles and clothing
+                               
+                                                               (<i>Industry</i>)
+                               </b>
+                                </div>
+
+                               <div class="mt5">
+                                                                                                                                                    <i>Eingetragen im Handelsregister/ Gründung 1934</i></br>                                                                                  <i>Erloschen 1939</i>                                                                                                                                        </div>
+                               <div class="mt5">
+                                                                                                                     Spittelmarkt 8/10,  Berlin 
+    
+                                                                                                 </div>
+                            <!--<small>company-38334</small>-->
+                            </div>
+                            <div class="col-xs-12 col-sm-4 mt15">
+                                                        
+                                                          </div>
+
+
+                        </div>
+
+
+                        </li>
+                                  </ul>
+                </div>
+
+                                <div class="pagerfanta">
+                    <ul class="pagination"><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=66" rel="prev">Previous</a></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=1">1</a></li><li class="disabled"><span>&hellip;</span></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=64">64</a></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=65">65</a></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=66">66</a></li><li class="active"><span>67 <span class="sr-only">(current)</span></span></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=68">68</a></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=69">69</a></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=70">70</a></li><li class="disabled"><span>&hellip;</span></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=1013">1013</a></li><li class=""><a href="/djgb/public/en/find?q=&fq=&sort=unternehmenasc&page=68" rel="next">Next</a></li></ul>
+                </div>
+                                            </div>
+            <div class="col-md-4">
+                                    <div class="panel panel-default">
+                        <div class="panel-heading">Main business</b></div>
+                        <div class="panel-body">
+                            <ul >                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_main_s_sf:%22Dienstleistungen%22">Services<span class="badge pull-right">291</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_main_s_sf:%22Handel%22">Trade<span class="badge pull-right">5971</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_main_s_sf:%22Handwerk%22">Handicraft<span class="badge pull-right">140</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_main_s_sf:%22Industrie%22">Industry<span class="badge pull-right">1634</span></a> </li>
+                                </ul>	
+                        </div>
+                    </div>
+                                    <div class="panel panel-default">
+                        <div class="panel-heading">Business</b></div>
+                        <div class="panel-body">
+                            <ul >                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Altwaren%22">used goods<span class="badge pull-right">28</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Apotheken%22">pharmacies<span class="badge pull-right">185</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Banken%20und%20Versicherungen%22">banks and insurance<span class="badge pull-right">783</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Bau%22">construction<span class="badge pull-right">122</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Bau-%20und%20Brennstoffe%22">construction materials and fuel<span class="badge pull-right">218</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22B%C3%BCcher%20und%20Kunst%22">books and art<span class="badge pull-right">122</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Chemie%20und%20Drogeriewaren%22">chemicals and pharmaceuticals<span class="badge pull-right">411</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Elektro%22">electrical goods<span class="badge pull-right">150</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Foto%20und%20Film%22">photography and film<span class="badge pull-right">65</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Gastronomie%22">restaurants<span class="badge pull-right">135</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Haushaltswaren%22">household goods<span class="badge pull-right">142</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Immobilien%22">real estate<span class="badge pull-right">230</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Leder-%20und%20Schuhwaren%22">leather and shoes<span class="badge pull-right">363</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Maschinen%20und%20Fahrzeuge,%20technische%20Artikel%22">machines, motor vehicles & technical articles<span class="badge pull-right">268</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Maschinen%20und%20Fahrzeuge,%20technische%20Artikel%20%22">Maschinen und Fahrzeuge, technische Artikel <span class="badge pull-right">38</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Metall%20und%20Metallwaren%22">metals and metal goods<span class="badge pull-right">302</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22M%C3%B6bel%22">Möbel<span class="badge pull-right">341</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Nahrungs-%20und%20Genussmittel%22">Nahrungs- und Genussmittel<span class="badge pull-right">1059</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Papier%20und%20Papierwaren%22">paper and paper goods<span class="badge pull-right">210</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Schmuck%20und%20Edelmetalle%22">jewelry and precious metals<span class="badge pull-right">155</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Sonstiges%22">other<span class="badge pull-right">283</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Textil%20und%20Bekleidung%22">textiles and clothing<span class="badge pull-right">3237</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Transport%22">transportation<span class="badge pull-right">60</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Verlags-%20und%20Druckereiwesen%22">publishing and printing<span class="badge pull-right">270</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Waren-%20und%20Kaufh%C3%A4user%22">retail shops and department stores<span class="badge pull-right">105</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_sector_s_sf:%22Werbung%22">advertising<span class="badge pull-right">65</span></a> </li>
+                                </ul>	
+                        </div>
+                    </div>
+                                    <div class="panel panel-default">
+                        <div class="panel-heading">Product</b></div>
+                        <div class="panel-body">
+                            <ul >                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22%22Die%20Gr%C3%BCndung%20und%20Errichtung%20einer%20Filmstadt%22%22">"Die Gründung und Errichtung einer Filmstadt"<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Absatzfabrikation,%20Fersenhalter%20und%20Gamaschenverschl%C3%BCsse%20nach%20eigenen%20Patenten%22">Absatzfabrikation, Fersenhalter und Gamaschenverschlüsse nach eigenen Patenten<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Abschlu%C3%9F%20eines%20Vertrages%20mit%20der%20Deutschen%20Bahnspedition%20GmbH%20bzw.%20Deutsche%22">Abschluß eines Vertrages mit der Deutschen Bahnspedition GmbH bzw. Deutsche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Abzahlungsgesch%C3%A4ft%22">Abzahlungsgeschäft<span class="badge pull-right">2</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Abzahlungsgesch%C3%A4ft%20f%C3%BCr%20M%C3%B6bel%20und%20Konfektion%22">Abzahlungsgeschäft für Möbel und Konfektion<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Adressen-Verlag%22">Adressen-Verlag<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Adressenverlag%22">Adressenverlag<span class="badge pull-right">2</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%22">Agent<span class="badge pull-right">5</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20an%20der%20Berliner%20Getreideb%C3%B6rse%22">Agent an der Berliner Getreidebörse<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20f%C3%BCr%20Holz%20und%20Getreide%22">Agent für Holz und Getreide<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20f%C3%BCr%20Tuche,%20UOBB:%20Damenm%C3%A4ntel%22">Agent für Tuche, UOBB: Damenmäntel<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20f%C3%BCr%20Wein-%20und%20Spirituosen;%20Agenturen%20%286%29%22">Agent für Wein- und Spirituosen; Agenturen (6)<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20f%C3%BCr%20Weine%20und%20Spirituosen%22">Agent für Weine und Spirituosen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20f%C3%BCr%20die%20Besatzbranche%22">Agent für die Besatzbranche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Bauger%C3%A4ten%20u.%20sonstigen%20Maschinen%22">Agent in Baugeräten u. sonstigen Maschinen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Baumwolle%22">Agent in Baumwolle<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Effekten%22">Agent in Effekten<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Galanteriewaren%22">Agent in Galanteriewaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Getreide%22">Agent in Getreide<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Kolonialwaren%20und%20Delikatessen%22">Agent in Kolonialwaren und Delikatessen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Lederwaren%22">Agent in Lederwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Leinenwaren%22">Agent in Leinenwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Schuhwaren%22">Agent in Schuhwaren<span class="badge pull-right">2</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Str%C3%BCmpfen%22">Agent in Strümpfen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Textilien%22">Agent in Textilien<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Tuchen%22">Agent in Tuchen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Tuchwaren%22">Agent in Tuchwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20Zigarren%22">Agent in Zigarren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20der%20Manufakturbranche%22">Agent in der Manufakturbranche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20der%20Textilbranche%22">Agent in der Textilbranche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20in%20rohen%20Baumwollgeweben%22">Agent in rohen Baumwollgeweben<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20und%20Kommissionen%22">Agent und Kommissionen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent%20und%20Verlag%22">Agent und Verlag<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent,%201937:%20Papiergro%C3%9Fhandlung%22">Agent, 1937: Papiergroßhandlung<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent,%20Hypothekenvermittlungen%22">Agent, Hypothekenvermittlungen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent.%22">Agent.<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent.%20Export%20u.%20Vertr.%22">Agent. Export u. Vertr.<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent.%20und%20Kommission%C3%A4r%20der%20Metallbranche,%20UOBB%20insbes.%20Chanukkaleuchter%22">Agent. und Kommissionär der Metallbranche, UOBB insbes. Chanukkaleuchter<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agent.;%20Posamentenagentur%22">Agent.; Posamentenagentur<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agenten%20f%C3%BCr%20Gardinenfabriken%22">Agenten für Gardinenfabriken<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%22">Agentur<span class="badge pull-right">26</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20%281938:%20Damenh%C3%BCte%20engros%20%281%29%29%22">Agentur (1938: Damenhüte engros (1))<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20%28BHR%29%20/%20Krawatten,%20Socken,%20Hemdenstoffe%22">Agentur (BHR) / Krawatten, Socken, Hemdenstoffe<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20%28Metall-%20und%20Chemikalienhandel%29%22">Agentur (Metall- und Chemikalienhandel)<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20%28M%C3%B6bel-%20und%20Manufakturwaren%29%22">Agentur (Möbel- und Manufakturwaren)<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20%28Textil%29%22">Agentur (Textil)<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20%28Textilien%29%22">Agentur (Textilien)<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20%28Textilwaren%29%22">Agentur (Textilwaren)<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20-%20UOBB:%20Schirmfurnituren%22">Agentur - UOBB: Schirmfurnituren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20der%20Damenhutbranche%22">Agentur der Damenhutbranche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20der%20M%C3%B6belbranche%22">Agentur der Möbelbranche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20der%20Produktenb%C3%B6rse%22">Agentur der Produktenbörse<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20der%20Textilbranche%22">Agentur der Textilbranche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Bekleidungsstoffe%20%28Vertretung%20der%20Tuchfabriken%20Tannenbaum,%20Pariser%20%26%20Co,%20Ernst%20Rohwedder%29%22">Agentur für Bekleidungsstoffe (Vertretung der Tuchfabriken Tannenbaum, Pariser & Co, Ernst Rohwedder)<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Futtermittel%22">Agentur für Futtermittel<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Futtermittel%20und%20H%C3%BClsenfr%C3%BCchte%22">Agentur für Futtermittel und Hülsenfrüchte<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Galantarie-%20und%20Kurzwaren%22">Agentur für Galantarie- und Kurzwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Garne%20und%20Gewebe%22">Agentur für Garne und Gewebe<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Getreide%22">Agentur für Getreide<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Manufakturwaren%22">Agentur für Manufakturwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Metalle%22">Agentur für Metalle<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Schuhwaren,%201938/39%20noch%20Detail-Verkauf!%22">Agentur für Schuhwaren, 1938/39 noch Detail-Verkauf!<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Stickereiartikel%22">Agentur für Stickereiartikel<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Strohgeflechte%20/%20Damenh%C3%BCte%22">Agentur für Strohgeflechte / Damenhüte<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Strumpfwaren%22">Agentur für Strumpfwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Technik%22">Agentur für Technik<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Textilwaren%22">Agentur für Textilwaren<span class="badge pull-right">4</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20Uhren,%20Gold-%20und%20Silberwaren%22">Agentur für Uhren, Gold- und Silberwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20W%C3%A4scheartikel%22">Agentur für Wäscheartikel<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20f%C3%BCr%20chemische%20Artikel%22">Agentur für chemische Artikel<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Baumwollwaren%22">Agentur in Baumwollwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Futtermitteln%20und%20Getreide%22">Agentur in Futtermitteln und Getreide<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Galanteriewaren;%20Wertpapierh%C3%A4ndler%22">Agentur in Galanteriewaren; Wertpapierhändler<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Getreide%20und%20Futtermittel%22">Agentur in Getreide und Futtermittel<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Herrenkonfektionsstoffen%22">Agentur in Herrenkonfektionsstoffen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Holz-%20und%20Eisenwaren%22">Agentur in Holz- und Eisenwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Juwelen%20und%20Goldwaren%22">Agentur in Juwelen und Goldwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Kleiderstoffen%20/%20Damenm%C3%A4ntelkonfektion%22">Agentur in Kleiderstoffen / Damenmäntelkonfektion<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Kommissionen%20in%20Textil%22">Agentur in Kommissionen in Textil<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Konfektionssachen%20und%20Krimmer%22">Agentur in Konfektionssachen und Krimmer<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Konfektionsstoffen%22">Agentur in Konfektionsstoffen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Kurzwaren%22">Agentur in Kurzwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Lebensmitteln%22">Agentur in Lebensmitteln<span class="badge pull-right">2</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Mehl,%20Getreide%20und%20S%C3%A4cken%22">Agentur in Mehl, Getreide und Säcken<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Schuhwaren%22">Agentur in Schuhwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Seidenwaren%22">Agentur in Seidenwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Spirituosen%20und%20Getreide%22">Agentur in Spirituosen und Getreide<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Strumpfwaren%22">Agentur in Strumpfwaren<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Tabakwaren%20/%20Vertreter%22">Agentur in Tabakwaren / Vertreter<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Textilwaren%22">Agentur in Textilwaren<span class="badge pull-right">10</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Weinen%20und%20Spirituosen%22">Agentur in Weinen und Spirituosen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20Zigarren%20und%20Zigaretten%22">Agentur in Zigarren und Zigaretten<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20der%20Lebensmittelbranche%22">Agentur in der Lebensmittelbranche<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20in%20der%20Textilbranche%22">Agentur in der Textilbranche<span class="badge pull-right">4</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20u.%20Commission%22">Agentur u. Commission<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20u.%20Kommission%22">Agentur u. Kommission<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20u.%20Kommission%20in%20Textilwar.%22">Agentur u. Kommission in Textilwar.<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20und%20Handel%20mit%20Stoffen%20und%20Stickereien%22">Agentur und Handel mit Stoffen und Stickereien<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20und%20Kommision%20in%20Metall-%20und%20Rohrsachen%22">Agentur und Kommision in Metall- und Rohrsachen<span class="badge pull-right">1</span></a> </li>
+                                                                <li class="ckdb-pad5"><a href="/djgb/public/en/find?q=&amp;sort=unternehmenasc&amp;fq=company_description.jgb_product_s_sf:%22Agentur%20und%20Kommission%22">Agentur und Kommission<span class="badge pull-right">15</span></a> </li>
+                                </ul>	
+                        </div>
+                    </div>
+                            </div>
+        </div>
+                   </div>
+            <footer> <div class="container"><hr class="am-y">
+                <div class="row">
+                    <div class="col-sm-12"><p><small><i>Die Datenbank wird unterstützt von</i></small></p></div>
+                    <div class="col-sm-6"><a href="https://www.aktives-museum.de"><img src="/djgb/public/build/images/aktives_museum.gif" alt="Aktives Museum"></a></div>
+                    <div class="col-sm-6 mt-15"><a class="pull-right" href="https://www.geschichte.hu-berlin.de/de/bereiche-und-lehrstuehle/digital-history/forschung/datenbank-juedischer-gewerbebetriebe-in-berlin"><img src="/djgb/public/build/images/husiegel_bw.gif" alt="Digital History - Humboldt-Universität zu Berlin"></a></div>
+                </div>  
+            </footer>
+                <script src="/djgb/public/build/jquery.min.js"></script>
+        <script src="/djgb/public/build/bootstrap.min.js"></script>
+        
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+        var url = window.location.href;
+        $('.nav a[href="'+url+'"]').parent().addClass('active');
+    });
+</script>
+
+    </body>
+</html>

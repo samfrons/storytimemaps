@@ -232,18 +232,26 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
   } | null>(null)
 
-  // Get colors from CSS variables
-  const getThemeColors = () => {
-    const style = getComputedStyle(document.documentElement);
-    return {
-      active: style.getPropertyValue('--success').trim() || '#97d8c0',
-      declining: style.getPropertyValue('--warning').trim() || '#ffcb51', 
-      closed: style.getPropertyValue('--danger').trim() || '#ee5760',
-      future: style.getPropertyValue('--foreground-muted').trim() || '#f5cdb4'
-    }
-  }
+  // Get colors from CSS variables - client-side only
+  const [colors, setColors] = useState({
+    active: '#97d8c0',
+    declining: '#ffcb51',
+    closed: '#ee5760',
+    future: '#f5cdb4'
+  })
 
-  const colors = getThemeColors()
+  // Extract theme colors on client-side to prevent SSR mismatch
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const style = getComputedStyle(document.documentElement);
+      setColors({
+        active: style.getPropertyValue('--success').trim() || '#97d8c0',
+        declining: style.getPropertyValue('--warning').trim() || '#ffcb51', 
+        closed: style.getPropertyValue('--danger').trim() || '#ee5760',
+        future: style.getPropertyValue('--foreground-muted').trim() || '#f5cdb4'
+      })
+    }
+  }, [theme])
 
   // Initialize Supercluster for clustering
   const supercluster = useMemo(() => {
@@ -363,8 +371,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       
       const layers = style.layers
       
-      // Get theme-specific map colors from CSS variables
+      // Get theme-specific map colors from CSS variables - client-side only
       const getMapColors = () => {
+        if (typeof window === 'undefined') {
+          // Return fallback colors for SSR
+          return {
+            water: '#5a5766',
+            park: '#97d8c0',
+            road: '#4a4a57',
+            background: '#4a4a57'
+          }
+        }
+        
         const style = getComputedStyle(document.documentElement);
         // For moody theme, use a darker purple for water
         const waterColor = theme === 'moody' 
@@ -445,9 +463,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           
           // Text labels - need special handling for immediate rendering
           if (layer.type === 'symbol') {
-            const style = getComputedStyle(document.documentElement);
-            const textColor = style.getPropertyValue('--foreground').trim() || '#f5cdb4'
-            const haloColor = style.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            let textColor = '#f5cdb4'
+            let haloColor = '#3b3340'
+            
+            if (typeof window !== 'undefined') {
+              const style = getComputedStyle(document.documentElement);
+              textColor = style.getPropertyValue('--foreground').trim() || '#f5cdb4'
+              haloColor = style.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            }
             
             // Apply text styling to all symbol layers
             try {
@@ -485,9 +508,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         const updateSymbolLayers = () => {
           const style = map.getStyle()
           if (style && style.layers) {
-            const computedStyle = getComputedStyle(document.documentElement)
-            const textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
-            const haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            let textColor = '#f5cdb4'
+            let haloColor = '#3b3340'
+            
+            if (typeof window !== 'undefined') {
+              const computedStyle = getComputedStyle(document.documentElement)
+              textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
+              haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            }
             
             style.layers.forEach(layer => {
               if (layer.type === 'symbol') {
@@ -558,9 +586,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           // Update labels specifically
           const style = map.getStyle()
           if (style && style.layers) {
-            const computedStyle = getComputedStyle(document.documentElement)
-            const textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
-            const haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            let textColor = '#f5cdb4'
+            let haloColor = '#3b3340'
+            
+            if (typeof window !== 'undefined') {
+              const computedStyle = getComputedStyle(document.documentElement)
+              textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
+              haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            }
             
             style.layers.forEach(layer => {
               if (layer.type === 'symbol') {
@@ -656,8 +689,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       const popupTips = document.querySelectorAll('.mapboxgl-popup-tip')
       const state = popupInfo.properties.state || 'active'
       
-      // Get theme-appropriate color for popup arrow
-      const colors = getThemeColors()
+      // Get theme-appropriate color for popup arrow (use current colors state)
       let color = colors.active || '#97d8c0' // Use theme's active color
       if (state === 'declining') color = colors.declining || 'rgba(255, 203, 81, 0.98)'
       if (state === 'closed') color = colors.closed || 'rgba(238, 87, 96, 0.98)'
@@ -917,6 +949,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }
 
 
+  // Show error state if no Mapbox token
+  if (!MAPBOX_TOKEN) {
+    return (
+      <div className="relative h-full w-full overflow-hidden border-l border-[#6b6275] flex items-center justify-center">
+        <div className="text-center p-8" style={{ color: 'var(--foreground)' }}>
+          <h3 className="text-lg font-bold mb-2">Map Configuration Error</h3>
+          <p className="text-sm opacity-80">
+            Mapbox token is missing. Please configure NEXT_PUBLIC_MAPBOX_TOKEN in the deployment environment.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="relative h-full w-full overflow-hidden border-l border-[#6b6275]">
       <Map
@@ -1014,9 +1060,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             setTimeout(() => {
               const style = map.getStyle()
               if (style && style.layers) {
-                const computedStyle = getComputedStyle(document.documentElement)
-                const textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
-                const haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+                let textColor = '#f5cdb4'
+                let haloColor = '#3b3340'
+                
+                if (typeof window !== 'undefined') {
+                  const computedStyle = getComputedStyle(document.documentElement)
+                  textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
+                  haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+                }
                 
                 style.layers.forEach(layer => {
                   if (layer.type === 'symbol') {

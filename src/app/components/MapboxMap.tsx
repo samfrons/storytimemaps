@@ -6,7 +6,11 @@ import Supercluster from 'supercluster'
 import { useTheme } from 'next-themes'
 import mapboxgl from 'mapbox-gl'
 
-const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
+
+if (!MAPBOX_TOKEN) {
+  console.error('Mapbox token is not configured. Please set NEXT_PUBLIC_MAPBOX_TOKEN in your .env.local file')
+}
 
 // Snazzy Maps "Red Colored" style conversion for hot theme
 const getSnazzyRedColoredStyle = () => {
@@ -227,7 +231,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       [key: string]: unknown
     }
   } | null>(null)
-  const [labelOpacity, setLabelOpacity] = useState(1)
 
   // Get colors from CSS variables
   const getThemeColors = () => {
@@ -342,16 +345,6 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
   }, [activeMarkerId, markers, enrichedStories])
 
-  // Fade labels when popup is open - removed to prevent labels disappearing
-  useEffect(() => {
-    if (!mapRef.current || !mapLoaded) return
-    
-    const map = mapRef.current.getMap()
-    if (!map) return
-    
-    // Set label opacity based on popup state
-    setLabelOpacity(popupInfo ? 0.6 : 1)
-  }, [popupInfo, mapLoaded])
 
   // Enhanced WebGL-synchronized theme application
   const applyThemeStyles = useCallback((map: mapboxgl.Map, forceRender = false) => {
@@ -637,7 +630,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
     
     const handleContextRestored = () => {
-      console.log('WebGL context restored, reapplying styles')
+      // WebGL context restored, reapplying styles
       setWebglReady(true)
       // Reapply styles after context restoration
       setTimeout(() => {
@@ -842,7 +835,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         offset={[0, -10]}
       >
         <div 
-          className={`px-2 py-1 text-xs font-mono ${theme === 'bauhaus' ? 'font-black uppercase' : theme === 'cool' || theme === 'cold' ? 'font-semibold' : 'font-bold'} whitespace-nowrap cursor-pointer transition-opacity duration-200`}
+          className={`px-2 py-1 text-xs font-mono ${theme === 'bauhaus' ? 'font-black uppercase' : theme === 'cool' || theme === 'cold' ? 'font-semibold' : 'font-bold'} whitespace-nowrap cursor-pointer`}
           style={{
             background: theme === 'cool' || theme === 'cold' ? 'rgba(255, 255, 255, 0.95)' : 
                        theme === 'bauhaus' ? '#ffffff' : (
@@ -860,7 +853,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                        theme === 'cool' || theme === 'cold' ? '0 2px 6px rgba(0,0,0,0.1)' :
                        '0 2px 6px rgba(0,0,0,0.2)',
             letterSpacing: theme === 'bauhaus' ? '0.1em' : 'normal',
-            opacity: labelOpacity,
+            opacity: popupInfo && popupInfo.properties.id !== properties.id ? 0.8 : 1,
+            transition: 'opacity 300ms ease-in-out',
             pointerEvents: 'auto'
           }}
           onClick={(e) => {
@@ -1008,7 +1002,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           })
           
           canvas.addEventListener('webglcontextrestored', () => {
-            console.log('WebGL context restored')
+            // WebGL context restored
             setWebglReady(true)
             // Reapply styles after context restoration
             setTimeout(() => applyThemeStyles(map, true), 100)

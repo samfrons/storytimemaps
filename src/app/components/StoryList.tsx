@@ -225,7 +225,7 @@ const StoryList: React.FC<StoryListProps> = ({
           return {
             backgroundColor: 'var(--success)',
             borderLeftColor: 'var(--success)',
-            color: 'var(--foreground)'
+            color: '#2a2a2a' // Black text for moody theme active state
           };
         } else if (theme === 'bauhaus') {
           return {
@@ -438,7 +438,7 @@ const StoryList: React.FC<StoryListProps> = ({
                       ''
                   }`}
                   style={{
-                    color: story.id === activeStoryId ? undefined : 'var(--muted)'
+                    color: story.id === activeStoryId ? undefined : 'var(--foreground-muted)'
                   }}>
                     <svg 
                       className="w-3 h-3 flex-shrink-0" 

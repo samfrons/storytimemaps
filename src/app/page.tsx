@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
@@ -19,13 +19,15 @@ const MapboxMap = dynamic(() => import('./components/MapboxMap'), {
 export default function OverlayTestPage() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
-  const [showIntro, setShowIntro] = useState(() => {
-    // Check if intro has been closed before
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('introSeen') !== 'true';
+  const [showIntro, setShowIntro] = useState(true);
+  
+  // Handle localStorage after hydration to avoid SSR mismatch
+  useEffect(() => {
+    const introSeen = localStorage.getItem('introSeen');
+    if (introSeen === 'true') {
+      setShowIntro(false);
     }
-    return true;
-  });
+  }, []);
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);

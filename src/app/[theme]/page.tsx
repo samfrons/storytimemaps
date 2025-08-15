@@ -26,13 +26,7 @@ export default function ThemePage({ params }: ThemePageProps) {
   const { theme: currentTheme, setTheme } = useTheme();
   const router = useRouter();
   const [theme, setThemeParam] = React.useState<string | null>(null);
-  const [showIntro, setShowIntro] = useState(() => {
-    // Check if intro has been closed before
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('introSeen') !== 'true';
-    }
-    return true;
-  });
+  const [showIntro, setShowIntro] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
@@ -60,6 +54,14 @@ export default function ThemePage({ params }: ThemePageProps) {
       }
     });
   }, [params, setTheme]);
+  
+  // Handle localStorage after hydration to avoid SSR mismatch
+  useEffect(() => {
+    const introSeen = localStorage.getItem('introSeen');
+    if (introSeen === 'true') {
+      setShowIntro(false);
+    }
+  }, []);
 
   const handleStoryClick = (storyId: string) => {
     setActiveStoryId(storyId);

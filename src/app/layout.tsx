@@ -23,6 +23,12 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: 'StoryMap Cluster',
   description: 'Interactive story map with clustering',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#4a4a57' }
+  ],
+  viewport: 'width=device-width, initial-scale=1',
+  colorScheme: 'dark light',
 }
 
 export default function RootLayout({
@@ -32,12 +38,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceMono.variable}`} suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={inter.className}>
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="moody"
           themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau']}
           enableSystem={false}
+          enableColorScheme={true}
+          disableTransitionOnChange={false}
           storageKey="storymap-theme"
         >
           {children}

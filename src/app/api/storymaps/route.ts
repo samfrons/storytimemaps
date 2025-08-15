@@ -12,6 +12,8 @@ async function getStoryMaps() {
     console.error('Error reading storymaps.json:', error);
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
       console.error('File not found. Please ensure storymaps.json exists in the data directory.');
+      // Return empty array as fallback for build time
+      return [];
     }
     throw error; // Re-throw the error to be caught in the GET function
   }

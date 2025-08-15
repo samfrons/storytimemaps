@@ -3,7 +3,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';

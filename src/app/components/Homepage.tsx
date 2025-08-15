@@ -126,74 +126,131 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
   }, [businessData]);
 
   return (
-    <div className="min-h-screen bg-[#4a4a57]">
-      {/* Hero Section */}
-      <header className="relative bg-gradient-to-br from-[#4a4a57] via-[#3b3340] to-[#2a2a2a] overflow-hidden">
-        {/* Decorative grid pattern */}
-        <div className="absolute inset-0 opacity-5">
+    <div className="min-h-screen bg-white">
+      {/* Hero Section - Clean, Modern, Light */}
+      <header className="relative bg-gradient-to-b from-[#fafafa] to-white overflow-hidden">
+        {/* Subtle geometric pattern */}
+        <div className="absolute inset-0 opacity-[0.02]">
           <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(245, 205, 180, 0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(245, 205, 180, 0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }} />
         </div>
         
-        <div className="absolute top-4 right-4 z-10">
+        {/* Floating accent elements - subtle */}
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-br from-blue-50 to-transparent rounded-full blur-3xl opacity-50" />
+        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-gradient-to-tr from-amber-50 to-transparent rounded-full blur-3xl opacity-40" />
+        
+        <div className="absolute top-6 right-6 z-10">
           <LanguageToggle />
         </div>
         
-        <div className="relative pt-24 pb-20 px-4">
-          <div className="max-w-5xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-['Inter'] font-light text-[#f5cdb4] mb-6 animate-fadeIn tracking-tight leading-none">
-              {t('hero.title')}
-            </h1>
-            <p className="text-2xl md:text-3xl text-[#97d8c0] font-['Inter'] font-light mb-4 animate-fadeIn animation-delay-200">
-              {t('hero.subtitle')}
-            </p>
-            <div className="inline-block bg-[#97d8c0]/10 border border-[#97d8c0]/30 px-6 py-2 animate-fadeIn animation-delay-400">
-              <p className="text-xl text-[#97d8c0] font-mono font-bold tracking-wider">
-                {t('hero.period')}
+        <div className="relative pt-32 pb-28 px-6">
+          <div className="max-w-7xl mx-auto">
+            {/* Clean typography */}
+            <div className="space-y-8">
+              <div className="flex justify-center">
+                <span className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white text-xs font-mono uppercase tracking-widest">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 7a2 2 0 114 0 2 2 0 01-4 0z"/>
+                  </svg>
+                  Berlin 1900-1945
+                </span>
+              </div>
+              
+              <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-light text-gray-900 text-center leading-[0.9] tracking-tight">
+                {t('hero.title')}
+              </h1>
+              
+              <p className="font-serif text-2xl md:text-3xl lg:text-4xl text-gray-600 text-center max-w-4xl mx-auto leading-relaxed font-light italic">
+                {t('hero.subtitle')}
               </p>
+              
+              {/* Modern CTA buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+                <button className="px-8 py-4 bg-black text-white font-medium hover:bg-gray-900 transition-all duration-200 text-lg group">
+                  Explore Map
+                  <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                </button>
+                <button className="px-8 py-4 bg-white border-2 border-black text-black font-medium hover:bg-gray-50 transition-all duration-200 text-lg">
+                  View Archive
+                </button>
+              </div>
+            </div>
+            
+            {/* Stats row */}
+            <div className="grid grid-cols-3 gap-8 mt-20 pt-12 border-t border-gray-200">
+              <div className="text-center">
+                <div className="font-mono text-4xl font-bold text-gray-900">8,000+</div>
+                <div className="text-sm text-gray-600 mt-2 font-medium uppercase tracking-wider">Businesses</div>
+              </div>
+              <div className="text-center">
+                <div className="font-mono text-4xl font-bold text-gray-900">45</div>
+                <div className="text-sm text-gray-600 mt-2 font-medium uppercase tracking-wider">Years Documented</div>
+              </div>
+              <div className="text-center">
+                <div className="font-mono text-4xl font-bold text-gray-900">100%</div>
+                <div className="text-sm text-gray-600 mt-2 font-medium uppercase tracking-wider">Open Data</div>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Introduction Section with Map Graphic */}
-      <section className="py-20 px-4 bg-gradient-to-r from-[#f5cdb4]/5 to-[#97d8c0]/5 relative">
-        {/* Decorative accent line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#97d8c0] via-[#ffcb51] to-[#eca27d]"></div>
-        
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-['Inter'] font-light text-[#f5cdb4] mb-4">
-              {t('intro.title')}
-            </h2>
-            <div className="w-24 h-1 bg-[#97d8c0] mx-auto"></div>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Text Content */}
+      {/* Introduction Section - Clean Layout */}
+      <section className="py-32 px-6 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Text content */}
             <div className="space-y-8">
-              <p className="text-lg leading-relaxed font-['Inter'] text-[#f5cdb4] animate-fadeIn animation-delay-600">
-                {t('intro.paragraph1')}
-              </p>
-              <p className="text-lg leading-relaxed font-['Inter'] text-[#f5cdb4]/90 animate-fadeIn animation-delay-800">
-                {t('intro.paragraph2')}
-              </p>
-              <p className="text-lg leading-relaxed font-['Inter'] text-[#f5cdb4]/90 animate-fadeIn animation-delay-1000">
-                {t('intro.paragraph3')}
-              </p>
+              <div>
+                <span className="font-mono text-xs uppercase tracking-widest text-gray-500">
+                  About the Project
+                </span>
+                <h2 className="font-display text-5xl md:text-6xl font-light text-gray-900 mt-4 leading-tight">
+                  {t('intro.title')}
+                </h2>
+              </div>
+              
+              <div className="space-y-6">
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {t('intro.paragraph1')}
+                </p>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {t('intro.paragraph2')}
+                </p>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {t('intro.paragraph3')}
+                </p>
+              </div>
+              
+              {/* Modern quote block */}
+              <blockquote className="border-l-4 border-black pl-6 py-2">
+                <p className="font-serif text-2xl text-gray-900 italic leading-relaxed">
+                  &ldquo;Every data point represents a life, a story, a piece of Berlin&apos;s commercial heritage.&rdquo;
+                </p>
+                <cite className="block mt-4 font-mono text-sm text-gray-600 not-italic">
+                  — StoryTimeMaps Archive
+                </cite>
+              </blockquote>
             </div>
             
-            {/* Map Graphic */}
-            <div className="animate-fadeIn animation-delay-800">
-              <div className="bg-[#2a2a2a] p-6 border-l-4 border-[#97d8c0] shadow-2xl">
-                <h3 className="text-2xl font-['Inter'] font-medium text-[#97d8c0] mb-6 text-center">
-                  {t('intro.mapTitle')}
-                </h3>
-                <div className="h-[400px] bg-[#1a1a1a] border border-[#6b6275] overflow-hidden">
-                  <BerlinMapPreview />
+            {/* Map Preview - Modern card */}
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-gradient-to-r from-gray-200 to-gray-300 opacity-20 blur-xl group-hover:opacity-30 transition-opacity" />
+              <div className="relative bg-white p-2 shadow-2xl">
+                <div className="bg-gray-100 p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-mono text-sm uppercase tracking-wider text-gray-700">
+                      {t('intro.mapTitle')}
+                    </h3>
+                    <span className="flex items-center gap-2 text-xs text-gray-500">
+                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      Live Data
+                    </span>
+                  </div>
+                  <div className="h-[500px] bg-white overflow-hidden">
+                    <BerlinMapPreview />
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,24 +258,28 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
         </div>
       </section>
 
-      {/* Preview Carousel Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#2a2a2a] to-[#4a4a57] relative overflow-hidden">
-        {/* Decorative pattern */}
-        <div className="absolute top-0 right-0 w-96 h-96 opacity-10">
-          <div className="w-full h-full bg-gradient-to-bl from-[#97d8c0] to-transparent transform rotate-45"></div>
-        </div>
-        
-        <div className="max-w-6xl mx-auto relative">
+      {/* Preview Carousel Section - Clean & Modern */}
+      <section className="py-32 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-['Inter'] font-light text-[#f5cdb4] mb-4">
+            <span className="font-mono text-xs uppercase tracking-widest text-gray-500">
+              Featured Stories
+            </span>
+            <h2 className="font-display text-5xl md:text-6xl font-light text-gray-900 mt-4 mb-6">
               {t('preview.title')}
             </h2>
-            <p className="text-xl text-[#97d8c0] font-['Inter'] font-light">
+            <p className="font-serif text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               {t('preview.subtitle')}
             </p>
-            <div className="w-32 h-1 bg-gradient-to-r from-[#97d8c0] to-[#ffcb51] mx-auto mt-6"></div>
           </div>
-          <AnimatedBusinessCarousel businesses={carouselBusinesses} />
+          
+          {/* Modern carousel wrapper */}
+          <div className="relative">
+            <div className="absolute -inset-x-4 -inset-y-2 bg-gradient-to-r from-gray-50 via-white to-gray-50 blur-xl opacity-50" />
+            <div className="relative">
+              <AnimatedBusinessCarousel businesses={carouselBusinesses} />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -243,53 +304,51 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
       {/* Future Initiatives */}
       <FutureInitiatives />
 
-      {/* Enhanced Call to Action */}
-      <section className="py-24 px-4 bg-gradient-to-br from-[#97d8c0]/10 via-[#4a4a57] to-[#2a2a2a] relative overflow-hidden">
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-[#97d8c0] to-transparent rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-tl from-[#ffcb51] to-transparent rounded-full blur-2xl"></div>
+      {/* Modern Call to Action */}
+      <section className="py-32 px-6 bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
+        {/* Subtle gradient overlays */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-600 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-tl from-amber-600 to-transparent rounded-full blur-3xl"></div>
         </div>
         
-        <div className="max-w-5xl mx-auto text-center relative">
-          <h2 className="text-5xl md:text-6xl font-['Inter'] font-light text-[#f5cdb4] mb-8 leading-tight">
+        <div className="max-w-6xl mx-auto text-center relative">
+          <h2 className="font-display text-6xl md:text-7xl lg:text-8xl font-light mb-8 leading-tight">
             Ready to Explore?
           </h2>
-          <p className="text-xl md:text-2xl text-[#97d8c0] font-['Inter'] font-light mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="font-serif text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed">
             Step into Berlin&apos;s past and discover the stories of thousands of Jewish businesses 
             that once formed the heart of the city&apos;s commercial life.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20">
             <Link 
               href="/"
-              className="group inline-block px-12 py-5 bg-gradient-to-r from-[#97d8c0] to-[#a9e2d0] text-[#1a1a1a] font-['Inter'] font-semibold text-xl hover:from-[#a9e2d0] hover:to-[#97d8c0] transition-all duration-300 shadow-2xl hover:shadow-[#97d8c0]/25 transform hover:-translate-y-2 hover:scale-105"
+              className="group inline-flex items-center justify-center px-10 py-5 bg-white text-black font-medium text-lg hover:bg-gray-100 transition-all duration-200"
             >
               <span className="flex items-center gap-3">
                 {t('cta.exploreMap')}
-                <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </Link>
             
             <Link 
               href="/jewish-businesses"
-              className="group inline-block px-12 py-5 bg-transparent border-3 border-[#f5cdb4] text-[#f5cdb4] font-['Inter'] font-semibold text-xl hover:bg-[#f5cdb4] hover:text-[#2a2a2a] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="group inline-flex items-center justify-center px-10 py-5 bg-transparent border-2 border-white text-white font-medium text-lg hover:bg-white hover:text-black transition-all duration-200"
             >
               <span className="flex items-center gap-3">
                 {t('cta.viewData')}
-                <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </span>
             </Link>
           </div>
 
-          <div className="bg-[#2a2a2a]/60 backdrop-blur-sm p-8 border border-[#6b6275]/30">
-            <p className="text-[#f5cdb4]/80 font-['Inter'] text-lg leading-relaxed">
-              This project is part of <strong className="text-[#97d8c0]">StoryTimeMaps&apos;</strong> ongoing work to make historical data accessible. 
-              For academic use and citations, please reference <strong className="text-[#ffcb51]">Dr. Kreutzmüller&apos;s</strong> original research.
+          <div className="border-t border-gray-800 pt-12">
+            <p className="text-gray-400 text-base leading-relaxed max-w-3xl mx-auto">
+              This project is part of <strong className="text-white">StoryTimeMaps</strong> ongoing work to make historical data accessible. 
+              For academic use and citations, please reference <strong className="text-white">Dr. Kreutzmüller&apos;s</strong> original research.
             </p>
           </div>
         </div>

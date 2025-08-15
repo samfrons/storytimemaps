@@ -65,8 +65,11 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
             )}
             
             {currentMedia?.caption && (
-              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-2">
-                <p className="text-xs font-mono">{currentMedia.caption}</p>
+              <div className="absolute bottom-0 left-0 right-0 p-2" style={{
+                backgroundColor: 'rgba(var(--background-rgb), 0.8)',
+                backdropFilter: 'blur(4px)'
+              }}>
+                <p className="text-xs font-mono" style={{ color: 'var(--foreground)' }}>{currentMedia.caption}</p>
               </div>
             )}
           </div>

@@ -20,14 +20,6 @@ export default function OverlayTestPage() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const [showIntro, setShowIntro] = useState(true);
-  
-  // Handle localStorage after hydration to avoid SSR mismatch
-  useEffect(() => {
-    const introSeen = localStorage.getItem('introSeen');
-    if (introSeen === 'true') {
-      setShowIntro(false);
-    }
-  }, []);
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
@@ -51,10 +43,6 @@ export default function OverlayTestPage() {
 
   const handleLetsGo = () => {
     setShowIntro(false);
-    // Remember that intro has been seen
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('introSeen', 'true');
-    }
   };
 
   const toggleInfo = () => {
@@ -160,6 +148,23 @@ export default function OverlayTestPage() {
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </button>
+
+            {/* Theme Customizer Button */}
+            <button
+              onClick={() => router.push('/theme-customizer')}
+              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:opacity-80 hot-button`}
+              style={{
+                backgroundColor: 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: 'var(--foreground)'
+              }}
+              aria-label="Theme Customizer"
+              title="Theme Customizer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
             </button>
           </div>
@@ -273,6 +278,25 @@ export default function OverlayTestPage() {
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </button>
+          
+          {/* Theme Customizer Button (Mobile) */}
+          <button
+            onClick={() => {
+              router.push('/theme-customizer');
+              setShowMobileMenu(false);
+            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 hot-button`}
+            style={{
+              backgroundColor: 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: 'var(--foreground)'
+            }}
+            aria-label="Theme Customizer"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
             </svg>
           </button>
         </div>

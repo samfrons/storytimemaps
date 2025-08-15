@@ -210,13 +210,17 @@ const StoryList: React.FC<StoryListProps> = ({
         return {
           backgroundColor: 'var(--warning)',
           borderLeftColor: 'var(--warning)',
-          color: 'var(--foreground)'
+          color: 'var(--declining-text)',
+          '--story-text-color': 'var(--declining-text)',
+          '--story-text-secondary': 'var(--declining-text-secondary)'
         };
       case 'closed':
         return {
           backgroundColor: 'var(--danger)',
           borderLeftColor: 'var(--danger)',
-          color: theme === 'hot' ? 'var(--secondary)' : 'var(--secondary)'
+          color: 'var(--closed-text)',
+          '--story-text-color': 'var(--closed-text)',
+          '--story-text-secondary': 'var(--closed-text-secondary)'
         };
       case 'active':
       default:
@@ -225,19 +229,25 @@ const StoryList: React.FC<StoryListProps> = ({
           return {
             backgroundColor: 'var(--success)',
             borderLeftColor: 'var(--success)',
-            color: '#2a2a2a' // Black text for moody theme active state
+            color: 'var(--active-text)',
+            '--story-text-color': 'var(--active-text)',
+            '--story-text-secondary': 'var(--active-text-secondary)'
           };
         } else if (theme === 'bauhaus') {
           return {
             backgroundColor: 'var(--primary)',
             borderLeftColor: 'var(--primary)',
-            color: 'var(--secondary)'
+            color: 'var(--active-text)',
+            '--story-text-color': 'var(--active-text)',
+            '--story-text-secondary': 'var(--active-text-secondary)'
           };
         } else {
           return {
             backgroundColor: 'rgba(var(--primary-rgb), 0.85)',
             borderLeftColor: 'var(--primary)',
-            color: theme === 'cool' || theme === 'cold' || theme === 'hot' ? 'var(--secondary)' : 'var(--foreground)'
+            color: 'var(--active-text)',
+            '--story-text-color': 'var(--active-text)',
+            '--story-text-secondary': 'var(--active-text-secondary)'
           };
         }
     }
@@ -421,24 +431,16 @@ const StoryList: React.FC<StoryListProps> = ({
             <div className="p-4">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h3 className={`font-mono font-semibold text-sm transition-colors ${
-                  story.id === activeStoryId ? 
-                    '' :
-                    ''
-                }`}
+                <h3 className="font-mono font-semibold text-sm transition-colors"
                 style={{
-                  color: story.id === activeStoryId ? undefined : 'var(--foreground)'
+                  color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
                 }}>
                   {story.title}
                 </h3>
                 {story.address && (
-                  <div className={`flex items-center gap-1.5 text-xs font-mono mt-1 ${
-                    story.id === activeStoryId ? 
-                      '' :
-                      ''
-                  }`}
+                  <div className="flex items-center gap-1.5 text-xs font-mono mt-1"
                   style={{
-                    color: story.id === activeStoryId ? undefined : 'var(--foreground-muted)'
+                    color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
                   }}>
                     <svg 
                       className="w-3 h-3 flex-shrink-0" 
@@ -461,35 +463,23 @@ const StoryList: React.FC<StoryListProps> = ({
                     <span>{story.address}</span>
                   </div>
                 )}
-                <p className={`text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed ${
-                  story.id === activeStoryId ? 
-                    '' :
-                    ''
-                }`}
+                <p className="text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed"
                 style={{
-                  color: story.id === activeStoryId ? undefined : 'var(--foreground-muted)'
+                  color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
                 }}>{story.description}</p>
                 
                 <div className="flex items-center gap-4 mt-3 text-xs font-mono">
-                  <span className={`${
-                    story.id === activeStoryId ? 
-                      '' :
-                      ''
-                  }`}
+                  <span
                   style={{
-                    color: story.id === activeStoryId ? undefined : 'var(--foreground)'
+                    color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
                   }}>
                     {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
                   </span>
                   {(story.businessType || story.category) && (
-                    <span className={`px-2 py-1 text-xs font-mono uppercase tracking-wide ${
-                      story.id === activeStoryId ? 
-                        'bg-black/20 text-current' :
-                        ''
-                    }`}
+                    <span className="px-2 py-1 text-xs font-mono uppercase tracking-wide"
                     style={{
-                      backgroundColor: story.id === activeStoryId ? undefined : 'var(--card-bg)',
-                      color: story.id === activeStoryId ? undefined : 'var(--foreground)',
+                      backgroundColor: story.id === activeStoryId ? 'rgba(0, 0, 0, 0.2)' : 'var(--card-bg)',
+                      color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)',
                       opacity: 1
                     }}>
                       {story.businessType || story.category}
@@ -519,10 +509,10 @@ const StoryList: React.FC<StoryListProps> = ({
               }`}
               style={{
                 color: story.id === activeStoryId 
-                  ? (getActiveStoryStyle(story, true).color === 'var(--secondary)' ? 'var(--secondary)' : 'var(--foreground)')
+                  ? 'var(--story-text-color, currentColor)'
                   : 'var(--foreground)',
                 borderColor: story.id === activeStoryId 
-                  ? (getActiveStoryStyle(story, true).color === 'var(--secondary)' ? 'var(--border)' : 'var(--muted)')
+                  ? 'currentColor'
                   : 'var(--muted)',
                 backgroundColor: story.id === activeStoryId ? 'transparent' : 'transparent'
               }}

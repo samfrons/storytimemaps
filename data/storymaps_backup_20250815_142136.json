@@ -2215,53 +2215,5 @@
     "main_category": "trade",
     "business_type": "",
     "imageUrls": []
-  },
-  {
-    "id": "123",
-    "title": "A. Baumert-Export",
-    "author": "HU Berlin Database",
-    "description": "A trade establishment. Located at 128, Berlin",
-    "address": "128, Berlin",
-    "lat": 52.52,
-    "lng": 13.405,
-    "startDate": "1900-01-01",
-    "midDate": "1930-01-01",
-    "endDate": "1945-12-31",
-    "category": "business",
-    "main_category": "trade",
-    "business_type": "",
-    "imageUrls": []
-  },
-  {
-    "id": "124",
-    "title": "A. Gr\u00fcn & Sohn",
-    "author": "HU Berlin Database",
-    "description": "A trade establishment. Located at Birkenstr. 14, Berlin",
-    "address": "Birkenstr. 14, Berlin",
-    "lat": 52.52,
-    "lng": 13.405,
-    "startDate": "1900-01-01",
-    "midDate": "1930-01-01",
-    "endDate": "1945-12-31",
-    "category": "business",
-    "main_category": "trade",
-    "business_type": "",
-    "imageUrls": []
-  },
-  {
-    "id": "125",
-    "title": "A. Damitt Inkasso GmbH",
-    "author": "HU Berlin Database",
-    "description": "A trade establishment. Located at 46, Berlin",
-    "address": "46, Berlin",
-    "lat": 52.52,
-    "lng": 13.405,
-    "startDate": "1900-01-01",
-    "midDate": "1930-01-01",
-    "endDate": "1945-12-31",
-    "category": "business",
-    "main_category": "trade",
-    "business_type": "",
-    "imageUrls": []
   }
 ]

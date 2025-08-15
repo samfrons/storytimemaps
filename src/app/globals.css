@@ -37,6 +37,12 @@
   --card-bg: rgba(107, 98, 117, 0.4);
   --card-bg-rgb: 107, 98, 117;
   --placeholder-color: #f5cdb4;
+  --active-text: #2a2a2a; /* Black text for active state in moody */
+  --active-text-secondary: #2a2a2a;
+  --declining-text: #000000; /* Black text for declining state */
+  --declining-text-secondary: #000000;
+  --closed-text: #ffffff; /* White text for closed state */
+  --closed-text-secondary: #ffffff;
 }
 
 /* Cool Theme - Light blues and teals */
@@ -73,6 +79,12 @@
   --card-bg: rgba(255, 255, 255, 0.6);
   --card-bg-rgb: 255, 255, 255;
   --placeholder-color: #7f8c8d;
+  --active-text: #ffffff; /* White text for active state in cool */
+  --active-text-secondary: #f0f4f8;
+  --declining-text: #000000;
+  --declining-text-secondary: #000000;
+  --closed-text: #ffffff;
+  --closed-text-secondary: #ffffff;
 }
 
 /* Warm Theme - Oranges, browns, earthy */
@@ -109,6 +121,12 @@
   --card-bg: rgba(255, 255, 255, 0.6);
   --card-bg-rgb: 255, 255, 255;
   --placeholder-color: #8d6e63;
+  --active-text: #5d4037; /* Dark text for active state in warm */
+  --active-text-secondary: #5d4037;
+  --declining-text: #000000;
+  --declining-text-secondary: #000000;
+  --closed-text: #ffffff;
+  --closed-text-secondary: #ffffff;
 }
 
 /* Hot Theme - Bloody Water inspired reds */
@@ -145,6 +163,12 @@
   --card-bg: rgba(255, 255, 255, 0.15); /* Semi-transparent white cards */
   --card-bg-rgb: 255, 255, 255;
   --placeholder-color: #ffcccc; /* Light red for visibility in dark red inputs */
+  --active-text: #ffffff; /* White text for active state in hot */
+  --active-text-secondary: #ffffff;
+  --declining-text: #000000;
+  --declining-text-secondary: #000000;
+  --closed-text: #ffffff;
+  --closed-text-secondary: #ffffff;
 }
 
 /* Cold Theme - Icy blues, grays */
@@ -181,6 +205,12 @@
   --card-bg: rgba(255, 255, 255, 0.6);
   --card-bg-rgb: 255, 255, 255;
   --placeholder-color: #78909c;
+  --active-text: #ffffff; /* White text for active state in cold */
+  --active-text-secondary: #e8f4f8;
+  --declining-text: #000000;
+  --declining-text-secondary: #000000;
+  --closed-text: #ffffff;
+  --closed-text-secondary: #ffffff;
 }
 
 /* Bauhaus Theme - Primary colors, black/white with light backgrounds */
@@ -217,6 +247,12 @@
   --input-bg: #ffffff;
   --input-bg-rgb: 255, 255, 255;
   --placeholder-color: #333333;
+  --active-text: #ffffff; /* White text for active state in bauhaus */
+  --active-text-secondary: #f5f5f0;
+  --declining-text: #000000;
+  --declining-text-secondary: #000000;
+  --closed-text: #ffffff;
+  --closed-text-secondary: #ffffff;
 }
 
 /* Art Nouveau Theme - Muted greens, browns, golds */
@@ -253,6 +289,12 @@
   --card-bg: rgba(255, 255, 255, 0.6);
   --card-bg-rgb: 255, 255, 255;
   --placeholder-color: #8d6e63;
+  --active-text: #3e2723; /* Dark text for active state in art-nouveau */
+  --active-text-secondary: #3e2723;
+  --declining-text: #000000;
+  --declining-text-secondary: #000000;
+  --closed-text: #ffffff;
+  --closed-text-secondary: #ffffff;
 }
 
 /* Mapbox popup arrow styling - uses theme primary color for active state */

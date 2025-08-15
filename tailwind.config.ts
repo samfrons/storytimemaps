@@ -22,8 +22,8 @@ const config: Config = {
         border: "var(--border)",
       },
       fontFamily: {
-        sans: ['var(--font-inter)', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        mono: ['var(--font-space-mono)', 'monospace'],
+        sans: ['var(--font-space-mono)', 'Space Mono', 'Space Mono Fallback', 'monospace'],
+        mono: ['var(--font-space-mono)', 'Space Mono', 'Space Mono Fallback', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',

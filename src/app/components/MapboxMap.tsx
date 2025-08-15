@@ -1062,7 +1062,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 background: popupInfo.properties.state === 'declining' ? `${colors.declining}fa` :
                            popupInfo.properties.state === 'closed' ? `${colors.closed}fa` :
                            `${colors.active}fa`,
-                color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                color: popupInfo.properties.state === 'closed' ? 'var(--closed-text)' : 
+                       popupInfo.properties.state === 'declining' ? 'var(--declining-text)' :
+                       theme === 'bauhaus' ? 'var(--active-text)' : 
+                       theme === 'moody' || !theme ? 'var(--active-text)' : '#2a2a2a',
                 fontFamily: 'Space Mono, monospace',
                 border: `2px solid ${
                   popupInfo.properties.state === 'declining' ? colors.declining :
@@ -1072,7 +1075,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               }}
             >
               <h3 className="font-bold text-base mb-2" style={{ 
-                color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                color: 'inherit',
                 fontFamily: 'Space Mono, monospace'
               }}>
                 {popupInfo.properties.popup}
@@ -1081,7 +1084,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 <>
                   <div className="text-xs mb-2" style={{ 
                     opacity: 0.8,
-                    color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a'
+                    color: 'inherit'
                   }}>
                     {popupInfo.properties.startDate && 
                      popupInfo.properties.endDate && 
@@ -1091,7 +1094,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                   </div>
                   {popupInfo.properties.description && (
                     <p className="text-xs line-clamp-3" style={{ 
-                      color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                      color: 'inherit',
                       opacity: 0.9
                     }}>
                       {popupInfo.properties.description}
@@ -1100,7 +1103,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                   <div 
                     className="text-xs mt-3 font-bold cursor-pointer"
                     style={{
-                      color: popupInfo.properties.state === 'closed' ? '#ffffff' : '#2a2a2a',
+                      color: 'inherit',
                       textDecoration: 'underline',
                       border: 'none',
                       outline: 'none',

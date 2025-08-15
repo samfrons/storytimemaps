@@ -232,3 +232,4 @@ Use conventional commits:
 
 ## Remember
 This project visualizes a difficult period in history. The goal is to preserve memory and educate, not to entertain. Keep the interface professional and the data presentation respectful.
+- don't use hardcoded color values use variables except when you can't like for maps i think

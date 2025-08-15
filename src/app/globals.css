@@ -10,8 +10,11 @@
   --primary-light: #a9e2d0;
   --secondary: #ee5760;
   --warning: #ffcb51;
+  --warning-rgb: 255, 203, 81;
   --danger: #ee5760;
+  --danger-rgb: 238, 87, 96;
   --success: #97d8c0;
+  --success-rgb: 151, 216, 192;
   --background: #4a4a57;
   --background-rgb: 74, 74, 87;
   --foreground: #f5cdb4;
@@ -27,6 +30,13 @@
   --accent-coral: #ee5760;
   --accent-navy: #3b3340;
   --accent-chartreuse: #97d8c0;
+  --input-bg: rgba(107, 98, 117, 0.5);
+  --input-bg-rgb: 107, 98, 117;
+  --dropdown-bg: rgba(107, 98, 117, 0.95);
+  --dropdown-bg-rgb: 107, 98, 117;
+  --card-bg: rgba(107, 98, 117, 0.4);
+  --card-bg-rgb: 107, 98, 117;
+  --placeholder-color: #f5cdb4;
 }
 
 /* Cool Theme - Light blues and teals */
@@ -36,8 +46,11 @@
   --primary-light: #6ba3e7;
   --secondary: #2c5aa0;
   --warning: #f5a623;
+  --warning-rgb: 245, 166, 35;
   --danger: #d0021b;
+  --danger-rgb: 208, 2, 27;
   --success: #7ed321;
+  --success-rgb: 126, 211, 33;
   --background: #f0f4f8;
   --background-rgb: 240, 244, 248;
   --foreground: #2c3e50;
@@ -53,6 +66,13 @@
   --accent-coral: #e74c3c;
   --accent-navy: #34495e;
   --accent-chartreuse: #27ae60;
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-bg-rgb: 255, 255, 255;
+  --dropdown-bg: rgba(255, 255, 255, 0.95);
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --card-bg-rgb: 255, 255, 255;
+  --placeholder-color: #7f8c8d;
 }
 
 /* Warm Theme - Oranges, browns, earthy */
@@ -62,8 +82,11 @@
   --primary-light: #e8956f;
   --secondary: #8b4513;
   --warning: #ff8c00;
+  --warning-rgb: 255, 140, 0;
   --danger: #cd5c5c;
+  --danger-rgb: 205, 92, 92;
   --success: #9acd32;
+  --success-rgb: 154, 205, 50;
   --background: #f4f1e8;
   --background-rgb: 244, 241, 232;
   --foreground: #5d4037;
@@ -79,6 +102,13 @@
   --accent-coral: #f4511e;
   --accent-navy: #37474f;
   --accent-chartreuse: #689f38;
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-bg-rgb: 255, 255, 255;
+  --dropdown-bg: rgba(255, 255, 255, 0.95);
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --card-bg-rgb: 255, 255, 255;
+  --placeholder-color: #8d6e63;
 }
 
 /* Hot Theme - Bloody Water inspired reds */
@@ -86,32 +116,35 @@
   --primary: #e4525e;
   --primary-rgb: 228, 82, 94;
   --primary-light: #ff6666;
-  --secondary: #e4524e;
-  --warning: #ff6600;
+  --secondary: #ffffff;
+  --warning: #ffffff; /* White for visibility on red background */
+  --warning-rgb: 255, 255, 255;
   --danger: #cc0000;
+  --danger-rgb: 204, 0, 0;
   --success: #ff9500;
-  --background: #f2f2f2;
-  --background-rgb: 242, 242, 242;
-  --foreground: #2a2a2a;
-  --foreground-muted: #666666;
-  --muted: #cccccc;
-  --muted-rgb: 204, 204, 204;
-  --border: #e0e0e0;
-  --shadow: rgba(228, 82, 94, 0.2);
-  --map-overlay: rgba(242, 242, 242, 0.1);
-  --accent-orange: #ff5722;
+  --success-rgb: 255, 149, 0;
+  --background: #e4525e; /* Red background for panel */
+  --background-rgb: 228, 82, 94;
+  --foreground: #ffffff; /* White text for high contrast */
+  --foreground-muted: #ffdddd; /* Light pink for secondary text */
+  --muted: #ffeeee; /* Very light pink for muted elements */
+  --muted-rgb: 255, 238, 238;
+  --border: #ff8a95; /* Lighter red for borders */
+  --shadow: rgba(139, 0, 0, 0.3);
+  --map-overlay: rgba(228, 82, 94, 0.1);
+  --accent-orange: #ffffff; /* White for dates in hot theme */
   --accent-yellow: #ffc107;
-  --accent-purple: #e91e63;
+  --accent-purple: #ffffff;
   --accent-coral: #f44336;
   --accent-navy: #8b0000;
   --accent-chartreuse: #ff9800;
-  --input-bg: rgba(255, 255, 255, 0.8);
-  --input-bg-rgb: 255, 255, 255;
-  --dropdown-bg: rgba(255, 255, 255, 0.95);
-  --dropdown-bg-rgb: 255, 255, 255;
-  --card-bg: rgba(255, 255, 255, 0.6);
+  --input-bg: rgba(139, 0, 0, 0.9); /* Dark red for hot theme sidebar */
+  --input-bg-rgb: 139, 0, 0;
+  --dropdown-bg: rgba(139, 0, 0, 0.95); /* Dark red dropdown */
+  --dropdown-bg-rgb: 139, 0, 0;
+  --card-bg: rgba(255, 255, 255, 0.15); /* Semi-transparent white cards */
   --card-bg-rgb: 255, 255, 255;
-  --placeholder-color: #666666;
+  --placeholder-color: #ffcccc; /* Light red for visibility in dark red inputs */
 }
 
 /* Cold Theme - Icy blues, grays */
@@ -121,8 +154,11 @@
   --primary-light: #90caf9;
   --secondary: #455a64;
   --warning: #90a4ae;
+  --warning-rgb: 144, 164, 174;
   --danger: #607d8b;
+  --danger-rgb: 96, 125, 139;
   --success: #81c784;
+  --success-rgb: 129, 199, 132;
   --background: #e8f4f8;
   --background-rgb: 232, 244, 248;
   --foreground: #263238;
@@ -138,6 +174,13 @@
   --accent-coral: #5c6bc0;
   --accent-navy: #37474f;
   --accent-chartreuse: #4db6ac;
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-bg-rgb: 255, 255, 255;
+  --dropdown-bg: rgba(255, 255, 255, 0.95);
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --card-bg-rgb: 255, 255, 255;
+  --placeholder-color: #78909c;
 }
 
 /* Bauhaus Theme - Primary colors, black/white with light backgrounds */
@@ -147,8 +190,11 @@
   --primary-light: #3388ff;
   --secondary: #ff0000;
   --warning: #ffcc00;
+  --warning-rgb: 255, 204, 0;
   --danger: #ff0000;
+  --danger-rgb: 255, 0, 0;
   --success: #0066ff;
+  --success-rgb: 0, 102, 255;
   --background: #f5f5f0;
   --background-rgb: 245, 245, 240;
   --foreground: #000000;
@@ -170,6 +216,7 @@
   --card-bg-rgb: 255, 255, 255;
   --input-bg: #ffffff;
   --input-bg-rgb: 255, 255, 255;
+  --placeholder-color: #333333;
 }
 
 /* Art Nouveau Theme - Muted greens, browns, golds */
@@ -179,8 +226,11 @@
   --primary-light: #a0916b;
   --secondary: #556b2f;
   --warning: #daa520;
+  --warning-rgb: 218, 165, 32;
   --danger: #704214;
+  --danger-rgb: 112, 66, 20;
   --success: #6b8e23;
+  --success-rgb: 107, 142, 35;
   --background: #f8f6f0;
   --background-rgb: 248, 246, 240;
   --foreground: #3e2723;
@@ -196,6 +246,13 @@
   --accent-coral: #bf360c;
   --accent-navy: #263238;
   --accent-chartreuse: #689f38;
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-bg-rgb: 255, 255, 255;
+  --dropdown-bg: rgba(255, 255, 255, 0.95);
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --card-bg-rgb: 255, 255, 255;
+  --placeholder-color: #8d6e63;
 }
 
 /* Mapbox popup arrow styling - uses theme primary color for active state */
@@ -582,6 +639,58 @@ textarea:-ms-input-placeholder {
   background-color: #6b6275;
   color: #f5cdb4;
   padding: 0.5rem;
+}
+
+/* Hot theme specific styles */
+[data-theme="hot"] .hot-sidebar {
+  background-color: rgba(139, 0, 0, 0.9) !important;
+}
+
+[data-theme="hot"] .hot-button {
+  background-color: rgba(139, 0, 0, 0.8) !important;
+  color: #ffffff !important;
+  border-color: #ff9999 !important;
+}
+
+[data-theme="hot"] .hot-button:hover {
+  background-color: #ff6666 !important;
+}
+
+[data-theme="hot"] .hot-button-active {
+  background-color: #ff6666 !important;
+  color: #ffffff !important;
+  border-color: #ff9999 !important;
+}
+
+[data-theme="hot"] .hot-intro-button {
+  background-color: #8b0000 !important;
+  border-color: #8b0000 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="hot"] .hot-close-button {
+  background-color: rgba(139, 0, 0, 0.8) !important;
+  color: #ffffff !important;
+  border-color: var(--border) !important;
+}
+
+[data-theme="hot"] .hot-dropdown {
+  background-color: rgba(139, 0, 0, 0.95) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="hot"] .hot-dropdown button {
+  color: #ffffff !important;
+}
+
+[data-theme="hot"] .hot-dropdown button:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="hot"] .hot-dropdown .dropdown-active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border-left-color: #ffffff !important;
 }
 
 .mapbox-cluster-marker {

@@ -209,36 +209,36 @@ const StoryList: React.FC<StoryListProps> = ({
     switch (state) {
       case 'declining':
         return {
-          backgroundColor: 'rgba(255, 203, 81, 0.85)',
-          borderLeftColor: '#ffcb51',
-          color: '#2a2a2a'
+          backgroundColor: 'var(--warning)',
+          borderLeftColor: 'var(--warning)',
+          color: 'var(--foreground)'
         };
       case 'closed':
         return {
-          backgroundColor: 'rgba(238, 87, 96, 0.85)',
-          borderLeftColor: '#ee5760',
-          color: '#ffffff'
+          backgroundColor: 'var(--danger)',
+          borderLeftColor: 'var(--danger)',
+          color: theme === 'hot' ? 'var(--secondary)' : '#ffffff'
         };
       case 'active':
       default:
         // Use theme-specific colors
         if (theme === 'moody' || !theme) {
           return {
-            backgroundColor: 'rgba(151, 216, 192, 1)',
-            borderLeftColor: '#97d8c0',
-            color: '#2a2a2a'
+            backgroundColor: 'var(--success)',
+            borderLeftColor: 'var(--success)',
+            color: 'var(--foreground)'
           };
         } else if (theme === 'bauhaus') {
           return {
             backgroundColor: 'var(--primary)',
             borderLeftColor: 'var(--primary)',
-            color: '#ffffff'
+            color: 'var(--secondary)'
           };
         } else {
           return {
             backgroundColor: 'rgba(var(--primary-rgb), 0.85)',
             borderLeftColor: 'var(--primary)',
-            color: theme === 'cool' || theme === 'cold' ? '#ffffff' : 'var(--foreground)'
+            color: theme === 'cool' || theme === 'cold' || theme === 'hot' ? 'var(--secondary)' : 'var(--foreground)'
           };
         }
     }
@@ -305,7 +305,7 @@ const StoryList: React.FC<StoryListProps> = ({
                   onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full px-3 py-2.5 pl-9 focus:outline-none text-xs font-mono transition-all border"
                   style={{
-                    backgroundColor: 'var(--input-bg, rgba(107, 98, 117, 0.5))',
+                    backgroundColor: 'var(--input-bg)',
                     borderColor: 'var(--border)',
                     color: 'var(--foreground)'
                   }}
@@ -342,9 +342,9 @@ const StoryList: React.FC<StoryListProps> = ({
               </button>
               
               {isDropdownOpen && (
-                <div className="md:fixed absolute top-full left-0 right-0 border backdrop-blur-sm z-[99999] max-h-[600px] overflow-y-auto shadow-lg mt-1" 
+                <div className="md:fixed absolute top-full left-0 right-0 border backdrop-blur-sm z-[99999] max-h-[600px] overflow-y-auto shadow-lg mt-1 hot-dropdown" 
                      style={{
-                       backgroundColor: window.innerWidth >= 768 ? 'var(--dropdown-bg, rgba(107, 98, 117, 0.95))' : 'var(--border)',
+                       backgroundColor: 'var(--dropdown-bg)',
                        borderColor: 'var(--border)',
                        top: window.innerWidth >= 768 ? `${dropdownPosition.top}px` : undefined,
                        left: window.innerWidth >= 768 ? `${dropdownPosition.left}px` : undefined,
@@ -356,7 +356,7 @@ const StoryList: React.FC<StoryListProps> = ({
                       setIsDropdownOpen(false);
                     }}
                     className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors ${
-                      selectedCategory === 'all' ? 'border-l-2' : ''
+                      selectedCategory === 'all' ? 'border-l-2 dropdown-active' : ''
                     }`}
                     style={{
                       backgroundColor: selectedCategory === 'all' ? 'var(--border)' : 'transparent',
@@ -374,7 +374,7 @@ const StoryList: React.FC<StoryListProps> = ({
                         setIsDropdownOpen(false);
                       }}
                       className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors ${
-                        selectedCategory === category ? 'border-l-2' : ''
+                        selectedCategory === category ? 'border-l-2 dropdown-active' : ''
                       }`}
                       style={{
                         backgroundColor: selectedCategory === category ? 'var(--border)' : 'transparent',
@@ -415,7 +415,7 @@ const StoryList: React.FC<StoryListProps> = ({
               story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : ''
             } ${getStatusColor(story)}`}
             style={{
-              backgroundColor: story.id === activeStoryId ? undefined : 'var(--card-bg, rgba(107, 98, 117, 0.4))',
+              backgroundColor: story.id === activeStoryId ? undefined : 'var(--card-bg)',
               borderTopColor: 'var(--border)',
               borderRightColor: 'var(--border)',
               borderBottomColor: 'var(--border)',
@@ -430,7 +430,7 @@ const StoryList: React.FC<StoryListProps> = ({
               <div className="flex-1">
                 <h3 className={`font-mono font-semibold text-sm transition-colors ${
                   story.id === activeStoryId ? 
-                    (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white' : 'text-[#2a2a2a]') :
+                    '' :
                     ''
                 }`}
                 style={{
@@ -440,7 +440,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 </h3>
                 <p className={`text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed ${
                   story.id === activeStoryId ? 
-                    (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white' : 'text-[#2a2a2a]') :
+                    '' :
                     ''
                 }`}
                 style={{
@@ -450,7 +450,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 <div className="flex items-center gap-4 mt-3 text-xs font-mono">
                   <span className={`${
                     story.id === activeStoryId ? 
-                      (getActiveStoryStyle(story, true).color === '#ffffff' ? 'text-white' : 'text-[#2a2a2a]') :
+                      '' :
                       ''
                   }`}
                   style={{
@@ -465,7 +465,7 @@ const StoryList: React.FC<StoryListProps> = ({
                         ''
                     }`}
                     style={{
-                      backgroundColor: story.id === activeStoryId ? undefined : 'var(--card-bg, rgba(107, 98, 117, 0.5))',
+                      backgroundColor: story.id === activeStoryId ? undefined : 'var(--card-bg)',
                       color: story.id === activeStoryId ? undefined : 'var(--foreground)',
                       opacity: 1
                     }}>

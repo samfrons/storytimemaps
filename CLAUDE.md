@@ -16,8 +16,41 @@ This is a historical data visualization project showing Jewish businesses in Ber
 - This includes buttons, links, inputs, and any clickable elements
 - Replace with custom focus indicators if needed (using border or background color changes)
 
-### 3. Color Palette (Snazzy Maps Inspired)
-Always use these specific colors:
+### 3. Color System
+**CRITICAL: Use CSS Variables, NOT Hardcoded Colors**
+
+#### CSS Variable Usage Rules
+1. **NEVER hardcode hex colors** in components - always use CSS variables
+2. **Use var() syntax** for all colors: `var(--primary)`, `var(--background)`, etc.
+3. **For RGBA needs**, use RGB variables: `rgba(var(--primary-rgb), 0.8)`
+4. **Map styling exception**: Map layers require hex values, but should read from theme-specific functions
+
+#### Available CSS Variables
+```css
+--primary / --primary-rgb      // Theme's main color
+--primary-light                // Lighter variant
+--secondary                    // Secondary color
+--warning                      // Warning state (declining)
+--danger                       // Danger state (closed)
+--success                      // Success state (active)
+--background / --background-rgb // Main background
+--foreground                   // Main text color
+--foreground-muted             // Secondary text
+--muted / --muted-rgb          // Muted elements
+--border                       // Border color
+--shadow                       // Shadow color
+--map-overlay                  // Map overlay backgrounds
+--input-bg / --input-bg-rgb    // Input backgrounds
+--dropdown-bg                  // Dropdown backgrounds
+--card-bg / --card-bg-rgb      // Card backgrounds
+--placeholder-color            // Placeholder text
+```
+
+#### Theme-Specific Map Colors
+Map colors are defined in `getMapColors()` and `getThemeColors()` functions.
+These return hex values for Mapbox API compatibility but should still be theme-aware.
+
+#### Default Moody Theme Colors (for reference only)
 - Background: `#4a4a57`
 - Borders: `#6b6275`
 - Active/Success: `#97d8c0` (mint green)
@@ -88,15 +121,33 @@ The time-based state system is critical:
 - Storage format: ISO 8601 strings
 - Always validate dates before display
 
+## Implementation Best Practices for Agents
+
+### When Working with Colors
+1. **Check existing usage first**: Use `grep` to find how colors are currently implemented
+2. **Use CSS variables**: All UI components should use `var(--variable-name)`
+3. **Map exception**: Mapbox requires hex values - use theme functions that return hex
+4. **Never hardcode**: Even "white" should be `var(--secondary)` or appropriate variable
+5. **Test all themes**: Changes should work across moody, hot, cold, warm, cool, bauhaus, art-nouveau
+
+### When Adding New Features
+1. **Check CLAUDE.md first**: This file contains critical project rules
+2. **Follow existing patterns**: Look at similar components for style/structure
+3. **Maintain theme consistency**: New elements must work with all themes
+4. **Performance first**: Use React.memo, useMemo, useCallback appropriately
+5. **No rounded corners**: Keep sharp edges unless explicitly requested
+
 ## Testing Checklist
 Before any commit, verify:
 - [ ] No border-radius used anywhere
-- [ ] Colors match the defined palette exactly
+- [ ] All colors use CSS variables (except Map API calls)
 - [ ] Components are memoized
 - [ ] Event handlers are throttled/debounced
 - [ ] Map loads without console errors
 - [ ] Modal animations are smooth
 - [ ] Time slider updates all components
+- [ ] All themes display correctly
+- [ ] Text remains legible in all themes
 
 ## Common Pitfalls to Avoid
 

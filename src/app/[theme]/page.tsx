@@ -11,8 +11,8 @@ import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../../hooks/us
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), { 
   ssr: false,
   loading: () => (
-    <div className="w-full h-full bg-[#4a4a57] flex items-center justify-center">
-      <div className="text-[#97d8c0] font-mono">Loading map...</div>
+    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
+      <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading map...</div>
     </div>
   )
 });
@@ -53,8 +53,8 @@ export default function ThemePage({ params }: ThemePageProps) {
 
   if (!theme) {
     return (
-      <div className="w-full h-screen bg-[#4a4a57] flex items-center justify-center">
-        <div className="text-[#97d8c0] font-mono">Loading...</div>
+      <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
+        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading...</div>
       </div>
     );
   }
@@ -65,7 +65,7 @@ export default function ThemePage({ params }: ThemePageProps) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-[#4a4a57]">
+    <div className="flex flex-col md:flex-row h-screen" style={{ backgroundColor: 'var(--background)' }}>
       <div className="w-full md:w-1/3 h-1/2 md:h-screen order-2 md:order-1">
         <StoryList
           visibleStories={visibleStories}

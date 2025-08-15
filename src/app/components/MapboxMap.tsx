@@ -82,7 +82,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
       return 'mapbox://styles/mapbox/outdoors-v12' // We'll customize this after load
     
     case 'hot':
-      return 'mapbox://styles/mapbox/satellite-streets-v12' // We'll customize this after load
+      return 'mapbox://styles/mapbox/light-v11' // We'll customize this after load for Bloody Water style
     
     case 'art-nouveau':
       return 'mapbox://styles/mapbox/outdoors-v12' // We'll customize this after load
@@ -317,6 +317,32 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const map = mapRef.current.getMap()
     if (!map) return
     
+    // For hot theme, ensure styles are applied after map is ready
+    if (theme === 'hot') {
+      const applyHotTheme = () => {
+        const style = map.getStyle()
+        if (style && style.layers) {
+          // Force re-application of hot theme
+          setTimeout(() => {
+            map.resize()
+          }, 100)
+        }
+      }
+      
+      // Listen for style load events
+      map.on('style.load', applyHotTheme)
+      
+      // Also apply immediately if style is already loaded
+      if (map.isStyleLoaded()) {
+        applyHotTheme()
+      }
+      
+      // Cleanup
+      return () => {
+        map.off('style.load', applyHotTheme)
+      }
+    }
+    
     try {
       const style = map.getStyle()
       if (!style || !style.layers) return
@@ -342,10 +368,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             }
           case 'hot':
             return {
-              water: '#e4525e',
-              park: '#ededed',
-              road: '#e4525e',
-              background: '#f2f2f2'
+              water: '#cc0000', // Deep blood red for water
+              park: '#ff6666', // Red for parks
+              road: '#ffcccc', // Very light red for roads
+              background: '#ff9999' // Red background
             }
           case 'cold':
             return {
@@ -383,16 +409,62 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       // Apply custom colors to layers
       layers.forEach(layer => {
         try {
-          // Water layers
+          // Water layers - Special handling for Bloody Water theme
           if (layer.id.includes('water') && layer.type === 'fill') {
             map.setPaintProperty(layer.id, 'fill-color', mapColors.water)
-            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 1 : theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
           }
           
-          // Park/landuse layers
+          // Park/landuse layers - Light gray for hot theme
           if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
             map.setPaintProperty(layer.id, 'fill-color', mapColors.park)
-            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.3 : theme === 'cold' ? 0.15 : 0.2)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 0.9 : theme === 'bauhaus' ? 0.3 : theme === 'cold' ? 0.15 : 0.2)
+          }
+          
+          // Special handling for hot theme - Bloody Water style with more red
+          if (theme === 'hot') {
+            // Set all land-related layers to deeper pink/red
+            if ((layer.id.includes('land') || layer.id.includes('background')) && layer.type === 'fill') {
+              map.setPaintProperty(layer.id, 'fill-color', '#ffcccc')
+              map.setPaintProperty(layer.id, 'fill-opacity', 1)
+            }
+            
+            // Grass and nature areas in light red
+            if ((layer.id.includes('grass') || layer.id.includes('wood') || layer.id.includes('forest')) && layer.type === 'fill') {
+              map.setPaintProperty(layer.id, 'fill-color', '#ff9999')
+              map.setPaintProperty(layer.id, 'fill-opacity', 0.8)
+            }
+            
+            // Waterways in red
+            if (layer.id.includes('waterway') && layer.type === 'line') {
+              map.setPaintProperty(layer.id, 'line-color', '#e4525e')
+              map.setPaintProperty(layer.id, 'line-width', 3)
+              map.setPaintProperty(layer.id, 'line-opacity', 1)
+            }
+            
+            // Administrative boundaries in red
+            if (layer.id.includes('admin') && layer.type === 'line') {
+              map.setPaintProperty(layer.id, 'line-color', '#ff6666')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.8)
+              map.setPaintProperty(layer.id, 'line-width', 2)
+            }
+            
+            // Railway lines in darker red
+            if ((layer.id.includes('rail') || layer.id.includes('transit')) && layer.type === 'line') {
+              map.setPaintProperty(layer.id, 'line-color', '#cc0000')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.9)
+            }
+            
+            // Tunnels and bridges in red tones
+            if ((layer.id.includes('tunnel') || layer.id.includes('bridge')) && layer.type === 'line') {
+              map.setPaintProperty(layer.id, 'line-color', '#ff3333')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.8)
+            }
+            
+            // Hide ALL text labels including street names
+            if (layer.type === 'symbol') {
+              map.setLayoutProperty(layer.id, 'visibility', 'none')
+            }
           }
           
           // Road layers  
@@ -406,6 +478,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               } else {
                 map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
                 map.setPaintProperty(layer.id, 'line-opacity', 0.6)
+              }
+            } else if (theme === 'hot') {
+              // Bloody Water theme - light pink/red roads
+              map.setPaintProperty(layer.id, 'line-color', '#ffdddd')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.7)
+              if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
+                map.setPaintProperty(layer.id, 'line-width', 2)
+                map.setPaintProperty(layer.id, 'line-color', '#ff9999')
+              } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
+                map.setPaintProperty(layer.id, 'line-width', 1.5)
+                map.setPaintProperty(layer.id, 'line-color', '#ffbbbb')
+              } else {
+                map.setPaintProperty(layer.id, 'line-width', 1)
               }
             } else if (theme === 'bauhaus') {
               // Bauhaus uses bold black lines
@@ -430,7 +515,16 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           
           // Building layers
           if (layer.id.includes('building') && layer.type === 'fill') {
-            if (theme === 'bauhaus') {
+            if (theme === 'hot') {
+              // Bloody Water theme - light pink buildings
+              map.setPaintProperty(layer.id, 'fill-color', '#ffcccc')
+              map.setPaintProperty(layer.id, 'fill-opacity', 0.6)
+              // Building outlines in red
+              if (layer.id.includes('outline')) {
+                map.setPaintProperty(layer.id, 'line-color', '#ff9999')
+                map.setPaintProperty(layer.id, 'line-opacity', 0.8)
+              }
+            } else if (theme === 'bauhaus') {
               map.setPaintProperty(layer.id, 'fill-color', '#000000')
               map.setPaintProperty(layer.id, 'fill-opacity', 0.2)
             } else if (theme === 'cold') {
@@ -444,7 +538,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           
           // Text labels
           if (layer.type === 'symbol') {
-            if (layer.paint) {
+            if (theme === 'hot') {
+              // Hide ALL labels for hot theme
+              map.setLayoutProperty(layer.id, 'visibility', 'none')
+            } else if (layer.paint) {
               map.setPaintProperty(layer.id, 'text-color', '#f5cdb4')
               map.setPaintProperty(layer.id, 'text-halo-color', '#3b3340')
               map.setPaintProperty(layer.id, 'text-halo-width', 1)
@@ -747,6 +844,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           
           // Apply custom style to match color scheme for other themes
           const map = mapRef.current?.getMap()
+          
+          // Force theme update after a small delay to ensure map is fully loaded
+          if (map && theme === 'hot') {
+            setTimeout(() => {
+              // Trigger a fake resize event to force redraw
+              map.resize()
+            }, 100)
+          }
+          
           if (map) {
             try {
               // Get all layers safely
@@ -991,10 +1097,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomIn()
           }}
-          className="bg-[#6b6275]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#6b6275]"
+          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border"
+          style={{
+            backgroundColor: 'rgba(var(--muted-rgb), 0.8)',
+            borderColor: 'var(--border)',
+            color: 'var(--foreground)'
+          }}
           aria-label="Zoom in"
         >
-          <svg className="w-5 h-5 text-[#f5cdb4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </button>
@@ -1002,10 +1113,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomOut()
           }}
-          className="bg-[#6b6275]/80 p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border border-[#6b6275]"
+          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border"
+          style={{
+            backgroundColor: 'rgba(var(--muted-rgb), 0.8)',
+            borderColor: 'var(--border)',
+            color: 'var(--foreground)'
+          }}
           aria-label="Zoom out"
         >
-          <svg className="w-5 h-5 text-[#f5cdb4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
           </svg>
         </button>

@@ -158,7 +158,8 @@ export default function OverlayTestPage() {
               style={{
                 backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--border)',
-                color: 'var(--foreground)'
+                color: 'var(--foreground)',
+                display: 'none'
               }}
               aria-label="Theme Customizer"
               title="Theme Customizer"
@@ -291,7 +292,8 @@ export default function OverlayTestPage() {
             style={{
               backgroundColor: 'var(--input-bg)',
               borderColor: 'var(--border)',
-              color: 'var(--foreground)'
+              color: 'var(--foreground)',
+              display: 'none'
             }}
             aria-label="Theme Customizer"
           >

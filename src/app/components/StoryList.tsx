@@ -90,11 +90,11 @@ const StoryList: React.FC<StoryListProps> = ({
   const handleModalNavigation = (direction: 'prev' | 'next') => {
     if (!selectedStory) return;
     
-    const currentIndex = filteredStories.findIndex(s => s.id === selectedStory.id);
+    const currentIndex = allFilteredStories.findIndex(s => s.id === selectedStory.id);
     const targetIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
     
-    if (targetIndex >= 0 && targetIndex < filteredStories.length) {
-      const targetStory = filteredStories[targetIndex];
+    if (targetIndex >= 0 && targetIndex < allFilteredStories.length) {
+      const targetStory = allFilteredStories[targetIndex];
       setSelectedStory(targetStory);
     }
   };
@@ -171,13 +171,22 @@ const StoryList: React.FC<StoryListProps> = ({
     return Array.from(categories).sort();
   }, [visibleStories]);
 
-  const filteredStories = visibleStories.filter(story => {
+  const allFilteredStories = visibleStories.filter(story => {
     const matchesSearch = story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           (story.description?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
     const storyCategory = story.businessType || story.category || '';
     const matchesCategory = selectedCategory === 'all' || storyCategory === selectedCategory;
     return matchesSearch && matchesCategory;
   });
+  
+  // Limit displayed stories for performance
+  const [displayCount, setDisplayCount] = useState(50);
+  const filteredStories = allFilteredStories.slice(0, displayCount);
+  
+  // Load more handler
+  const loadMore = () => {
+    setDisplayCount(prev => Math.min(prev + 50, allFilteredStories.length));
+  };
 
   const getStatusColor = (story: StoryMap) => {
     const now = currentDate.getTime();
@@ -406,7 +415,7 @@ const StoryList: React.FC<StoryListProps> = ({
       
       <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3">
         <div className="text-xs font-mono mb-3 uppercase tracking-wide font-semibold" style={{color: 'var(--accent-orange)'}}>
-          {filteredStories.length} locations found
+          {allFilteredStories.length} locations found {displayCount < allFilteredStories.length && `(showing ${displayCount})`}
         </div>
         
         {filteredStories.map((story) => (
@@ -541,6 +550,29 @@ const StoryList: React.FC<StoryListProps> = ({
             </div>
           </div>
         ))}
+        
+        {/* Load More Button */}
+        {displayCount < allFilteredStories.length && (
+          <div className="p-4 text-center">
+            <button
+              onClick={loadMore}
+              className="px-4 py-2 text-xs font-mono uppercase tracking-wide border transition-all"
+              style={{
+                borderColor: 'var(--muted)',
+                color: 'var(--foreground)',
+                backgroundColor: 'var(--background)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--muted)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--background)';
+              }}
+            >
+              Load More ({allFilteredStories.length - displayCount} remaining)
+            </button>
+          </div>
+        )}
       </div>
       
       {/* Business Detail Modal */}
@@ -551,8 +583,8 @@ const StoryList: React.FC<StoryListProps> = ({
           onClose={closeModal}
           originRect={originRect}
           onNavigate={handleModalNavigation}
-          hasPrevious={filteredStories.findIndex(s => s.id === selectedStory.id) > 0}
-          hasNext={filteredStories.findIndex(s => s.id === selectedStory.id) < filteredStories.length - 1}
+          hasPrevious={allFilteredStories.findIndex(s => s.id === selectedStory.id) > 0}
+          hasNext={allFilteredStories.findIndex(s => s.id === selectedStory.id) < allFilteredStories.length - 1}
         />
       )}
     </div>

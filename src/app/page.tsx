@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
@@ -20,6 +20,33 @@ export default function OverlayTestPage() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const [showIntro, setShowIntro] = useState(true);
+
+  // Check localStorage on mount to see if intro was already seen
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const introSeen = localStorage.getItem('introSeen');
+      if (introSeen === 'true') {
+        setShowIntro(false);
+      }
+    }
+  }, []);
+
+  // Clear custom theme styles when theme changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && theme) {
+      // Clear all inline CSS variables from the root element
+      const root = document.documentElement;
+      const styles = root.style;
+      const length = styles.length;
+      
+      for (let i = length - 1; i >= 0; i--) {
+        const property = styles[i];
+        if (property.startsWith('--')) {
+          root.style.removeProperty(property);
+        }
+      }
+    }
+  }, [theme]);
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
@@ -43,6 +70,10 @@ export default function OverlayTestPage() {
 
   const handleLetsGo = () => {
     setShowIntro(false);
+    // Remember that intro has been seen
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('introSeen', 'true');
+    }
   };
 
   const toggleInfo = () => {
@@ -99,13 +130,12 @@ export default function OverlayTestPage() {
                      backgroundColor: 'var(--dropdown-bg)',
                      borderColor: 'var(--border)'
                    }}>
-                {['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].map((themeName) => (
+                {['moody', 'bauhaus'].map((themeName) => (
                   <button
                     key={themeName}
                     onClick={() => {
                       setTheme(themeName);
                       setShowThemeMenu(false);
-                      router.push(`/${themeName}`);
                     }}
                     className={`w-full px-3 py-2 text-left text-xs font-mono transition-colors capitalize hover:opacity-80 ${theme === themeName ? 'dropdown-active' : ''}`}
                     style={{
@@ -311,14 +341,13 @@ export default function OverlayTestPage() {
           backgroundColor: 'var(--dropdown-bg)',
           borderColor: 'var(--border)'
         }}>
-          {['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].map((themeName) => (
+          {['moody', 'bauhaus'].map((themeName) => (
             <button
               key={themeName}
               onClick={() => {
                 setTheme(themeName);
                 setShowThemeMenu(false);
                 setShowMobileMenu(false);
-                router.push(`/${themeName}`);
               }}
               className={`w-full px-3 py-2 text-left text-xs font-mono transition-colors hover:opacity-80 capitalize`}
               style={{

@@ -1,0 +1,239 @@
+2025-08-15 16:13:39,147 - INFO - Starting geocoding process...
+2025-08-15 16:13:39,149 - INFO - Backup created: /Users/samfrons/Desktop/storymaps/data/storymaps.json.backup_20250815_161339
+2025-08-15 16:13:39,157 - INFO - Loaded 4000 entries
+2025-08-15 16:13:39,158 - INFO - Found 3898 entries needing geocoding
+2025-08-15 16:13:39,159 - INFO - Processing 2495 unique addresses
+2025-08-15 16:13:39,159 - INFO - Processing address 1/2495: Lothringer Str. 81, Berlin
+2025-08-15 16:13:46,060 - WARNING - Failed to geocode: Lothringer Str. 81, Berlin
+2025-08-15 16:13:46,060 - ERROR - Failed to geocode address: Lothringer Str. 81, Berlin
+2025-08-15 16:13:46,060 - INFO - Processing address 2/2495: Probststr. 10/11, Berlin
+2025-08-15 16:13:53,080 - WARNING - Failed to geocode: Probststr. 10/11, Berlin
+2025-08-15 16:13:53,080 - ERROR - Failed to geocode address: Probststr. 10/11, Berlin
+2025-08-15 16:13:53,081 - INFO - Processing address 3/2495: 22, Berlin
+2025-08-15 16:13:53,081 - WARNING - Incomplete address detected: 22, Berlin
+2025-08-15 16:13:53,081 - ERROR - Failed to geocode address: 22, Berlin
+2025-08-15 16:13:53,081 - INFO - Processing address 4/2495: 128, Berlin
+2025-08-15 16:13:53,081 - WARNING - Incomplete address detected: 128, Berlin
+2025-08-15 16:13:53,081 - ERROR - Failed to geocode address: 128, Berlin
+2025-08-15 16:13:53,081 - INFO - Processing address 5/2495: 81, Berlin
+2025-08-15 16:13:53,081 - WARNING - Incomplete address detected: 81, Berlin
+2025-08-15 16:13:53,081 - ERROR - Failed to geocode address: 81, Berlin
+2025-08-15 16:13:53,081 - INFO - Processing address 6/2495: Harzburgstr. 3, Berlin
+2025-08-15 16:13:58,366 - WARNING - Failed to geocode: Harzburgstr. 3, Berlin
+2025-08-15 16:13:58,366 - ERROR - Failed to geocode address: Harzburgstr. 3, Berlin
+2025-08-15 16:13:58,366 - INFO - Processing address 7/2495: Birkenstr. 14, Berlin
+2025-08-15 16:14:00,128 - INFO - Geocoded: Birkenstr. 14, Berlin -> (52.5308121, 13.3483605) confidence: 8.875486381318407e-05
+2025-08-15 16:14:00,128 - INFO - Updated A. Grün & Sohn: (52.530947941896926, 13.34774330464989)
+2025-08-15 16:14:00,128 - INFO - Updated A. Grün & Sohn: (52.53077099743079, 13.347795780430646)
+2025-08-15 16:14:00,128 - INFO - Updated A. Grün & Sohn: (52.53118989105931, 13.347841970035033)
+2025-08-15 16:14:00,128 - INFO - Processing address 8/2495: 109, Berlin
+2025-08-15 16:14:00,128 - WARNING - Incomplete address detected: 109, Berlin
+2025-08-15 16:14:00,128 - ERROR - Failed to geocode address: 109, Berlin
+2025-08-15 16:14:00,128 - INFO - Processing address 9/2495: Bischofstr. 2/3, Berlin
+2025-08-15 16:14:10,023 - WARNING - Failed to geocode: Bischofstr. 2/3, Berlin
+2025-08-15 16:14:10,023 - ERROR - Failed to geocode address: Bischofstr. 2/3, Berlin
+2025-08-15 16:14:10,023 - INFO - Processing address 10/2495: Hollmannstr. 16, Berlin
+2025-08-15 16:14:11,640 - INFO - Geocoded: Hollmannstr. 16, Berlin -> (52.5018096, 13.39627) confidence: 0.04008875486381322
+2025-08-15 16:14:11,640 - INFO - Updated A. Chill & Co: (52.5018096, 13.39627)
+2025-08-15 16:14:11,640 - INFO - Processing address 11/2495: 46, Berlin
+2025-08-15 16:14:11,640 - WARNING - Incomplete address detected: 46, Berlin
+2025-08-15 16:14:11,640 - ERROR - Failed to geocode address: 46, Berlin
+2025-08-15 16:14:11,640 - INFO - Processing address 12/2495: 105, Berlin
+2025-08-15 16:14:11,640 - WARNING - Incomplete address detected: 105, Berlin
+2025-08-15 16:14:11,640 - ERROR - Failed to geocode address: 105, Berlin
+2025-08-15 16:14:11,640 - INFO - Processing address 13/2495: Maikowskistr.  69, Berlin
+2025-08-15 16:14:16,989 - WARNING - Failed to geocode: Maikowskistr.  69, Berlin
+2025-08-15 16:14:16,990 - ERROR - Failed to geocode address: Maikowskistr.  69, Berlin
+2025-08-15 16:14:16,990 - INFO - Processing address 14/2495: Stadtbahnbogen 137, Berlin
+2025-08-15 16:14:18,627 - INFO - Geocoded: Stadtbahnbogen 137, Berlin -> (52.5233251, 13.4058007) confidence: 8.875486381318407e-05
+2025-08-15 16:14:18,627 - INFO - Updated A. Magnus: (52.5233251, 13.4058007)
+2025-08-15 16:14:18,627 - INFO - Processing address 15/2495: Kottbusser Ufer 43, Berlin
+2025-08-15 16:14:25,422 - WARNING - Failed to geocode: Kottbusser Ufer 43, Berlin
+2025-08-15 16:14:25,422 - ERROR - Failed to geocode address: Kottbusser Ufer 43, Berlin
+2025-08-15 16:14:25,422 - INFO - Processing address 16/2495: Platz 11, Berlin
+2025-08-15 16:14:26,851 - INFO - Geocoded: Platz 11, Berlin -> (52.4844741, 13.2601672) confidence: 8.875486381318407e-05
+2025-08-15 16:14:26,852 - INFO - Updated A. Neumann & Co: (52.4844741, 13.2601672)
+2025-08-15 16:14:26,852 - INFO - Processing address 17/2495: Gervinusstr. 17/19, Berlin
+2025-08-15 16:14:28,695 - INFO - Geocoded: Gervinusstr. 17/19, Berlin -> (52.5037523, 13.3036388) confidence: 0.05342208819714653
+2025-08-15 16:14:28,695 - INFO - Updated AG für Brennstoffvergasung: (52.5037523, 13.3036388)
+2025-08-15 16:14:28,695 - INFO - Processing address 18/2495: Luisenstr. 31, Berlin
+2025-08-15 16:14:30,392 - INFO - Geocoded: Luisenstr. 31, Berlin -> (52.5200137, 13.3807477) confidence: 8.875486381318407e-05
+2025-08-15 16:14:30,392 - INFO - Updated AG für Eigentumschutz: (52.5200137, 13.3807477)
+2025-08-15 16:14:30,392 - INFO - Processing address 19/2495: 6, Berlin
+2025-08-15 16:14:30,392 - WARNING - Incomplete address detected: 6, Berlin
+2025-08-15 16:14:30,392 - ERROR - Failed to geocode address: 6, Berlin
+2025-08-15 16:14:30,392 - INFO - Processing address 20/2495: Bleibtreustr. 20, Berlin
+2025-08-15 16:14:32,098 - INFO - Geocoded: Bleibtreustr. 20, Berlin -> (52.5021397, 13.3193461) confidence: 8.875486381318407e-05
+2025-08-15 16:14:32,098 - INFO - Updated AG für Finanzierungen am Grundstücksmarkt: (52.502185058676716, 13.319055914316618)
+2025-08-15 16:14:32,099 - INFO - Updated AG für Grundkredit: (52.50244805542932, 13.318975036891493)
+2025-08-15 16:14:32,099 - INFO - Processing address 21/2495: Brunnenstr. 188/190, Berlin
+2025-08-15 16:14:33,977 - INFO - Geocoded: Brunnenstr. 188/190, Berlin -> (52.5308549, 13.4000746) confidence: 8.875486381318407e-05
+2025-08-15 16:14:33,977 - INFO - Updated AG für Geschäfts- und Industriebauten: (52.530678509000595, 13.400087041909549)
+2025-08-15 16:14:33,977 - INFO - Updated Gebrüder Weinberger GmbH: (52.5307121009105, 13.399564925419801)
+2025-08-15 16:14:33,977 - INFO - Processing address 22/2495: Ritterstr. 11, Berlin
+2025-08-15 16:14:35,656 - INFO - Geocoded: Ritterstr. 11, Berlin -> (52.5016554, 13.4116221) confidence: 8.875486381318407e-05
+2025-08-15 16:14:35,657 - INFO - Updated AG für Grundstücksbeteiligungen: (52.50165980737471, 13.411809742540092)
+2025-08-15 16:14:35,657 - INFO - Updated Alexanderbasar GmbH: (52.501437993407514, 13.411050436551958)
+2025-08-15 16:14:35,657 - INFO - Updated Der Soda-Syphon GmbH: (52.50134281088749, 13.411289103704775)
+2025-08-15 16:14:35,657 - INFO - Updated Deutsche Grundbesitz-AG: (52.50178510435341, 13.411754862057778)
+2025-08-15 16:14:35,657 - INFO - Updated Eterna Billard-Gesellschaft Flörsheimer & Co: (52.50206911591897, 13.4116649139573)
+2025-08-15 16:14:35,657 - INFO - Processing address 23/2495: Kurfürstendamm 190/192, Berlin
+2025-08-15 16:14:38,481 - INFO - Geocoded: Kurfürstendamm 190/192, Berlin -> (52.5035641, 13.3305371) confidence: 0.4914112718388304
+2025-08-15 16:14:38,481 - INFO - Updated AG für Grundstücksverwaltung und Außenhandel: (52.5035641, 13.3305371)
+2025-08-15 16:14:38,481 - INFO - Processing address 24/2495: Mohrenstr. 57, Berlin
+2025-08-15 16:14:40,010 - INFO - Geocoded: Mohrenstr. 57, Berlin -> (52.511298, 13.3847578) confidence: 0.32314590312055647
+2025-08-15 16:14:40,010 - INFO - Updated AG für Handel und Grundbesitz: (52.511298, 13.3847578)
+2025-08-15 16:14:40,010 - INFO - Processing address 25/2495: Jägerstr. 69, Berlin
+2025-08-15 16:14:42,339 - INFO - Geocoded: Jägerstr. 69, Berlin -> (52.4857799, 13.5755808) confidence: 8.875486381318407e-05
+2025-08-15 16:14:42,340 - INFO - Updated AG für Konsortialbeteiligung: (52.4857799, 13.5755808)
+2025-08-15 16:14:42,340 - INFO - Processing address 26/2495: Krausenstr. 54, Berlin
+2025-08-15 16:14:43,853 - INFO - Geocoded: Krausenstr. 54, Berlin -> (52.5094155, 13.3895332) confidence: 0.05342208819714653
+2025-08-15 16:14:43,853 - INFO - Updated A. Velisch & Hochgesang: (52.5094155, 13.3895332)
+2025-08-15 16:14:43,853 - INFO - Processing address 27/2495: 17, Berlin
+2025-08-15 16:14:43,853 - WARNING - Incomplete address detected: 17, Berlin
+2025-08-15 16:14:43,853 - ERROR - Failed to geocode address: 17, Berlin
+2025-08-15 16:14:43,853 - INFO - Processing address 28/2495: und 132/137, Berlin
+2025-08-15 16:14:57,126 - WARNING - Failed to geocode: und 132/137, Berlin
+2025-08-15 16:14:57,126 - ERROR - Failed to geocode address: und 132/137, Berlin
+2025-08-15 16:14:57,126 - INFO - Processing address 29/2495: Voßstr. 25, Berlin
+2025-08-15 16:14:58,668 - INFO - Geocoded: Voßstr. 25, Berlin -> (52.5108638, 13.3796918) confidence: 8.875486381318407e-05
+2025-08-15 16:14:58,668 - INFO - Updated A. Wertheim Special-Verkauf GmbH: (52.5108638, 13.3796918)
+2025-08-15 16:14:58,668 - INFO - Processing address 30/2495: , Berlin, Germany
+2025-08-15 16:15:01,666 - INFO - Geocoded: , Berlin, Germany -> (52.510885, 13.3989367) confidence: 0.840425236063765
+2025-08-15 16:15:01,666 - INFO - Updated A. Woitke: (52.51119753585974, 13.39940004959399)
+2025-08-15 16:15:01,666 - INFO - Updated Alfred Dreyfuss: (52.51101837162952, 13.39857025427241)
+2025-08-15 16:15:01,666 - INFO - Updated Alfred Mokrauer: (52.51053668070628, 13.398417236486905)
+2025-08-15 16:15:01,666 - INFO - Updated Anghuli: (52.510914195515014, 13.398455976593757)
+2025-08-15 16:15:01,666 - INFO - Updated Anso Apparatebau GmbH: (52.51045757687377, 13.399146748719575)
+2025-08-15 16:15:01,666 - INFO - Updated Arnhold'sche Vermögensverwaltung GmbH: (52.5108084166138, 13.399025426368244)
+2025-08-15 16:15:01,666 - INFO - Updated Arthur Heymann: (52.51126072302027, 13.398787887152817)
+2025-08-15 16:15:01,666 - INFO - Updated Barmat: (52.510713144814765, 13.399558256175125)
+2025-08-15 16:15:01,666 - INFO - Updated Basch & Co: (52.51071704292347, 13.398659944080865)
+2025-08-15 16:15:01,666 - INFO - Updated Behrend, Emil: (52.51113239824549, 13.399305106419874)
+2025-08-15 16:15:01,666 - INFO - Updated Bellevue-Apotheke Dr. Georg Herzberg: (52.51080686600706, 13.39873415988541)
+2025-08-15 16:15:01,666 - INFO - Updated Bendit, Paula, geb. Schwersenz: (52.51125291391078, 13.399329899169391)
+2025-08-15 16:15:01,666 - INFO - Updated Bernhard Schumann, Eisdiele: (52.511060445461375, 13.399475722849695)
+2025-08-15 16:15:01,667 - INFO - Updated Bewässerungsgesellschaft Palästina mbH: (52.51067439676098, 13.399449505789418)
+2025-08-15 16:15:01,667 - INFO - Updated Bruno Bernstein: (52.511030375502806, 13.39860527936387)
+2025-08-15 16:15:01,667 - INFO - Updated C. Riese: (52.51128173688441, 13.399343179917508)
+2025-08-15 16:15:01,667 - INFO - Updated Carl Himmelweit: (52.51062101247764, 13.39838193228881)
+2025-08-15 16:15:01,667 - INFO - Updated Chemische Fabrik Dr. Seidel & Co GmbH: (52.511162069267414, 13.39926836297104)
+2025-08-15 16:15:01,667 - INFO - Updated Concordia-Apotheke Dr. Max Haase Inhaber Theodor Kauf: (52.51102807864099, 13.398925268737573)
+2025-08-15 16:15:01,667 - INFO - Updated Conrad Tack & Cie. AG: (52.51061666751209, 13.399397642323114)
+2025-08-15 16:15:01,667 - INFO - Updated Croner, Rosenthaler & Co: (52.51099348278122, 13.39950829159413)
+2025-08-15 16:15:01,667 - INFO - Updated D. Herz: (52.5108169970835, 13.39946352460822)
+2025-08-15 16:15:01,667 - INFO - Updated Der deutsche Qualitäts-Schuh: (52.510822259741204, 13.39937002144222)
+2025-08-15 16:15:01,667 - INFO - Updated Deutsche Eisenbahn-Reklame GmbH: (52.51093661571464, 13.39891413959378)
+2025-08-15 16:15:01,667 - INFO - Updated Dora Wachtel: (52.51096227425431, 13.399419892290807)
+2025-08-15 16:15:01,667 - INFO - Updated Dr. Georg Herzberg Fabrikation pharmazeutischer Präparate: (52.510647030316555, 13.398407098369404)
+2025-08-15 16:15:01,667 - INFO - Updated Dr. Gustav Wicke: (52.511313773423566, 13.39842738753868)
+2025-08-15 16:15:01,667 - INFO - Updated Dr. Ing. Neumann & Co: (52.51082031761909, 13.399355787858092)
+2025-08-15 16:15:01,667 - INFO - Updated Dr. Toni Haber, Pension Westend: (52.510637766018874, 13.399401902683872)
+2025-08-15 16:15:01,667 - INFO - Updated Dübelwerke GmbH: (52.51069757687666, 13.398975637826059)
+2025-08-15 16:15:01,667 - INFO - Updated E. & F. Liepmann: (52.51080668273399, 13.398985141288826)
+2025-08-15 16:15:01,667 - INFO - Updated E. Witte's Apotheke, Julius Hirschberg: (52.51113018003502, 13.398695052758155)
+2025-08-15 16:15:01,667 - INFO - Updated Edgar Ritterband: (52.51099130195967, 13.398520128643833)
+2025-08-15 16:15:01,667 - INFO - Updated Eisdiele Kohn: (52.51096858511115, 13.398834705947676)
+2025-08-15 16:15:01,667 - INFO - Updated Eisladen der Senta Reibach-Ruß: (52.5111356211241, 13.398414785088494)
+2025-08-15 16:15:01,667 - INFO - Updated Elsa Liedke: (52.51131370630558, 13.39922372246688)
+2025-08-15 16:15:01,668 - INFO - Updated Ernst Schotte & Co: (52.51077333314705, 13.398691790173222)
+2025-08-15 16:15:01,668 - INFO - Updated Essig- u. Mostrich-Fabrik Nordring Hugo Jacobsohn & Co: (52.5112339133883, 13.398881671433687)
+2025-08-15 16:15:01,668 - INFO - Updated Eugen Kohn: (52.511295453602784, 13.399419429393841)
+2025-08-15 16:15:01,669 - INFO - Updated Eugen Wendriner & Sohn: (52.511135106508284, 13.399212767435575)
+2025-08-15 16:15:01,669 - INFO - Updated Feinkost Pförtner: (52.510881541589875, 13.398382824030785)
+2025-08-15 16:15:01,669 - INFO - Updated Feuchtwanger & Co GmbH: (52.51050091695671, 13.39888966538346)
+2025-08-15 16:15:01,669 - INFO - Updated Firma Salberg: (52.5109669254422, 13.398945757171358)
+2025-08-15 16:15:01,669 - INFO - Updated Forst-Apotheke, W. Blevers ( W. Rievers): (52.51093061876674, 13.398988785573613)
+2025-08-15 16:15:01,669 - INFO - Updated Fulgo Export GmbH: (52.51070505844591, 13.399320194947954)
+2025-08-15 16:15:01,669 - INFO - Updated G. Fränkel (früher behördl. Dolmetscher, ehem. Prokurist): (52.51121262334953, 13.399250057370327)
+2025-08-15 16:15:01,669 - INFO - Updated Gebr. Friedländer: (52.511081235167936, 13.398380207338601)
+2025-08-15 16:15:01,669 - INFO - Updated Gebr. Jüdel: (52.51047129831499, 13.399517793616003)
+2025-08-15 16:15:01,669 - INFO - Updated Gebr. Kindermann: (52.510702611751206, 13.398799962212308)
+2025-08-15 16:15:01,669 - INFO - Updated Gebr. S. & E. Schmukler: (52.5106935274474, 13.399335369096892)
+2025-08-15 16:15:01,669 - INFO - Updated Gebrüder Siedner Holz - Engros - Geschäft: (52.51075770722389, 13.3987375269881)
+2025-08-15 16:15:01,669 - INFO - Updated Gebrüder Stub: (52.511298987814584, 13.399317504650956)
+2025-08-15 16:15:01,669 - INFO - Updated Georg Wedell: (52.510756016770344, 13.398355579272206)
+2025-08-15 16:15:01,669 - INFO - Updated Getreide-Verwertung AG: (52.51127222274249, 13.39840637247941)
+2025-08-15 16:15:01,669 - INFO - Updated Gorbatschow Liköre J. Kramer & Co: (52.511168309269586, 13.398462678978447)
+2025-08-15 16:15:01,669 - INFO - Updated Großwäscherei Riebe: (52.51091171010929, 13.399506285620667)
+2025-08-15 16:15:01,669 - INFO - Updated Grundstücksgesellschaft Hans GmbH: (52.51077716398068, 13.398458700555118)
+2025-08-15 16:15:01,669 - INFO - Updated Hael-Werkstätten für künstlerische Keramik GmbH: (52.51094762779542, 13.39942239583296)
+2025-08-15 16:15:01,669 - INFO - Updated Hans Jacob Bornstein: (52.51063371424356, 13.399237469406543)
+2025-08-15 16:15:01,669 - INFO - Updated Hans Max Samuel Kirstein: (52.51078502609482, 13.398495470649678)
+2025-08-15 16:15:01,669 - INFO - Updated Hans Wall: (52.51129120693393, 13.399297325221685)
+2025-08-15 16:15:01,670 - INFO - Processing address 31/2495: 4, Berlin
+2025-08-15 16:15:01,670 - WARNING - Incomplete address detected: 4, Berlin
+2025-08-15 16:15:01,670 - ERROR - Failed to geocode address: 4, Berlin
+2025-08-15 16:15:01,670 - INFO - Processing address 32/2495: Magdeburger Platz 4, Berlin
+2025-08-15 16:15:03,244 - INFO - Geocoded: Magdeburger Platz 4, Berlin -> (52.5030973, 13.3604492) confidence: 8.875486381318407e-05
+2025-08-15 16:15:03,244 - INFO - Updated A. Zuntz sel. Wwe.: (52.50329256014236, 13.360267318629845)
+2025-08-15 16:15:03,244 - INFO - Updated Chronos Zeitschriften GmbH: (52.50269475586283, 13.36045869526698)
+2025-08-15 16:15:03,244 - INFO - Processing address 33/2495: Matthaikirchstr. 10, Berlin
+2025-08-15 16:15:09,385 - WARNING - Failed to geocode: Matthaikirchstr. 10, Berlin
+2025-08-15 16:15:09,385 - ERROR - Failed to geocode address: Matthaikirchstr. 10, Berlin
+2025-08-15 16:15:09,385 - INFO - Processing address 34/2495: Salzufer 17/19, Berlin
+2025-08-15 16:15:10,896 - INFO - Geocoded: Salzufer 17/19, Berlin -> (52.5193279, 13.3218197) confidence: 8.875486381318407e-05
+2025-08-15 16:15:10,896 - INFO - Updated AG Johannes Jeserich: (52.5193279, 13.3218197)
+2025-08-15 16:15:10,896 - INFO - Processing address 35/2495: Möckernstraße 118, Berlin
+2025-08-15 16:15:12,643 - INFO - Geocoded: Möckernstraße 118, Berlin -> (52.4950314, 13.379671) confidence: 0.24404996673231694
+2025-08-15 16:15:12,643 - INFO - Updated AG für Biervertrieb: (52.4950314, 13.379671)
+2025-08-15 16:15:12,643 - INFO - Processing address 36/2495: Landgrafenstr. 18, Berlin
+2025-08-15 16:15:14,124 - INFO - Geocoded: Landgrafenstr. 18, Berlin -> (52.5042881, 13.3480722) confidence: 8.875486381318407e-05
+2025-08-15 16:15:14,124 - INFO - Updated AG für Landwirtschaft und Industrie: (52.504672911108784, 13.348401996971871)
+2025-08-15 16:15:14,124 - INFO - Updated August Knoche-Wallwitz GmbH: (52.503875277961704, 13.348185004186425)
+2025-08-15 16:15:14,124 - INFO - Processing address 37/2495: Kurfürstendamm 13, Berlin
+2025-08-15 16:15:15,667 - INFO - Geocoded: Kurfürstendamm 13, Berlin -> (52.5044852, 13.3330099) confidence: 8.875486381318407e-05
+2025-08-15 16:15:15,667 - INFO - Updated AG für metallurgische Produkte: (52.50473830022592, 13.333478493221117)
+2025-08-15 16:15:15,667 - INFO - Updated Alfred Dreifuß: (52.504678297960425, 13.33347578836247)
+2025-08-15 16:15:15,667 - INFO - Processing address 38/2495: Segelfliederdamm 27, Berlin
+2025-08-15 16:15:20,984 - WARNING - Failed to geocode: Segelfliederdamm 27, Berlin
+2025-08-15 16:15:20,985 - ERROR - Failed to geocode address: Segelfliederdamm 27, Berlin
+2025-08-15 16:15:20,985 - INFO - Processing address 39/2495: Burgstr. 24, Berlin
+2025-08-15 16:15:23,586 - INFO - Geocoded: Burgstr. 24, Berlin -> (52.5222556, 13.4003567) confidence: 0.2535713079130456
+2025-08-15 16:15:23,586 - INFO - Updated Abels Schokolade GmbH: (52.5222556, 13.4003567)
+2025-08-15 16:15:23,586 - INFO - Processing address 40/2495: Hohenstaufenstr. 8, Berlin
+2025-08-15 16:15:25,238 - INFO - Geocoded: Hohenstaufenstr. 8, Berlin -> (52.4948325, 13.3509689) confidence: 8.875486381318407e-05
+2025-08-15 16:15:25,238 - INFO - Updated Abr. Schmidt: (52.4948325, 13.3509689)
+2025-08-15 16:15:25,238 - INFO - Processing address 41/2495: Rückertstr. 6, Berlin
+2025-08-15 16:15:27,573 - INFO - Geocoded: Rückertstr. 6, Berlin -> (52.5102565, 13.3031308) confidence: 8.875486381318407e-05
+2025-08-15 16:15:27,573 - INFO - Updated Abraham Antmann: (52.5102565, 13.3031308)
+2025-08-15 16:15:27,573 - INFO - Processing address 42/2495: 3, Berlin
+2025-08-15 16:15:27,573 - WARNING - Incomplete address detected: 3, Berlin
+2025-08-15 16:15:27,573 - ERROR - Failed to geocode address: 3, Berlin
+2025-08-15 16:15:27,573 - INFO - Processing address 43/2495: Richthofenstr. 7, Berlin
+2025-08-15 16:15:29,262 - INFO - Geocoded: Richthofenstr. 7, Berlin -> (52.4838407, 13.3838027) confidence: 0.05342208819714653
+2025-08-15 16:15:29,262 - INFO - Updated Abraham Ball: (52.4838407, 13.3838027)
+2025-08-15 16:15:29,262 - INFO - Processing address 44/2495: Waldstr.  16, Berlin
+2025-08-15 16:15:32,149 - INFO - Geocoded: Waldstr.  16, Berlin -> (52.4418104, 13.5526058) confidence: 8.875486381318407e-05
+2025-08-15 16:15:32,149 - INFO - Updated Abraham Berenblum: (52.4415177895762, 13.55226189439531)
+2025-08-15 16:15:32,149 - INFO - Updated Beerenblum Abraham: (52.44137196160059, 13.55322819929668)
+2025-08-15 16:15:32,149 - INFO - Processing address 45/2495: Rosenstr. 16, Berlin
+2025-08-15 16:15:33,911 - INFO - Geocoded: Rosenstr. 16, Berlin -> (52.5213063, 13.4054689) confidence: 8.875486381318407e-05
+2025-08-15 16:15:33,911 - INFO - Updated Abraham Brettschneider: (52.52110539204927, 13.404878859832788)
+2025-08-15 16:15:33,911 - INFO - Updated Biedermann & Mamlok: (52.52105298138026, 13.405127896716973)
+2025-08-15 16:15:33,911 - INFO - Updated David & Ehrlich: (52.52108436799603, 13.405120159359173)
+2025-08-15 16:15:33,911 - INFO - Processing address 46/2495: Jablonskistr.  31, Berlin
+2025-08-15 16:15:35,412 - INFO - Geocoded: Jablonskistr.  31, Berlin -> (52.5361979, 13.4278519) confidence: 8.875486381318407e-05
+2025-08-15 16:15:35,412 - INFO - Updated Abraham Ebel: (52.5361979, 13.4278519)
+2025-08-15 16:15:35,412 - INFO - Processing address 47/2495: Mulackstr.  11, Berlin
+2025-08-15 16:15:36,891 - INFO - Geocoded: Mulackstr.  11, Berlin -> (52.5274948, 13.4056018) confidence: 8.875486381318407e-05
+2025-08-15 16:15:36,891 - INFO - Updated Abraham Feder: (52.5274948, 13.4056018)
+2025-08-15 16:15:36,891 - INFO - Processing address 48/2495: 9, Berlin
+2025-08-15 16:15:36,891 - WARNING - Incomplete address detected: 9, Berlin
+2025-08-15 16:15:36,891 - ERROR - Failed to geocode address: 9, Berlin
+2025-08-15 16:15:36,891 - INFO - Processing address 49/2495: Linienstr. 213, Berlin
+2025-08-15 16:15:38,702 - INFO - Geocoded: Linienstr. 213, Berlin -> (52.5286028, 13.4055417) confidence: 8.875486381318407e-05
+2025-08-15 16:15:38,702 - INFO - Updated Abraham Frommer: (52.5286028, 13.4055417)
+2025-08-15 16:15:38,702 - INFO - Processing address 50/2495: 97, Berlin
+2025-08-15 16:15:38,702 - WARNING - Incomplete address detected: 97, Berlin
+2025-08-15 16:15:38,702 - ERROR - Failed to geocode address: 97, Berlin
+2025-08-15 16:15:38,702 - INFO - Processing address 51/2495: Taubenstr. 21, Berlin
+2025-08-15 16:15:40,283 - INFO - Geocoded: Taubenstr. 21, Berlin -> (52.4494151, 13.4679752) confidence: 0.05342208819714653
+2025-08-15 16:15:40,283 - INFO - Updated Abraham Herschaft: (52.4494151, 13.4679752)
+2025-08-15 16:15:40,283 - INFO - Processing address 52/2495: Weinbergsweg 4, Berlin
+2025-08-15 16:15:41,768 - INFO - Geocoded: Weinbergsweg 4, Berlin -> (52.5306742, 13.4022925) confidence: 8.875486381318407e-05
+2025-08-15 16:15:41,768 - INFO - Updated Abraham J. Grebler: (52.5306742, 13.4022925)
+2025-08-15 16:15:41,769 - INFO - Processing address 53/2495: 79, Berlin
+2025-08-15 16:15:41,769 - WARNING - Incomplete address detected: 79, Berlin
+2025-08-15 16:15:41,769 - ERROR - Failed to geocode address: 79, Berlin
+2025-08-15 16:15:41,769 - INFO - Processing address 54/2495: Königstr.  17, Berlin

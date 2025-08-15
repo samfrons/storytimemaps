@@ -1,0 +1,11 @@
+# Requirements for Berlin Historical Address Geocoder
+# 
+# This file lists the Python dependencies needed to run the geocoding script.
+# Install with: pip install -r requirements.txt
+
+requests>=2.28.0
+sqlite3  # Built-in Python module, no installation needed
+pathlib  # Built-in Python module, no installation needed
+
+# Optional: For enhanced logging and debugging
+tqdm>=4.64.0  # Progress bars (optional)

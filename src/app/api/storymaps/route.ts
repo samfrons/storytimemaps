@@ -19,9 +19,7 @@ async function getStoryMaps() {
 
 export async function GET() {
   try {
-    console.log('GET request received for /api/storymaps');
     const storyMaps = await getStoryMaps();
-    console.log(`Successfully retrieved ${storyMaps.length} StoryMaps`);
     return NextResponse.json(storyMaps);
   } catch (error) {
     console.error('Error in GET /api/storymaps:', error);

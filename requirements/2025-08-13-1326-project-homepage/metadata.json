@@ -1,0 +1,21 @@
+{
+  "id": "project-homepage",
+  "started": "2025-08-13T13:26:00Z",
+  "lastUpdated": "2025-08-13T13:26:00Z",
+  "status": "active",
+  "phase": "complete",
+  "progress": {
+    "discovery": { "answered": 5, "total": 5 },
+    "detail": { "answered": 5, "total": 5 }
+  },
+  "contextFiles": [
+    "src/app/page.tsx",
+    "src/app/layout.tsx", 
+    "src/app/globals.css",
+    "src/app/theme-preview/page.tsx",
+    "src/app/components/BusinessDetailModal.tsx",
+    "src/types.ts",
+    "public/jewish_businesses.geojson"
+  ],
+  "relatedFeatures": ["theme-preview", "business-detail-modal", "map-application"]
+}

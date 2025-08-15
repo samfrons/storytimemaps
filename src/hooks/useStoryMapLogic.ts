@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { StoryMap } from '../types';
+import { fetchWithCache } from '../utils/fetchWithCache';
 
 interface JewishBusiness {
   name: string;
@@ -22,33 +23,23 @@ interface BusinessFeature {
   properties: JewishBusiness;
 }
 
-interface Marker {
-  id: string;
-  position: [number, number];
-  popup: string;
-  state: string;
-  hasEnrichedData?: boolean;
-  businessType?: string;
-}
+// Marker interface moved inline as needed
 
 export const useStoryMapLogic = () => {
   const [jewishBusinesses, setJewishBusinesses] = useState<BusinessFeature[]>([]);
   const [enrichedStories, setEnrichedStories] = useState<StoryMap[]>([]);
   const [visibleStories, setVisibleStories] = useState<StoryMap[]>([]);
   const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
-  const [currentDate, setCurrentDate] = useState<Date>(new Date('1930-01-01'));
-  const [minDate] = useState<Date>(new Date('1900-01-01'));
+  const [currentDate, setCurrentDate] = useState<Date>(new Date('1920-01-01'));
+  const [minDate] = useState<Date>(new Date('1920-01-01'));
   const [maxDate] = useState<Date>(new Date('1945-12-31'));
 
   useEffect(() => {
     // Fetch Jewish businesses data as the primary data source
     const fetchJewishBusinesses = async () => {
       try {
-        const response = await fetch('/jewish_businesses.geojson');
-        if (response.ok) {
-          const data = await response.json();
-          setJewishBusinesses(data.features || []);
-        }
+        const data = await fetchWithCache('/jewish_businesses.geojson');
+        setJewishBusinesses(data.features || []);
       } catch (error) {
         console.error('Error fetching Jewish businesses:', error);
       }
@@ -57,57 +48,110 @@ export const useStoryMapLogic = () => {
     // Fetch enriched story data (with additional text, images, etc.)
     const fetchEnrichedStories = async () => {
       try {
-        const response = await fetch('/api/storymaps');
-        if (response.ok) {
-          const data = await response.json();
-          setEnrichedStories(data);
-        }
+        const data = await fetchWithCache('/api/storymaps');
+        setEnrichedStories(data);
       } catch (error) {
         console.error('Error fetching enriched stories:', error);
       }
     };
     
-    fetchJewishBusinesses();
-    fetchEnrichedStories();
+    // Fetch both in parallel
+    Promise.all([fetchJewishBusinesses(), fetchEnrichedStories()]);
   }, []);
 
-  useEffect(() => {
-    // Show enriched stories in the sidebar
-    setVisibleStories(enrichedStories);
-  }, [enrichedStories, currentDate]);
+  // Function to extract business type from story title
+  const extractBusinessTypeFromTitle = (title: string): string | undefined => {
+    const businessTypePatterns = [
+      { pattern: /tailor\s*shop/i, type: 'Tailoring' },
+      { pattern: /department\s*store/i, type: 'Department Store' },
+      { pattern: /medical\s*practice/i, type: 'Medical Practice' },
+      { pattern: /photography\s*agency/i, type: 'Photography Agency' },
+      { pattern: /fine\s*foods/i, type: 'Fine Foods' },
+      { pattern: /textiles/i, type: 'Textiles' },
+      { pattern: /bakery/i, type: 'Bakery' },
+      { pattern: /restaurant/i, type: 'Restaurant' },
+      { pattern: /cafe/i, type: 'Café' },
+      { pattern: /theater/i, type: 'Theater' },
+      { pattern: /bookstore/i, type: 'Bookstore' },
+      { pattern: /furrier/i, type: 'Furrier' },
+      { pattern: /bank/i, type: 'Bank' },
+      { pattern: /lawyer/i, type: 'Law Office' },
+      { pattern: /dentist/i, type: 'Dental Practice' },
+      { pattern: /doctor/i, type: 'Medical Practice' },
+      { pattern: /pharmacy/i, type: 'Pharmacy' }
+    ];
 
-  const handleMarkerClick = (storyId: string) => {
-    setActiveStoryId(storyId);
+    for (const { pattern, type } of businessTypePatterns) {
+      if (pattern.test(title)) {
+        return type;
+      }
+    }
+    return undefined;
   };
 
-  // Create markers from both enriched stories and Jewish businesses database
-  const testMarkers = useMemo(() => {
-    const markers: Marker[] = [];
-    const year = currentDate.getFullYear();
+  useEffect(() => {
+    // Enhance stories with business type data
+    const enhancedStories = enrichedStories.map(story => {
+      // First try to find matching business in Jewish businesses dataset
+      const matchingBusiness = jewishBusinesses.find(business =>
+        story.title.toLowerCase().includes(business.properties.name.toLowerCase()) ||
+        business.properties.name.toLowerCase().includes(story.title.toLowerCase())
+      );
+      
+      // If found in dataset, use that business type
+      if (matchingBusiness?.properties.business_type) {
+        return {
+          ...story,
+          businessType: matchingBusiness.properties.business_type
+        };
+      }
+      
+      // Otherwise, extract business type from the story title
+      const extractedType = extractBusinessTypeFromTitle(story.title);
+      if (extractedType) {
+        return {
+          ...story,
+          businessType: extractedType
+        };
+      }
+      
+      // Fall back to existing businessType or undefined
+      return story;
+    });
+    
+    setVisibleStories(enhancedStories);
+  }, [enrichedStories, jewishBusinesses, currentDate]);
+
+  const handleMarkerClick = useCallback((storyId: string) => {
+    setActiveStoryId(storyId);
+  }, []);
+
+  // Pre-compute base marker data that doesn't change with date
+  const baseMarkers = useMemo(() => {
+    const markers: Array<{
+      id: string;
+      position: [number, number];
+      popup: string;
+      startYear: number;
+      endYear: number;
+      midYear: number | null;
+      hasEnrichedData?: boolean;
+      businessType?: string;
+      type: string;
+    }> = [];
     
     // First, add markers from enriched stories (these have proper lat/lng)
     enrichedStories.forEach(story => {
       if (story.lat && story.lng) {
-        // Determine story state based on dates
-        let state = 'active';
-        const startYear = story.startDate ? new Date(story.startDate).getFullYear() : 1900;
-        const endYear = story.endDate ? new Date(story.endDate).getFullYear() : 1945;
-        const midYear = story.midDate ? new Date(story.midDate).getFullYear() : null;
-        
-        if (year < startYear) {
-          state = 'future';
-        } else if (year > endYear) {
-          state = 'closed';
-        } else if (midYear && year >= midYear) {
-          state = 'declining';
-        }
-        
         markers.push({
           id: story.id,
           position: [story.lat, story.lng] as [number, number],
           popup: story.title,
-          state,
-          hasEnrichedData: true
+          startYear: story.startDate ? new Date(story.startDate).getFullYear() : 1900,
+          endYear: story.endDate ? new Date(story.endDate).getFullYear() : 1945,
+          midYear: story.midDate ? new Date(story.midDate).getFullYear() : null,
+          hasEnrichedData: true,
+          type: 'story'
         });
       }
     });
@@ -121,33 +165,47 @@ export const useStoryMapLogic = () => {
       
       // Only add if not already added from enriched stories
       if (!enrichedStory) {
-        // Determine business state based on dates
-        let state = 'active';
-        const regYear = business.properties.registration_date ? parseInt(business.properties.registration_date) : 1900;
-        const liqYear = business.properties.liquidation_date ? parseInt(business.properties.liquidation_date) : 1945;
-        const takeoverYear = business.properties.takeover_date ? parseInt(business.properties.takeover_date) : null;
-        
-        if (year < regYear) {
-          state = 'future';
-        } else if (year > liqYear) {
-          state = 'closed';
-        } else if (takeoverYear && year >= takeoverYear) {
-          state = 'declining';
-        }
-        
         markers.push({
           id: `business-${business.properties.name}`,
           position: [business.geometry.coordinates[1], business.geometry.coordinates[0]] as [number, number],
           popup: business.properties.name,
-          state,
+          startYear: business.properties.registration_date ? parseInt(business.properties.registration_date) : 1900,
+          endYear: business.properties.liquidation_date ? parseInt(business.properties.liquidation_date) : 1945,
+          midYear: business.properties.takeover_date ? parseInt(business.properties.takeover_date) : null,
           businessType: business.properties.business_type,
-          hasEnrichedData: false
+          hasEnrichedData: false,
+          type: 'business'
         });
       }
     });
     
     return markers;
-  }, [jewishBusinesses, enrichedStories, currentDate]);
+  }, [jewishBusinesses, enrichedStories]);
+
+  // Calculate marker states based on current date
+  const testMarkers = useMemo(() => {
+    const year = currentDate.getFullYear();
+    
+    return baseMarkers.map(marker => {
+      let state = 'active';
+      
+      if (year < marker.startYear) {
+        state = 'future';
+      } else if (year > marker.endYear) {
+        state = 'closed';
+      } else if (marker.midYear && year >= marker.midYear) {
+        state = 'declining';
+      }
+      
+      // Clean up the marker object for output
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { startYear, endYear, midYear, type, ...cleanMarker } = marker;
+      return {
+        ...cleanMarker,
+        state
+      };
+    });
+  }, [baseMarkers, currentDate]);
 
   return {
     jewishBusinesses,

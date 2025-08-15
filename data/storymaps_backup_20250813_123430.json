@@ -1,0 +1,246 @@
+[
+  {
+    "id": "1",
+    "title": "Elias Braun - Tailor Shop",
+    "author": "Unknown",
+    "description": "A small tailoring business owned by Elias Braun and his family. The shop was known for fine men's clothing and had been operating since 1925. During Kristallnacht in November 1938 the windows were smashed and the business was forced to close.",
+    "address": "Rosenthaler Straße 40, Berlin, Germany",
+    "lat": 52.52,
+    "lng": 13.405,
+    "startDate": "1925-01-01",
+    "midDate": "1935-01-01",
+    "endDate": "1938-11-09",
+    "category": "business",
+    "imageUrls": [
+      "/images/ebraun/ebraun1.png",
+      "/images/ebraun/ebraun2.png",
+      "/images/ebraun/ebraun3.png",
+      "/images/ebraun/ebraun4.png"
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Breslauer Brothers Department Store",
+    "author": "Unknown",
+    "description": "One of Berlin's prominent Jewish-owned department stores. The Breslauer Brothers had built a successful business over 15 years before being forced to sell under duress in 1935 as part of the systematic economic persecution.",
+    "address": "Unter den Linden 15, Berlin, Germany",
+    "lat": 52.517,
+    "lng": 13.388,
+    "startDate": "1920-03-15",
+    "midDate": "1933-01-01",
+    "endDate": "1935-04-01",
+    "category": "business",
+    "imageUrls": [
+      "/images/breslaur/breslaur1.png",
+      "/images/breslaur/breslaur2.png"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Deutsches Theater Café",
+    "author": "Unknown",
+    "description": "A popular café frequented by artists and intellectuals near the Deutsches Theater. Owned by the Goldstein family it was boycotted and closed in early 1933 as part of the initial wave of anti-Jewish business actions.",
+    "address": "Schumannstraße 13a, Berlin, Germany",
+    "lat": 52.524,
+    "lng": 13.382,
+    "startDate": "1928-06-01",
+    "midDate": "1932-01-01",
+    "endDate": "1933-03-30",
+    "category": "business",
+    "imageUrls": [
+      "/images/dtheater/dtheater.png"
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Ebro Textiles",
+    "author": "Unknown",
+    "description": "A textile import business specializing in fine fabrics from across Europe. The Ebro family business employed twelve people before being forced to liquidate in early 1939.",
+    "address": "Alexanderstraße 125, Berlin, Germany",
+    "lat": 52.508,
+    "lng": 13.418,
+    "startDate": "1922-09-01",
+    "midDate": "1936-01-01",
+    "endDate": "1939-01-15",
+    "category": "business",
+    "imageUrls": [
+      "/images/ebro/erbo.png"
+    ]
+  },
+  {
+    "id": "5",
+    "title": "Hoxter & Sons Bookshop",
+    "author": "Unknown",
+    "description": "An established bookshop that had served Berlin's intellectual community for nearly three decades. The shop specialized in literature philosophy and Jewish texts. It was destroyed during Kristallnacht.",
+    "address": "Oranienburger Straße 28, Berlin, Germany",
+    "lat": 52.519,
+    "lng": 13.4,
+    "startDate": "1910-01-01",
+    "midDate": "1935-01-01",
+    "endDate": "1938-11-10",
+    "category": "business",
+    "imageUrls": [
+      "/images/hoxter/hoxter.png"
+    ]
+  },
+  {
+    "id": "6",
+    "title": "Pelz Furrier",
+    "author": "Unknown",
+    "description": "A luxury furrier shop owned by the Pelz family. Known for high-quality fur coats and accessories the business served Berlin's wealthy clientele before being forced to close in 1937.",
+    "address": "Friedrichstraße 180, Berlin, Germany",
+    "lat": 52.522,
+    "lng": 13.39,
+    "startDate": "1918-11-01",
+    "midDate": "1935-01-01",
+    "endDate": "1937-08-15",
+    "category": "business",
+    "imageUrls": [
+      "/images/pelz/pelz.png"
+    ]
+  },
+  {
+    "id": "7",
+    "title": "Product X Manufacturing",
+    "author": "Unknown",
+    "description": "A small manufacturing company producing household goods. The business employed 25 workers before being systematically excluded from supply chains and forced to close.",
+    "address": "Warschauer Straße 45, Berlin, Germany",
+    "lat": 52.495,
+    "lng": 13.425,
+    "startDate": "1926-04-01",
+    "midDate": "1935-01-01",
+    "endDate": "1936-12-01",
+    "category": "business",
+    "imageUrls": [
+      "/images/productx/productx.png"
+    ]
+  },
+  {
+    "id": "8",
+    "title": "Eggs & Dairy Distributors",
+    "author": "Unknown",
+    "description": "A family-run business distributing dairy products and eggs throughout Berlin. The Rosenberg family had built strong relationships with local farmers before being forced out of business.",
+    "address": "Hackescher Markt 12, Berlin, Germany",
+    "lat": 52.505,
+    "lng": 13.395,
+    "startDate": "1923-02-01",
+    "midDate": "1934-01-01",
+    "endDate": "1935-06-30",
+    "category": "business",
+    "imageUrls": [
+      "/images/eggs/eggs.png"
+    ]
+  },
+  {
+    "id": "9",
+    "title": "Jonas & Co. Law Firm",
+    "author": "Unknown",
+    "description": "A respected law firm that had practiced in Berlin for 25 years. Dr. Jonas and his partners were prohibited from practicing law under the new racial laws in April 1933.",
+    "address": "Neue Friedrichstraße 60, Berlin, Germany",
+    "lat": 52.518,
+    "lng": 13.41,
+    "startDate": "1908-01-01",
+    "midDate": "1930-01-01",
+    "endDate": "1933-04-01",
+    "category": "business",
+    "imageUrls": [
+      "/images/jonassco/jonassco.png"
+    ]
+  },
+  {
+    "id": "10",
+    "title": "Kutschera Photography Studio",
+    "author": "Unknown",
+    "description": "A modern photography studio offering portraits and commercial photography. The Kutschera family had invested in the latest equipment before being forced to sell at far below market value.",
+    "address": "Potsdamer Straße 125, Berlin, Germany",
+    "lat": 52.514,
+    "lng": 13.392,
+    "startDate": "1930-01-01",
+    "midDate": "1935-01-01",
+    "endDate": "1938-03-15",
+    "category": "business",
+    "imageUrls": [
+      "/images/kutschera/kutschera.png"
+    ]
+  },
+  {
+    "id": "11",
+    "title": "P. Kunst Gallery",
+    "author": "Unknown",
+    "description": "An art gallery showcasing contemporary and traditional works. Paul Kunst had built relationships with artists across Europe before being forced to sell his collection and close the gallery.",
+    "address": "Unter den Linden 35, Berlin, Germany",
+    "lat": 52.516,
+    "lng": 13.398,
+    "startDate": "1924-05-01",
+    "midDate": "1935-01-01",
+    "endDate": "1937-11-20",
+    "category": "business",
+    "imageUrls": [
+      "/images/pkunst/pkunst.png"
+    ]
+  },
+  {
+    "id": "12",
+    "title": "Ruilos Import Export",
+    "author": "Unknown",
+    "description": "An import-export business with connections across Eastern Europe. The Ruilos family business was a vital link in trade networks before being systematically excluded.",
+    "address": "Spandauer Straße 15, Berlin, Germany",
+    "lat": 52.51,
+    "lng": 13.415,
+    "startDate": "1921-08-01",
+    "midDate": "1935-01-01",
+    "endDate": "1938-06-30",
+    "category": "business",
+    "imageUrls": [
+      "/images/ruilos/ruilos.png"
+    ]
+  },
+  {
+    "id": "13",
+    "title": "Wassermann Medical Practice",
+    "author": "Unknown",
+    "description": "Dr. Wassermann had served the community as a physician for over 20 years. His practice was closed and his medical license revoked under the racial laws in September 1938.",
+    "address": "Rosenstraße 22, Berlin, Germany",
+    "lat": 52.521,
+    "lng": 13.402,
+    "startDate": "1915-01-01",
+    "midDate": "1933-01-01",
+    "endDate": "1938-09-30",
+    "category": "business",
+    "imageUrls": [
+      "/images/wassermann/wassermann.png"
+    ]
+  },
+  {
+    "id": "14",
+    "title": "Butter & Fine Foods",
+    "author": "Unknown",
+    "description": "A gourmet food shop specializing in imported delicacies and fine foods. The Stern family business catered to Berlin's upper class before being boycotted and forced to close.",
+    "address": "Gendarmenmarkt 8, Berlin, Germany",
+    "lat": 52.512,
+    "lng": 13.396,
+    "startDate": "1927-03-01",
+    "midDate": "1935-01-01",
+    "endDate": "1936-10-15",
+    "category": "business",
+    "imageUrls": [
+      "/images/butter/butter.png"
+    ]
+  },
+  {
+    "id": "15",
+    "title": "YVA Photography Agency",
+    "author": "Unknown",
+    "description": "A pioneering photography agency founded by Else Neuländer-Simon (YVA). The agency was known for innovative fashion and advertising photography before being forced to close during the persecution.",
+    "address": "Kaiserdamm 118, Berlin, Germany",
+    "lat": 52.523,
+    "lng": 13.408,
+    "startDate": "1925-07-01",
+    "midDate": "1935-01-01",
+    "endDate": "1938-12-01",
+    "category": "business",
+    "imageUrls": [
+      "/images/yva/yva.png"
+    ]
+  }
+]

@@ -80,6 +80,12 @@ export default function JewishBusinessesPage() {
 
   const handleMarkerClick = useCallback((id: string) => {
     setSelectedBusiness(id)
+    
+    // Scroll to the business in the list
+    const businessElement = document.querySelector(`[data-business-id="${id}"]`)
+    if (businessElement) {
+      businessElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
   }, [])
 
   const getBusinessState = (business: Business) => {
@@ -92,7 +98,10 @@ export default function JewishBusinessesPage() {
     id: feature.properties.name,
     position: [feature.geometry.coordinates[1], feature.geometry.coordinates[0]] as [number, number],
     popup: feature.properties.category || feature.properties.business_type || 'Business',
-    state: getBusinessState(feature.properties)
+    state: getBusinessState(feature.properties),
+    description: `${feature.properties.business_type}${feature.properties.category ? ` - ${feature.properties.category}` : ''}`,
+    startDate: feature.properties.registration_date || feature.properties.date_range?.split('-')[0],
+    endDate: feature.properties.liquidation_date || feature.properties.date_range?.split('-')[1]
   })) || []
 
   const selectedBusinessData = filteredBusinesses?.features.find(
@@ -160,7 +169,12 @@ export default function JewishBusinessesPage() {
             {filteredBusinesses?.features.slice(0, 50).map(feature => (
               <div
                 key={feature.properties.name}
-                onClick={() => setSelectedBusiness(feature.properties.name)}
+                data-business-id={feature.properties.name}
+                onClick={() => {
+                  setSelectedBusiness(feature.properties.name)
+                  // Trigger map marker click handler to open popup
+                  handleMarkerClick(feature.properties.name)
+                }}
                 className="p-4 rounded-lg cursor-pointer transition-all hover:shadow-sm"
                 style={{
                   border: '1px solid #e2e0dd',
@@ -199,6 +213,12 @@ export default function JewishBusinessesPage() {
           markers={markers}
           onMarkerClick={handleMarkerClick}
           activeMarkerId={selectedBusiness}
+          enrichedStories={markers.map(m => ({
+            id: m.id,
+            description: m.description,
+            startDate: m.startDate,
+            endDate: m.endDate
+          }))}
         />
         
         {/* Selected Business Info Overlay */}

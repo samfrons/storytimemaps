@@ -218,6 +218,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   })
   const [mapLoaded, setMapLoaded] = useState(false)
   const [, setWebglReady] = useState(false) // Track WebGL readiness for context loss handling
+  const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null)
+  const [labelPriorities, setLabelPriorities] = useState<Set<string>>(new Set())
   const [popupInfo, setPopupInfo] = useState<{
     longitude: number
     latitude: number
@@ -240,25 +242,42 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     future: '#f5cdb4'
   })
 
-  // Extract theme colors on client-side to prevent SSR mismatch
+  // Use theme colors directly - no DOM reading, no delays
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const style = getComputedStyle(document.documentElement);
-      setColors({
-        active: style.getPropertyValue('--success').trim() || '#97d8c0',
-        declining: style.getPropertyValue('--warning').trim() || '#ffcb51', 
-        closed: style.getPropertyValue('--danger').trim() || '#ee5760',
-        future: style.getPropertyValue('--foreground-muted').trim() || '#f5cdb4'
-      })
-    }
+    const themeColors = theme === 'bauhaus' ? {
+      active: '#0066ff',
+      declining: '#ffcc00',
+      closed: '#ff0000',
+      future: '#333333'
+    } : { // moody (default)
+      active: '#97d8c0',
+      declining: '#ffcb51',
+      closed: '#ee5760',
+      future: '#f5cdb4'
+    };
+    
+    setColors(themeColors);
   }, [theme])
 
-  // Initialize Supercluster for clustering
+  // Function to determine max labels based on zoom
+  const getMaxLabels = (zoom: number) => {
+    if (zoom < 12) return 5
+    if (zoom < 14) return 10
+    if (zoom < 15) return 20
+    if (zoom < 16) return 30
+    if (zoom < 17) return 50
+    if (zoom < 18) return 80
+    return 150
+  }
+  
+  // Initialize Supercluster for clustering with better settings for 4000 markers
   const supercluster = useMemo(() => {
     const index = new Supercluster({
-      radius: 60,
-      maxZoom: 16,
-      minPoints: 2
+      radius: 50,  // Balanced clustering
+      maxZoom: 18,  // Allow unclustering only at very high zoom
+      minPoints: 2,
+      extent: 512,  // Larger tile extent for better performance
+      nodeSize: 64  // Optimize KD-tree node size
     })
 
     if (markers.length > 0) {
@@ -296,7 +315,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }))
   }, [markers])
 
-  // Get clusters for current viewport with optimized recalculation
+  // Get clusters for current viewport with optimized recalculation and viewport culling
   const clusters = useMemo(() => {
     // Always return initial markers if map is not ready
     if (!mapLoaded || !mapRef.current) {
@@ -309,21 +328,67 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
     
     try {
+      // Add buffer to viewport for smooth panning
+      const buffer = 0.1  // 10% buffer around viewport
+      const width = bounds.getEast() - bounds.getWest()
+      const height = bounds.getNorth() - bounds.getSouth()
+      
       const bbox: [number, number, number, number] = [
-        bounds.getWest(),
-        bounds.getSouth(),
-        bounds.getEast(),
-        bounds.getNorth()
+        bounds.getWest() - (width * buffer),
+        bounds.getSouth() - (height * buffer),
+        bounds.getEast() + (width * buffer),
+        bounds.getNorth() + (height * buffer)
       ]
       
       const clusteredMarkers = supercluster.getClusters(bbox, Math.floor(viewState.zoom))
-      // Ensure we always have markers to render
+      
+      // Let supercluster handle the clustering naturally
+      // Only apply viewport culling, not artificial limits
+      
       return clusteredMarkers.length > 0 ? clusteredMarkers : initialMarkers
     } catch (error) {
       console.warn('Error getting clusters:', error)
       return initialMarkers
     }
   }, [supercluster, viewState.zoom, mapLoaded, initialMarkers])
+  
+  // Update label priorities when viewport changes
+  useEffect(() => {
+    if (!mapLoaded || !clusters) return
+    
+    const maxLabels = getMaxLabels(viewState.zoom)
+    const nonClusteredMarkers = clusters.filter(c => !('cluster' in (c.properties || {})))
+    
+    // Prioritize markers: active first, then spatially distributed
+    const priorities = new Set<string>()
+    
+    // Always show active and hovered markers
+    if (activeMarkerId) {
+      priorities.add(activeMarkerId)
+    }
+    if (hoveredMarkerId) {
+      priorities.add(hoveredMarkerId)
+    }
+    
+    // Add spatially distributed markers up to limit
+    // Simple spatial distribution: sort by position and take evenly spaced ones
+    const sorted = [...nonClusteredMarkers]
+      .filter(m => m.properties?.id)
+      .sort((a, b) => {
+        const [aLng, aLat] = a.geometry.coordinates
+        const [bLng, bLat] = b.geometry.coordinates
+        return (aLng + aLat) - (bLng + bLat)
+      })
+    
+    const step = Math.max(1, Math.floor(sorted.length / (maxLabels - priorities.size)))
+    for (let i = 0; i < sorted.length && priorities.size < maxLabels; i += step) {
+      if (sorted[i].properties?.id) {
+        priorities.add(sorted[i].properties.id)
+      }
+    }
+    
+    setLabelPriorities(priorities)
+  }, [viewState.zoom, clusters, activeMarkerId, hoveredMarkerId, mapLoaded])
 
   // Focus on active marker and open popup when list item is clicked
   useEffect(() => {
@@ -373,28 +438,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       
       // Get theme-specific map colors from CSS variables - client-side only
       const getMapColors = () => {
-        if (typeof window === 'undefined') {
-          // Return fallback colors for SSR
-          return {
-            water: '#5a5766',
-            park: '#97d8c0',
-            road: '#4a4a57',
-            background: '#4a4a57'
-          }
-        }
-        
-        const style = getComputedStyle(document.documentElement);
-        // For moody theme, use a darker purple for water
-        const waterColor = theme === 'moody' 
-          ? '#5a5766' // Dark purple-gray for moody theme water
-          : style.getPropertyValue('--accent-purple').trim() || '#5a5766';
-        
-        return {
-          water: waterColor,
-          park: style.getPropertyValue('--success').trim() || '#97d8c0', 
-          road: style.getPropertyValue('--foreground').trim() || '#4a4a57',
-          background: style.getPropertyValue('--background').trim() || '#4a4a57'
-        }
+        // Use direct theme values - no DOM reading
+        return theme === 'bauhaus' ? {
+          water: '#6600cc',  // Purple
+          park: '#0066ff',   // Blue
+          road: '#000000',   // Black
+          background: '#f5f5f0' // Light
+        } : { // moody (default)
+          water: '#5a5766',  // Dark purple-gray
+          park: '#97d8c0',   // Mint green
+          road: '#f5cdb4',   // Light peach
+          background: '#4a4a57' // Dark background
+        };
       }
       
       const mapColors = getMapColors()
@@ -772,10 +827,13 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   const renderMarker = (feature: GeoJSON.Feature<GeoJSON.Point, { cluster?: boolean; cluster_id?: number; point_count?: number; id?: string; popup?: string; state?: string }>) => {
     if (!feature || !feature.geometry || !feature.geometry.coordinates) {
-      return null
+      return []
     }
     const [lng, lat] = feature.geometry.coordinates
     const properties = feature.properties || {}
+    
+    // Determine if we should show this label
+    const shouldShowLabel = properties.id && labelPriorities.has(properties.id)
 
     if (properties.cluster) {
       const size = 30 + (properties.point_count! / markers.length) * 30
@@ -783,7 +841,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       
       // Special shapes for Bauhaus clusters
       if (theme === 'bauhaus') {
-        return (
+        return [
           <Marker
             key={`cluster-${properties.cluster_id}`}
             longitude={lng}
@@ -814,11 +872,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               <span style={{ transform: 'rotate(-45deg)' }}>{properties.point_count}</span>
             </div>
           </Marker>
-        )
+        ]
       }
       
       // Render cluster marker for other themes
-      return (
+      return [
         <Marker
           key={`cluster-${properties.cluster_id}`}
           longitude={lng}
@@ -850,23 +908,27 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             {properties.point_count}
           </div>
         </Marker>
-      )
+      ]
     }
 
     // Render individual marker
     const isActive = properties.id === activeMarkerId
+    const isHovered = properties.id === hoveredMarkerId
     const color = colors[properties.state as keyof typeof colors] || colors.active
 
-    return [
-      // Always visible label as a Marker
-      <Marker
-        key={`label-${properties.id}`}
-        longitude={lng}
-        latitude={lat}
-        anchor="bottom"
-        offset={[0, -10]}
-      >
-        <div 
+    const markerElements = []
+    
+    // Show label based on priority system
+    if (shouldShowLabel || isHovered) {
+      markerElements.push(
+        <Marker
+          key={`label-${properties.id}`}
+          longitude={lng}
+          latitude={lat}
+          anchor="bottom"
+          offset={[0, -10]}
+        >
+          <div 
           className={`px-2 py-1 text-xs font-mono ${theme === 'bauhaus' ? 'font-black uppercase' : theme === 'cool' || theme === 'cold' ? 'font-semibold' : 'font-bold'} whitespace-nowrap cursor-pointer`}
           style={{
             background: theme === 'cool' || theme === 'cold' ? 'rgba(255, 255, 255, 0.95)' : 
@@ -885,8 +947,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                        theme === 'cool' || theme === 'cold' ? '0 2px 6px rgba(0,0,0,0.1)' :
                        '0 2px 6px rgba(0,0,0,0.2)',
             letterSpacing: theme === 'bauhaus' ? '0.1em' : 'normal',
-            opacity: popupInfo && popupInfo.properties.id !== properties.id ? 0.8 : 1,
-            transition: 'opacity 300ms ease-in-out',
+            opacity: isHovered ? 1 : (popupInfo && popupInfo.properties.id !== properties.id ? 0.7 : 0.9),
+            transition: 'all 200ms ease-in-out',
+            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
             pointerEvents: 'auto'
           }}
           onClick={(e) => {
@@ -905,9 +968,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         >
           {properties.popup}
         </div>
-      </Marker>,
-      
-      // Marker dot
+      </Marker>
+      )
+    }
+    
+    // Render marker dot with better click targets
+    const dotSize = isHovered || isActive ? 12 : 10
+    const bauhausDotSize = isHovered || isActive ? 18 : 14
+    
+    markerElements.push(
       <Marker
         key={`marker-${properties.id}`}
         longitude={lng}
@@ -927,10 +996,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         anchor="center"
       >
         <div
+          onMouseEnter={() => setHoveredMarkerId(properties.id!)}
+          onMouseLeave={() => setHoveredMarkerId(null)}
           style={{
             backgroundColor: color,
-            width: theme === 'bauhaus' && isActive ? '20px' : theme === 'bauhaus' ? '14px' : '8px',
-            height: theme === 'bauhaus' && isActive ? '20px' : theme === 'bauhaus' ? '14px' : '8px',
+            width: theme === 'bauhaus' && isActive ? '20px' : theme === 'bauhaus' ? `${bauhausDotSize}px` : `${dotSize}px`,
+            height: theme === 'bauhaus' && isActive ? '20px' : theme === 'bauhaus' ? `${bauhausDotSize}px` : `${dotSize}px`,
             clipPath: theme === 'bauhaus' ? (
               properties.state === 'closed' ? 'polygon(50% 0%, 0% 100%, 100% 100%)' : // Triangle
               properties.state === 'declining' ? 'none' : // Square
@@ -945,7 +1016,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           }}
         />
       </Marker>
-    ]
+    )
+    
+    return markerElements
   }
 
 
@@ -1092,7 +1165,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         minZoom={3}
       >
         {/* Render all markers and clusters */}
-        {mapLoaded && clusters && clusters.length > 0 && clusters.flatMap(cluster => renderMarker(cluster))}
+        {mapLoaded && clusters && clusters.length > 0 && clusters.flatMap(cluster => {
+          const result = renderMarker(cluster)
+          return Array.isArray(result) ? result : []
+        })}
         
         {/* Detailed popup on click */}
         {popupInfo && (

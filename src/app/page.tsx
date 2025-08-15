@@ -21,32 +21,16 @@ export default function OverlayTestPage() {
   const router = useRouter();
   const [showIntro, setShowIntro] = useState(true);
 
-  // Check localStorage on mount to see if intro was already seen
+  // Check sessionStorage on mount to see if intro was already seen in this session
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const introSeen = localStorage.getItem('introSeen');
+      const introSeen = sessionStorage.getItem('introSeen');
       if (introSeen === 'true') {
         setShowIntro(false);
       }
     }
   }, []);
 
-  // Clear custom theme styles when theme changes
-  useEffect(() => {
-    if (typeof window !== 'undefined' && theme) {
-      // Clear all inline CSS variables from the root element
-      const root = document.documentElement;
-      const styles = root.style;
-      const length = styles.length;
-      
-      for (let i = length - 1; i >= 0; i--) {
-        const property = styles[i];
-        if (property.startsWith('--')) {
-          root.style.removeProperty(property);
-        }
-      }
-    }
-  }, [theme]);
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
@@ -68,11 +52,16 @@ export default function OverlayTestPage() {
     handleMarkerClick(storyId);
   };
 
+  const handleThemeSwitch = (newTheme: string) => {
+    setShowThemeMenu(false);
+    setTheme(newTheme);
+  };
+
   const handleLetsGo = () => {
     setShowIntro(false);
-    // Remember that intro has been seen
+    // Remember that intro has been seen in this session
     if (typeof window !== 'undefined') {
-      localStorage.setItem('introSeen', 'true');
+      sessionStorage.setItem('introSeen', 'true');
     }
   };
 
@@ -80,9 +69,9 @@ export default function OverlayTestPage() {
     setShowInfo(!showInfo);
     if (showIntro) {
       setShowIntro(false);
-      // Remember that intro has been seen
+      // Remember that intro has been seen in this session
       if (typeof window !== 'undefined') {
-        localStorage.setItem('introSeen', 'true');
+        sessionStorage.setItem('introSeen', 'true');
       }
     }
   };
@@ -92,7 +81,7 @@ export default function OverlayTestPage() {
     setShowInfo(false);
     // Clear the intro seen flag when user explicitly clicks home
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('introSeen');
+      sessionStorage.removeItem('introSeen');
     }
   };
 
@@ -133,14 +122,30 @@ export default function OverlayTestPage() {
                 {['moody', 'bauhaus'].map((themeName) => (
                   <button
                     key={themeName}
-                    onClick={() => {
-                      setTheme(themeName);
-                      setShowThemeMenu(false);
-                    }}
-                    className={`w-full px-3 py-2 text-left text-xs font-mono transition-colors capitalize hover:opacity-80 ${theme === themeName ? 'dropdown-active' : ''}`}
+                    onClick={() => handleThemeSwitch(themeName)}
+                    className={`w-full px-3 py-2 text-left text-xs font-mono transition-all capitalize ${theme === themeName ? 'dropdown-active' : ''}`}
                     style={{
                       backgroundColor: theme === themeName ? 'var(--primary)' : 'transparent',
-                      color: theme === themeName ? 'var(--background)' : 'var(--foreground)'
+                      color: theme === themeName ? 'var(--background)' : 'var(--foreground)',
+                      borderLeft: theme === themeName ? '2px solid var(--primary)' : '2px solid transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (theme !== themeName) {
+                        e.currentTarget.style.backgroundColor = 'var(--muted)';
+                        e.currentTarget.style.color = 'var(--primary)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (theme !== themeName) {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = 'var(--foreground)';
+                      }
+                    }}
+                    onMouseDown={(e) => {
+                      e.currentTarget.style.transform = 'scale(0.98)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
                     {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
@@ -181,23 +186,6 @@ export default function OverlayTestPage() {
               </svg>
             </button>
 
-            {/* Theme Customizer Button */}
-            <button
-              onClick={() => router.push('/theme-customizer')}
-              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:opacity-80 hot-button`}
-              style={{
-                backgroundColor: 'var(--input-bg)',
-                borderColor: 'var(--border)',
-                color: 'var(--foreground)',
-                display: 'none'
-              }}
-              aria-label="Theme Customizer"
-              title="Theme Customizer"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-              </svg>
-            </button>
           </div>
         
         {/* StoryList Panel - Visible on both mobile and desktop */}
@@ -311,26 +299,6 @@ export default function OverlayTestPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </button>
-          
-          {/* Theme Customizer Button (Mobile) */}
-          <button
-            onClick={() => {
-              router.push('/theme-customizer');
-              setShowMobileMenu(false);
-            }}
-            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 hot-button`}
-            style={{
-              backgroundColor: 'var(--input-bg)',
-              borderColor: 'var(--border)',
-              color: 'var(--foreground)',
-              display: 'none'
-            }}
-            aria-label="Theme Customizer"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-            </svg>
-          </button>
         </div>
       )}
       
@@ -345,14 +313,32 @@ export default function OverlayTestPage() {
             <button
               key={themeName}
               onClick={() => {
-                setTheme(themeName);
-                setShowThemeMenu(false);
+                handleThemeSwitch(themeName);
                 setShowMobileMenu(false);
               }}
-              className={`w-full px-3 py-2 text-left text-xs font-mono transition-colors hover:opacity-80 capitalize`}
+              className={`w-full px-3 py-2 text-left text-xs font-mono transition-all capitalize`}
               style={{
                 backgroundColor: theme === themeName ? 'var(--primary)' : 'transparent',
-                color: theme === themeName ? 'var(--background)' : 'var(--foreground)'
+                color: theme === themeName ? 'var(--background)' : 'var(--foreground)',
+                borderLeft: theme === themeName ? '2px solid var(--primary)' : '2px solid transparent'
+              }}
+              onMouseEnter={(e) => {
+                if (theme !== themeName) {
+                  e.currentTarget.style.backgroundColor = 'var(--muted)';
+                  e.currentTarget.style.color = 'var(--primary)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (theme !== themeName) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'var(--foreground)';
+                }
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.transform = 'scale(0.98)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
               {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
@@ -571,6 +557,7 @@ export default function OverlayTestPage() {
           </div>
         </div>
       </div>
+
 
 
       {/* Ken Burns Animation Styles */}

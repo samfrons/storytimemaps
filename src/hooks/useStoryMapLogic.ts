@@ -52,6 +52,8 @@ export const useStoryMapLogic = () => {
         setEnrichedStories(data);
       } catch (error) {
         console.error('Error fetching enriched stories:', error);
+        // Fallback to empty array if API fails
+        setEnrichedStories([]);
       }
     };
     

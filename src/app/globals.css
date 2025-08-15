@@ -81,30 +81,37 @@
   --accent-chartreuse: #689f38;
 }
 
-/* Hot Theme - Reds, bright oranges */
+/* Hot Theme - Bloody Water inspired reds */
 [data-theme="hot"] {
-  --primary: #ff4444;
-  --primary-rgb: 255, 68, 68;
+  --primary: #e4525e;
+  --primary-rgb: 228, 82, 94;
   --primary-light: #ff6666;
-  --secondary: #ff8800;
+  --secondary: #e4524e;
   --warning: #ff6600;
   --danger: #cc0000;
   --success: #ff9500;
-  --background: #fff5f5;
-  --background-rgb: 255, 245, 245;
-  --foreground: #8b0000;
-  --foreground-muted: #a00000;
-  --muted: #cd5c5c;
-  --muted-rgb: 205, 92, 92;
-  --border: #ffc1cc;
-  --shadow: rgba(255, 0, 0, 0.2);
-  --map-overlay: rgba(255, 245, 245, 0.1);
+  --background: #f2f2f2;
+  --background-rgb: 242, 242, 242;
+  --foreground: #2a2a2a;
+  --foreground-muted: #666666;
+  --muted: #cccccc;
+  --muted-rgb: 204, 204, 204;
+  --border: #e0e0e0;
+  --shadow: rgba(228, 82, 94, 0.2);
+  --map-overlay: rgba(242, 242, 242, 0.1);
   --accent-orange: #ff5722;
   --accent-yellow: #ffc107;
   --accent-purple: #e91e63;
   --accent-coral: #f44336;
-  --accent-navy: #b71c1c;
+  --accent-navy: #8b0000;
   --accent-chartreuse: #ff9800;
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-bg-rgb: 255, 255, 255;
+  --dropdown-bg: rgba(255, 255, 255, 0.95);
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --card-bg-rgb: 255, 255, 255;
+  --placeholder-color: #666666;
 }
 
 /* Cold Theme - Icy blues, grays */
@@ -252,6 +259,31 @@ select:focus,
 select:focus-visible {
   outline: none !important;
   box-shadow: none !important;
+}
+
+/* Placeholder text styling for better visibility */
+input::placeholder,
+textarea::placeholder {
+  color: var(--placeholder-color, var(--muted)) !important;
+  opacity: 0.8 !important;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: var(--placeholder-color, var(--muted)) !important;
+  opacity: 0.8 !important;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: var(--placeholder-color, var(--muted)) !important;
+  opacity: 0.8 !important;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: var(--placeholder-color, var(--muted)) !important;
+  opacity: 0.8 !important;
 }
 
 @layer utilities {

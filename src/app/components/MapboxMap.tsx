@@ -161,10 +161,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       case 'hot':
         return {
-          active: '#ff4444',
+          active: '#e4525e',
           declining: '#ff6600',
           closed: '#cc0000',
-          future: '#ffc1cc'
+          future: '#cccccc'
         }
       case 'cold':
         return {
@@ -342,10 +342,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             }
           case 'hot':
             return {
-              water: '#ff4444',
-              park: '#ff9500',
-              road: '#8b0000',
-              background: '#fff5f5'
+              water: '#e4525e',
+              park: '#ededed',
+              road: '#e4525e',
+              background: '#f2f2f2'
             }
           case 'cold':
             return {
@@ -518,7 +518,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       case 'hot':
         return {
-          backgroundColor: '#ff4444',
+          backgroundColor: '#e4525e',
           border: '3px solid white',
           color: 'white'
         }
@@ -774,10 +774,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     }
                   case 'hot':
                     return {
-                      water: '#ff4444',
-                      park: '#ff9500',
-                      road: '#8b0000',
-                      background: '#fff5f5'
+                      water: '#e4525e',
+                      park: '#ededed',
+                      road: '#e4525e',
+                      background: '#f2f2f2'
                     }
                   case 'cold':
                     return {

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import StoryList from './components/StoryList';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
@@ -17,7 +18,14 @@ const MapboxMap = dynamic(() => import('./components/MapboxMap'), {
 
 export default function OverlayTestPage() {
   const { theme, setTheme } = useTheme();
-  const [showIntro, setShowIntro] = useState(true);
+  const router = useRouter();
+  const [showIntro, setShowIntro] = useState(() => {
+    // Check if intro has been closed before
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('introSeen') !== 'true';
+    }
+    return true;
+  });
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
@@ -41,18 +49,30 @@ export default function OverlayTestPage() {
 
   const handleLetsGo = () => {
     setShowIntro(false);
+    // Remember that intro has been seen
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('introSeen', 'true');
+    }
   };
 
   const toggleInfo = () => {
     setShowInfo(!showInfo);
     if (showIntro) {
       setShowIntro(false);
+      // Remember that intro has been seen
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('introSeen', 'true');
+      }
     }
   };
 
   const goHome = () => {
     setShowIntro(true);
     setShowInfo(false);
+    // Clear the intro seen flag when user explicitly clicks home
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('introSeen');
+    }
   };
 
   return (
@@ -95,6 +115,7 @@ export default function OverlayTestPage() {
                     onClick={() => {
                       setTheme(themeName);
                       setShowThemeMenu(false);
+                      router.push(`/${themeName}`);
                     }}
                     className={`w-full px-3 py-2 text-left text-xs font-mono transition-colors capitalize hover:opacity-80 ${theme === themeName ? 'dropdown-active' : ''}`}
                     style={{
@@ -197,6 +218,25 @@ export default function OverlayTestPage() {
                backgroundColor: 'var(--dropdown-bg)',
                borderColor: 'var(--border)'
              }}>
+          {/* Theme Button */}
+          <button
+            onClick={() => {
+              setShowThemeMenu(!showThemeMenu);
+            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 hot-button relative ${showThemeMenu ? 'hot-button-active' : ''}`}
+            style={{
+              backgroundColor: showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: showThemeMenu ? 'var(--background)' : 'var(--foreground)'
+            }}
+            aria-label="Switch theme"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z" />
+            </svg>
+          </button>
+          
+          {/* Home Button */}
           <button
             onClick={() => {
               goHome();
@@ -214,6 +254,8 @@ export default function OverlayTestPage() {
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
             </svg>
           </button>
+          
+          {/* Info Button */}
           <button
             onClick={() => {
               toggleInfo();
@@ -231,6 +273,34 @@ export default function OverlayTestPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </button>
+        </div>
+      )}
+      
+      {/* Mobile Theme Menu Dropdown */}
+      {showThemeMenu && showMobileMenu && (
+        <div className="md:hidden fixed top-16 left-20 shadow-lg p-2 min-w-[120px] border hot-dropdown" style={{ 
+          zIndex: 10002,
+          backgroundColor: 'var(--dropdown-bg)',
+          borderColor: 'var(--border)'
+        }}>
+          {['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].map((themeName) => (
+            <button
+              key={themeName}
+              onClick={() => {
+                setTheme(themeName);
+                setShowThemeMenu(false);
+                setShowMobileMenu(false);
+                router.push(`/${themeName}`);
+              }}
+              className={`w-full px-3 py-2 text-left text-xs font-mono transition-colors hover:opacity-80 capitalize`}
+              style={{
+                backgroundColor: theme === themeName ? 'var(--primary)' : 'transparent',
+                color: theme === themeName ? 'var(--background)' : 'var(--foreground)'
+              }}
+            >
+              {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
+            </button>
+          ))}
         </div>
       )}
 
@@ -279,7 +349,7 @@ export default function OverlayTestPage() {
 
             <div className="relative space-y-8">
               <div>
-                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light mb-4 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
+                <h1 className="font-kame text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-4" style={{ color: 'var(--foreground)' }}>
                   Jewish Businesses
                 </h1>
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
@@ -301,15 +371,16 @@ export default function OverlayTestPage() {
               <div className="pt-8">
                 <button
                   onClick={handleLetsGo}
-                  className="group inline-flex items-center gap-3 px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 text-base sm:text-lg md:text-xl font-medium transition-all duration-200 font-['Space_Mono'] font-mono border-2 hot-intro-button"
+                  className="group inline-flex items-center gap-3 px-8 py-4 sm:px-10 sm:py-5 md:px-12 md:py-6 text-xl sm:text-2xl md:text-3xl transition-all duration-200 font-kame border-2 hot-intro-button"
                   style={{
                     backgroundColor: 'var(--primary)',
                     borderColor: 'var(--primary)',
-                    color: '#ffffff'
+                    color: '#ffffff',
+                    letterSpacing: '0.08em'
                   }}
                 >
                   <span>Let&apos;s Explore</span>
-                  <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </button>

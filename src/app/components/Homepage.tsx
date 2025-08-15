@@ -128,7 +128,7 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section - Clean, Modern, Light */}
-      <header className="relative bg-gradient-to-b from-[#fafafa] to-white overflow-hidden">
+      <header className="relative overflow-hidden" style={{background: 'linear-gradient(to bottom, var(--background), var(--card-bg))'}}>
         {/* Subtle geometric pattern */}
         <div className="absolute inset-0 opacity-[0.02]">
           <div className="absolute inset-0" style={{

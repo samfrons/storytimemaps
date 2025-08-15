@@ -6,7 +6,6 @@ import Image from 'next/image';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import TimeSlider from './TimeSlider';
-import ThemeSwitcher from './ThemeSwitcher';
 import { StoryMap } from '../../types';
 import BusinessDetailModal from './BusinessDetailModal';
 import { throttle } from '../../utils/performance';
@@ -217,7 +216,7 @@ const StoryList: React.FC<StoryListProps> = ({
         return {
           backgroundColor: 'var(--danger)',
           borderLeftColor: 'var(--danger)',
-          color: theme === 'hot' ? 'var(--secondary)' : '#ffffff'
+          color: theme === 'hot' ? 'var(--secondary)' : 'var(--secondary)'
         };
       case 'active':
       default:
@@ -253,14 +252,11 @@ const StoryList: React.FC<StoryListProps> = ({
           <div className="flex-1">
             <h1 className="text-lg font-mono font-bold mb-1 tracking-tight uppercase" style={{color: 'var(--primary)'}}>Bygone Berlin Businesses</h1>
             {!isHeaderCollapsed && (
-              <p className="text-xs font-mono uppercase tracking-wide" style={{color: 'var(--warning)'}}>Berlin · 1900-1945</p>
+              <p className="text-xs font-mono uppercase tracking-wide" style={{color: 'var(--accent-orange)'}}>Berlin · 1900-1945</p>
             )}
           </div>
           
           <div className="flex items-center gap-2">
-            <div className="hidden md:block">
-              <ThemeSwitcher />
-            </div>
             
             <div className="flex items-center gap-2 md:hidden">
               <button
@@ -313,9 +309,6 @@ const StoryList: React.FC<StoryListProps> = ({
                 <svg className="absolute left-3 top-2.5 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{color: 'var(--muted)'}}>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-              </div>
-              <div className="md:hidden">
-                <ThemeSwitcher />
               </div>
             </div>
             
@@ -402,7 +395,7 @@ const StoryList: React.FC<StoryListProps> = ({
       </div>
       
       <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3">
-        <div className="text-xs font-mono mb-3 uppercase tracking-wide font-semibold" style={{color: 'var(--warning)'}}>
+        <div className="text-xs font-mono mb-3 uppercase tracking-wide font-semibold" style={{color: 'var(--accent-orange)'}}>
           {filteredStories.length} locations found
         </div>
         
@@ -438,6 +431,36 @@ const StoryList: React.FC<StoryListProps> = ({
                 }}>
                   {story.title}
                 </h3>
+                {story.address && (
+                  <div className={`flex items-center gap-1.5 text-xs font-mono mt-1 ${
+                    story.id === activeStoryId ? 
+                      '' :
+                      ''
+                  }`}
+                  style={{
+                    color: story.id === activeStoryId ? undefined : 'var(--muted)'
+                  }}>
+                    <svg 
+                      className="w-3 h-3 flex-shrink-0" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" 
+                      />
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" 
+                      />
+                    </svg>
+                    <span>{story.address}</span>
+                  </div>
+                )}
                 <p className={`text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed ${
                   story.id === activeStoryId ? 
                     '' :
@@ -496,10 +519,10 @@ const StoryList: React.FC<StoryListProps> = ({
               }`}
               style={{
                 color: story.id === activeStoryId 
-                  ? (getActiveStoryStyle(story, true).color === '#ffffff' ? '#ffffff' : '#2a2a2a')
+                  ? (getActiveStoryStyle(story, true).color === 'var(--secondary)' ? 'var(--secondary)' : 'var(--foreground)')
                   : 'var(--foreground)',
                 borderColor: story.id === activeStoryId 
-                  ? (getActiveStoryStyle(story, true).color === '#ffffff' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.3)')
+                  ? (getActiveStoryStyle(story, true).color === 'var(--secondary)' ? 'var(--border)' : 'var(--muted)')
                   : 'var(--muted)',
                 backgroundColor: story.id === activeStoryId ? 'transparent' : 'transparent'
               }}

@@ -4,8 +4,94 @@ import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import Map, { Marker, NavigationControl, Popup } from 'react-map-gl/mapbox'
 import Supercluster from 'supercluster'
 import { useTheme } from 'next-themes'
+import mapboxgl from 'mapbox-gl'
 
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
+
+// Snazzy Maps "Red Colored" style conversion for hot theme
+const getSnazzyRedColoredStyle = () => {
+  return {
+    version: 8 as const,
+    name: 'Red Colored - Snazzy Maps',
+    sources: {
+      'mapbox': {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v8'
+      }
+    },
+    layers: [
+      {
+        id: 'background',
+        type: 'background',
+        paint: {
+          'background-color': '#96000e' // Main red from Snazzy Maps
+        }
+      },
+      {
+        id: 'water',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'water',
+        paint: {
+          'fill-color': '#2a0b0d', // Dark red-brown water
+          'fill-opacity': 1
+        }
+      },
+      {
+        id: 'landuse-park',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'landuse',
+        filter: ['==', 'class', 'park'],
+        paint: {
+          'fill-color': '#5f0006', // Dark red parks
+          'fill-opacity': 1
+        }
+      },
+      {
+        id: 'building',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'building',
+        paint: {
+          'fill-color': '#7a0a11', // Slightly lighter red buildings
+          'fill-opacity': 0.9,
+          'fill-outline-color': '#5f0006'
+        }
+      },
+      {
+        id: 'road-highway',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        filter: ['in', 'class', 'motorway', 'trunk'],
+        paint: {
+          'line-color': '#b93f3f', // Bright red highways
+          'line-width': {
+            base: 1.5,
+            stops: [[8, 0.5], [10, 1], [12, 3], [16, 8], [20, 18]]
+          },
+          'line-opacity': 1
+        }
+      },
+      {
+        id: 'road-local',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        filter: ['in', 'class', 'street', 'street_limited', 'primary', 'secondary'],
+        paint: {
+          'line-color': '#8e895e', // Brownish roads
+          'line-width': {
+            base: 1.5,
+            stops: [[12, 0.5], [14, 1], [16, 3], [20, 8]]
+          },
+          'line-opacity': 1
+        }
+      }
+    ]
+  }
+}
 
 // Get custom map style for each theme
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,7 +99,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
   switch(theme) {
     case 'bauhaus':
       return {
-        version: 8,
+        version: 8 as const,
         sources: {
           'mapbox': {
             type: 'vector',
@@ -25,7 +111,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
             id: 'background',
             type: 'background',
             paint: {
-              'background-color': '#f5f5f0'
+              'background-color': '#ffffff' // white background for Bauhaus
             }
           },
           {
@@ -34,7 +120,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
             source: 'mapbox',
             'source-layer': 'water',
             paint: {
-              'fill-color': '#0066ff',
+              'fill-color': '#0066cc', // primary blue
               'fill-opacity': 0.4
             }
           },
@@ -45,7 +131,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
             'source-layer': 'landuse',
             filter: ['==', 'class', 'park'],
             paint: {
-              'fill-color': '#ffcc00',
+              'fill-color': '#ffcc00', // yellow
               'fill-opacity': 0.3
             }
           },
@@ -55,7 +141,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
             source: 'mapbox',
             'source-layer': 'building',
             paint: {
-              'fill-color': '#000000',
+              'fill-color': '#000000', // black
               'fill-opacity': 0.2
             }
           },
@@ -65,7 +151,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
             source: 'mapbox',
             'source-layer': 'road',
             paint: {
-              'line-color': '#000000',
+              'line-color': '#cc0000', // red
               'line-width': 2
             }
           }
@@ -82,7 +168,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
       return 'mapbox://styles/mapbox/outdoors-v12' // We'll customize this after load
     
     case 'hot':
-      return 'mapbox://styles/mapbox/light-v11' // We'll customize this after load for Bloody Water style
+      return getSnazzyRedColoredStyle() // Use complete Snazzy Maps "Red Colored" style
     
     case 'art-nouveau':
       return 'mapbox://styles/mapbox/outdoors-v12' // We'll customize this after load
@@ -127,6 +213,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     zoom: zoom
   })
   const [mapLoaded, setMapLoaded] = useState(false)
+  const [, setWebglReady] = useState(false) // Track WebGL readiness for context loss handling
   const [popupInfo, setPopupInfo] = useState<{
     longitude: number
     latitude: number
@@ -142,58 +229,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   } | null>(null)
   const [labelOpacity, setLabelOpacity] = useState(1)
 
-  // Theme-specific colors
+  // Get colors from CSS variables
   const getThemeColors = () => {
-    switch(theme) {
-      case 'cool':
-        return {
-          active: '#4a90e2',
-          declining: '#f5a623',
-          closed: '#d0021b',
-          future: '#95a5a6'
-        }
-      case 'warm':
-        return {
-          active: '#d67b5a',
-          declining: '#ff8c00',
-          closed: '#cd5c5c',
-          future: '#bcaaa4'
-        }
-      case 'hot':
-        return {
-          active: '#e4525e',
-          declining: '#ff8c00', // Orange to match the UI
-          closed: '#cc0000',
-          future: '#cccccc'
-        }
-      case 'cold':
-        return {
-          active: '#64b5f6',
-          declining: '#90a4ae',
-          closed: '#607d8b',
-          future: '#b0bec5'
-        }
-      case 'bauhaus':
-        return {
-          active: '#0066ff',
-          declining: '#ffcc00',
-          closed: '#ff0000',
-          future: '#666666'
-        }
-      case 'art-nouveau':
-        return {
-          active: '#8b7355',
-          declining: '#daa520',
-          closed: '#704214',
-          future: '#a1887f'
-        }
-      default: // moody
-        return {
-          active: '#97d8c0',
-          declining: '#ffcb51',
-          closed: '#ee5760',
-          future: '#f5cdb4'
-        }
+    const style = getComputedStyle(document.documentElement);
+    return {
+      active: style.getPropertyValue('--success').trim() || '#97d8c0',
+      declining: style.getPropertyValue('--warning').trim() || '#ffcb51', 
+      closed: style.getPropertyValue('--danger').trim() || '#ee5760',
+      future: style.getPropertyValue('--foreground-muted').trim() || '#f5cdb4'
     }
   }
 
@@ -310,37 +353,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     setLabelOpacity(popupInfo ? 0.6 : 1)
   }, [popupInfo, mapLoaded])
 
-  // Re-apply theme colors when theme changes
-  useEffect(() => {
-    if (!mapLoaded || !mapRef.current) return
-    
-    const map = mapRef.current.getMap()
-    if (!map) return
-    
-    // For hot theme, ensure styles are applied after map is ready
-    if (theme === 'hot') {
-      const applyHotTheme = () => {
-        const style = map.getStyle()
-        if (style && style.layers) {
-          // Force re-application of hot theme
-          setTimeout(() => {
-            map.resize()
-          }, 100)
-        }
+  // Enhanced WebGL-synchronized theme application
+  const applyThemeStyles = useCallback((map: mapboxgl.Map, forceRender = false) => {
+    // Hot theme and Bauhaus use complete custom styles, no additional styling needed
+    if (theme === 'hot' || theme === 'bauhaus') {
+      if (forceRender) {
+        // Force WebGL render cycle for custom themes
+        map.triggerRepaint()
       }
-      
-      // Listen for style load events
-      map.on('style.load', applyHotTheme)
-      
-      // Also apply immediately if style is already loaded
-      if (map.isStyleLoaded()) {
-        applyHotTheme()
-      }
-      
-      // Cleanup
-      return () => {
-        map.off('style.load', applyHotTheme)
-      }
+      return
     }
     
     try {
@@ -349,125 +370,42 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       
       const layers = style.layers
       
-      // Get theme-specific map colors
+      // Get theme-specific map colors from CSS variables
       const getMapColors = () => {
-        switch(theme) {
-          case 'cool':
-            return {
-              water: '#4a90e2',
-              park: '#7ed321',
-              road: '#2c3e50',
-              background: '#f0f4f8'
-            }
-          case 'warm':
-            return {
-              water: '#8b4513',
-              park: '#9acd32',
-              road: '#5d4037',
-              background: '#f4f1e8'
-            }
-          case 'hot':
-            return {
-              water: '#3d3d4e', // Dark gray/blue for water
-              park: '#6b1f2a', // Very dark red for parks
-              road: '#c85464', // Pink/coral roads
-              background: '#8b2635' // Dark red background
-            }
-          case 'cold':
-            return {
-              water: '#64b5f6',
-              park: '#81c784',
-              road: '#263238',
-              background: '#e8f4f8'
-            }
-          case 'bauhaus':
-            return {
-              water: '#0066ff',
-              park: '#ffcc00',
-              road: '#000000',
-              background: '#f5f5f0'
-            }
-          case 'art-nouveau':
-            return {
-              water: '#556b2f',
-              park: '#6b8e23',
-              road: '#3e2723',
-              background: '#f8f6f0'
-            }
-          default: // moody
-            return {
-              water: '#5a5766',
-              park: '#97d8c0',
-              road: '#4a4a57',
-              background: '#4a4a57'
-            }
+        const style = getComputedStyle(document.documentElement);
+        // For moody theme, use a darker purple for water
+        const waterColor = theme === 'moody' 
+          ? '#5a5766' // Dark purple-gray for moody theme water
+          : style.getPropertyValue('--accent-purple').trim() || '#5a5766';
+        
+        return {
+          water: waterColor,
+          park: style.getPropertyValue('--success').trim() || '#97d8c0', 
+          road: style.getPropertyValue('--foreground').trim() || '#4a4a57',
+          background: style.getPropertyValue('--background').trim() || '#4a4a57'
         }
       }
       
       const mapColors = getMapColors()
+      let styleChangesApplied = false
       
-      // Apply custom colors to layers
+      // Apply custom colors to layers with batch operations
       layers.forEach(layer => {
         try {
-          // Water layers - Special handling for Bloody Water theme
+          let layerModified = false
+          
+          // Water layers
           if (layer.id.includes('water') && layer.type === 'fill') {
             map.setPaintProperty(layer.id, 'fill-color', mapColors.water)
-            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 1 : theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'cold' ? 0.5 : 0.8)
+            layerModified = true
           }
           
-          // Park/landuse layers - Light gray for hot theme
+          // Park/landuse layers
           if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
             map.setPaintProperty(layer.id, 'fill-color', mapColors.park)
-            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 0.95 : theme === 'bauhaus' ? 0.3 : theme === 'cold' ? 0.15 : 0.2)
-          }
-          
-          // Special handling for hot theme - Dark red with dark water
-          if (theme === 'hot') {
-            // Set background and land layers to dark red
-            if (layer.id === 'background' && layer.type === 'background') {
-              map.setPaintProperty(layer.id, 'background-color', '#8b2635')
-            }
-            if (layer.id.includes('land') && layer.type === 'fill') {
-              map.setPaintProperty(layer.id, 'fill-color', '#923640')
-              map.setPaintProperty(layer.id, 'fill-opacity', 1)
-            }
-            
-            // Grass and nature areas in darker red
-            if ((layer.id.includes('grass') || layer.id.includes('wood') || layer.id.includes('forest')) && layer.type === 'fill') {
-              map.setPaintProperty(layer.id, 'fill-color', '#6b1f2a')
-              map.setPaintProperty(layer.id, 'fill-opacity', 1)
-            }
-            
-            // Waterways in dark gray/blue
-            if (layer.id.includes('waterway') && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#3d3d4e')
-              map.setPaintProperty(layer.id, 'line-width', 3)
-              map.setPaintProperty(layer.id, 'line-opacity', 1)
-            }
-            
-            // Administrative boundaries in pink
-            if (layer.id.includes('admin') && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#c85464')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.4)
-              map.setPaintProperty(layer.id, 'line-width', 1)
-            }
-            
-            // Railway lines in coral
-            if ((layer.id.includes('rail') || layer.id.includes('transit')) && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#c85464')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.6)
-            }
-            
-            // Tunnels and bridges in coral
-            if ((layer.id.includes('tunnel') || layer.id.includes('bridge')) && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#c85464')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.5)
-            }
-            
-            // Hide ALL text labels including street names
-            if (layer.type === 'symbol') {
-              map.setLayoutProperty(layer.id, 'visibility', 'none')
-            }
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'cold' ? 0.15 : 0.2)
+            layerModified = true
           }
           
           // Road layers  
@@ -482,27 +420,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
                 map.setPaintProperty(layer.id, 'line-opacity', 0.6)
               }
-            } else if (theme === 'hot') {
-              // Dark theme - coral/pink roads for contrast
-              map.setPaintProperty(layer.id, 'line-color', '#c85464')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.7)
-              if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
-                map.setPaintProperty(layer.id, 'line-width', 2)
-                map.setPaintProperty(layer.id, 'line-color', '#d67383')
-              } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
-                map.setPaintProperty(layer.id, 'line-width', 1.5)
-                map.setPaintProperty(layer.id, 'line-color', '#c85464')
-              } else {
-                map.setPaintProperty(layer.id, 'line-width', 1)
-                map.setPaintProperty(layer.id, 'line-color', '#b94455')
-              }
-            } else if (theme === 'bauhaus') {
-              // Bauhaus uses bold black lines
-              map.setPaintProperty(layer.id, 'line-color', '#000000')
-              map.setPaintProperty(layer.id, 'line-width', 2)
             } else if (theme === 'cold') {
               // Cold theme uses subtle gray lines
-              map.setPaintProperty(layer.id, 'line-color', '#b0bec5')
+              map.setPaintProperty(layer.id, 'line-color', mapColors.road)
               map.setPaintProperty(layer.id, 'line-opacity', 0.7)
             } else {
               // Use theme colors for other themes
@@ -515,50 +435,225 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 map.setPaintProperty(layer.id, 'line-opacity', 0.6)
               }
             }
+            layerModified = true
           }
           
           // Building layers
           if (layer.id.includes('building') && layer.type === 'fill') {
-            if (theme === 'hot') {
-              // Dark theme - very dark red buildings
-              map.setPaintProperty(layer.id, 'fill-color', '#6b1f2a')
-              map.setPaintProperty(layer.id, 'fill-opacity', 0.95)
-              // Building outlines in red
-              if (layer.id.includes('outline')) {
-                map.setPaintProperty(layer.id, 'line-color', '#ff9999')
-                map.setPaintProperty(layer.id, 'line-opacity', 0.8)
-              }
-            } else if (theme === 'bauhaus') {
-              map.setPaintProperty(layer.id, 'fill-color', '#000000')
-              map.setPaintProperty(layer.id, 'fill-opacity', 0.2)
-            } else if (theme === 'cold') {
-              map.setPaintProperty(layer.id, 'fill-color', '#cfd8dc')
+            if (theme === 'cold') {
+              map.setPaintProperty(layer.id, 'fill-color', mapColors.background)
               map.setPaintProperty(layer.id, 'fill-opacity', 0.3)
             } else {
-              map.setPaintProperty(layer.id, 'fill-color', '#564b5a')
+              map.setPaintProperty(layer.id, 'fill-color', mapColors.background)
               map.setPaintProperty(layer.id, 'fill-opacity', 0.6)
+            }
+            layerModified = true
+          }
+          
+          // Text labels - need special handling for immediate rendering
+          if (layer.type === 'symbol') {
+            const style = getComputedStyle(document.documentElement);
+            const textColor = style.getPropertyValue('--foreground').trim() || '#f5cdb4'
+            const haloColor = style.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            
+            // Apply text styling to all symbol layers
+            try {
+              map.setPaintProperty(layer.id, 'text-color', textColor)
+              map.setPaintProperty(layer.id, 'text-halo-color', haloColor)
+              map.setPaintProperty(layer.id, 'text-halo-width', 1)
+              
+              // Also handle icon colors for symbol layers with icons
+              if (layer.layout && layer.layout['icon-image']) {
+                map.setPaintProperty(layer.id, 'icon-color', textColor)
+                map.setPaintProperty(layer.id, 'icon-halo-color', haloColor)
+                map.setPaintProperty(layer.id, 'icon-halo-width', 1)
+              }
+              
+              layerModified = true
+            } catch (e) {
+              // Some properties might not exist for all symbol layers
             }
           }
           
-          // Text labels
-          if (layer.type === 'symbol') {
-            if (theme === 'hot') {
-              // Hide ALL labels for hot theme
-              map.setLayoutProperty(layer.id, 'visibility', 'none')
-            } else if (layer.paint) {
-              map.setPaintProperty(layer.id, 'text-color', '#f5cdb4')
-              map.setPaintProperty(layer.id, 'text-halo-color', '#3b3340')
-              map.setPaintProperty(layer.id, 'text-halo-width', 1)
-            }
+          if (layerModified) {
+            styleChangesApplied = true
           }
         } catch (e) {
           // Silently ignore layer errors
         }
       })
+      
+      // Force WebGL render cycle after style changes
+      if (styleChangesApplied || forceRender) {
+        // Multiple render triggers to ensure WebGL synchronization
+        map.triggerRepaint()
+        
+        // Force symbol layer update multiple times to ensure labels render
+        const updateSymbolLayers = () => {
+          const style = map.getStyle()
+          if (style && style.layers) {
+            const computedStyle = getComputedStyle(document.documentElement)
+            const textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
+            const haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            
+            style.layers.forEach(layer => {
+              if (layer.type === 'symbol') {
+                try {
+                  map.setPaintProperty(layer.id, 'text-color', textColor)
+                  map.setPaintProperty(layer.id, 'text-halo-color', haloColor)
+                  map.setPaintProperty(layer.id, 'text-halo-width', 1)
+                } catch (e) {
+                  // Ignore errors for layers that don't support these properties
+                }
+              }
+            })
+            map.triggerRepaint()
+          }
+        }
+        
+        // Apply symbol updates immediately
+        updateSymbolLayers()
+        
+        // Then again after idle for safety
+        map.once('idle', () => {
+          updateSymbolLayers()
+        })
+        
+        // And once more after a delay to catch any late-loading labels
+        setTimeout(() => {
+          updateSymbolLayers()
+        }, 200)
+        
+        // Additional render force using requestAnimationFrame for better timing
+        requestAnimationFrame(() => {
+          map.triggerRepaint()
+          
+          // Final render after a slight delay to ensure all WebGL operations complete
+          setTimeout(() => {
+            map.triggerRepaint()
+          }, 16) // ~1 frame at 60fps
+        })
+      }
     } catch (e) {
       console.warn('Error updating map theme:', e)
     }
-  }, [theme, mapLoaded, colors])
+  }, [theme, colors])
+
+  // Re-apply theme colors when theme changes with WebGL synchronization
+  useEffect(() => {
+    if (!mapLoaded || !mapRef.current) return
+    
+    const map = mapRef.current.getMap()
+    if (!map) return
+    
+    // Handle style changes that require full reloads (like switching between custom and standard styles)
+    const handleStyleLoad = () => {
+      try {
+        // Wait for style to be completely loaded
+        if (!map.isStyleLoaded()) {
+          setTimeout(handleStyleLoad, 50)
+          return
+        }
+        
+        // Apply theme styles with force render
+        applyThemeStyles(map, true)
+        
+        // Force multiple repaints to ensure labels update
+        const forceLabelsUpdate = () => {
+          map.triggerRepaint()
+          
+          // Update labels specifically
+          const style = map.getStyle()
+          if (style && style.layers) {
+            const computedStyle = getComputedStyle(document.documentElement)
+            const textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
+            const haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+            
+            style.layers.forEach(layer => {
+              if (layer.type === 'symbol') {
+                try {
+                  map.setPaintProperty(layer.id, 'text-color', textColor)
+                  map.setPaintProperty(layer.id, 'text-halo-color', haloColor)
+                  map.setPaintProperty(layer.id, 'text-halo-width', 1)
+                } catch (e) {
+                  // Ignore
+                }
+              }
+            })
+          }
+          
+          map.triggerRepaint()
+        }
+        
+        // Immediate update
+        forceLabelsUpdate()
+        
+        // Update after a frame
+        requestAnimationFrame(forceLabelsUpdate)
+        
+        // Update after map is idle
+        map.once('idle', forceLabelsUpdate)
+        
+        // Final update after delay
+        setTimeout(forceLabelsUpdate, 100)
+        setTimeout(forceLabelsUpdate, 300)
+        
+      } catch (err) {
+        console.warn('Error during theme style change:', err)
+        // Fallback: try to trigger repaint anyway
+        try {
+          map.triggerRepaint()
+        } catch (fallbackErr) {
+          console.warn('Fallback repaint also failed:', fallbackErr)
+        }
+      }
+    }
+    
+    // Remove any existing style event listeners to prevent duplicates
+    map.off('style.load', handleStyleLoad)
+    
+    // Listen for style load events (happens when switching between themes)
+    map.on('style.load', handleStyleLoad)
+    
+    // Also trigger immediately in case style is already loaded
+    handleStyleLoad()
+    
+    // Cleanup
+    return () => {
+      map.off('style.load', handleStyleLoad)
+    }
+  }, [theme, mapLoaded, applyThemeStyles])
+  
+  // Handle WebGL context loss/restore
+  useEffect(() => {
+    if (!mapRef.current) return
+    
+    const map = mapRef.current.getMap()
+    if (!map) return
+    
+    const handleContextLost = () => {
+      console.warn('WebGL context lost, will restore styles when context is restored')
+      setWebglReady(false)
+    }
+    
+    const handleContextRestored = () => {
+      console.log('WebGL context restored, reapplying styles')
+      setWebglReady(true)
+      // Reapply styles after context restoration
+      setTimeout(() => {
+        applyThemeStyles(map, true)
+      }, 100)
+    }
+    
+    const canvas = map.getCanvas()
+    canvas.addEventListener('webglcontextlost', handleContextLost)
+    canvas.addEventListener('webglcontextrestored', handleContextRestored)
+    
+    return () => {
+      canvas.removeEventListener('webglcontextlost', handleContextLost)
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored)
+    }
+  }, [mapLoaded, applyThemeStyles])
 
   // Fix popup arrow color after popup renders
   useEffect(() => {
@@ -845,155 +940,105 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           }
         }}
         onLoad={() => {
-          setMapLoaded(true)
-          // Don't apply custom styles if using Bauhaus (it has its own complete style)
-          if (theme === 'bauhaus') return
-          
-          // Apply custom style to match color scheme for other themes
           const map = mapRef.current?.getMap()
+          if (!map) return
           
-          // Force theme update after a small delay to ensure map is fully loaded
-          if (map && theme === 'hot') {
-            setTimeout(() => {
-              // Trigger a fake resize event to force redraw
-              map.resize()
-            }, 100)
-          }
+          // Set map as loaded first
+          setMapLoaded(true)
           
-          if (map) {
+          // Ensure WebGL context is ready for rendering
+          const checkWebGLReady = () => {
             try {
-              // Get all layers safely
-              const style = map.getStyle()
-              if (!style || !style.layers) return
-              
-              const layers = style.layers
-              
-              // Get theme-specific map colors
-              const getMapColors = () => {
-                switch(theme) {
-                  case 'cool':
-                    return {
-                      water: '#4a90e2',
-                      park: '#7ed321',
-                      road: '#2c3e50',
-                      background: '#f0f4f8'
-                    }
-                  case 'warm':
-                    return {
-                      water: '#8b4513',
-                      park: '#9acd32',
-                      road: '#5d4037',
-                      background: '#f4f1e8'
-                    }
-                  case 'hot':
-                    return {
-                      water: '#3d3d4e',
-                      park: '#6b1f2a',
-                      road: '#c85464',
-                      background: '#8b2635'
-                    }
-                  case 'cold':
-                    return {
-                      water: '#64b5f6',
-                      park: '#81c784',
-                      road: '#263238',
-                      background: '#e8f4f8'
-                    }
-                  case 'bauhaus':
-                    return {
-                      water: '#0066ff',
-                      park: '#ffcc00',
-                      road: '#000000',
-                      background: '#f5f5f0'
-                    }
-                  case 'art-nouveau':
-                    return {
-                      water: '#556b2f',
-                      park: '#6b8e23',
-                      road: '#3e2723',
-                      background: '#f8f6f0'
-                    }
-                  default: // moody
-                    return {
-                      water: '#5a5766',
-                      park: '#97d8c0',
-                      road: '#4a4a57',
-                      background: '#4a4a57'
-                    }
-                }
+              const canvas = map.getCanvas()
+              const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+              if (gl && gl instanceof WebGLRenderingContext && !gl.isContextLost()) {
+                setWebglReady(true)
+                return true
               }
-              
-              const mapColors = getMapColors()
-              
-              // Apply custom colors to layers
-              layers.forEach(layer => {
-                try {
-                  // Water layers
-                  if (layer.id.includes('water') && layer.type === 'fill') {
-                    map.setPaintProperty(layer.id, 'fill-color', mapColors.water)
-                    map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
-                  }
-                  
-                  // Park/landuse layers
-                  if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
-                    map.setPaintProperty(layer.id, 'fill-color', mapColors.park)
-                    map.setPaintProperty(layer.id, 'fill-opacity', theme === 'bauhaus' ? 0.3 : theme === 'cold' ? 0.15 : 0.2)
-                  }
-                  
-                  // Road layers
-                  if (layer.id.includes('road') && layer.type === 'line') {
-                    if (theme === 'bauhaus') {
-                      // Bauhaus uses bold black lines
-                      map.setPaintProperty(layer.id, 'line-color', '#000000')
-                      map.setPaintProperty(layer.id, 'line-width', 2)
-                    } else if (theme === 'cold') {
-                      // Cold theme uses subtle gray lines
-                      map.setPaintProperty(layer.id, 'line-color', '#b0bec5')
-                      map.setPaintProperty(layer.id, 'line-opacity', 0.7)
-                    } else {
-                      // Default moody theme colors
-                      if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
-                        map.setPaintProperty(layer.id, 'line-color', '#ee5760')
-                      } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
-                        map.setPaintProperty(layer.id, 'line-color', '#ffcb51')
-                      } else {
-                        map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
-                        map.setPaintProperty(layer.id, 'line-opacity', 0.6)
-                      }
-                    }
-                  }
-                  
-                  // Building layers
-                  if (layer.id.includes('building') && layer.type === 'fill') {
-                    if (theme === 'bauhaus') {
-                      map.setPaintProperty(layer.id, 'fill-color', '#000000')
-                      map.setPaintProperty(layer.id, 'fill-opacity', 0.2)
-                    } else if (theme === 'cold') {
-                      map.setPaintProperty(layer.id, 'fill-color', '#cfd8dc')
-                      map.setPaintProperty(layer.id, 'fill-opacity', 0.3)
-                    } else {
-                      map.setPaintProperty(layer.id, 'fill-color', '#564b5a')
-                      map.setPaintProperty(layer.id, 'fill-opacity', 0.6)
-                    }
-                  }
-                  
-                  // Text labels
-                  if (layer.type === 'symbol') {
-                    if (layer.paint) {
-                      map.setPaintProperty(layer.id, 'text-color', '#f5cdb4')
-                      map.setPaintProperty(layer.id, 'text-halo-color', '#3b3340')
-                      map.setPaintProperty(layer.id, 'text-halo-width', 1)
-                    }
-                  }
-                } catch (err) {
-                  // Silently skip layers that can't be modified
-                  console.debug('Could not modify layer:', layer.id)
-                }
-              })
+              return false
             } catch (err) {
-              console.warn('Could not apply custom map styles:', err)
+              console.warn('WebGL context check failed:', err)
+              return false
             }
           }
+          
+          // Wait for WebGL context to be fully ready before applying styles
+          const applyInitialStyles = () => {
+            try {
+              // Ensure map style is fully loaded
+              if (!map.isStyleLoaded()) {
+                // If style isn't loaded yet, wait for it
+                map.once('styledata', applyInitialStyles)
+                return
+              }
+              
+              // Check if WebGL is ready
+              if (!checkWebGLReady()) {
+                // Retry WebGL check after a brief delay
+                setTimeout(applyInitialStyles, 16)
+                return
+              }
+              
+              // Apply theme styles with forced render for immediate display
+              applyThemeStyles(map, true)
+              
+              // Additional safety: ensure styles are visible immediately
+              // This addresses the WebGL synchronization issue
+              requestAnimationFrame(() => {
+                map.triggerRepaint()
+                
+                // Final render trigger to ensure all WebGL operations complete
+                setTimeout(() => {
+                  map.triggerRepaint()
+                }, 50) // Slightly longer delay for initial load
+              })
+            } catch (err) {
+              console.warn('Could not apply initial map styles:', err)
+            }
+          }
+          
+          // Start the style application process
+          applyInitialStyles()
+          
+          // Handle WebGL context loss and restoration for label rendering
+          const canvas = map.getCanvas()
+          canvas.addEventListener('webglcontextlost', () => {
+            console.warn('WebGL context lost')
+            setWebglReady(false)
+          })
+          
+          canvas.addEventListener('webglcontextrestored', () => {
+            console.log('WebGL context restored')
+            setWebglReady(true)
+            // Reapply styles after context restoration
+            setTimeout(() => applyThemeStyles(map, true), 100)
+          })
+          
+          // Listen for style changes to reapply symbol layer styles
+          map.on('styledata', () => {
+            // When style data changes, ensure labels are updated
+            setTimeout(() => {
+              const style = map.getStyle()
+              if (style && style.layers) {
+                const computedStyle = getComputedStyle(document.documentElement)
+                const textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
+                const haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+                
+                style.layers.forEach(layer => {
+                  if (layer.type === 'symbol') {
+                    try {
+                      map.setPaintProperty(layer.id, 'text-color', textColor)
+                      map.setPaintProperty(layer.id, 'text-halo-color', haloColor)
+                      map.setPaintProperty(layer.id, 'text-halo-width', 1)
+                    } catch (e) {
+                      // Ignore
+                    }
+                  }
+                })
+                map.triggerRepaint()
+              }
+            }, 100)
+          })
         }}
         mapStyle={getThemeMapStyle(theme)}
         mapboxAccessToken={MAPBOX_TOKEN}

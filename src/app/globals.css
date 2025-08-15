@@ -282,7 +282,38 @@
 }
 
 /* Import premium typography - Modern, clean fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Bebas+Neue&family=Oswald:wght@700&display=swap');
+
+/* Custom font face for Kame Poster fonts */
+@font-face {
+  font-family: 'Kame Poster';
+  src: url('/fonts/Kame Poster Black.woff2') format('woff2'),
+       url('/fonts/Kame Poster Black.woff') format('woff'),
+       url('/fonts/Kame Poster Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kame Poster';
+  src: url('/fonts/Kame Poster Regular.woff2') format('woff2'),
+       url('/fonts/Kame Poster Regular.woff') format('woff'),
+       url('/fonts/Kame Poster Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kame Book';
+  src: url('/fonts/Kame Book.woff2') format('woff2'),
+       url('/fonts/Kame Book.woff') format('woff'),
+       url('/fonts/Kame Book.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 body {
   color: var(--foreground);
@@ -341,6 +372,30 @@ input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
   color: var(--placeholder-color, var(--muted)) !important;
   opacity: 0.8 !important;
+}
+
+/* Kame Poster style class */
+.font-kame {
+  font-family: 'Kame Poster', 'Impact', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.font-kame-regular {
+  font-family: 'Kame Poster', 'Impact', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.font-kame-book {
+  font-family: 'Kame Book', 'Helvetica', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
 }
 
 @layer utilities {

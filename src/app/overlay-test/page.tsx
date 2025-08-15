@@ -197,6 +197,25 @@ export default function OverlayTestPage() {
                backgroundColor: 'var(--dropdown-bg, var(--input-bg, rgba(var(--muted-rgb), 0.9)))',
                borderColor: 'var(--border)'
              }}>
+          {/* Theme Button */}
+          <button
+            onClick={() => {
+              setShowThemeMenu(!showThemeMenu);
+            }}
+            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 relative"
+            style={{
+              backgroundColor: showThemeMenu ? 'var(--primary)' : 'var(--input-bg, rgba(var(--muted-rgb), 0.5))',
+              borderColor: 'var(--border)',
+              color: showThemeMenu ? 'var(--background)' : 'var(--foreground)'
+            }}
+            aria-label="Switch theme"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z" />
+            </svg>
+          </button>
+          
+          {/* Home Button */}
           <button
             onClick={() => {
               goHome();
@@ -214,6 +233,8 @@ export default function OverlayTestPage() {
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
             </svg>
           </button>
+          
+          {/* Info Button */}
           <button
             onClick={() => {
               toggleInfo();
@@ -231,6 +252,33 @@ export default function OverlayTestPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </button>
+        </div>
+      )}
+      
+      {/* Mobile Theme Menu Dropdown */}
+      {showThemeMenu && showMobileMenu && (
+        <div className="md:hidden fixed top-16 left-20 bg-white shadow-lg p-2 min-w-[120px] border" style={{ 
+          zIndex: 10002,
+          backgroundColor: 'var(--dropdown-bg, var(--input-bg, rgba(var(--muted-rgb), 0.9)))',
+          borderColor: 'var(--border)'
+        }}>
+          {['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].map((themeName) => (
+            <button
+              key={themeName}
+              onClick={() => {
+                setTheme(themeName);
+                setShowThemeMenu(false);
+                setShowMobileMenu(false);
+              }}
+              className={`w-full px-3 py-2 text-left text-xs font-mono transition-colors hover:opacity-80 capitalize`}
+              style={{
+                backgroundColor: theme === themeName ? 'var(--primary)' : 'transparent',
+                color: theme === themeName ? 'var(--background)' : 'var(--foreground)'
+              }}
+            >
+              {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
+            </button>
+          ))}
         </div>
       )}
 

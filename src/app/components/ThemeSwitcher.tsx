@@ -2,13 +2,11 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 
 const ThemeSwitcher: React.FC = () => {
   const { theme, setTheme, themes } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -85,7 +83,6 @@ const ThemeSwitcher: React.FC = () => {
               onClick={() => {
                 setTheme(themeName);
                 setIsOpen(false);
-                router.push(`/${themeName}`);
               }}
               className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:opacity-80 uppercase tracking-wide ${
                 theme === themeName ? 'border-l-2' : ''

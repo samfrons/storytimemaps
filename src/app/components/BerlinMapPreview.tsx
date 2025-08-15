@@ -58,16 +58,27 @@ const BerlinMapPreview: React.FC = () => {
   ];
 
   const getMarkerColor = (state: string) => {
+    if (typeof window === 'undefined') {
+      // Server-side fallback colors
+      switch (state) {
+        case 'active': return '#97d8c0';
+        case 'declining': return '#ffcb51';
+        case 'closed': return '#ee5760';
+        default: return '#97d8c0';
+      }
+    }
+    
+    const style = getComputedStyle(document.documentElement);
     switch (state) {
-      case 'active': return '#97d8c0';
-      case 'declining': return '#ffcb51';
-      case 'closed': return '#ee5760';
-      default: return '#97d8c0';
+      case 'active': return style.getPropertyValue('--success').trim() || '#97d8c0';
+      case 'declining': return style.getPropertyValue('--warning').trim() || '#ffcb51';
+      case 'closed': return style.getPropertyValue('--danger').trim() || '#ee5760';
+      default: return style.getPropertyValue('--success').trim() || '#97d8c0';
     }
   };
 
   return (
-    <div className="relative w-full h-full bg-[#4a4a57] overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden" style={{backgroundColor: 'var(--background)'}}>
       <svg
         viewBox="0 0 100 100"
         className="w-full h-full"
@@ -75,12 +86,12 @@ const BerlinMapPreview: React.FC = () => {
         {/* Map background with street-like grid */}
         <defs>
           <pattern id="streets" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-            <rect width="8" height="8" fill="#3b3340" />
-            <path d="M0 4h8M4 0v8" stroke="#6b6275" strokeWidth="0.2" opacity="0.4" />
+            <rect width="8" height="8" fill="var(--accent-navy)" />
+            <path d="M0 4h8M4 0v8" stroke="var(--border)" strokeWidth="0.2" opacity="0.4" />
           </pattern>
           <pattern id="blocks" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
-            <rect width="4" height="4" fill="#4a4a57" />
-            <rect x="0.5" y="0.5" width="3" height="3" fill="#3b3340" stroke="#6b6275" strokeWidth="0.1" opacity="0.3" />
+            <rect width="4" height="4" fill="var(--background)" />
+            <rect x="0.5" y="0.5" width="3" height="3" fill="var(--accent-navy)" stroke="var(--border)" strokeWidth="0.1" opacity="0.3" />
           </pattern>
           
           {/* Glow effect for markers */}
@@ -101,14 +112,14 @@ const BerlinMapPreview: React.FC = () => {
         <path
           d="M 25 45 Q 35 43, 45 45 T 55 44 Q 65 43, 75 45"
           fill="none"
-          stroke="#2a2a2a"
+          stroke="var(--foreground)"
           strokeWidth="2"
           opacity="0.8"
         />
         <path
           d="M 25 45 Q 35 43, 45 45 T 55 44 Q 65 43, 75 45"
           fill="none"
-          stroke="#4a4a57"
+          stroke="var(--background)"
           strokeWidth="1.5"
           opacity="0.6"
         />
@@ -116,17 +127,17 @@ const BerlinMapPreview: React.FC = () => {
         {/* Major streets/avenues */}
         <g opacity="0.3">
           {/* Unter den Linden */}
-          <path d="M 30 42 L 60 40" stroke="#6b6275" strokeWidth="0.8" />
+          <path d="M 30 42 L 60 40" stroke="var(--border)" strokeWidth="0.8" />
           {/* Friedrichstraße */}
-          <path d="M 50 25 L 48 60" stroke="#6b6275" strokeWidth="0.8" />
+          <path d="M 50 25 L 48 60" stroke="var(--border)" strokeWidth="0.8" />
           {/* Kurfürstendamm */}
-          <path d="M 20 48 L 45 45" stroke="#6b6275" strokeWidth="0.8" />
+          <path d="M 20 48 L 45 45" stroke="var(--border)" strokeWidth="0.8" />
           {/* Karl-Marx-Allee */}
-          <path d="M 52 44 L 75 42" stroke="#6b6275" strokeWidth="0.8" />
+          <path d="M 52 44 L 75 42" stroke="var(--border)" strokeWidth="0.8" />
         </g>
 
         {/* District boundaries (subtle) */}
-        <g opacity="0.2" stroke="#8b7d8e" strokeWidth="0.3" fill="none" strokeDasharray="1 1">
+        <g opacity="0.2" stroke="var(--foreground-muted)" strokeWidth="0.3" fill="none" strokeDasharray="1 1">
           {/* Mitte boundary */}
           <path d="M 40 35 L 45 32 L 55 33 L 60 37 L 58 45 L 52 48 L 45 47 L 42 42 Z" />
           {/* Charlottenburg */}
@@ -187,7 +198,7 @@ const BerlinMapPreview: React.FC = () => {
                   y={marker.y - 8}
                   width="16"
                   height="6"
-                  fill="#2a2a2a"
+                  fill="var(--foreground)"
                   stroke={getMarkerColor(marker.state)}
                   strokeWidth="0.2"
                   rx="1"
@@ -211,20 +222,20 @@ const BerlinMapPreview: React.FC = () => {
 
         {/* Map controls indicator (like real map) */}
         <g transform="translate(5, 5)" opacity="0.8">
-          <rect width="12" height="8" fill="#3b3340" stroke="#6b6275" strokeWidth="0.2" />
-          <text x="6" y="4.5" textAnchor="middle" fill="#8b7d8e" fontSize="1.8" fontFamily="monospace">
+          <rect width="12" height="8" fill="var(--accent-navy)" stroke="var(--border)" strokeWidth="0.2" />
+          <text x="6" y="4.5" textAnchor="middle" fill="var(--foreground-muted)" fontSize="1.8" fontFamily="monospace">
             ZOOM
           </text>
         </g>
 
         {/* Time slider indicator */}
         <g transform="translate(5, 85)" opacity="0.8">
-          <rect width="90" height="4" fill="#3b3340" stroke="#6b6275" strokeWidth="0.2" />
-          <rect x="20" y="1" width="30" height="2" fill="#97d8c0" />
-          <circle cx="35" r="1.5" cy="2" fill="#97d8c0" />
-          <text x="2" y="3" fill="#8b7d8e" fontSize="1.5" fontFamily="monospace">1900</text>
-          <text x="88" y="3" fill="#8b7d8e" fontSize="1.5" fontFamily="monospace">1945</text>
-          <text x="35" y="-1" fill="#97d8c0" fontSize="1.8" fontFamily="monospace" textAnchor="middle">1933</text>
+          <rect width="90" height="4" fill="var(--accent-navy)" stroke="var(--border)" strokeWidth="0.2" />
+          <rect x="20" y="1" width="30" height="2" fill="var(--primary)" />
+          <circle cx="35" r="1.5" cy="2" fill="var(--primary)" />
+          <text x="2" y="3" fill="var(--foreground-muted)" fontSize="1.5" fontFamily="monospace">1900</text>
+          <text x="88" y="3" fill="var(--foreground-muted)" fontSize="1.5" fontFamily="monospace">1945</text>
+          <text x="35" y="-1" fill="var(--primary)" fontSize="1.8" fontFamily="monospace" textAnchor="middle">1933</text>
         </g>
       </svg>
 

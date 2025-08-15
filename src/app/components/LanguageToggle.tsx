@@ -10,22 +10,48 @@ const LanguageToggle: React.FC = () => {
     <div className="flex gap-2">
       <button
         onClick={() => language !== 'en' && toggleLanguage()}
-        className={`px-3 py-1.5 font-mono text-sm transition-colors duration-200 border ${
-          language === 'en' 
-            ? 'bg-[#97d8c0] text-[#2a2a2a] border-[#97d8c0]' 
-            : 'bg-[#6b6275] text-[#f5cdb4] border-[#8b7d8e] hover:bg-[#7a7184] hover:border-[#97d8c0]'
-        }`}
+        className={`px-3 py-1.5 font-mono text-sm transition-colors duration-200 border`}
+        style={{
+          backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--muted)',
+          color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
+          borderColor: language === 'en' ? 'var(--primary)' : 'var(--border)'
+        }}
+        onMouseEnter={(e) => {
+          if (language !== 'en') {
+            e.currentTarget.style.backgroundColor = 'var(--border)';
+            e.currentTarget.style.borderColor = 'var(--primary)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (language !== 'en') {
+            e.currentTarget.style.backgroundColor = 'var(--muted)';
+            e.currentTarget.style.borderColor = 'var(--border)';
+          }
+        }}
         aria-label="Switch to English"
       >
         EN
       </button>
       <button
         onClick={() => language !== 'de' && toggleLanguage()}
-        className={`px-3 py-1.5 font-mono text-sm transition-colors duration-200 border ${
-          language === 'de' 
-            ? 'bg-[#97d8c0] text-[#2a2a2a] border-[#97d8c0]' 
-            : 'bg-[#6b6275] text-[#f5cdb4] border-[#8b7d8e] hover:bg-[#7a7184] hover:border-[#97d8c0]'
-        }`}
+        className={`px-3 py-1.5 font-mono text-sm transition-colors duration-200 border`}
+        style={{
+          backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--muted)',
+          color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+          borderColor: language === 'de' ? 'var(--primary)' : 'var(--border)'
+        }}
+        onMouseEnter={(e) => {
+          if (language !== 'de') {
+            e.currentTarget.style.backgroundColor = 'var(--border)';
+            e.currentTarget.style.borderColor = 'var(--primary)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (language !== 'de') {
+            e.currentTarget.style.backgroundColor = 'var(--muted)';
+            e.currentTarget.style.borderColor = 'var(--border)';
+          }
+        }}
         aria-label="Switch to German"
       >
         DE

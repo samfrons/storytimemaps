@@ -137,8 +137,41 @@ The time-based state system is critical:
 4. **Performance first**: Use React.memo, useMemo, useCallback appropriately
 5. **No rounded corners**: Keep sharp edges unless explicitly requested
 
+## TypeScript and Library Compliance
+
+### CRITICAL: Always Ensure Code Quality
+1. **Run TypeScript checks** before completing any task:
+   - `pnpm run typecheck` or `npx tsc --noEmit`
+   - Fix ALL TypeScript errors - no `any` types unless absolutely necessary
+   - Properly type all props, state, and function parameters
+
+2. **Follow library rules strictly**:
+   - **React**: No direct DOM manipulation, use refs and state properly
+   - **Next.js**: 
+     - Use `'use client'` directive for client components
+     - Avoid hydration mismatches (no `typeof window` checks in initial render)
+     - Use CSS variables consistently between server and client
+   - **Mapbox GL**: Handle WebGL context properly, check for map readiness
+   - **Tailwind**: Use utility classes correctly, no conflicting styles
+
+3. **Common violations to avoid**:
+   - Conditional rendering that differs between server/client (hydration errors)
+   - Using browser-only APIs without proper checks
+   - Hardcoding values that should use CSS variables
+   - Missing error boundaries for async operations
+   - Incorrect hook dependencies in useEffect/useMemo/useCallback
+
+4. **Always validate**:
+   - Props match component interfaces
+   - Event handlers are properly typed
+   - Async operations have error handling
+   - CSS variables exist before using them
+
 ## Testing Checklist
 Before any commit, verify:
+- [ ] **No TypeScript errors** - run `pnpm run typecheck`
+- [ ] **No console errors** in browser
+- [ ] **No hydration warnings** in Next.js
 - [ ] No border-radius used anywhere
 - [ ] All colors use CSS variables (except Map API calls)
 - [ ] Components are memoized

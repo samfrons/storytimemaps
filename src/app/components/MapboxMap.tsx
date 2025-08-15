@@ -162,7 +162,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       case 'hot':
         return {
           active: '#e4525e',
-          declining: '#ff6600',
+          declining: '#ff8c00', // Orange to match the UI
           closed: '#cc0000',
           future: '#cccccc'
         }
@@ -368,10 +368,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             }
           case 'hot':
             return {
-              water: '#cc0000', // Deep blood red for water
-              park: '#ff6666', // Red for parks
-              road: '#ffcccc', // Very light red for roads
-              background: '#ff9999' // Red background
+              water: '#3d3d4e', // Dark gray/blue for water
+              park: '#7d2633', // Very dark red for parks
+              road: '#d4596a', // Light red/pink roads
+              background: '#8b2635' // Dark red background
             }
           case 'cold':
             return {
@@ -412,53 +412,53 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           // Water layers - Special handling for Bloody Water theme
           if (layer.id.includes('water') && layer.type === 'fill') {
             map.setPaintProperty(layer.id, 'fill-color', mapColors.water)
-            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 1 : theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 0.85 : theme === 'bauhaus' ? 0.4 : theme === 'cold' ? 0.5 : 0.8)
           }
           
           // Park/landuse layers - Light gray for hot theme
           if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
             map.setPaintProperty(layer.id, 'fill-color', mapColors.park)
-            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 0.9 : theme === 'bauhaus' ? 0.3 : theme === 'cold' ? 0.15 : 0.2)
+            map.setPaintProperty(layer.id, 'fill-opacity', theme === 'hot' ? 0.95 : theme === 'bauhaus' ? 0.3 : theme === 'cold' ? 0.15 : 0.2)
           }
           
-          // Special handling for hot theme - Bloody Water style with more red
+          // Special handling for hot theme - Dark red with dark water
           if (theme === 'hot') {
-            // Set all land-related layers to deeper pink/red
+            // Set all land-related layers to dark red
             if ((layer.id.includes('land') || layer.id.includes('background')) && layer.type === 'fill') {
-              map.setPaintProperty(layer.id, 'fill-color', '#ffcccc')
+              map.setPaintProperty(layer.id, 'fill-color', '#8b2635')
               map.setPaintProperty(layer.id, 'fill-opacity', 1)
             }
             
-            // Grass and nature areas in light red
+            // Grass and nature areas in very dark red
             if ((layer.id.includes('grass') || layer.id.includes('wood') || layer.id.includes('forest')) && layer.type === 'fill') {
-              map.setPaintProperty(layer.id, 'fill-color', '#ff9999')
-              map.setPaintProperty(layer.id, 'fill-opacity', 0.8)
+              map.setPaintProperty(layer.id, 'fill-color', '#7d2633')
+              map.setPaintProperty(layer.id, 'fill-opacity', 1)
             }
             
-            // Waterways in red
+            // Waterways in dark gray/blue
             if (layer.id.includes('waterway') && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#e4525e')
+              map.setPaintProperty(layer.id, 'line-color', '#3d3d4e')
               map.setPaintProperty(layer.id, 'line-width', 3)
               map.setPaintProperty(layer.id, 'line-opacity', 1)
             }
             
-            // Administrative boundaries in red
+            // Administrative boundaries in pink/light red
             if (layer.id.includes('admin') && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#ff6666')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.8)
-              map.setPaintProperty(layer.id, 'line-width', 2)
+              map.setPaintProperty(layer.id, 'line-color', '#e8919f')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.5)
+              map.setPaintProperty(layer.id, 'line-width', 1)
             }
             
-            // Railway lines in darker red
+            // Railway lines in light pink
             if ((layer.id.includes('rail') || layer.id.includes('transit')) && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#cc0000')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.9)
+              map.setPaintProperty(layer.id, 'line-color', '#d4596a')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.7)
             }
             
-            // Tunnels and bridges in red tones
+            // Tunnels and bridges in pink
             if ((layer.id.includes('tunnel') || layer.id.includes('bridge')) && layer.type === 'line') {
-              map.setPaintProperty(layer.id, 'line-color', '#ff3333')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.8)
+              map.setPaintProperty(layer.id, 'line-color', '#e8919f')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.6)
             }
             
             // Hide ALL text labels including street names
@@ -480,17 +480,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 map.setPaintProperty(layer.id, 'line-opacity', 0.6)
               }
             } else if (theme === 'hot') {
-              // Bloody Water theme - light pink/red roads
-              map.setPaintProperty(layer.id, 'line-color', '#ffdddd')
-              map.setPaintProperty(layer.id, 'line-opacity', 0.7)
+              // Dark theme - pink/light red roads
+              map.setPaintProperty(layer.id, 'line-color', '#e8919f')
+              map.setPaintProperty(layer.id, 'line-opacity', 0.8)
               if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
                 map.setPaintProperty(layer.id, 'line-width', 2)
-                map.setPaintProperty(layer.id, 'line-color', '#ff9999')
+                map.setPaintProperty(layer.id, 'line-color', '#f5b3bd')
               } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
                 map.setPaintProperty(layer.id, 'line-width', 1.5)
-                map.setPaintProperty(layer.id, 'line-color', '#ffbbbb')
+                map.setPaintProperty(layer.id, 'line-color', '#e8919f')
               } else {
                 map.setPaintProperty(layer.id, 'line-width', 1)
+                map.setPaintProperty(layer.id, 'line-color', '#d4596a')
               }
             } else if (theme === 'bauhaus') {
               // Bauhaus uses bold black lines
@@ -516,9 +517,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           // Building layers
           if (layer.id.includes('building') && layer.type === 'fill') {
             if (theme === 'hot') {
-              // Bloody Water theme - light pink buildings
-              map.setPaintProperty(layer.id, 'fill-color', '#ffcccc')
-              map.setPaintProperty(layer.id, 'fill-opacity', 0.6)
+              // Dark theme - darkest red buildings
+              map.setPaintProperty(layer.id, 'fill-color', '#5c1a23')
+              map.setPaintProperty(layer.id, 'fill-opacity', 1)
               // Building outlines in red
               if (layer.id.includes('outline')) {
                 map.setPaintProperty(layer.id, 'line-color', '#ff9999')
@@ -880,10 +881,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     }
                   case 'hot':
                     return {
-                      water: '#e4525e',
-                      park: '#ededed',
-                      road: '#e4525e',
-                      background: '#f2f2f2'
+                      water: '#3d3d4e',
+                      park: '#7d2633',
+                      road: '#d4596a',
+                      background: '#8b2635'
                     }
                   case 'cold':
                     return {
@@ -1097,7 +1098,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomIn()
           }}
-          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border"
+          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border zoom-button"
           style={{
             backgroundColor: 'rgba(var(--muted-rgb), 0.8)',
             borderColor: 'var(--border)',
@@ -1113,7 +1114,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomOut()
           }}
-          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border"
+          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border zoom-button"
           style={{
             backgroundColor: 'rgba(var(--muted-rgb), 0.8)',
             borderColor: 'var(--border)',

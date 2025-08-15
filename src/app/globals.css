@@ -117,8 +117,8 @@
   --primary-rgb: 228, 82, 94;
   --primary-light: #ff6666;
   --secondary: #ffffff;
-  --warning: #ffffff; /* White for visibility on red background */
-  --warning-rgb: 255, 255, 255;
+  --warning: #ff8c00; /* Orange for declining state - matches popup */
+  --warning-rgb: 255, 140, 0;
   --danger: #cc0000;
   --danger-rgb: 204, 0, 0;
   --success: #ff9500;
@@ -132,7 +132,7 @@
   --border: #ff8a95; /* Lighter red for borders */
   --shadow: rgba(139, 0, 0, 0.3);
   --map-overlay: rgba(228, 82, 94, 0.1);
-  --accent-orange: #ffffff; /* White for dates in hot theme */
+  --accent-orange: #8b2635; /* Dark red for dates in hot theme */
   --accent-yellow: #ffc107;
   --accent-purple: #ffffff;
   --accent-coral: #f44336;
@@ -691,6 +691,18 @@ textarea:-ms-input-placeholder {
   background-color: rgba(255, 255, 255, 0.2) !important;
   color: #ffffff !important;
   border-left-color: #ffffff !important;
+}
+
+/* Hot theme zoom buttons */
+[data-theme="hot"] .zoom-button {
+  background-color: rgba(139, 38, 53, 0.9) !important;
+  border-color: #d4596a !important;
+  color: #5c1a23 !important;
+}
+
+[data-theme="hot"] .zoom-button:hover {
+  background-color: rgba(125, 38, 51, 1) !important;
+  color: #3d3d4e !important;
 }
 
 .mapbox-cluster-marker {

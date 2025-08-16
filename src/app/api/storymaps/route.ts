@@ -70,8 +70,8 @@ export async function GET(request: NextRequest) {
     // Get paginated data
     const paginatedData = storyMaps.slice(startIndex, endIndex);
     
-    // Return paginated response with metadata
-    return NextResponse.json({
+    // Prepare response data
+    const responseData = {
       data: paginatedData,
       metadata: {
         page,
@@ -81,7 +81,15 @@ export async function GET(request: NextRequest) {
         hasNextPage: page < totalPages,
         hasPreviousPage: page > 1
       }
-    });
+    };
+    
+    // Add cache headers for better performance
+    const headers = {
+      'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
+      'Vary': 'Accept-Encoding'
+    };
+    
+    return NextResponse.json(responseData, { headers });
   } catch (error) {
     console.error('Error in GET /api/storymaps:', error);
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {

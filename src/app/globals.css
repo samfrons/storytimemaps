@@ -323,38 +323,38 @@
   border-right-color: rgba(238, 87, 96, 0.98) !important;
 }
 
-/* Import premium typography - Modern, clean fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Bebas+Neue&family=Oswald:wght@700&display=swap');
+/* 
+REMOVED: Google Fonts CSS import for performance optimization
+Critical fonts (Inter, Space Mono) are now loaded via Next.js font optimization in layout.tsx
+Additional fonts loaded dynamically only when needed to prevent render blocking
+*/
 
-/* Custom font face for Kame Poster fonts */
+/* Optimized custom font face declarations with better fallbacks */
 @font-face {
   font-family: 'Kame Poster';
-  src: url('/fonts/Kame Poster Black.woff2') format('woff2'),
-       url('/fonts/Kame Poster Black.woff') format('woff'),
-       url('/fonts/Kame Poster Black.ttf') format('truetype');
+  src: url('/fonts/Kame Poster Black.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF; /* Latin + Latin-1 Supplement */
 }
 
 @font-face {
   font-family: 'Kame Poster';
-  src: url('/fonts/Kame Poster Regular.woff2') format('woff2'),
-       url('/fonts/Kame Poster Regular.woff') format('woff'),
-       url('/fonts/Kame Poster Regular.ttf') format('truetype');
+  src: url('/fonts/Kame Poster Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF; /* Latin + Latin-1 Supplement */
 }
 
 @font-face {
   font-family: 'Kame Book';
-  src: url('/fonts/Kame Book.woff2') format('woff2'),
-       url('/fonts/Kame Book.woff') format('woff'),
-       url('/fonts/Kame Book.ttf') format('truetype');
+  src: url('/fonts/Kame Book.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF; /* Latin + Latin-1 Supplement */
 }
 
 body {
@@ -366,6 +366,59 @@ body {
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent text size adjustment on mobile */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Mobile-specific performance optimizations */
+@media (max-width: 768px) {
+  /* Optimize touch interactions */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    touch-action: manipulation; /* Faster touch response */
+  }
+  
+  /* Enable hardware acceleration for scrolling */
+  .overflow-y-auto,
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+  }
+  
+  /* Reduce animation complexity on mobile */
+  .transition-all {
+    transition-property: transform, opacity;
+    transition-duration: 200ms;
+  }
+  
+  /* Optimize map container for mobile */
+  .mapboxgl-canvas {
+    will-change: transform;
+  }
+  
+  /* Reduce shadow complexity on mobile */
+  .shadow-lg {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Font optimizations for mobile */
+  body {
+    font-size: 13px; /* Slightly smaller on mobile */
+  }
+  
+  /* Disable animations for low-end devices */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 /* Remove default blue focus outlines globally */
@@ -416,28 +469,31 @@ textarea:-ms-input-placeholder {
   opacity: 0.8 !important;
 }
 
-/* Kame Poster style class */
+/* Optimized Kame font classes with better fallback strategies */
 .font-kame {
-  font-family: 'Kame Poster', 'Impact', sans-serif;
+  font-family: 'Kame Poster', 'Impact', 'Arial Black', system-ui, sans-serif;
   font-weight: 900;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 0.9;
+  font-display: swap;
 }
 
 .font-kame-regular {
-  font-family: 'Kame Poster', 'Impact', sans-serif;
+  font-family: 'Kame Poster', 'Impact', 'Arial Black', system-ui, sans-serif;
   font-weight: 400;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 0.9;
+  font-display: swap;
 }
 
 .font-kame-book {
-  font-family: 'Kame Book', 'Helvetica', sans-serif;
+  font-family: 'Kame Book', 'Helvetica Neue', 'Helvetica', system-ui, sans-serif;
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.1;
+  font-display: swap;
 }
 
 @layer utilities {
@@ -445,18 +501,18 @@ textarea:-ms-input-placeholder {
     text-wrap: balance;
   }
   
-  /* Modern Typography Classes */
+  /* Optimized Typography Classes - using system fonts for performance */
   .font-display {
-    font-family: 'Syne', 'Inter', sans-serif;
+    font-family: var(--font-inter), system-ui, sans-serif;
     font-weight: 600;
   }
   
   .font-serif {
-    font-family: 'Newsreader', Georgia, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
   
   .font-mono-modern {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-family: var(--font-space-mono), 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   }
   
   /* Text effects */

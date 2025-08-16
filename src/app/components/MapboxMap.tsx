@@ -5,6 +5,7 @@ import Map, { Marker, NavigationControl, Popup } from 'react-map-gl/mapbox'
 import Supercluster from 'supercluster'
 import { useTheme } from 'next-themes'
 import mapboxgl from 'mapbox-gl'
+import { useMobileOptimizations } from '../../hooks/useMobileOptimizations'
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
@@ -270,14 +271,17 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     return 150
   }
   
-  // Initialize Supercluster for clustering with better settings for 4000 markers
+  // Get mobile optimizations
+  const { isMobile, settings } = useMobileOptimizations();
+  
+  // Initialize Supercluster for clustering with optimized settings for large datasets
   const supercluster = useMemo(() => {
     const index = new Supercluster({
-      radius: 50,  // Balanced clustering
-      maxZoom: 18,  // Allow unclustering only at very high zoom
-      minPoints: 2,
-      extent: 512,  // Larger tile extent for better performance
-      nodeSize: 64  // Optimize KD-tree node size
+      radius: settings.clusterRadius,  // Device-optimized clustering
+      maxZoom: isMobile ? 14 : 16,  // Less zoom levels on mobile
+      minPoints: isMobile ? 5 : 3,  // More aggressive clustering on mobile
+      extent: isMobile ? 256 : 512,  // Smaller tiles on mobile
+      nodeSize: isMobile ? 64 : 32  // Optimized for device capability
     })
 
     if (markers.length > 0) {
@@ -297,11 +301,21 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [markers])
+  }, [markers, isMobile, settings.clusterRadius])
 
-  // Pre-compute initial markers for fallback
+  // Pre-compute initial markers for fallback with spatial distribution
   const initialMarkers = useMemo(() => {
-    return markers.slice(0, 40).map(marker => ({
+    if (!markers.length) return []
+    
+    // Take every 10th marker for better spatial distribution than just first 40
+    const step = Math.max(1, Math.floor(markers.length / 30))
+    const selectedMarkers = []
+    
+    for (let i = 0; i < markers.length && selectedMarkers.length < 30; i += step) {
+      selectedMarkers.push(markers[i])
+    }
+    
+    return selectedMarkers.map(marker => ({
       type: 'Feature' as const,
       properties: {
         id: marker.id,
@@ -315,21 +329,31 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }))
   }, [markers])
 
+  // Throttled viewport bounds for better performance
+  const [throttledViewport, setThrottledViewport] = useState({ zoom: viewState.zoom, bounds: null as mapboxgl.LngLatBounds | null })
+  
+  useEffect(() => {
+    const throttleTimer = setTimeout(() => {
+      if (mapRef.current && mapLoaded) {
+        const bounds = mapRef.current.getBounds()
+        setThrottledViewport({ zoom: Math.floor(viewState.zoom), bounds })
+      }
+    }, 150) // Throttle viewport updates to 150ms
+    
+    return () => clearTimeout(throttleTimer)
+  }, [viewState.zoom, mapLoaded])
+
   // Get clusters for current viewport with optimized recalculation and viewport culling
   const clusters = useMemo(() => {
     // Always return initial markers if map is not ready
-    if (!mapLoaded || !mapRef.current) {
-      return initialMarkers
-    }
-    
-    const bounds = mapRef.current.getBounds()
-    if (!bounds) {
+    if (!mapLoaded || !throttledViewport.bounds) {
       return initialMarkers
     }
     
     try {
       // Add buffer to viewport for smooth panning
       const buffer = 0.1  // 10% buffer around viewport
+      const bounds = throttledViewport.bounds
       const width = bounds.getEast() - bounds.getWest()
       const height = bounds.getNorth() - bounds.getSouth()
       
@@ -340,55 +364,67 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         bounds.getNorth() + (height * buffer)
       ]
       
-      const clusteredMarkers = supercluster.getClusters(bbox, Math.floor(viewState.zoom))
+      const clusteredMarkers = supercluster.getClusters(bbox, throttledViewport.zoom)
       
-      // Let supercluster handle the clustering naturally
-      // Only apply viewport culling, not artificial limits
+      // Device-optimized marker limiting for better mobile performance
+      const baseMax = settings.maxMarkers
+      const zoomLevel = throttledViewport.zoom
+      let maxMarkers = baseMax
       
-      return clusteredMarkers.length > 0 ? clusteredMarkers : initialMarkers
+      if (isMobile) {
+        // More aggressive limiting on mobile for better performance
+        maxMarkers = zoomLevel > 15 ? Math.min(100, baseMax) : 
+                     zoomLevel > 12 ? Math.min(50, baseMax * 0.5) : 
+                     Math.min(30, baseMax * 0.3)
+      } else {
+        // Desktop scaling
+        maxMarkers = zoomLevel > 15 ? 200 : zoomLevel > 12 ? 100 : 50
+      }
+      
+      const limitedMarkers = clusteredMarkers.slice(0, maxMarkers)
+      
+      return limitedMarkers.length > 0 ? limitedMarkers : initialMarkers.slice(0, 20)
     } catch (error) {
       console.warn('Error getting clusters:', error)
-      return initialMarkers
+      return initialMarkers.slice(0, 20)
     }
-  }, [supercluster, viewState.zoom, mapLoaded, initialMarkers])
+  }, [supercluster, throttledViewport, mapLoaded, initialMarkers, isMobile, settings.maxMarkers])
   
-  // Update label priorities when viewport changes
+  // Update label priorities when viewport changes - throttled for performance
   useEffect(() => {
     if (!mapLoaded || !clusters) return
     
-    const maxLabels = getMaxLabels(viewState.zoom)
-    const nonClusteredMarkers = clusters.filter(c => !('cluster' in (c.properties || {})))
-    
-    // Prioritize markers: active first, then spatially distributed
-    const priorities = new Set<string>()
-    
-    // Always show active and hovered markers
-    if (activeMarkerId) {
-      priorities.add(activeMarkerId)
-    }
-    if (hoveredMarkerId) {
-      priorities.add(hoveredMarkerId)
-    }
-    
-    // Add spatially distributed markers up to limit
-    // Simple spatial distribution: sort by position and take evenly spaced ones
-    const sorted = [...nonClusteredMarkers]
-      .filter(m => m.properties?.id)
-      .sort((a, b) => {
-        const [aLng, aLat] = a.geometry.coordinates
-        const [bLng, bLat] = b.geometry.coordinates
-        return (aLng + aLat) - (bLng + bLat)
-      })
-    
-    const step = Math.max(1, Math.floor(sorted.length / (maxLabels - priorities.size)))
-    for (let i = 0; i < sorted.length && priorities.size < maxLabels; i += step) {
-      if (sorted[i].properties?.id) {
-        priorities.add(sorted[i].properties.id)
+    const updatePriorities = () => {
+      const maxLabels = getMaxLabels(throttledViewport.zoom)
+      const nonClusteredMarkers = clusters.filter(c => !('cluster' in (c.properties || {})))
+      
+      // Prioritize markers: active first, then spatially distributed
+      const priorities = new Set<string>()
+      
+      // Always show active and hovered markers
+      if (activeMarkerId) {
+        priorities.add(activeMarkerId)
       }
+      if (hoveredMarkerId) {
+        priorities.add(hoveredMarkerId)
+      }
+      
+      // Add spatially distributed markers up to limit - simplified calculation
+      const step = Math.max(2, Math.floor(nonClusteredMarkers.length / (maxLabels - priorities.size)))
+      for (let i = 0; i < nonClusteredMarkers.length && priorities.size < maxLabels; i += step) {
+        const marker = nonClusteredMarkers[i]
+        if (marker?.properties?.id) {
+          priorities.add(marker.properties.id)
+        }
+      }
+      
+      setLabelPriorities(priorities)
     }
     
-    setLabelPriorities(priorities)
-  }, [viewState.zoom, clusters, activeMarkerId, hoveredMarkerId, mapLoaded])
+    // Debounce priority updates
+    const debounceTimer = setTimeout(updatePriorities, 200)
+    return () => clearTimeout(debounceTimer)
+  }, [throttledViewport.zoom, clusters, activeMarkerId, hoveredMarkerId, mapLoaded])
 
   // Focus on active marker and open popup when list item is clicked
   useEffect(() => {
@@ -419,13 +455,13 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }, [activeMarkerId, markers, enrichedStories])
 
 
-  // Enhanced WebGL-synchronized theme application
+  // Optimized theme application with reduced WebGL operations
   const applyThemeStyles = useCallback((map: mapboxgl.Map, forceRender = false) => {
     // Hot theme and Bauhaus use complete custom styles, no additional styling needed
     if (theme === 'hot' || theme === 'bauhaus') {
       if (forceRender) {
-        // Force WebGL render cycle for custom themes
-        map.triggerRepaint()
+        // Single render cycle for custom themes
+        requestAnimationFrame(() => map.triggerRepaint())
       }
       return
     }
@@ -557,61 +593,38 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       })
       
-      // Force WebGL render cycle after style changes
+      // Optimized WebGL render cycle after style changes
       if (styleChangesApplied || forceRender) {
-        // Multiple render triggers to ensure WebGL synchronization
-        map.triggerRepaint()
-        
-        // Force symbol layer update multiple times to ensure labels render
-        const updateSymbolLayers = () => {
-          if (!map.isStyleLoaded()) return
-          const style = map.getStyle()
-          if (style && style.layers) {
-            let textColor = '#f5cdb4'
-            let haloColor = '#3b3340'
-            
-            if (typeof window !== 'undefined') {
-              const computedStyle = getComputedStyle(document.documentElement)
-              textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
-              haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
-            }
-            
-            style.layers.forEach(layer => {
-              if (layer.type === 'symbol') {
-                try {
-                  map.setPaintProperty(layer.id, 'text-color', textColor)
-                  map.setPaintProperty(layer.id, 'text-halo-color', haloColor)
-                  map.setPaintProperty(layer.id, 'text-halo-width', 1)
-                } catch (e) {
-                  // Ignore errors for layers that don't support these properties
-                }
-              }
-            })
-            map.triggerRepaint()
-          }
-        }
-        
-        // Apply symbol updates immediately
-        updateSymbolLayers()
-        
-        // Then again after idle for safety
-        map.once('idle', () => {
-          updateSymbolLayers()
-        })
-        
-        // And once more after a delay to catch any late-loading labels
-        setTimeout(() => {
-          updateSymbolLayers()
-        }, 200)
-        
-        // Additional render force using requestAnimationFrame for better timing
+        // Single batched render operation
         requestAnimationFrame(() => {
-          map.triggerRepaint()
-          
-          // Final render after a slight delay to ensure all WebGL operations complete
-          setTimeout(() => {
+          if (map.isStyleLoaded()) {
             map.triggerRepaint()
-          }, 16) // ~1 frame at 60fps
+            
+            // Update symbol layers only once after render
+            const style = map.getStyle()
+            if (style && style.layers) {
+              let textColor = '#f5cdb4'
+              let haloColor = '#3b3340'
+              
+              if (typeof window !== 'undefined') {
+                const computedStyle = getComputedStyle(document.documentElement)
+                textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
+                haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
+              }
+              
+              style.layers.forEach(layer => {
+                if (layer.type === 'symbol') {
+                  try {
+                    map.setPaintProperty(layer.id, 'text-color', textColor)
+                    map.setPaintProperty(layer.id, 'text-halo-color', haloColor)
+                    map.setPaintProperty(layer.id, 'text-halo-width', 1)
+                  } catch (e) {
+                    // Ignore errors for layers that don't support these properties
+                  }
+                }
+              })
+            }
+          }
         })
       }
     } catch (e) {
@@ -1309,13 +1322,37 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 }
 
 export default React.memo(MapboxMap, (prevProps, nextProps) => {
-  return (
-    prevProps.center[0] === nextProps.center[0] &&
-    prevProps.center[1] === nextProps.center[1] &&
-    prevProps.zoom === nextProps.zoom &&
-    prevProps.activeMarkerId === nextProps.activeMarkerId &&
-    prevProps.currentDate?.getTime() === nextProps.currentDate?.getTime() &&
-    JSON.stringify(prevProps.markers) === JSON.stringify(nextProps.markers) &&
-    JSON.stringify(prevProps.enrichedStories) === JSON.stringify(nextProps.enrichedStories)
-  )
+  // Quick checks first
+  if (prevProps.center[0] !== nextProps.center[0] || 
+      prevProps.center[1] !== nextProps.center[1] ||
+      prevProps.zoom !== nextProps.zoom ||
+      prevProps.activeMarkerId !== nextProps.activeMarkerId) {
+    return false
+  }
+  
+  // Date comparison
+  const prevTime = prevProps.currentDate?.getTime() || 0
+  const nextTime = nextProps.currentDate?.getTime() || 0
+  if (prevTime !== nextTime) {
+    return false
+  }
+  
+  // Array length checks before deep comparison
+  if (prevProps.markers?.length !== nextProps.markers?.length ||
+      prevProps.enrichedStories?.length !== nextProps.enrichedStories?.length) {
+    return false
+  }
+  
+  // Only do expensive comparison if lengths are the same and small
+  if (prevProps.markers && nextProps.markers && prevProps.markers.length < 100) {
+    // Shallow comparison for small arrays
+    for (let i = 0; i < prevProps.markers.length; i++) {
+      if (prevProps.markers[i]?.id !== nextProps.markers[i]?.id ||
+          prevProps.markers[i]?.state !== nextProps.markers[i]?.state) {
+        return false
+      }
+    }
+  }
+  
+  return true
 })

@@ -91,7 +91,14 @@ export async function GET() {
     if (!metadata) {
       return NextResponse.json({ error: 'Could not load metadata' }, { status: 500 });
     }
-    return NextResponse.json(metadata);
+    
+    // Add cache headers for better performance
+    const headers = {
+      'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400', // Cache for 1 hour
+      'Vary': 'Accept-Encoding'
+    };
+    
+    return NextResponse.json(metadata, { headers });
   } catch (error) {
     console.error('Error in GET /api/storymaps/metadata:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

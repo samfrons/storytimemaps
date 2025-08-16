@@ -104,23 +104,25 @@ function MapPage() {
     handleMarkerClick(storyId);
   };
 
-  const handleThemeSwitch = (newTheme: string) => {
+  const handleThemeSwitch = useCallback((newTheme: string) => {
     if (!mounted) return;
     setShowThemeMenu(false);
-    // Update URL and theme
-    updateURLParams({ theme: newTheme });
-    setTheme(newTheme);
-  };
+    // Update URL and theme - batched for better performance
+    requestAnimationFrame(() => {
+      updateURLParams({ theme: newTheme });
+      setTheme(newTheme);
+    });
+  }, [mounted, updateURLParams, setTheme]);
 
-  const handleLetsGo = () => {
+  const handleLetsGo = useCallback(() => {
     setShowIntro(false);
     // Remember that intro has been seen in this session
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('introSeen', 'true');
     }
-  };
+  }, []);
 
-  const toggleInfo = () => {
+  const toggleInfo = useCallback(() => {
     const newShowInfo = !showInfo;
     setShowInfo(newShowInfo);
     updateURLParams({ about: newShowInfo });
@@ -132,9 +134,9 @@ function MapPage() {
         sessionStorage.setItem('introSeen', 'true');
       }
     }
-  };
+  }, [showInfo, showIntro, updateURLParams]);
 
-  const goHome = () => {
+  const goHome = useCallback(() => {
     // Navigate to root URL with moody theme
     router.push('/?theme=moody');
     setShowIntro(true);
@@ -143,13 +145,15 @@ function MapPage() {
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('introSeen');
     }
-  };
+  }, [router]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
-      {/* Show loading skeleton while data is loading */}
+      {/* Show loading skeleton while data is loading - prevent layout shift */}
       {isLoading ? (
-        <LoadingSkeleton />
+        <div className="loading-skeleton">
+          <LoadingSkeleton />
+        </div>
       ) : (
       /* Main Layout with Sidebar, StoryList and Map */
       <div className="flex flex-col md:flex-row h-screen">
@@ -422,15 +426,15 @@ function MapPage() {
           backgroundColor: 'rgba(var(--background-rgb), 0.98)'
         }}
       >
-        {/* Animated Map Background with Ken Burns Effect */}
+        {/* Animated Map Background with Ken Burns Effect - Lazy loaded */}
         <div className="absolute inset-0 opacity-20">
           <div 
             className="absolute w-[200%] h-[200%] -top-[50%] -left-[50%]"
             style={{
-              backgroundImage: `url('/berlin-map.png')`,
+              backgroundImage: showIntro ? `url('/berlin-map.png')` : 'none',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              animation: 'kenBurns 30s ease-in-out infinite alternate',
+              animation: showIntro ? 'kenBurns 30s ease-in-out infinite alternate' : 'none',
               filter: 'contrast(1.2) brightness(0.9)'
             }}
           />
@@ -512,15 +516,15 @@ function MapPage() {
           backgroundColor: 'rgba(var(--background-rgb), 0.98)'
         }}
       >
-        {/* Animated Map Background with Ken Burns Effect */}
+        {/* Animated Map Background with Ken Burns Effect - Lazy loaded */}
         <div className="absolute inset-0 opacity-15">
           <div 
             className="absolute w-[200%] h-[200%] -top-[50%] -right-[50%]"
             style={{
-              backgroundImage: `url('/berlin-map.png')`,
+              backgroundImage: showInfo ? `url('/berlin-map.png')` : 'none',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              animation: 'kenBurnsReverse 25s ease-in-out infinite alternate',
+              animation: showInfo ? 'kenBurnsReverse 25s ease-in-out infinite alternate' : 'none',
               filter: 'contrast(1.2) brightness(0.9)'
             }}
           />

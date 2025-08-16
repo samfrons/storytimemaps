@@ -27,8 +27,15 @@ export const metadata: Metadata = {
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#4a4a57' }
   ],
-  viewport: 'width=device-width, initial-scale=1',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes',
   colorScheme: 'dark light',
+  other: {
+    'dns-prefetch': '//api.mapbox.com',
+    'preconnect': 'https://api.mapbox.com',
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+  }
 }
 
 export default function RootLayout({
@@ -38,6 +45,100 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceMono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="//api.mapbox.com" />
+        <link rel="dns-prefetch" href="//events.mapbox.com" />
+        <link rel="dns-prefetch" href="//tiles.mapbox.com" />
+        
+        {/* Preconnect to critical origins */}
+        <link rel="preconnect" href="https://api.mapbox.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://events.mapbox.com" crossOrigin="anonymous" />
+        
+        {/* Preload critical custom fonts */}
+        <link
+          rel="preload"
+          href="/fonts/Kame Poster Black.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Kame Book.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        
+        {/* Preload critical resources */}
+        <link 
+          rel="preload" 
+          href="/api/storymaps/metadata" 
+          as="fetch" 
+          crossOrigin="anonymous" 
+        />
+        
+        {/* Preload critical background image only when needed */}
+        <link 
+          rel="prefetch" 
+          href="/berlin-map.png" 
+          as="image"
+        />
+        
+        {/* Resource hints for better performance */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
+        {/* Mobile-specific optimizations */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+        
+        {/* Disable tap highlight on mobile for better performance */}
+        <style>{`
+          @media (max-width: 768px) {
+            * {
+              -webkit-tap-highlight-color: transparent;
+              -webkit-touch-callout: none;
+            }
+            
+            /* Optimize scrolling performance on mobile */
+            .overflow-y-auto {
+              -webkit-overflow-scrolling: touch;
+              overflow-scrolling: touch;
+            }
+            
+            /* Prevent layout shifts during font loading */
+            body {
+              font-display: swap;
+            }
+            
+            /* Reduce animations on mobile for better performance */
+            @media (prefers-reduced-motion: reduce) {
+              *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+              }
+            }
+            
+            /* Prevent layout shifts from loading states */
+            .loading-skeleton {
+              min-height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            
+            /* Optimize input responsiveness for better FID/INP */
+            input, button, select, textarea {
+              touch-action: manipulation;
+            }
+          }
+        `}</style>
+      </head>
       <body className="font-sans">
         <ThemeProvider
           attribute="data-theme"

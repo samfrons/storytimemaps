@@ -867,7 +867,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     } catch (e) {
       console.warn('Error updating map theme:', e)
     }
-  }, [theme, colors])
+  }, [theme])
 
   // Re-apply theme colors when theme changes with WebGL synchronization
   useEffect(() => {

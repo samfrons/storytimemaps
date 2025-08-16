@@ -3,41 +3,45 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { StoryMap } from '../types';
 
-interface JewishBusiness {
-  name: string;
-  business_type: string;
-  category: string;
-  address: string;
-  registration_date: string;
-  liquidation_date: string;
-  takeover_date: string;
-}
+// Keeping for future use when integrating Jewish business data
+// interface JewishBusiness {
+//   name: string;
+//   business_type: string;
+//   category: string;
+//   address: string;
+//   registration_date: string;
+//   liquidation_date: string;
+//   takeover_date: string;
+// }
 
-interface BusinessFeature {
-  type: 'Feature';
-  geometry: {
-    type: 'Point';
-    coordinates: [number, number];
-  };
-  properties: JewishBusiness;
-}
+// Keeping for future use when integrating GeoJSON data
+// interface BusinessFeature {
+//   type: 'Feature';
+//   geometry: {
+//     type: 'Point';
+//     coordinates: [number, number];
+//   };
+//   properties: JewishBusiness;
+// }
 
-interface PaginatedResponse {
-  data: StoryMap[];
-  metadata: {
-    page: number;
-    pageSize: number;
-    totalItems: number;
-    totalPages: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  };
-}
+// Keeping for future use when pagination is needed
+// interface PaginatedResponse {
+//   data: StoryMap[];
+//   metadata: {
+//     page: number;
+//     pageSize: number;
+//     totalItems: number;
+//     totalPages: number;
+//     hasNextPage: boolean;
+//     hasPreviousPage: boolean;
+//   };
+// }
 
 // Marker interface moved inline as needed
 
 export const useStoryMapLogicTest = () => {
-  const [jewishBusinesses, setJewishBusinesses] = useState<BusinessFeature[]>([]);
+  // Keeping for future use when Jewish businesses data is integrated
+  // const [jewishBusinesses, setJewishBusinesses] = useState<BusinessFeature[]>([]);
   const [enrichedStories, setEnrichedStories] = useState<StoryMap[]>([]);
   const [visibleStories, setVisibleStories] = useState<StoryMap[]>([]);
   const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
@@ -95,6 +99,8 @@ export const useStoryMapLogicTest = () => {
   // Filter stories based on current date
   const filterStoriesByDate = useCallback((stories: StoryMap[], date: Date) => {
     return stories.filter(story => {
+      // Handle null startDate
+      if (!story.startDate) return false;
       const startDate = new Date(story.startDate);
       const endDate = story.endDate ? new Date(story.endDate) : new Date('1945-12-31');
       
@@ -112,18 +118,15 @@ export const useStoryMapLogicTest = () => {
 
   // Create test markers from visible stories
   const testMarkers = useMemo(() => {
-    return visibleStories.map((story, index) => ({
+    return visibleStories.map((story) => ({
       id: story.id,
       position: [story.lat, story.lng] as [number, number],
-      title: story.title,
-      description: story.description,
-      author: story.author,
-      address: story.address,
-      startDate: story.startDate,
-      endDate: story.endDate,
-      category: story.category,
-      state: story.state || 'active',
-      index
+      popup: story.title, // Add popup property for MapboxMap compatibility
+      state: 'active', // Default state since StoryMap doesn't have state property
+      // Convert null to undefined for type compatibility
+      description: story.description ?? undefined,
+      startDate: story.startDate ?? undefined,
+      endDate: story.endDate ?? undefined
     }));
   }, [visibleStories]);
 

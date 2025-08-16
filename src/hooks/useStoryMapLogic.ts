@@ -35,30 +35,38 @@ export const useStoryMapLogic = () => {
   const [maxDate] = useState<Date>(new Date('1945-12-31'));
 
   useEffect(() => {
-    // Fetch Jewish businesses data as the primary data source
-    const fetchJewishBusinesses = async () => {
-      try {
-        const data = await fetchWithCache('/jewish_businesses.geojson');
-        setJewishBusinesses(data.features || []);
-      } catch (error) {
-        console.error('Error fetching Jewish businesses:', error);
-      }
-    };
-    
-    // Fetch enriched story data (with additional text, images, etc.)
+    // Only fetch from API - no duplicate GeoJSON loading
     const fetchEnrichedStories = async () => {
       try {
         const data = await fetchWithCache('/api/storymaps');
         setEnrichedStories(data);
+        
+        // Convert API data to GeoJSON format for compatibility
+        const geoFeatures = data.map((story: StoryMap) => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [story.lng || 13.405, story.lat || 52.52]
+          },
+          properties: {
+            name: story.title,
+            business_type: story.businessType,
+            category: story.category,
+            address: story.address,
+            registration_date: story.startDate,
+            liquidation_date: story.endDate,
+            takeover_date: story.midDate
+          }
+        }));
+        setJewishBusinesses(geoFeatures);
       } catch (error) {
-        console.error('Error fetching enriched stories:', error);
-        // Fallback to empty array if API fails
+        console.error('Error fetching stories:', error);
         setEnrichedStories([]);
+        setJewishBusinesses([]);
       }
     };
     
-    // Fetch both in parallel
-    Promise.all([fetchJewishBusinesses(), fetchEnrichedStories()]);
+    fetchEnrichedStories();
   }, []);
 
   // Function to extract business type from story title

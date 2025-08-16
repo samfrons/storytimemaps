@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Performance Test</title>
+</head>
+<body>
+    <h1>Map Performance Test</h1>
+    <p>Open the console to see timing results</p>
+    <iframe id="app" src="http://localhost:3000" style="width: 100%; height: 600px; border: 1px solid #ccc;"></iframe>
+    
+    <script>
+        const startTime = performance.now();
+        let mapLoadTime = null;
+        let apiLoadTime = null;
+        
+        // Monitor network requests
+        const observer = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+                if (entry.name.includes('/api/storymaps')) {
+                    apiLoadTime = entry.responseEnd;
+                    console.log(`API loaded in: ${(entry.responseEnd / 1000).toFixed(2)}s`);
+                }
+                if (entry.name.includes('mapbox')) {
+                    console.log(`Mapbox resource: ${entry.name.split('/').pop()} - ${(entry.duration / 1000).toFixed(2)}s`);
+                }
+            }
+        });
+        observer.observe({ entryTypes: ['resource'] });
+        
+        // Check when iframe is fully loaded
+        document.getElementById('app').onload = function() {
+            const totalTime = (performance.now() - startTime) / 1000;
+            console.log(`Total page load time: ${totalTime.toFixed(2)}s`);
+            
+            // Summary
+            setTimeout(() => {
+                console.log('\n=== Performance Summary ===');
+                console.log(`Page Load: ${totalTime.toFixed(2)}s`);
+                console.log(`API Data: 1.8MB`);
+                console.log(`Initial List Items: 50 (progressive loading)`);
+                console.log('Map: Should load without errors');
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

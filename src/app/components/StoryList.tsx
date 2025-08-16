@@ -442,6 +442,30 @@ const StoryList: React.FC<StoryListProps> = ({
           {allFilteredStories.length} locations found {displayCount < allFilteredStories.length && `(showing ${displayCount})`}
         </div>
         
+        {/* Background loading indicator */}
+        {displayCount < allFilteredStories.length && (
+          <div className="mb-3 px-2">
+            <div className="relative h-1 bg-gray-200 dark:bg-gray-700 overflow-hidden">
+              <div 
+                className="absolute left-0 top-0 h-full transition-all duration-500"
+                style={{
+                  width: `${(displayCount / allFilteredStories.length) * 100}%`,
+                  backgroundColor: 'var(--primary)'
+                }}
+              />
+              <div 
+                className="absolute left-0 top-0 h-full animate-pulse"
+                style={{
+                  width: '100%',
+                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                  animation: 'shimmer 2s infinite'
+                }}
+              />
+            </div>
+            <p className="text-[10px] font-mono mt-1 opacity-60">Loading more...</p>
+          </div>
+        )}
+        
         {filteredStories.map((story) => (
           <div 
             key={story.id}
@@ -575,28 +599,6 @@ const StoryList: React.FC<StoryListProps> = ({
           </div>
         ))}
         
-        {/* Load More Button */}
-        {displayCount < allFilteredStories.length && (
-          <div className="p-4 text-center">
-            <button
-              onClick={loadMore}
-              className="px-4 py-2 text-xs font-mono uppercase tracking-wide border transition-all"
-              style={{
-                borderColor: 'var(--muted)',
-                color: 'var(--foreground)',
-                backgroundColor: 'var(--background)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--muted)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--background)';
-              }}
-            >
-              Load More ({allFilteredStories.length - displayCount} remaining)
-            </button>
-          </div>
-        )}
       </div>
       
       {/* Business Detail Modal */}

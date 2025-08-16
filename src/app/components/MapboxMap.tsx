@@ -431,6 +431,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
     
     try {
+      // Check if style is loaded before accessing
+      if (!map.isStyleLoaded()) return
+      
       const style = map.getStyle()
       if (!style || !style.layers) return
       
@@ -561,6 +564,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         
         // Force symbol layer update multiple times to ensure labels render
         const updateSymbolLayers = () => {
+          if (!map.isStyleLoaded()) return
           const style = map.getStyle()
           if (style && style.layers) {
             let textColor = '#f5cdb4'
@@ -636,6 +640,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         
         // Force multiple repaints to ensure labels update
         const forceLabelsUpdate = () => {
+          // Check if style is loaded before accessing it
+          if (!map.isStyleLoaded()) return
+          
           map.triggerRepaint()
           
           // Update labels specifically
@@ -666,18 +673,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           map.triggerRepaint()
         }
         
-        // Immediate update
-        forceLabelsUpdate()
-        
-        // Update after a frame
-        requestAnimationFrame(forceLabelsUpdate)
-        
-        // Update after map is idle
-        map.once('idle', forceLabelsUpdate)
-        
-        // Final update after delay
-        setTimeout(forceLabelsUpdate, 100)
-        setTimeout(forceLabelsUpdate, 300)
+        // Single update after style is applied
+        setTimeout(() => {
+          if (map.isStyleLoaded()) {
+            forceLabelsUpdate()
+          }
+        }, 100)
         
       } catch (err) {
         console.warn('Error during theme style change:', err)
@@ -1131,6 +1132,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           map.on('styledata', () => {
             // When style data changes, ensure labels are updated
             setTimeout(() => {
+              if (!map.isStyleLoaded()) return
               const style = map.getStyle()
               if (style && style.layers) {
                 let textColor = '#f5cdb4'

@@ -12,10 +12,10 @@
     "endDate": "1938-11-09",
     "category": "business",
     "imageUrls": [
-      "/images/ebraun/ebraun1.png",
-      "/images/ebraun/ebraun2.png",
-      "/images/ebraun/ebraun3.png",
-      "/images/ebraun/ebraun4.png"
+      "/images/ebraun/ebraun1.webp",
+      "/images/ebraun/ebraun2.webp",
+      "/images/ebraun/ebraun3.webp",
+      "/images/ebraun/ebraun4.webp"
     ]
   },
   {
@@ -31,8 +31,8 @@
     "endDate": "1935-04-01",
     "category": "business",
     "imageUrls": [
-      "/images/breslaur/breslaur1.png",
-      "/images/breslaur/breslaur2.png"
+      "/images/breslaur/breslaur1.webp",
+      "/images/breslaur/breslaur2.webp"
     ]
   },
   {
@@ -48,7 +48,7 @@
     "endDate": "1933-03-30",
     "category": "business",
     "imageUrls": [
-      "/images/dtheater/dtheater.png"
+      "/images/dtheater/dtheater.webp"
     ]
   },
   {
@@ -64,7 +64,7 @@
     "endDate": "1939-01-15",
     "category": "business",
     "imageUrls": [
-      "/images/ebro/erbo.png"
+      "/images/ebro/erbo.webp"
     ]
   },
   {
@@ -80,7 +80,7 @@
     "endDate": "1938-11-10",
     "category": "business",
     "imageUrls": [
-      "/images/hoxter/hoxter.png"
+      "/images/hoxter/hoxter.webp"
     ]
   },
   {
@@ -96,7 +96,7 @@
     "endDate": "1937-08-15",
     "category": "business",
     "imageUrls": [
-      "/images/pelz/pelz.png"
+      "/images/pelz/pelz.webp"
     ]
   },
   {
@@ -112,7 +112,7 @@
     "endDate": "1936-12-01",
     "category": "business",
     "imageUrls": [
-      "/images/productx/productx.png"
+      "/images/productx/productx.webp"
     ]
   },
   {
@@ -128,7 +128,7 @@
     "endDate": "1935-06-30",
     "category": "business",
     "imageUrls": [
-      "/images/eggs/eggs.png"
+      "/images/eggs/eggs.webp"
     ]
   },
   {
@@ -144,7 +144,7 @@
     "endDate": "1933-04-01",
     "category": "business",
     "imageUrls": [
-      "/images/jonassco/jonassco.png"
+      "/images/jonassco/jonassco.webp"
     ]
   },
   {
@@ -160,7 +160,7 @@
     "endDate": "1938-03-15",
     "category": "business",
     "imageUrls": [
-      "/images/kutschera/kutschera.png"
+      "/images/kutschera/kutschera.webp"
     ]
   },
   {
@@ -176,7 +176,7 @@
     "endDate": "1937-11-20",
     "category": "business",
     "imageUrls": [
-      "/images/pkunst/pkunst.png"
+      "/images/pkunst/pkunst.webp"
     ]
   },
   {
@@ -192,7 +192,7 @@
     "endDate": "1938-06-30",
     "category": "business",
     "imageUrls": [
-      "/images/ruilos/ruilos.png"
+      "/images/ruilos/ruilos.webp"
     ]
   },
   {
@@ -208,7 +208,7 @@
     "endDate": "1938-09-30",
     "category": "business",
     "imageUrls": [
-      "/images/wassermann/wassermann.png"
+      "/images/wassermann/wassermann.webp"
     ]
   },
   {
@@ -224,7 +224,7 @@
     "endDate": "1936-10-15",
     "category": "business",
     "imageUrls": [
-      "/images/butter/butter.png"
+      "/images/butter/butter.webp"
     ]
   },
   {
@@ -240,7 +240,7 @@
     "endDate": "1938-12-01",
     "category": "business",
     "imageUrls": [
-      "/images/yva/yva.png"
+      "/images/yva/yva.webp"
     ]
   },
   {

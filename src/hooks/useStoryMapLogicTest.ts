@@ -116,19 +116,38 @@ export const useStoryMapLogicTest = () => {
     }
   }, [enrichedStories, currentDate, filterStoriesByDate]);
 
-  // Create test markers from visible stories
+  // Create test markers from ALL stories, not just visible ones
+  // This ensures all businesses are always on the map with proper coordinates
   const testMarkers = useMemo(() => {
-    return visibleStories.map((story) => ({
-      id: story.id,
-      position: [story.lat, story.lng] as [number, number],
-      popup: story.title, // Add popup property for MapboxMap compatibility
-      state: 'active', // Default state since StoryMap doesn't have state property
-      // Convert null to undefined for type compatibility
-      description: story.description ?? undefined,
-      startDate: story.startDate ?? undefined,
-      endDate: story.endDate ?? undefined
-    }));
-  }, [visibleStories]);
+    const year = currentDate.getFullYear();
+    
+    return enrichedStories.map((story) => {
+      // Calculate state based on current date
+      let state = 'active';
+      const startYear = story.startDate ? new Date(story.startDate).getFullYear() : 1900;
+      const endYear = story.endDate ? new Date(story.endDate).getFullYear() : 1945;
+      
+      if (year < startYear) {
+        state = 'future';
+      } else if (year > endYear) {
+        state = 'closed';
+      } else if (year >= startYear + (endYear - startYear) * 0.7) {
+        // Business is declining in its last 30% of life
+        state = 'declining';
+      }
+      
+      return {
+        id: story.id,
+        position: [story.lat, story.lng] as [number, number],
+        popup: story.title,
+        state: state,
+        // Convert null to undefined for type compatibility
+        description: story.description ?? undefined,
+        startDate: story.startDate ?? undefined,
+        endDate: story.endDate ?? undefined
+      };
+    });
+  }, [enrichedStories, currentDate]);
 
   const handleMarkerClick = useCallback((markerId: string) => {
     setActiveStoryId(markerId);

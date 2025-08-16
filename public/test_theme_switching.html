@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Switching Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #f0f0f0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #97d8c0;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            background: #333;
+        }
+        .success {
+            background: #2d5a2d;
+            color: #97d8c0;
+        }
+        .info {
+            background: #3d4a5d;
+            color: #9dc8fc;
+        }
+        .warning {
+            background: #5a4d2d;
+            color: #ffcb51;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #6b6275;
+            margin: 20px 0;
+        }
+        .theme-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .theme-test {
+            padding: 20px;
+            background: #333;
+        }
+        h3 {
+            color: #f5cdb4;
+            margin-top: 0;
+        }
+        ul {
+            line-height: 1.8;
+        }
+        .check {
+            color: #97d8c0;
+        }
+        .cross {
+            color: #ee5760;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Theme Switching Test</h1>
+    
+    <div class="test-section">
+        <h2>Implementation Status</h2>
+        <div class="status success">
+            ✅ Moody theme: Complete custom style implemented
+        </div>
+        <div class="status success">
+            ✅ Bauhaus theme: Complete custom style implemented
+        </div>
+        <div class="status success">
+            ✅ Hot theme: Complete custom style (Snazzy Maps Red)
+        </div>
+        <div class="status info">
+            ℹ️ Cold, Cool, Warm, Art-Nouveau: Still using modified default styles
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>What Changed</h2>
+        <ul>
+            <li><span class="check">✓</span> Created complete <code>getMoodyStyle()</code> function with all layers defined</li>
+            <li><span class="check">✓</span> Created complete <code>getBauhausStyle()</code> function with all layers defined</li>
+            <li><span class="check">✓</span> Updated <code>getThemeMapStyle()</code> to return complete styles for moody/bauhaus</li>
+            <li><span class="check">✓</span> Modified <code>applyThemeStyles()</code> to skip moody theme (no modifications needed)</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Moody Theme Style Definition</h2>
+        <div class="theme-grid">
+            <div class="theme-test">
+                <h3>Colors</h3>
+                <ul>
+                    <li>Background: #4a4a57 (dark purple-gray)</li>
+                    <li>Water: #5a5766 (darker purple-gray)</li>
+                    <li>Parks: #97d8c0 (mint green)</li>
+                    <li>Buildings: #4a4a57 (matching background)</li>
+                    <li>Highways: #ee5760 (coral red)</li>
+                    <li>Primary roads: #ffcb51 (golden yellow)</li>
+                    <li>Local streets: #f5cdb4 (light peach)</li>
+                    <li>Labels: #f5cdb4 with #3b3340 halo</li>
+                </ul>
+            </div>
+            <div class="theme-test">
+                <h3>Layers</h3>
+                <ul>
+                    <li>✓ Background layer</li>
+                    <li>✓ Water layer (0.8 opacity)</li>
+                    <li>✓ Park landuse (0.2 opacity)</li>
+                    <li>✓ Other landuse (0.1 opacity)</li>
+                    <li>✓ Buildings (0.6 opacity)</li>
+                    <li>✓ Highway roads (motorway/trunk)</li>
+                    <li>✓ Primary roads (primary/secondary)</li>
+                    <li>✓ Local streets (0.6 opacity)</li>
+                    <li>✓ Place labels</li>
+                    <li>✓ Road labels</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Bauhaus Theme Style Definition</h2>
+        <div class="theme-grid">
+            <div class="theme-test">
+                <h3>Colors</h3>
+                <ul>
+                    <li>Background: #ffffff (white)</li>
+                    <li>Water: #0066cc (primary blue)</li>
+                    <li>Parks: #ffcc00 (yellow)</li>
+                    <li>Buildings: #000000 (black)</li>
+                    <li>Roads: #cc0000 (red)</li>
+                    <li>Place labels: #000000 (black)</li>
+                    <li>Road labels: #cc0000 (red)</li>
+                </ul>
+            </div>
+            <div class="theme-test">
+                <h3>Special Features</h3>
+                <ul>
+                    <li>✓ Uppercase text transform on labels</li>
+                    <li>✓ Bold fonts for place labels</li>
+                    <li>✓ White halos on all text</li>
+                    <li>✓ Geometric marker shapes</li>
+                    <li>✓ 45° rotated cluster markers</li>
+                    <li>✓ Black borders on all markers</li>
+                    <li>✓ Hard shadows (4px offset)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Instructions</h2>
+        <ol>
+            <li>Open the main app at <a href="http://localhost:3000" target="_blank" style="color: #97d8c0;">http://localhost:3000</a></li>
+            <li>Click the theme switcher dropdown in the header</li>
+            <li>Switch between <strong>Moody</strong> and <strong>Bauhaus</strong> themes</li>
+            <li>Verify the following:
+                <ul>
+                    <li>Map style changes instantly (no delay or flicker)</li>
+                    <li>Labels remain visible and properly styled</li>
+                    <li>No console errors appear</li>
+                    <li>Markers maintain their theme-appropriate colors</li>
+                    <li>Switching is smooth and reliable</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Results</h2>
+        <div class="status success">
+            ✅ Moody theme shows dark purple-gray map with peach/mint/coral accents
+        </div>
+        <div class="status success">
+            ✅ Bauhaus theme shows white map with primary colors (red/blue/yellow/black)
+        </div>
+        <div class="status success">
+            ✅ Theme switching is instant with no modification delays
+        </div>
+        <div class="status success">
+            ✅ Labels are visible immediately in both themes
+        </div>
+        <div class="status success">
+            ✅ No WebGL errors or timing issues
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Benefits of Complete Custom Styles</h2>
+        <ul>
+            <li>🚀 <strong>Performance:</strong> No post-load modifications needed</li>
+            <li>⚡ <strong>Instant switching:</strong> Map style loads complete from the start</li>
+            <li>🎯 <strong>Reliability:</strong> No race conditions or timing issues</li>
+            <li>🧹 <strong>Clean code:</strong> Removed ~200 lines of modification logic</li>
+            <li>🎨 <strong>Consistency:</strong> Themes always look exactly as intended</li>
+        </ul>
+    </div>
+
+    <script>
+        console.log('Theme Switching Test Page Loaded');
+        console.log('Themes with complete custom styles: moody, bauhaus, hot');
+        console.log('Themes still using modifications: cold, cool, warm, art-nouveau');
+    </script>
+</body>
+</html>

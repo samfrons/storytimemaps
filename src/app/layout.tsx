@@ -1,6 +1,6 @@
 import './globals.css'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 
@@ -23,12 +23,6 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: 'Jewish Businesses in Berlin 1900-1945',
   description: 'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#4a4a57' }
-  ],
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes',
-  colorScheme: 'dark light',
   other: {
     'dns-prefetch': '//api.mapbox.com',
     'preconnect': 'https://api.mapbox.com',
@@ -36,6 +30,18 @@ export const metadata: Metadata = {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
   }
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#4a4a57' }
+  ],
+  colorScheme: 'dark light'
 }
 
 export default function RootLayout({

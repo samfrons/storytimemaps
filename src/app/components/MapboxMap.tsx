@@ -13,6 +13,155 @@ if (!MAPBOX_TOKEN) {
   console.error('Mapbox token is not configured. Please set NEXT_PUBLIC_MAPBOX_TOKEN in your .env.local file')
 }
 
+// Complete custom style for moody theme
+const getMoodyStyle = () => {
+  return {
+    version: 8 as const,
+    name: 'Moody Theme',
+    sources: {
+      'mapbox': {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v8'
+      }
+    },
+    glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
+    layers: [
+      {
+        id: 'background',
+        type: 'background',
+        paint: {
+          'background-color': '#4a4a57' // Dark purple-gray background
+        }
+      },
+      {
+        id: 'water',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'water',
+        paint: {
+          'fill-color': '#5a5766', // Darker purple-gray water
+          'fill-opacity': 0.8
+        }
+      },
+      {
+        id: 'landuse-park',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'landuse',
+        filter: ['==', 'class', 'park'],
+        paint: {
+          'fill-color': '#97d8c0', // Mint green parks
+          'fill-opacity': 0.2
+        }
+      },
+      {
+        id: 'landuse-other',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'landuse',
+        filter: ['!=', 'class', 'park'],
+        paint: {
+          'fill-color': '#4a4a57',
+          'fill-opacity': 0.1
+        }
+      },
+      {
+        id: 'building',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'building',
+        paint: {
+          'fill-color': '#4a4a57',
+          'fill-opacity': 0.6,
+          'fill-outline-color': '#3b3340'
+        }
+      },
+      {
+        id: 'road-highway',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        filter: ['in', 'class', 'motorway', 'trunk'],
+        paint: {
+          'line-color': '#ee5760', // Coral red for highways
+          'line-width': {
+            base: 1.5,
+            stops: [[8, 0.5], [10, 1], [12, 3], [16, 8], [20, 18]]
+          },
+          'line-opacity': 1
+        }
+      },
+      {
+        id: 'road-primary',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        filter: ['in', 'class', 'primary', 'secondary'],
+        paint: {
+          'line-color': '#ffcb51', // Golden yellow for primary roads
+          'line-width': {
+            base: 1.5,
+            stops: [[12, 0.5], [14, 1], [16, 3], [20, 8]]
+          },
+          'line-opacity': 1
+        }
+      },
+      {
+        id: 'road-local',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        filter: ['in', 'class', 'street', 'street_limited', 'service', 'track', 'pedestrian'],
+        paint: {
+          'line-color': '#f5cdb4', // Light peach for local streets
+          'line-width': {
+            base: 1.5,
+            stops: [[12, 0.5], [14, 0.8], [16, 2], [20, 6]]
+          },
+          'line-opacity': 0.6
+        }
+      },
+      // Labels
+      {
+        id: 'place-label',
+        type: 'symbol',
+        source: 'mapbox',
+        'source-layer': 'place_label',
+        layout: {
+          'text-field': '{name}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [[6, 10], [12, 16]]
+          }
+        },
+        paint: {
+          'text-color': '#f5cdb4', // Peach text
+          'text-halo-color': '#3b3340', // Dark navy halo
+          'text-halo-width': 1
+        }
+      },
+      {
+        id: 'road-label',
+        type: 'symbol',
+        source: 'mapbox',
+        'source-layer': 'road',
+        layout: {
+          'text-field': '{name}',
+          'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+          'text-size': 12,
+          'symbol-placement': 'line',
+          'text-rotation-alignment': 'map'
+        },
+        paint: {
+          'text-color': '#f5cdb4',
+          'text-halo-color': '#3b3340',
+          'text-halo-width': 1
+        }
+      }
+    ]
+  }
+}
+
 // Snazzy Maps "Red Colored" style conversion for hot theme
 const getSnazzyRedColoredStyle = () => {
   return {
@@ -24,6 +173,7 @@ const getSnazzyRedColoredStyle = () => {
         url: 'mapbox://mapbox.mapbox-streets-v8'
       }
     },
+    glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
     layers: [
       {
         id: 'background',
@@ -98,70 +248,84 @@ const getSnazzyRedColoredStyle = () => {
   }
 }
 
+// Get complete Bauhaus style
+const getBauhausStyle = () => {
+  return {
+    version: 8 as const,
+    name: 'Bauhaus Theme',
+    sources: {
+      'mapbox': {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v8'
+      }
+    },
+    glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
+    layers: [
+      {
+        id: 'background',
+        type: 'background',
+        paint: {
+          'background-color': '#ffffff' // white background for Bauhaus
+        }
+      },
+      {
+        id: 'water',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'water',
+        paint: {
+          'fill-color': '#0066cc', // primary blue
+          'fill-opacity': 0.4
+        }
+      },
+      {
+        id: 'parks',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'landuse',
+        filter: ['==', 'class', 'park'],
+        paint: {
+          'fill-color': '#ffcc00', // yellow
+          'fill-opacity': 0.3
+        }
+      },
+      {
+        id: 'buildings',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'building',
+        paint: {
+          'fill-color': '#000000', // black
+          'fill-opacity': 0.2
+        }
+      },
+      {
+        id: 'roads',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        paint: {
+          'line-color': '#cc0000', // red
+          'line-width': 2
+        }
+      }
+      // No text labels for clean Bauhaus aesthetic
+    ]
+  }
+}
+
 // Get custom map style for each theme
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getThemeMapStyle = (theme: string | undefined): any => {
   switch(theme) {
+    case 'moody':
+      return getMoodyStyle() // Use complete moody style
+    
     case 'bauhaus':
-      return {
-        version: 8 as const,
-        sources: {
-          'mapbox': {
-            type: 'vector',
-            url: 'mapbox://mapbox.mapbox-streets-v8'
-          }
-        },
-        layers: [
-          {
-            id: 'background',
-            type: 'background',
-            paint: {
-              'background-color': '#ffffff' // white background for Bauhaus
-            }
-          },
-          {
-            id: 'water',
-            type: 'fill',
-            source: 'mapbox',
-            'source-layer': 'water',
-            paint: {
-              'fill-color': '#0066cc', // primary blue
-              'fill-opacity': 0.4
-            }
-          },
-          {
-            id: 'parks',
-            type: 'fill',
-            source: 'mapbox',
-            'source-layer': 'landuse',
-            filter: ['==', 'class', 'park'],
-            paint: {
-              'fill-color': '#ffcc00', // yellow
-              'fill-opacity': 0.3
-            }
-          },
-          {
-            id: 'buildings',
-            type: 'fill',
-            source: 'mapbox',
-            'source-layer': 'building',
-            paint: {
-              'fill-color': '#000000', // black
-              'fill-opacity': 0.2
-            }
-          },
-          {
-            id: 'roads',
-            type: 'line',
-            source: 'mapbox',
-            'source-layer': 'road',
-            paint: {
-              'line-color': '#cc0000', // red
-              'line-width': 2
-            }
-          }
-        ]
-      }
+      return getBauhausStyle() // Use complete bauhaus style
+    
+    case 'hot':
+      return getSnazzyRedColoredStyle() // Use complete Snazzy Maps "Red Colored" style
     
     case 'cold':
       return 'mapbox://styles/mapbox/light-v11' // We'll customize this after load
@@ -172,14 +336,11 @@ const getThemeMapStyle = (theme: string | undefined): any => {
     case 'warm':
       return 'mapbox://styles/mapbox/outdoors-v12' // We'll customize this after load
     
-    case 'hot':
-      return getSnazzyRedColoredStyle() // Use complete Snazzy Maps "Red Colored" style
-    
     case 'art-nouveau':
       return 'mapbox://styles/mapbox/outdoors-v12' // We'll customize this after load
     
-    default: // moody
-      return 'mapbox://styles/mapbox/dark-v11' // We'll customize this after load
+    default:
+      return getMoodyStyle() // Use moody as default
   }
 }
 
@@ -243,21 +404,37 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     future: '#f5cdb4'
   })
 
-  // Use theme colors directly - no DOM reading, no delays
+  // Use theme colors directly - only for themes that need color state
   useEffect(() => {
-    const themeColors = theme === 'bauhaus' ? {
-      active: '#0066ff',
-      declining: '#ffcc00',
-      closed: '#ff0000',
-      future: '#333333'
-    } : { // moody (default)
-      active: '#97d8c0',
-      declining: '#ffcb51',
-      closed: '#ee5760',
-      future: '#f5cdb4'
-    };
-    
-    setColors(themeColors);
+    // Only update colors for themes that use the modification approach
+    if (theme === 'cold' || theme === 'cool' || theme === 'warm' || theme === 'art-nouveau') {
+      const themeColors = {
+        active: '#97d8c0',   // Default active color for modification themes
+        declining: '#ffcb51', // Default declining color
+        closed: '#ee5760',    // Default closed color  
+        future: '#f5cdb4'     // Default future color
+      };
+      setColors(themeColors);
+    } else {
+      // For complete custom style themes, use their specific colors for markers only
+      const themeColors = theme === 'bauhaus' ? {
+        active: '#0066ff',
+        declining: '#ffcc00', 
+        closed: '#ff0000',
+        future: '#333333'
+      } : theme === 'hot' ? {
+        active: '#00ff00',    // Bright green for hot theme
+        declining: '#ffaa00', // Orange
+        closed: '#ff0000',    // Red
+        future: '#666666'     // Gray
+      } : { // moody (default)
+        active: '#97d8c0',
+        declining: '#ffcb51',
+        closed: '#ee5760', 
+        future: '#f5cdb4'
+      };
+      setColors(themeColors);
+    }
   }, [theme])
 
   // Function to determine max labels based on zoom
@@ -513,12 +690,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   // Optimized theme application with reduced WebGL operations
   const applyThemeStyles = useCallback((map: mapboxgl.Map, forceRender = false) => {
-    // Hot theme and Bauhaus use complete custom styles, no additional styling needed
-    if (theme === 'hot' || theme === 'bauhaus') {
+    // Moody, Hot, and Bauhaus use complete custom styles, no additional styling needed
+    // Skip ALL style modifications for these themes to prevent color bleeding
+    if (theme === 'moody' || theme === 'hot' || theme === 'bauhaus') {
       if (forceRender) {
         // Single render cycle for custom themes
         requestAnimationFrame(() => map.triggerRepaint())
       }
+      return
+    }
+    
+    // For themes we haven't implemented complete custom styles yet,
+    // continue with the modification approach
+    if (theme !== 'cold' && theme !== 'cool' && theme !== 'warm' && theme !== 'art-nouveau') {
+      // Unknown theme - skip modifications
       return
     }
     
@@ -531,20 +716,26 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       
       const layers = style.layers
       
-      // Get theme-specific map colors from CSS variables - client-side only
+      // Get theme-specific map colors for modification themes only
       const getMapColors = () => {
-        // Use direct theme values - no DOM reading
-        return theme === 'bauhaus' ? {
-          water: '#6600cc',  // Purple
-          park: '#0066ff',   // Blue
-          road: '#000000',   // Black
-          background: '#f5f5f0' // Light
-        } : { // moody (default)
-          water: '#5a5766',  // Dark purple-gray
-          park: '#97d8c0',   // Mint green
-          road: '#f5cdb4',   // Light peach
-          background: '#4a4a57' // Dark background
-        };
+        // Since this function only runs for modification themes (cold, cool, warm, art-nouveau),
+        // use appropriate default colors for each
+        if (theme === 'cold') {
+          return {
+            water: '#87CEEB',  // Sky blue
+            park: '#90EE90',   // Light green  
+            road: '#B0B0B0',   // Light gray
+            background: '#F5F5F5' // Very light gray
+          };
+        } else {
+          // Default colors for cool, warm, art-nouveau
+          return {
+            water: '#5a5766',  // Dark purple-gray
+            park: '#97d8c0',   // Mint green
+            road: '#f5cdb4',   // Light peach
+            background: '#4a4a57' // Dark background
+          };
+        }
       }
       
       const mapColors = getMapColors()
@@ -571,26 +762,16 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           
           // Road layers  
           if (layer.id.includes('road') && layer.type === 'line') {
-            if (theme === 'moody') {
-              // Use original colors for moody theme
-              if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
-                map.setPaintProperty(layer.id, 'line-color', '#ee5760')
-              } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
-                map.setPaintProperty(layer.id, 'line-color', '#ffcb51')
-              } else {
-                map.setPaintProperty(layer.id, 'line-color', '#f5cdb4')
-                map.setPaintProperty(layer.id, 'line-opacity', 0.6)
-              }
-            } else if (theme === 'cold') {
+            if (theme === 'cold') {
               // Cold theme uses subtle gray lines
               map.setPaintProperty(layer.id, 'line-color', mapColors.road)
               map.setPaintProperty(layer.id, 'line-opacity', 0.7)
             } else {
-              // Use theme colors for other themes
+              // Use neutral colors for other modification themes
               if (layer.id.includes('motorway') || layer.id.includes('trunk')) {
-                map.setPaintProperty(layer.id, 'line-color', colors.closed)
+                map.setPaintProperty(layer.id, 'line-color', '#666666') // Neutral gray
               } else if (layer.id.includes('primary') || layer.id.includes('secondary')) {
-                map.setPaintProperty(layer.id, 'line-color', colors.declining)
+                map.setPaintProperty(layer.id, 'line-color', '#888888') // Lighter gray
               } else {
                 map.setPaintProperty(layer.id, 'line-color', mapColors.road)
                 map.setPaintProperty(layer.id, 'line-opacity', 0.6)
@@ -928,7 +1109,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                cursor: 'pointer',
+                cursor: 'pointer !important',
                 fontSize: '16px',
                 fontWeight: 'bold',
                 border: clusterStyle.border,
@@ -969,7 +1150,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               fontSize: '14px',
               border: clusterStyle.border,
               boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-              cursor: 'pointer',
+              cursor: 'pointer !important',
               transition: 'transform 0.2s'
             }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
@@ -1080,7 +1261,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             borderRadius: theme === 'bauhaus' ? '0' : '50%',
             border: theme === 'bauhaus' ? '2px solid #000000' : '2px solid white',
             boxShadow: theme === 'bauhaus' ? '2px 2px 0px #000000' : '0 2px 4px rgba(0,0,0,0.3)',
-            cursor: 'pointer',
+            cursor: 'pointer !important',
             transition: 'transform 0.2s',
             transform: isActive ? 'scale(1.5)' : 'scale(1)'
           }}
@@ -1344,11 +1525,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomIn()
           }}
-          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border zoom-button"
+          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border zoom-button hover:scale-110"
           style={{
             backgroundColor: 'rgba(var(--muted-rgb), 0.8)',
             borderColor: 'var(--border)',
-            color: 'var(--foreground)'
+            color: 'var(--foreground)',
+            cursor: 'pointer',
+            transform: 'scale(1)',
+            transition: 'transform 0.2s ease-in-out, box-shadow 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
           }}
           aria-label="Zoom in"
         >
@@ -1360,11 +1550,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           onClick={() => {
             mapRef.current?.zoomOut()
           }}
-          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border zoom-button"
+          className="p-2.5 shadow-sm hover:shadow-md transition-all duration-200 border zoom-button hover:scale-110"
           style={{
             backgroundColor: 'rgba(var(--muted-rgb), 0.8)',
             borderColor: 'var(--border)',
-            color: 'var(--foreground)'
+            color: 'var(--foreground)',
+            cursor: 'pointer',
+            transform: 'scale(1)',
+            transition: 'transform 0.2s ease-in-out, box-shadow 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
           }}
           aria-label="Zoom out"
         >

@@ -444,6 +444,21 @@ select:focus-visible {
   box-shadow: none !important;
 }
 
+/* Ensure all buttons have pointer cursor and can transform */
+button {
+  cursor: pointer !important;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Fix for Safari/iOS transform issues */
+button:hover {
+  cursor: pointer !important;
+}
+
 /* Placeholder text styling for better visibility */
 input::placeholder,
 textarea::placeholder {

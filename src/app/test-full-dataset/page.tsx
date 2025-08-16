@@ -4,12 +4,12 @@ import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useTheme } from 'next-themes';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import StoryList from './components/StoryList';
-import LoadingSkeleton from './components/LoadingSkeleton';
-import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
-import { useIsMounted } from '../hooks/useIsMounted';
+import StoryList from '../components/StoryList';
+import LoadingSkeleton from '../components/LoadingSkeleton';
+import { useStoryMapLogicTest as useStoryMapLogic, berlinCoordinates, defaultZoom } from '../../hooks/useStoryMapLogicTest';
+import { useIsMounted } from '../../hooks/useIsMounted';
 
-const MapboxMap = dynamic(() => import('./components/MapboxMap'), { 
+const MapboxMap = dynamic(() => import('../components/MapboxMap'), { 
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
@@ -18,21 +18,21 @@ const MapboxMap = dynamic(() => import('./components/MapboxMap'), {
   )
 });
 
-function MapPage() {
+function TestFullDatasetPage() {
   const { theme, setTheme } = useTheme();
   const mounted = useIsMounted();
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Always show intro on root page unless explicitly closed
-  const [showIntro, setShowIntro] = useState(true);
+  // Always show intro on root page unless there are URL params
+  const hasUrlParams = searchParams.toString() !== '';
+  const [showIntro, setShowIntro] = useState(!hasUrlParams);
   const [introExplicitlyClosed, setIntroExplicitlyClosed] = useState(false); // Track if user closed intro
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
-  const [isThemeSwitching, setIsThemeSwitching] = useState(false); // Prevent rapid theme changes
   
-  // Handle URL parameters for info panel only
+  // Sync with URL parameters on mount and when they change
   useEffect(() => {
     if (!mounted) return;
     
@@ -41,14 +41,24 @@ function MapPage() {
     if (aboutParam === 'true') {
       setShowInfo(true);
       setShowIntro(false);
-      setIntroExplicitlyClosed(true); // Mark as explicitly closed
     }
     
-    // Show intro only if not explicitly closed
-    if (!introExplicitlyClosed && searchParams.toString() === '') {
+    // Check for theme parameter
+    const themeParam = searchParams.get('theme');
+    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
+      setTheme(themeParam);
+    }
+    // Don't force a theme if none is in the URL - let next-themes handle the default
+    
+    // Show intro only on root page without params AND if not explicitly closed
+    const hasParams = searchParams.toString() !== '';
+    if (hasParams) {
+      setShowIntro(false);
+    } else if (!introExplicitlyClosed) {
+      // Only show intro if user hasn't explicitly closed it
       setShowIntro(true);
     }
-  }, [searchParams, mounted, introExplicitlyClosed]);
+  }, [searchParams, mounted, setTheme, introExplicitlyClosed]);
   const {
     visibleStories,
     activeStoryId,
@@ -76,7 +86,7 @@ function MapPage() {
     }
     
     const queryString = params.toString();
-    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+    router.push(queryString ? `/test-full-dataset?${queryString}` : '/test-full-dataset', { scroll: false });
   }, [router, searchParams]);
 
   const handleStoryClick = (storyId: string) => {
@@ -85,26 +95,13 @@ function MapPage() {
   };
 
   const handleThemeSwitch = useCallback((newTheme: string) => {
-    if (!mounted || isThemeSwitching || theme === newTheme) return;
-    
-    // Prevent rapid theme switching
-    setIsThemeSwitching(true);
+    if (!mounted) return;
     setShowThemeMenu(false);
-    
-    // Smooth theme transition with error handling
-    try {
-      requestAnimationFrame(() => {
-        setTheme(newTheme);
-        // Reset switching state after transition
-        setTimeout(() => setIsThemeSwitching(false), 200);
-      });
-    } catch (error) {
-      console.error('Theme switching error:', error);
-      setIsThemeSwitching(false);
-      // Fallback to moody theme on error
-      setTheme('moody');
-    }
-  }, [mounted, isThemeSwitching, theme, setTheme]);
+    // Just update theme without URL parameter
+    requestAnimationFrame(() => {
+      setTheme(newTheme);
+    });
+  }, [mounted, setTheme]);
 
   const handleLetsGo = useCallback(() => {
     setShowIntro(false);
@@ -125,7 +122,7 @@ function MapPage() {
 
   const goHome = useCallback(() => {
     // Navigate to root URL without forcing a theme
-    router.push('/');
+    router.push('/test-full-dataset');
     setShowIntro(true);
     setIntroExplicitlyClosed(false); // Reset so intro shows when home is clicked
     setShowInfo(false);
@@ -133,32 +130,27 @@ function MapPage() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
+      {/* TEST BANNER */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-red-600 text-white text-center py-2 font-mono text-sm">
+        🚧 TEST PAGE - Full Dataset (10,000+ businesses) - Production Data Safe 🚧
+      </div>
+      
       {/* Desktop Sidebar Navigation - Always render immediately */}
       <div className="hidden md:flex md:w-16 md:h-full flex-shrink-0 flex-col items-center py-6 gap-4 absolute left-0 top-0 backdrop-blur-sm hot-sidebar" 
            style={{ 
              zIndex: 10000,
-             backgroundColor: 'var(--input-bg)'
+             backgroundColor: 'var(--input-bg)',
+             marginTop: '40px' // Account for test banner
            }}>
             {/* Theme Button */}
             <button
-              onClick={() => !isThemeSwitching && setShowThemeMenu(!showThemeMenu)}
-              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border relative hot-button hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
+              onClick={() => setShowThemeMenu(!showThemeMenu)}
+              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border relative hot-button cursor-pointer hover:opacity-80 ${showThemeMenu ? 'hot-button-active' : ''}`}
               style={{
-                backgroundColor: isThemeSwitching ? 'var(--warning)' : showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
+                backgroundColor: showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
                 borderColor: 'var(--border)',
-                color: isThemeSwitching ? 'var(--background)' : showThemeMenu ? 'var(--background)' : 'var(--foreground)',
-                cursor: isThemeSwitching ? 'wait' : 'pointer',
-                opacity: isThemeSwitching ? 0.7 : 1,
-                transform: 'scale(1)',
-                transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-              }}
-              onMouseEnter={(e) => {
-                if (!isThemeSwitching) {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
+                color: showThemeMenu ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer'
               }}
               aria-label="Switch theme"
             >
@@ -168,7 +160,7 @@ function MapPage() {
             </button>
             
             {/* Theme Menu Dropdown */}
-            {showThemeMenu && !isThemeSwitching && (
+            {showThemeMenu && (
               <div className="absolute top-16 left-0 border backdrop-blur-sm shadow-lg p-2 min-w-[120px] hot-dropdown" 
                    style={{ 
                      zIndex: 10001,
@@ -184,7 +176,7 @@ function MapPage() {
                       backgroundColor: mounted && theme === themeName ? 'var(--primary)' : 'transparent',
                       color: mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
                       borderLeft: mounted && theme === themeName ? '2px solid var(--primary)' : '2px solid transparent',
-                      cursor: 'pointer !important'
+                      cursor: 'pointer'
                     }}
                     onMouseEnter={(e) => {
                       if (!mounted || theme !== themeName) {
@@ -214,20 +206,12 @@ function MapPage() {
             {/* Home Button */}
             <button
               onClick={goHome}
-              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${showIntro ? 'hot-button-active' : ''}`}
+              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${showIntro ? 'hot-button-active' : ''}`}
               style={{
                 backgroundColor: showIntro ? 'var(--primary)' : 'var(--input-bg)',
                 borderColor: 'var(--border)',
                 color: showIntro ? 'var(--background)' : 'var(--foreground)',
-                cursor: 'pointer',
-                transform: 'scale(1)',
-                transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
+                cursor: 'pointer'
               }}
               aria-label="Home"
             >
@@ -239,20 +223,12 @@ function MapPage() {
             {/* Info Button */}
             <button
               onClick={toggleInfo}
-              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${showInfo ? 'hot-button-active' : ''}`}
+              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${showInfo ? 'hot-button-active' : ''}`}
               style={{
                 backgroundColor: showInfo ? 'var(--primary)' : 'var(--input-bg)',
                 borderColor: 'var(--border)',
                 color: showInfo ? 'var(--background)' : 'var(--foreground)',
-                cursor: 'pointer',
-                transform: 'scale(1)',
-                transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
+                cursor: 'pointer'
               }}
               aria-label="Information"
             >
@@ -265,11 +241,11 @@ function MapPage() {
 
       {/* Main content area - with loading state */}
       {isLoading ? (
-        <div className="loading-skeleton">
+        <div className="loading-skeleton" style={{ marginTop: '40px' }}>
           <LoadingSkeleton />
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row h-screen md:pl-16">
+        <div className="flex flex-col md:flex-row h-screen md:pl-16" style={{ marginTop: '40px' }}>
           {/* StoryList Panel - Visible on both mobile and desktop */}
           <div className="w-full md:w-1/3 h-1/2 md:h-screen order-2 md:order-1 flex-shrink-0">
             <StoryList
@@ -286,7 +262,6 @@ function MapPage() {
           {/* Map Layer - Remaining space */}
           <div className="w-full md:flex-1 h-1/2 md:h-screen order-1 md:order-2 relative">
             <MapboxMap
-              key="main-map" // Stable key to prevent unnecessary recreation
               center={berlinCoordinates}
               zoom={defaultZoom}
               markers={testMarkers}
@@ -302,21 +277,13 @@ function MapPage() {
       {/* Mobile Hamburger Menu Button */}
       <button
         onClick={() => setShowMobileMenu(!showMobileMenu)}
-        className="md:hidden fixed top-4 left-4 w-10 h-10 flex items-center justify-center border backdrop-blur-sm hot-button hover:scale-110"
+        className="md:hidden fixed top-14 left-4 w-10 h-10 flex items-center justify-center border backdrop-blur-sm cursor-pointer hover:opacity-80 hot-button"
         style={{ 
           zIndex: 10001,
           backgroundColor: 'var(--input-bg)',
           borderColor: 'var(--border)',
           color: 'var(--foreground)',
-          cursor: 'pointer',
-          transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
+          cursor: 'pointer'
         }}
         aria-label="Menu"
       >
@@ -331,7 +298,7 @@ function MapPage() {
 
       {/* Mobile Menu Dropdown */}
       {showMobileMenu && (
-        <div className="md:hidden fixed top-16 left-4 border backdrop-blur-sm shadow-lg p-2 flex flex-col gap-2 hot-dropdown" 
+        <div className="md:hidden fixed top-26 left-4 border backdrop-blur-sm shadow-lg p-2 flex flex-col gap-2 hot-dropdown" 
              style={{ 
                zIndex: 10001,
                backgroundColor: 'var(--dropdown-bg)',
@@ -340,22 +307,14 @@ function MapPage() {
           {/* Theme Button */}
           <button
             onClick={() => {
-              if (!isThemeSwitching) setShowThemeMenu(!showThemeMenu);
+              setShowThemeMenu(!showThemeMenu);
             }}
-            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hot-button relative hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button relative ${showThemeMenu ? 'hot-button-active' : ''}`}
             style={{
               backgroundColor: showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: showThemeMenu ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              cursor: 'pointer'
             }}
             aria-label="Switch theme"
           >
@@ -370,20 +329,12 @@ function MapPage() {
               goHome();
               setShowMobileMenu(false);
             }}
-            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${showIntro ? 'hot-button-active' : ''}`}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${showIntro ? 'hot-button-active' : ''}`}
             style={{
               backgroundColor: showIntro ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: showIntro ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              cursor: 'pointer'
             }}
             aria-label="Home"
           >
@@ -398,20 +349,12 @@ function MapPage() {
               toggleInfo();
               setShowMobileMenu(false);
             }}
-            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${showInfo ? 'hot-button-active' : ''}`}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${showInfo ? 'hot-button-active' : ''}`}
             style={{
               backgroundColor: showInfo ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: showInfo ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              cursor: 'pointer'
             }}
             aria-label="Information"
           >
@@ -423,8 +366,8 @@ function MapPage() {
       )}
       
       {/* Mobile Theme Menu Dropdown */}
-      {showThemeMenu && showMobileMenu && !isThemeSwitching && (
-        <div className="md:hidden fixed top-16 left-20 shadow-lg p-2 min-w-[120px] border hot-dropdown" style={{ 
+      {showThemeMenu && showMobileMenu && (
+        <div className="md:hidden fixed top-26 left-20 shadow-lg p-2 min-w-[120px] border hot-dropdown" style={{ 
           zIndex: 10002,
           backgroundColor: 'var(--dropdown-bg)',
           borderColor: 'var(--border)'
@@ -441,7 +384,7 @@ function MapPage() {
                 backgroundColor: mounted && theme === themeName ? 'var(--primary)' : 'transparent',
                 color: mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
                 borderLeft: mounted && theme === themeName ? '2px solid var(--primary)' : '2px solid transparent',
-                cursor: 'pointer !important'
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 if (!mounted || theme !== themeName) {
@@ -470,7 +413,7 @@ function MapPage() {
 
       {/* Intro Overlay - Slides to the left, but leaves sidebar visible */}
       <div 
-        className={`fixed md:absolute top-0 left-0 md:left-16 right-0 bottom-0 backdrop-blur-sm transition-transform duration-700 ease-in-out overflow-hidden ${
+        className={`fixed md:absolute top-10 left-0 md:left-16 right-0 bottom-0 backdrop-blur-sm transition-transform duration-700 ease-in-out overflow-hidden ${
           showIntro ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{ 
@@ -495,20 +438,12 @@ function MapPage() {
         {/* Close button */}
         <button
           onClick={handleLetsGo}
-          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-all duration-200 z-10 hot-close-button hover:scale-110"
+          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors z-10 hover:opacity-80 hot-close-button"
           style={{
             backgroundColor: 'var(--input-bg)',
             borderColor: 'var(--border)',
             color: 'var(--foreground)',
-            cursor: 'pointer',
-            transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
+            cursor: 'pointer'
           }}
           aria-label="Close"
         >
@@ -528,16 +463,19 @@ function MapPage() {
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   Berlin 1900-1945
                 </p>
+                <div className="mt-4 p-4 border border-yellow-500 bg-yellow-100 text-yellow-800 font-mono text-sm">
+                  🚧 TEST VERSION: Full Dataset (10,000+ businesses) 🚧
+                </div>
               </div>
 
               <div className="space-y-4 max-w-2xl mx-auto">
                 <p className="text-base sm:text-lg md:text-xl leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
-                  Explore the stories of over 8,000 Jewish-owned businesses that once 
+                  Explore the complete dataset of over 10,000 Jewish-owned businesses that once 
                   formed the backbone of Berlin&apos;s commercial life.
                 </p>
                 <p className="text-sm sm:text-base md:text-lg font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   Navigate through time to witness their rise, struggles, and the tragic 
-                  impact of Nazi persecution.
+                  impact of Nazi persecution. This is a test environment with the full dataset.
                 </p>
               </div>
 
@@ -550,10 +488,10 @@ function MapPage() {
                     borderColor: 'var(--primary)',
                     color: '#ffffff',
                     letterSpacing: '0.08em',
-                    cursor: 'pointer !important'
+                    cursor: 'pointer'
                   }}
                 >
-                  <span>Let&apos;s Explore</span>
+                  <span>Test Full Dataset</span>
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -561,7 +499,7 @@ function MapPage() {
               </div>
 
               <div className="pt-12 text-sm font-mono" style={{ color: 'var(--muted)' }}>
-                <p>Data: Dr. Christoph Kreutzmüller | Visualization: StoryTimeMaps</p>
+                <p>Data: Dr. Christoph Kreutzmüller | Visualization: StoryTimeMaps | TEST ENVIRONMENT</p>
               </div>
             </div>
           </div>
@@ -570,7 +508,7 @@ function MapPage() {
 
       {/* Info Panel - Slides from the right */}
       <div 
-        className={`fixed md:absolute right-0 top-0 bottom-0 h-full w-full md:w-1/2 lg:w-2/5 backdrop-blur-sm shadow-2xl transition-transform duration-500 ease-in-out overflow-hidden ${
+        className={`fixed md:absolute right-0 top-10 bottom-0 h-full w-full md:w-1/2 lg:w-2/5 backdrop-blur-sm shadow-2xl transition-transform duration-500 ease-in-out overflow-hidden ${
           showInfo ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{ 
@@ -600,20 +538,12 @@ function MapPage() {
                 setShowInfo(false);
                 updateURLParams({ about: false });
               }}
-              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-all duration-200 hover:scale-110"
+              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors hover:opacity-80"
               style={{
                 backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--border)',
                 color: 'var(--foreground)',
-                cursor: 'pointer',
-                transform: 'scale(1)',
-                transition: 'transform 0.2s ease-in-out'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
+                cursor: 'pointer'
               }}
               aria-label="Close"
             >
@@ -624,75 +554,45 @@ function MapPage() {
 
             <div className="space-y-8 pt-16 md:pt-0">
               <div>
-                <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>About This Project</h2>
+                <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>About This Test Page</h2>
                 <div className="w-20 h-1" style={{ backgroundColor: 'var(--primary)' }} />
               </div>
 
               <div className="space-y-6 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
+                <div className="p-4 border border-red-500 bg-red-50 text-red-800">
+                  <h3 className="font-semibold mb-2">⚠️ TEST ENVIRONMENT</h3>
+                  <p>This page contains the complete dataset of 10,000+ businesses. Production data remains safe and unchanged.</p>
+                </div>
+
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Historical Context</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Full Dataset Features</h3>
                   <p className="leading-relaxed">
-                    Between 1900 and 1945, Jewish entrepreneurs operated thousands of businesses 
-                    in Berlin, from small shops to major department stores. This map documents 
-                    their locations, types, and fates during the Nazi era.
+                    This test environment includes all scraped businesses from the HU Berlin database,
+                    providing a comprehensive view of Jewish commercial life in Berlin from 1900-1945.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>The Data</h3>
-                  <p className="leading-relaxed">
-                    Our database contains over 8,000 verified business records, compiled from 
-                    historical directories, registration documents, and survivor testimonies. 
-                    Each entry represents not just a business, but a family&apos;s livelihood and 
-                    contribution to Berlin&apos;s economy.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Timeline Navigation</h3>
-                  <p className="leading-relaxed">
-                    Use the timeline controls to see how the business landscape changed over 
-                    45 years. Watch businesses flourish in the 1920s, then witness the 
-                    devastating impact of Nazi policies from 1933 onwards.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Color Coding</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-3">
-                      <span className="w-4 h-4" style={{ backgroundColor: 'var(--success)' }} />
-                      <span>Active businesses</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-4 h-4" style={{ backgroundColor: 'var(--warning)' }} />
-                      <span>Businesses under pressure</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-4 h-4" style={{ backgroundColor: 'var(--danger)' }} />
-                      <span>Closed/Liquidated businesses</span>
-                    </li>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Data Statistics</h3>
+                  <ul className="space-y-1 text-sm">
+                    <li>• Total businesses: 10,000+ records</li>
+                    <li>• Geographic coverage: All Berlin districts</li>
+                    <li>• Time period: 1900-1945</li>
+                    <li>• Business types: Trade, services, manufacturing</li>
                   </ul>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Research Team</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Performance Testing</h3>
                   <p className="leading-relaxed">
-                    <strong>Dr. Christoph Kreutzmüller</strong><br />
-                    Historical Research &amp; Data Compilation<br />
-                    <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Humboldt University Berlin</span>
-                  </p>
-                  <p className="leading-relaxed mt-3">
-                    <strong>StoryTimeMaps</strong><br />
-                    Interactive Visualization &amp; Web Development<br />
-                    <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Making history accessible through technology</span>
+                    Use this environment to test map performance with large datasets,
+                    clustering algorithms, and timeline interactions at scale.
                   </p>
                 </div>
 
                 <div className="pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
                   <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
-                    For academic citations, please reference: Kreutzmüller, C. (2024). 
-                    &quot;Jewish Businesses in Berlin 1900-1945: A Digital Archive&quot;
+                    🔒 Production environment remains at: <a href="/" className="underline">/ (main page)</a>
                   </p>
                 </div>
               </div>
@@ -745,14 +645,14 @@ function MapPage() {
   );
 }
 
-export default function OverlayTestPage() {
+export default function TestFullDatasetPageWrapper() {
   return (
     <Suspense fallback={
       <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
-        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading...</div>
+        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading test environment...</div>
       </div>
     }>
-      <MapPage />
+      <TestFullDatasetPage />
     </Suspense>
   );
 }

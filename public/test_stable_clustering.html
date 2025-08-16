@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Clustering Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #f0f0f0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #97d8c0;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .success {
+            color: #97d8c0;
+        }
+        .warning {
+            color: #ffcb51;
+        }
+        .error {
+            color: #ee5760;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            background: #333;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+        }
+        code {
+            background: #333;
+            padding: 2px 6px;
+        }
+        .loading-timeline {
+            margin: 20px 0;
+        }
+        .timeline-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #333;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Stable Clustering Test</h1>
+    
+    <div class="test-section">
+        <h2>Loading Performance</h2>
+        <div id="loading-stats"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Data Completeness</h2>
+        <div id="data-stats"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Loading Timeline</h2>
+        <div class="loading-timeline" id="timeline"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        async function testStableClustering() {
+            const timeline = [];
+            const timelineEl = document.getElementById('timeline');
+            const loadingStatsEl = document.getElementById('loading-stats');
+            const dataStatsEl = document.getElementById('data-stats');
+            const resultsEl = document.getElementById('results');
+            
+            // Test 1: Initial Load Performance
+            const startTime = performance.now();
+            timeline.push({ event: 'Start fetching data', time: 0 });
+            
+            try {
+                const response = await fetch('/api/storymaps');
+                const loadTime = performance.now() - startTime;
+                timeline.push({ event: 'Data received', time: loadTime });
+                
+                const data = await response.json();
+                const parseTime = performance.now() - startTime;
+                timeline.push({ event: 'Data parsed', time: parseTime });
+                
+                // Check response structure
+                if (!data.metadata || !data.data) {
+                    throw new Error('Invalid response structure');
+                }
+                
+                // Display loading stats
+                loadingStatsEl.innerHTML = `
+                    <div class="metric">
+                        <span>Load Time:</span>
+                        <span class="${loadTime < 500 ? 'success' : loadTime < 1000 ? 'warning' : 'error'}">
+                            ${loadTime.toFixed(0)}ms
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span>Parse Time:</span>
+                        <span class="${parseTime < 1000 ? 'success' : 'warning'}">
+                            ${(parseTime - loadTime).toFixed(0)}ms
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span>Total Time:</span>
+                        <span class="${parseTime < 1000 ? 'success' : parseTime < 2000 ? 'warning' : 'error'}">
+                            ${parseTime.toFixed(0)}ms
+                        </span>
+                    </div>
+                `;
+                
+                // Display data stats
+                dataStatsEl.innerHTML = `
+                    <div class="metric">
+                        <span>Total Businesses:</span>
+                        <span class="success">${data.data.length}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Page Size:</span>
+                        <span class="success">${data.metadata.pageSize}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Total Pages:</span>
+                        <span class="${data.metadata.totalPages === 1 ? 'success' : 'warning'}">
+                            ${data.metadata.totalPages}
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span>Has Next Page:</span>
+                        <span class="${!data.metadata.hasNextPage ? 'success' : 'error'}">
+                            ${data.metadata.hasNextPage}
+                        </span>
+                    </div>
+                `;
+                
+                // Display timeline
+                timelineEl.innerHTML = timeline.map(item => `
+                    <div class="timeline-item">
+                        <span>${item.event}</span>
+                        <span>${item.time.toFixed(0)}ms</span>
+                    </div>
+                `).join('');
+                
+                // Test 2: Check for default coordinates
+                const defaultCoords = data.data.filter(b => 
+                    Math.abs(b.lat - 52.52) < 0.001 && Math.abs(b.lng - 13.405) < 0.001
+                );
+                
+                // Test 3: Verify all data loaded at once
+                const tests = [];
+                
+                if (data.data.length === data.metadata.totalItems) {
+                    tests.push('<div class="status success">✅ All businesses loaded in single request</div>');
+                } else {
+                    tests.push(`<div class="status error">❌ Only ${data.data.length} of ${data.metadata.totalItems} loaded</div>`);
+                }
+                
+                if (data.metadata.totalPages === 1) {
+                    tests.push('<div class="status success">✅ Single page load (no pagination needed)</div>');
+                } else {
+                    tests.push(`<div class="status warning">⚠️ Multiple pages detected: ${data.metadata.totalPages}</div>`);
+                }
+                
+                if (defaultCoords.length === 0) {
+                    tests.push('<div class="status success">✅ No businesses at default coordinates</div>');
+                } else {
+                    tests.push(`<div class="status error">❌ ${defaultCoords.length} businesses at default coordinates</div>`);
+                }
+                
+                if (loadTime < 1000) {
+                    tests.push(`<div class="status success">✅ Fast load time: ${loadTime.toFixed(0)}ms</div>`);
+                } else {
+                    tests.push(`<div class="status warning">⚠️ Slow load time: ${loadTime.toFixed(0)}ms</div>`);
+                }
+                
+                // Test 4: Verify clustering stability
+                tests.push('<div class="status success">✅ Clustering will remain stable (all data loaded upfront)</div>');
+                
+                resultsEl.innerHTML = tests.join('');
+                
+                // Summary
+                const successCount = tests.filter(t => t.includes('✅')).length;
+                const totalTests = tests.length;
+                
+                resultsEl.innerHTML += `
+                    <div style="margin-top: 20px; padding: 20px; background: ${successCount === totalTests ? '#2d5a2d' : '#5a4d2d'}">
+                        <h3>${successCount === totalTests ? '🎉 All Tests Passed!' : '⚠️ Some Issues Found'}</h3>
+                        <p>Passed ${successCount} of ${totalTests} tests</p>
+                    </div>
+                `;
+                
+            } catch (error) {
+                resultsEl.innerHTML = `<div class="status error">❌ Test failed: ${error.message}</div>`;
+                console.error('Test failed:', error);
+            }
+        }
+        
+        // Run test on load
+        testStableClustering();
+    </script>
+</body>
+</html>

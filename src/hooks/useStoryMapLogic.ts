@@ -45,8 +45,6 @@ export const useStoryMapLogic = () => {
   const [minDate] = useState<Date>(new Date('1920-01-01'));
   const [maxDate] = useState<Date>(new Date('1945-12-31'));
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [hasMorePages, setHasMorePages] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalItems, setTotalItems] = useState(0);
 
@@ -62,13 +60,12 @@ export const useStoryMapLogic = () => {
         setTotalItems(metadata.totalItems);
         console.log('Total items in database:', metadata.totalItems);
         
-        // Fetch first page of data
-        const response = await fetch('/api/storymaps?page=1&pageSize=200');
+        // Fetch all data at once for stable clustering
+        const response = await fetch('/api/storymaps?page=1&pageSize=3000');
         const result: PaginatedResponse = await response.json();
         
         if (result.data) {
           setEnrichedStories(result.data);
-          setHasMorePages(result.metadata.hasNextPage);
           
           // Convert to GeoJSON format
           const geoFeatures: BusinessFeature[] = result.data.map((story: StoryMap) => ({
@@ -101,66 +98,7 @@ export const useStoryMapLogic = () => {
     fetchInitialData();
   }, []);
   
-  // Load more data in the background
-  useEffect(() => {
-    if (!isLoading && hasMorePages && currentPage === 1) {
-      const loadMoreData = async () => {
-        let page = 2;
-        let allData = [...enrichedStories];
-        
-        while (page <= 20) { // Load up to page 20 in background (4000 items)
-          try {
-            const response = await fetch(`/api/storymaps?page=${page}&pageSize=200`);
-            const result: PaginatedResponse = await response.json();
-            
-            if (result.data && result.data.length > 0) {
-              allData = [...allData, ...result.data];
-              
-              // Update state with accumulated data
-              setEnrichedStories(allData);
-              
-              // Convert new data to GeoJSON
-              const geoFeatures: BusinessFeature[] = allData.map((story: StoryMap) => ({
-                type: 'Feature' as const,
-                geometry: {
-                  type: 'Point' as const,
-                  coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number]
-                },
-                properties: {
-                  name: story.title,
-                  business_type: story.businessType || '',
-                  category: story.category || '',
-                  address: story.address || '',
-                  registration_date: story.startDate || '',
-                  liquidation_date: story.endDate || '',
-                  takeover_date: story.midDate || ''
-                }
-              }));
-              setJewishBusinesses(geoFeatures);
-              
-              if (!result.metadata.hasNextPage) {
-                setHasMorePages(false);
-                break;
-              }
-            }
-            
-            page++;
-            // Small delay between requests
-            await new Promise(resolve => setTimeout(resolve, 500));
-          } catch (error) {
-            console.error(`Error loading page ${page}:`, error);
-            break;
-          }
-        }
-        
-        setCurrentPage(page - 1);
-      };
-      
-      // Start loading more data after a short delay
-      const timer = setTimeout(loadMoreData, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading, hasMorePages, currentPage, enrichedStories]);
+  // Background loading removed - all data loads upfront for stable clustering
 
   // Function to extract business type from story title
   const extractBusinessTypeFromTitle = (title: string): string | undefined => {

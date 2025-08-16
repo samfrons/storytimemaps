@@ -3,8 +3,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json');
-const DEFAULT_PAGE_SIZE = 200;
-const MAX_PAGE_SIZE = 500;
+const DEFAULT_PAGE_SIZE = 3000;  // Load all businesses by default
+const MAX_PAGE_SIZE = 3000;  // Allow loading all at once
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let cachedData: any[] | null = null;
@@ -33,10 +33,8 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get('page') || '1', 10);
-    const pageSize = Math.min(
-      parseInt(searchParams.get('pageSize') || String(DEFAULT_PAGE_SIZE), 10),
-      MAX_PAGE_SIZE
-    );
+    const requestedPageSize = parseInt(searchParams.get('pageSize') || String(DEFAULT_PAGE_SIZE), 10);
+    const pageSize = Math.min(requestedPageSize, MAX_PAGE_SIZE);
     const all = searchParams.get('all') === 'true';
     
     const storyMaps = await getStoryMaps();

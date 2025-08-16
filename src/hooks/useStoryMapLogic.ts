@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { StoryMap } from '../types';
-import { fetchWithCache } from '../utils/fetchWithCache';
 
 interface JewishBusiness {
   name: string;
@@ -23,6 +22,18 @@ interface BusinessFeature {
   properties: JewishBusiness;
 }
 
+interface PaginatedResponse {
+  data: StoryMap[];
+  metadata: {
+    page: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+}
+
 // Marker interface moved inline as needed
 
 export const useStoryMapLogic = () => {
@@ -33,41 +44,123 @@ export const useStoryMapLogic = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date('1920-01-01'));
   const [minDate] = useState<Date>(new Date('1920-01-01'));
   const [maxDate] = useState<Date>(new Date('1945-12-31'));
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMorePages, setHasMorePages] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [totalItems, setTotalItems] = useState(0);
 
+  // Fetch initial page and metadata
   useEffect(() => {
-    // Only fetch from API - no duplicate GeoJSON loading
-    const fetchEnrichedStories = async () => {
+    const fetchInitialData = async () => {
       try {
-        const data = await fetchWithCache('/api/storymaps');
-        setEnrichedStories(data);
+        setIsLoading(true);
         
-        // Convert API data to GeoJSON format for compatibility
-        const geoFeatures = data.map((story: StoryMap) => ({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [story.lng || 13.405, story.lat || 52.52]
-          },
-          properties: {
-            name: story.title,
-            business_type: story.businessType,
-            category: story.category,
-            address: story.address,
-            registration_date: story.startDate,
-            liquidation_date: story.endDate,
-            takeover_date: story.midDate
-          }
-        }));
-        setJewishBusinesses(geoFeatures);
+        // Fetch metadata first
+        const metadataResponse = await fetch('/api/storymaps/metadata');
+        const metadata = await metadataResponse.json();
+        setTotalItems(metadata.totalItems);
+        console.log('Total items in database:', metadata.totalItems);
+        
+        // Fetch first page of data
+        const response = await fetch('/api/storymaps?page=1&pageSize=200');
+        const result: PaginatedResponse = await response.json();
+        
+        if (result.data) {
+          setEnrichedStories(result.data);
+          setHasMorePages(result.metadata.hasNextPage);
+          
+          // Convert to GeoJSON format
+          const geoFeatures: BusinessFeature[] = result.data.map((story: StoryMap) => ({
+            type: 'Feature' as const,
+            geometry: {
+              type: 'Point' as const,
+              coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number]
+            },
+            properties: {
+              name: story.title,
+              business_type: story.businessType || '',
+              category: story.category || '',
+              address: story.address || '',
+              registration_date: story.startDate || '',
+              liquidation_date: story.endDate || '',
+              takeover_date: story.midDate || ''
+            }
+          }));
+          setJewishBusinesses(geoFeatures);
+        }
       } catch (error) {
-        console.error('Error fetching stories:', error);
+        console.error('Error fetching initial data:', error);
         setEnrichedStories([]);
         setJewishBusinesses([]);
+      } finally {
+        setIsLoading(false);
       }
     };
     
-    fetchEnrichedStories();
+    fetchInitialData();
   }, []);
+  
+  // Load more data in the background
+  useEffect(() => {
+    if (!isLoading && hasMorePages && currentPage === 1) {
+      const loadMoreData = async () => {
+        let page = 2;
+        let allData = [...enrichedStories];
+        
+        while (page <= 5) { // Load up to page 5 in background
+          try {
+            const response = await fetch(`/api/storymaps?page=${page}&pageSize=200`);
+            const result: PaginatedResponse = await response.json();
+            
+            if (result.data && result.data.length > 0) {
+              allData = [...allData, ...result.data];
+              
+              // Update state with accumulated data
+              setEnrichedStories(allData);
+              
+              // Convert new data to GeoJSON
+              const geoFeatures: BusinessFeature[] = allData.map((story: StoryMap) => ({
+                type: 'Feature' as const,
+                geometry: {
+                  type: 'Point' as const,
+                  coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number]
+                },
+                properties: {
+                  name: story.title,
+                  business_type: story.businessType || '',
+                  category: story.category || '',
+                  address: story.address || '',
+                  registration_date: story.startDate || '',
+                  liquidation_date: story.endDate || '',
+                  takeover_date: story.midDate || ''
+                }
+              }));
+              setJewishBusinesses(geoFeatures);
+              
+              if (!result.metadata.hasNextPage) {
+                setHasMorePages(false);
+                break;
+              }
+            }
+            
+            page++;
+            // Small delay between requests
+            await new Promise(resolve => setTimeout(resolve, 500));
+          } catch (error) {
+            console.error(`Error loading page ${page}:`, error);
+            break;
+          }
+        }
+        
+        setCurrentPage(page - 1);
+      };
+      
+      // Start loading more data after a short delay
+      const timer = setTimeout(loadMoreData, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, hasMorePages, currentPage, enrichedStories]);
 
   // Function to extract business type from story title
   const extractBusinessTypeFromTitle = (title: string): string | undefined => {
@@ -229,6 +322,7 @@ export const useStoryMapLogic = () => {
     handleMarkerClick,
     testMarkers,
     setActiveStoryId,
+    isLoading
   };
 };
 

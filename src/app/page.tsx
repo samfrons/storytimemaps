@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import StoryList from './components/StoryList';
+import LoadingSkeleton from './components/LoadingSkeleton';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
 import { useIsMounted } from '../hooks/useIsMounted';
 
@@ -43,6 +44,12 @@ function MapPage() {
     const themeParam = searchParams.get('theme');
     if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
       setTheme(themeParam);
+    } else if (!themeParam) {
+      // If no theme parameter, set it to moody (the default)
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('theme', 'moody');
+      const queryString = params.toString();
+      router.replace(queryString ? `/?${queryString}` : '/?theme=moody', { scroll: false });
     }
     
     // Check sessionStorage for intro (only if no about param)
@@ -52,7 +59,7 @@ function MapPage() {
         setShowIntro(false);
       }
     }
-  }, [searchParams, mounted, setTheme]);
+  }, [searchParams, mounted, setTheme, router]);
   const {
     visibleStories,
     activeStoryId,
@@ -62,7 +69,8 @@ function MapPage() {
     setCurrentDate,
     handleMarkerClick,
     testMarkers,
-    setActiveStoryId
+    setActiveStoryId,
+    isLoading
   } = useStoryMapLogic();
 
 
@@ -79,7 +87,8 @@ function MapPage() {
     }
     
     if (updates.theme !== undefined) {
-      if (updates.theme && updates.theme !== 'moody') {
+      // Always show theme in URL, including moody
+      if (updates.theme) {
         params.set('theme', updates.theme);
       } else {
         params.delete('theme');
@@ -126,8 +135,8 @@ function MapPage() {
   };
 
   const goHome = () => {
-    // Navigate to root URL (clears all params)
-    router.push('/');
+    // Navigate to root URL with moody theme
+    router.push('/?theme=moody');
     setShowIntro(true);
     setShowInfo(false);
     // Clear the intro seen flag when user explicitly clicks home
@@ -138,7 +147,11 @@ function MapPage() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
-      {/* Main Layout with Sidebar, StoryList and Map */}
+      {/* Show loading skeleton while data is loading */}
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+      /* Main Layout with Sidebar, StoryList and Map */
       <div className="flex flex-col md:flex-row h-screen">
           {/* Desktop Sidebar Navigation - Hidden on mobile */}
           <div className="hidden md:flex md:w-16 md:h-full flex-shrink-0 flex-col items-center py-6 gap-4 relative backdrop-blur-sm hot-sidebar" 
@@ -265,6 +278,7 @@ function MapPage() {
           />
         </div>
       </div>
+      )}
 
       {/* Mobile Hamburger Menu Button */}
       <button

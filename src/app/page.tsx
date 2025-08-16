@@ -32,9 +32,15 @@ function MapPage() {
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [isThemeSwitching, setIsThemeSwitching] = useState(false); // Prevent rapid theme changes
   
-  // Handle URL parameters for info panel only
+  // Handle URL parameters for theme and info panel
   useEffect(() => {
     if (!mounted) return;
+    
+    // Check for theme parameter
+    const themeParam = searchParams.get('theme');
+    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
+      setTheme(themeParam);
+    }
     
     // Check for about parameter
     const aboutParam = searchParams.get('about');
@@ -44,11 +50,11 @@ function MapPage() {
       setIntroExplicitlyClosed(true); // Mark as explicitly closed
     }
     
-    // Show intro only if not explicitly closed
+    // Show intro only if not explicitly closed and no parameters
     if (!introExplicitlyClosed && searchParams.toString() === '') {
       setShowIntro(true);
     }
-  }, [searchParams, mounted, introExplicitlyClosed]);
+  }, [searchParams, mounted, setTheme, introExplicitlyClosed]);
   const {
     visibleStories,
     activeStoryId,
@@ -64,7 +70,7 @@ function MapPage() {
 
 
   // Helper function to update URL parameters
-  const updateURLParams = useCallback((updates: { about?: boolean }) => {
+  const updateURLParams = useCallback((updates: { about?: boolean; theme?: string }) => {
     const params = new URLSearchParams(searchParams.toString());
     
     if (updates.about !== undefined) {
@@ -72,6 +78,14 @@ function MapPage() {
         params.set('about', 'true');
       } else {
         params.delete('about');
+      }
+    }
+    
+    if (updates.theme !== undefined) {
+      if (updates.theme) {
+        params.set('theme', updates.theme);
+      } else {
+        params.delete('theme');
       }
     }
     
@@ -95,6 +109,8 @@ function MapPage() {
     try {
       requestAnimationFrame(() => {
         setTheme(newTheme);
+        // Update URL with new theme
+        updateURLParams({ theme: newTheme });
         // Reset switching state after transition
         setTimeout(() => setIsThemeSwitching(false), 200);
       });
@@ -103,8 +119,9 @@ function MapPage() {
       setIsThemeSwitching(false);
       // Fallback to moody theme on error
       setTheme('moody');
+      updateURLParams({ theme: 'moody' });
     }
-  }, [mounted, isThemeSwitching, theme, setTheme]);
+  }, [mounted, isThemeSwitching, theme, setTheme, updateURLParams]);
 
   const handleLetsGo = useCallback(() => {
     setShowIntro(false);
@@ -115,21 +132,24 @@ function MapPage() {
   const toggleInfo = useCallback(() => {
     const newShowInfo = !showInfo;
     setShowInfo(newShowInfo);
-    updateURLParams({ about: newShowInfo });
+    // Preserve theme when toggling info
+    const currentTheme = theme || 'moody';
+    updateURLParams({ about: newShowInfo, theme: currentTheme });
     
     if (showIntro) {
       setShowIntro(false);
       setIntroExplicitlyClosed(true); // Mark as explicitly closed
     }
-  }, [showInfo, showIntro, updateURLParams]);
+  }, [showInfo, showIntro, theme, updateURLParams]);
 
   const goHome = useCallback(() => {
-    // Navigate to root URL without forcing a theme
-    router.push('/');
+    // Navigate to root URL preserving current theme
+    const currentTheme = theme || 'moody';
+    router.push(`/?theme=${currentTheme}`, { scroll: false });
     setShowIntro(true);
     setIntroExplicitlyClosed(false); // Reset so intro shows when home is clicked
     setShowInfo(false);
-  }, [router]);
+  }, [router, theme]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
@@ -598,7 +618,9 @@ function MapPage() {
             <button
               onClick={() => {
                 setShowInfo(false);
-                updateURLParams({ about: false });
+                // Preserve theme when closing info panel
+                const currentTheme = theme || 'moody';
+                updateURLParams({ about: false, theme: currentTheme });
               }}
               className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-all duration-200 hover:scale-110"
               style={{

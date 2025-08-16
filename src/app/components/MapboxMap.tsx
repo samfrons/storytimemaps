@@ -947,7 +947,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                        theme === 'cool' || theme === 'cold' ? '0 2px 6px rgba(0,0,0,0.1)' :
                        '0 2px 6px rgba(0,0,0,0.2)',
             letterSpacing: theme === 'bauhaus' ? '0.1em' : 'normal',
-            opacity: isHovered ? 1 : (popupInfo && popupInfo.properties.id !== properties.id ? 0.7 : 0.9),
+            opacity: isHovered ? 1 : (popupInfo && popupInfo.properties.id !== properties.id ? 0.8 : 0.9),
             transition: 'all 200ms ease-in-out',
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
             pointerEvents: 'auto'

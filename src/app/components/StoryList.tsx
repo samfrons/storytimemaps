@@ -183,7 +183,31 @@ const StoryList: React.FC<StoryListProps> = ({
   const [displayCount, setDisplayCount] = useState(50);
   const filteredStories = allFilteredStories.slice(0, displayCount);
   
-  // Load more handler
+  // Progressive background loading
+  useEffect(() => {
+    if (displayCount < allFilteredStories.length) {
+      const timer = setTimeout(() => {
+        setDisplayCount(prev => {
+          const nextCount = Math.min(prev + 100, allFilteredStories.length);
+          return nextCount;
+        });
+      }, 500); // Load 100 more after 500ms
+      return () => clearTimeout(timer);
+    }
+  }, [displayCount, allFilteredStories.length]);
+  
+  // Handle marker click - ensure story is loaded
+  useEffect(() => {
+    if (activeStoryId) {
+      const index = allFilteredStories.findIndex(s => s.id === activeStoryId);
+      if (index >= displayCount && index !== -1) {
+        // Load up to the clicked item plus some buffer
+        setDisplayCount(Math.min(index + 20, allFilteredStories.length));
+      }
+    }
+  }, [activeStoryId, allFilteredStories, displayCount]);
+  
+  // Load more handler (for manual loading if needed)
   const loadMore = () => {
     setDisplayCount(prev => Math.min(prev + 50, allFilteredStories.length));
   };

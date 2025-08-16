@@ -21,8 +21,8 @@ const spaceMono = Space_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'StoryMap Cluster',
-  description: 'Interactive story map with clustering',
+  title: 'Jewish Businesses in Berlin 1900-1945',
+  description: 'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#4a4a57' }

@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useTheme } from 'next-themes';
+import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import StoryList from './components/StoryList';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
+import { useIsMounted } from '../hooks/useIsMounted';
 
 const MapboxMap = dynamic(() => import('./components/MapboxMap'), { 
   ssr: false,
@@ -15,23 +17,42 @@ const MapboxMap = dynamic(() => import('./components/MapboxMap'), {
   )
 });
 
-export default function OverlayTestPage() {
+function MapPage() {
   const { theme, setTheme } = useTheme();
+  const mounted = useIsMounted();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [showIntro, setShowIntro] = useState(true);
-
-  // Check sessionStorage on mount to see if intro was already seen in this session
+  const [showInfo, setShowInfo] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showThemeMenu, setShowThemeMenu] = useState(false);
+  
+  // Sync with URL parameters on mount and when they change
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (!mounted) return;
+    
+    // Check for about parameter
+    const aboutParam = searchParams.get('about');
+    if (aboutParam === 'true') {
+      setShowInfo(true);
+      setShowIntro(false);
+    }
+    
+    // Check for theme parameter
+    const themeParam = searchParams.get('theme');
+    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
+      setTheme(themeParam);
+    }
+    
+    // Check sessionStorage for intro (only if no about param)
+    if (aboutParam !== 'true' && typeof window !== 'undefined') {
       const introSeen = sessionStorage.getItem('introSeen');
       if (introSeen === 'true') {
         setShowIntro(false);
       }
     }
-  }, []);
-
-  const [showInfo, setShowInfo] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [showThemeMenu, setShowThemeMenu] = useState(false);
+  }, [searchParams, mounted, setTheme]);
   const {
     visibleStories,
     activeStoryId,
@@ -45,13 +66,40 @@ export default function OverlayTestPage() {
   } = useStoryMapLogic();
 
 
+  // Helper function to update URL parameters
+  const updateURLParams = useCallback((updates: { about?: boolean; theme?: string }) => {
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if (updates.about !== undefined) {
+      if (updates.about) {
+        params.set('about', 'true');
+      } else {
+        params.delete('about');
+      }
+    }
+    
+    if (updates.theme !== undefined) {
+      if (updates.theme && updates.theme !== 'moody') {
+        params.set('theme', updates.theme);
+      } else {
+        params.delete('theme');
+      }
+    }
+    
+    const queryString = params.toString();
+    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+  }, [router, searchParams]);
+
   const handleStoryClick = (storyId: string) => {
     setActiveStoryId(storyId);
     handleMarkerClick(storyId);
   };
 
   const handleThemeSwitch = (newTheme: string) => {
+    if (!mounted) return;
     setShowThemeMenu(false);
+    // Update URL and theme
+    updateURLParams({ theme: newTheme });
     setTheme(newTheme);
   };
 
@@ -64,7 +112,10 @@ export default function OverlayTestPage() {
   };
 
   const toggleInfo = () => {
-    setShowInfo(!showInfo);
+    const newShowInfo = !showInfo;
+    setShowInfo(newShowInfo);
+    updateURLParams({ about: newShowInfo });
+    
     if (showIntro) {
       setShowIntro(false);
       // Remember that intro has been seen in this session
@@ -75,6 +126,8 @@ export default function OverlayTestPage() {
   };
 
   const goHome = () => {
+    // Navigate to root URL (clears all params)
+    router.push('/');
     setShowIntro(true);
     setShowInfo(false);
     // Clear the intro seen flag when user explicitly clicks home
@@ -121,20 +174,20 @@ export default function OverlayTestPage() {
                   <button
                     key={themeName}
                     onClick={() => handleThemeSwitch(themeName)}
-                    className={`w-full px-3 py-2 text-left text-xs font-mono transition-all capitalize ${theme === themeName ? 'dropdown-active' : ''}`}
+                    className={`w-full px-3 py-2 text-left text-xs font-mono transition-all capitalize ${mounted && theme === themeName ? 'dropdown-active' : ''}`}
                     style={{
-                      backgroundColor: theme === themeName ? 'var(--primary)' : 'transparent',
-                      color: theme === themeName ? 'var(--background)' : 'var(--foreground)',
-                      borderLeft: theme === themeName ? '2px solid var(--primary)' : '2px solid transparent'
+                      backgroundColor: mounted && theme === themeName ? 'var(--primary)' : 'transparent',
+                      color: mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
+                      borderLeft: mounted && theme === themeName ? '2px solid var(--primary)' : '2px solid transparent'
                     }}
                     onMouseEnter={(e) => {
-                      if (theme !== themeName) {
+                      if (!mounted || theme !== themeName) {
                         e.currentTarget.style.backgroundColor = 'var(--muted)';
                         e.currentTarget.style.color = 'var(--primary)';
                       }
                     }}
                     onMouseLeave={(e) => {
-                      if (theme !== themeName) {
+                      if (!mounted || theme !== themeName) {
                         e.currentTarget.style.backgroundColor = 'transparent';
                         e.currentTarget.style.color = 'var(--foreground)';
                       }
@@ -316,18 +369,18 @@ export default function OverlayTestPage() {
               }}
               className={`w-full px-3 py-2 text-left text-xs font-mono transition-all capitalize`}
               style={{
-                backgroundColor: theme === themeName ? 'var(--primary)' : 'transparent',
-                color: theme === themeName ? 'var(--background)' : 'var(--foreground)',
-                borderLeft: theme === themeName ? '2px solid var(--primary)' : '2px solid transparent'
+                backgroundColor: mounted && theme === themeName ? 'var(--primary)' : 'transparent',
+                color: mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
+                borderLeft: mounted && theme === themeName ? '2px solid var(--primary)' : '2px solid transparent'
               }}
               onMouseEnter={(e) => {
-                if (theme !== themeName) {
+                if (!mounted || theme !== themeName) {
                   e.currentTarget.style.backgroundColor = 'var(--muted)';
                   e.currentTarget.style.color = 'var(--primary)';
                 }
               }}
               onMouseLeave={(e) => {
-                if (theme !== themeName) {
+                if (!mounted || theme !== themeName) {
                   e.currentTarget.style.backgroundColor = 'transparent';
                   e.currentTarget.style.color = 'var(--foreground)';
                 }
@@ -463,7 +516,10 @@ export default function OverlayTestPage() {
           <div className="p-8">
             {/* Close button */}
             <button
-              onClick={() => setShowInfo(false)}
+              onClick={() => {
+                setShowInfo(false);
+                updateURLParams({ about: false });
+              }}
               className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors hover:opacity-80"
               style={{
                 backgroundColor: 'var(--input-bg)',
@@ -597,5 +653,17 @@ export default function OverlayTestPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function OverlayTestPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
+        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading...</div>
+      </div>
+    }>
+      <MapPage />
+    </Suspense>
   );
 }

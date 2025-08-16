@@ -45,10 +45,10 @@ export default function ThemePage({ params }: ThemePageProps) {
   useEffect(() => {
     const validThemes = ['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau'];
     
-    params.then(({ theme }) => {
-      if (validThemes.includes(theme)) {
-        setTheme(theme);
-        setThemeParam(theme);
+    params.then((resolvedParams) => {
+      if (validThemes.includes(resolvedParams.theme)) {
+        setTheme(resolvedParams.theme);
+        setThemeParam(resolvedParams.theme);
       } else {
         notFound();
       }

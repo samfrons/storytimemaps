@@ -207,10 +207,6 @@ const StoryList: React.FC<StoryListProps> = ({
     }
   }, [activeStoryId, allFilteredStories, displayCount]);
   
-  // Load more handler (for manual loading if needed)
-  const loadMore = () => {
-    setDisplayCount(prev => Math.min(prev + 50, allFilteredStories.length));
-  };
 
   const getStatusColor = (story: StoryMap) => {
     const now = currentDate.getTime();

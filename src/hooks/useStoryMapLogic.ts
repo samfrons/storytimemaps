@@ -108,7 +108,7 @@ export const useStoryMapLogic = () => {
         let page = 2;
         let allData = [...enrichedStories];
         
-        while (page <= 5) { // Load up to page 5 in background
+        while (page <= 20) { // Load up to page 20 in background (4000 items)
           try {
             const response = await fetch(`/api/storymaps?page=${page}&pageSize=200`);
             const result: PaginatedResponse = await response.json();

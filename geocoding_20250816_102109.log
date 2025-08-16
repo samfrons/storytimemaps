@@ -1,0 +1,159 @@
+2025-08-16 10:21:09,082 - INFO - Starting geocoding process...
+2025-08-16 10:21:09,084 - INFO - Backup created: /Users/samfrons/Desktop/storymaps/data/storymaps.json.backup_20250816_102109
+2025-08-16 10:21:09,092 - INFO - Loaded 4000 entries
+2025-08-16 10:21:09,093 - INFO - Found 1255 entries needing geocoding
+2025-08-16 10:21:09,093 - INFO - Processing 395 unique addresses
+2025-08-16 10:21:09,093 - INFO - Processing address 1/395: Lothringer Str. 81, Berlin
+2025-08-16 10:21:17,212 - WARNING - Failed to geocode: Lothringer Str. 81, Berlin
+2025-08-16 10:21:17,212 - ERROR - Failed to geocode address: Lothringer Str. 81, Berlin
+2025-08-16 10:21:17,212 - INFO - Processing address 2/395: Probststr. 10/11, Berlin
+2025-08-16 10:21:26,370 - WARNING - Failed to geocode: Probststr. 10/11, Berlin
+2025-08-16 10:21:26,370 - ERROR - Failed to geocode address: Probststr. 10/11, Berlin
+2025-08-16 10:21:26,370 - INFO - Processing address 3/395: 22, Berlin
+2025-08-16 10:21:26,370 - WARNING - Incomplete address detected: 22, Berlin
+2025-08-16 10:21:26,370 - ERROR - Failed to geocode address: 22, Berlin
+2025-08-16 10:21:26,370 - INFO - Processing address 4/395: 128, Berlin
+2025-08-16 10:21:26,370 - WARNING - Incomplete address detected: 128, Berlin
+2025-08-16 10:21:26,370 - ERROR - Failed to geocode address: 128, Berlin
+2025-08-16 10:21:26,370 - INFO - Processing address 5/395: 81, Berlin
+2025-08-16 10:21:26,370 - WARNING - Incomplete address detected: 81, Berlin
+2025-08-16 10:21:26,370 - ERROR - Failed to geocode address: 81, Berlin
+2025-08-16 10:21:26,370 - INFO - Processing address 6/395: Harzburgstr. 3, Berlin
+2025-08-16 10:21:31,616 - WARNING - Failed to geocode: Harzburgstr. 3, Berlin
+2025-08-16 10:21:31,616 - ERROR - Failed to geocode address: Harzburgstr. 3, Berlin
+2025-08-16 10:21:31,616 - INFO - Processing address 7/395: 109, Berlin
+2025-08-16 10:21:31,616 - WARNING - Incomplete address detected: 109, Berlin
+2025-08-16 10:21:31,616 - ERROR - Failed to geocode address: 109, Berlin
+2025-08-16 10:21:31,616 - INFO - Processing address 8/395: Bischofstr. 2/3, Berlin
+2025-08-16 10:21:38,494 - WARNING - Failed to geocode: Bischofstr. 2/3, Berlin
+2025-08-16 10:21:38,494 - ERROR - Failed to geocode address: Bischofstr. 2/3, Berlin
+2025-08-16 10:21:38,494 - INFO - Processing address 9/395: 46, Berlin
+2025-08-16 10:21:38,494 - WARNING - Incomplete address detected: 46, Berlin
+2025-08-16 10:21:38,494 - ERROR - Failed to geocode address: 46, Berlin
+2025-08-16 10:21:38,494 - INFO - Processing address 10/395: 105, Berlin
+2025-08-16 10:21:38,494 - WARNING - Incomplete address detected: 105, Berlin
+2025-08-16 10:21:38,494 - ERROR - Failed to geocode address: 105, Berlin
+2025-08-16 10:21:38,494 - INFO - Processing address 11/395: Maikowskistr.  69, Berlin
+2025-08-16 10:21:43,800 - WARNING - Failed to geocode: Maikowskistr.  69, Berlin
+2025-08-16 10:21:43,800 - ERROR - Failed to geocode address: Maikowskistr.  69, Berlin
+2025-08-16 10:21:43,800 - INFO - Processing address 12/395: Kottbusser Ufer 43, Berlin
+2025-08-16 10:21:52,402 - WARNING - Failed to geocode: Kottbusser Ufer 43, Berlin
+2025-08-16 10:21:52,402 - ERROR - Failed to geocode address: Kottbusser Ufer 43, Berlin
+2025-08-16 10:21:52,402 - INFO - Processing address 13/395: 6, Berlin
+2025-08-16 10:21:52,402 - WARNING - Incomplete address detected: 6, Berlin
+2025-08-16 10:21:52,402 - ERROR - Failed to geocode address: 6, Berlin
+2025-08-16 10:21:52,402 - INFO - Processing address 14/395: 17, Berlin
+2025-08-16 10:21:52,402 - WARNING - Incomplete address detected: 17, Berlin
+2025-08-16 10:21:52,402 - ERROR - Failed to geocode address: 17, Berlin
+2025-08-16 10:21:52,402 - INFO - Processing address 15/395: und 132/137, Berlin
+2025-08-16 10:22:00,853 - WARNING - Failed to geocode: und 132/137, Berlin
+2025-08-16 10:22:00,853 - ERROR - Failed to geocode address: und 132/137, Berlin
+2025-08-16 10:22:00,853 - INFO - Processing address 16/395: 4, Berlin
+2025-08-16 10:22:00,854 - WARNING - Incomplete address detected: 4, Berlin
+2025-08-16 10:22:00,854 - ERROR - Failed to geocode address: 4, Berlin
+2025-08-16 10:22:00,854 - INFO - Processing address 17/395: Matthaikirchstr. 10, Berlin
+2025-08-16 10:22:06,836 - WARNING - Failed to geocode: Matthaikirchstr. 10, Berlin
+2025-08-16 10:22:06,836 - ERROR - Failed to geocode address: Matthaikirchstr. 10, Berlin
+2025-08-16 10:22:06,837 - INFO - Processing address 18/395: Segelfliederdamm 27, Berlin
+2025-08-16 10:22:12,098 - WARNING - Failed to geocode: Segelfliederdamm 27, Berlin
+2025-08-16 10:22:12,098 - ERROR - Failed to geocode address: Segelfliederdamm 27, Berlin
+2025-08-16 10:22:12,098 - INFO - Processing address 19/395: 3, Berlin
+2025-08-16 10:22:12,098 - WARNING - Incomplete address detected: 3, Berlin
+2025-08-16 10:22:12,098 - ERROR - Failed to geocode address: 3, Berlin
+2025-08-16 10:22:12,098 - INFO - Processing address 20/395: 9, Berlin
+2025-08-16 10:22:12,098 - WARNING - Incomplete address detected: 9, Berlin
+2025-08-16 10:22:12,098 - ERROR - Failed to geocode address: 9, Berlin
+2025-08-16 10:22:12,098 - INFO - Processing address 21/395: 97, Berlin
+2025-08-16 10:22:12,098 - WARNING - Incomplete address detected: 97, Berlin
+2025-08-16 10:22:12,098 - ERROR - Failed to geocode address: 97, Berlin
+2025-08-16 10:22:12,098 - INFO - Processing address 22/395: 79, Berlin
+2025-08-16 10:22:12,098 - WARNING - Incomplete address detected: 79, Berlin
+2025-08-16 10:22:12,098 - ERROR - Failed to geocode address: 79, Berlin
+2025-08-16 10:22:12,098 - INFO - Processing address 23/395: Gollnowstr.  11, Berlin
+2025-08-16 10:22:18,041 - WARNING - Failed to geocode: Gollnowstr.  11, Berlin
+2025-08-16 10:22:18,041 - ERROR - Failed to geocode address: Gollnowstr.  11, Berlin
+2025-08-16 10:22:18,041 - INFO - Processing address 24/395: 96, Berlin
+2025-08-16 10:22:18,042 - WARNING - Incomplete address detected: 96, Berlin
+2025-08-16 10:22:18,042 - ERROR - Failed to geocode address: 96, Berlin
+2025-08-16 10:22:18,042 - INFO - Processing address 25/395: 75, Berlin
+2025-08-16 10:22:18,042 - WARNING - Incomplete address detected: 75, Berlin
+2025-08-16 10:22:18,042 - ERROR - Failed to geocode address: 75, Berlin
+2025-08-16 10:22:18,042 - INFO - Processing address 26/395: 39, Berlin
+2025-08-16 10:22:18,042 - WARNING - Incomplete address detected: 39, Berlin
+2025-08-16 10:22:18,042 - ERROR - Failed to geocode address: 39, Berlin
+2025-08-16 10:22:18,042 - INFO - Processing address 27/395: 15, Berlin
+2025-08-16 10:22:18,042 - WARNING - Incomplete address detected: 15, Berlin
+2025-08-16 10:22:18,042 - ERROR - Failed to geocode address: 15, Berlin
+2025-08-16 10:22:18,042 - INFO - Processing address 28/395: 34, Berlin
+2025-08-16 10:22:18,042 - WARNING - Incomplete address detected: 34, Berlin
+2025-08-16 10:22:18,042 - ERROR - Failed to geocode address: 34, Berlin
+2025-08-16 10:22:18,042 - INFO - Processing address 29/395: 92, Berlin
+2025-08-16 10:22:18,042 - WARNING - Incomplete address detected: 92, Berlin
+2025-08-16 10:22:18,042 - ERROR - Failed to geocode address: 92, Berlin
+2025-08-16 10:22:18,042 - INFO - Processing address 30/395: Weissenburgstr. 16, Berlin
+2025-08-16 10:22:24,275 - WARNING - Failed to geocode: Weissenburgstr. 16, Berlin
+2025-08-16 10:22:24,275 - ERROR - Failed to geocode address: Weissenburgstr. 16, Berlin
+2025-08-16 10:22:24,275 - INFO - Processing address 31/395: 13, Berlin
+2025-08-16 10:22:24,275 - WARNING - Incomplete address detected: 13, Berlin
+2025-08-16 10:22:24,275 - ERROR - Failed to geocode address: 13, Berlin
+2025-08-16 10:22:24,275 - INFO - Processing address 32/395: Allensteinerstr. 39, Berlin
+2025-08-16 10:22:30,098 - WARNING - Failed to geocode: Allensteinerstr. 39, Berlin
+2025-08-16 10:22:30,098 - ERROR - Failed to geocode address: Allensteinerstr. 39, Berlin
+2025-08-16 10:22:30,098 - INFO - Processing address 33/395: 2, Berlin
+2025-08-16 10:22:30,098 - WARNING - Incomplete address detected: 2, Berlin
+2025-08-16 10:22:30,098 - ERROR - Failed to geocode address: 2, Berlin
+2025-08-16 10:22:30,098 - INFO - Processing address 34/395: Saarlandstr.  52, Berlin
+2025-08-16 10:22:36,097 - WARNING - Failed to geocode: Saarlandstr.  52, Berlin
+2025-08-16 10:22:36,097 - ERROR - Failed to geocode address: Saarlandstr.  52, Berlin
+2025-08-16 10:22:36,097 - INFO - Processing address 35/395: 1, Berlin
+2025-08-16 10:22:36,097 - WARNING - Incomplete address detected: 1, Berlin
+2025-08-16 10:22:36,097 - ERROR - Failed to geocode address: 1, Berlin
+2025-08-16 10:22:36,097 - INFO - Processing address 36/395: 125, Berlin
+2025-08-16 10:22:36,097 - WARNING - Incomplete address detected: 125, Berlin
+2025-08-16 10:22:36,097 - ERROR - Failed to geocode address: 125, Berlin
+2025-08-16 10:22:36,097 - INFO - Processing address 37/395: 91, Berlin
+2025-08-16 10:22:36,097 - WARNING - Incomplete address detected: 91, Berlin
+2025-08-16 10:22:36,097 - ERROR - Failed to geocode address: 91, Berlin
+2025-08-16 10:22:36,097 - INFO - Processing address 38/395: 16, Berlin
+2025-08-16 10:22:36,097 - WARNING - Incomplete address detected: 16, Berlin
+2025-08-16 10:22:36,097 - ERROR - Failed to geocode address: 16, Berlin
+2025-08-16 10:22:36,098 - INFO - Processing address 39/395: Bischofstr. 25/26, Berlin
+2025-08-16 10:22:42,877 - WARNING - Failed to geocode: Bischofstr. 25/26, Berlin
+2025-08-16 10:22:42,877 - ERROR - Failed to geocode address: Bischofstr. 25/26, Berlin
+2025-08-16 10:22:42,877 - INFO - Processing address 40/395: 86, Berlin
+2025-08-16 10:22:42,877 - WARNING - Incomplete address detected: 86, Berlin
+2025-08-16 10:22:42,877 - ERROR - Failed to geocode address: 86, Berlin
+2025-08-16 10:22:42,877 - INFO - Processing address 41/395: 62, Berlin
+2025-08-16 10:22:42,877 - WARNING - Incomplete address detected: 62, Berlin
+2025-08-16 10:22:42,877 - ERROR - Failed to geocode address: 62, Berlin
+2025-08-16 10:22:42,877 - INFO - Processing address 42/395: 23, Berlin
+2025-08-16 10:22:42,877 - WARNING - Incomplete address detected: 23, Berlin
+2025-08-16 10:22:42,877 - ERROR - Failed to geocode address: 23, Berlin
+2025-08-16 10:22:42,877 - INFO - Processing address 43/395: 111, Berlin
+2025-08-16 10:22:42,877 - WARNING - Incomplete address detected: 111, Berlin
+2025-08-16 10:22:42,877 - ERROR - Failed to geocode address: 111, Berlin
+2025-08-16 10:22:42,877 - INFO - Processing address 44/395: Meineckestr. 24, Berlin
+2025-08-16 10:22:48,931 - WARNING - Failed to geocode: Meineckestr. 24, Berlin
+2025-08-16 10:22:48,931 - ERROR - Failed to geocode address: Meineckestr. 24, Berlin
+2025-08-16 10:22:48,931 - INFO - Processing address 45/395: Adolf Bielschowski textiles and clothing Oberlandgarten  26, Berlin
+2025-08-16 10:22:54,210 - WARNING - Failed to geocode: Adolf Bielschowski textiles and clothing Oberlandgarten  26, Berlin
+2025-08-16 10:22:54,210 - ERROR - Failed to geocode address: Adolf Bielschowski textiles and clothing Oberlandgarten  26, Berlin
+2025-08-16 10:22:54,210 - INFO - Processing address 46/395: 144, Berlin
+2025-08-16 10:22:54,210 - WARNING - Incomplete address detected: 144, Berlin
+2025-08-16 10:22:54,210 - ERROR - Failed to geocode address: 144, Berlin
+2025-08-16 10:22:54,210 - INFO - Processing address 47/395: 12, Berlin
+2025-08-16 10:22:54,210 - WARNING - Incomplete address detected: 12, Berlin
+2025-08-16 10:22:54,210 - ERROR - Failed to geocode address: 12, Berlin
+2025-08-16 10:22:54,210 - INFO - Processing address 48/395: Langhannsstr.  144, Berlin
+2025-08-16 10:22:59,472 - WARNING - Failed to geocode: Langhannsstr.  144, Berlin
+2025-08-16 10:22:59,473 - ERROR - Failed to geocode address: Langhannsstr.  144, Berlin
+2025-08-16 10:22:59,473 - INFO - Processing address 49/395: 20, Berlin
+2025-08-16 10:22:59,473 - WARNING - Incomplete address detected: 20, Berlin
+2025-08-16 10:22:59,473 - ERROR - Failed to geocode address: 20, Berlin
+2025-08-16 10:22:59,473 - INFO - Processing address 50/395: 35, Berlin
+2025-08-16 10:22:59,473 - WARNING - Incomplete address detected: 35, Berlin
+2025-08-16 10:22:59,473 - ERROR - Failed to geocode address: 35, Berlin
+2025-08-16 10:22:59,473 - INFO - Processing address 51/395: Dellbrückstr. 19, Berlin
+2025-08-16 10:23:06,194 - WARNING - Failed to geocode: Dellbrückstr. 19, Berlin
+2025-08-16 10:23:06,194 - ERROR - Failed to geocode address: Dellbrückstr. 19, Berlin
+2025-08-16 10:23:06,194 - INFO - Processing address 52/395: Marsiliusstr. 7, Berlin

@@ -272,16 +272,67 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }
   
   // Get mobile optimizations
-  const { isMobile, settings } = useMobileOptimizations();
+  const { isMobile } = useMobileOptimizations();
+  
+  // Spatial sampling function for even marker distribution
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const spatialSample = (markers: any[], maxCount: number, bbox: [number, number, number, number]) => {
+    if (markers.length <= maxCount) return markers
+    
+    // Create a spatial grid
+    const gridSize = Math.ceil(Math.sqrt(maxCount))
+    const [west, south, east, north] = bbox
+    const cellWidth = (east - west) / gridSize
+    const cellHeight = (north - south) / gridSize
+    
+    // Group markers by grid cell
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const grid: { [key: string]: any[] } = {}
+    
+    markers.forEach(marker => {
+      const [lng, lat] = marker.geometry.coordinates
+      const col = Math.floor((lng - west) / cellWidth)
+      const row = Math.floor((lat - south) / cellHeight)
+      const key = `${col},${row}`
+      
+      if (!grid[key]) {
+        grid[key] = []
+      }
+      grid[key].push(marker)
+    })
+    
+    // Sample from each cell
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sampled: any[] = []
+    const gridKeys = Object.keys(grid)
+    const markersPerCell = Math.max(1, Math.floor(maxCount / gridKeys.length))
+    
+    gridKeys.forEach(key => {
+      const cellMarkers = grid[key]
+      // Prioritize active businesses
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const sorted = cellMarkers.sort((a: any, b: any) => {
+        const aState = a.properties?.state || 'active'
+        const bState = b.properties?.state || 'active'
+        if (aState === 'active' && bState !== 'active') return -1
+        if (bState === 'active' && aState !== 'active') return 1
+        return 0
+      })
+      
+      sampled.push(...sorted.slice(0, markersPerCell))
+    })
+    
+    return sampled.slice(0, maxCount)
+  }
   
   // Initialize Supercluster for clustering with optimized settings for large datasets
   const supercluster = useMemo(() => {
     const index = new Supercluster({
-      radius: settings.clusterRadius,  // Device-optimized clustering
+      radius: isMobile ? 100 : 60,  // More aggressive clustering on mobile
       maxZoom: isMobile ? 14 : 16,  // Less zoom levels on mobile
-      minPoints: isMobile ? 5 : 3,  // More aggressive clustering on mobile
-      extent: isMobile ? 256 : 512,  // Smaller tiles on mobile
-      nodeSize: isMobile ? 64 : 32  // Optimized for device capability
+      minPoints: isMobile ? 4 : 2,  // Require fewer points for clustering to show more clusters
+      extent: 512,  // Standard tile extent
+      nodeSize: 64  // Standard node size
     })
 
     if (markers.length > 0) {
@@ -301,7 +352,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [markers, isMobile, settings.clusterRadius])
+  }, [markers, isMobile])
 
   // Pre-compute initial markers for fallback with spatial distribution
   const initialMarkers = useMemo(() => {
@@ -366,29 +417,34 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       
       const clusteredMarkers = supercluster.getClusters(bbox, throttledViewport.zoom)
       
-      // Device-optimized marker limiting for better mobile performance
-      const baseMax = settings.maxMarkers
-      const zoomLevel = throttledViewport.zoom
-      let maxMarkers = baseMax
+      // Smart limiting: show ALL clusters, limit only individual markers
+      const processedMarkers = clusteredMarkers.map(marker => {
+        // Always show clusters
+        if (marker.properties?.cluster) {
+          return marker
+        }
+        // For individual markers, apply spatial sampling at high zoom
+        return marker
+      })
       
-      if (isMobile) {
-        // More aggressive limiting on mobile for better performance
-        maxMarkers = zoomLevel > 15 ? Math.min(100, baseMax) : 
-                     zoomLevel > 12 ? Math.min(50, baseMax * 0.5) : 
-                     Math.min(30, baseMax * 0.3)
-      } else {
-        // Desktop scaling
-        maxMarkers = zoomLevel > 15 ? 200 : zoomLevel > 12 ? 100 : 50
+      // At very high zoom levels, limit individual markers spatially
+      if (throttledViewport.zoom > 15) {
+        const maxIndividualMarkers = isMobile ? 50 : 150
+        const clusters = processedMarkers.filter(m => m.properties?.cluster)
+        const individuals = processedMarkers.filter(m => !m.properties?.cluster)
+        
+        // Spatial sampling: spread markers evenly across viewport
+        const sampledIndividuals = spatialSample(individuals, maxIndividualMarkers, bbox)
+        
+        return [...clusters, ...sampledIndividuals]
       }
       
-      const limitedMarkers = clusteredMarkers.slice(0, maxMarkers)
-      
-      return limitedMarkers.length > 0 ? limitedMarkers : initialMarkers.slice(0, 20)
+      return processedMarkers
     } catch (error) {
       console.warn('Error getting clusters:', error)
       return initialMarkers.slice(0, 20)
     }
-  }, [supercluster, throttledViewport, mapLoaded, initialMarkers, isMobile, settings.maxMarkers])
+  }, [supercluster, throttledViewport, mapLoaded, initialMarkers, isMobile])
   
   // Update label priorities when viewport changes - throttled for performance
   useEffect(() => {

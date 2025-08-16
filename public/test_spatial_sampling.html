@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spatial Sampling Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #f0f0f0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 40px);
+            gap: 2px;
+            margin: 20px 0;
+        }
+        .cell {
+            width: 40px;
+            height: 40px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        .cell.has-markers {
+            background: #97d8c0;
+            color: #000;
+        }
+        .stats {
+            margin: 20px 0;
+            padding: 20px;
+            background: #2a2a2a;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            background: #333;
+        }
+        .success {
+            background: #2d5a2d;
+        }
+        .warning {
+            background: #5a4d2d;
+        }
+        .error {
+            background: #5a2d2d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spatial Sampling Verification</h1>
+    <div class="status" id="loading">Loading business data...</div>
+    
+    <div class="stats" id="stats"></div>
+    
+    <h2>Spatial Distribution Grid (10x10)</h2>
+    <div class="grid" id="grid"></div>
+    
+    <div class="stats" id="results"></div>
+
+    <script>
+        async function testSpatialDistribution() {
+            const statusEl = document.getElementById('loading');
+            const statsEl = document.getElementById('stats');
+            const gridEl = document.getElementById('grid');
+            const resultsEl = document.getElementById('results');
+            
+            try {
+                // Fetch business data
+                statusEl.textContent = 'Fetching business data...';
+                const response = await fetch('/api/storymaps?page=1&pageSize=3000');
+                const data = await response.json();
+                
+                if (!data.data) {
+                    throw new Error('No data received');
+                }
+                
+                const businesses = data.data;
+                statusEl.className = 'status success';
+                statusEl.textContent = `Loaded ${businesses.length} businesses`;
+                
+                // Calculate bounds
+                const lats = businesses.map(b => b.lat).filter(lat => lat);
+                const lngs = businesses.map(b => b.lng).filter(lng => lng);
+                
+                const bounds = {
+                    minLat: Math.min(...lats),
+                    maxLat: Math.max(...lats),
+                    minLng: Math.min(...lngs),
+                    maxLng: Math.max(...lngs)
+                };
+                
+                // Create spatial grid (10x10)
+                const gridSize = 10;
+                const latStep = (bounds.maxLat - bounds.minLat) / gridSize;
+                const lngStep = (bounds.maxLng - bounds.minLng) / gridSize;
+                
+                // Count businesses in each grid cell
+                const grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(0));
+                
+                businesses.forEach(business => {
+                    if (business.lat && business.lng) {
+                        const row = Math.floor((business.lat - bounds.minLat) / latStep);
+                        const col = Math.floor((business.lng - bounds.minLng) / lngStep);
+                        
+                        if (row >= 0 && row < gridSize && col >= 0 && col < gridSize) {
+                            grid[row][col]++;
+                        }
+                    }
+                });
+                
+                // Display stats
+                const totalCells = gridSize * gridSize;
+                const occupiedCells = grid.flat().filter(count => count > 0).length;
+                const maxInCell = Math.max(...grid.flat());
+                const avgPerCell = businesses.length / totalCells;
+                const coverage = (occupiedCells / totalCells * 100).toFixed(1);
+                
+                statsEl.innerHTML = `
+                    <h3>Distribution Statistics</h3>
+                    <p>Total businesses: ${businesses.length}</p>
+                    <p>Grid cells with businesses: ${occupiedCells}/${totalCells} (${coverage}% coverage)</p>
+                    <p>Max businesses in single cell: ${maxInCell}</p>
+                    <p>Average per cell: ${avgPerCell.toFixed(1)}</p>
+                    <p>Berlin bounds: [${bounds.minLat.toFixed(3)}, ${bounds.minLng.toFixed(3)}] to [${bounds.maxLat.toFixed(3)}, ${bounds.maxLng.toFixed(3)}]</p>
+                `;
+                
+                // Visualize grid
+                gridEl.innerHTML = '';
+                for (let row = gridSize - 1; row >= 0; row--) {
+                    for (let col = 0; col < gridSize; col++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        if (grid[row][col] > 0) {
+                            cell.className += ' has-markers';
+                            cell.textContent = grid[row][col];
+                            // Color intensity based on count
+                            const intensity = Math.min(255, grid[row][col] * 20);
+                            cell.style.background = `rgb(${151 - intensity/2}, ${216 - intensity/4}, ${192 - intensity/3})`;
+                        }
+                        gridEl.appendChild(cell);
+                    }
+                }
+                
+                // Test results
+                const issues = [];
+                
+                if (coverage < 50) {
+                    issues.push(`⚠️ Low coverage: Only ${coverage}% of grid cells have businesses`);
+                }
+                
+                if (maxInCell > avgPerCell * 5) {
+                    issues.push(`⚠️ Uneven distribution: Some cells have ${maxInCell} businesses (5x average)`);
+                }
+                
+                // Check for default coordinates clustering
+                const defaultCoordCount = businesses.filter(b => 
+                    Math.abs(b.lat - 52.52) < 0.001 && Math.abs(b.lng - 13.405) < 0.001
+                ).length;
+                
+                if (defaultCoordCount > 10) {
+                    issues.push(`❌ ${defaultCoordCount} businesses still at default coordinates (52.52, 13.405)`);
+                }
+                
+                resultsEl.innerHTML = `
+                    <h3>Test Results</h3>
+                    ${issues.length === 0 
+                        ? '<p class="status success">✅ Spatial distribution looks good!</p>' 
+                        : issues.map(issue => `<p class="status warning">${issue}</p>`).join('')
+                    }
+                `;
+                
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.textContent = `Error: ${error.message}`;
+                console.error('Test failed:', error);
+            }
+        }
+        
+        // Run test on load
+        testSpatialDistribution();
+    </script>
+</body>
+</html>

@@ -567,6 +567,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 borderColor: story.id === activeStoryId 
                   ? 'currentColor'
                   : 'var(--muted)',
+                borderWidth: theme === 'bauhaus' ? '2px' : '1px',
                 backgroundColor: story.id === activeStoryId ? 'transparent' : 'transparent'
               }}
               onMouseEnter={(e) => {

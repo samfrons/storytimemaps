@@ -80,6 +80,10 @@ These return hex values for Mapbox API compatibility but should still be theme-a
 - Use viewport-based clustering
 - Fade map labels when tooltips are active
 
+## Theming and Routing
+For detailed theming implementation, URL-based theme management, and routing patterns, see:
+**`docs/THEMING_GUIDE.md`** - Comprehensive guide for the theme-consistency-architect agent
+
 ## Code Style Guidelines
 
 ### Component Structure

@@ -1299,7 +1299,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     </p>
                   )}
                   <div 
-                    className="text-xs mt-3 font-bold cursor-pointer"
+                    className="text-xs mt-3 font-bold cursor-pointer uppercase tracking-wide"
                     style={{
                       color: 'inherit',
                       textDecoration: 'underline',

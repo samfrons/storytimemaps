@@ -149,7 +149,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="moody"
-          themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau']}
+          themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival']}
           enableSystem={false}
           enableColorScheme={true}
           disableTransitionOnChange={false}

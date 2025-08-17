@@ -41,7 +41,7 @@ function MapPageContent() {
     
     // Check for theme parameter
     const themeParam = searchParams.get('theme');
-    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
+    if (themeParam && ['moody', 'bauhaus', 'archival', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
       setTheme(themeParam);
     }
     
@@ -198,7 +198,7 @@ function MapPageContent() {
                      backgroundColor: 'var(--dropdown-bg)',
                      borderColor: 'var(--border)'
                    }}>
-                {['moody', 'bauhaus'].map((themeName) => (
+                {['moody', 'bauhaus', 'archival'].map((themeName) => (
                   <button
                     key={themeName}
                     onClick={() => handleThemeSwitch(themeName)}
@@ -542,7 +542,7 @@ function MapPageContent() {
           backgroundColor: 'var(--dropdown-bg)',
           borderColor: 'var(--border)'
         }}>
-          {['moody', 'bauhaus'].map((themeName) => (
+          {['moody', 'bauhaus', 'archival'].map((themeName) => (
             <button
               key={themeName}
               onClick={() => {

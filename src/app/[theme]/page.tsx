@@ -15,7 +15,7 @@ export default function ThemePage({ params }: ThemePageProps) {
   const router = useRouter();
 
   useEffect(() => {
-    const validThemes = ['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau'];
+    const validThemes = ['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival'];
     
     params.then((resolvedParams) => {
       if (validThemes.includes(resolvedParams.theme)) {

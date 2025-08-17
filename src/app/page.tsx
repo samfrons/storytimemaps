@@ -495,6 +495,58 @@ function MapPageContent() {
             </svg>
           </button>
           
+          {/* Stories Mode Button */}
+          <button
+            onClick={() => {
+              setViewMode('stories');
+              if (showIntro) {
+                setShowIntro(false);
+                setIntroExplicitlyClosed(true);
+              }
+              setShowMobileMenu(false);
+            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${viewMode === 'stories' ? 'hot-button-active' : ''}`}
+            style={{
+              backgroundColor: viewMode === 'stories' ? 'var(--success)' : 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: viewMode === 'stories' ? 'var(--background)' : 'var(--foreground)',
+              cursor: 'pointer',
+              fontSize: '10px',
+              fontFamily: 'Space Mono, monospace',
+              fontWeight: '600'
+            }}
+            aria-label="Featured Stories mode"
+            title="Featured Stories (15 detailed narratives)"
+          >
+            15
+          </button>
+          
+          {/* Database Mode Button */}
+          <button
+            onClick={() => {
+              setViewMode('database');
+              if (showIntro) {
+                setShowIntro(false);
+                setIntroExplicitlyClosed(true);
+              }
+              setShowMobileMenu(false);
+            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${viewMode === 'database' ? 'hot-button-active' : ''}`}
+            style={{
+              backgroundColor: viewMode === 'database' ? 'var(--primary)' : 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: viewMode === 'database' ? 'var(--background)' : 'var(--foreground)',
+              cursor: 'pointer',
+              fontSize: '10px',
+              fontFamily: 'Space Mono, monospace',
+              fontWeight: '600'
+            }}
+            aria-label="Historical Database mode"
+            title="Historical Database (10,000+ records)"
+          >
+            DB
+          </button>
+          
           {/* Home Button */}
           <button
             onClick={() => {
@@ -536,56 +588,54 @@ function MapPageContent() {
           </button>
           
           {/* Language Buttons for Mobile */}
-          <div className="flex gap-2 mt-2">
-            <button
-              onClick={() => {
-                if (language !== 'en') {
-                  toggleLanguage();
-                  const params = new URLSearchParams(searchParams.toString());
-                  params.set('lang', 'en');
-                  const queryString = params.toString();
-                  router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
-                }
-                // Don't close mobile menu on language change
-              }}
-              className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
-              style={{
-                backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
-                borderColor: 'var(--border)',
-                color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontFamily: 'Space Mono, monospace'
-              }}
-              aria-label="Switch to English"
-            >
-              EN
-            </button>
-            <button
-              onClick={() => {
-                if (language !== 'de') {
-                  toggleLanguage();
-                  const params = new URLSearchParams(searchParams.toString());
-                  params.set('lang', 'de');
-                  const queryString = params.toString();
-                  router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
-                }
-                // Don't close mobile menu on language change
-              }}
-              className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
-              style={{
-                backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
-                borderColor: 'var(--border)',
-                color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontFamily: 'Space Mono, monospace'
-              }}
-              aria-label="Switch to German"
-            >
-              DE
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              if (language !== 'en') {
+                toggleLanguage();
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('lang', 'en');
+                const queryString = params.toString();
+                router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+              }
+              // Don't close mobile menu on language change
+            }}
+            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
+            style={{
+              backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontFamily: 'Space Mono, monospace'
+            }}
+            aria-label="Switch to English"
+          >
+            EN
+          </button>
+          <button
+            onClick={() => {
+              if (language !== 'de') {
+                toggleLanguage();
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('lang', 'de');
+                const queryString = params.toString();
+                router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+              }
+              // Don't close mobile menu on language change
+            }}
+            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
+            style={{
+              backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontFamily: 'Space Mono, monospace'
+            }}
+            aria-label="Switch to German"
+          >
+            DE
+          </button>
         </div>
       )}
       
@@ -682,19 +732,19 @@ function MapPageContent() {
 
             <div className="relative space-y-8">
               <div>
-                <h1 className="font-kame text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-4" style={{ color: 'var(--foreground)' }}>
+                <h1 className="font-kame text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4" style={{ color: 'var(--foreground)' }}>
                   {t('mainPage.intro.title')}
                 </h1>
-                <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-2xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   {t('mainPage.intro.subtitle')}
                 </p>
               </div>
 
               <div className="space-y-4 max-w-2xl mx-auto">
-                <p className="text-base sm:text-lg md:text-xl leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
                   {t('mainPage.intro.description1')}
                 </p>
-                <p className="text-sm sm:text-base md:text-lg font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                <p className="text-xs sm:text-sm md:text-base font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   {t('mainPage.intro.description2')}
                 </p>
               </div>

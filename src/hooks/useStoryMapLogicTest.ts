@@ -51,43 +51,50 @@ export const useStoryMapLogicTest = () => {
   const [isLoading, setIsLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalItems, setTotalItems] = useState(0);
+  const [viewMode, setViewMode] = useState<'stories' | 'database'>('stories');
+  const [detailedStoriesData, setDetailedStoriesData] = useState<StoryMap[]>([]);
 
-  // Fetch data from the test API endpoint
+  // Fetch data from the test API endpoint based on view mode
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
         
-        // Use the test API endpoint for full dataset
-        const response = await fetch('/api/storymaps-test?all=true');
+        // Fetch both datasets
+        const [fullResponse, storiesResponse] = await Promise.all([
+          fetch('/api/storymaps-test?all=true'),
+          fetch('/api/storymaps-test?all=true&stories=true')
+        ]);
         
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        if (!fullResponse.ok || !storiesResponse.ok) {
+          throw new Error(`HTTP error! status: ${fullResponse.status} or ${storiesResponse.status}`);
         }
         
-        const data = await response.json();
+        const [fullData, storiesData] = await Promise.all([
+          fullResponse.json(),
+          storiesResponse.json()
+        ]);
         
         // Handle both paginated and non-paginated responses
-        const storyMaps = Array.isArray(data) ? data : data.data || [];
+        const fullStoryMaps = Array.isArray(fullData) ? fullData : fullData.data || [];
+        const detailedStories = Array.isArray(storiesData) ? storiesData : storiesData.data || [];
         
-        if (storyMaps.length === 0) {
-          console.warn('No data received from test API. The test dataset may not be ready yet.');
-          setEnrichedStories([]);
-          setVisibleStories([]);
-          setIsLoading(false);
-          return;
-        }
+        console.log(`Loaded ${fullStoryMaps.length} businesses from full test dataset`);
+        console.log(`Loaded ${detailedStories.length} detailed stories`);
         
-        console.log(`Loaded ${storyMaps.length} businesses from test dataset`);
+        // Store both datasets - we'll use them based on mode
+        setEnrichedStories(fullStoryMaps);
+        setTotalItems(fullStoryMaps.length);
         
-        setEnrichedStories(storyMaps);
-        setTotalItems(storyMaps.length);
+        // Store detailed stories count
+        setDetailedStoriesData(detailedStories);
         
       } catch (error) {
         console.error('Error fetching test storymaps data:', error);
         // Set empty data rather than crashing
         setEnrichedStories([]);
         setVisibleStories([]);
+        setDetailedStoriesData([]);
       } finally {
         setIsLoading(false);
       }
@@ -96,11 +103,24 @@ export const useStoryMapLogicTest = () => {
     fetchData();
   }, []);
 
+  // Helper function to check if a business has detailed story content
+  const hasDetailedStory = useCallback((story: StoryMap) => {
+    return !!(story.longDescription && story.longDescription.trim().length > 0);
+  }, []);
+
+  // Filter stories based on view mode
+  const filterStoriesByMode = useCallback((mode: 'stories' | 'database') => {
+    if (mode === 'stories') {
+      return detailedStoriesData; // Return the detailed stories from main dataset
+    }
+    return enrichedStories; // Return all test data for database mode
+  }, [detailedStoriesData, enrichedStories]);
+
   // Filter stories based on current date
   const filterStoriesByDate = useCallback((stories: StoryMap[], date: Date) => {
     return stories.filter(story => {
-      // Handle null startDate
-      if (!story.startDate) return false;
+      // Handle null startDate - include all businesses without dates for the full dataset
+      if (!story.startDate) return true; // Show businesses without dates
       const startDate = new Date(story.startDate);
       const endDate = story.endDate ? new Date(story.endDate) : new Date('1945-12-31');
       
@@ -108,20 +128,21 @@ export const useStoryMapLogicTest = () => {
     });
   }, []);
 
-  // Update visible stories when enriched stories or current date changes
+  // Update visible stories when enriched stories or view mode changes
+  // Remove date filtering for list display - show all stories in the selected mode
   useEffect(() => {
-    if (enrichedStories.length > 0) {
-      const filtered = filterStoriesByDate(enrichedStories, currentDate);
-      setVisibleStories(filtered);
+    if (enrichedStories.length > 0 || detailedStoriesData.length > 0) {
+      const modeFiltered = filterStoriesByMode(viewMode);
+      setVisibleStories(modeFiltered);
     }
-  }, [enrichedStories, currentDate, filterStoriesByDate]);
+  }, [enrichedStories, detailedStoriesData, viewMode, filterStoriesByMode]);
 
-  // Create test markers from ALL stories, not just visible ones
-  // This ensures all businesses are always on the map with proper coordinates
+  // Create test markers based on view mode
   const testMarkers = useMemo(() => {
     const year = currentDate.getFullYear();
+    const modeFiltered = filterStoriesByMode(viewMode);
     
-    return enrichedStories.map((story) => {
+    return modeFiltered.map((story) => {
       // Calculate state based on current date
       let state = 'active';
       const startYear = story.startDate ? new Date(story.startDate).getFullYear() : 1900;
@@ -147,11 +168,16 @@ export const useStoryMapLogicTest = () => {
         endDate: story.endDate ?? undefined
       };
     });
-  }, [enrichedStories, currentDate]);
+  }, [currentDate, viewMode, filterStoriesByMode]);
 
   const handleMarkerClick = useCallback((markerId: string) => {
     setActiveStoryId(markerId);
   }, []);
+
+  // Calculate counts for the mode toggle
+  const storiesWithDetailCount = useMemo(() => {
+    return detailedStoriesData.length;
+  }, [detailedStoriesData]);
 
   return {
     visibleStories,
@@ -165,7 +191,11 @@ export const useStoryMapLogicTest = () => {
     testMarkers,
     setActiveStoryId,
     isLoading,
-    totalItems
+    totalItems,
+    viewMode,
+    setViewMode,
+    storiesWithDetailCount,
+    hasDetailedStory
   };
 };
 

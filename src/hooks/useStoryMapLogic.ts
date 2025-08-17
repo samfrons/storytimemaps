@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { StoryMap } from '../types';
+import { useTranslation } from '../i18n/useTranslation';
 
 interface JewishBusiness {
   name: string;
@@ -37,6 +38,7 @@ interface PaginatedResponse {
 // Marker interface moved inline as needed
 
 export const useStoryMapLogic = () => {
+  const { language } = useTranslation();
   const [jewishBusinesses, setJewishBusinesses] = useState<BusinessFeature[]>([]);
   const [enrichedStories, setEnrichedStories] = useState<StoryMap[]>([]);
   const [visibleStories, setVisibleStories] = useState<StoryMap[]>([]);
@@ -47,48 +49,96 @@ export const useStoryMapLogic = () => {
   const [isLoading, setIsLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalItems, setTotalItems] = useState(0);
+  const [detailedStoriesData, setDetailedStoriesData] = useState<StoryMap[]>([]);
+  const [fullDatabaseData, setFullDatabaseData] = useState<StoryMap[]>([]);
+  const [mode, setMode] = useState<'stories' | 'database'>('stories');
 
-  // Fetch initial page and metadata
+  // Function to load English data from GeoJSON
+  const loadEnglishDataFromGeoJSON = async () => {
+    const response = await fetch('/jewish_businesses.geojson');
+    const geoData = await response.json();
+    
+    return geoData.features.map((feature: any, index: number) => ({
+      id: `geojson_${index + 1}`,
+      title: feature.properties.name,
+      author: "Historical Database",
+      description: feature.properties.description || "",
+      address: feature.properties.address,
+      lat: feature.geometry.coordinates[1],
+      lng: feature.geometry.coordinates[0],
+      startDate: feature.properties.registration_date,
+      endDate: feature.properties.liquidation_date,
+      midDate: feature.properties.takeover_date,
+      category: feature.properties.category || "business",
+      businessType: feature.properties.business_type,
+      state: "active"
+    }));
+  };
+
+  // Fetch both datasets once on initial mount, language-aware
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         setIsLoading(true);
         
-        // Fetch metadata first
-        const metadataResponse = await fetch('/api/storymaps/metadata');
-        const metadata = await metadataResponse.json();
-        setTotalItems(metadata.totalItems);
-        console.log('Total items in database:', metadata.totalItems);
-        
-        // Fetch all data at once for stable clustering
-        const response = await fetch('/api/storymaps?page=1&pageSize=3000');
-        const result: PaginatedResponse = await response.json();
-        
-        if (result.data) {
-          setEnrichedStories(result.data);
-          
-          // Convert to GeoJSON format
-          const geoFeatures: BusinessFeature[] = result.data.map((story: StoryMap) => ({
-            type: 'Feature' as const,
-            geometry: {
-              type: 'Point' as const,
-              coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number]
-            },
-            properties: {
-              name: story.title,
-              business_type: story.businessType || '',
-              category: story.category || '',
-              address: story.address || '',
-              registration_date: story.startDate || '',
-              liquidation_date: story.endDate || '',
-              takeover_date: story.midDate || ''
-            }
-          }));
-          setJewishBusinesses(geoFeatures);
+        // Load stories data (always from main stories file - has English)
+        const storiesResponse = await fetch('/api/storymaps-test?all=true&stories=true');
+        if (!storiesResponse.ok) {
+          throw new Error(`HTTP error! status: ${storiesResponse.status}`);
         }
+        const storiesData = await storiesResponse.json();
+        const storiesDataArray = Array.isArray(storiesData) ? storiesData : storiesData.data || [];
+        
+        let fullDataArray;
+        
+        // Load full dataset based on language
+        if (language === 'en') {
+          // Load English names from GeoJSON
+          console.log('Loading English business names from GeoJSON');
+          fullDataArray = await loadEnglishDataFromGeoJSON();
+        } else {
+          // Load German names from API
+          console.log('Loading German business names from API');
+          const fullResponse = await fetch('/api/storymaps-test?all=true');
+          if (!fullResponse.ok) {
+            throw new Error(`HTTP error! status: ${fullResponse.status}`);
+          }
+          const fullData = await fullResponse.json();
+          fullDataArray = Array.isArray(fullData) ? fullData : fullData.data || [];
+        }
+        
+        console.log(`Loaded ${fullDataArray.length} businesses from full dataset`);
+        console.log(`Loaded ${storiesDataArray.length} detailed stories`);
+        
+        // Store both datasets
+        setFullDatabaseData(fullDataArray);
+        setDetailedStoriesData(storiesDataArray);
+        setEnrichedStories(fullDataArray); // Set initial enriched stories
+        setTotalItems(fullDataArray.length);
+        
+        // Convert full dataset to GeoJSON format (used for both modes)
+        const geoFeatures: BusinessFeature[] = fullDataArray.map((story: StoryMap) => ({
+          type: 'Feature' as const,
+          geometry: {
+            type: 'Point' as const,
+            coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number]
+          },
+          properties: {
+            name: story.title,
+            business_type: story.businessType || '',
+            category: story.category || '',
+            address: story.address || '',
+            registration_date: story.startDate || '',
+            liquidation_date: story.endDate || '',
+            takeover_date: story.midDate || ''
+          }
+        }));
+        setJewishBusinesses(geoFeatures);
       } catch (error) {
         console.error('Error fetching initial data:', error);
         setEnrichedStories([]);
+        setFullDatabaseData([]);
+        setDetailedStoriesData([]);
         setJewishBusinesses([]);
       } finally {
         setIsLoading(false);
@@ -96,7 +146,7 @@ export const useStoryMapLogic = () => {
     };
     
     fetchInitialData();
-  }, []);
+  }, [language]); // Reload when language changes
   
   // Background loading removed - all data loads upfront for stable clustering
 
@@ -181,8 +231,11 @@ export const useStoryMapLogic = () => {
       type: string;
     }> = [];
     
-    // First, add markers from enriched stories (these have proper lat/lng)
-    enrichedStories.forEach(story => {
+    // Use the appropriate dataset based on mode
+    const dataToUse = mode === 'stories' ? detailedStoriesData : fullDatabaseData;
+    
+    // Add markers from the selected dataset
+    dataToUse.forEach(story => {
       if (story.lat && story.lng) {
         markers.push({
           id: story.id,
@@ -199,7 +252,7 @@ export const useStoryMapLogic = () => {
     
     // Then add Jewish businesses that don't have enriched data
     jewishBusinesses.forEach(business => {
-      const enrichedStory = enrichedStories.find(story => 
+      const enrichedStory = dataToUse.find(story => 
         story.title.toLowerCase().includes(business.properties.name.toLowerCase()) ||
         business.properties.name.toLowerCase().includes(story.title.toLowerCase())
       );
@@ -221,7 +274,7 @@ export const useStoryMapLogic = () => {
     });
     
     return markers;
-  }, [jewishBusinesses, enrichedStories]);
+  }, [jewishBusinesses, detailedStoriesData, fullDatabaseData, mode]);
 
   // Calculate marker states based on current date
   const testMarkers = useMemo(() => {
@@ -248,6 +301,19 @@ export const useStoryMapLogic = () => {
     });
   }, [baseMarkers, currentDate]);
 
+  // Update visible stories and enriched stories based on mode
+  useEffect(() => {
+    if (mode === 'stories') {
+      setVisibleStories(detailedStoriesData);
+      setEnrichedStories(detailedStoriesData);
+      setTotalItems(detailedStoriesData.length);
+    } else {
+      setVisibleStories(fullDatabaseData);
+      setEnrichedStories(fullDatabaseData);
+      setTotalItems(fullDatabaseData.length);
+    }
+  }, [fullDatabaseData, detailedStoriesData, mode]);
+
   return {
     jewishBusinesses,
     enrichedStories,
@@ -260,7 +326,9 @@ export const useStoryMapLogic = () => {
     handleMarkerClick,
     testMarkers,
     setActiveStoryId,
-    isLoading
+    isLoading,
+    mode,
+    setMode
   };
 };
 

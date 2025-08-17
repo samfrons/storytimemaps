@@ -3,11 +3,14 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps_test_full.json');
+const STORIES_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json');
 const DEFAULT_PAGE_SIZE = 10000;  // Load all businesses by default for testing
 const MAX_PAGE_SIZE = 10000;  // Allow loading all at once
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let cachedData: any[] | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let cachedStoriesData: any[] | null = null;
 
 async function getStoryMaps() {
   // Always read fresh data for test dataset to pick up changes
@@ -26,6 +29,22 @@ async function getStoryMaps() {
   }
 }
 
+async function getDetailedStories() {
+  // Read detailed stories from main storymaps.json
+  try {
+    const data = await fs.readFile(STORIES_FILE_PATH, 'utf8');
+    cachedStoriesData = JSON.parse(data);
+    return cachedStoriesData;
+  } catch (error) {
+    console.error('Error reading storymaps.json:', error);
+    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
+      console.error('File not found. Please ensure storymaps.json exists in the data directory.');
+      return [];
+    }
+    throw error;
+  }
+}
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -33,8 +52,18 @@ export async function GET(request: NextRequest) {
     const requestedPageSize = parseInt(searchParams.get('pageSize') || String(DEFAULT_PAGE_SIZE), 10);
     const pageSize = Math.min(requestedPageSize, MAX_PAGE_SIZE);
     const all = searchParams.get('all') === 'true';
+    const storiesOnly = searchParams.get('stories') === 'true';
     
-    const storyMaps = await getStoryMaps();
+    let storyMaps;
+    
+    if (storiesOnly) {
+      // Return only the first 15 detailed stories from main data file
+      const allStories = await getDetailedStories();
+      storyMaps = allStories ? allStories.slice(0, 15) : [];
+    } else {
+      // Return full test dataset
+      storyMaps = await getStoryMaps();
+    }
     
     // Return all data if requested (for backwards compatibility)
     if (all) {

@@ -124,7 +124,7 @@ export const translations = {
       intro: {
         title: "Jewish Businesses",
         subtitle: "Berlin 1900-1945",
-        description1: "Explore the stories of over 8,000 Jewish-owned businesses that once formed the backbone of Berlin's commercial life.",
+        description1: "Explore the complete dataset of over 10,000 Jewish-owned businesses that once formed the backbone of Berlin's commercial life.",
         description2: "Navigate through time to witness their rise, struggles, and the tragic impact of Nazi persecution.",
         letsExplore: "Let's Explore",
         credits: "Data: Dr. Christoph Kreutzmüller | Visualization: StoryTimeMaps"
@@ -190,6 +190,26 @@ export const translations = {
         "tailor_shop": "A small tailoring business owned by {owner}. The shop was known for quality craftsmanship.",
         "department_store": "One of Berlin's prominent Jewish-owned department stores. The {name} offered a wide range of products.",
         "theater_cafe": "A popular café frequented by artists and intellectuals near the Deutsches Theater."
+      },
+      overlay: {
+        featuredStories: "Featured Stories",
+        detailedNarratives: "detailed narratives",
+        personalAccounts: "Personal accounts with rich historical context, photographs, and detailed stories",
+        historicalDatabase: "Historical Database",
+        businessRecords: "business records",
+        completeRegistry: "Complete registry for genealogical research and comprehensive historical analysis",
+        featuredStoriesModeActive: "Featured Stories Mode Active",
+        viewingBusinesses: "Viewing {count} businesses with detailed personal narratives, photographs, and rich historical context.",
+        intimateGlimpses: "These stories provide intimate glimpses into the lives of business owners and their families during this period.",
+        historicalDatabaseModeActive: "Historical Database Mode Active",
+        viewingAllRecords: "Viewing all {count} business records from the complete historical registry.",
+        comprehensiveDataset: "This comprehensive dataset includes basic information for genealogical research and academic study.",
+        personalStories: "Personal Stories",
+        historicalPhotos: "Historical Photos",
+        detailedContext: "Detailed Context",
+        completeRegistryTag: "Complete Registry",
+        researchData: "Research Data",
+        genealogy: "Genealogy"
       }
     }
   },
@@ -318,7 +338,7 @@ export const translations = {
       intro: {
         title: "Jüdische Geschäfte",
         subtitle: "Berlin 1900-1945",
-        description1: "Erkunden Sie die Geschichten von über 8.000 jüdischen Geschäften, die einst das Rückgrat des Berliner Wirtschaftslebens bildeten.",
+        description1: "Erkunden Sie den vollständigen Datensatz von über 10.000 jüdischen Geschäften, die einst das Rückgrat des Berliner Wirtschaftslebens bildeten.",
         description2: "Navigieren Sie durch die Zeit, um ihren Aufstieg, ihre Kämpfe und die tragischen Auswirkungen der Nazi-Verfolgung zu erleben.",
         letsExplore: "Los geht's",
         credits: "Daten: Dr. Christoph Kreutzmüller | Visualisierung: StoryTimeMaps"
@@ -384,6 +404,26 @@ export const translations = {
         "tailor_shop": "Ein kleines Schneidergeschäft im Besitz von {owner}. Das Geschäft war bekannt für hochwertige Handwerkskunst.",
         "department_store": "Eines der prominenten jüdischen Kaufhäuser Berlins. Das {name} bot eine breite Produktpalette.",
         "theater_cafe": "Ein beliebtes Café, das von Künstlern und Intellektuellen in der Nähe des Deutschen Theaters frequentiert wurde."
+      },
+      overlay: {
+        featuredStories: "Ausgewählte Geschichten",
+        detailedNarratives: "detaillierte Erzählungen",
+        personalAccounts: "Persönliche Berichte mit reichem historischem Kontext, Fotografien und detaillierten Geschichten",
+        historicalDatabase: "Historische Datenbank",
+        businessRecords: "Geschäftsaufzeichnungen",
+        completeRegistry: "Vollständiges Register für genealogische Forschung und umfassende historische Analyse",
+        featuredStoriesModeActive: "Modus Ausgewählte Geschichten Aktiv",
+        viewingBusinesses: "Betrachten Sie {count} Geschäfte mit detaillierten persönlichen Erzählungen, Fotografien und reichem historischem Kontext.",
+        intimateGlimpses: "Diese Geschichten bieten intime Einblicke in das Leben von Geschäftsinhabern und ihren Familien während dieser Zeit.",
+        historicalDatabaseModeActive: "Modus Historische Datenbank Aktiv",
+        viewingAllRecords: "Betrachten Sie alle {count} Geschäftsaufzeichnungen aus dem vollständigen historischen Register.",
+        comprehensiveDataset: "Dieser umfassende Datensatz enthält grundlegende Informationen für genealogische Forschung und akademische Studien.",
+        personalStories: "Persönliche Geschichten",
+        historicalPhotos: "Historische Fotos",
+        detailedContext: "Detaillierter Kontext",
+        completeRegistryTag: "Vollständiges Register",
+        researchData: "Forschungsdaten",
+        genealogy: "Genealogie"
       }
     }
   }

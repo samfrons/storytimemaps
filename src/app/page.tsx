@@ -6,7 +6,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import StoryList from './components/StoryList';
 import LoadingSkeleton from './components/LoadingSkeleton';
-import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
+import ModeToggle from './components/ModeToggle';
+import ContentPreview from './components/ContentPreview';
+import { useStoryMapLogicTest as useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogicTest';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { TranslationProvider } from '../i18n/TranslationContext';
 import { useTranslation } from '../i18n/useTranslation';
@@ -27,42 +29,50 @@ function MapPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Always show intro on root page unless explicitly closed
-  const [showIntro, setShowIntro] = useState(true);
+  // Always show intro on root page unless there are URL params
+  const hasUrlParams = searchParams.toString() !== '';
+  const [showIntro, setShowIntro] = useState(!hasUrlParams);
   const [introExplicitlyClosed, setIntroExplicitlyClosed] = useState(false); // Track if user closed intro
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   
-  // Handle URL parameters for theme, language and info panel
+  // Sync with URL parameters on mount and when they change
   useEffect(() => {
     if (!mounted) return;
-    
-    // Check for theme parameter
-    const themeParam = searchParams.get('theme');
-    if (themeParam && ['moody', 'bauhaus', 'archival', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
-      setTheme(themeParam);
-    }
-    
-    // Check for language parameter
-    const langParam = searchParams.get('lang');
-    if (langParam === 'de' || langParam === 'en') {
-      // This will be handled by TranslationProvider
-    }
     
     // Check for about parameter
     const aboutParam = searchParams.get('about');
     if (aboutParam === 'true') {
       setShowInfo(true);
       setShowIntro(false);
-      setIntroExplicitlyClosed(true); // Mark as explicitly closed
     }
     
-    // Show intro only if not explicitly closed and no parameters
-    if (!introExplicitlyClosed && searchParams.toString() === '') {
+    // Check for theme parameter - only set if different from current
+    const themeParam = searchParams.get('theme');
+    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(themeParam)) {
+      if (theme !== themeParam) {
+        setTheme(themeParam);
+      }
+    } else if (!themeParam && !theme) {
+      // Only set default if no theme is set at all
+      setTheme('archival');
+    }
+    
+    // Show intro only on root page without significant params AND if not explicitly closed
+    // Don't consider language/theme params as "significant" for intro display
+    const significantParams = Array.from(searchParams.keys()).filter(
+      key => key !== 'lang' && key !== 'theme'
+    );
+    const hasSignificantParams = significantParams.length > 0;
+    
+    if (hasSignificantParams) {
+      setShowIntro(false);
+    } else if (!introExplicitlyClosed) {
+      // Only show intro if user hasn't explicitly closed it
       setShowIntro(true);
     }
-  }, [searchParams, mounted, setTheme, introExplicitlyClosed]);
+  }, [searchParams, mounted, setTheme, introExplicitlyClosed, theme]);
   const {
     visibleStories,
     activeStoryId,
@@ -73,41 +83,14 @@ function MapPageContent() {
     handleMarkerClick,
     testMarkers,
     setActiveStoryId,
-    isLoading
+    isLoading,
+    totalItems,
+    viewMode,
+    setViewMode,
+    storiesWithDetailCount
   } = useStoryMapLogic();
 
 
-  // Helper function to update URL parameters
-  const updateURLParams = useCallback((updates: { about?: boolean; theme?: string; lang?: string }) => {
-    const params = new URLSearchParams(searchParams.toString());
-    
-    if (updates.about !== undefined) {
-      if (updates.about) {
-        params.set('about', 'true');
-      } else {
-        params.delete('about');
-      }
-    }
-    
-    if (updates.theme !== undefined) {
-      if (updates.theme) {
-        params.set('theme', updates.theme);
-      } else {
-        params.delete('theme');
-      }
-    }
-    
-    if (updates.lang !== undefined) {
-      if (updates.lang) {
-        params.set('lang', updates.lang);
-      } else {
-        params.delete('lang');
-      }
-    }
-    
-    const queryString = params.toString();
-    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
-  }, [router, searchParams]);
 
   const handleStoryClick = (storyId: string) => {
     setActiveStoryId(storyId);
@@ -115,23 +98,16 @@ function MapPageContent() {
   };
 
   const handleThemeSwitch = useCallback((newTheme: string) => {
-    if (!mounted || theme === newTheme) return;
-    
-    // Close menu immediately
+    if (!mounted) return;
     setShowThemeMenu(false);
-    
-    // Direct theme switch without delays
-    try {
-      setTheme(newTheme);
-      // Update URL with new theme
-      updateURLParams({ theme: newTheme });
-    } catch (error) {
-      console.error('Theme switching error:', error);
-      // Fallback to moody theme on error
-      setTheme('moody');
-      updateURLParams({ theme: 'moody' });
-    }
-  }, [mounted, theme, setTheme, updateURLParams]);
+    // Set theme immediately to avoid flicker
+    setTheme(newTheme);
+    // Update URL parameter
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('theme', newTheme);
+    const queryString = params.toString();
+    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+  }, [mounted, setTheme, searchParams, router]);
 
   const handleLetsGo = useCallback(() => {
     setShowIntro(false);
@@ -142,29 +118,33 @@ function MapPageContent() {
   const toggleInfo = useCallback(() => {
     const newShowInfo = !showInfo;
     setShowInfo(newShowInfo);
-    // Preserve theme when toggling info
-    const currentTheme = theme || 'moody';
-    updateURLParams({ about: newShowInfo, theme: currentTheme });
+    const params = new URLSearchParams(searchParams.toString());
+    if (newShowInfo) {
+      params.set('about', 'true');
+    } else {
+      params.delete('about');
+    }
+    const queryString = params.toString();
+    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
     
     if (showIntro) {
       setShowIntro(false);
       setIntroExplicitlyClosed(true); // Mark as explicitly closed
     }
-  }, [showInfo, showIntro, theme, updateURLParams]);
+  }, [showInfo, showIntro, searchParams, router]);
 
   const goHome = useCallback(() => {
-    // Navigate to root URL preserving current theme and language
-    const currentTheme = theme || 'moody';
+    // Navigate to root URL preserving language
     const params = new URLSearchParams();
-    params.set('theme', currentTheme);
     if (language) {
       params.set('lang', language);
     }
-    router.push(`/?${params.toString()}`, { scroll: false });
+    const queryString = params.toString();
+    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
     setShowIntro(true);
     setIntroExplicitlyClosed(false); // Reset so intro shows when home is clicked
     setShowInfo(false);
-  }, [router, theme, language]);
+  }, [router, language]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
@@ -172,7 +152,8 @@ function MapPageContent() {
       <div className="hidden md:flex md:w-16 md:h-full flex-shrink-0 flex-col items-center py-6 gap-4 absolute left-0 top-0 backdrop-blur-sm hot-sidebar" 
            style={{ 
              zIndex: 10000,
-             backgroundColor: 'var(--input-bg)'
+             backgroundColor: 'var(--input-bg)',
+             marginTop: '0'
            }}>
             {/* Theme Button */}
             <button
@@ -216,7 +197,7 @@ function MapPageContent() {
                       backgroundColor: mounted && theme === themeName ? 'var(--primary)' : 'transparent',
                       color: mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
                       borderLeft: mounted && theme === themeName ? '2px solid var(--primary)' : '2px solid transparent',
-                      cursor: 'pointer !important'
+                      cursor: 'pointer'
                     }}
                     onMouseEnter={(e) => {
                       if (!mounted || theme !== themeName) {
@@ -242,6 +223,72 @@ function MapPageContent() {
                 ))}
               </div>
             )}
+
+            {/* Stories Mode Button */}
+            <button
+              onClick={() => {
+                setViewMode('stories');
+                if (showIntro) {
+                  setShowIntro(false);
+                  setIntroExplicitlyClosed(true);
+                }
+              }}
+              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${viewMode === 'stories' ? 'hot-button-active' : ''}`}
+              style={{
+                backgroundColor: viewMode === 'stories' ? 'var(--success)' : 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: viewMode === 'stories' ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
+                transform: 'scale(1)',
+                transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+                fontSize: '10px',
+                fontFamily: 'Space Mono, monospace',
+                fontWeight: '600'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              aria-label="Featured Stories mode"
+              title="Featured Stories (15 detailed narratives)"
+            >
+              15
+            </button>
+            
+            {/* Database Mode Button */}
+            <button
+              onClick={() => {
+                setViewMode('database');
+                if (showIntro) {
+                  setShowIntro(false);
+                  setIntroExplicitlyClosed(true);
+                }
+              }}
+              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${viewMode === 'database' ? 'hot-button-active' : ''}`}
+              style={{
+                backgroundColor: viewMode === 'database' ? 'var(--primary)' : 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: viewMode === 'database' ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
+                transform: 'scale(1)',
+                transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+                fontSize: '10px',
+                fontFamily: 'Space Mono, monospace',
+                fontWeight: '600'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              aria-label="Historical Database mode"
+              title="Historical Database (10,000+ records)"
+            >
+              DB
+            </button>
             
             {/* Home Button */}
             <button
@@ -299,7 +346,10 @@ function MapPageContent() {
                 onClick={() => {
                   if (language !== 'en') {
                     toggleLanguage();
-                    updateURLParams({ lang: 'en' });
+                    const params = new URLSearchParams(searchParams.toString());
+                    params.set('lang', 'en');
+                    const queryString = params.toString();
+                    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
                   }
                 }}
                 className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
@@ -327,7 +377,10 @@ function MapPageContent() {
                 onClick={() => {
                   if (language !== 'de') {
                     toggleLanguage();
-                    updateURLParams({ lang: 'de' });
+                    const params = new URLSearchParams(searchParams.toString());
+                    params.set('lang', 'de');
+                    const queryString = params.toString();
+                    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
                   }
                 }}
                 className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
@@ -378,7 +431,6 @@ function MapPageContent() {
           {/* Map Layer - Remaining space */}
           <div className="w-full md:flex-1 h-1/2 md:h-screen order-1 md:order-2 relative">
             <MapboxMap
-              key="main-map" // Stable key to prevent unnecessary recreation
               center={berlinCoordinates}
               zoom={defaultZoom}
               markers={testMarkers}
@@ -386,6 +438,7 @@ function MapPageContent() {
               activeMarkerId={activeStoryId}
               currentDate={currentDate}
               enrichedStories={visibleStories}
+              isTestMode={true}
             />
           </div>
         </div>
@@ -394,21 +447,14 @@ function MapPageContent() {
       {/* Mobile Hamburger Menu Button */}
       <button
         onClick={() => setShowMobileMenu(!showMobileMenu)}
-        className="md:hidden fixed top-4 left-4 w-10 h-10 flex items-center justify-center border backdrop-blur-sm hot-button hover:scale-110"
+        className="md:hidden fixed left-4 w-10 h-10 flex items-center justify-center border backdrop-blur-sm cursor-pointer hover:opacity-80 hot-button"
         style={{ 
+          top: '10px',
           zIndex: 10001,
           backgroundColor: 'var(--input-bg)',
           borderColor: 'var(--border)',
           color: 'var(--foreground)',
-          cursor: 'pointer',
-          transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
+          cursor: 'pointer'
         }}
         aria-label="Menu"
       >
@@ -423,29 +469,24 @@ function MapPageContent() {
 
       {/* Mobile Menu Dropdown */}
       {showMobileMenu && (
-        <div className="md:hidden fixed top-16 left-4 border backdrop-blur-sm shadow-lg p-2 flex flex-col gap-2 hot-dropdown" 
+        <div className="md:hidden fixed left-4 border backdrop-blur-sm shadow-lg p-2 flex flex-col gap-2 hot-dropdown" 
              style={{ 
+               top: '26px',
                zIndex: 10001,
                backgroundColor: 'var(--dropdown-bg)',
                borderColor: 'var(--border)'
              }}>
           {/* Theme Button */}
           <button
-            onClick={() => setShowThemeMenu(!showThemeMenu)}
-            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hot-button relative hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
+            onClick={() => {
+              setShowThemeMenu(!showThemeMenu);
+            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button relative ${showThemeMenu ? 'hot-button-active' : ''}`}
             style={{
               backgroundColor: showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: showThemeMenu ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              cursor: 'pointer'
             }}
             aria-label="Switch theme"
           >
@@ -460,20 +501,12 @@ function MapPageContent() {
               goHome();
               setShowMobileMenu(false);
             }}
-            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${showIntro ? 'hot-button-active' : ''}`}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${showIntro ? 'hot-button-active' : ''}`}
             style={{
               backgroundColor: showIntro ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: showIntro ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              cursor: 'pointer'
             }}
             aria-label="Home"
           >
@@ -488,20 +521,12 @@ function MapPageContent() {
               toggleInfo();
               setShowMobileMenu(false);
             }}
-            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${showInfo ? 'hot-button-active' : ''}`}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${showInfo ? 'hot-button-active' : ''}`}
             style={{
               backgroundColor: showInfo ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: showInfo ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              cursor: 'pointer'
             }}
             aria-label="Information"
           >
@@ -516,9 +541,12 @@ function MapPageContent() {
               onClick={() => {
                 if (language !== 'en') {
                   toggleLanguage();
-                  updateURLParams({ lang: 'en' });
+                  const params = new URLSearchParams(searchParams.toString());
+                  params.set('lang', 'en');
+                  const queryString = params.toString();
+                  router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
                 }
-                setShowMobileMenu(false);
+                // Don't close mobile menu on language change
               }}
               className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
               style={{
@@ -537,9 +565,12 @@ function MapPageContent() {
               onClick={() => {
                 if (language !== 'de') {
                   toggleLanguage();
-                  updateURLParams({ lang: 'de' });
+                  const params = new URLSearchParams(searchParams.toString());
+                  params.set('lang', 'de');
+                  const queryString = params.toString();
+                  router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
                 }
-                setShowMobileMenu(false);
+                // Don't close mobile menu on language change
               }}
               className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
               style={{
@@ -560,7 +591,8 @@ function MapPageContent() {
       
       {/* Mobile Theme Menu Dropdown */}
       {showThemeMenu && showMobileMenu && (
-        <div className="md:hidden fixed top-16 left-20 shadow-lg p-2 min-w-[120px] border hot-dropdown" style={{ 
+        <div className="md:hidden fixed left-20 shadow-lg p-2 min-w-[120px] border hot-dropdown" style={{ 
+          top: '26px',
           zIndex: 10002,
           backgroundColor: 'var(--dropdown-bg)',
           borderColor: 'var(--border)'
@@ -577,7 +609,7 @@ function MapPageContent() {
                 backgroundColor: mounted && theme === themeName ? 'var(--primary)' : 'transparent',
                 color: mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
                 borderLeft: mounted && theme === themeName ? '2px solid var(--primary)' : '2px solid transparent',
-                cursor: 'pointer !important'
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 if (!mounted || theme !== themeName) {
@@ -631,20 +663,12 @@ function MapPageContent() {
         {/* Close button */}
         <button
           onClick={handleLetsGo}
-          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-all duration-200 z-10 hot-close-button hover:scale-110"
+          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors z-10 hover:opacity-80 hot-close-button"
           style={{
             backgroundColor: 'var(--input-bg)',
             borderColor: 'var(--border)',
             color: 'var(--foreground)',
-            cursor: 'pointer',
-            transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
+            cursor: 'pointer'
           }}
           aria-label="Close"
         >
@@ -675,23 +699,24 @@ function MapPageContent() {
                 </p>
               </div>
 
-              <div className="pt-8">
-                <button
-                  onClick={handleLetsGo}
-                  className="group inline-flex items-center gap-3 px-8 py-4 sm:px-10 sm:py-5 md:px-12 md:py-6 text-xl sm:text-2xl md:text-3xl transition-all duration-200 font-kame border-2 hot-intro-button"
-                  style={{
-                    backgroundColor: 'var(--primary)',
-                    borderColor: 'var(--primary)',
-                    color: '#ffffff',
-                    letterSpacing: '0.08em',
-                    cursor: 'pointer !important'
+              {/* Mode Selection */}
+              <div className="pt-8 max-w-4xl mx-auto">
+                <ModeToggle
+                  mode={viewMode}
+                  onModeChange={(newMode) => {
+                    setViewMode(newMode);
+                    // Close intro overlay when mode is selected from the overlay
+                    setShowIntro(false);
+                    setIntroExplicitlyClosed(true);
                   }}
-                >
-                  <span>{t('mainPage.intro.letsExplore')}</span>
-                  <svg className="w-6 h-6 sm:w-8 sm:h-8 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </button>
+                  storiesCount={storiesWithDetailCount}
+                  totalCount={totalItems}
+                />
+                <ContentPreview
+                  mode={viewMode}
+                  storiesCount={storiesWithDetailCount}
+                  totalCount={totalItems}
+                />
               </div>
 
               <div className="pt-12 text-sm font-mono" style={{ color: 'var(--muted)' }}>
@@ -732,24 +757,17 @@ function MapPageContent() {
             <button
               onClick={() => {
                 setShowInfo(false);
-                // Preserve theme when closing info panel
-                const currentTheme = theme || 'moody';
-                updateURLParams({ about: false, theme: currentTheme });
+                const params = new URLSearchParams(searchParams.toString());
+                params.delete('about');
+                const queryString = params.toString();
+                router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
               }}
-              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-all duration-200 hover:scale-110"
+              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors hover:opacity-80"
               style={{
                 backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--border)',
                 color: 'var(--foreground)',
-                cursor: 'pointer',
-                transform: 'scale(1)',
-                transition: 'transform 0.2s ease-in-out'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
+                cursor: 'pointer'
               }}
               aria-label="Close"
             >
@@ -881,11 +899,11 @@ function MapPage() {
   );
 }
 
-export default function OverlayTestPage() {
+export default function HomePage() {
   return (
     <Suspense fallback={
       <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
-        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading...</div>
+        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading test environment...</div>
       </div>
     }>
       <MapPage />

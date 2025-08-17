@@ -365,7 +365,11 @@ const StoryList: React.FC<StoryListProps> = ({
                   color: 'var(--foreground)'
                 }}
               >
-                <span>{selectedCategory === 'all' ? t('mainPage.storyList.allCategories') : selectedCategory}</span>
+                <span>{selectedCategory === 'all' ? t('mainPage.storyList.allCategories') : (() => {
+                  const translationKey = `mainPage.businessTypes.${selectedCategory.toUpperCase()}`;
+                  const translated = t(translationKey);
+                  return translated !== translationKey ? translated : selectedCategory;
+                })()}</span>
                 <svg 
                   className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
                   fill="none" 
@@ -418,7 +422,11 @@ const StoryList: React.FC<StoryListProps> = ({
                         borderLeftColor: selectedCategory === category ? 'var(--primary)' : 'transparent'
                       }}
                     >
-                      {category}
+                      {(() => {
+                        const translationKey = `mainPage.businessTypes.${category.toUpperCase()}`;
+                        const translated = t(translationKey);
+                        return translated !== translationKey ? translated : category;
+                      })()}
                     </button>
                   ))}
                 </div>

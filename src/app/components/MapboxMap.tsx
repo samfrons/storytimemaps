@@ -15,8 +15,7 @@ if (!MAPBOX_TOKEN) {
 }
 
 // Complete custom style for moody theme
-const getMoodyStyle = () => {
-  return {
+const MOODY_STYLE = {
     version: 8 as const,
     name: 'Moody Theme',
     sources: {
@@ -160,12 +159,10 @@ const getMoodyStyle = () => {
         }
       }
     ]
-  }
-}
+};
 
 // Snazzy Maps "Red Colored" style conversion for hot theme
-const getSnazzyRedColoredStyle = () => {
-  return {
+const SNAZZY_RED_STYLE = {
     version: 8 as const,
     name: 'Red Colored - Snazzy Maps',
     sources: {
@@ -246,12 +243,10 @@ const getSnazzyRedColoredStyle = () => {
         }
       }
     ]
-  }
-}
+};
 
 // Get complete Bauhaus style
-const getBauhausStyle = () => {
-  return {
+const BAUHAUS_STYLE = {
     version: 8 as const,
     name: 'Bauhaus Theme',
     sources: {
@@ -312,13 +307,11 @@ const getBauhausStyle = () => {
       }
       // No text labels for clean Bauhaus aesthetic
     ]
-  }
-}
+};
 
 // Get minimal dark archival map style
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getArchivalStyle = (): any => {
-  return {
+const ARCHIVAL_STYLE: any = {
     version: 8,
     sources: {
       mapbox: {
@@ -386,24 +379,23 @@ const getArchivalStyle = (): any => {
       }
       // No labels for minimal design
     ]
-  }
-}
+};
 
 // Get custom map style for each theme
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getThemeMapStyle = (theme: string | undefined): any => {
   switch(theme) {
     case 'moody':
-      return getMoodyStyle() // Use complete moody style
+      return MOODY_STYLE // Use complete moody style
     
     case 'bauhaus':
-      return getBauhausStyle() // Use complete bauhaus style
+      return BAUHAUS_STYLE // Use complete bauhaus style
     
     case 'hot':
-      return getSnazzyRedColoredStyle() // Use complete Snazzy Maps "Red Colored" style
+      return SNAZZY_RED_STYLE // Use complete Snazzy Maps "Red Colored" style
     
     case 'archival':
-      return getArchivalStyle() // Use minimal dark style for archival theme
+      return ARCHIVAL_STYLE // Use minimal dark style for archival theme
     
     case 'cold':
       return 'mapbox://styles/mapbox/light-v11' // We'll customize this after load
@@ -418,7 +410,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
       return 'mapbox://styles/mapbox/outdoors-v12' // We'll customize this after load
     
     default:
-      return getMoodyStyle() // Use moody as default
+      return MOODY_STYLE // Use moody as default
   }
 }
 

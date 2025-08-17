@@ -152,7 +152,7 @@ export default function RootLayout({
           themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival']}
           enableSystem={false}
           enableColorScheme={true}
-          disableTransitionOnChange={true}
+          disableTransitionOnChange={false}
           storageKey="storymap-theme"
         >
           {children}

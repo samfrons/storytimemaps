@@ -325,25 +325,25 @@ function OverlayTestPageContent() {
           </svg>
         </button>
         
-        <div className="relative h-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20 md:py-0" style={{ marginTop: '2%' }}>
+        <div className="relative h-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20 md:py-0" style={{ marginTop: '4rem' }}>
           <div className="max-w-4xl mx-auto text-center relative z-10">
 
             <div className="relative space-y-8">
               <div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
                   Jewish Businesses
                 </h1>
-                <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   Berlin 1900-1945
                 </p>
               </div>
 
               <div className="space-y-4 max-w-2xl mx-auto">
-                <p className="text-base sm:text-lg md:text-xl leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
                   Explore the stories of over 8,000 Jewish-owned businesses that once 
                   formed the backbone of Berlin&apos;s commercial life.
                 </p>
-                <p className="text-sm sm:text-base md:text-lg font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                <p className="text-xs sm:text-sm md:text-base font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   Navigate through time to witness their rise, struggles, and the tragic 
                   impact of Nazi persecution.
                 </p>
@@ -352,7 +352,7 @@ function OverlayTestPageContent() {
               <div className="pt-8">
                 <button
                   onClick={handleLetsGo}
-                  className="group inline-flex items-center gap-3 px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 text-base sm:text-lg md:text-xl font-medium transition-all duration-200 font-['Space_Mono'] font-mono border-2"
+                  className="group inline-flex items-center gap-3 px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 text-sm sm:text-base md:text-lg font-medium transition-all duration-200 font-['Space_Mono'] font-mono border-2"
                   style={{
                     backgroundColor: 'var(--primary)',
                     borderColor: 'var(--primary)',

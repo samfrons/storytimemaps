@@ -36,6 +36,7 @@ function MapPageContent() {
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
+  const [isThemeSwitching, setIsThemeSwitching] = useState(false);
   
   // Sync with URL parameters on mount and when they change
   useEffect(() => {
@@ -98,16 +99,35 @@ function MapPageContent() {
   };
 
   const handleThemeSwitch = useCallback((newTheme: string) => {
-    if (!mounted) return;
+    if (!mounted || theme === newTheme || isThemeSwitching) return;
+    
+    setIsThemeSwitching(true);
     setShowThemeMenu(false);
-    // Set theme immediately to avoid flicker
-    setTheme(newTheme);
-    // Update URL parameter
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('theme', newTheme);
-    const queryString = params.toString();
-    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
-  }, [mounted, setTheme, searchParams, router]);
+    
+    // Use requestAnimationFrame to coordinate React state updates with WebGL rendering
+    requestAnimationFrame(() => {
+      try {
+        setTheme(newTheme);
+        
+        // Update URL parameter
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('theme', newTheme);
+        const queryString = params.toString();
+        router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+        
+        // Allow time for theme transition to complete
+        setTimeout(() => {
+          setIsThemeSwitching(false);
+        }, 300);
+        
+      } catch (error) {
+        console.error('Theme switching error:', error);
+        setIsThemeSwitching(false);
+        // Fallback to default theme
+        setTheme('moody');
+      }
+    });
+  }, [mounted, theme, setTheme, searchParams, router, isThemeSwitching]);
 
   const handleLetsGo = useCallback(() => {
     setShowIntro(false);

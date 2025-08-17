@@ -800,10 +800,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     // Moody, Hot, Bauhaus, and Archival use complete custom styles, no additional styling needed
     // Skip ALL style modifications for these themes to prevent color bleeding
     if (theme === 'moody' || theme === 'hot' || theme === 'bauhaus' || theme === 'archival') {
-      if (forceRender) {
-        // Single render cycle for custom themes
-        requestAnimationFrame(() => map.triggerRepaint())
-      }
+      // No need to trigger repaint for complete custom styles - they handle their own rendering
       return
     }
     
@@ -997,12 +994,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         
       } catch (err) {
         console.warn('Error during theme style change:', err)
-        // Fallback: try to trigger repaint anyway
-        try {
-          map.triggerRepaint()
-        } catch (fallbackErr) {
-          console.warn('Fallback repaint also failed:', fallbackErr)
-        }
+        // Minimal fallback - let the next render cycle handle it naturally
       }
     }
     
@@ -1421,18 +1413,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 return
               }
               
-              // Apply theme styles with forced render for immediate display
+              // Apply theme styles with coordinated rendering
               applyThemeStyles(map, true)
               
-              // Additional safety: ensure styles are visible immediately
-              // This addresses the WebGL synchronization issue
+              // Single coordinated render for initial display
               requestAnimationFrame(() => {
-                map.triggerRepaint()
-                
-                // Final render trigger to ensure all WebGL operations complete
-                setTimeout(() => {
+                if (map.isStyleLoaded()) {
                   map.triggerRepaint()
-                }, 50) // Slightly longer delay for initial load
+                }
               })
             } catch (err) {
               console.warn('Could not apply initial map styles:', err)
@@ -1483,7 +1471,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     }
                   }
                 })
-                map.triggerRepaint()
+                // Single coordinated repaint for label updates
+                requestAnimationFrame(() => {
+                  if (map.isStyleLoaded()) {
+                    map.triggerRepaint()
+                  }
+                })
               }
             }, 100)
           })

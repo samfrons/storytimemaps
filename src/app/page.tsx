@@ -33,9 +33,8 @@ function MapPageContent() {
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
-  const [isThemeSwitching, setIsThemeSwitching] = useState(false); // Prevent rapid theme changes
   
-  // Handle URL parameters for theme and info panel
+  // Handle URL parameters for theme, language and info panel
   useEffect(() => {
     if (!mounted) return;
     
@@ -43,6 +42,12 @@ function MapPageContent() {
     const themeParam = searchParams.get('theme');
     if (themeParam && ['moody', 'bauhaus', 'archival', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
       setTheme(themeParam);
+    }
+    
+    // Check for language parameter
+    const langParam = searchParams.get('lang');
+    if (langParam === 'de' || langParam === 'en') {
+      // This will be handled by TranslationProvider
     }
     
     // Check for about parameter
@@ -73,7 +78,7 @@ function MapPageContent() {
 
 
   // Helper function to update URL parameters
-  const updateURLParams = useCallback((updates: { about?: boolean; theme?: string }) => {
+  const updateURLParams = useCallback((updates: { about?: boolean; theme?: string; lang?: string }) => {
     const params = new URLSearchParams(searchParams.toString());
     
     if (updates.about !== undefined) {
@@ -92,6 +97,14 @@ function MapPageContent() {
       }
     }
     
+    if (updates.lang !== undefined) {
+      if (updates.lang) {
+        params.set('lang', updates.lang);
+      } else {
+        params.delete('lang');
+      }
+    }
+    
     const queryString = params.toString();
     router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
   }, [router, searchParams]);
@@ -102,29 +115,23 @@ function MapPageContent() {
   };
 
   const handleThemeSwitch = useCallback((newTheme: string) => {
-    if (!mounted || isThemeSwitching || theme === newTheme) return;
+    if (!mounted || theme === newTheme) return;
     
-    // Prevent rapid theme switching
-    setIsThemeSwitching(true);
+    // Close menu immediately
     setShowThemeMenu(false);
     
-    // Smooth theme transition with error handling
+    // Direct theme switch without delays
     try {
-      requestAnimationFrame(() => {
-        setTheme(newTheme);
-        // Update URL with new theme
-        updateURLParams({ theme: newTheme });
-        // Reset switching state after transition
-        setTimeout(() => setIsThemeSwitching(false), 200);
-      });
+      setTheme(newTheme);
+      // Update URL with new theme
+      updateURLParams({ theme: newTheme });
     } catch (error) {
       console.error('Theme switching error:', error);
-      setIsThemeSwitching(false);
       // Fallback to moody theme on error
       setTheme('moody');
       updateURLParams({ theme: 'moody' });
     }
-  }, [mounted, isThemeSwitching, theme, setTheme, updateURLParams]);
+  }, [mounted, theme, setTheme, updateURLParams]);
 
   const handleLetsGo = useCallback(() => {
     setShowIntro(false);
@@ -146,13 +153,18 @@ function MapPageContent() {
   }, [showInfo, showIntro, theme, updateURLParams]);
 
   const goHome = useCallback(() => {
-    // Navigate to root URL preserving current theme
+    // Navigate to root URL preserving current theme and language
     const currentTheme = theme || 'moody';
-    router.push(`/?theme=${currentTheme}`, { scroll: false });
+    const params = new URLSearchParams();
+    params.set('theme', currentTheme);
+    if (language) {
+      params.set('lang', language);
+    }
+    router.push(`/?${params.toString()}`, { scroll: false });
     setShowIntro(true);
     setIntroExplicitlyClosed(false); // Reset so intro shows when home is clicked
     setShowInfo(false);
-  }, [router, theme]);
+  }, [router, theme, language]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
@@ -164,21 +176,18 @@ function MapPageContent() {
            }}>
             {/* Theme Button */}
             <button
-              onClick={() => !isThemeSwitching && setShowThemeMenu(!showThemeMenu)}
+              onClick={() => setShowThemeMenu(!showThemeMenu)}
               className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border relative hot-button hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
               style={{
-                backgroundColor: isThemeSwitching ? 'var(--warning)' : showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
+                backgroundColor: showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
                 borderColor: 'var(--border)',
-                color: isThemeSwitching ? 'var(--background)' : showThemeMenu ? 'var(--background)' : 'var(--foreground)',
-                cursor: isThemeSwitching ? 'wait' : 'pointer',
-                opacity: isThemeSwitching ? 0.7 : 1,
+                color: showThemeMenu ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
                 transform: 'scale(1)',
                 transition: 'transform 0.2s ease-in-out, background-color 0.2s'
               }}
               onMouseEnter={(e) => {
-                if (!isThemeSwitching) {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }
+                e.currentTarget.style.transform = 'scale(1.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
@@ -191,7 +200,7 @@ function MapPageContent() {
             </button>
             
             {/* Theme Menu Dropdown */}
-            {showThemeMenu && !isThemeSwitching && (
+            {showThemeMenu && (
               <div className="absolute top-16 left-0 border backdrop-blur-sm shadow-lg p-2 min-w-[120px] hot-dropdown" 
                    style={{ 
                      zIndex: 10001,
@@ -287,7 +296,12 @@ function MapPageContent() {
             {/* Language Toggle Buttons */}
             <div className="flex flex-col gap-1">
               <button
-                onClick={() => language !== 'en' && toggleLanguage()}
+                onClick={() => {
+                  if (language !== 'en') {
+                    toggleLanguage();
+                    updateURLParams({ lang: 'en' });
+                  }
+                }}
                 className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
                 style={{
                   backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
@@ -310,7 +324,12 @@ function MapPageContent() {
                 EN
               </button>
               <button
-                onClick={() => language !== 'de' && toggleLanguage()}
+                onClick={() => {
+                  if (language !== 'de') {
+                    toggleLanguage();
+                    updateURLParams({ lang: 'de' });
+                  }
+                }}
                 className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
                 style={{
                   backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
@@ -412,9 +431,7 @@ function MapPageContent() {
              }}>
           {/* Theme Button */}
           <button
-            onClick={() => {
-              if (!isThemeSwitching) setShowThemeMenu(!showThemeMenu);
-            }}
+            onClick={() => setShowThemeMenu(!showThemeMenu)}
             className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hot-button relative hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
             style={{
               backgroundColor: showThemeMenu ? 'var(--primary)' : 'var(--input-bg)',
@@ -497,7 +514,10 @@ function MapPageContent() {
           <div className="flex gap-2 mt-2">
             <button
               onClick={() => {
-                if (language !== 'en') toggleLanguage();
+                if (language !== 'en') {
+                  toggleLanguage();
+                  updateURLParams({ lang: 'en' });
+                }
                 setShowMobileMenu(false);
               }}
               className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
@@ -515,7 +535,10 @@ function MapPageContent() {
             </button>
             <button
               onClick={() => {
-                if (language !== 'de') toggleLanguage();
+                if (language !== 'de') {
+                  toggleLanguage();
+                  updateURLParams({ lang: 'de' });
+                }
                 setShowMobileMenu(false);
               }}
               className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
@@ -536,7 +559,7 @@ function MapPageContent() {
       )}
       
       {/* Mobile Theme Menu Dropdown */}
-      {showThemeMenu && showMobileMenu && !isThemeSwitching && (
+      {showThemeMenu && showMobileMenu && (
         <div className="md:hidden fixed top-16 left-20 shadow-lg p-2 min-w-[120px] border hot-dropdown" style={{ 
           zIndex: 10002,
           backgroundColor: 'var(--dropdown-bg)',

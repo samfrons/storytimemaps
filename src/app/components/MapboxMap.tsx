@@ -1000,50 +1000,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           return
         }
         
-        // Apply theme styles with force render
+        // Apply theme styles once
         applyThemeStyles(map, true)
-        
-        // Force multiple repaints to ensure labels update
-        const forceLabelsUpdate = () => {
-          // Check if style is loaded before accessing it
-          if (!map.isStyleLoaded()) return
-          
-          map.triggerRepaint()
-          
-          // Update labels specifically
-          const style = map.getStyle()
-          if (style && style.layers) {
-            let textColor = '#f5cdb4'
-            let haloColor = '#3b3340'
-            
-            if (typeof window !== 'undefined') {
-              const computedStyle = getComputedStyle(document.documentElement)
-              textColor = computedStyle.getPropertyValue('--foreground').trim() || '#f5cdb4'
-              haloColor = computedStyle.getPropertyValue('--accent-navy').trim() || '#3b3340'
-            }
-            
-            style.layers.forEach(layer => {
-              if (layer.type === 'symbol') {
-                try {
-                  map.setPaintProperty(layer.id, 'text-color', textColor)
-                  map.setPaintProperty(layer.id, 'text-halo-color', haloColor)
-                  map.setPaintProperty(layer.id, 'text-halo-width', 1)
-                } catch (e) {
-                  // Ignore
-                }
-              }
-            })
-          }
-          
-          map.triggerRepaint()
-        }
-        
-        // Single update after style is applied
-        setTimeout(() => {
-          if (map.isStyleLoaded()) {
-            forceLabelsUpdate()
-          }
-        }, 100)
         
       } catch (err) {
         console.warn('Error during theme style change:', err)

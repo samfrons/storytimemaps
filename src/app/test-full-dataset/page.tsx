@@ -80,7 +80,7 @@ function TestFullDatasetPageContent() {
 
 
   // Helper function to update URL parameters
-  const updateURLParams = useCallback((updates: { about?: boolean }) => {
+  const updateURLParams = useCallback((updates: { about?: boolean; lang?: string }) => {
     const params = new URLSearchParams(searchParams.toString());
     
     if (updates.about !== undefined) {
@@ -88,6 +88,14 @@ function TestFullDatasetPageContent() {
         params.set('about', 'true');
       } else {
         params.delete('about');
+      }
+    }
+    
+    if (updates.lang !== undefined) {
+      if (updates.lang) {
+        params.set('lang', updates.lang);
+      } else {
+        params.delete('lang');
       }
     }
     
@@ -127,12 +135,17 @@ function TestFullDatasetPageContent() {
   }, [showInfo, showIntro, updateURLParams]);
 
   const goHome = useCallback(() => {
-    // Navigate to root URL without forcing a theme
-    router.push('/test-full-dataset');
+    // Navigate to root URL preserving language
+    const params = new URLSearchParams();
+    if (language) {
+      params.set('lang', language);
+    }
+    const queryString = params.toString();
+    router.push(queryString ? `/test-full-dataset?${queryString}` : '/test-full-dataset', { scroll: false });
     setShowIntro(true);
     setIntroExplicitlyClosed(false); // Reset so intro shows when home is clicked
     setShowInfo(false);
-  }, [router]);
+  }, [router, language]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
@@ -248,7 +261,12 @@ function TestFullDatasetPageContent() {
             {/* Language Toggle Buttons */}
             <div className="flex flex-col gap-1">
               <button
-                onClick={() => language !== 'en' && toggleLanguage()}
+                onClick={() => {
+                  if (language !== 'en') {
+                    toggleLanguage();
+                    updateURLParams({ lang: 'en' });
+                  }
+                }}
                 className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
                 style={{
                   backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
@@ -271,7 +289,12 @@ function TestFullDatasetPageContent() {
                 EN
               </button>
               <button
-                onClick={() => language !== 'de' && toggleLanguage()}
+                onClick={() => {
+                  if (language !== 'de') {
+                    toggleLanguage();
+                    updateURLParams({ lang: 'de' });
+                  }
+                }}
                 className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
                 style={{
                   backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
@@ -426,7 +449,10 @@ function TestFullDatasetPageContent() {
           <div className="flex gap-2 mt-2">
             <button
               onClick={() => {
-                if (language !== 'en') toggleLanguage();
+                if (language !== 'en') {
+                  toggleLanguage();
+                  updateURLParams({ lang: 'en' });
+                }
                 setShowMobileMenu(false);
               }}
               className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
@@ -444,7 +470,10 @@ function TestFullDatasetPageContent() {
             </button>
             <button
               onClick={() => {
-                if (language !== 'de') toggleLanguage();
+                if (language !== 'de') {
+                  toggleLanguage();
+                  updateURLParams({ lang: 'de' });
+                }
                 setShowMobileMenu(false);
               }}
               className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"

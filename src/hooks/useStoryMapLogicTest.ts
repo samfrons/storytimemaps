@@ -155,6 +155,7 @@ export const useStoryMapLogicTest = () => {
 
   return {
     visibleStories,
+    enrichedStories,  // Export all stories for test page
     activeStoryId,
     currentDate,
     minDate,

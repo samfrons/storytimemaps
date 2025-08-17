@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { StoryMap } from '../../types';
+import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
 
 interface StoryDetailProps {
   story: StoryMap;
@@ -152,7 +153,12 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
               className="font-mono text-xs font-semibold"
               style={{ color: 'var(--foreground)' }}
             >
-              {story.address}
+              {(() => {
+                if (!story.address) return '';
+                const zipcode = getZipcodeFromAddress(story.address, story.lat, story.lng);
+                const streetPart = story.address.replace(', Berlin', '').replace(', Germany', '');
+                return `${streetPart}, ${zipcode} Berlin`;
+              })()}
             </p>
             <p 
               className="font-mono text-xs mt-0.5"

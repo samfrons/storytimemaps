@@ -297,6 +297,48 @@
   --closed-text-secondary: #ffffff;
 }
 
+/* Archival Theme - Based on Arolsen Archives design */
+[data-theme="archival"] {
+  --primary: #0019a8; /* Deep archival blue from reference */
+  --primary-rgb: 0, 25, 168;
+  --primary-light: #1a3dc8;
+  --secondary: #ffffff;
+  --warning: #5a7fb8; /* Muted blue for warnings/declining */
+  --warning-rgb: 90, 127, 184;
+  --danger: #1a2e5a; /* Dark blue-black for closed states */
+  --danger-rgb: 26, 46, 90;
+  --success: #4d8fd9; /* Medium blue for active/success */
+  --success-rgb: 77, 143, 217;
+  --background: #f8f9fa; /* Light gray background */
+  --background-rgb: 248, 249, 250;
+  --foreground: #0019a8; /* Blue text */
+  --foreground-muted: #495057; /* Gray text */
+  --muted: #e9ecef; /* Light gray */
+  --muted-rgb: 233, 236, 239;
+  --border: #0019a8; /* Blue borders */
+  --shadow: rgba(0, 25, 168, 0.15);
+  --map-overlay: rgba(0, 25, 168, 0.05);
+  --accent-orange: #3d5a80;
+  --accent-yellow: #5a7fb8;
+  --accent-purple: #2c4166;
+  --accent-coral: #1a2e5a;
+  --accent-navy: #0019a8;
+  --accent-chartreuse: #4d8fd9;
+  --input-bg: rgba(255, 255, 255, 1);
+  --input-bg-rgb: 255, 255, 255;
+  --dropdown-bg: rgba(255, 255, 255, 1);
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: rgba(255, 255, 255, 1);
+  --card-bg-rgb: 255, 255, 255;
+  --placeholder-color: #6c757d;
+  --active-text: #ffffff; /* White text on blue backgrounds */
+  --active-text-secondary: #ffffff;
+  --declining-text: #ffffff; /* White text on muted blue */
+  --declining-text-secondary: #f8f9fa;
+  --closed-text: #ffffff; /* White text on dark blue */
+  --closed-text-secondary: #ffffff;
+}
+
 /* Mapbox popup arrow styling - uses theme primary color for active state */
 .popup-state-active .mapboxgl-popup-tip,
 .popup-state-future .mapboxgl-popup-tip,

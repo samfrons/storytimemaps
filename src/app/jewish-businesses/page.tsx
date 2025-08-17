@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react'
 import MapboxMap from '../components/MapboxMap'
+import { getZipcodeFromAddress } from '../../utils/berlinZipcodes'
 
 interface Business {
   name: string
@@ -189,7 +190,18 @@ export default function JewishBusinessesPage() {
                   {feature.properties.category && ` (${feature.properties.category})`}
                 </p>
                 <p className="text-xs" style={{ color: '#a8a199' }}>
-                  {feature.properties.address}
+                  {(() => {
+                    const coords = feature.geometry.coordinates;
+                    const zipcode = getZipcodeFromAddress(
+                      feature.properties.address, 
+                      coords[1], 
+                      coords[0]
+                    );
+                    const streetPart = feature.properties.address
+                      .replace(', Berlin', '')
+                      .replace(', Germany', '');
+                    return `${streetPart}, ${zipcode} Berlin`;
+                  })()}
                 </p>
                 {feature.properties.date_range && (
                   <p className="text-xs mt-1" style={{ 
@@ -262,7 +274,20 @@ export default function JewishBusinessesPage() {
               </div>
               <div>
                 <span className="text-muted-foreground">Address: </span>
-                <span className="text-foreground">{selectedBusinessData.properties.address}</span>
+                <span className="text-foreground">
+                  {(() => {
+                    const coords = selectedBusinessData.geometry.coordinates;
+                    const zipcode = getZipcodeFromAddress(
+                      selectedBusinessData.properties.address, 
+                      coords[1], 
+                      coords[0]
+                    );
+                    const streetPart = selectedBusinessData.properties.address
+                      .replace(', Berlin', '')
+                      .replace(', Germany', '');
+                    return `${streetPart}, ${zipcode} Berlin`;
+                  })()}
+                </span>
               </div>
               {selectedBusinessData.properties.date_range && (
                 <div>

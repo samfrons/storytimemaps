@@ -314,6 +314,80 @@ const getBauhausStyle = () => {
   }
 }
 
+// Get minimal dark archival map style
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getArchivalStyle = (): any => {
+  return {
+    version: 8,
+    sources: {
+      mapbox: {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v8'
+      }
+    },
+    sprite: 'mapbox://sprites/mapbox/dark-v10',
+    glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
+    layers: [
+      // Background - slate blue-grey
+      {
+        id: 'background',
+        type: 'background',
+        paint: {
+          'background-color': '#3e4a5c'
+        }
+      },
+      // Water - darker blue
+      {
+        id: 'water',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'water',
+        paint: {
+          'fill-color': '#1e3a52'
+        }
+      },
+      // Land/landscape - slightly darker slate
+      {
+        id: 'landuse',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'landuse',
+        paint: {
+          'fill-color': '#2c3847',
+          'fill-opacity': 0.3
+        }
+      },
+      // Buildings - not shown
+      // Roads - minimal dark blue
+      {
+        id: 'road-local',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        filter: ['all', ['!=', 'class', 'motorway'], ['!=', 'class', 'trunk']],
+        paint: {
+          'line-color': '#1a2e5a',
+          'line-width': 1,
+          'line-opacity': 0.8
+        }
+      },
+      {
+        id: 'road-highway',
+        type: 'line',
+        source: 'mapbox',
+        'source-layer': 'road',
+        filter: ['in', 'class', 'motorway', 'trunk'],
+        paint: {
+          'line-color': '#2c4166',
+          'line-width': 2,
+          'line-opacity': 0.9
+        }
+      }
+      // No labels for minimal design
+    ]
+  }
+}
+
 // Get custom map style for each theme
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getThemeMapStyle = (theme: string | undefined): any => {
@@ -326,6 +400,9 @@ const getThemeMapStyle = (theme: string | undefined): any => {
     
     case 'hot':
       return getSnazzyRedColoredStyle() // Use complete Snazzy Maps "Red Colored" style
+    
+    case 'archival':
+      return getArchivalStyle() // Use minimal dark style for archival theme
     
     case 'cold':
       return 'mapbox://styles/mapbox/light-v11' // We'll customize this after load
@@ -360,6 +437,7 @@ interface MapboxMapProps {
   activeMarkerId?: string | null
   currentDate?: Date
   enrichedStories?: Array<{ id: string; startDate?: string | null; endDate?: string | null; description?: string | null }>
+  isTestMode?: boolean
 }
 
 const MapboxMap: React.FC<MapboxMapProps> = ({
@@ -369,7 +447,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   onMarkerClick,
   activeMarkerId,
   currentDate, // eslint-disable-line @typescript-eslint/no-unused-vars
-  enrichedStories = []
+  enrichedStories = [],
+  isTestMode = false
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
   const { theme } = useTheme()
@@ -427,6 +506,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         declining: '#ffaa00', // Orange
         closed: '#ff0000',    // Red
         future: '#666666'     // Gray
+      } : theme === 'archival' ? {
+        active: '#4d8fd9',    // Medium blue for active
+        declining: '#5a7fb8', // Muted blue for declining
+        closed: '#1a2e5a',    // Dark blue-black for closed
+        future: '#0019a8'     // Deep blue for future
       } : { // moody (default)
         active: '#97d8c0',
         declining: '#ffcb51',
@@ -504,10 +588,37 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   
   // Initialize Supercluster for clustering with optimized settings for large datasets
   const supercluster = useMemo(() => {
+    // Adjust clustering based on test mode and zoom level
+    let radius = isMobile ? 40 : 20
+    let maxZoom = isMobile ? 16 : 18
+    let minPoints = isMobile ? 4 : 2
+    
+    if (isTestMode) {
+      // More aggressive clustering for 10,000+ markers
+      const currentZoom = viewState.zoom
+      if (currentZoom < 10) {
+        radius = 100
+        minPoints = 3
+      } else if (currentZoom < 12) {
+        radius = 60
+        minPoints = 2
+      } else if (currentZoom < 14) {
+        radius = 40
+        minPoints = 2
+      } else if (currentZoom < 16) {
+        radius = 25
+        minPoints = 2
+      } else {
+        radius = 15
+        minPoints = 2
+      }
+      maxZoom = 18
+    }
+    
     const index = new Supercluster({
-      radius: isMobile ? 100 : 60,  // More aggressive clustering on mobile
-      maxZoom: isMobile ? 14 : 16,  // Less zoom levels on mobile
-      minPoints: isMobile ? 4 : 2,  // Require fewer points for clustering to show more clusters
+      radius,
+      maxZoom,
+      minPoints,
       extent: 512,  // Standard tile extent
       nodeSize: 64  // Standard node size
     })
@@ -529,7 +640,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [markers, isMobile])
+  }, [markers, isMobile, isTestMode, viewState.zoom])
 
   // Pre-compute initial markers for fallback with spatial distribution
   const initialMarkers = useMemo(() => {
@@ -606,7 +717,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       
       // At very high zoom levels, limit individual markers spatially
       if (throttledViewport.zoom > 15) {
-        const maxIndividualMarkers = isMobile ? 50 : 150
+        const maxIndividualMarkers = isTestMode 
+          ? (isMobile ? 200 : 800)  // Much higher limits for test mode
+          : (isMobile ? 50 : 150)
         const clusters = processedMarkers.filter(m => m.properties?.cluster)
         const individuals = processedMarkers.filter(m => !m.properties?.cluster)
         
@@ -621,7 +734,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       console.warn('Error getting clusters:', error)
       return initialMarkers.slice(0, 20)
     }
-  }, [supercluster, throttledViewport, mapLoaded, initialMarkers, isMobile])
+  }, [supercluster, throttledViewport, mapLoaded, initialMarkers, isMobile, isTestMode])
   
   // Update label priorities when viewport changes - throttled for performance
   useEffect(() => {
@@ -690,9 +803,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   // Optimized theme application with reduced WebGL operations
   const applyThemeStyles = useCallback((map: mapboxgl.Map, forceRender = false) => {
-    // Moody, Hot, and Bauhaus use complete custom styles, no additional styling needed
+    // Moody, Hot, Bauhaus, and Archival use complete custom styles, no additional styling needed
     // Skip ALL style modifications for these themes to prevent color bleeding
-    if (theme === 'moody' || theme === 'hot' || theme === 'bauhaus') {
+    if (theme === 'moody' || theme === 'hot' || theme === 'bauhaus' || theme === 'archival') {
       if (forceRender) {
         // Single render cycle for custom themes
         requestAnimationFrame(() => map.triggerRepaint())
@@ -1064,6 +1177,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       case 'art-nouveau':
         return {
           backgroundColor: '#8b7355',
+          border: '3px solid white',
+          color: 'white'
+        }
+      case 'archival':
+        return {
+          backgroundColor: '#0019a8',
           border: '3px solid white',
           color: 'white'
         }

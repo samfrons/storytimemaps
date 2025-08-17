@@ -7,8 +7,9 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';
-import BusinessDetailModal from './BusinessDetailModal';
+// import BusinessDetailModal from './BusinessDetailModal'; // Removed - all info shown in list
 import { throttle } from '../../utils/performance';
+import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
 
 interface StoryListProps {
   visibleStories: StoryMap[];
@@ -29,10 +30,10 @@ const StoryList: React.FC<StoryListProps> = ({
   setCurrentDate,
   onStoryClick
 }) => {
-  const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null); // Removed - no modal
+  // const [modalOpen, setModalOpen] = useState(false); // Removed - no modal
   const { theme } = useTheme();
-  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  // const [originRect, setOriginRect] = useState<DOMRect | null>(null); // Removed - no modal
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -43,20 +44,21 @@ const StoryList: React.FC<StoryListProps> = ({
   const listRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
-    const rect = element.getBoundingClientRect();
-    setOriginRect(rect);
-    setSelectedStory(story);
-    setModalOpen(true);
-  };
+  // Modal functionality removed - all information is displayed in the list
+  // const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
+  //   const rect = element.getBoundingClientRect();
+  //   setOriginRect(rect);
+  //   setSelectedStory(story);
+  //   setModalOpen(true);
+  // };
 
-  const closeModal = () => {
-    setModalOpen(false);
-    setTimeout(() => {
-      setSelectedStory(null);
-      setOriginRect(null);
-    }, 600);
-  };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  //   setTimeout(() => {
+  //     setSelectedStory(null);
+  //     setOriginRect(null);
+  //   }, 600);
+  // };
 
   const handleDropdownToggle = () => {
     if (!isDropdownOpen && dropdownRef.current) {
@@ -87,17 +89,17 @@ const StoryList: React.FC<StoryListProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [isDropdownOpen]);
 
-  const handleModalNavigation = (direction: 'prev' | 'next') => {
-    if (!selectedStory) return;
-    
-    const currentIndex = allFilteredStories.findIndex(s => s.id === selectedStory.id);
-    const targetIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
-    
-    if (targetIndex >= 0 && targetIndex < allFilteredStories.length) {
-      const targetStory = allFilteredStories[targetIndex];
-      setSelectedStory(targetStory);
-    }
-  };
+  // const handleModalNavigation = (direction: 'prev' | 'next') => {
+  //   if (!selectedStory) return;
+  //   
+  //   const currentIndex = allFilteredStories.findIndex(s => s.id === selectedStory.id);
+  //   const targetIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
+  //   
+  //   if (targetIndex >= 0 && targetIndex < allFilteredStories.length) {
+  //     const targetStory = allFilteredStories[targetIndex];
+  //     setSelectedStory(targetStory);
+  //   }
+  // };
 
   const handleStoryClick = (storyId: string) => {
     onStoryClick(storyId);
@@ -513,13 +515,40 @@ const StoryList: React.FC<StoryListProps> = ({
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" 
                       />
                     </svg>
-                    <span>{story.address}</span>
+                    <span>
+                      {(() => {
+                        const zipcode = getZipcodeFromAddress(story.address, story.lat, story.lng);
+                        const streetPart = story.address.replace(', Berlin', '').replace(', Germany', '');
+                        return `${streetPart}, ${zipcode} Berlin`;
+                      })()}
+                    </span>
                   </div>
                 )}
-                <p className="text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed"
-                style={{
-                  color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
-                }}>{story.description}</p>
+                {(() => {
+                  if (!story.description) return null;
+                  
+                  // Check if description is just a generic business type description
+                  const desc = story.description.toLowerCase();
+                  const businessType = (story.businessType || story.category || '').toLowerCase();
+                  
+                  // Skip if description is just "[business type] business" or similar generic patterns
+                  const isGeneric = 
+                    desc.endsWith(' business') ||
+                    desc.endsWith(' establishment') ||
+                    desc === businessType ||
+                    (desc.includes(businessType) && desc.split(' ').length <= 4) ||
+                    desc === `${businessType} business` ||
+                    desc === `a ${businessType} establishment`;
+                  
+                  if (isGeneric) return null;
+                  
+                  return (
+                    <p className="text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed"
+                    style={{
+                      color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
+                    }}>{story.description}</p>
+                  );
+                })()}
                 
                 <div className="flex items-center gap-4 mt-3 text-xs font-mono">
                   <span
@@ -554,52 +583,15 @@ const StoryList: React.FC<StoryListProps> = ({
               )}
             </div>
             
-            <button
-              className={`view-details-button mt-3 px-3 py-1.5 text-xs font-mono bg-transparent border transition-all uppercase tracking-wider font-semibold inline-block ${
-                story.id === activeStoryId 
-                  ? 'hover:opacity-80'
-                  : ''
-              }`}
-              style={{
-                color: story.id === activeStoryId 
-                  ? 'var(--story-text-color, currentColor)'
-                  : 'var(--foreground)',
-                borderColor: story.id === activeStoryId 
-                  ? 'currentColor'
-                  : 'var(--muted)',
-                borderWidth: theme === 'bauhaus' ? '2px' : '1px',
-                backgroundColor: story.id === activeStoryId ? 'transparent' : 'transparent'
-              }}
-              onMouseEnter={(e) => {
-                if (story.id !== activeStoryId) {
-                  e.currentTarget.style.backgroundColor = 'var(--muted)';
-                  e.currentTarget.style.color = 'var(--background)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (story.id !== activeStoryId) {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = 'var(--foreground)';
-                }
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                const element = storyRefs.current[story.id];
-                if (element) {
-                  handleViewDetails(story, element);
-                }
-              }}
-            >
-              + View Details
-            </button>
+            {/* View Details button removed - all information is already displayed */}
             </div>
           </div>
         ))}
         
       </div>
       
-      {/* Business Detail Modal */}
-      {selectedStory && (
+      {/* Business Detail Modal - Removed since all information is already displayed in the list */}
+      {/* selectedStory && (
         <BusinessDetailModal
           story={selectedStory}
           isOpen={modalOpen}
@@ -609,7 +601,7 @@ const StoryList: React.FC<StoryListProps> = ({
           hasPrevious={allFilteredStories.findIndex(s => s.id === selectedStory.id) > 0}
           hasNext={allFilteredStories.findIndex(s => s.id === selectedStory.id) < allFilteredStories.length - 1}
         />
-      )}
+      ) */}
     </div>
   );
 };

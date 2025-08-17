@@ -10,10 +10,7 @@ const MAX_PAGE_SIZE = 10000;  // Allow loading all at once
 let cachedData: any[] | null = null;
 
 async function getStoryMaps() {
-  if (cachedData) {
-    return cachedData;
-  }
-  
+  // Always read fresh data for test dataset to pick up changes
   try {
     const data = await fs.readFile(DATA_FILE_PATH, 'utf8');
     cachedData = JSON.parse(data);

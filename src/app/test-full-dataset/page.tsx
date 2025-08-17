@@ -45,10 +45,12 @@ function TestFullDatasetPage() {
     
     // Check for theme parameter
     const themeParam = searchParams.get('theme');
-    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'].includes(themeParam)) {
+    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(themeParam)) {
       setTheme(themeParam);
+    } else if (!themeParam) {
+      // Default to archival theme for full dataset page
+      setTheme('archival');
     }
-    // Don't force a theme if none is in the URL - let next-themes handle the default
     
     // Show intro only on root page without params AND if not explicitly closed
     const hasParams = searchParams.toString() !== '';
@@ -61,6 +63,7 @@ function TestFullDatasetPage() {
   }, [searchParams, mounted, setTheme, introExplicitlyClosed]);
   const {
     visibleStories,
+    enrichedStories,
     activeStoryId,
     currentDate,
     minDate,
@@ -167,7 +170,7 @@ function TestFullDatasetPage() {
                      backgroundColor: 'var(--dropdown-bg)',
                      borderColor: 'var(--border)'
                    }}>
-                {['moody', 'bauhaus'].map((themeName) => (
+                {['archival', 'moody', 'bauhaus', 'hot', 'cold', 'cool', 'warm', 'art-nouveau'].map((themeName) => (
                   <button
                     key={themeName}
                     onClick={() => handleThemeSwitch(themeName)}
@@ -197,7 +200,9 @@ function TestFullDatasetPage() {
                       e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
+                    {themeName === 'art-nouveau' ? 'Art Nouveau' : 
+                     themeName === 'archival' ? 'Archival' : 
+                     themeName}
                   </button>
                 ))}
               </div>
@@ -249,7 +254,7 @@ function TestFullDatasetPage() {
           {/* StoryList Panel - Visible on both mobile and desktop */}
           <div className="w-full md:w-1/3 h-1/2 md:h-screen order-2 md:order-1 flex-shrink-0">
             <StoryList
-              visibleStories={visibleStories}
+              visibleStories={enrichedStories}
               activeStoryId={activeStoryId}
               minDate={minDate}
               maxDate={maxDate}
@@ -268,7 +273,8 @@ function TestFullDatasetPage() {
               onMarkerClick={handleStoryClick}
               activeMarkerId={activeStoryId}
               currentDate={currentDate}
-              enrichedStories={visibleStories}
+              enrichedStories={enrichedStories}
+              isTestMode={true}
             />
           </div>
         </div>

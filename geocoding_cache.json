@@ -1,0 +1,597 @@
+{
+  "78d9f3cc7f7ec07fafce2fb44c4b0c9f": {
+    "lat": 52.4949547,
+    "lon": 13.3359763,
+    "display_name": "Nachodstraße, Wilmersdorf, Charlottenburg-Wilmersdorf, Berlin, 10779, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "c1ce9c79f17fc63b8585cdeed2e95b4f": {
+    "lat": 52.5209204,
+    "lon": 13.5185475,
+    "display_name": "Paul-Singer-Straße, Kleingartenanlage \"Alwin Bielefeldt\", Lichtenberg, Berlin, 10315, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "66f9e2415c746275cb35528ceb5a11ab": {
+    "lat": 52.4751421,
+    "lon": 13.322047,
+    "display_name": "Offenbacher Straße, Friedenau, Tempelhof-Schöneberg, Berlin, Teltow, 14197, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "5cbb1043722d1d886036e81202d73a8c": {
+    "lat": 52.4910779,
+    "lon": 13.3459873,
+    "display_name": "2, Freisinger Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10781, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "d6b337f65ef83836383846e4b8c6062f": {
+    "lat": 52.4869944,
+    "lon": 13.3447655,
+    "display_name": "86, Martin-Luther-Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10825, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "6b00a5b20f1fcb7da12743f29ea6a374": {
+    "lat": 52.4643919,
+    "lon": 13.4147389,
+    "display_name": "26, Oberlandgarten, Bärensiedlung, Tempelhof, Tempelhof-Schöneberg, Berlin, Teltow, 12099, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "861b04a8b6201417633190c974786822": {
+    "lat": 52.5240801,
+    "lon": 13.3516205,
+    "display_name": "111, Alt-Moabit, Moabit, Mitte, Berlin, 10559, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "82cfd0d9b5017f9d822b7b23894b05ca": {
+    "lat": 52.5266247,
+    "lon": 13.4078977,
+    "display_name": "Monsieur Vuong, 46, Alte Schönhauser Straße, Scheunenviertel, Mitte, Berlin, 10119, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "0b8937860764c766decd227b03e5f5e2": {
+    "lat": 52.5313307,
+    "lon": 13.4626564,
+    "display_name": "20, Oderbruchstraße, Blumenviertel, Prenzlauer Berg, Pankow, Berlin, 10369, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "bd0c1cb9c99756cde483a197477e857d": {
+    "lat": 52.5605643,
+    "lon": 13.4671425,
+    "display_name": "255, Berliner Allee, Weißensee, Pankow, Berlin, 13088, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "1121a0130bb11c84c3901285d5a171ae": {
+    "lat": 52.5247962,
+    "lon": 13.6424429,
+    "display_name": "Landsberger Straße, Mahlsdorf Nord, Mahlsdorf, Marzahn-Hellersdorf, Berlin, 12623, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "afe34d506f6dfa1a1ab94ad530cd81f1": {
+    "lat": 52.5197596,
+    "lon": 13.4486411,
+    "display_name": "33, Mühsamstraße, Hausburgviertel, Friedrichshain, Friedrichshain-Kreuzberg, Berlin, 10249, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "fe428e0dc79afb5c3026deb1e69acb60": {
+    "lat": 52.4751421,
+    "lon": 13.322047,
+    "display_name": "Offenbacher Straße, Friedenau, Tempelhof-Schöneberg, Berlin, Teltow, 14197, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "29e9486ceafe89c7d72f8d7b20cab458": {
+    "lat": 52.5170028,
+    "lon": 13.3842209,
+    "display_name": "56, Unter den Linden, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "8e34e84ca08afa9cac977d3008cf1b79": {
+    "lat": 52.5081823,
+    "lon": 13.6217226,
+    "display_name": "14, Landsberger Straße, Mahlsdorf, Marzahn-Hellersdorf, Berlin, 12623, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "c8b0e12cd488dfe841d6cdd892c87f2d": {
+    "lat": 52.5103085,
+    "lon": 13.623113,
+    "display_name": "21, Landsberger Straße, Mahlsdorf, Marzahn-Hellersdorf, Berlin, 12623, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "b5d1402ed0722df2761711b37afeb51f": {
+    "lat": 52.4529795,
+    "lon": 13.5171105,
+    "display_name": "21, Britzer Straße, Niederschöneweide, Treptow-Köpenick, Berlin, 12439, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "9d1a7de246e81d0addf5fb29f1a7fccf": {
+    "lat": 52.5228123,
+    "lon": 13.3646111,
+    "display_name": "Alt-Moabit, Europacity, Moabit, Mitte, Berlin, 10557, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "4f03db0b3072b3a24d20e0fe5b5cbeca": {
+    "lat": 52.5228123,
+    "lon": 13.3646111,
+    "display_name": "Alt-Moabit, Europacity, Moabit, Mitte, Berlin, 10557, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "bdfba419557295dbe262b27b6e963e47": {
+    "lat": 52.517382,
+    "lon": 13.3957141,
+    "display_name": "Unter den Linden, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "c1b407740df9311059ef1594d512ed49": {
+    "lat": 52.4084773,
+    "lon": 13.1071902,
+    "display_name": "5, Griebnitzstraße, Wannsee, Steglitz-Zehlendorf, Potsdam, 14482, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "ca0fdafeb4d9727318d84c2c22bdf18d": {
+    "lat": 52.4626759,
+    "lon": 13.3601884,
+    "display_name": "Dresdner Bahn, Röblingstraße, Schöneberg, Tempelhof-Schöneberg, Berlin, Teltow, 12105, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "0743332358bbf8f788579de5dce50287": {
+    "lat": 52.5165712,
+    "lon": 13.387757,
+    "display_name": "39, Unter den Linden, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "5c13c0ab284a1f941455a394bf837fe7": {
+    "lat": 52.510885,
+    "lon": 13.3989367,
+    "display_name": "Berlin, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "888cdf5725560975c17a93ce7a1eb087": {
+    "lat": 52.5102638,
+    "lon": 13.3885045,
+    "display_name": "Leipziger Straße, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "b412479c33800ba4fad863c49ca33198": {
+    "lat": 52.5089924,
+    "lon": 13.397046,
+    "display_name": "Jerusalemer Straße, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "47fd265b56b0f5f1dcafed117c479675": {
+    "lat": 52.5046933,
+    "lon": 13.3410551,
+    "display_name": "Nürnberger Straße, Charlottenburg, Charlottenburg-Wilmersdorf, Berlin, 10787, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "7aa3f89817b98eaeb9bba21f2c3941fb": {
+    "lat": 52.4751421,
+    "lon": 13.322047,
+    "display_name": "Offenbacher Straße, Friedenau, Tempelhof-Schöneberg, Berlin, Teltow, 14197, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "6deadb985e57648f518f665b7aab9313": {
+    "lat": 52.5093139,
+    "lon": 13.4653327,
+    "display_name": "Boxhagener Straße, Friedrichshain, Friedrichshain-Kreuzberg, Berlin, 10245, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "53a8c8924c401bb762dfba52645f22ea": {
+    "lat": 52.4524007,
+    "lon": 13.2567906,
+    "display_name": "1, Hochwildpfad, Zehlendorf, Steglitz-Zehlendorf, Berlin, Teltow, 14169, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "17afd5eb16550e25f75891d5702e54d5": {
+    "lat": 52.4977823,
+    "lon": 13.3495654,
+    "display_name": "Eisenacher Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10777, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "6fc4c89db950d15541c1a42154e5352e": {
+    "lat": 52.517382,
+    "lon": 13.3957141,
+    "display_name": "Unter den Linden, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "3751e0cd9bee87324ce28a2abf9388b2": {
+    "lat": 52.3601871,
+    "lon": 13.1144625,
+    "display_name": "TLT Berlin GmbH, 2 - 4, Verkehrshof, Industriegebiet Potsdam Süd, Waldstadt I und Industriegelände, Potsdam, Brandenburg, 14478, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "975352c8bf02ca7ed4d6be8ba8e73624": {
+    "lat": 52.5355584,
+    "lon": 13.432104,
+    "display_name": "Greifswalder Straße, Bötzowkiez, Prenzlauer Berg, Pankow, Berlin, 10405, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "f67d2ce2480f2715030a94848a7f69f5": {
+    "lat": 52.531455,
+    "lon": 13.4062404,
+    "display_name": "3, Choriner Straße, Spandauer Vorstadt, Prenzlauer Berg, Mitte, Berlin, 10119, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "65039a8e8feb77b0d009817932e366bb": {
+    "lat": 52.5168431,
+    "lon": 13.3911424,
+    "display_name": "15, Unter den Linden, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "2c80186871881b1d60f8d373d110ad20": {
+    "lat": 52.4232159,
+    "lon": 13.5118843,
+    "display_name": "63, Köpenicker Straße, Pfarrland-Siedlung, Rudow, Neukölln, Berlin, 12355, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "bee3c627acc2f39c767ee531a23c0a2e": {
+    "lat": 52.4461743,
+    "lon": 13.6299374,
+    "display_name": "212, Müggelseedamm, Friedrichshagen, Treptow-Köpenick, Berlin, 12587, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "e373f808eb84bdd7fa2ad2a3644d1be3": {
+    "lat": 52.5166917,
+    "lon": 13.389634,
+    "display_name": "Incyde, 21, Unter den Linden, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "eb4dd3ee763d0cb134e5f44ae8884a16": {
+    "lat": 52.5102638,
+    "lon": 13.3885045,
+    "display_name": "Leipziger Straße, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "f06b0c9bf7f7f8c725e093c6b6fbb7e2": {
+    "lat": 52.5307824,
+    "lon": 13.4319525,
+    "display_name": "29, Käthe-Niederkirchner-Straße, Bötzowkiez, Prenzlauer Berg, Pankow, Berlin, 10407, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "cb49bfbfa92033ffcdd7fb8b5744c61d": {
+    "lat": 52.4927072,
+    "lon": 13.3481994,
+    "display_name": "Schwäbische Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10781, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "d27fab60d3d3b08f0ee2b8153194be3e": {
+    "lat": 52.4807691,
+    "lon": 13.6948131,
+    "display_name": "Kulturgießerei, 5, An der Reihe, Schöneiche, Schöneiche bei Berlin, Oder-Spree, Brandenburg, 15566, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "431a6d41b5709fd46d71c24996595616": {
+    "lat": 52.4827929,
+    "lon": 13.3841,
+    "display_name": "4, Kaiserkorso, Gartenstadt Neu-Tempelhof, Tempelhof, Tempelhof-Schöneberg, Berlin, 12101, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "a100b5138c13a59e0eddaa9095d779c1": {
+    "lat": 52.4897436,
+    "lon": 13.332146,
+    "display_name": "5, Tharandter Straße, Wilmersdorf, Charlottenburg-Wilmersdorf, Berlin, 10717, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "81cc4b4b9f1f15513aea350306795579": {
+    "lat": 52.5102638,
+    "lon": 13.3885045,
+    "display_name": "Leipziger Straße, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "f3dcb5a3edb6a8c7970b57fd97a6b41f": {
+    "lat": 52.5038764,
+    "lon": 13.3423792,
+    "display_name": "8;10, Ansbacher Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10787, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "b49a050e6b8c4d384df9cc628fa8c0be": {
+    "lat": 52.5020601,
+    "lon": 13.3365416,
+    "display_name": "Dr. med. Cuno Theobald, 12, Marburger Straße, Charlottenburg, Charlottenburg-Wilmersdorf, Berlin, 10789, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "18e69610b17b36e44b7c473baa81ef1f": {
+    "lat": 52.512365,
+    "lon": 13.3048823,
+    "display_name": "Steinofen Pizza, 33, Wilmersdorfer Straße, Charlottenburg, Charlottenburg-Wilmersdorf, Berlin, 10585, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "e8c37b4ed1412ce99a2dac9f13d16a51": {
+    "lat": 52.5221636,
+    "lon": 13.4561424,
+    "display_name": "27, Thaerstraße, Hausburgviertel, Prenzlauer Berg, Friedrichshain-Kreuzberg, Berlin, 10249, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "d1e3003850fffb61f788a1dcd38d7185": {
+    "lat": 52.4990298,
+    "lon": 13.3401457,
+    "display_name": "42, Ansbacher Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10777, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "6516879e4c5c057f16018694c099bf2a": {
+    "lat": 52.5223394,
+    "lon": 13.3424312,
+    "display_name": "2, Holsteiner Ufer, Hansaviertel, Mitte, Berlin, 10557, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "19467ab41deddc843bbe6c53f517a798": {
+    "lat": 52.5277491,
+    "lon": 13.408812,
+    "display_name": "57, Alte Schönhauser Straße, Scheunenviertel, Mitte, Berlin, 10119, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "923d459c2f667cf39d60cba9c60e7d59": {
+    "lat": 52.4862449,
+    "lon": 13.3274958,
+    "display_name": "Badenscher Hof, 29, Badensche Straße, Wilmersdorf, Charlottenburg-Wilmersdorf, Berlin, 10715, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "13e7fa99b5d03040219faee44238b861": {
+    "lat": 52.5173239,
+    "lon": 13.3894867,
+    "display_name": "16, Unter den Linden, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "ab5c180e2c8810eedd0979d8fca99897": {
+    "lat": 52.5050308,
+    "lon": 13.367747,
+    "display_name": "Potsdamer Straße, Tiergarten, Mitte, Berlin, 10785, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "d16e1909f260cd3f5181efaac05f87bc": {
+    "lat": 52.5185793,
+    "lon": 13.3935975,
+    "display_name": "Humboldt-Universität zu Berlin - Campus Mitte, Unter den Linden, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "b745d4944ff0737dfb6b50470092cf52": {
+    "lat": 52.5140405,
+    "lon": 13.3825103,
+    "display_name": "Französische Straße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "111ed2b5219485ae4d96902ea1012a05": {
+    "lat": 52.525875,
+    "lon": 13.4069224,
+    "display_name": "Hundt Hammer Stein, 23/24, Alte Schönhauser Straße, Scheunenviertel, Mitte, Berlin, 10119, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "21228abb4ba1cf1f5b578f1e1a5dcb7d": {
+    "lat": 52.5250039,
+    "lon": 13.4019817,
+    "display_name": "40-41, Rosenthaler Straße, Spandauer Vorstadt, Mitte, Berlin, 10178, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "08b843280d93e546902ef4f3a87999bb": {
+    "lat": 52.4231105,
+    "lon": 13.1807306,
+    "display_name": "10, Am Sandwerder, Wannsee, Steglitz-Zehlendorf, Berlin, Teltow, 14109, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "a68c0708d901c798982ca6fced75d6d8": {
+    "lat": 52.540967,
+    "lon": 13.4110925,
+    "display_name": "VEG'D, 22, Eberswalder Straße, Bremer Höhe, Prenzlauer Berg, Pankow, Berlin, 10437, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "43c08f40eea95bbc31e9040fe819b9ca": {
+    "lat": 52.4870583,
+    "lon": 13.5941135,
+    "display_name": "27, Pariser Straße, Mahlsdorf, Marzahn-Hellersdorf, Berlin, 12623, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "ed60ddba9a85ddc19c3774308d796e95": {
+    "lat": 52.4086828,
+    "lon": 13.4109459,
+    "display_name": "13, Landsberger Straße, Lichtenrade, Tempelhof-Schöneberg, Berlin, Teltow, 12305, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "fd6cc6ea5d01f7e78e288a5f34707025": {
+    "lat": 52.4593665,
+    "lon": 13.4280254,
+    "display_name": "Karl-Elsasser-Straße, Britz, Neukölln, Berlin, 12347, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "6bb2a7665b82ce345d4e7128d0ddc118": {
+    "lat": 52.5140405,
+    "lon": 13.3825103,
+    "display_name": "Französische Straße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "8e19c4f812203a4f29056ca17777e564": {
+    "lat": 52.5061681,
+    "lon": 13.3068085,
+    "display_name": "Wilmersdorfer Straße, Charlottenburg, Charlottenburg-Wilmersdorf, Berlin, 10627, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "2d537865e04fd5fc96cb51f5d82e6860": {
+    "lat": 52.5058141,
+    "lon": 13.4347954,
+    "display_name": "spindler & klatt, 16-17, Köpenicker Straße, Luisenstadt, Kreuzberg, Friedrichshain-Kreuzberg, Berlin, 10997, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "dce79a1de164d3a32175f067e9983b83": {
+    "lat": 52.5089924,
+    "lon": 13.397046,
+    "display_name": "Jerusalemer Straße, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "7bfb6999a5ec650c6b0ba7194ffd7be9": {
+    "lat": 52.5058191,
+    "lon": 13.4322358,
+    "display_name": "18-20, Köpenicker Straße, Luisenstadt, Kreuzberg, Friedrichshain-Kreuzberg, Berlin, 10997, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "8aeba4d270333f7177f855f75311547e": {
+    "lat": 52.4299031,
+    "lon": 13.3330529,
+    "display_name": "Kaiser-Wilhelm-Straße, Lankwitz, Steglitz-Zehlendorf, Berlin, Teltow, 12247, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "95959c066cbd9d75ecdc277e9968e75c": {
+    "lat": 52.5319685,
+    "lon": 13.3512359,
+    "display_name": "24, Rathenower Straße, Moabit, Mitte, Berlin, 10559, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "738b94762c6a152760a71ffbca910313": {
+    "lat": 52.5018296,
+    "lon": 13.3402382,
+    "display_name": "Passauer Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10789, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "9ac45b83bb4af306c8c15deae8bfbd8a": {
+    "lat": 52.3847301,
+    "lon": 13.4188996,
+    "display_name": "44, Augsburger Straße, Lichtenrade, Tempelhof-Schöneberg, Berlin, Teltow, 12309, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "04f21b132b3a78ee737e5d28ad40ed9a": {
+    "lat": 52.5992157,
+    "lon": 13.4286631,
+    "display_name": "Rosenthaler Straße, Französisch Buchholz, Pankow, Berlin, 13127, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "9238d7f09b04c71cecf9202235d157a6": {
+    "lat": 52.490518,
+    "lon": 13.3480776,
+    "display_name": "7, Rosenheimer Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10781, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "dbd410138f6bac6393b295b494b08c77": {
+    "lat": 52.5061681,
+    "lon": 13.3068085,
+    "display_name": "Wilmersdorfer Straße, Charlottenburg, Charlottenburg-Wilmersdorf, Berlin, 10627, Deutschland",
+    "confidence": 0.5,
+    "source": "nominatim"
+  },
+  "6bd0de069658396074d30baf6eeaa0ce": {
+    "lat": 52.4992028,
+    "lon": 13.2966353,
+    "display_name": "Stirner Friseure, 20, Joachim-Friedrich-Straße, Halensee, Charlottenburg-Wilmersdorf, Berlin, 10711, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "aab47db00cd39adbedbc509e6405c12e": {
+    "lat": 52.5300167,
+    "lon": 13.4647384,
+    "display_name": "138, Landsberger Allee, Fennpfuhl, Lichtenberg, Berlin, 10369, Deutschland",
+    "confidence": 1.0,
+    "source": "nominatim"
+  },
+  "53c91924a69105c7429d12b9743137af": {
+    "lat": 52.4817335,
+    "lon": 13.3427828,
+    "display_name": "40, Innsbrucker Straße, Schöneberg, Tempelhof-Schöneberg, Berlin, 10825, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "c1ae4c28c762a3fcc352370161662eec": {
+    "lat": 52.5386381,
+    "lon": 13.4055785,
+    "display_name": "41, Schwedter Straße, Prenzlauer Berg, Mitte, Berlin, 10435, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "ef44a4541ea85c4e35328d5a5f269b0d": {
+    "lat": 52.5491242,
+    "lon": 13.4539291,
+    "display_name": "Toni Nails & Beauty, 59, Berliner Allee, Weißensee, Pankow, Berlin, 13088, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "78e0c8ed2b9e556fcec8c438fee04f33": {
+    "lat": 52.498246,
+    "lon": 13.3177904,
+    "display_name": "Insel Rügen, 39, Pariser Straße, Wilmersdorf, Charlottenburg-Wilmersdorf, Berlin, 10707, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "5e0906f53f001b2dd52b8b63313831e8": {
+    "lat": 52.4350167,
+    "lon": 13.2647433,
+    "display_name": "14, Berliner Straße, Zehlendorf, Steglitz-Zehlendorf, Berlin, Teltow, 14169, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  },
+  "2f261d8f469348223605faf1346d63d7": {
+    "lat": 52.5302602,
+    "lon": 13.4126603,
+    "display_name": "20/21, Saarbrücker Straße, Prenzlauer Berg, Pankow, Berlin, 10405, Deutschland",
+    "confidence": 0.6,
+    "source": "nominatim"
+  }
+}

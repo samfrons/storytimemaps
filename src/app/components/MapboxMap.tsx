@@ -346,15 +346,15 @@ const getArchivalStyle = (): any => {
           'fill-color': '#1e3a52'
         }
       },
-      // Land/landscape - slightly darker slate
+      // Land/landscape - off-white blue
       {
         id: 'landuse',
         type: 'fill',
         source: 'mapbox',
         'source-layer': 'landuse',
         paint: {
-          'fill-color': '#2c3847',
-          'fill-opacity': 0.3
+          'fill-color': '#e8eef5',
+          'fill-opacity': 0.4
         }
       },
       // Buildings - not shown
@@ -507,10 +507,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         closed: '#ff0000',    // Red
         future: '#666666'     // Gray
       } : theme === 'archival' ? {
-        active: '#4d8fd9',    // Medium blue for active
-        declining: '#5a7fb8', // Muted blue for declining
-        closed: '#1a2e5a',    // Dark blue-black for closed
-        future: '#0019a8'     // Deep blue for future
+        active: 'rgba(44, 74, 124, 0.85)',    // Navy-slate rich blue for active
+        declining: 'rgba(90, 115, 151, 0.85)', // Medium shade blue for declining
+        closed: 'rgba(139, 156, 174, 0.85)',    // Light shade blue for closed
+        future: 'rgba(44, 74, 124, 0.85)'     // Navy-slate blue for future
       } : { // moody (default)
         active: '#97d8c0',
         declining: '#ffcb51',
@@ -1182,8 +1182,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       case 'archival':
         return {
-          backgroundColor: '#0019a8',
-          border: '3px solid white',
+          backgroundColor: 'rgba(44, 74, 124, 0.85)',
+          border: '3px solid rgba(255, 255, 255, 0.85)',
           color: 'white'
         }
       default: // moody

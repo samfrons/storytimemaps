@@ -169,10 +169,12 @@ function OverlayTestPageContent() {
         </div>
       </div>
 
-      {/* Mobile Hamburger Menu Button */}
+      {/* Mobile Hamburger Menu Button - Hidden when intro overlay is shown */}
       <button
         onClick={() => setShowMobileMenu(!showMobileMenu)}
-        className="md:hidden fixed top-4 left-4 w-10 h-10 flex items-center justify-center border backdrop-blur-sm"
+        className={`md:hidden fixed top-4 left-4 w-10 h-10 flex items-center justify-center border backdrop-blur-sm transition-opacity duration-300 ${
+          showIntro ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
         style={{ 
           zIndex: 10001,
           backgroundColor: 'var(--input-bg, rgba(var(--muted-rgb), 0.5))',
@@ -190,8 +192,8 @@ function OverlayTestPageContent() {
         </svg>
       </button>
 
-      {/* Mobile Menu Dropdown */}
-      {showMobileMenu && (
+      {/* Mobile Menu Dropdown - Hidden when intro overlay is shown */}
+      {showMobileMenu && !showIntro && (
         <div className="md:hidden fixed top-16 left-4 border backdrop-blur-sm shadow-lg p-2 flex flex-col gap-2" 
              style={{ 
                zIndex: 10001,
@@ -256,9 +258,9 @@ function OverlayTestPageContent() {
         </div>
       )}
       
-      {/* Mobile Theme Menu Dropdown */}
-      {showThemeMenu && showMobileMenu && (
-        <div className="md:hidden fixed top-16 left-20 bg-white shadow-lg p-2 min-w-[120px] border" style={{ 
+      {/* Mobile Theme Menu Dropdown - Hidden when intro overlay is shown */}
+      {showThemeMenu && showMobileMenu && !showIntro && (
+        <div className="md:hidden fixed top-16 left-20 shadow-lg p-2 min-w-[120px] border" style={{ 
           zIndex: 10002,
           backgroundColor: 'var(--dropdown-bg, var(--input-bg, rgba(var(--muted-rgb), 0.9)))',
           borderColor: 'var(--border)'
@@ -283,9 +285,9 @@ function OverlayTestPageContent() {
         </div>
       )}
 
-      {/* Intro Overlay - Slides to the left, but leaves sidebar visible */}
+      {/* Intro Overlay - Full screen on mobile, leaves sidebar visible on desktop */}
       <div 
-        className={`fixed md:absolute top-0 left-0 md:left-16 right-0 bottom-0 backdrop-blur-sm transition-transform duration-700 ease-in-out overflow-hidden ${
+        className={`fixed top-0 left-0 md:left-16 right-0 bottom-0 backdrop-blur-sm transition-transform duration-700 ease-in-out overflow-hidden ${
           showIntro ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{ 
@@ -323,12 +325,12 @@ function OverlayTestPageContent() {
           </svg>
         </button>
         
-        <div className="relative h-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-16 md:py-0">
+        <div className="relative h-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20 md:py-0" style={{ marginTop: '2%' }}>
           <div className="max-w-4xl mx-auto text-center relative z-10">
 
             <div className="relative space-y-8">
               <div>
-                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light mb-4 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
                   Jewish Businesses
                 </h1>
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>

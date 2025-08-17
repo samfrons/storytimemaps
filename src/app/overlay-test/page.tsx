@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import StoryList from '../components/StoryList';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../../hooks/useStoryMapLogic';
+import { TranslationProvider } from '../../i18n/TranslationContext';
 
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), { 
   ssr: false,
@@ -15,7 +16,7 @@ const MapboxMap = dynamic(() => import('../components/MapboxMap'), {
   )
 });
 
-export default function OverlayTestPage() {
+function OverlayTestPageContent() {
   const { theme, setTheme } = useTheme();
   const [showIntro, setShowIntro] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
@@ -532,5 +533,13 @@ export default function OverlayTestPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function OverlayTestPage() {
+  return (
+    <TranslationProvider>
+      <OverlayTestPageContent />
+    </TranslationProvider>
   );
 }

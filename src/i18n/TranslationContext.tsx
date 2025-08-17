@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { translations, Language } from './translations';
 
 interface TranslationContextType {
@@ -15,30 +14,32 @@ const TranslationContext = createContext<TranslationContextType | undefined>(und
 export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
   const [isClient, setIsClient] = useState(false);
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     setIsClient(true);
     
-    // First priority: URL parameter
-    const langParam = searchParams.get('lang');
-    if (langParam === 'de' || langParam === 'en') {
-      setLanguage(langParam);
-      localStorage.setItem('storymap-language', langParam);
-    } else {
-      // Second priority: localStorage
-      const savedLang = localStorage.getItem('storymap-language') as Language;
-      if (savedLang && (savedLang === 'en' || savedLang === 'de')) {
-        setLanguage(savedLang);
+    // First priority: URL parameter (check window.location for SSR safety)
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const langParam = urlParams.get('lang');
+      if (langParam === 'de' || langParam === 'en') {
+        setLanguage(langParam);
+        localStorage.setItem('storymap-language', langParam);
       } else {
-        // Third priority: browser language
-        const browserLang = navigator.language.toLowerCase();
-        if (browserLang.startsWith('de')) {
-          setLanguage('de');
+        // Second priority: localStorage
+        const savedLang = localStorage.getItem('storymap-language') as Language;
+        if (savedLang && (savedLang === 'en' || savedLang === 'de')) {
+          setLanguage(savedLang);
+        } else {
+          // Third priority: browser language
+          const browserLang = navigator.language.toLowerCase();
+          if (browserLang.startsWith('de')) {
+            setLanguage('de');
+          }
         }
       }
     }
-  }, [searchParams]);
+  }, []);
 
   const toggleLanguage = useCallback(() => {
     const newLang = language === 'en' ? 'de' : 'en';

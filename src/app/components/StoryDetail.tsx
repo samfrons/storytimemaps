@@ -5,14 +5,13 @@ import Image from 'next/image';
 import { StoryMap } from '../../types';
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
 import { useTranslation } from '../../i18n/useTranslation';
-import { getTranslatedDescription, getTranslatedBusinessName } from '../../utils/businessTranslations';
 
 interface StoryDetailProps {
   story: StoryMap;
 }
 
 const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
   const [selectedMediaIndex, setSelectedMediaIndex] = React.useState(0);
   const [showFullDescription, setShowFullDescription] = React.useState(false);
   

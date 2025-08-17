@@ -548,7 +548,7 @@ const StoryList: React.FC<StoryListProps> = ({
                     <p className="text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed"
                     style={{
                       color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
-                    }}>{getTranslatedDescription(story, language, t)}</p>
+                    }}>{getTranslatedDescription(story, language)}</p>
                   );
                 })()}
                 

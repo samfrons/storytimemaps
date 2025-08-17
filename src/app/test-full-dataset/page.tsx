@@ -65,7 +65,6 @@ function TestFullDatasetPageContent() {
     }
   }, [searchParams, mounted, setTheme, introExplicitlyClosed]);
   const {
-    visibleStories,
     enrichedStories,
     activeStoryId,
     currentDate,

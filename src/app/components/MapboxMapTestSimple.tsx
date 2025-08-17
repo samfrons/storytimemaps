@@ -73,6 +73,7 @@ const MapboxMapTestSimple: React.FC<MapboxMapTestProps> = ({
         map.current = null
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // Only run once on mount
 
   // Handle markers with clustering
@@ -125,10 +126,13 @@ const MapboxMapTestSimple: React.FC<MapboxMapTestProps> = ({
       }
     }))
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     index.load(points as any)
 
     // Get bounds
     const bounds = map.current.getBounds()
+    if (!bounds) return
+    
     const bbox: [number, number, number, number] = [
       bounds.getWest(),
       bounds.getSouth(), 
@@ -223,6 +227,8 @@ const MapboxMapTestSimple: React.FC<MapboxMapTestProps> = ({
         if (!map.current) return
         
         const newBounds = map.current.getBounds()
+        if (!newBounds) return
+        
         const newBbox: [number, number, number, number] = [
           newBounds.getWest(),
           newBounds.getSouth(),

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Supercluster from 'supercluster'
@@ -109,7 +109,7 @@ interface MapboxMapTestProps {
   onMarkerClick?: (markerId: string) => void
   activeMarkerId?: string | null
   currentDate?: Date
-  enrichedStories?: any[]
+  enrichedStories?: Array<{ id: string; lat: number; lng: number; title: string; businessType?: string; }>
 }
 
 const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
@@ -118,7 +118,9 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
   markers,
   onMarkerClick,
   activeMarkerId,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   currentDate,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   enrichedStories = []
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null)
@@ -191,6 +193,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
       mapInstance.remove()
       map.current = null
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Update markers with smart clustering
@@ -227,10 +230,13 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
       }
     }))
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     index.load(points as any)
 
     // Get viewport bounds
     const bounds = map.current.getBounds()
+    if (!bounds) return
+    
     const bbox: [number, number, number, number] = [
       bounds.getWest(),
       bounds.getSouth(),
@@ -347,11 +353,12 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
       const newZoom = map.current!.getZoom()
       const newParams = getClusteringParams(newZoom)
       
-      // Reconfigure clustering if zoom changed significantly
-      index.options.radius = newParams.radius
-      index.options.minPoints = newParams.minPoints
+      // Note: Supercluster doesn't allow runtime reconfiguration of options
+      // Would need to create a new instance if we want to change clustering parameters
       
       const newBounds = map.current!.getBounds()
+      if (!newBounds) return
+      
       const newBbox: [number, number, number, number] = [
         newBounds.getWest(),
         newBounds.getSouth(),

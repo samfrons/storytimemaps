@@ -1,7 +1,16 @@
+interface Story {
+  title?: string;
+  description?: string | null;
+  businessType?: string;
+  category?: string;
+  startDate?: string | null;
+  endDate?: string | null;
+  midDate?: string | null;
+}
+
 export const getTranslatedDescription = (
-  story: any,
-  language: string,
-  t: (key: string) => string
+  story: Story,
+  language: string
 ): string => {
   // For German translations, provide context-aware descriptions
   if (language === 'de') {

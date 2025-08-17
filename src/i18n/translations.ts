@@ -119,6 +119,78 @@ export const translations = {
       active: "Active",
       declining: "Declining",
       closed: "Closed"
+    },
+    mainPage: {
+      intro: {
+        title: "Jewish Businesses",
+        subtitle: "Berlin 1900-1945",
+        description1: "Explore the stories of over 8,000 Jewish-owned businesses that once formed the backbone of Berlin's commercial life.",
+        description2: "Navigate through time to witness their rise, struggles, and the tragic impact of Nazi persecution.",
+        letsExplore: "Let's Explore",
+        credits: "Data: Dr. Christoph Kreutzmüller | Visualization: StoryTimeMaps"
+      },
+      info: {
+        title: "About This Project",
+        historicalContext: "Historical Context",
+        historicalContextDesc: "Between 1900 and 1945, Jewish entrepreneurs operated thousands of businesses in Berlin, from small shops to major department stores. This map documents their locations, types, and fates during the Nazi era.",
+        theData: "The Data",
+        theDataDesc: "Our database contains over 8,000 verified business records, compiled from historical directories, registration documents, and survivor testimonies. Each entry represents not just a business, but a family's livelihood and contribution to Berlin's economy.",
+        timelineNavigation: "Timeline Navigation",
+        timelineNavigationDesc: "Use the timeline controls to see how the business landscape changed over 45 years. Watch businesses flourish in the 1920s, then witness the devastating impact of Nazi policies from 1933 onwards.",
+        colorCoding: "Color Coding",
+        activeBusinesses: "Active businesses",
+        businessesUnderPressure: "Businesses under pressure",
+        closedLiquidated: "Closed/Liquidated businesses",
+        researchTeam: "Research Team",
+        researchTeamDesc1: "Historical Research & Data Compilation",
+        researchTeamDesc2: "Humboldt University Berlin",
+        researchTeamDesc3: "Interactive Visualization & Web Development",
+        researchTeamDesc4: "Making history accessible through technology",
+        academicCitation: "For academic citations, please reference: Kreutzmüller, C. (2024). \"Jewish Businesses in Berlin 1900-1945: A Digital Archive\""
+      },
+      storyList: {
+        searchPlaceholder: "Search businesses...",
+        allCategories: "All Categories",
+        activeBusinessLabel: "Active Business",
+        decliningBusinessLabel: "Declining",
+        closedBusinessLabel: "Closed"
+      },
+      map: {
+        viewMore: "View more →"
+      },
+      storyDetails: {
+        viewDetails: "VIEW DETAILS",
+        activePeriod: "Active Period",
+        businessType: "Business Type",
+        address: "Address",
+        description: "Description",
+        close: "Close",
+        previous: "Previous",
+        next: "Next"
+      },
+      businessTypes: {
+        "TAILORING": "TAILORING",
+        "DEPARTMENT STORE": "DEPARTMENT STORE",
+        "THEATER": "THEATER",
+        "CAFE": "CAFE",
+        "RESTAURANT": "RESTAURANT",
+        "BAKERY": "BAKERY",
+        "GROCERY": "GROCERY",
+        "PHARMACY": "PHARMACY",
+        "CLOTHING": "CLOTHING",
+        "JEWELRY": "JEWELRY",
+        "FURNITURE": "FURNITURE",
+        "BOOKSTORE": "BOOKSTORE",
+        "PHOTOGRAPHY": "PHOTOGRAPHY",
+        "BANK": "BANK",
+        "HOTEL": "HOTEL",
+        "BUTCHER": "BUTCHER"
+      },
+      businessDescriptions: {
+        "tailor_shop": "A small tailoring business owned by {owner}. The shop was known for quality craftsmanship.",
+        "department_store": "One of Berlin's prominent Jewish-owned department stores. The {name} offered a wide range of products.",
+        "theater_cafe": "A popular café frequented by artists and intellectuals near the Deutsches Theater."
+      }
     }
   },
   de: {
@@ -241,6 +313,78 @@ export const translations = {
       active: "Aktiv",
       declining: "Rückläufig",
       closed: "Geschlossen"
+    },
+    mainPage: {
+      intro: {
+        title: "Jüdische Geschäfte",
+        subtitle: "Berlin 1900-1945",
+        description1: "Erkunden Sie die Geschichten von über 8.000 jüdischen Geschäften, die einst das Rückgrat des Berliner Wirtschaftslebens bildeten.",
+        description2: "Navigieren Sie durch die Zeit, um ihren Aufstieg, ihre Kämpfe und die tragischen Auswirkungen der Nazi-Verfolgung zu erleben.",
+        letsExplore: "Los geht's",
+        credits: "Daten: Dr. Christoph Kreutzmüller | Visualisierung: StoryTimeMaps"
+      },
+      info: {
+        title: "Über dieses Projekt",
+        historicalContext: "Historischer Kontext",
+        historicalContextDesc: "Zwischen 1900 und 1945 betrieben jüdische Unternehmer Tausende von Geschäften in Berlin, von kleinen Läden bis zu großen Kaufhäusern. Diese Karte dokumentiert ihre Standorte, Typen und Schicksale während der Nazi-Ära.",
+        theData: "Die Daten",
+        theDataDesc: "Unsere Datenbank enthält über 8.000 verifizierte Geschäftsaufzeichnungen, zusammengestellt aus historischen Verzeichnissen, Registrierungsdokumenten und Zeugnissen von Überlebenden. Jeder Eintrag repräsentiert nicht nur ein Geschäft, sondern den Lebensunterhalt einer Familie und ihren Beitrag zur Berliner Wirtschaft.",
+        timelineNavigation: "Zeitleisten-Navigation",
+        timelineNavigationDesc: "Verwenden Sie die Zeitleisten-Steuerung, um zu sehen, wie sich die Geschäftslandschaft über 45 Jahre veränderte. Beobachten Sie, wie Geschäfte in den 1920er Jahren florierten, und erleben Sie dann die verheerenden Auswirkungen der Nazi-Politik ab 1933.",
+        colorCoding: "Farbcodierung",
+        activeBusinesses: "Aktive Geschäfte",
+        businessesUnderPressure: "Geschäfte unter Druck",
+        closedLiquidated: "Geschlossene/Liquidierte Geschäfte",
+        researchTeam: "Forschungsteam",
+        researchTeamDesc1: "Historische Forschung & Datenerfassung",
+        researchTeamDesc2: "Humboldt-Universität zu Berlin",
+        researchTeamDesc3: "Interaktive Visualisierung & Webentwicklung",
+        researchTeamDesc4: "Geschichte durch Technologie zugänglich machen",
+        academicCitation: "Für akademische Zitate verwenden Sie bitte: Kreutzmüller, C. (2024). \"Jüdische Geschäfte in Berlin 1900-1945: Ein digitales Archiv\""
+      },
+      storyList: {
+        searchPlaceholder: "Geschäfte suchen...",
+        allCategories: "Alle Kategorien",
+        activeBusinessLabel: "Aktives Geschäft",
+        decliningBusinessLabel: "Rückläufig",
+        closedBusinessLabel: "Geschlossen"
+      },
+      map: {
+        viewMore: "Mehr anzeigen →"
+      },
+      storyDetails: {
+        viewDetails: "DETAILS ANZEIGEN",
+        activePeriod: "Aktive Periode",
+        businessType: "Geschäftstyp",
+        address: "Adresse",
+        description: "Beschreibung",
+        close: "Schließen",
+        previous: "Zurück",
+        next: "Weiter"
+      },
+      businessTypes: {
+        "TAILORING": "SCHNEIDEREI",
+        "DEPARTMENT STORE": "KAUFHAUS",
+        "THEATER": "THEATER",
+        "CAFE": "CAFÉ",
+        "RESTAURANT": "RESTAURANT",
+        "BAKERY": "BÄCKEREI",
+        "GROCERY": "LEBENSMITTEL",
+        "PHARMACY": "APOTHEKE",
+        "CLOTHING": "BEKLEIDUNG",
+        "JEWELRY": "SCHMUCK",
+        "FURNITURE": "MÖBEL",
+        "BOOKSTORE": "BUCHHANDLUNG",
+        "PHOTOGRAPHY": "FOTOGRAFIE",
+        "BANK": "BANK",
+        "HOTEL": "HOTEL",
+        "BUTCHER": "METZGEREI"
+      },
+      businessDescriptions: {
+        "tailor_shop": "Ein kleines Schneidergeschäft im Besitz von {owner}. Das Geschäft war bekannt für hochwertige Handwerkskunst.",
+        "department_store": "Eines der prominenten jüdischen Kaufhäuser Berlins. Das {name} bot eine breite Produktpalette.",
+        "theater_cafe": "Ein beliebtes Café, das von Künstlern und Intellektuellen in der Nähe des Deutschen Theaters frequentiert wurde."
+      }
     }
   }
 };

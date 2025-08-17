@@ -3,6 +3,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslation } from '../../i18n/useTranslation';
 
 
 interface TimeSliderProps {
@@ -14,6 +15,7 @@ interface TimeSliderProps {
 
 const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, onChange }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const { t } = useTranslation();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(parseInt(e.target.value));
@@ -129,15 +131,15 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
         <div className="flex gap-3 text-xs font-mono">
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--primary)' }}></span>
-            <span style={{ color: 'var(--foreground)' }}>Active</span>
+            <span style={{ color: 'var(--foreground)' }}>{t('businessStates.active')}</span>
           </span>
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--warning)' }}></span>
-            <span style={{ color: 'var(--foreground)' }}>Declining</span>
+            <span style={{ color: 'var(--foreground)' }}>{t('businessStates.declining')}</span>
           </span>
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--danger)' }}></span>
-            <span style={{ color: 'var(--foreground)' }}>Closed</span>
+            <span style={{ color: 'var(--foreground)' }}>{t('businessStates.closed')}</span>
           </span>
         </div>
       </div>

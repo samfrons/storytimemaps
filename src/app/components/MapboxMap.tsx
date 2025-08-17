@@ -6,6 +6,7 @@ import Supercluster from 'supercluster'
 import { useTheme } from 'next-themes'
 import mapboxgl from 'mapbox-gl'
 import { useMobileOptimizations } from '../../hooks/useMobileOptimizations'
+import { useTranslation } from '../../i18n/useTranslation'
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
@@ -452,6 +453,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const [viewState, setViewState] = useState({
     longitude: center[1],
     latitude: center[0],
@@ -1302,16 +1304,23 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           className={`px-2 py-1 text-xs font-mono ${theme === 'bauhaus' ? 'font-black uppercase' : theme === 'cool' || theme === 'cold' ? 'font-semibold' : 'font-bold'} whitespace-nowrap cursor-pointer`}
           style={{
             background: theme === 'cool' || theme === 'cold' ? 'rgba(255, 255, 255, 0.95)' : 
-                       theme === 'bauhaus' ? '#ffffff' : (
+                       theme === 'bauhaus' ? '#ffffff' :
+                       theme === 'archival' ? (
+              properties.state === 'declining' ? '#5a7397' : // archival warning color
+              properties.state === 'closed' ? '#8b9cae' :     // archival danger color  
+              '#2c4a7c'                                        // archival primary color (active)
+            ) : (
               properties.state === 'declining' ? `${colors.declining}e8` :
               properties.state === 'closed' ? `${colors.closed}e8` :
               `${colors.active}e8`
             ),
             color: theme === 'cool' || theme === 'cold' ? color :
-                   theme === 'bauhaus' ? color : 
+                   theme === 'bauhaus' ? color :
+                   theme === 'archival' ? '#ffffff' : // white text for good contrast on archival colors
                    (properties.state === 'closed' ? '#ffffff' : '#2a2a2a'),
             border: theme === 'bauhaus' ? `3px solid ${color}` : 
                     theme === 'cool' || theme === 'cold' ? `2px solid ${color}` :
+                    theme === 'archival' ? `1px solid ${color}` :
                     `1px solid ${color}`,
             boxShadow: theme === 'bauhaus' ? '3px 3px 0px #000000' : 
                        theme === 'cool' || theme === 'cold' ? '0 2px 6px rgba(0,0,0,0.1)' :
@@ -1620,7 +1629,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                       setPopupInfo(null);
                     }}
                   >
-                    View more →
+                    {t('mainPage.map.viewMore') || 'View more →'}
                   </div>
                 </>
               )}

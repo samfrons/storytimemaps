@@ -8,6 +8,8 @@ import StoryList from './components/StoryList';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogic';
 import { useIsMounted } from '../hooks/useIsMounted';
+import { TranslationProvider } from '../i18n/TranslationContext';
+import { useTranslation } from '../i18n/useTranslation';
 
 const MapboxMap = dynamic(() => import('./components/MapboxMap'), { 
   ssr: false,
@@ -18,7 +20,8 @@ const MapboxMap = dynamic(() => import('./components/MapboxMap'), {
   )
 });
 
-function MapPage() {
+function MapPageContent() {
+  const { t, language, toggleLanguage } = useTranslation();
   const { theme, setTheme } = useTheme();
   const mounted = useIsMounted();
   const router = useRouter();
@@ -281,6 +284,56 @@ function MapPage() {
               </svg>
             </button>
 
+            {/* Language Toggle Buttons */}
+            <div className="flex flex-col gap-1">
+              <button
+                onClick={() => language !== 'en' && toggleLanguage()}
+                className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+                style={{
+                  backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
+                  borderColor: 'var(--border)',
+                  color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
+                  cursor: 'pointer',
+                  transform: 'scale(1)',
+                  transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+                  fontSize: '12px',
+                  fontFamily: 'Space Mono, monospace'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+                aria-label="Switch to English"
+              >
+                EN
+              </button>
+              <button
+                onClick={() => language !== 'de' && toggleLanguage()}
+                className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+                style={{
+                  backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+                  borderColor: 'var(--border)',
+                  color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+                  cursor: 'pointer',
+                  transform: 'scale(1)',
+                  transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+                  fontSize: '12px',
+                  fontFamily: 'Space Mono, monospace'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+                aria-label="Switch to German"
+              >
+                DE
+              </button>
+            </div>
+
       </div>
 
       {/* Main content area - with loading state */}
@@ -439,6 +492,46 @@ function MapPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </button>
+          
+          {/* Language Buttons for Mobile */}
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={() => {
+                if (language !== 'en') toggleLanguage();
+                setShowMobileMenu(false);
+              }}
+              className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
+              style={{
+                backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
+                fontSize: '12px',
+                fontFamily: 'Space Mono, monospace'
+              }}
+              aria-label="Switch to English"
+            >
+              EN
+            </button>
+            <button
+              onClick={() => {
+                if (language !== 'de') toggleLanguage();
+                setShowMobileMenu(false);
+              }}
+              className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
+              style={{
+                backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
+                fontSize: '12px',
+                fontFamily: 'Space Mono, monospace'
+              }}
+              aria-label="Switch to German"
+            >
+              DE
+            </button>
+          </div>
         </div>
       )}
       
@@ -543,21 +636,19 @@ function MapPage() {
             <div className="relative space-y-8">
               <div>
                 <h1 className="font-kame text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-4" style={{ color: 'var(--foreground)' }}>
-                  Jewish Businesses
+                  {t('mainPage.intro.title')}
                 </h1>
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
-                  Berlin 1900-1945
+                  {t('mainPage.intro.subtitle')}
                 </p>
               </div>
 
               <div className="space-y-4 max-w-2xl mx-auto">
                 <p className="text-base sm:text-lg md:text-xl leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
-                  Explore the stories of over 8,000 Jewish-owned businesses that once 
-                  formed the backbone of Berlin&apos;s commercial life.
+                  {t('mainPage.intro.description1')}
                 </p>
                 <p className="text-sm sm:text-base md:text-lg font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
-                  Navigate through time to witness their rise, struggles, and the tragic 
-                  impact of Nazi persecution.
+                  {t('mainPage.intro.description2')}
                 </p>
               </div>
 
@@ -573,7 +664,7 @@ function MapPage() {
                     cursor: 'pointer !important'
                   }}
                 >
-                  <span>Let&apos;s Explore</span>
+                  <span>{t('mainPage.intro.letsExplore')}</span>
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -581,7 +672,7 @@ function MapPage() {
               </div>
 
               <div className="pt-12 text-sm font-mono" style={{ color: 'var(--muted)' }}>
-                <p>Data: Dr. Christoph Kreutzmüller | Visualization: StoryTimeMaps</p>
+                <p>{t('mainPage.intro.credits')}</p>
               </div>
             </div>
           </div>
@@ -646,75 +737,67 @@ function MapPage() {
 
             <div className="space-y-8 pt-16 md:pt-0">
               <div>
-                <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>About This Project</h2>
+                <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>{t('mainPage.info.title')}</h2>
                 <div className="w-20 h-1" style={{ backgroundColor: 'var(--primary)' }} />
               </div>
 
               <div className="space-y-6 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Historical Context</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>{t('mainPage.info.historicalContext')}</h3>
                   <p className="leading-relaxed">
-                    Between 1900 and 1945, Jewish entrepreneurs operated thousands of businesses 
-                    in Berlin, from small shops to major department stores. This map documents 
-                    their locations, types, and fates during the Nazi era.
+                    {t('mainPage.info.historicalContextDesc')}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>The Data</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>{t('mainPage.info.theData')}</h3>
                   <p className="leading-relaxed">
-                    Our database contains over 8,000 verified business records, compiled from 
-                    historical directories, registration documents, and survivor testimonies. 
-                    Each entry represents not just a business, but a family&apos;s livelihood and 
-                    contribution to Berlin&apos;s economy.
+                    {t('mainPage.info.theDataDesc')}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Timeline Navigation</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>{t('mainPage.info.timelineNavigation')}</h3>
                   <p className="leading-relaxed">
-                    Use the timeline controls to see how the business landscape changed over 
-                    45 years. Watch businesses flourish in the 1920s, then witness the 
-                    devastating impact of Nazi policies from 1933 onwards.
+                    {t('mainPage.info.timelineNavigationDesc')}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Color Coding</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>{t('mainPage.info.colorCoding')}</h3>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-3">
                       <span className="w-4 h-4" style={{ backgroundColor: 'var(--success)' }} />
-                      <span>Active businesses</span>
+                      <span>{t('mainPage.info.activeBusinesses')}</span>
                     </li>
                     <li className="flex items-center gap-3">
                       <span className="w-4 h-4" style={{ backgroundColor: 'var(--warning)' }} />
-                      <span>Businesses under pressure</span>
+                      <span>{t('mainPage.info.businessesUnderPressure')}</span>
                     </li>
                     <li className="flex items-center gap-3">
                       <span className="w-4 h-4" style={{ backgroundColor: 'var(--danger)' }} />
-                      <span>Closed/Liquidated businesses</span>
+                      <span>{t('mainPage.info.closedLiquidated')}</span>
                     </li>
                   </ul>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Research Team</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>{t('mainPage.info.researchTeam')}</h3>
                   <p className="leading-relaxed">
                     <strong>Dr. Christoph Kreutzmüller</strong><br />
-                    Historical Research &amp; Data Compilation<br />
-                    <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Humboldt University Berlin</span>
+                    {t('mainPage.info.researchTeamDesc1')}<br />
+                    <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>{t('mainPage.info.researchTeamDesc2')}</span>
                   </p>
                   <p className="leading-relaxed mt-3">
                     <strong>StoryTimeMaps</strong><br />
-                    Interactive Visualization &amp; Web Development<br />
-                    <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Making history accessible through technology</span>
+                    {t('mainPage.info.researchTeamDesc3')}<br />
+                    <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>{t('mainPage.info.researchTeamDesc4')}</span>
                   </p>
                 </div>
 
                 <div className="pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
                   <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
-                    For academic citations, please reference: Kreutzmüller, C. (2024). 
-                    &quot;Jewish Businesses in Berlin 1900-1945: A Digital Archive&quot;
+                    {t('mainPage.info.academicCitation')}
                   </p>
                 </div>
               </div>
@@ -764,6 +847,14 @@ function MapPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+function MapPage() {
+  return (
+    <TranslationProvider>
+      <MapPageContent />
+    </TranslationProvider>
   );
 }
 

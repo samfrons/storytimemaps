@@ -4,12 +4,15 @@ import React from 'react';
 import Image from 'next/image';
 import { StoryMap } from '../../types';
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
+import { useTranslation } from '../../i18n/useTranslation';
+import { getTranslatedDescription, getTranslatedBusinessName } from '../../utils/businessTranslations';
 
 interface StoryDetailProps {
   story: StoryMap;
 }
 
 const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
+  const { t, language } = useTranslation();
   const [selectedMediaIndex, setSelectedMediaIndex] = React.useState(0);
   const [showFullDescription, setShowFullDescription] = React.useState(false);
   
@@ -218,7 +221,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
               className="font-mono text-xs mt-0.5"
               style={{ color: 'var(--foreground-muted)' }}
             >
-              Active Period
+              {t('mainPage.storyDetails.activePeriod')}
             </p>
           </div>
         </div>
@@ -281,7 +284,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
             className="font-mono text-xs font-bold uppercase tracking-wider mb-2"
             style={{ color: 'var(--foreground-muted)' }}
           >
-            Business Type
+            {t('mainPage.storyDetails.businessType')}
           </h5>
           <p 
             className="font-mono text-xs capitalize"

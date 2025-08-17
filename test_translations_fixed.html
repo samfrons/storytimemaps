@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Language Switching Fix</title>
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+            padding: 20px;
+            background: #2a2a2a;
+            color: #f5f5f5;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #3a3a3a;
+            border-left: 3px solid #4ade80;
+        }
+        .success { color: #4ade80; }
+        .error { color: #ef4444; }
+        .info { color: #60a5fa; }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background: #4a4a57;
+            color: white;
+            border: 1px solid #6b6275;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #5a5a67;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #6b6275;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Testing Language Switching - Fixed Implementation</h1>
+    
+    <div class="test-section">
+        <h2>Quick Manual Test:</h2>
+        <ol>
+            <li class="info">Open the app at <a href="http://localhost:3001" target="_blank" style="color: #60a5fa;">http://localhost:3001</a></li>
+            <li class="info">Look for the EN/DE buttons in the left sidebar (below the info icon)</li>
+            <li class="info">Click DE to switch to German</li>
+            <li class="info">Check these areas for translation:</li>
+            <ul>
+                <li>✅ Intro overlay: "Jüdische Geschäfte" instead of "Jewish Businesses"</li>
+                <li>✅ Intro button: "Los geht's" instead of "Let's Explore"</li>
+                <li>✅ Credits: Should remain the same (names don't translate)</li>
+                <li>✅ Info panel: "Über dieses Projekt" instead of "About This Project"</li>
+                <li>✅ Search placeholder: "Geschäfte suchen..." instead of "Search businesses..."</li>
+                <li>✅ Category dropdown: "Alle Kategorien" instead of "All Categories"</li>
+                <li>✅ Map popup: "Mehr anzeigen →" instead of "View more →"</li>
+            </ul>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>Automated Check:</h2>
+        <div id="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Live Preview:</h2>
+        <p class="info">The app should load below. Test the language switching directly:</p>
+        <iframe src="http://localhost:3001" id="app-frame"></iframe>
+    </div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        async function checkImplementation() {
+            try {
+                const response = await fetch('http://localhost:3001');
+                const html = await response.text();
+                
+                // Check for translation function usage
+                const translationChecks = [
+                    { pattern: /\{t\(['"]mainPage\.intro\.title['"]\)\}/, name: 'Intro title uses t() function' },
+                    { pattern: /\{t\(['"]mainPage\.intro\.subtitle['"]\)\}/, name: 'Intro subtitle uses t() function' },
+                    { pattern: /\{t\(['"]mainPage\.intro\.description1['"]\)\}/, name: 'Intro description1 uses t() function' },
+                    { pattern: /\{t\(['"]mainPage\.intro\.letsExplore['"]\)\}/, name: 'Let\'s Explore button uses t() function' },
+                    { pattern: /\{t\(['"]mainPage\.info\.title['"]\)\}/, name: 'Info panel title uses t() function' },
+                    { pattern: /\{t\(['"]mainPage\.storyList\.searchPlaceholder['"]\)\}/, name: 'Search placeholder uses t() function' },
+                    { pattern: /TranslationProvider/, name: 'TranslationProvider is present' },
+                    { pattern: /useTranslation/, name: 'useTranslation hook is imported' },
+                    { pattern: />EN<\/button>.*>DE<\/button>/s, name: 'Language buttons are rendered' }
+                ];
+                
+                let allPassed = true;
+                for (const check of translationChecks) {
+                    const passed = check.pattern.test(html);
+                    const div = document.createElement('div');
+                    div.className = passed ? 'success' : 'error';
+                    div.textContent = `${passed ? '✅' : '❌'} ${check.name}`;
+                    results.appendChild(div);
+                    if (!passed) allPassed = false;
+                }
+                
+                const summary = document.createElement('div');
+                summary.style.marginTop = '20px';
+                summary.className = allPassed ? 'success' : 'error';
+                summary.innerHTML = allPassed 
+                    ? '<h3>✅ All translation hooks are properly implemented!</h3>' 
+                    : '<h3>⚠️ Some translations may not be working. Check the manual test above.</h3>';
+                results.appendChild(summary);
+                
+            } catch (error) {
+                results.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        checkImplementation();
+    </script>
+</body>
+</html>

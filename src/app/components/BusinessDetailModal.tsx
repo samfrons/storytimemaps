@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StoryMap } from '../../types';
 import StoryDetail from './StoryDetail';
+import { useTranslation } from '../../i18n/useTranslation';
 
 interface BusinessDetailModalProps {
   story: StoryMap;
@@ -23,6 +24,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   hasPrevious = false,
   hasNext = false
 }) => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showContent, setShowContent] = useState(false);
@@ -212,7 +214,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                Previous
+                {t('mainPage.storyDetails.previous')}
               </button>
               
               <button 
@@ -236,7 +238,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                   }
                 }}
               >
-                Next
+                {t('mainPage.storyDetails.next')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>

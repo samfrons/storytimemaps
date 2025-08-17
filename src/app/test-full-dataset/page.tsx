@@ -8,6 +8,8 @@ import StoryList from '../components/StoryList';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import { useStoryMapLogicTest as useStoryMapLogic, berlinCoordinates, defaultZoom } from '../../hooks/useStoryMapLogicTest';
 import { useIsMounted } from '../../hooks/useIsMounted';
+import { TranslationProvider } from '../../i18n/TranslationContext';
+import { useTranslation } from '../../i18n/useTranslation';
 
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), { 
   ssr: false,
@@ -18,7 +20,8 @@ const MapboxMap = dynamic(() => import('../components/MapboxMap'), {
   )
 });
 
-function TestFullDatasetPage() {
+function TestFullDatasetPageContent() {
+  const { t, language, toggleLanguage } = useTranslation();
   const { theme, setTheme } = useTheme();
   const mounted = useIsMounted();
   const router = useRouter();
@@ -242,6 +245,56 @@ function TestFullDatasetPage() {
               </svg>
             </button>
 
+            {/* Language Toggle Buttons */}
+            <div className="flex flex-col gap-1">
+              <button
+                onClick={() => language !== 'en' && toggleLanguage()}
+                className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+                style={{
+                  backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
+                  borderColor: 'var(--border)',
+                  color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
+                  cursor: 'pointer',
+                  transform: 'scale(1)',
+                  transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+                  fontSize: '12px',
+                  fontFamily: 'Space Mono, monospace'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+                aria-label="Switch to English"
+              >
+                EN
+              </button>
+              <button
+                onClick={() => language !== 'de' && toggleLanguage()}
+                className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+                style={{
+                  backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+                  borderColor: 'var(--border)',
+                  color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+                  cursor: 'pointer',
+                  transform: 'scale(1)',
+                  transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+                  fontSize: '12px',
+                  fontFamily: 'Space Mono, monospace'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+                aria-label="Switch to German"
+              >
+                DE
+              </button>
+            </div>
+
       </div>
 
       {/* Main content area - with loading state */}
@@ -368,6 +421,46 @@ function TestFullDatasetPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </button>
+          
+          {/* Language Buttons for Mobile */}
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={() => {
+                if (language !== 'en') toggleLanguage();
+                setShowMobileMenu(false);
+              }}
+              className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
+              style={{
+                backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
+                fontSize: '12px',
+                fontFamily: 'Space Mono, monospace'
+              }}
+              aria-label="Switch to English"
+            >
+              EN
+            </button>
+            <button
+              onClick={() => {
+                if (language !== 'de') toggleLanguage();
+                setShowMobileMenu(false);
+              }}
+              className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
+              style={{
+                backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
+                fontSize: '12px',
+                fontFamily: 'Space Mono, monospace'
+              }}
+              aria-label="Switch to German"
+            >
+              DE
+            </button>
+          </div>
         </div>
       )}
       
@@ -464,7 +557,7 @@ function TestFullDatasetPage() {
             <div className="relative space-y-8">
               <div>
                 <h1 className="font-kame text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-4" style={{ color: 'var(--foreground)' }}>
-                  Jewish Businesses
+                  {t('mainPage.intro.title')}
                 </h1>
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   Berlin 1900-1945
@@ -560,7 +653,7 @@ function TestFullDatasetPage() {
 
             <div className="space-y-8 pt-16 md:pt-0">
               <div>
-                <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>About This Test Page</h2>
+                <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>{t('mainPage.info.title')}</h2>
                 <div className="w-20 h-1" style={{ backgroundColor: 'var(--primary)' }} />
               </div>
 
@@ -648,6 +741,14 @@ function TestFullDatasetPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+function TestFullDatasetPage() {
+  return (
+    <TranslationProvider>
+      <TestFullDatasetPageContent />
+    </TranslationProvider>
   );
 }
 

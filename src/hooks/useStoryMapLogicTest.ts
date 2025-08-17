@@ -116,17 +116,6 @@ export const useStoryMapLogicTest = () => {
     return enrichedStories; // Return all test data for database mode
   }, [detailedStoriesData, enrichedStories]);
 
-  // Filter stories based on current date
-  const filterStoriesByDate = useCallback((stories: StoryMap[], date: Date) => {
-    return stories.filter(story => {
-      // Handle null startDate - include all businesses without dates for the full dataset
-      if (!story.startDate) return true; // Show businesses without dates
-      const startDate = new Date(story.startDate);
-      const endDate = story.endDate ? new Date(story.endDate) : new Date('1945-12-31');
-      
-      return date >= startDate && date <= endDate;
-    });
-  }, []);
 
   // Update visible stories when enriched stories or view mode changes
   // Remove date filtering for list display - show all stories in the selected mode

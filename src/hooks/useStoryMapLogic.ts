@@ -12,6 +12,7 @@ interface JewishBusiness {
   registration_date: string;
   liquidation_date: string;
   takeover_date: string;
+  description?: string;
 }
 
 interface BusinessFeature {
@@ -23,17 +24,6 @@ interface BusinessFeature {
   properties: JewishBusiness;
 }
 
-interface PaginatedResponse {
-  data: StoryMap[];
-  metadata: {
-    page: number;
-    pageSize: number;
-    totalItems: number;
-    totalPages: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  };
-}
 
 // Marker interface moved inline as needed
 
@@ -58,7 +48,7 @@ export const useStoryMapLogic = () => {
     const response = await fetch('/jewish_businesses.geojson');
     const geoData = await response.json();
     
-    return geoData.features.map((feature: any, index: number) => ({
+    return geoData.features.map((feature: BusinessFeature, index: number) => ({
       id: `geojson_${index + 1}`,
       title: feature.properties.name,
       author: "Historical Database",

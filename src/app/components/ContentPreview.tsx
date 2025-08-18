@@ -20,7 +20,7 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({
       <div 
         className="w-full px-4 py-3 border-b"
         style={{ 
-          backgroundColor: 'var(--card-bg)',
+          backgroundColor: 'transparent',
           borderColor: 'var(--border)'
         }}
       >
@@ -31,14 +31,14 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({
               style={{ backgroundColor: 'var(--success)' }}
             />
             <h3 
-              className="text-lg font-semibold font-mono"
+              className="text-base sm:text-lg font-semibold font-mono"
               style={{ color: 'var(--foreground)' }}
             >
               {t('mainPage.overlay.featuredStoriesModeActive')}
             </h3>
           </div>
           <p 
-            className="text-sm leading-relaxed mb-2"
+            className="text-xs sm:text-sm leading-relaxed mb-2"
             style={{ color: 'var(--foreground-muted)' }}
           >
             {t('mainPage.overlay.viewingBusinesses').replace('{count}', storiesCount.toString())} {t('mainPage.overlay.intimateGlimpses')}
@@ -84,7 +84,7 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({
     <div 
       className="w-full px-4 py-3 border-b"
       style={{ 
-        backgroundColor: 'var(--card-bg)',
+        backgroundColor: 'transparent',
         borderColor: 'var(--border)'
       }}
     >
@@ -95,14 +95,14 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({
             style={{ backgroundColor: 'var(--primary)' }}
           />
           <h3 
-            className="text-lg font-semibold font-mono"
+            className="text-base sm:text-lg font-semibold font-mono"
             style={{ color: 'var(--foreground)' }}
           >
             {t('mainPage.overlay.historicalDatabaseModeActive')}
           </h3>
         </div>
         <p 
-          className="text-sm leading-relaxed mb-2"
+          className="text-xs sm:text-sm leading-relaxed mb-2"
           style={{ color: 'var(--foreground-muted)' }}
         >
           {t('mainPage.overlay.viewingAllRecords').replace('{count}', totalCount.toLocaleString())} {t('mainPage.overlay.comprehensiveDataset')}

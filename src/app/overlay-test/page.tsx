@@ -339,11 +339,11 @@ function OverlayTestPageContent() {
               </div>
 
               <div className="space-y-4 max-w-2xl mx-auto">
-                <p className="text-sm sm:text-base md:text-lg leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
+                <p className="text-base sm:text-lg md:text-xl leading-relaxed font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>
                   Explore the stories of over 8,000 Jewish-owned businesses that once 
                   formed the backbone of Berlin&apos;s commercial life.
                 </p>
-                <p className="text-xs sm:text-sm md:text-base font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                <p className="text-sm sm:text-base md:text-lg font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground-muted)' }}>
                   Navigate through time to witness their rise, struggles, and the tragic 
                   impact of Nazi persecution.
                 </p>

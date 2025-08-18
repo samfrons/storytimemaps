@@ -747,7 +747,7 @@ function MapPageContent() {
           </svg>
         </button>
         
-        <div className="relative h-full flex items-start md:items-center justify-center px-4 sm:px-6 md:px-8 py-8 md:py-0 overflow-y-auto">
+        <div className="relative h-full flex items-start md:items-center justify-center px-4 sm:px-6 md:px-8 py-8 md:py-0 overflow-y-auto" style={{ marginTop: '2rem' }}>
           <div className="max-w-4xl mx-auto text-center relative z-10">
 
             <div className="relative space-y-8">
@@ -770,7 +770,7 @@ function MapPageContent() {
               </div>
 
               {/* Mode Selection */}
-              <div className="pt-8 max-w-4xl mx-auto">
+              <div className="pt-4 max-w-4xl mx-auto">
                 <ModeToggle
                   mode={viewMode}
                   onModeChange={(newMode) => {
@@ -782,13 +782,11 @@ function MapPageContent() {
                   storiesCount={storiesWithDetailCount}
                   totalCount={totalItems}
                 />
-                <div className="hidden md:block">
-                  <ContentPreview
-                    mode={viewMode}
-                    storiesCount={storiesWithDetailCount}
-                    totalCount={totalItems}
-                  />
-                </div>
+                <ContentPreview
+                  mode={viewMode}
+                  storiesCount={storiesWithDetailCount}
+                  totalCount={totalItems}
+                />
               </div>
 
               <div className="pt-12 text-sm font-mono" style={{ color: 'var(--muted)' }}>

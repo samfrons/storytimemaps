@@ -53,9 +53,9 @@ const ModeToggle: React.FC<ModeToggleProps> = ({
             }}
           >
             <div className="text-left">
-              <div className="font-semibold text-lg mb-1">{t('mainPage.overlay.featuredStories')}</div>
+              <div className="font-semibold text-base sm:text-lg mb-1">{t('mainPage.overlay.featuredStories')}</div>
               <div 
-                className="font-mono text-sm mb-2"
+                className="font-mono text-xs sm:text-sm mb-2"
                 style={{ 
                   color: mode === 'stories' ? 'var(--background)' : 'var(--primary)' 
                 }}
@@ -63,7 +63,7 @@ const ModeToggle: React.FC<ModeToggleProps> = ({
                 {storiesCount} {t('mainPage.overlay.detailedNarratives')}
               </div>
               <div 
-                className="text-sm leading-relaxed"
+                className="text-xs sm:text-sm leading-relaxed"
                 style={{ 
                   color: mode === 'stories' ? 'var(--background)' : 'var(--foreground-muted)' 
                 }}
@@ -111,9 +111,9 @@ const ModeToggle: React.FC<ModeToggleProps> = ({
             }}
           >
             <div className="text-left">
-              <div className="font-semibold text-lg mb-1">{t('mainPage.overlay.historicalDatabase')}</div>
+              <div className="font-semibold text-base sm:text-lg mb-1">{t('mainPage.overlay.historicalDatabase')}</div>
               <div 
-                className="font-mono text-sm mb-2"
+                className="font-mono text-xs sm:text-sm mb-2"
                 style={{ 
                   color: mode === 'database' ? 'var(--background)' : 'var(--primary)' 
                 }}
@@ -121,7 +121,7 @@ const ModeToggle: React.FC<ModeToggleProps> = ({
                 {totalCount.toLocaleString()} {t('mainPage.overlay.businessRecords')}
               </div>
               <div 
-                className="text-sm leading-relaxed"
+                className="text-xs sm:text-sm leading-relaxed"
                 style={{ 
                   color: mode === 'database' ? 'var(--background)' : 'var(--foreground-muted)' 
                 }}

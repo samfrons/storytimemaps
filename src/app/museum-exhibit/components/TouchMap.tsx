@@ -2,31 +2,52 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Map, { Source, Layer } from 'react-map-gl/mapbox';
-import type { MapMouseEvent } from 'react-map-gl/mapbox';
+import type { MapMouseEvent, MapRef, LayerProps } from 'react-map-gl/mapbox';
+import mapboxgl from 'mapbox-gl';
 import { processBusinessesForDate, toGeoJSON, getBusinessStatistics } from '../services/dataLoader';
 import { rafThrottle, FPSMonitor } from '../utils/performance';
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ';
+
+interface BusinessStatistics {
+  total: number;
+  active: number;
+  declining: number;
+  takenOver: number;
+  liquidated: number;
+}
 
 interface TouchMapProps {
   currentDate: Date;
   onBusinessSelect: (id: string | null) => void;
   selectedBusiness: string | null;
   isActive: boolean;
-  onStatsUpdate?: (stats: any) => void;
+  onStatsUpdate?: (stats: BusinessStatistics) => void;
 }
 
 const TouchMap: React.FC<TouchMapProps> = ({ 
   currentDate, 
   onBusinessSelect, 
-  selectedBusiness,
+  // selectedBusiness not used in this map implementation
+  selectedBusiness: _selectedBusiness,
   isActive,
   onStatsUpdate 
 }) => {
-  const mapRef = useRef<any>(null);
+  // Explicitly ignore unused parameter
+  void _selectedBusiness;
+  const mapRef = useRef<MapRef>(null);
   const [businessData, setBusinessData] = useState<GeoJSON.FeatureCollection | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [hoveredCluster, setHoveredCluster] = useState<Record<string, any> | null>(null);
+  const [hoveredCluster, setHoveredCluster] = useState<{
+    cluster?: boolean;
+    cluster_id?: number;
+    point_count?: number;
+    title?: string;
+    address?: string;
+    status?: string;
+    color?: string;
+    [key: string]: unknown;
+  } | null>(null);
   const [viewState, setViewState] = useState({
     longitude: 13.4050,
     latitude: 52.5200,
@@ -201,29 +222,35 @@ const TouchMap: React.FC<TouchMapProps> = ({
     
     const feature = features[0];
     
-    if (feature.properties.cluster) {
+    if (feature.properties && feature.properties.cluster) {
       // Clicked on a cluster - zoom in
       const clusterId = feature.properties.cluster_id;
-      const source = map.getSource('businesses');
+      const source = map.getSource('businesses') as mapboxgl.GeoJSONSource;
       
-      source.getClusterExpansionZoom(clusterId, (err: any, zoom: number) => {
-        if (err) return;
-        
-        map.flyTo({
-          center: feature.geometry.coordinates,
-          zoom: zoom + 1,
-          duration: 1000
+      if (source && 'getClusterExpansionZoom' in source) {
+        source.getClusterExpansionZoom(clusterId, (err: Error | null, zoom: number) => {
+          if (err) return;
+          
+          const geometry = feature.geometry as GeoJSON.Point;
+          map.flyTo({
+            center: geometry.coordinates as [number, number],
+            zoom: zoom + 1,
+            duration: 1000
+          });
         });
-      });
+      }
     } else {
       // Clicked on a point
-      onBusinessSelect(feature.properties.id);
-      
-      map.flyTo({
-        center: feature.geometry.coordinates,
-        zoom: 14,
-        duration: 1000
-      });
+      if (feature.properties) {
+        onBusinessSelect(feature.properties.id);
+        
+        const geometry = feature.geometry as GeoJSON.Point;
+        map.flyTo({
+          center: geometry.coordinates as [number, number],
+          zoom: 14,
+          duration: 1000
+        });
+      }
     }
   }, [onBusinessSelect]);
 
@@ -288,9 +315,9 @@ const TouchMap: React.FC<TouchMapProps> = ({
               liquidatedCount: ['+', ['case', ['==', ['get', 'status'], 'liquidated'], 1, 0]]
             }}
           >
-            <Layer {...clusterLayer as any} />
-            <Layer {...clusterCountLayer as any} />
-            <Layer {...unclusteredPointLayer as any} />
+            <Layer {...(clusterLayer as LayerProps)} />
+            <Layer {...(clusterCountLayer as LayerProps)} />
+            <Layer {...(unclusteredPointLayer as LayerProps)} />
           </Source>
         )}
           

@@ -5,16 +5,16 @@
 /**
  * Throttle function execution
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean;
-  let lastResult: any;
+  let lastResult: ReturnType<T>;
   
-  return function(this: any, ...args: Parameters<T>) {
+  return function(...args: Parameters<T>) {
     if (!inThrottle) {
-      lastResult = func.apply(this, args);
+      lastResult = func(...args) as ReturnType<T>;
       inThrottle = true;
       setTimeout(() => inThrottle = false, limit);
     }
@@ -25,19 +25,17 @@ export function throttle<T extends (...args: any[]) => any>(
 /**
  * Debounce function execution
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout | null = null;
   
-  return function(this: any, ...args: Parameters<T>) {
-    const context = this;
-    
+  return function(...args: Parameters<T>) {
     if (timeout) clearTimeout(timeout);
     
     timeout = setTimeout(() => {
-      func.apply(context, args);
+      func(...args);
     }, wait);
   };
 }
@@ -45,17 +43,15 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * Request animation frame throttle
  */
-export function rafThrottle<T extends (...args: any[]) => any>(
+export function rafThrottle<T extends (...args: unknown[]) => unknown>(
   func: T
 ): (...args: Parameters<T>) => void {
   let rafId: number | null = null;
   
-  return function(this: any, ...args: Parameters<T>) {
-    const context = this;
-    
+  return function(...args: Parameters<T>) {
     if (rafId === null) {
       rafId = requestAnimationFrame(() => {
-        func.apply(context, args);
+        func(...args);
         rafId = null;
       });
     }
@@ -65,11 +61,11 @@ export function rafThrottle<T extends (...args: any[]) => any>(
 /**
  * Viewport culling for markers
  */
-export function getVisibleMarkers(
-  markers: Array<{ lat: number; lng: number; [key: string]: any }>,
+export function getVisibleMarkers<T extends { lat: number; lng: number }>(
+  markers: T[],
   bounds: { north: number; south: number; east: number; west: number },
   maxMarkers: number = 1000
-): typeof markers {
+): T[] {
   // Filter markers within bounds
   const visible = markers.filter(marker => {
     return marker.lat >= bounds.south &&
@@ -185,8 +181,8 @@ export class FPSMonitor {
 /**
  * Spatial index for efficient marker lookup
  */
-export class SpatialIndex {
-  private grid: Map<string, any[]> = new Map();
+export class SpatialIndex<T extends { lat: number; lng: number }> {
+  private grid: Map<string, T[]> = new Map();
   private cellSize: number;
   
   constructor(cellSize: number = 0.01) { // ~1km cells
@@ -199,7 +195,7 @@ export class SpatialIndex {
     return `${x},${y}`;
   }
   
-  add(item: { lat: number; lng: number; [key: string]: any }): void {
+  add(item: T): void {
     const key = this.getKey(item.lat, item.lng);
     if (!this.grid.has(key)) {
       this.grid.set(key, []);
@@ -207,8 +203,8 @@ export class SpatialIndex {
     this.grid.get(key)!.push(item);
   }
   
-  getInBounds(bounds: { north: number; south: number; east: number; west: number }): any[] {
-    const results: any[] = [];
+  getInBounds(bounds: { north: number; south: number; east: number; west: number }): T[] {
+    const results: T[] = [];
     
     const minX = Math.floor(bounds.west / this.cellSize);
     const maxX = Math.floor(bounds.east / this.cellSize);

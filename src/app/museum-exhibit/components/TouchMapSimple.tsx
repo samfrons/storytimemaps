@@ -2,15 +2,24 @@
 
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import Map, { Marker, Popup } from 'react-map-gl/mapbox';
+import type { MapRef } from 'react-map-gl/mapbox';
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ';
+
+interface BusinessStatistics {
+  total: number;
+  active: number;
+  declining: number;
+  takenOver: number;
+  liquidated: number;
+}
 
 interface TouchMapProps {
   currentDate: Date;
   onBusinessSelect: (id: string | null) => void;
   selectedBusiness: string | null;
   isActive: boolean;
-  onStatsUpdate?: (stats: any) => void;
+  onStatsUpdate?: (stats: BusinessStatistics) => void;
 }
 
 // Generate realistic business distribution across Berlin districts
@@ -60,7 +69,7 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
   isActive,
   onStatsUpdate 
 }) => {
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<MapRef>(null);
   const [businesses] = useState(() => generateBusinesses());
   const [hoveredBusiness, setHoveredBusiness] = useState<string | null>(null);
   const [viewState, setViewState] = useState({

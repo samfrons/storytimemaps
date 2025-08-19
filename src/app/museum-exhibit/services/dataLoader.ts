@@ -18,7 +18,7 @@ interface ProcessedBusiness extends Business {
 
 // Cache for processed data
 let cachedBusinesses: Business[] | null = null;
-let processedCache: Map<string, ProcessedBusiness[]> = new Map();
+const processedCache: Map<string, ProcessedBusiness[]> = new Map();
 
 /**
  * Load all 10,021 businesses from the full dataset
@@ -45,7 +45,7 @@ export async function loadBusinessData(): Promise<Business[]> {
       const geoData = await fallbackResponse.json();
       
       // Transform GeoJSON to our format
-      const businesses = geoData.features.map((feature: any, index: number) => ({
+      const businesses = geoData.features.map((feature: { properties: Record<string, unknown>; geometry: { coordinates: [number, number] } }, index: number) => ({
         id: `business_${index}`,
         title: feature.properties.name || 'Unknown Business',
         address: feature.properties.address || '',

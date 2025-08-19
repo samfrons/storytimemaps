@@ -5,15 +5,14 @@ import dynamic from 'next/dynamic';
 import AttractMode from './components/AttractMode';
 import SessionManager from './components/SessionManager';
 import ExhibitTimeline from './components/ExhibitTimeline';
-import LanguageSelector from './components/LanguageSelector';
 import { TranslationProvider } from '../../i18n/TranslationContext';
 import { useTranslation } from '../../i18n/useTranslation';
 
 const TouchMap = dynamic(() => import('./components/TouchMapSimple'), { 
   ssr: false,
   loading: () => (
-    <div className="w-full h-full flex items-center justify-center bg-black">
-      <div className="text-white text-2xl font-mono animate-pulse">Loading exhibit...</div>
+    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#1a1a1a' }}>
+      <div className="text-white text-2xl font-mono animate-pulse">LOADING...</div>
     </div>
   )
 });
@@ -77,23 +76,17 @@ function MuseumExhibitContent() {
     }
   }, [language, toggleLanguage]);
 
-  // Keyboard prevention for kiosk mode
-  useEffect(() => {
-    const preventKeyboard = (e: KeyboardEvent) => {
-      e.preventDefault();
-      return false;
-    };
-    
-    document.addEventListener('keydown', preventKeyboard);
-    return () => document.removeEventListener('keydown', preventKeyboard);
-  }, []);
-
   return (
     <div 
-      className="fixed inset-0 bg-black overflow-hidden cursor-none select-none"
+      className="fixed inset-0 overflow-hidden cursor-none select-none"
       onTouchStart={handleTouch}
       onMouseDown={handleTouch}
-      style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none' }}
+      style={{ 
+        touchAction: 'none', 
+        userSelect: 'none', 
+        WebkitUserSelect: 'none',
+        backgroundColor: '#0a0a0a'
+      }}
     >
       {/* Touch ripple effects */}
       {touchPoints.map(point => (
@@ -116,59 +109,181 @@ function MuseumExhibitContent() {
       {/* Main Exhibit Interface */}
       <div className={`absolute inset-0 transition-opacity duration-1000 ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900" />
-        
-        {/* Animated background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 museum-grid-pattern" />
+        {/* Map Layer - Full screen */}
+        <div className="absolute inset-0">
+          <TouchMap 
+            currentDate={currentDate}
+            onBusinessSelect={setSelectedBusiness}
+            selectedBusiness={selectedBusiness}
+            isActive={isActive}
+            onStatsUpdate={setBusinessStats}
+          />
         </div>
 
-        {/* Main Content Area */}
-        <div className="relative h-full flex flex-col">
+        {/* Main content overlay */}
+        <div className="relative h-full flex flex-col pointer-events-none">
           
-          {/* Header */}
-          <div className="relative z-20 bg-black bg-opacity-80 backdrop-blur-lg border-b border-gray-800">
-            <div className="px-8 py-6 flex items-center justify-between">
+          {/* Brutalist Header - Transparent background */}
+          <div className="relative z-20 pointer-events-auto" 
+               style={{ 
+                 backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                 borderBottom: '4px solid #ff3300'
+               }}>
+            <div className="px-8 py-4 flex items-center justify-between">
               <div className="flex items-center gap-8">
-                <h1 className="text-3xl font-light text-white tracking-wide">
-                  {t('hero.title')}
-                </h1>
-                <div className="text-xl text-gray-400">
-                  {t('hero.period')}
+                <div>
+                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#ffffff' }}>
+                    JEWISH
+                  </h1>
+                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#ffffff' }}>
+                    BUSINESSES IN
+                  </h1>
+                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#ffffff' }}>
+                    BERLIN
+                  </h1>
+                </div>
+                <div className="text-2xl font-black" style={{ color: '#ffcc00' }}>
+                  1900-<br/>1945
                 </div>
               </div>
               
               <div className="flex items-center gap-6">
-                <LanguageSelector 
-                  currentLanguage={language} 
-                  onLanguageChange={handleLanguageChange}
-                />
+                {/* Language buttons */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleLanguageChange('en')}
+                    className="px-6 py-3 font-black uppercase text-lg transition-all"
+                    style={{ 
+                      backgroundColor: language === 'en' ? '#ffcc00' : 'transparent',
+                      color: language === 'en' ? '#000' : '#fff',
+                      border: `3px solid ${language === 'en' ? '#ffcc00' : '#fff'}`,
+                    }}
+                  >
+                    🇬🇧 ENGLISH
+                  </button>
+                  <button
+                    onClick={() => handleLanguageChange('de')}
+                    className="px-6 py-3 font-black uppercase text-lg transition-all"
+                    style={{ 
+                      backgroundColor: language === 'de' ? '#ffcc00' : 'transparent',
+                      color: language === 'de' ? '#000' : '#fff',
+                      border: `3px solid ${language === 'de' ? '#ffcc00' : '#fff'}`,
+                    }}
+                  >
+                    🇩🇪 DEUTSCH
+                  </button>
+                </div>
+                
                 <button
                   onClick={handleSessionEnd}
-                  className="px-6 py-3 bg-red-900 bg-opacity-50 text-white text-lg border border-red-700 hover:bg-opacity-70 transition-all duration-300"
-                  style={{ minWidth: '150px', minHeight: '60px' }}
+                  className="px-8 py-4 text-white font-black uppercase text-lg transition-all"
+                  style={{ 
+                    backgroundColor: '#ff3300',
+                    border: '3px solid #ffffff',
+                    boxShadow: '5px 5px 0 rgba(0,0,0,0.5)'
+                  }}
                 >
-                  {language === 'en' ? 'Start Over' : 'Neustart'}
+                  START OVER
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Map and Timeline Container */}
-          <div className="flex-1 relative">
-            
-            {/* Touch-optimized Map with 10,021 real businesses */}
-            <TouchMap 
-              currentDate={currentDate}
-              onBusinessSelect={setSelectedBusiness}
-              selectedBusiness={selectedBusiness}
-              isActive={isActive}
-              onStatsUpdate={setBusinessStats}
-            />
+          {/* Spacer to push content */}
+          <div className="flex-1" />
 
-            {/* Timeline Overlay */}
-            <div className={`absolute bottom-0 left-0 right-0 transition-transform duration-700 ${showTimeline ? 'translate-y-0' : 'translate-y-full'}`}>
+          {/* Bottom control area - Transparent without blur */}
+          <div className="relative z-20 pointer-events-auto" 
+               style={{ 
+                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                 borderTop: '3px solid #ff3300'
+               }}>
+            
+            {/* Stats and Legend Row */}
+            <div className="px-8 py-6 flex justify-between items-start">
+              
+              {/* Statistics Panel */}
+              <div className="flex flex-col gap-2">
+                <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#ffcc00' }}>
+                  STATISTICS
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="text-4xl font-black" style={{ color: '#00ff00' }}>
+                      {businessStats.active.toLocaleString()}
+                    </div>
+                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                      ACTIVE
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-4xl font-black" style={{ color: '#ffcc00' }}>
+                      {businessStats.declining.toLocaleString()}
+                    </div>
+                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                      DECLINING
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-4xl font-black" style={{ color: '#ff6600' }}>
+                      {businessStats.takenOver.toLocaleString()}
+                    </div>
+                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                      TAKEN
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-4xl font-black" style={{ color: '#ff3300' }}>
+                      {businessStats.liquidated.toLocaleString()}
+                    </div>
+                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                      LIQUIDATED
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-3 mt-3" style={{ borderTop: '2px solid #333' }}>
+                  <div className="flex items-baseline gap-3">
+                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                      TOTAL DOCUMENTED
+                    </div>
+                    <div className="text-2xl font-black" style={{ color: '#ffffff' }}>
+                      {businessStats.total.toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Status Key */}
+              <div className="flex flex-col gap-2">
+                <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#ffcc00' }}>
+                  STATUS KEY
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#00ff00' }} />
+                    <span className="text-sm font-bold uppercase text-white">Active & Operating</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ffcc00' }} />
+                    <span className="text-sm font-bold uppercase text-white">Under Pressure</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ff6600' }} />
+                    <span className="text-sm font-bold uppercase text-white">Taken Over</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ff3300' }} />
+                    <span className="text-sm font-bold uppercase text-white">Liquidated</span>
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 text-xs uppercase font-bold" style={{ borderTop: '2px solid #333', color: '#808080' }}>
+                  Click clusters to zoom
+                </div>
+              </div>
+            </div>
+
+            {/* Timeline */}
+            <div className={`transition-all duration-700 ${showTimeline ? 'opacity-100' : 'opacity-0'}`}>
               <ExhibitTimeline
                 minDate={minDate}
                 maxDate={maxDate}
@@ -176,85 +291,6 @@ function MuseumExhibitContent() {
                 onChange={setCurrentDate}
                 isPlaying={isActive}
               />
-            </div>
-
-            {/* Statistics Overlay with Real Data */}
-            <div className="absolute top-8 left-8 bg-black bg-opacity-80 backdrop-blur-lg p-6 border border-gray-800">
-              <div className="space-y-4">
-                <div className="text-gray-400 text-sm uppercase tracking-wider mb-2">
-                  {language === 'en' ? 'Business Statistics' : 'Geschäftsstatistik'}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-3xl font-light text-green-500 museum-counter">
-                      {businessStats.active.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-gray-500 uppercase">
-                      {language === 'en' ? 'Active' : 'Aktiv'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-light text-yellow-500 museum-counter">
-                      {businessStats.declining.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-gray-500 uppercase">
-                      {language === 'en' ? 'Declining' : 'Gefährdet'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-light text-orange-500 museum-counter">
-                      {businessStats.takenOver.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-gray-500 uppercase">
-                      {language === 'en' ? 'Taken Over' : 'Übernommen'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-light text-red-500 museum-counter">
-                      {businessStats.liquidated.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-gray-500 uppercase">
-                      {language === 'en' ? 'Liquidated' : 'Liquidiert'}
-                    </div>
-                  </div>
-                </div>
-                <div className="pt-2 border-t border-gray-700">
-                  <div className="text-sm text-gray-400">
-                    {language === 'en' ? 'Total Documented' : 'Gesamt Dokumentiert'}
-                  </div>
-                  <div className="text-2xl font-light text-white">
-                    {businessStats.total.toLocaleString()}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Enhanced Legend */}
-            <div className="absolute top-8 right-8 bg-black bg-opacity-80 backdrop-blur-lg p-6 border border-gray-800">
-              <div className="space-y-3">
-                <div className="text-gray-400 text-sm uppercase tracking-wider mb-3">
-                  {language === 'en' ? 'Business Status' : 'Geschäftsstatus'}
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-white text-sm">{language === 'en' ? 'Active & Operating' : 'Aktiv & Betriebsbereit'}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-yellow-500 rounded-full" />
-                  <span className="text-white text-sm">{language === 'en' ? 'Under Pressure' : 'Unter Druck'}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-orange-500 rounded-full" />
-                  <span className="text-white text-sm">{language === 'en' ? 'Taken Over' : 'Übernommen'}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-red-500 rounded-full" />
-                  <span className="text-white text-sm">{language === 'en' ? 'Liquidated' : 'Liquidiert'}</span>
-                </div>
-                <div className="mt-4 pt-3 border-t border-gray-700 text-xs text-gray-500">
-                  {language === 'en' ? 'Click clusters to zoom' : 'Cluster anklicken zum Zoomen'}
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -267,13 +303,13 @@ function MuseumExhibitContent() {
         timeoutMinutes={3}
       />
 
-      {/* Museum-specific styles */}
+      {/* Brutalist styles */}
       <style jsx>{`
         .touch-ripple {
           width: 100px;
           height: 100px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(255,51,0,0.8) 0%, transparent 70%);
           animation: ripple 1s ease-out forwards;
         }
 
@@ -286,29 +322,6 @@ function MuseumExhibitContent() {
             transform: scale(4);
             opacity: 0;
           }
-        }
-
-        .museum-grid-pattern {
-          background-image: 
-            linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .02) 25%, rgba(255, 255, 255, .02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .02) 75%, rgba(255, 255, 255, .02) 76%, transparent 77%, transparent),
-            linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .02) 25%, rgba(255, 255, 255, .02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .02) 75%, rgba(255, 255, 255, .02) 76%, transparent 77%, transparent);
-          background-size: 50px 50px;
-          animation: grid-move 20s linear infinite;
-        }
-
-        @keyframes grid-move {
-          0% { transform: translate(0, 0); }
-          100% { transform: translate(50px, 50px); }
-        }
-
-        .museum-counter {
-          font-variant-numeric: tabular-nums;
-          letter-spacing: 0.05em;
-        }
-
-        @media (max-height: 800px) {
-          .text-5xl { font-size: 2.5rem; }
-          .text-3xl { font-size: 1.875rem; }
         }
       `}</style>
     </div>

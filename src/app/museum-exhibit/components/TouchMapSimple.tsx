@@ -123,170 +123,58 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
     onStatsUpdate?.(stats);
   }, [visibleBusinesses, onStatsUpdate]);
 
-  // Apply custom map styling for elegant dark aesthetic
-  useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map) return;
+  // Remove old dark styling (replaced with brutalist style below)
 
-    const applyCustomStyling = () => {
-      try {
-        // Background - very dark
-        map.setPaintProperty('background', 'background-color', '#1a1a1a');
-
-        // Water - very dark blue/black
-        if (map.getLayer('water')) {
-          map.setPaintProperty('water', 'fill-color', '#0a0a0f');
-        }
-
-        // Streets and roads - gold/amber colors
-        const roadLayers = [
-          'road-primary',
-          'road-secondary-tertiary', 
-          'road-minor',
-          'road-street',
-          'road-trunk',
-          'road-motorway',
-          'road-rail',
-          'road-construction'
-        ];
-
-        roadLayers.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            // Different shades of gold/amber for different road types
-            const roadColors = {
-              'road-motorway': '#d4af37',
-              'road-trunk': '#d4af37', 
-              'road-primary': '#c9a961',
-              'road-secondary-tertiary': '#c9a961',
-              'road-street': '#b8975a',
-              'road-minor': '#a68650',
-              'road-rail': '#8a7247',
-              'road-construction': '#7a6640'
-            };
-            map.setPaintProperty(layerId, 'line-color', roadColors[layerId] || '#c9a961');
-            map.setPaintProperty(layerId, 'line-opacity', 0.8);
-          }
-        });
-
-        // Road borders/casings - slightly darker
-        const roadCasingLayers = [
-          'road-primary-case',
-          'road-secondary-tertiary-case',
-          'road-minor-case',
-          'road-street-case',
-          'road-trunk-case',
-          'road-motorway-case'
-        ];
-
-        roadCasingLayers.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            map.setPaintProperty(layerId, 'line-color', '#2d2d2d');
-            map.setPaintProperty(layerId, 'line-opacity', 0.4);
-          }
-        });
-
-        // Parks and green spaces - very dark green/muted teal
-        const greenSpaceLayers = [
-          'landuse',
-          'national-park',
-          'park',
-          'pitch',
-          'golf-course-rough',
-          'golf-course-fairway'
-        ];
-
-        greenSpaceLayers.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            map.setPaintProperty(layerId, 'fill-color', '#1a2e2a');
-            map.setPaintProperty(layerId, 'fill-opacity', 0.6);
-          }
-        });
-
-        // Building footprints - subtle dark gray
-        if (map.getLayer('building')) {
-          map.setPaintProperty('building', 'fill-color', '#2d2d2d');
-          map.setPaintProperty('building', 'fill-opacity', 0.4);
-        }
-
-        // Building extrusions
-        if (map.getLayer('building-extrusion')) {
-          map.setPaintProperty('building-extrusion', 'fill-extrusion-color', '#2d2d2d');
-          map.setPaintProperty('building-extrusion', 'fill-extrusion-opacity', 0.3);
-        }
-
-        // Labels - light cream/gold text
-        const labelLayers = [
-          'country-label',
-          'state-label',
-          'settlement-major-label',
-          'settlement-minor-label',
-          'place-city-large-n',
-          'place-city-medium-n', 
-          'place-city-small-n',
-          'place-neighbourhood',
-          'place-other',
-          'poi-label',
-          'road-label',
-          'waterway-label',
-          'natural-point-label',
-          'transit-label'
-        ];
-
-        labelLayers.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            map.setPaintProperty(layerId, 'text-color', '#f5e6d3');
-            map.setPaintProperty(layerId, 'text-halo-color', '#1a1a1a');
-            map.setPaintProperty(layerId, 'text-halo-width', 1);
-            map.setPaintProperty(layerId, 'text-opacity', 0.8);
-          }
-        });
-
-        // Transportation lines
-        if (map.getLayer('transit-line')) {
-          map.setPaintProperty('transit-line', 'line-color', '#8a7247');
-          map.setPaintProperty('transit-line', 'line-opacity', 0.6);
-        }
-
-        // Airport areas and other special zones
-        if (map.getLayer('airport')) {
-          map.setPaintProperty('airport', 'fill-color', '#2a2a2a');
-        }
-
-        // Reduce overall saturation for a more muted look
-        const terrainLayers = ['hillshade', 'terrain', 'landcover'];
-        terrainLayers.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            map.setPaintProperty(layerId, 'fill-opacity', 0.3);
-          }
-        });
-
-      } catch (error) {
-        console.warn('Error applying custom map styling:', error);
-      }
-    };
-
-    // Apply styling after map loads
-    if (map.loaded()) {
-      applyCustomStyling();
-    } else {
-      map.on('load', applyCustomStyling);
-    }
-
-    // Cleanup
-    return () => {
-      if (map.loaded()) {
-        map.off('load', applyCustomStyling);
-      }
-    };
-  }, []);
-
-  // Smooth zoom animation when activated
+  // Smooth zoom animation when activated and reapply styles
   useEffect(() => {
     if (isActive && mapRef.current) {
+      const map = mapRef.current.getMap();
+      
+      // Fly to zoom
       mapRef.current.flyTo({
         zoom: 11,
         duration: 2000,
       });
+      
+      // Reapply custom styles after activation
+      const reapplyStyles = () => {
+        if (!map.isStyleLoaded()) return;
+        
+        const layers = map.getStyle().layers;
+        
+        // Hide labels
+        layers.forEach(layer => {
+          if (layer.type === 'symbol') {
+            map.setLayoutProperty(layer.id, 'visibility', 'none');
+          }
+        });
+        
+        // Reapply colors
+        layers.forEach(layer => {
+          if (layer.id === 'background') {
+            map.setPaintProperty(layer.id, 'background-color', '#282833');
+          }
+          if (layer.id.includes('water') && layer.type === 'fill') {
+            map.setPaintProperty(layer.id, 'fill-color', '#ffecc0');
+          }
+          if ((layer.id.includes('park') || layer.id.includes('landuse')) && layer.type === 'fill') {
+            map.setPaintProperty(layer.id, 'fill-color', '#21212d');
+          }
+          if (layer.type === 'line' && layer.id.includes('road')) {
+            if (layer.id.includes('motorway') || layer.id.includes('trunk') || layer.id.includes('primary')) {
+              map.setPaintProperty(layer.id, 'line-color', '#ecc368');
+            } else if (layer.id.includes('secondary')) {
+              map.setPaintProperty(layer.id, 'line-color', '#cea74f');
+            } else {
+              map.setPaintProperty(layer.id, 'line-color', '#a1823a');
+            }
+          }
+        });
+      };
+      
+      // Apply immediately and after a delay
+      setTimeout(reapplyStyles, 100);
+      setTimeout(reapplyStyles, 2500);
     }
   }, [isActive]);
 
@@ -304,42 +192,217 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
     return () => clearInterval(interval);
   }, [isActive]);
 
-  // Apply custom map styling after load for elegant bright palette
+  // Apply custom dark map styling with gold roads - no labels
+  useEffect(() => {
+    if (!mapRef.current) return;
+    
+    const map = mapRef.current.getMap();
+    let styleApplied = false;
+    
+    const applyCustomStyle = () => {
+      try {
+        // Wait for style to be fully loaded
+        if (!map.isStyleLoaded()) {
+          return;
+        }
+
+        console.log('Applying custom map styles...');
+        const layers = map.getStyle().layers;
+        
+        // Hide ALL labels first
+        layers.forEach(layer => {
+          if (layer.type === 'symbol') {
+            map.setLayoutProperty(layer.id, 'visibility', 'none');
+          }
+        });
+
+        // Apply background color
+        layers.forEach(layer => {
+          if (layer.id === 'background') {
+            map.setPaintProperty(layer.id, 'background-color', '#282833');
+          }
+        });
+
+        // Style water layers - cream/beige for contrast
+        layers.forEach(layer => {
+          if (layer.id.includes('water')) {
+            if (layer.type === 'fill') {
+              map.setPaintProperty(layer.id, 'fill-color', '#ffecc0');
+            } else if (layer.type === 'line') {
+              map.setPaintProperty(layer.id, 'line-color', '#ffecc0');
+            }
+          }
+        });
+
+        // Style park/landuse layers - darker than land
+        layers.forEach(layer => {
+          if ((layer.id.includes('park') || layer.id.includes('landuse') || 
+               layer.id.includes('landcover') || layer.id.includes('grass')) && 
+              layer.type === 'fill') {
+            map.setPaintProperty(layer.id, 'fill-color', '#21212d');
+            map.setPaintProperty(layer.id, 'fill-opacity', 0.8);
+          }
+        });
+
+        // Style buildings
+        layers.forEach(layer => {
+          if (layer.id.includes('building') && layer.type === 'fill') {
+            map.setPaintProperty(layer.id, 'fill-color', '#323240');
+            map.setPaintProperty(layer.id, 'fill-opacity', 0.5);
+          }
+        });
+
+        // Style all road layers with golden colors
+        layers.forEach(layer => {
+          if (layer.type === 'line' && 
+              (layer.id.includes('road') || layer.id.includes('street') || 
+               layer.id.includes('highway') || layer.id.includes('path'))) {
+            
+            // Remove any casing
+            if (layer.id.includes('case') || layer.id.includes('casing')) {
+              map.setLayoutProperty(layer.id, 'visibility', 'none');
+              return;
+            }
+            
+            // Major roads - bright gold
+            if (layer.id.includes('motorway') || layer.id.includes('trunk') || 
+                layer.id.includes('primary')) {
+              map.setPaintProperty(layer.id, 'line-color', '#ecc368');
+              map.setPaintProperty(layer.id, 'line-width', [
+                'interpolate', ['linear'], ['zoom'],
+                10, 2,
+                15, 6
+              ]);
+            }
+            // Medium roads
+            else if (layer.id.includes('secondary') || layer.id.includes('tertiary')) {
+              map.setPaintProperty(layer.id, 'line-color', '#cea74f');
+              map.setPaintProperty(layer.id, 'line-width', [
+                'interpolate', ['linear'], ['zoom'],
+                10, 1,
+                15, 4
+              ]);
+            }
+            // Small streets
+            else if (layer.id.includes('street') || layer.id.includes('minor') || 
+                     layer.id.includes('service') || layer.id.includes('link')) {
+              map.setPaintProperty(layer.id, 'line-color', '#a1823a');
+              map.setPaintProperty(layer.id, 'line-width', [
+                'interpolate', ['linear'], ['zoom'],
+                10, 0.5,
+                15, 2
+              ]);
+            }
+            // Paths
+            else if (layer.id.includes('path') || layer.id.includes('pedestrian')) {
+              map.setPaintProperty(layer.id, 'line-color', '#7a6230');
+              map.setPaintProperty(layer.id, 'line-width', 1);
+            }
+            // Default for any other roads
+            else {
+              map.setPaintProperty(layer.id, 'line-color', '#8a7040');
+              map.setPaintProperty(layer.id, 'line-width', 1.5);
+            }
+          }
+        });
+
+        // Style transit
+        layers.forEach(layer => {
+          if (layer.type === 'line' && layer.id.includes('transit')) {
+            map.setPaintProperty(layer.id, 'line-color', '#deaf44');
+            map.setPaintProperty(layer.id, 'line-opacity', 0.6);
+          }
+        });
+
+        // Style admin boundaries
+        layers.forEach(layer => {
+          if (layer.type === 'line' && 
+              (layer.id.includes('admin') || layer.id.includes('boundary'))) {
+            map.setPaintProperty(layer.id, 'line-color', '#3a3a3a');
+            map.setPaintProperty(layer.id, 'line-opacity', 0.3);
+          }
+        });
+
+        styleApplied = true;
+        console.log('Map styling applied successfully');
+
+      } catch (error) {
+        console.error('Error applying map styles:', error);
+      }
+    };
+
+    // Apply styles whenever the map style changes or loads
+    const onStyleData = () => {
+      if (!styleApplied && map.isStyleLoaded()) {
+        applyCustomStyle();
+      }
+    };
+
+    // Listen for multiple events to catch style changes
+    map.on('styledata', onStyleData);
+    map.on('style.load', applyCustomStyle);
+    map.on('load', applyCustomStyle);
+    
+    // Initial application
+    if (map.loaded() && map.isStyleLoaded()) {
+      applyCustomStyle();
+    }
+
+    // Also apply on idle to catch any missed events
+    const onIdle = () => {
+      if (!styleApplied && map.isStyleLoaded()) {
+        applyCustomStyle();
+      }
+    };
+    map.once('idle', onIdle);
+
+    // Cleanup
+    return () => {
+      map.off('styledata', onStyleData);
+      map.off('style.load', applyCustomStyle);
+      map.off('load', applyCustomStyle);
+      map.off('idle', onIdle);
+    };
+  }, []);
+
+  // Apply brutalist abstract art styling
   useEffect(() => {
     if (!mapRef.current) return;
     
     const map = mapRef.current.getMap();
     
-    const applyCustomStyle = () => {
+    const applyBrutalistStyle = () => {
       try {
-        // Set light cream background
+        // Set white background
         if (map.getLayer('background')) {
-          map.setPaintProperty('background', 'background-color', '#FAF8F5');
+          map.setPaintProperty('background', 'background-color', '#FFFFFF');
         }
 
-        // Style water - soft teal
+        // Style water - bright teal/turquoise
         if (map.getLayer('water')) {
-          map.setPaintProperty('water', 'fill-color', '#B8E6E6');
+          map.setPaintProperty('water', 'fill-color', '#00D9D9');
         }
         if (map.getLayer('waterway')) {
-          map.setPaintProperty('waterway', 'line-color', '#B8E6E6');
+          map.setPaintProperty('waterway', 'line-color', '#00D9D9');
+          map.setPaintProperty('waterway', 'line-width', 4);
         }
 
-        // Style parks/green spaces - soft mint
+        // Style parks/green spaces - bright purple/lavender
         ['park', 'landuse', 'landcover', 'national_park'].forEach(layer => {
           if (map.getLayer(layer)) {
-            map.setPaintProperty(layer, 'fill-color', '#D4EDDA');
-            map.setPaintProperty(layer, 'fill-opacity', 0.4);
+            map.setPaintProperty(layer, 'fill-color', '#C589E8');
+            map.setPaintProperty(layer, 'fill-opacity', 1);
           }
         });
 
-        // Style buildings - light warm gray
+        // Style buildings - bright yellow blocks
         if (map.getLayer('building')) {
-          map.setPaintProperty('building', 'fill-color', '#E8E4DE');
-          map.setPaintProperty('building', 'fill-opacity', 0.6);
+          map.setPaintProperty('building', 'fill-color', '#FFD93D');
+          map.setPaintProperty('building', 'fill-opacity', 1);
+          map.setPaintProperty('building', 'fill-outline-color', '#000000');
         }
 
-        // Style roads with warm golden/orange tones
+        // Style roads with bright orange
         const roadLayers = [
           'road-motorway', 'road-motorway-trunk',
           'road-trunk', 'road-primary',
@@ -351,37 +414,38 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
 
         roadLayers.forEach(layer => {
           if (map.getLayer(layer)) {
-            // Main roads - bright orange/gold
-            if (layer.includes('motorway') || layer.includes('trunk')) {
-              map.setPaintProperty(layer, 'line-color', '#FDB863');
-              map.setPaintProperty(layer, 'line-width', 2.5);
-            }
-            // Secondary roads - softer orange
-            else if (layer.includes('primary') || layer.includes('secondary')) {
-              map.setPaintProperty(layer, 'line-color', '#FDAE61');
-              map.setPaintProperty(layer, 'line-width', 1.8);
-            }
-            // Minor roads - pale gold
-            else {
-              map.setPaintProperty(layer, 'line-color', '#FEE08B');
-              map.setPaintProperty(layer, 'line-width', 1);
-            }
+            // All roads - bright orange
+            map.setPaintProperty(layer, 'line-color', '#FF6B35');
+            map.setPaintProperty(layer, 'line-width', layer.includes('motorway') || layer.includes('trunk') ? 8 : 4);
           }
         });
 
-        // Style labels - dark blue-gray for contrast
+        // HIDE ALL LABELS for abstract art effect
         const labelLayers = [
-          'place-label', 'place-label-other',
-          'road-label', 'road-label-simple',
-          'poi-label', 'water-label',
-          'waterway-label', 'natural-label'
+          'country-label', 'state-label', 'settlement-major-label', 'settlement-minor-label',
+          'place-city-large-n', 'place-city-medium-n', 'place-city-small-n',
+          'place-neighbourhood', 'place-other', 'poi-label', 'road-label',
+          'waterway-label', 'natural-point-label', 'transit-label',
+          'place-label', 'place-label-other', 'road-label-simple',
+          'water-label', 'natural-label'
         ];
         
         labelLayers.forEach(layer => {
           if (map.getLayer(layer)) {
-            map.setPaintProperty(layer, 'text-color', '#2C3E50');
-            map.setPaintProperty(layer, 'text-halo-color', '#FFFFFF');
-            map.setPaintProperty(layer, 'text-halo-width', 2);
+            map.setLayoutProperty(layer, 'visibility', 'none');
+          }
+        });
+
+        // Remove road casings for cleaner look
+        const roadCasingLayers = [
+          'road-primary-case', 'road-secondary-tertiary-case',
+          'road-minor-case', 'road-street-case',
+          'road-trunk-case', 'road-motorway-case'
+        ];
+
+        roadCasingLayers.forEach(layer => {
+          if (map.getLayer(layer)) {
+            map.setLayoutProperty(layer, 'visibility', 'none');
           }
         });
 
@@ -392,25 +456,25 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
 
     // Apply styling when map loads
     if (map.loaded()) {
-      setTimeout(applyCustomStyle, 100);
+      setTimeout(applyBrutalistStyle, 100);
     } else {
-      map.once('load', () => setTimeout(applyCustomStyle, 100));
+      map.once('load', () => setTimeout(applyBrutalistStyle, 100));
     }
 
     return () => {
-      map.off('load', applyCustomStyle);
+      map.off('load', applyBrutalistStyle);
     };
   }, []);
 
   const getMarkerColor = (status: string) => {
     switch (status) {
-      case 'active': return '#00d9bf'; // Teal
-      case 'pressure': return '#00a89d'; // Darker teal
-      case 'declining': return '#ffb700'; // Amber/orange
-      case 'takenOver': return '#ff8c00'; // Dark orange
-      case 'closing': return '#ff6b00'; // Burnt orange
-      case 'closed': return '#2d3748'; // Dark navy/gray
-      default: return '#4a5568';
+      case 'active': return '#00D9D9'; // Bright teal
+      case 'pressure': return '#FFD93D'; // Bright yellow
+      case 'declining': return '#FFD93D'; // Bright yellow
+      case 'takenOver': return '#FF6B35'; // Bright orange
+      case 'closing': return '#FF6B35'; // Bright orange
+      case 'closed': return '#C589E8'; // Bright purple
+      default: return '#000000';
     }
   };
 
@@ -448,7 +512,7 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
         ref={mapRef}
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
-        mapStyle="mapbox://styles/mapbox/light-v11"
+        mapStyle="mapbox://styles/mapbox/dark-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
         touchZoomRotate={true}
         touchPitch={false}
@@ -492,15 +556,16 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
                   />
                 )}
                 
-                {/* Main marker dot */}
+                {/* Main marker square - brutalist style */}
                 <div
-                  className="relative rounded-full transition-all duration-300"
+                  className="relative transition-all duration-300"
                   style={{
-                    width: isSelected ? '20px' : isHovered ? '16px' : '12px',
-                    height: isSelected ? '20px' : isHovered ? '16px' : '12px',
+                    width: isSelected ? '24px' : isHovered ? '20px' : '16px',
+                    height: isSelected ? '24px' : isHovered ? '20px' : '16px',
                     backgroundColor: color,
-                    boxShadow: `0 0 ${isSelected ? '30px' : '10px'} ${color}`,
-                    opacity: business.status === 'closed' ? 0.5 : 1,
+                    border: '2px solid #000000',
+                    boxShadow: `0 0 ${isSelected ? '20px' : '8px'} ${color}`,
+                    opacity: business.status === 'closed' ? 0.7 : 1,
                     transform: `scale(${isHovered ? 1.2 : 1})`,
                   }}
                 />
@@ -508,14 +573,19 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
                 {/* Hover tooltip */}
                 {isHovered && (
                   <div
-                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black bg-opacity-90 text-white text-xs whitespace-nowrap pointer-events-none z-50"
-                    style={{ minWidth: '150px' }}
+                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-4 py-3 text-sm whitespace-nowrap pointer-events-none z-50"
+                    style={{ 
+                      minWidth: '180px',
+                      backgroundColor: '#FFFFFF',
+                      border: '4px solid #000000',
+                      color: '#000000'
+                    }}
                   >
-                    <div className="font-semibold">{business.type} Business</div>
-                    <div className="text-gray-400">{business.district}</div>
-                    <div className="text-gray-400">Est. {business.establishedYear}</div>
+                    <div className="font-black uppercase">{business.type} Business</div>
+                    <div className="font-bold">{business.district}</div>
+                    <div className="font-bold">Est. {business.establishedYear}</div>
                     {business.status === 'closed' && (
-                      <div className="text-red-400">Closed {business.closedYear}</div>
+                      <div className="font-bold" style={{ color: '#C589E8' }}>Closed {business.closedYear}</div>
                     )}
                   </div>
                 )}
@@ -537,25 +607,27 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
               onClose={() => onBusinessSelect(null)}
               closeButton={true}
               closeOnClick={false}
-              className="museum-popup"
+              className="brutalist-popup"
             >
-              <div className="p-4 max-w-xs">
-                <h3 className="text-lg font-semibold mb-2">{business.type} Business</h3>
-                <p className="text-sm text-gray-600 mb-2">{business.district}, Berlin</p>
-                <div className="text-xs space-y-1">
-                  <div>Established: {business.establishedYear}</div>
+              <div className="p-6" style={{ backgroundColor: '#FFFFFF', border: '4px solid #000000' }}>
+                <h3 className="text-xl font-black uppercase mb-3" style={{ color: '#000000' }}>{business.type} Business</h3>
+                <p className="text-lg font-bold mb-3" style={{ color: '#000000' }}>{business.district}, Berlin</p>
+                <div className="text-sm space-y-2">
+                  <div className="font-bold">Established: {business.establishedYear}</div>
                   {business.status === 'closed' && (
-                    <div className="text-red-600">Forced closure: {business.closedYear}</div>
+                    <div className="font-bold" style={{ color: '#C589E8' }}>Forced closure: {business.closedYear}</div>
                   )}
-                  <div className="mt-2 pt-2 border-t border-gray-200">
-                    Status: <span style={{ color: getMarkerColor(business.status) }}>
-                      {business.status === 'active' ? 'Operating' :
-                       business.status === 'pressure' ? 'Under Pressure' :
-                       business.status === 'declining' ? 'Declining' :
-                       business.status === 'takenOver' ? 'Taken Over' :
-                       business.status === 'closing' ? 'Being Liquidated' :
-                       'Closed'}
-                    </span>
+                  <div className="mt-3 pt-3" style={{ borderTop: '4px solid #000000' }}>
+                    <div className="p-2" style={{ backgroundColor: getMarkerColor(business.status), border: '2px solid #000000' }}>
+                      <span className="font-black uppercase" style={{ color: '#000000' }}>
+                        Status: {business.status === 'active' ? 'Operating' :
+                         business.status === 'pressure' ? 'Under Pressure' :
+                         business.status === 'declining' ? 'Declining' :
+                         business.status === 'takenOver' ? 'Taken Over' :
+                         business.status === 'closing' ? 'Being Liquidated' :
+                         'Closed'}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -565,31 +637,41 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
       </Map>
 
       {/* Marker count indicator */}
-      <div className="absolute bottom-4 left-4 px-4 py-2 text-sm font-bold uppercase" 
+      <div className="absolute bottom-4 left-4 px-4 py-2 text-sm font-black uppercase" 
            style={{ 
-             backgroundColor: 'rgba(212, 175, 55, 0.15)',
-             border: '2px solid #d4af37',
-             color: '#f5e6d3'
+             backgroundColor: 'rgba(26, 26, 26, 0.95)',
+             border: '3px solid #ecc368',
+             color: '#ecc368'
            }}>
         Showing {displayedBusinesses.length} of {visibleBusinesses.length} businesses
       </div>
 
       <style jsx global>{`
-        .museum-popup .mapboxgl-popup-content {
-          background: #1a1a1a;
-          color: #f5e6d3;
-          border: 3px solid #d4af37;
-          font-family: 'Space Mono', monospace;
+        .brutalist-popup .mapboxgl-popup-content {
+          background: #FFFFFF !important;
+          color: #000000 !important;
+          border: 6px solid #000000 !important;
+          font-family: 'Inter', sans-serif !important;
+          border-radius: 0 !important;
         }
         
-        .museum-popup .mapboxgl-popup-close-button {
-          color: #d4af37;
-          font-size: 20px;
-          padding: 5px 10px;
+        .brutalist-popup .mapboxgl-popup-close-button {
+          color: #000000 !important;
+          font-size: 24px !important;
+          font-weight: 900 !important;
+          padding: 8px 12px !important;
+          background: #FF6B35 !important;
+          border: 4px solid #000000 !important;
+          border-radius: 0 !important;
         }
         
-        .museum-popup .mapboxgl-popup-close-button:hover {
-          background: rgba(212, 175, 55, 0.1);
+        .brutalist-popup .mapboxgl-popup-close-button:hover {
+          background: #FFD93D !important;
+        }
+        
+        .brutalist-popup .mapboxgl-popup-close-button:focus {
+          outline: none !important;
+          box-shadow: none !important;
         }
       `}</style>
     </div>

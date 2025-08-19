@@ -85,7 +85,7 @@ function MuseumExhibitContent() {
         touchAction: 'none', 
         userSelect: 'none', 
         WebkitUserSelect: 'none',
-        backgroundColor: '#1a202c'
+        backgroundColor: '#FFFFFF'
       }}
     >
       {/* Touch ripple effects */}
@@ -125,21 +125,22 @@ function MuseumExhibitContent() {
           
           {/* Top Left - Header only */}
           <div className="absolute top-8 left-8 z-20 pointer-events-auto">
-            <div className="p-4" style={{ backgroundColor: 'rgba(26, 32, 44, 0.95)', border: '2px solid #00d9bf' }}>
+            <div className="p-6" style={{ backgroundColor: '#FFFFFF', border: '6px solid #000000' }}>
               <div className="flex items-center gap-6">
                 <div>
-                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#00d9bf' }}>
+                  <h1 className="text-4xl font-black uppercase tracking-tight leading-none" style={{ color: '#000000' }}>
                     JEWISH
                   </h1>
-                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#00d9bf' }}>
+                  <h1 className="text-4xl font-black uppercase tracking-tight leading-none" style={{ color: '#000000' }}>
                     BUSINESSES IN
                   </h1>
-                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#00d9bf' }}>
+                  <h1 className="text-4xl font-black uppercase tracking-tight leading-none" style={{ color: '#000000' }}>
                     BERLIN
                   </h1>
                 </div>
-                <div className="text-2xl font-black" style={{ color: '#ffb700' }}>
-                  1900-<br/>1945
+                <div className="px-4 py-2" style={{ backgroundColor: '#FFD93D', border: '4px solid #000000', color: '#000000' }}>
+                  <div className="text-3xl font-black leading-none">1900</div>
+                  <div className="text-3xl font-black leading-none">1945</div>
                 </div>
               </div>
             </div>
@@ -149,38 +150,44 @@ function MuseumExhibitContent() {
           <div className="absolute top-8 right-8 z-20 pointer-events-auto">
             <div className="flex items-start gap-4">
               {/* Language buttons */}
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 <button
                   onClick={() => handleLanguageChange('en')}
-                  className="px-5 py-2 font-black uppercase text-sm transition-all"
+                  className="px-6 py-4 font-black uppercase text-lg transition-all"
                   style={{ 
-                    backgroundColor: language === 'en' ? '#00d9bf' : 'rgba(26, 32, 44, 0.95)',
-                    color: language === 'en' ? '#1a202c' : '#00d9bf',
-                    border: `2px solid #00d9bf`,
+                    backgroundColor: language === 'en' ? '#00D9D9' : '#FFFFFF',
+                    color: '#000000',
+                    border: '6px solid #000000',
+                    outline: 'none',
+                    boxShadow: 'none'
                   }}
                 >
-                  🇬🇧 ENGLISH
+                  ENGLISH
                 </button>
                 <button
                   onClick={() => handleLanguageChange('de')}
-                  className="px-5 py-2 font-black uppercase text-sm transition-all"
+                  className="px-6 py-4 font-black uppercase text-lg transition-all"
                   style={{ 
-                    backgroundColor: language === 'de' ? '#00d9bf' : 'rgba(26, 32, 44, 0.95)',
-                    color: language === 'de' ? '#1a202c' : '#00d9bf',
-                    border: `2px solid #00d9bf`,
+                    backgroundColor: language === 'de' ? '#00D9D9' : '#FFFFFF',
+                    color: '#000000',
+                    border: '6px solid #000000',
+                    outline: 'none',
+                    boxShadow: 'none'
                   }}
                 >
-                  🇩🇪 DEUTSCH
+                  DEUTSCH
                 </button>
               </div>
               
               <button
                 onClick={handleSessionEnd}
-                className="px-6 py-2 font-black uppercase text-sm transition-all"
+                className="px-8 py-4 font-black uppercase text-lg transition-all"
                 style={{ 
-                  backgroundColor: '#ffb700',
-                  color: '#1a202c',
-                  border: '2px solid #ffb700'
+                  backgroundColor: '#FF6B35',
+                  color: '#000000',
+                  border: '6px solid #000000',
+                  outline: 'none',
+                  boxShadow: 'none'
                 }}
               >
                 START OVER
@@ -192,55 +199,55 @@ function MuseumExhibitContent() {
           <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-auto flex items-end gap-4 p-6">
             
             {/* Statistics Panel - Left */}
-            <div className="flex-shrink-0 p-4" 
+            <div className="flex-shrink-0 p-6" 
                  style={{ 
-                   backgroundColor: 'rgba(26, 32, 44, 0.95)',
-                   border: '2px solid #00d9bf',
-                   width: '280px'
+                   backgroundColor: '#FFFFFF',
+                   border: '6px solid #000000',
+                   width: '320px'
                  }}>
-              <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#00d9bf' }}>
+              <div className="text-xl font-black uppercase tracking-wider mb-4" style={{ color: '#000000' }}>
                 STATISTICS
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black" style={{ color: '#00d9bf' }}>
+              <div className="space-y-3">
+                <div className="p-3" style={{ backgroundColor: '#00D9D9', border: '4px solid #000000' }}>
+                  <div className="text-3xl font-black" style={{ color: '#000000' }}>
                     {businessStats.active.toLocaleString()}
                   </div>
-                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                  <div className="text-sm font-black uppercase" style={{ color: '#000000' }}>
                     ACTIVE
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black" style={{ color: '#ffb700' }}>
+                <div className="p-3" style={{ backgroundColor: '#FFD93D', border: '4px solid #000000' }}>
+                  <div className="text-3xl font-black" style={{ color: '#000000' }}>
                     {businessStats.declining.toLocaleString()}
                   </div>
-                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                  <div className="text-sm font-black uppercase" style={{ color: '#000000' }}>
                     DECLINING
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black" style={{ color: '#ff8c00' }}>
+                <div className="p-3" style={{ backgroundColor: '#FF6B35', border: '4px solid #000000' }}>
+                  <div className="text-3xl font-black" style={{ color: '#000000' }}>
                     {businessStats.takenOver.toLocaleString()}
                   </div>
-                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                  <div className="text-sm font-black uppercase" style={{ color: '#000000' }}>
                     TAKEN
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black" style={{ color: '#718096' }}>
+                <div className="p-3" style={{ backgroundColor: '#C589E8', border: '4px solid #000000' }}>
+                  <div className="text-3xl font-black" style={{ color: '#000000' }}>
                     {businessStats.liquidated.toLocaleString()}
                   </div>
-                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                  <div className="text-sm font-black uppercase" style={{ color: '#000000' }}>
                     CLOSED
                   </div>
                 </div>
               </div>
-              <div className="pt-2 mt-2" style={{ borderTop: '1px solid rgba(0, 217, 191, 0.3)' }}>
-                <div className="flex items-baseline gap-2">
-                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(0, 217, 191, 0.6)' }}>
+              <div className="pt-4 mt-4" style={{ borderTop: '4px solid #000000' }}>
+                <div className="text-center p-3" style={{ backgroundColor: '#F0F0F0', border: '4px solid #000000' }}>
+                  <div className="text-sm font-black uppercase" style={{ color: '#000000' }}>
                     TOTAL
                   </div>
-                  <div className="text-xl font-black" style={{ color: '#00d9bf' }}>
+                  <div className="text-4xl font-black" style={{ color: '#000000' }}>
                     {businessStats.total.toLocaleString()}
                   </div>
                 </div>
@@ -259,31 +266,31 @@ function MuseumExhibitContent() {
             </div>
 
             {/* Status Key - Right */}
-            <div className="flex-shrink-0 p-4" 
+            <div className="flex-shrink-0 p-6" 
                  style={{ 
-                   backgroundColor: 'rgba(26, 32, 44, 0.95)',
-                   border: '2px solid #00d9bf',
-                   width: '200px'
+                   backgroundColor: '#FFFFFF',
+                   border: '6px solid #000000',
+                   width: '240px'
                  }}>
-              <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#00d9bf' }}>
+              <div className="text-xl font-black uppercase tracking-wider mb-4" style={{ color: '#000000' }}>
                 STATUS KEY
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4" style={{ backgroundColor: '#00d9bf' }} />
-                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Active</span>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-2" style={{ backgroundColor: '#00D9D9', border: '4px solid #000000' }}>
+                  <div className="w-6 h-6" style={{ backgroundColor: '#000000' }} />
+                  <span className="text-sm font-black uppercase" style={{ color: '#000000' }}>ACTIVE</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4" style={{ backgroundColor: '#ffb700' }} />
-                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Pressure</span>
+                <div className="flex items-center gap-3 p-2" style={{ backgroundColor: '#FFD93D', border: '4px solid #000000' }}>
+                  <div className="w-6 h-6" style={{ backgroundColor: '#000000' }} />
+                  <span className="text-sm font-black uppercase" style={{ color: '#000000' }}>PRESSURE</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4" style={{ backgroundColor: '#ff8c00' }} />
-                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Taken</span>
+                <div className="flex items-center gap-3 p-2" style={{ backgroundColor: '#FF6B35', border: '4px solid #000000' }}>
+                  <div className="w-6 h-6" style={{ backgroundColor: '#000000' }} />
+                  <span className="text-sm font-black uppercase" style={{ color: '#000000' }}>TAKEN</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4" style={{ backgroundColor: '#718096' }} />
-                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Closed</span>
+                <div className="flex items-center gap-3 p-2" style={{ backgroundColor: '#C589E8', border: '4px solid #000000' }}>
+                  <div className="w-6 h-6" style={{ backgroundColor: '#000000' }} />
+                  <span className="text-sm font-black uppercase" style={{ color: '#000000' }}>CLOSED</span>
                 </div>
               </div>
             </div>
@@ -303,8 +310,8 @@ function MuseumExhibitContent() {
         .touch-ripple {
           width: 100px;
           height: 100px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(0,217,191,0.8) 0%, transparent 70%);
+          background: #00D9D9;
+          border: 4px solid #000000;
           animation: ripple 1s ease-out forwards;
         }
 
@@ -317,6 +324,17 @@ function MuseumExhibitContent() {
             transform: scale(4);
             opacity: 0;
           }
+        }
+
+        /* Remove all focus outlines */
+        button:focus {
+          outline: none !important;
+          box-shadow: none !important;
+        }
+        
+        input:focus {
+          outline: none !important;
+          box-shadow: none !important;
         }
       `}</style>
     </div>

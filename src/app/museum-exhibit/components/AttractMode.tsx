@@ -27,11 +27,11 @@ const AttractMode: React.FC<AttractModeProps> = ({ isVisible }) => {
 
     const interval = setInterval(() => {
       setStats(prev => ({
-        businesses: Math.min(prev.businesses + 23, 2847),
+        businesses: Math.min(prev.businesses + 87, 10021),
         years: Math.min(prev.years + 1, 45),
-        stories: Math.min(prev.stories + 1, 127),
+        stories: Math.min(prev.stories + 3, 542),
       }));
-    }, 50);
+    }, 30);
 
     return () => clearInterval(interval);
   }, [isVisible]);
@@ -118,7 +118,7 @@ const AttractMode: React.FC<AttractModeProps> = ({ isVisible }) => {
 
         {/* Animated statistics */}
         <div className="flex gap-24 mb-20">
-          <div className="text-center">
+          <div className="text-center transform hover:scale-110 transition-transform duration-500">
             <div className="text-6xl font-light text-white mb-2 museum-counter">
               {stats.businesses.toLocaleString()}
             </div>
@@ -126,7 +126,7 @@ const AttractMode: React.FC<AttractModeProps> = ({ isVisible }) => {
               Businesses Documented
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center transform hover:scale-110 transition-transform duration-500">
             <div className="text-6xl font-light text-white mb-2 museum-counter">
               {stats.years}
             </div>
@@ -134,7 +134,7 @@ const AttractMode: React.FC<AttractModeProps> = ({ isVisible }) => {
               Years of History
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center transform hover:scale-110 transition-transform duration-500">
             <div className="text-6xl font-light text-white mb-2 museum-counter">
               {stats.stories}
             </div>

@@ -9,7 +9,7 @@ import LanguageSelector from './components/LanguageSelector';
 import { TranslationProvider } from '../../i18n/TranslationContext';
 import { useTranslation } from '../../i18n/useTranslation';
 
-const TouchMap = dynamic(() => import('./components/TouchMap'), { 
+const TouchMap = dynamic(() => import('./components/TouchMapSimple'), { 
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center bg-black">
@@ -25,6 +25,13 @@ function MuseumExhibitContent() {
   const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null);
   const [showTimeline, setShowTimeline] = useState(false);
   const [touchPoints, setTouchPoints] = useState<Array<{x: number, y: number, id: number}>>([]);
+  const [businessStats, setBusinessStats] = useState({
+    total: 10021,
+    active: 0,
+    declining: 0,
+    takenOver: 0,
+    liquidated: 0
+  });
   const touchIdRef = useRef(0);
   
   const minDate = new Date(1920, 0, 1);
@@ -151,12 +158,13 @@ function MuseumExhibitContent() {
           {/* Map and Timeline Container */}
           <div className="flex-1 relative">
             
-            {/* Touch-optimized Map */}
+            {/* Touch-optimized Map with 10,021 real businesses */}
             <TouchMap 
               currentDate={currentDate}
               onBusinessSelect={setSelectedBusiness}
               selectedBusiness={selectedBusiness}
               isActive={isActive}
+              onStatsUpdate={setBusinessStats}
             />
 
             {/* Timeline Overlay */}
@@ -170,32 +178,81 @@ function MuseumExhibitContent() {
               />
             </div>
 
-            {/* Statistics Overlay */}
+            {/* Statistics Overlay with Real Data */}
             <div className="absolute top-8 left-8 bg-black bg-opacity-80 backdrop-blur-lg p-6 border border-gray-800">
               <div className="space-y-4">
-                <div className="text-gray-400 text-sm uppercase tracking-wider">
-                  {language === 'en' ? 'Active Businesses' : 'Aktive Geschäfte'}
+                <div className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+                  {language === 'en' ? 'Business Statistics' : 'Geschäftsstatistik'}
                 </div>
-                <div className="text-5xl font-light text-white museum-counter">
-                  {Math.max(0, Math.floor(2847 * (1 - (currentDate.getFullYear() - 1920) / 25)))}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-3xl font-light text-green-500 museum-counter">
+                      {businessStats.active.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase">
+                      {language === 'en' ? 'Active' : 'Aktiv'}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-light text-yellow-500 museum-counter">
+                      {businessStats.declining.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase">
+                      {language === 'en' ? 'Declining' : 'Gefährdet'}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-light text-orange-500 museum-counter">
+                      {businessStats.takenOver.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase">
+                      {language === 'en' ? 'Taken Over' : 'Übernommen'}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-light text-red-500 museum-counter">
+                      {businessStats.liquidated.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase">
+                      {language === 'en' ? 'Liquidated' : 'Liquidiert'}
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-gray-700">
+                  <div className="text-sm text-gray-400">
+                    {language === 'en' ? 'Total Documented' : 'Gesamt Dokumentiert'}
+                  </div>
+                  <div className="text-2xl font-light text-white">
+                    {businessStats.total.toLocaleString()}
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Legend */}
+            {/* Enhanced Legend */}
             <div className="absolute top-8 right-8 bg-black bg-opacity-80 backdrop-blur-lg p-6 border border-gray-800">
               <div className="space-y-3">
+                <div className="text-gray-400 text-sm uppercase tracking-wider mb-3">
+                  {language === 'en' ? 'Business Status' : 'Geschäftsstatus'}
+                </div>
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-white">{language === 'en' ? 'Active' : 'Aktiv'}</span>
+                  <span className="text-white text-sm">{language === 'en' ? 'Active & Operating' : 'Aktiv & Betriebsbereit'}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 bg-yellow-500 rounded-full" />
-                  <span className="text-white">{language === 'en' ? 'Declining' : 'Gefährdet'}</span>
+                  <span className="text-white text-sm">{language === 'en' ? 'Under Pressure' : 'Unter Druck'}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 bg-orange-500 rounded-full" />
+                  <span className="text-white text-sm">{language === 'en' ? 'Taken Over' : 'Übernommen'}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 bg-red-500 rounded-full" />
-                  <span className="text-white">{language === 'en' ? 'Closed' : 'Geschlossen'}</span>
+                  <span className="text-white text-sm">{language === 'en' ? 'Liquidated' : 'Liquidiert'}</span>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-700 text-xs text-gray-500">
+                  {language === 'en' ? 'Click clusters to zoom' : 'Cluster anklicken zum Zoomen'}
                 </div>
               </div>
             </div>

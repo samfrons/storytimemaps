@@ -16,7 +16,6 @@ const SessionManager: React.FC<SessionManagerProps> = ({
   const [timeRemaining, setTimeRemaining] = useState(timeoutMinutes * 60);
   const [showWarning, setShowWarning] = useState(false);
   const lastActivityRef = useRef(Date.now());
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reset timer on any activity
   useEffect(() => {

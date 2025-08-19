@@ -134,7 +134,7 @@ export const translations = {
         historicalContext: "Historical Context",
         historicalContextDesc: "Between 1900 and 1945, Jewish entrepreneurs operated thousands of businesses in Berlin, from small shops to major department stores. This map documents their locations, types, and fates during the Nazi era.",
         theData: "The Data",
-        theDataDesc: "Our database contains over 8,000 verified business records, compiled from historical directories, registration documents, and survivor testimonies. Each entry represents not just a business, but a family's livelihood and contribution to Berlin's economy.",
+        theDataDesc: "Our database contains over 10,000 verified business records, compiled from historical directories, registration documents, and survivor testimonies. Each entry represents not just a business, but a family's livelihood and contribution to Berlin's economy.",
         timelineNavigation: "Timeline Navigation",
         timelineNavigationDesc: "Use the timeline controls to see how the business landscape changed over 45 years. Watch businesses flourish in the 1920s, then witness the devastating impact of Nazi policies from 1933 onwards.",
         colorCoding: "Color Coding",

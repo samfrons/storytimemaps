@@ -701,6 +701,7 @@ function TestFullDatasetPageContent() {
                   }}
                   storiesCount={storiesWithDetailCount}
                   totalCount={totalItems}
+                  theme={mounted ? theme : undefined}
                 />
                 <ContentPreview
                   mode={viewMode}

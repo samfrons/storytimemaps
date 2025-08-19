@@ -8,20 +8,22 @@ export interface ModeToggleProps {
   onModeChange: (mode: 'stories' | 'database') => void;
   storiesCount: number;
   totalCount: number;
+  theme?: string;
 }
 
 const ModeToggle: React.FC<ModeToggleProps> = ({ 
   mode, 
   onModeChange, 
   storiesCount, 
-  totalCount 
+  totalCount,
+  theme 
 }) => {
   const { t } = useTranslation();
   return (
     <div 
       className="mode-selector w-full px-4 py-3 border-b"
       style={{ 
-        backgroundColor: 'var(--input-bg)',
+        backgroundColor: (theme === 'bauhaus' || theme === 'archival' || theme === 'moody') ? 'transparent' : 'var(--input-bg)',
         borderColor: 'var(--border)'
       }}
     >

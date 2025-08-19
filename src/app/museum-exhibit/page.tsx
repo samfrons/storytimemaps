@@ -126,8 +126,7 @@ function MuseumExhibitContent() {
           {/* Brutalist Header - Transparent background */}
           <div className="relative z-20 pointer-events-auto" 
                style={{ 
-                 backgroundColor: 'rgba(0, 0, 0, 0.85)',
-                 borderBottom: '4px solid #ff3300'
+                 backgroundColor: 'transparent'
                }}>
             <div className="px-8 py-4 flex items-center justify-between">
               <div className="flex items-center gap-8">
@@ -195,8 +194,7 @@ function MuseumExhibitContent() {
           {/* Bottom control area - Transparent without blur */}
           <div className="relative z-20 pointer-events-auto" 
                style={{ 
-                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                 borderTop: '3px solid #ff3300'
+                 backgroundColor: 'transparent'
                }}>
             
             {/* Stats and Legend Row */}
@@ -208,42 +206,42 @@ function MuseumExhibitContent() {
                   STATISTICS
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
                     <div className="text-4xl font-black" style={{ color: '#00ff00' }}>
                       {businessStats.active.toLocaleString()}
                     </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                       ACTIVE
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
                     <div className="text-4xl font-black" style={{ color: '#ffcc00' }}>
                       {businessStats.declining.toLocaleString()}
                     </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                       DECLINING
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
                     <div className="text-4xl font-black" style={{ color: '#ff6600' }}>
                       {businessStats.takenOver.toLocaleString()}
                     </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                       TAKEN
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
                     <div className="text-4xl font-black" style={{ color: '#ff3300' }}>
                       {businessStats.liquidated.toLocaleString()}
                     </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                       LIQUIDATED
                     </div>
                   </div>
                 </div>
-                <div className="pt-3 mt-3" style={{ borderTop: '2px solid #333' }}>
+                <div className="pt-3 mt-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.15)', border: '2px solid rgba(255, 102, 0, 0.3)' }}>
                   <div className="flex items-baseline gap-3">
-                    <div className="text-xs font-bold uppercase" style={{ color: '#808080' }}>
+                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                       TOTAL DOCUMENTED
                     </div>
                     <div className="text-2xl font-black" style={{ color: '#ffffff' }}>

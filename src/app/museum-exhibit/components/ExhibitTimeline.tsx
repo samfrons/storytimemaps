@@ -65,35 +65,38 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
 
   // Determine era color based on year
   const getEraColor = (year: number) => {
-    if (year < 1933) return '#00ff00';
-    if (year < 1938) return '#ffcc00';
-    return '#ff3300';
+    if (year < 1933) return '#00d9bf';
+    if (year < 1938) return '#ffb700';
+    return '#ff8c00';
   };
 
   return (
-    <div className="p-6" style={{ borderTop: '3px solid #ff3300' }}>
+    <div className="p-4" style={{ 
+      backgroundColor: 'rgba(26, 32, 44, 0.95)',
+      border: '2px solid #00d9bf'
+    }}>
       
       {/* Timeline header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-4">
           {/* Play/Pause button */}
           <button
             onClick={() => setAutoPlay(!autoPlay)}
             className="flex items-center justify-center transition-all duration-100"
             style={{ 
-              minWidth: '60px', 
-              minHeight: '60px',
-              backgroundColor: autoPlay ? '#ff6600' : 'transparent',
-              border: '3px solid #ff6600',
-              color: autoPlay ? '#000' : '#ff6600'
+              minWidth: '50px', 
+              minHeight: '50px',
+              backgroundColor: autoPlay ? '#00d9bf' : 'transparent',
+              border: '3px solid #00d9bf',
+              color: autoPlay ? '#1a202c' : '#00d9bf'
             }}
           >
             {autoPlay ? (
-              <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
               </svg>
             ) : (
-              <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
               </svg>
             )}
@@ -101,17 +104,17 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
 
           {/* Speed controls */}
           <div className="flex items-center gap-2">
-            <span className="text-sm font-black uppercase tracking-wider" style={{ color: '#ffcc00' }}>SPEED</span>
+            <span className="text-sm font-black uppercase tracking-wider" style={{ color: '#00d9bf' }}>SPEED</span>
             {[0.5, 1, 2].map(s => (
               <button
                 key={s}
                 onClick={() => setSpeed(s)}
-                className="px-4 py-3 font-black text-sm uppercase transition-all duration-100"
+                className="px-3 py-2 font-black text-xs uppercase transition-all duration-100"
                 style={{ 
-                  backgroundColor: speed === s ? '#ffcc00' : 'transparent',
-                  color: speed === s ? '#000' : '#fff',
-                  border: `3px solid ${speed === s ? '#ffcc00' : '#fff'}`,
-                  minWidth: '60px'
+                  backgroundColor: speed === s ? '#ffb700' : 'transparent',
+                  color: speed === s ? '#1a202c' : '#00d9bf',
+                  border: `3px solid ${speed === s ? '#ffb700' : '#00d9bf'}`,
+                  minWidth: '50px'
                 }}
               >
                 {s}x
@@ -122,24 +125,19 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
 
         {/* Current date display */}
         <div className="text-center">
-          <div className="text-6xl font-black" style={{ color: '#ff3300' }}>
+          <div className="text-4xl font-black" style={{ color: '#00d9bf' }}>
             {currentYear}
           </div>
-          <div className="text-sm font-black uppercase tracking-wider" style={{ color: '#ffcc00' }}>
+          <div className="text-xs font-black uppercase tracking-wider" style={{ color: '#ffb700' }}>
             {currentDate.toLocaleDateString('en-US', { month: 'long' })}
           </div>
         </div>
       </div>
 
       {/* Main timeline slider */}
-      <div className="relative mb-8">
-        {/* Background gradient showing eras */}
-        <div className="absolute inset-0 h-20 overflow-hidden opacity-30">
-          <div className="h-full transition-all duration-1000" style={{ backgroundColor: getEraColor(currentYear) }} />
-        </div>
-
+      <div className="relative mb-4">
         {/* Timeline track */}
-        <div className="relative h-20 flex items-center">
+        <div className="relative h-12 flex items-center">
           <input
             type="range"
             min={minDate.getTime()}
@@ -149,14 +147,14 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
             className="w-full h-2 appearance-none bg-transparent relative z-10 cursor-pointer"
             style={{
               background: `linear-gradient(to right, 
-                rgba(0, 255, 0, 0.8) 0%, 
-                rgba(0, 255, 0, 0.8) ${percentage * 0.4}%,
-                rgba(255, 204, 0, 0.8) ${percentage * 0.4}%,
-                rgba(255, 204, 0, 0.8) ${percentage * 0.7}%,
-                rgba(255, 51, 0, 0.8) ${percentage * 0.7}%,
-                rgba(255, 51, 0, 0.8) ${percentage}%,
-                rgba(255, 255, 255, 0.2) ${percentage}%,
-                rgba(255, 255, 255, 0.2) 100%)`
+                rgba(0, 217, 191, 0.8) 0%, 
+                rgba(0, 217, 191, 0.8) ${percentage * 0.4}%,
+                rgba(255, 183, 0, 0.8) ${percentage * 0.4}%,
+                rgba(255, 183, 0, 0.8) ${percentage * 0.7}%,
+                rgba(255, 140, 0, 0.8) ${percentage * 0.7}%,
+                rgba(255, 140, 0, 0.8) ${percentage}%,
+                rgba(0, 217, 191, 0.2) ${percentage}%,
+                rgba(0, 217, 191, 0.2) 100%)`
             }}
           />
 
@@ -165,12 +163,12 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
             className="absolute top-1/2 transform -translate-y-1/2 w-8 h-8 pointer-events-none"
             style={{ 
               left: `${percentage}%`,
-              backgroundColor: '#ff3300',
-              border: '3px solid #fff',
-              boxShadow: '0 0 20px rgba(255, 51, 0, 0.8)'
+              backgroundColor: '#00d9bf',
+              border: '3px solid #1a202c',
+              boxShadow: '0 0 20px rgba(0, 217, 191, 0.8)'
             }}
           >
-            <div className="absolute inset-0 animate-ping opacity-50" style={{ backgroundColor: '#ff3300' }} />
+            <div className="absolute inset-0 animate-ping opacity-50" style={{ backgroundColor: '#00d9bf' }} />
           </div>
         </div>
 
@@ -196,7 +194,7 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
                 {/* Year label */}
                 <span className={`text-sm font-black uppercase transition-all duration-300`}
                       style={{ 
-                        color: currentYear === year ? '#ff3300' : (hoveredYear === year ? '#ffcc00' : '#808080'),
+                        color: currentYear === year ? '#00d9bf' : (hoveredYear === year ? '#ffb700' : 'rgba(0, 217, 191, 0.4)'),
                         fontSize: currentYear === year ? '18px' : '14px'
                       }}>
                   {year}
@@ -206,9 +204,9 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
                 {event && (
                   <div className="absolute -top-8 px-3 py-2 text-xs font-black uppercase whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                        style={{ 
-                         backgroundColor: '#ff3300',
-                         color: '#fff',
-                         border: '2px solid #fff'
+                         backgroundColor: '#ffb700',
+                         color: '#1a202c',
+                         border: '2px solid #00d9bf'
                        }}>
                     {event.event}
                   </div>
@@ -219,26 +217,37 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
         </div>
       </div>
 
-      {/* Historical events display */}
-      <div className="grid grid-cols-4 gap-4">
-        {historicalEvents.map(event => {
-          const isPast = currentYear >= event.year;
-          return (
-            <button
-              key={event.year}
-              onClick={() => handleYearClick(event.year)}
-              className="p-4 transition-all duration-100"
-              style={{ 
-                backgroundColor: isPast ? 'rgba(255, 51, 0, 0.2)' : 'transparent',
-                border: `3px solid ${isPast ? '#ff3300' : '#333'}`,
-                color: isPast ? '#fff' : '#808080'
-              }}
-            >
-              <div className="text-2xl font-black mb-2">{event.year}</div>
-              <div className="text-xs font-bold uppercase">{event.event}</div>
-            </button>
-          );
-        })}
+      {/* Historical events display - Prominent */}
+      <div className="mt-4 pt-4" style={{ borderTop: '2px solid rgba(0, 217, 191, 0.3)' }}>
+        <div className="text-sm font-black uppercase tracking-wider mb-3 text-center" style={{ color: '#00d9bf' }}>
+          HISTORICAL EVENTS
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          {historicalEvents.map(event => {
+            const isPast = currentYear >= event.year;
+            return (
+              <button
+                key={event.year}
+                onClick={() => handleYearClick(event.year)}
+                className="p-3 transition-all duration-200 text-center"
+                style={{ 
+                  backgroundColor: isPast ? 'rgba(255, 183, 0, 0.15)' : 'rgba(0, 217, 191, 0.05)',
+                  border: `2px solid ${isPast ? '#ffb700' : 'rgba(0, 217, 191, 0.3)'}`,
+                  color: isPast ? '#00d9bf' : 'rgba(0, 217, 191, 0.6)'
+                }}
+              >
+                <div className="text-lg font-black mb-1" style={{ 
+                  color: isPast ? '#ffb700' : 'rgba(255, 183, 0, 0.6)' 
+                }}>
+                  {event.year}
+                </div>
+                <div className="text-xs font-bold uppercase leading-tight">
+                  {event.event}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <style jsx>{`
@@ -246,31 +255,31 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
           appearance: none;
           width: 30px;
           height: 30px;
-          background: #ff3300;
-          border: 3px solid #fff;
+          background: #00d9bf;
+          border: 3px solid #1a202c;
           cursor: pointer;
-          box-shadow: 0 0 20px rgba(255, 51, 0, 0.8);
+          box-shadow: 0 0 20px rgba(0, 217, 191, 0.8);
           transition: all 0.1s;
         }
 
         input[type="range"]::-webkit-slider-thumb:hover {
           transform: scale(1.2);
-          box-shadow: 0 0 30px rgba(255, 51, 0, 1);
+          box-shadow: 0 0 30px rgba(0, 217, 191, 1);
         }
 
         input[type="range"]::-moz-range-thumb {
           width: 30px;
           height: 30px;
-          background: #ff3300;
-          border: 3px solid #fff;
+          background: #00d9bf;
+          border: 3px solid #1a202c;
           cursor: pointer;
-          box-shadow: 0 0 20px rgba(255, 51, 0, 0.8);
+          box-shadow: 0 0 20px rgba(0, 217, 191, 0.8);
           transition: all 0.1s;
         }
 
         input[type="range"]::-moz-range-thumb:hover {
           transform: scale(1.2);
-          box-shadow: 0 0 30px rgba(255, 51, 0, 1);
+          box-shadow: 0 0 30px rgba(0, 217, 191, 1);
         }
       `}</style>
     </div>

@@ -85,7 +85,7 @@ function MuseumExhibitContent() {
         touchAction: 'none', 
         userSelect: 'none', 
         WebkitUserSelect: 'none',
-        backgroundColor: '#0a0a0a'
+        backgroundColor: '#1a202c'
       }}
     >
       {/* Touch ripple effects */}
@@ -120,168 +120,135 @@ function MuseumExhibitContent() {
           />
         </div>
 
-        {/* Main content overlay */}
-        <div className="relative h-full flex flex-col pointer-events-none">
+        {/* UI Overlays - pointer-events-none so map is interactive */}
+        <div className="absolute inset-0 pointer-events-none">
           
-          {/* Brutalist Header - Transparent background */}
-          <div className="relative z-20 pointer-events-auto" 
-               style={{ 
-                 backgroundColor: 'transparent'
-               }}>
-            <div className="px-8 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-8">
+          {/* Top Left - Header only */}
+          <div className="absolute top-8 left-8 z-20 pointer-events-auto">
+            <div className="p-4" style={{ backgroundColor: 'rgba(26, 32, 44, 0.95)', border: '2px solid #00d9bf' }}>
+              <div className="flex items-center gap-6">
                 <div>
-                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#ffffff' }}>
+                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#00d9bf' }}>
                     JEWISH
                   </h1>
-                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#ffffff' }}>
+                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#00d9bf' }}>
                     BUSINESSES IN
                   </h1>
-                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#ffffff' }}>
+                  <h1 className="text-3xl font-black uppercase tracking-tight leading-none" style={{ color: '#00d9bf' }}>
                     BERLIN
                   </h1>
                 </div>
-                <div className="text-2xl font-black" style={{ color: '#ffcc00' }}>
+                <div className="text-2xl font-black" style={{ color: '#ffb700' }}>
                   1900-<br/>1945
                 </div>
-              </div>
-              
-              <div className="flex items-center gap-6">
-                {/* Language buttons */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleLanguageChange('en')}
-                    className="px-6 py-3 font-black uppercase text-lg transition-all"
-                    style={{ 
-                      backgroundColor: language === 'en' ? '#ffcc00' : 'transparent',
-                      color: language === 'en' ? '#000' : '#fff',
-                      border: `3px solid ${language === 'en' ? '#ffcc00' : '#fff'}`,
-                    }}
-                  >
-                    🇬🇧 ENGLISH
-                  </button>
-                  <button
-                    onClick={() => handleLanguageChange('de')}
-                    className="px-6 py-3 font-black uppercase text-lg transition-all"
-                    style={{ 
-                      backgroundColor: language === 'de' ? '#ffcc00' : 'transparent',
-                      color: language === 'de' ? '#000' : '#fff',
-                      border: `3px solid ${language === 'de' ? '#ffcc00' : '#fff'}`,
-                    }}
-                  >
-                    🇩🇪 DEUTSCH
-                  </button>
-                </div>
-                
-                <button
-                  onClick={handleSessionEnd}
-                  className="px-8 py-4 text-white font-black uppercase text-lg transition-all"
-                  style={{ 
-                    backgroundColor: '#ff3300',
-                    border: '3px solid #ffffff',
-                    boxShadow: '5px 5px 0 rgba(0,0,0,0.5)'
-                  }}
-                >
-                  START OVER
-                </button>
               </div>
             </div>
           </div>
 
-          {/* Spacer to push content */}
-          <div className="flex-1" />
-
-          {/* Bottom control area - Transparent without blur */}
-          <div className="relative z-20 pointer-events-auto" 
-               style={{ 
-                 backgroundColor: 'transparent'
-               }}>
-            
-            {/* Stats and Legend Row */}
-            <div className="px-8 py-6 flex justify-between items-start">
+          {/* Top Right - Controls */}
+          <div className="absolute top-8 right-8 z-20 pointer-events-auto">
+            <div className="flex items-start gap-4">
+              {/* Language buttons */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleLanguageChange('en')}
+                  className="px-5 py-2 font-black uppercase text-sm transition-all"
+                  style={{ 
+                    backgroundColor: language === 'en' ? '#00d9bf' : 'rgba(26, 32, 44, 0.95)',
+                    color: language === 'en' ? '#1a202c' : '#00d9bf',
+                    border: `2px solid #00d9bf`,
+                  }}
+                >
+                  🇬🇧 ENGLISH
+                </button>
+                <button
+                  onClick={() => handleLanguageChange('de')}
+                  className="px-5 py-2 font-black uppercase text-sm transition-all"
+                  style={{ 
+                    backgroundColor: language === 'de' ? '#00d9bf' : 'rgba(26, 32, 44, 0.95)',
+                    color: language === 'de' ? '#1a202c' : '#00d9bf',
+                    border: `2px solid #00d9bf`,
+                  }}
+                >
+                  🇩🇪 DEUTSCH
+                </button>
+              </div>
               
-              {/* Statistics Panel */}
-              <div className="flex flex-col gap-2">
-                <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#ffcc00' }}>
-                  STATISTICS
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
-                    <div className="text-4xl font-black" style={{ color: '#00ff00' }}>
-                      {businessStats.active.toLocaleString()}
-                    </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                      ACTIVE
-                    </div>
+              <button
+                onClick={handleSessionEnd}
+                className="px-6 py-2 font-black uppercase text-sm transition-all"
+                style={{ 
+                  backgroundColor: '#ffb700',
+                  color: '#1a202c',
+                  border: '2px solid #ffb700'
+                }}
+              >
+                START OVER
+              </button>
+            </div>
+          </div>
+
+          {/* Bottom Row - Statistics, Timeline, Status Key */}
+          <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-auto flex items-end gap-4 p-6">
+            
+            {/* Statistics Panel - Left */}
+            <div className="flex-shrink-0 p-4" 
+                 style={{ 
+                   backgroundColor: 'rgba(26, 32, 44, 0.95)',
+                   border: '2px solid #00d9bf',
+                   width: '280px'
+                 }}>
+              <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#00d9bf' }}>
+                STATISTICS
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="text-2xl font-black" style={{ color: '#00d9bf' }}>
+                    {businessStats.active.toLocaleString()}
                   </div>
-                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
-                    <div className="text-4xl font-black" style={{ color: '#ffcc00' }}>
-                      {businessStats.declining.toLocaleString()}
-                    </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                      DECLINING
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
-                    <div className="text-4xl font-black" style={{ color: '#ff6600' }}>
-                      {businessStats.takenOver.toLocaleString()}
-                    </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                      TAKEN
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.2)', border: '2px solid rgba(255, 102, 0, 0.4)' }}>
-                    <div className="text-4xl font-black" style={{ color: '#ff3300' }}>
-                      {businessStats.liquidated.toLocaleString()}
-                    </div>
-                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                      LIQUIDATED
-                    </div>
+                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                    ACTIVE
                   </div>
                 </div>
-                <div className="pt-3 mt-3 px-4 py-2" style={{ backgroundColor: 'rgba(255, 102, 0, 0.15)', border: '2px solid rgba(255, 102, 0, 0.3)' }}>
-                  <div className="flex items-baseline gap-3">
-                    <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                      TOTAL DOCUMENTED
-                    </div>
-                    <div className="text-2xl font-black" style={{ color: '#ffffff' }}>
-                      {businessStats.total.toLocaleString()}
-                    </div>
+                <div className="flex items-center gap-2">
+                  <div className="text-2xl font-black" style={{ color: '#ffb700' }}>
+                    {businessStats.declining.toLocaleString()}
+                  </div>
+                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                    DECLINING
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="text-2xl font-black" style={{ color: '#ff8c00' }}>
+                    {businessStats.takenOver.toLocaleString()}
+                  </div>
+                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                    TAKEN
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="text-2xl font-black" style={{ color: '#718096' }}>
+                    {businessStats.liquidated.toLocaleString()}
+                  </div>
+                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                    CLOSED
                   </div>
                 </div>
               </div>
-
-              {/* Status Key */}
-              <div className="flex flex-col gap-2">
-                <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#ffcc00' }}>
-                  STATUS KEY
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#00ff00' }} />
-                    <span className="text-sm font-bold uppercase text-white">Active & Operating</span>
+              <div className="pt-2 mt-2" style={{ borderTop: '1px solid rgba(0, 217, 191, 0.3)' }}>
+                <div className="flex items-baseline gap-2">
+                  <div className="text-xs font-bold uppercase" style={{ color: 'rgba(0, 217, 191, 0.6)' }}>
+                    TOTAL
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ffcc00' }} />
-                    <span className="text-sm font-bold uppercase text-white">Under Pressure</span>
+                  <div className="text-xl font-black" style={{ color: '#00d9bf' }}>
+                    {businessStats.total.toLocaleString()}
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ff6600' }} />
-                    <span className="text-sm font-bold uppercase text-white">Taken Over</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full" style={{ backgroundColor: '#ff3300' }} />
-                    <span className="text-sm font-bold uppercase text-white">Liquidated</span>
-                  </div>
-                </div>
-                <div className="mt-3 pt-3 text-xs uppercase font-bold" style={{ borderTop: '2px solid #333', color: '#808080' }}>
-                  Click clusters to zoom
                 </div>
               </div>
             </div>
 
-            {/* Timeline */}
-            <div className={`transition-all duration-700 ${showTimeline ? 'opacity-100' : 'opacity-0'}`}>
+            {/* Timeline - Center */}
+            <div className={`flex-1 transition-all duration-700 ${showTimeline ? 'opacity-100' : 'opacity-0'}`}>
               <ExhibitTimeline
                 minDate={minDate}
                 maxDate={maxDate}
@@ -289,6 +256,36 @@ function MuseumExhibitContent() {
                 onChange={setCurrentDate}
                 isPlaying={isActive}
               />
+            </div>
+
+            {/* Status Key - Right */}
+            <div className="flex-shrink-0 p-4" 
+                 style={{ 
+                   backgroundColor: 'rgba(26, 32, 44, 0.95)',
+                   border: '2px solid #00d9bf',
+                   width: '200px'
+                 }}>
+              <div className="text-sm font-black uppercase tracking-wider mb-2" style={{ color: '#00d9bf' }}>
+                STATUS KEY
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#00d9bf' }} />
+                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Active</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#ffb700' }} />
+                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Pressure</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#ff8c00' }} />
+                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Taken</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#718096' }} />
+                  <span className="text-xs font-bold uppercase" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Closed</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -307,7 +304,7 @@ function MuseumExhibitContent() {
           width: 100px;
           height: 100px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,51,0,0.8) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(0,217,191,0.8) 0%, transparent 70%);
           animation: ripple 1s ease-out forwards;
         }
 

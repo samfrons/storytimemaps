@@ -38,19 +38,19 @@ function MapPageContent() {
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   // const [isThemeSwitching, setIsThemeSwitching] = useState(false); // Removed - no longer needed
   
-  // Read theme from URL on initial load only
+  // Force theme from URL to override localStorage
   useEffect(() => {
     if (!mounted) return;
     
     const themeParam = searchParams.get('theme');
     if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(themeParam)) {
-      // Only set theme from URL if it's different from current
-      if (theme !== themeParam) {
+      // Force set theme from URL - no checking if different
+      // Small timeout ensures it runs after next-themes loads from localStorage
+      setTimeout(() => {
         setTheme(themeParam);
-      }
+      }, 50);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted, searchParams.get('theme')]); // Only re-run if the theme param in URL changes
+  }, [mounted, searchParams, setTheme]); // Re-run when URL changes
   
   // Handle non-theme URL parameters
   useEffect(() => {
@@ -261,7 +261,9 @@ function MapPageContent() {
               aria-label="Featured Stories mode"
               title="Featured Stories (15 detailed narratives)"
             >
-              15
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
             </button>
             
             {/* Database Mode Button */}
@@ -294,7 +296,9 @@ function MapPageContent() {
               aria-label="Historical Database mode"
               title="Historical Database (10,000+ records)"
             >
-              DB
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
             </button>
             
             {/* Home Button */}
@@ -332,7 +336,11 @@ function MapPageContent() {
                 color: showInfo ? 'var(--background)' : 'var(--foreground)',
                 cursor: 'pointer',
                 transform: 'scale(1)',
-                transition: 'transform 0.2s ease-in-out, background-color 0.2s'
+                transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+                fontSize: '18px',
+                fontFamily: 'serif',
+                fontStyle: 'italic',
+                fontWeight: '600'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.1)';
@@ -342,10 +350,34 @@ function MapPageContent() {
               }}
               aria-label="Information"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+              i
             </button>
+
+            {/* Bar Charts Button */}
+            <a
+              href="/barcharts"
+              className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+              style={{
+                backgroundColor: 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: 'var(--foreground)',
+                cursor: 'pointer',
+                transform: 'scale(1)',
+                transition: 'transform 0.2s ease-in-out, background-color 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              aria-label="Data Visualizations"
+              title="Interactive Bar Charts"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </a>
 
             {/* Language Toggle Buttons */}
             <div className="flex flex-col gap-1">
@@ -525,7 +557,9 @@ function MapPageContent() {
             aria-label="Featured Stories mode"
             title="Featured Stories (15 detailed narratives)"
           >
-            15
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
           </button>
           
           {/* Database Mode Button */}
@@ -551,7 +585,9 @@ function MapPageContent() {
             aria-label="Historical Database mode"
             title="Historical Database (10,000+ records)"
           >
-            DB
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+            </svg>
           </button>
           
           {/* Home Button */}
@@ -585,14 +621,33 @@ function MapPageContent() {
               backgroundColor: showInfo ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: showInfo ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: '20px',
+              fontFamily: 'serif',
+              fontStyle: 'italic',
+              fontWeight: '600'
             }}
             aria-label="Information"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+            i
           </button>
+          
+          {/* Bar Charts Button for Mobile */}
+          <a
+            href="/barcharts"
+            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
+            style={{
+              backgroundColor: 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: 'var(--foreground)',
+              cursor: 'pointer'
+            }}
+            aria-label="Data Visualizations"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </a>
           
           {/* Language Buttons for Mobile */}
           <button

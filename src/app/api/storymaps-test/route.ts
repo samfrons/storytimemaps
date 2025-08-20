@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
+import { inferBusinessCategory } from '../../../utils/businessTranslations';
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps_test_full.json');
 const STORIES_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json');
@@ -63,6 +64,21 @@ export async function GET(request: NextRequest) {
     } else {
       // Return full test dataset
       storyMaps = await getStoryMaps();
+    }
+    
+    // Populate businessType field using inference if it's missing
+    if (storyMaps && storyMaps.length > 0) {
+      storyMaps = storyMaps.map(story => {
+        if (!story.businessType && story.description) {
+          // Use inferBusinessCategory to extract business type from description
+          const inferredType = inferBusinessCategory(story);
+          return {
+            ...story,
+            businessType: inferredType
+          };
+        }
+        return story;
+      });
     }
     
     // Return all data if requested (for backwards compatibility)

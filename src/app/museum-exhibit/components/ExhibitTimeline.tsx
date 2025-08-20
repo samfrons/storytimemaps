@@ -63,12 +63,12 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
   const percentage = ((currentDate.getTime() - minDate.getTime()) / (maxDate.getTime() - minDate.getTime())) * 100;
   const currentYear = currentDate.getFullYear();
 
-  // Determine era color based on year
-  const getEraColor = (year: number) => {
-    if (year < 1933) return '#00d9bf';
-    if (year < 1938) return '#ffb700';
-    return '#ff8c00';
-  };
+  // Determine era color based on year - commented out as not currently used
+  // const getEraColor = (year: number) => {
+  //   if (year < 1933) return '#00d9bf';
+  //   if (year < 1938) return '#ffb700';
+  //   return '#ff8c00';
+  // };
 
   return (
     <div className="p-6" style={{ 

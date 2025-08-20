@@ -7,7 +7,7 @@ interface AttractModeProps {
 }
 
 const AttractModeBrutalist: React.FC<AttractModeProps> = ({ isVisible }) => {
-  const [currentImage, setCurrentImage] = useState(0);
+  // const [currentImage, setCurrentImage] = useState(0); // Unused - commented out for now
   const [stats, setStats] = useState({ businesses: 0, years: 0, stories: 0 });
   const [glitchText, setGlitchText] = useState(false);
   

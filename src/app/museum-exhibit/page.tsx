@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import AttractMode from './components/AttractMode';
 import SessionManager from './components/SessionManager';
@@ -18,7 +18,7 @@ const TouchMap = dynamic(() => import('./components/TouchMapSimple'), {
 });
 
 function MuseumExhibitContent() {
-  const { t, language, toggleLanguage } = useTranslation();
+  const { language, toggleLanguage } = useTranslation(); // Removed unused 't'
   const [isActive, setIsActive] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date(1933, 0, 1));
   const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null);
@@ -305,38 +305,6 @@ function MuseumExhibitContent() {
         timeoutMinutes={3}
       />
 
-      {/* Brutalist styles */}
-      <style jsx>{`
-        .touch-ripple {
-          width: 100px;
-          height: 100px;
-          background: #00D9D9;
-          border: 4px solid #000000;
-          animation: ripple 1s ease-out forwards;
-        }
-
-        @keyframes ripple {
-          0% {
-            transform: scale(0);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(4);
-            opacity: 0;
-          }
-        }
-
-        /* Remove all focus outlines */
-        button:focus {
-          outline: none !important;
-          box-shadow: none !important;
-        }
-        
-        input:focus {
-          outline: none !important;
-          box-shadow: none !important;
-        }
-      `}</style>
     </div>
   );
 }

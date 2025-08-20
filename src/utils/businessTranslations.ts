@@ -8,6 +8,56 @@ interface Story {
   midDate?: string | null;
 }
 
+// Infer business category from title and description
+export const inferBusinessCategory = (story: Story): string => {
+  const title = (story.title || '').toLowerCase();
+  const description = (story.description || '').toLowerCase();
+  
+  // Check title patterns first
+  if (title.includes('tailor')) return 'Tailoring';
+  if (title.includes('department store')) return 'Department Store';
+  if (title.includes('café') || title.includes('cafe')) return 'Café';
+  if (title.includes('theater') || title.includes('theatre')) return 'Theater';
+  if (title.includes('bakery')) return 'Bakery';
+  if (title.includes('restaurant')) return 'Restaurant';
+  if (title.includes('pharmacy')) return 'Pharmacy';
+  if (title.includes('bank')) return 'Banking';
+  if (title.includes('textiles')) return 'Textiles';
+  if (title.includes('photography')) return 'Photography';
+  if (title.includes('medical')) return 'Medical Practice';
+  if (title.includes('dental') || title.includes('dentist')) return 'Dental Practice';
+  if (title.includes('lawyer') || title.includes('law firm')) return 'Law Office';
+  if (title.includes('bookstore')) return 'Bookstore';
+  if (title.includes('jewelry') || title.includes('jeweler')) return 'Jewelry';
+  if (title.includes('furniture')) return 'Furniture';
+  if (title.includes('shoe')) return 'Shoe Store';
+  if (title.includes('optical') || title.includes('optician')) return 'Optical';
+  
+  // Check description patterns
+  if (description.includes('tailoring business') || description.includes('men\'s clothing')) return 'Tailoring';
+  if (description.includes('department store')) return 'Department Store';
+  if (description.includes('café') || description.includes('cafe') || description.includes('coffee')) return 'Café';
+  if (description.includes('restaurant')) return 'Restaurant';
+  if (description.includes('bakery') || description.includes('bread')) return 'Bakery';
+  if (description.includes('pharmacy') || description.includes('medical supplies')) return 'Pharmacy';
+  if (description.includes('textile') || description.includes('fabric')) return 'Textiles';
+  if (description.includes('bank') || description.includes('financial')) return 'Banking';
+  if (description.includes('law firm') || description.includes('legal')) return 'Law Office';
+  if (description.includes('medical practice') || description.includes('doctor')) return 'Medical Practice';
+  if (description.includes('dental') || description.includes('dentist')) return 'Dental Practice';
+  if (description.includes('bookstore') || description.includes('books')) return 'Bookstore';
+  if (description.includes('jewelry') || description.includes('jeweler')) return 'Jewelry';
+  if (description.includes('furniture')) return 'Furniture';
+  if (description.includes('shoe')) return 'Shoe Store';
+  if (description.includes('optical') || description.includes('glasses')) return 'Optical';
+  if (description.includes('tobacco')) return 'Tobacco';
+  if (description.includes('printing') || description.includes('publisher')) return 'Publishing';
+  if (description.includes('hardware')) return 'Hardware';
+  
+  // Default to generic business if no specific type found
+  return 'Business';
+}
+
 export const getTranslatedDescription = (
   story: Story,
   language: string

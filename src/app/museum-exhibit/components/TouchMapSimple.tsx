@@ -581,7 +581,7 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
                       color: '#000000'
                     }}
                   >
-                    <div className="font-black uppercase">{business.type} Business</div>
+                    <div className="font-black uppercase">{business.type}</div>
                     <div className="font-bold">{business.district}</div>
                     <div className="font-bold">Est. {business.establishedYear}</div>
                     {business.status === 'closed' && (
@@ -610,7 +610,7 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
               className="brutalist-popup"
             >
               <div className="p-6" style={{ backgroundColor: '#FFFFFF', border: '4px solid #000000' }}>
-                <h3 className="text-xl font-black uppercase mb-3" style={{ color: '#000000' }}>{business.type} Business</h3>
+                <h3 className="text-xl font-black uppercase mb-3" style={{ color: '#000000' }}>{business.type}</h3>
                 <p className="text-lg font-bold mb-3" style={{ color: '#000000' }}>{business.district}, Berlin</p>
                 <div className="text-sm space-y-2">
                   <div className="font-bold">Established: {business.establishedYear}</div>
@@ -646,34 +646,6 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
         Showing {displayedBusinesses.length} of {visibleBusinesses.length} businesses
       </div>
 
-      <style jsx global>{`
-        .brutalist-popup .mapboxgl-popup-content {
-          background: #FFFFFF !important;
-          color: #000000 !important;
-          border: 6px solid #000000 !important;
-          font-family: 'Inter', sans-serif !important;
-          border-radius: 0 !important;
-        }
-        
-        .brutalist-popup .mapboxgl-popup-close-button {
-          color: #000000 !important;
-          font-size: 24px !important;
-          font-weight: 900 !important;
-          padding: 8px 12px !important;
-          background: #FF6B35 !important;
-          border: 4px solid #000000 !important;
-          border-radius: 0 !important;
-        }
-        
-        .brutalist-popup .mapboxgl-popup-close-button:hover {
-          background: #FFD93D !important;
-        }
-        
-        .brutalist-popup .mapboxgl-popup-close-button:focus {
-          outline: none !important;
-          box-shadow: none !important;
-        }
-      `}</style>
     </div>
   );
 };

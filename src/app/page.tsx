@@ -36,9 +36,23 @@ function MapPageContent() {
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
-  const [isThemeSwitching, setIsThemeSwitching] = useState(false);
+  // const [isThemeSwitching, setIsThemeSwitching] = useState(false); // Removed - no longer needed
   
-  // Sync with URL parameters on mount and when they change
+  // Read theme from URL on initial load only
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const themeParam = searchParams.get('theme');
+    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(themeParam)) {
+      // Only set theme from URL if it's different from current
+      if (theme !== themeParam) {
+        setTheme(themeParam);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted, searchParams.get('theme')]); // Only re-run if the theme param in URL changes
+  
+  // Handle non-theme URL parameters
   useEffect(() => {
     if (!mounted) return;
     
@@ -47,17 +61,6 @@ function MapPageContent() {
     if (aboutParam === 'true') {
       setShowInfo(true);
       setShowIntro(false);
-    }
-    
-    // Check for theme parameter - only set if different from current
-    const themeParam = searchParams.get('theme');
-    if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(themeParam)) {
-      if (theme !== themeParam) {
-        setTheme(themeParam);
-      }
-    } else if (!themeParam && !theme) {
-      // Only set default if no theme is set at all
-      setTheme('archival');
     }
     
     // Show intro only on root page without significant params AND if not explicitly closed
@@ -73,7 +76,7 @@ function MapPageContent() {
       // Only show intro if user hasn't explicitly closed it
       setShowIntro(true);
     }
-  }, [searchParams, mounted, setTheme, introExplicitlyClosed, theme]);
+  }, [searchParams, mounted, introExplicitlyClosed]);
   const {
     visibleStories,
     activeStoryId,
@@ -99,35 +102,19 @@ function MapPageContent() {
   };
 
   const handleThemeSwitch = useCallback((newTheme: string) => {
-    if (!mounted || theme === newTheme || isThemeSwitching) return;
+    if (!mounted || theme === newTheme) return;
     
-    setIsThemeSwitching(true);
     setShowThemeMenu(false);
     
-    // Use requestAnimationFrame to coordinate React state updates with WebGL rendering
-    requestAnimationFrame(() => {
-      try {
-        setTheme(newTheme);
-        
-        // Update URL parameter
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('theme', newTheme);
-        const queryString = params.toString();
-        router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
-        
-        // Allow time for theme transition to complete
-        setTimeout(() => {
-          setIsThemeSwitching(false);
-        }, 300);
-        
-      } catch (error) {
-        console.error('Theme switching error:', error);
-        setIsThemeSwitching(false);
-        // Fallback to default theme
-        setTheme('moody');
-      }
-    });
-  }, [mounted, theme, setTheme, searchParams, router, isThemeSwitching]);
+    // Simply set the theme - let next-themes handle everything
+    setTheme(newTheme);
+    
+    // Update URL parameter for sharing
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('theme', newTheme);
+    const queryString = params.toString();
+    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+  }, [mounted, theme, setTheme, searchParams, router]);
 
   const handleLetsGo = useCallback(() => {
     setShowIntro(false);

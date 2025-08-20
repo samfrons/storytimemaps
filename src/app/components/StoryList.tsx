@@ -567,22 +567,35 @@ const StoryList: React.FC<StoryListProps> = ({
                   }}>
                     {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
                   </span>
-                  {(story.businessType || story.category) && (
-                    <span className="px-2 py-1 text-xs font-mono uppercase tracking-wide"
-                    style={{
-                      backgroundColor: story.id === activeStoryId ? 'rgba(0, 0, 0, 0.2)' : 'var(--card-bg)',
-                      color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)',
-                      opacity: 1
-                    }}>
-                      {(() => {
-                        const type = story.businessType || story.category || '';
-                        const translationKey = `mainPage.businessTypes.${type.toUpperCase()}`;
-                        const translated = t(translationKey);
-                        // If translation not found, return original
-                        return translated !== translationKey ? translated : type;
-                      })()}
-                    </span>
-                  )}
+                  {(() => {
+                    // First try to extract business type from title (e.g., "Name - Business Type")
+                    const titleParts = story.title?.split(' - ') || [];
+                    const extractedType = titleParts.length > 1 ? titleParts[titleParts.length - 1].trim() : null;
+                    
+                    // Use extracted type, or fall back to businessType/category fields
+                    const type = extractedType || story.businessType || story.category || '';
+                    
+                    // Don't show label if it's just generic "business" or empty
+                    if (!type || type.toLowerCase() === 'business') {
+                      return null;
+                    }
+                    
+                    // Try to translate the type
+                    const translationKey = `mainPage.businessTypes.${type.toUpperCase().replace(/ /g, '_')}`;
+                    const translated = t(translationKey);
+                    const displayType = translated !== translationKey ? translated : type;
+                    
+                    return (
+                      <span className="px-2 py-1 text-xs font-mono uppercase tracking-wide"
+                      style={{
+                        backgroundColor: story.id === activeStoryId ? 'rgba(0, 0, 0, 0.2)' : 'var(--card-bg)',
+                        color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)',
+                        opacity: 1
+                      }}>
+                        {displayType}
+                      </span>
+                    );
+                  })()}
                 </div>
                 
                 {/* View Details button for businesses with actual details */}

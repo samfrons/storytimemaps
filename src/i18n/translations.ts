@@ -170,9 +170,13 @@ export const translations = {
       },
       businessTypes: {
         "TAILORING": "TAILORING",
+        "TAILOR_SHOP": "TAILOR SHOP",
         "DEPARTMENT STORE": "DEPARTMENT STORE",
+        "DEPARTMENT_STORE": "DEPARTMENT STORE",
         "THEATER": "THEATER",
+        "THEATER_CAFÉ": "THEATER CAFÉ",
         "CAFE": "CAFE",
+        "CAFÉ": "CAFÉ",
         "RESTAURANT": "RESTAURANT",
         "BAKERY": "BAKERY",
         "GROCERY": "GROCERY",
@@ -184,7 +188,13 @@ export const translations = {
         "PHOTOGRAPHY": "PHOTOGRAPHY",
         "BANK": "BANK",
         "HOTEL": "HOTEL",
-        "BUTCHER": "BUTCHER"
+        "BUTCHER": "BUTCHER",
+        // Generic categories
+        "INDUSTRY": "INDUSTRY",
+        "SERVICES": "SERVICES",
+        "TRADE": "TRADE",
+        "RETAIL": "RETAIL",
+        "FINANCE": "FINANCE"
       },
       businessDescriptions: {
         "tailor_shop": "A small tailoring business owned by {owner}. The shop was known for quality craftsmanship.",
@@ -384,9 +394,13 @@ export const translations = {
       },
       businessTypes: {
         "TAILORING": "SCHNEIDEREI",
+        "TAILOR_SHOP": "SCHNEIDEREI",
         "DEPARTMENT STORE": "KAUFHAUS",
+        "DEPARTMENT_STORE": "KAUFHAUS",
         "THEATER": "THEATER",
+        "THEATER_CAFÉ": "THEATER CAFÉ",
         "CAFE": "CAFÉ",
+        "CAFÉ": "CAFÉ",
         "RESTAURANT": "RESTAURANT",
         "BAKERY": "BÄCKEREI",
         "GROCERY": "LEBENSMITTEL",
@@ -398,7 +412,13 @@ export const translations = {
         "PHOTOGRAPHY": "FOTOGRAFIE",
         "BANK": "BANK",
         "HOTEL": "HOTEL",
-        "BUTCHER": "METZGEREI"
+        "BUTCHER": "METZGEREI",
+        // Generic categories
+        "INDUSTRY": "INDUSTRIE",
+        "SERVICES": "DIENSTLEISTUNGEN",
+        "TRADE": "HANDEL",
+        "RETAIL": "EINZELHANDEL",
+        "FINANCE": "FINANZ"
       },
       businessDescriptions: {
         "tailor_shop": "Ein kleines Schneidergeschäft im Besitz von {owner}. Das Geschäft war bekannt für hochwertige Handwerkskunst.",

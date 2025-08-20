@@ -147,6 +147,7 @@ export const customMapStyle = {
 };
 
 // Alternative: Apply styles to existing Mapbox style
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const applyCustomStyleToMap = (map: any) => {
   try {
     if (!map.isStyleLoaded()) {
@@ -158,6 +159,7 @@ export const applyCustomStyleToMap = (map: any) => {
     const layers = map.getStyle().layers;
     
     // First pass: Hide all labels and symbols
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     layers.forEach((layer: any) => {
       if (layer.type === 'symbol') {
         map.setLayoutProperty(layer.id, 'visibility', 'none');
@@ -165,6 +167,7 @@ export const applyCustomStyleToMap = (map: any) => {
     });
 
     // Second pass: Apply colors
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     layers.forEach((layer: any) => {
       const layerId = layer.id.toLowerCase();
       

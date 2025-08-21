@@ -113,5 +113,53 @@
   "language": {
     "switchTo": "Deutsch",
     "current": "English"
+  },
+  "barcharts": {
+    "title": "Interactive Data Visualizations",
+    "subtitle": "3D map exploration with timeline analysis of Jewish business destruction in Berlin",
+    "3dMap": {
+      "title": "3D Interactive Berlin Map",
+      "statistics": "Statistics",
+      "totalBusinesses": "Total Businesses",
+      "districts": "Districts",
+      "topDistrict": "Top District",
+      "viewModes": {
+        "hexagonal": "Hexagonal",
+        "towers": "Towers",
+        "particles": "Particles"
+      },
+      "instructions": "Click and drag to rotate • Scroll to zoom • Click hexagons for details",
+      "visualization": "3D Cluster Visualization"
+    },
+    "timeline": {
+      "title": "Timeline Analysis",
+      "yearlyOverview": "Yearly Destruction Overview",
+      "yearlySubtitle": "Complete timeline showing the systematic destruction of Jewish commercial activity",
+      "monthlyOverview": "Monthly Destruction Pattern",
+      "monthlySubtitle": "November 1938 - Kristallnacht and its aftermath",
+      "filters": {
+        "allYears": "All Years",
+        "peak": "Peak (1938-39)",
+        "warYears": "War Years (1940+)"
+      }
+    },
+    "legend": {
+      "title": "Legend",
+      "liquidations": "Liquidations (Business closures)",
+      "possessionTransfers": "Possession Transfers (Forced sales)"
+    },
+    "historicalPeriods": {
+      "title": "Historical Periods",
+      "earlyPersecution": "Early Persecution",
+      "intensification": "Intensification",
+      "warPeriod": "War Period",
+      "finalPhase": "Final Phase"
+    },
+    "statistics": {
+      "peakYear": "Peak destruction year",
+      "totalDestructions": "Total destructions",
+      "peakMonth": "Peak destruction month",
+      "dailyAverage": "Daily average (Nov 1938)"
+    }
   }
 }

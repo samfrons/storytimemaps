@@ -1015,17 +1015,17 @@ function MapPageContent() {
 }
 
 function MapPage() {
-  return <MapPageContent />;
-}
-
-export default function HomePage() {
   return (
     <Suspense fallback={
       <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
-        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading test environment...</div>
+        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading...</div>
       </div>
     }>
-      <MapPage />
+      <MapPageContent />
     </Suspense>
   );
+}
+
+export default function HomePage() {
+  return <MapPage />;
 }

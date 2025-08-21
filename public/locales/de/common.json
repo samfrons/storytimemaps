@@ -113,5 +113,53 @@
   "language": {
     "switchTo": "English",
     "current": "Deutsch"
+  },
+  "barcharts": {
+    "title": "Interaktive Datenvisualisierungen",
+    "subtitle": "3D-Kartenerkundung mit Zeitlinienanalyse der Zerstörung jüdischer Geschäfte in Berlin",
+    "3dMap": {
+      "title": "3D Interaktive Berlin-Karte",
+      "statistics": "Statistiken",
+      "totalBusinesses": "Geschäfte gesamt",
+      "districts": "Bezirke",
+      "topDistrict": "Häufigster Bezirk",
+      "viewModes": {
+        "hexagonal": "Hexagonal",
+        "towers": "Türme",
+        "particles": "Partikel"
+      },
+      "instructions": "Klicken und ziehen zum Drehen • Scrollen zum Zoomen • Hexagone anklicken für Details",
+      "visualization": "3D-Cluster-Visualisierung"
+    },
+    "timeline": {
+      "title": "Zeitlinienanalyse",
+      "yearlyOverview": "Jährliche Zerstörungsübersicht",
+      "yearlySubtitle": "Vollständige Zeitleiste der systematischen Zerstörung jüdischer Geschäftstätigkeit",
+      "monthlyOverview": "Monatliches Zerstörungsmuster",
+      "monthlySubtitle": "November 1938 - Reichskristallnacht und ihre Folgen",
+      "filters": {
+        "allYears": "Alle Jahre",
+        "peak": "Höhepunkt (1938-39)",
+        "warYears": "Kriegsjahre (1940+)"
+      }
+    },
+    "legend": {
+      "title": "Legende",
+      "liquidations": "Liquidationen (Geschäftsschließungen)",
+      "possessionTransfers": "Besitzübertragungen (Zwangsverkäufe)"
+    },
+    "historicalPeriods": {
+      "title": "Historische Perioden",
+      "earlyPersecution": "Frühe Verfolgung",
+      "intensification": "Intensivierung",
+      "warPeriod": "Kriegszeit",
+      "finalPhase": "Endphase"
+    },
+    "statistics": {
+      "peakYear": "Höhepunkt der Zerstörung",
+      "totalDestructions": "Zerstörungen gesamt",
+      "peakMonth": "Höhepunkt-Monat",
+      "dailyAverage": "Tagesdurchschnitt (Nov 1938)"
+    }
   }
 }

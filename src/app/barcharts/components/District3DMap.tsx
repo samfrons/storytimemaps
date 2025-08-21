@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { useTranslation } from '../../../i18n/useTranslation';
 
 // Get token from environment
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ';
@@ -23,6 +24,7 @@ interface District3DMapProps {
 }
 
 const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
+  const { t } = useTranslation();
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [businesses, setBusinesses] = useState<Business[]>([]);
@@ -608,7 +610,7 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
         borderColor: 'var(--border)', 
         backgroundColor: 'var(--card-bg)' 
       }}>
-        <div className="text-white font-mono">Loading 3D Map...</div>
+        <div className="text-white font-mono">{t('barcharts.3dMap.title')}...</div>
       </div>
     );
   }
@@ -621,17 +623,17 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
       {/* Loading Overlay */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="text-white font-mono">Loading 3D visualization...</div>
+          <div className="text-white font-mono">{t('barcharts.3dMap.title')}...</div>
         </div>
       )}
 
       {/* Stats Overlay - Glass Morphism Panel */}
       <div className="absolute top-4 left-4 p-4 rounded-lg backdrop-blur-md bg-black bg-opacity-30 border border-white border-opacity-20">
-        <h3 className="text-white font-mono font-bold mb-2">Statistics</h3>
+        <h3 className="text-white font-mono font-bold mb-2">{t('barcharts.3dMap.statistics')}</h3>
         <div className="text-white text-sm font-mono space-y-1">
-          <div>Total Businesses: <span className="text-cyan-400">{stats.total}</span></div>
-          <div>Districts: <span className="text-cyan-400">{Object.keys(stats.byDistrict).length}</span></div>
-          <div>Top District: <span className="text-cyan-400">
+          <div>{t('barcharts.3dMap.totalBusinesses')}: <span className="text-cyan-400">{stats.total}</span></div>
+          <div>{t('barcharts.3dMap.districts')}: <span className="text-cyan-400">{Object.keys(stats.byDistrict).length}</span></div>
+          <div>{t('barcharts.3dMap.topDistrict')}: <span className="text-cyan-400">
             {Object.entries(stats.byDistrict).sort((a, b) => b[1] - a[1])[0]?.[0]}
           </span></div>
         </div>
@@ -647,7 +649,7 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
               : 'bg-black bg-opacity-30 text-white border-white border-opacity-20'
           }`}
         >
-          Hexagonal
+          {t('barcharts.3dMap.viewModes.hexagonal')}
         </button>
         <button
           onClick={() => setViewMode('towers')}
@@ -657,7 +659,7 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
               : 'bg-black bg-opacity-30 text-white border-white border-opacity-20'
           }`}
         >
-          Towers
+          {t('barcharts.3dMap.viewModes.towers')}
         </button>
         <button
           onClick={() => setViewMode('particles')}
@@ -667,15 +669,15 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
               : 'bg-black bg-opacity-30 text-white border-white border-opacity-20'
           }`}
         >
-          Particles
+          {t('barcharts.3dMap.viewModes.particles')}
         </button>
       </div>
 
       {/* Bottom Info Bar */}
       <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg backdrop-blur-md bg-black bg-opacity-30 border border-white border-opacity-20">
         <div className="text-white text-xs font-mono flex justify-between items-center">
-          <span>Click and drag to rotate • Scroll to zoom • Click hexagons for details</span>
-          <span className="text-cyan-400">3D Cluster Visualization</span>
+          <span>{t('barcharts.3dMap.instructions')}</span>
+          <span className="text-cyan-400">{t('barcharts.3dMap.visualization')}</span>
         </div>
       </div>
     </div>

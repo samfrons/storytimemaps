@@ -118,5 +118,53 @@
     "active": "Aktiv",
     "declining": "Aropgeeyendik",
     "closed": "Farshlosn"
+  },
+  "barcharts": {
+    "title": "אינטעראַקטיווע דאַטן וויזואַליזאַציעס",
+    "subtitle": "3D מאַפּע מיט צייט אַנאַליז פון חורבן פון ייִדישע געשעפטן אין בערלין",
+    "3dMap": {
+      "title": "3D אינטעראַקטיווע בערלין מאַפּע",
+      "statistics": "סטאַטיסטיק",
+      "totalBusinesses": "סך הכל געשעפטן",
+      "districts": "דיסטריקטן",
+      "topDistrict": "העכסטע דיסטריקט",
+      "viewModes": {
+        "hexagonal": "העקסאַגאָנאַל",
+        "towers": "טורעמס",
+        "particles": "פּאַרטיקאַלז"
+      },
+      "instructions": "קליק און שלעפּ צו דרייען • סקראָל צו זום • קליק העקסאַגאָנז פֿאַר דעטאַלן",
+      "visualization": "3D קלאַסטער וויזואַליזאַציע"
+    },
+    "timeline": {
+      "title": "צייט אַנאַליז",
+      "yearlyOverview": "יערלעך חורבן איבערבליק",
+      "yearlySubtitle": "גאַנצע צייט-ליניע פון סיסטעמאַטיש חורבן פון ייִדיש האַנדל טעטיקייט",
+      "monthlyOverview": "חודשלעך חורבן מוסטער",
+      "monthlySubtitle": "נאָוועמבער 1938 - קריסטאַלנאַכט און איר נאָכפאָלג",
+      "filters": {
+        "allYears": "אַלע יאָרן",
+        "peak": "שפּיץ (1938-39)",
+        "warYears": "מלחמה יאָרן (1940+)"
+      }
+    },
+    "legend": {
+      "title": "לעגענדע",
+      "liquidations": "ליקווידאַציעס (געשעפט פאַרמאַכן)",
+      "possessionTransfers": "פאַרמעגן טראַנספערס (געצווונגען פאַרקויפן)"
+    },
+    "historicalPeriods": {
+      "title": "היסטאָרישע פּעריאָדן",
+      "earlyPersecution": "פרי רדיפה",
+      "intensification": "אינטענסיפיקאַציע",
+      "warPeriod": "מלחמה צייט",
+      "finalPhase": "ענד פאַזע"
+    },
+    "statistics": {
+      "peakYear": "שפּיץ חורבן יאָר",
+      "totalDestructions": "סך הכל חורבנות",
+      "peakMonth": "שפּיץ חורבן חודש",
+      "dailyAverage": "טעגלעך דורכשניט (נאָוו 1938)"
+    }
   }
 }

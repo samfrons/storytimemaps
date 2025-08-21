@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import type { GeoJSONFeatureCollection, GeoJSONFeature } from '../../types';
 import { useTheme } from 'next-themes';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
@@ -32,15 +33,13 @@ function FrankfurtMapContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  const [showIntro, setShowIntro] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
-  const [businessData, setBusinessData] = useState(null);
+  const [businessData, setBusinessData] = useState<GeoJSONFeatureCollection | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedBusiness, setSelectedBusiness] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date('1935-01-01'));
-  const [viewMode, setViewMode] = useState('frankfurt');
+  const [selectedBusiness, setSelectedBusiness] = useState<GeoJSONFeature | null>(null);
+  const [selectedDate] = useState(new Date('1935-01-01'));
   
   // Load Frankfurt business data
   useEffect(() => {
@@ -73,7 +72,7 @@ function FrankfurtMapContent() {
     }
   }, [mounted, searchParams, setTheme]);
 
-  const handleBusinessSelect = useCallback((business: any) => {
+  const handleBusinessSelect = useCallback((business: GeoJSONFeature) => {
     setSelectedBusiness(business);
   }, []);
 
@@ -408,7 +407,7 @@ function FrankfurtMapContent() {
             <div className="p-4">
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-lg font-bold font-mono" style={{ color: 'var(--primary)' }}>
-                  {selectedBusiness.properties.name}
+                  {(selectedBusiness.properties.name as string) || 'Unknown'}
                 </h2>
                 <button
                   onClick={() => setSelectedBusiness(null)}
@@ -428,7 +427,7 @@ function FrankfurtMapContent() {
                     {t('business.owner')}
                   </p>
                   <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
-                    {selectedBusiness.properties.owner}
+                    {(selectedBusiness.properties.owner as string) || 'Unknown'}
                   </p>
                 </div>
                 
@@ -437,7 +436,7 @@ function FrankfurtMapContent() {
                     {t('business.address')}
                   </p>
                   <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
-                    {selectedBusiness.properties.address}
+                    {(selectedBusiness.properties.address as string) || 'Unknown'}
                   </p>
                 </div>
                 
@@ -446,7 +445,7 @@ function FrankfurtMapContent() {
                     {t('business.district')}
                   </p>
                   <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
-                    {selectedBusiness.properties.district}
+                    {(selectedBusiness.properties.district as string) || 'Unknown'}
                   </p>
                 </div>
                 
@@ -455,17 +454,17 @@ function FrankfurtMapContent() {
                     {t('business.category')}
                   </p>
                   <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
-                    {selectedBusiness.properties.category}
+                    {(selectedBusiness.properties.category as string) || 'Unknown'}
                   </p>
                 </div>
                 
-                {selectedBusiness.properties.subcategory && (
+                {(selectedBusiness.properties.subcategory as string) && (
                   <div>
                     <p className="text-xs font-mono mb-1" style={{ color: 'var(--foreground-muted)' }}>
                       {t('business.subcategory')}
                     </p>
                     <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
-                      {selectedBusiness.properties.subcategory}
+                      {selectedBusiness.properties.subcategory as string}
                     </p>
                   </div>
                 )}
@@ -756,8 +755,8 @@ function FrankfurtMapContent() {
                   <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>The Data</h3>
                   <p className="leading-relaxed">
                     The dataset includes {businessData?.features?.length || 0} businesses across various categories including
-                    textiles, banking, retail, and professional services. Frankfurt's Jewish community had deep historical roots,
-                    with the famous Judengasse being one of Europe's earliest Jewish quarters.
+                    textiles, banking, retail, and professional services. Frankfurt&apos;s Jewish community had deep historical roots,
+                    with the famous Judengasse being one of Europe&apos;s earliest Jewish quarters.
                   </p>
                 </div>
 
@@ -787,7 +786,7 @@ function FrankfurtMapContent() {
                   <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--primary)' }}>Notable Families</h3>
                   <p className="leading-relaxed">
                     The directory reveals established business dynasties including Rothschild, Oppenheimer, 
-                    Goldschmidt, and other families who had contributed to Frankfurt's economic development for generations.
+                    Goldschmidt, and other families who had contributed to Frankfurt&apos;s economic development for generations.
                   </p>
                 </div>
 

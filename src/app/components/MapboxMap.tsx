@@ -651,7 +651,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
     const markersToUse = processedMarkers
     if (markersToUse.length > 0) {
-      const points: GeoJSON.Feature<GeoJSON.Point, { id: string; popup: string; state: string }>[] = markersToUse.map(marker => ({
+      const points: GeoJSON.Feature<GeoJSON.Point, { id: string; popup: string; state: string }>[] = markersToUse.map((marker: any) => ({
         type: 'Feature',
         properties: {
           id: marker.id,
@@ -1698,9 +1698,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 }
 
 export default React.memo(MapboxMap, (prevProps, nextProps) => {
-  // Quick checks first
-  if (prevProps.center[0] !== nextProps.center[0] || 
-      prevProps.center[1] !== nextProps.center[1] ||
+  // Quick checks first - handle both center formats
+  const getPrevCenter = prevProps.center 
+    ? Array.isArray(prevProps.center) 
+      ? prevProps.center 
+      : [prevProps.center.lng, prevProps.center.lat]
+    : [0, 0];
+  const getNextCenter = nextProps.center 
+    ? Array.isArray(nextProps.center) 
+      ? nextProps.center 
+      : [nextProps.center.lng, nextProps.center.lat]
+    : [0, 0];
+      
+  if (getPrevCenter[0] !== getNextCenter[0] || 
+      getPrevCenter[1] !== getNextCenter[1] ||
       prevProps.zoom !== nextProps.zoom ||
       prevProps.activeMarkerId !== nextProps.activeMarkerId) {
     return false

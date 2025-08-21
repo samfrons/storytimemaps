@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from '../../../i18n/useTranslation';
 
 interface MonthlyData {
   month: string;
@@ -45,6 +46,7 @@ interface MonthlyDestructionChartProps {
 }
 
 const MonthlyDestructionChart: React.FC<MonthlyDestructionChartProps> = ({ theme }) => {
+  const { t } = useTranslation();
   const [selectedYear, setSelectedYear] = useState<'1938' | '1939'>('1938');
   const [hoveredMonth, setHoveredMonth] = useState<string | null>(null);
 
@@ -67,7 +69,7 @@ const MonthlyDestructionChart: React.FC<MonthlyDestructionChartProps> = ({ theme
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold font-mono mb-2">
-            Monthly Destruction Timeline
+            {t('barcharts.timeline.monthlyOverview')}
           </h2>
           <p className="text-sm font-mono" style={{ color: 'var(--foreground-muted)' }}>
             Possession transfers and liquidations by month showing the intensification of persecution

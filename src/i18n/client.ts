@@ -18,7 +18,6 @@ if (!runsOnServerSide) {
       )
     )
     .init({
-      lng: undefined, // Let detector decide
       fallbackLng: 'en',
       defaultNS: 'common',
       ns: ['common', 'business'],
@@ -31,10 +30,8 @@ if (!runsOnServerSide) {
         caches: ['localStorage'],
         lookupQuerystring: 'lang',
         lookupLocalStorage: 'storymap-language',
-        // Only detect supported languages
-        checkWhitelist: true,
       },
-      whitelist: ['en', 'de', 'yi'],
+      supportedLngs: ['en', 'de', 'yi'],
       react: {
         useSuspense: false,
       },

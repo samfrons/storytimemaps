@@ -1,4 +1,4 @@
-import { TFunction } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 interface Story {
   title?: string;
@@ -63,7 +63,7 @@ export const inferBusinessCategory = (story: Story): string => {
 export const getTranslatedDescription = (
   story: Story,
   language: string,
-  t?: TFunction
+  _t?: TFunction
 ): string => {
   // For German translations, provide context-aware descriptions
   if (language === 'de') {

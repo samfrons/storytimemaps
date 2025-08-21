@@ -2,11 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 
-interface DistrictData {
-  name: string;
-  businesses: number;
-  path?: string;
-}
+// District data type is defined inline in the component
 
 // District data for Berlin map
 const berlinDistrictsData = [
@@ -32,11 +28,7 @@ const berlinDistrictsData = [
   { name: 'Reinickendorf', businesses: 24 }
 ];
 
-interface BerlinDistrictsChartProps {
-  theme?: string;
-}
-
-const BerlinDistrictsChart: React.FC<BerlinDistrictsChartProps> = ({ theme }) => {
+const BerlinDistrictsChart: React.FC = () => {
   const [hoveredDistrict, setHoveredDistrict] = useState<string | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
 
@@ -84,7 +76,7 @@ const BerlinDistrictsChart: React.FC<BerlinDistrictsChartProps> = ({ theme }) =>
           Distribution of Jewish Businesses by Berlin District
         </h2>
         <p className="text-sm font-mono" style={{ color: 'var(--foreground-muted)' }}>
-          Interactive visualization showing business concentration across Berlin's districts.
+          Interactive visualization showing business concentration across Berlin&apos;s districts.
           Hover over bars for details.
         </p>
       </div>

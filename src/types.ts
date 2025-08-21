@@ -28,3 +28,26 @@ export interface MarkerData {
   popup: string;
 }
 
+export interface GeoJSONFeature {
+  type: 'Feature';
+  properties: {
+    id: string;
+    name: string;
+    category?: string;
+    businessType?: string;
+    description?: string;
+    startDate?: string;
+    endDate?: string;
+    [key: string]: unknown;
+  };
+  geometry: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
+}
+
+export interface GeoJSONFeatureCollection {
+  type: 'FeatureCollection';
+  features: GeoJSONFeature[];
+}
+

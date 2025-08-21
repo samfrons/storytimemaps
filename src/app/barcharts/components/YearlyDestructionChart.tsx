@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from '../../../i18n/useTranslation';
 
 interface YearlyData {
   year: number;
@@ -31,6 +32,7 @@ interface YearlyDestructionChartProps {
 }
 
 const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }) => {
+  const { t } = useTranslation();
   const [hoveredYear, setHoveredYear] = useState<number | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState<'all' | 'peak' | 'decline'>('all');
 
@@ -76,10 +78,10 @@ const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold font-mono mb-2">
-            Yearly Destruction Overview (1933-1945)
+            {t('barcharts.timeline.yearlyOverview')} (1933-1945)
           </h2>
           <p className="text-sm font-mono" style={{ color: 'var(--foreground-muted)' }}>
-            Complete timeline showing the systematic destruction of Jewish commercial activity
+            {t('barcharts.timeline.yearlySubtitle')}
           </p>
         </div>
         
@@ -94,7 +96,7 @@ const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }
               borderRight: '1px solid var(--border)'
             }}
           >
-            All Years
+            {t('barcharts.timeline.filters.allYears')}
           </button>
           <button
             onClick={() => setSelectedPeriod('peak')}
@@ -105,7 +107,7 @@ const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }
               borderRight: '1px solid var(--border)'
             }}
           >
-            Peak (1938-39)
+            {t('barcharts.timeline.filters.peak')}
           </button>
           <button
             onClick={() => setSelectedPeriod('decline')}
@@ -115,17 +117,19 @@ const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }
               color: selectedPeriod === 'decline' ? 'var(--background)' : 'var(--foreground)'
             }}
           >
-            War Years (1940+)
+            {t('barcharts.timeline.filters.warYears')}
           </button>
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="border p-6 overflow-x-auto" style={{ 
-        borderColor: 'var(--border)', 
-        backgroundColor: 'var(--card-bg)' 
-      }}>
-        <svg width={chartWidth} height={chartHeight} className="min-w-full">
+      {/* Chart and Legend Container */}
+      <div className="flex gap-6">
+        {/* Chart */}
+        <div className="flex-1 border p-6 overflow-x-auto" style={{ 
+          borderColor: 'var(--border)', 
+          backgroundColor: 'var(--card-bg)' 
+        }}>
+          <svg width={chartWidth} height={chartHeight} className="min-w-full">
           {/* Y-axis grid lines and labels */}
           {[0, 500, 1000, 1500, 2000, 2500].map((value) => (
             <g key={value}>
@@ -288,36 +292,43 @@ const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }
             stroke="var(--border)"
             strokeWidth="2"
           />
-        </svg>
-      </div>
-
-      {/* Legend and Period Info */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Legend */}
-        <div>
-          <h3 className="font-bold font-mono mb-3">Legend</h3>
-          <div className="space-y-2 text-sm font-mono">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4" style={{ backgroundColor: 'var(--danger)' }}></div>
-              <span>Liquidations (Business closures)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4" style={{ backgroundColor: 'var(--warning)' }}></div>
-              <span>Possession Transfers (Forced sales)</span>
-            </div>
-          </div>
+          </svg>
         </div>
 
-        {/* Historical Periods */}
-        <div>
-          <h3 className="font-bold font-mono mb-3">Historical Periods</h3>
-          <div className="space-y-2 text-sm font-mono">
-            {periods.map((period) => (
-              <div key={period.name} className="flex items-center gap-2">
-                <div className="w-4 h-4" style={{ backgroundColor: period.color, opacity: 0.3 }}></div>
-                <span>{period.name} ({period.years[0]}-{period.years[period.years.length-1]})</span>
+        {/* Legend and Historical Periods - Right Side */}
+        <div className="w-80 space-y-6">
+          {/* Legend */}
+          <div className="border p-4" style={{ 
+            borderColor: 'var(--border)', 
+            backgroundColor: 'var(--card-bg)' 
+          }}>
+            <h3 className="font-bold font-mono mb-3">{t('barcharts.legend.title')}</h3>
+            <div className="space-y-2 text-sm font-mono">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4" style={{ backgroundColor: 'var(--danger)' }}></div>
+                <span>{t('barcharts.legend.liquidations')}</span>
               </div>
-            ))}
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4" style={{ backgroundColor: 'var(--warning)' }}></div>
+                <span>{t('barcharts.legend.possessionTransfers')}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Historical Periods */}
+          <div className="border p-4" style={{ 
+            borderColor: 'var(--border)', 
+            backgroundColor: 'var(--card-bg)' 
+          }}>
+            <h3 className="font-bold font-mono mb-3">{t('barcharts.historicalPeriods.title')}</h3>
+            <div className="space-y-2 text-sm font-mono">
+              {periods.map((period) => (
+                <div key={period.name} className="flex items-center gap-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: period.color, opacity: 0.3 }}></div>
+                  <span className="text-xs">{period.name} ({period.years[0]}-{period.years[period.years.length-1]})</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -332,7 +343,7 @@ const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }
             1939
           </div>
           <div className="text-sm font-mono" style={{ color: 'var(--foreground-muted)' }}>
-            Peak destruction year
+            {t('barcharts.statistics.peakYear')}
           </div>
         </div>
         
@@ -344,7 +355,7 @@ const YearlyDestructionChart: React.FC<YearlyDestructionChartProps> = ({ theme }
             {yearlyData.reduce((sum, d) => sum + d.total, 0).toLocaleString()}
           </div>
           <div className="text-sm font-mono" style={{ color: 'var(--foreground-muted)' }}>
-            Total destructions
+            {t('barcharts.statistics.totalDestructions')}
           </div>
         </div>
         

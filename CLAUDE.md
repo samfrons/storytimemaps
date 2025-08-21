@@ -171,6 +171,84 @@ The time-based state system is critical:
    - Async operations have error handling
    - CSS variables exist before using them
 
+## DEPLOYMENT RULES - CRITICAL FOR BUILD SUCCESS
+
+### 1. Suspense Boundaries for useSearchParams
+**MANDATORY**: Any page component that uses `useSearchParams()` (directly or indirectly) MUST be wrapped in Suspense boundary:
+
+```typescript
+export default function PageName() {
+  return (
+    <Suspense fallback={
+      <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
+        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading...</div>
+      </div>
+    }>
+      <PageContent />
+    </Suspense>
+  );
+}
+```
+
+**Components that require Suspense**:
+- Any component using `useSearchParams()` directly
+- Any component using `useTranslation()` hooks that might read URL params
+- Any component importing `Sidebar` component
+- Any component using routing hooks (`useRouter`, `usePathname` with search params)
+
+### 2. JSX Syntax Rules
+**CRITICAL**: Always use proper JSX syntax:
+- ✅ Correct: `<Component />`
+- ❌ Wrong: `<Component / />`
+- ✅ Correct: `<Component>content</Component>`
+- ❌ Wrong: `<Component>content<Component / />`
+
+### 3. TypeScript Property Access
+**CRITICAL**: Always type-cast unknown properties:
+```typescript
+// ✅ Correct
+{(selectedBusiness.properties.name as string) || 'Unknown'}
+
+// ❌ Wrong
+{selectedBusiness.properties.name}
+```
+
+### 4. Text Escaping in JSX
+**CRITICAL**: Escape apostrophes in JSX text:
+- ✅ Correct: `Frankfurt&apos;s Jewish community`
+- ❌ Wrong: `Frankfurt's Jewish community`
+
+### 5. ESLint Configuration
+Maintain warning-level ESLint configuration for deployment:
+```json
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react/no-unescaped-entities": "off",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
+```
+
+### 6. Pre-Deployment Checklist
+**ALWAYS** run before pushing to deployment branch:
+1. `pnpm run build` - Must complete without errors
+2. Fix all TypeScript errors (not warnings)
+3. Ensure all pages with useSearchParams have Suspense boundaries
+4. Verify JSX syntax is correct (no malformed closing tags)
+5. Check that property access is properly typed
+6. Verify apostrophes are escaped in JSX text
+
+### 7. Common Deployment Failures
+**Watch out for these patterns that cause build failures**:
+- Missing Suspense around useSearchParams usage
+- Malformed JSX closing tags (`/ />` instead of `/>`)
+- Untyped property access on unknown objects
+- Unescaped apostrophes in JSX text content
+- TypeScript strict mode violations
+
 ## Testing Checklist
 Before any commit, verify:
 - [ ] **No TypeScript errors** - run `pnpm run typecheck`

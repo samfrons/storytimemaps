@@ -415,7 +415,7 @@ const getThemeMapStyle = (theme: string | undefined): any => {
 }
 
 interface MapboxMapProps {
-  center: [number, number]
+  center?: [number, number] | { lat: number; lng: number }
   zoom: number
   markers?: Array<{
     id: string
@@ -426,11 +426,15 @@ interface MapboxMapProps {
     startDate?: string
     endDate?: string
   }>
-  onMarkerClick: (id: string) => void
+  onMarkerClick?: (id: string) => void
   activeMarkerId?: string | null
   currentDate?: Date
   enrichedStories?: Array<{ id: string; startDate?: string | null; endDate?: string | null; description?: string | null }>
   isTestMode?: boolean
+  city?: 'berlin' | 'frankfurt'
+  data?: any
+  selectedDate?: Date
+  onBusinessSelect?: (business: any) => void
 }
 
 const MapboxMap: React.FC<MapboxMapProps> = ({
@@ -441,14 +445,25 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   activeMarkerId,
   currentDate, // eslint-disable-line @typescript-eslint/no-unused-vars
   enrichedStories = [],
-  isTestMode = false
+  isTestMode = false,
+  city = 'berlin',
+  data,
+  selectedDate,
+  onBusinessSelect
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
   const { theme } = useTheme()
   const { t } = useTranslation()
+  
+  // Handle both center formats
+  const centerCoords = center 
+    ? Array.isArray(center) 
+      ? { longitude: center[1], latitude: center[0] }
+      : { longitude: center.lng, latitude: center.lat }
+    : { longitude: 13.404954, latitude: 52.520008 } // Default to Berlin
+  
   const [viewState, setViewState] = useState({
-    longitude: center[1],
-    latitude: center[0],
+    ...centerCoords,
     zoom: zoom
   })
   const [mapLoaded, setMapLoaded] = useState(false)
@@ -580,6 +595,23 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     return sampled.slice(0, maxCount)
   }
   
+  // Process GeoJSON data for Frankfurt
+  const processedMarkers = useMemo(() => {
+    if (data && data.features) {
+      // Convert GeoJSON features to markers format
+      return data.features.map((feature: any, index: number) => ({
+        id: feature.properties.id?.toString() || `marker-${index}`,
+        position: [feature.geometry.coordinates[1], feature.geometry.coordinates[0]] as [number, number],
+        popup: feature.properties.name || '',
+        state: 'active', // Default state, can be derived from date comparison
+        description: feature.properties.address || '',
+        startDate: feature.properties.founded_date,
+        endDate: feature.properties.closing_date
+      }))
+    }
+    return markers
+  }, [data, markers])
+  
   // Initialize Supercluster for clustering with optimized settings for large datasets
   const supercluster = useMemo(() => {
     // Adjust clustering based on test mode and zoom level
@@ -617,8 +649,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       nodeSize: 64  // Standard node size
     })
 
-    if (markers.length > 0) {
-      const points: GeoJSON.Feature<GeoJSON.Point, { id: string; popup: string; state: string }>[] = markers.map(marker => ({
+    const markersToUse = processedMarkers
+    if (markersToUse.length > 0) {
+      const points: GeoJSON.Feature<GeoJSON.Point, { id: string; popup: string; state: string }>[] = markersToUse.map(marker => ({
         type: 'Feature',
         properties: {
           id: marker.id,
@@ -634,18 +667,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [markers, isMobile, isTestMode, viewState.zoom])
+  }, [processedMarkers, isMobile, isTestMode, viewState.zoom])
 
   // Pre-compute initial markers for fallback with spatial distribution
   const initialMarkers = useMemo(() => {
-    if (!markers.length) return []
+    const markersToUse = processedMarkers
+    if (!markersToUse.length) return []
     
     // Take every 10th marker for better spatial distribution than just first 40
-    const step = Math.max(1, Math.floor(markers.length / 30))
+    const step = Math.max(1, Math.floor(markersToUse.length / 30))
     const selectedMarkers = []
     
-    for (let i = 0; i < markers.length && selectedMarkers.length < 30; i += step) {
-      selectedMarkers.push(markers[i])
+    for (let i = 0; i < markersToUse.length && selectedMarkers.length < 30; i += step) {
+      selectedMarkers.push(markersToUse[i])
     }
     
     return selectedMarkers.map(marker => ({
@@ -660,7 +694,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         coordinates: [marker.position[1], marker.position[0]]
       }
     }))
-  }, [markers])
+  }, [processedMarkers])
 
   // Throttled viewport bounds for better performance
   const [throttledViewport, setThrottledViewport] = useState({ zoom: viewState.zoom, bounds: null as mapboxgl.LngLatBounds | null })
@@ -1275,7 +1309,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           }}
           onClick={(e) => {
             e.stopPropagation()
-            onMarkerClick(properties.id!)
+            if (onBusinessSelect && data) {
+              // For Frankfurt data, find the business in the GeoJSON
+              const business = data.features?.find((f: any) => f.properties.id?.toString() === properties.id)
+              if (business) {
+                onBusinessSelect(business)
+              }
+            } else if (onMarkerClick) {
+              onMarkerClick(properties.id!)
+            }
             const enrichedStory = enrichedStories.find(s => s.id === properties.id) || {}
             setPopupInfo({
               longitude: lng,
@@ -1303,7 +1345,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         longitude={lng}
         latitude={lat}
         onClick={() => {
-          onMarkerClick(properties.id!)
+          if (onBusinessSelect && data) {
+            // For Frankfurt data, find the business in the GeoJSON
+            const business = data.features?.find((f: any) => f.properties.id?.toString() === properties.id)
+            if (business) {
+              onBusinessSelect(business)
+            }
+          } else if (onMarkerClick) {
+            onMarkerClick(properties.id!)
+          }
           const enrichedStory = enrichedStories.find(s => s.id === properties.id)
           setPopupInfo({
             longitude: lng,

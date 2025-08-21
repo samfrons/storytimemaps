@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth theme transitions */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 /* Default/Moody Theme */
 :root,
 [data-theme="moody"] {
@@ -901,6 +906,21 @@ textarea:-ms-input-placeholder {
   background-color: rgba(255, 255, 255, 0.2) !important;
   color: #ffffff !important;
   border-left-color: #ffffff !important;
+}
+
+/* Language buttons */
+.lang-btn {
+  background-color: var(--input-bg);
+  border-color: var(--border);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.lang-btn-active {
+  background-color: var(--primary);
+  border-color: var(--border);
+  color: var(--background);
+  cursor: pointer;
 }
 
 /* Hot theme zoom buttons */

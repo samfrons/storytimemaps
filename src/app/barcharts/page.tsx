@@ -3,20 +3,33 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { useIsMounted } from '../../hooks/useIsMounted';
-import { TranslationProvider } from '../../i18n/TranslationContext';
+// TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation';
-import BerlinDistrictsChart from './components/BerlinDistrictsChart';
+import dynamic from 'next/dynamic';
 import MonthlyDestructionChart from './components/MonthlyDestructionChart';
 import YearlyDestructionChart from './components/YearlyDestructionChart';
+
+// Dynamically import 3D map to avoid SSR issues
+const District3DMap = dynamic(() => import('./components/District3DMap'), {
+  ssr: false,
+  loading: () => <div className="h-[700px] flex items-center justify-center font-mono">Loading 3D Map...</div>
+});
 
 function BarChartsContent() {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const mounted = useIsMounted();
-  const [activeChart, setActiveChart] = useState<'districts' | 'monthly' | 'yearly'>('districts');
 
-  if (!mounted) {
-    return <div className="min-h-screen bg-[var(--background)]" />;
+  // Don't render anything until mounted and theme is ready
+  if (!mounted || !theme) {
+    return (
+      <div 
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
+      >
+        <div className="font-mono text-sm">Loading visualizations...</div>
+      </div>
+    );
   }
 
   return (
@@ -25,66 +38,43 @@ function BarChartsContent() {
       <div className="border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--background)' }}>
         <div className="max-w-7xl mx-auto px-4 py-6">
           <h1 className="text-2xl md:text-3xl font-bold font-mono mb-2">
-            Data Visualizations
+            Interactive Data Visualizations
           </h1>
           <p className="text-sm md:text-base font-mono" style={{ color: 'var(--foreground-muted)' }}>
-            Interactive charts showing the destruction of Jewish commercial activity in Berlin
+            3D map exploration with timeline analysis of Jewish business destruction in Berlin
           </p>
         </div>
       </div>
 
-      {/* Navigation */}
-      <div className="border-b" style={{ borderColor: 'var(--border)' }}>
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-wrap gap-1">
-            <button
-              onClick={() => setActiveChart('districts')}
-              className={`px-4 py-3 text-sm font-mono transition-all ${
-                activeChart === 'districts' ? 'border-b-2' : ''
-              }`}
-              style={{
-                borderColor: activeChart === 'districts' ? 'var(--primary)' : 'transparent',
-                color: activeChart === 'districts' ? 'var(--primary)' : 'var(--foreground-muted)',
-                backgroundColor: 'transparent'
-              }}
-            >
-              Berlin Districts
-            </button>
-            <button
-              onClick={() => setActiveChart('monthly')}
-              className={`px-4 py-3 text-sm font-mono transition-all ${
-                activeChart === 'monthly' ? 'border-b-2' : ''
-              }`}
-              style={{
-                borderColor: activeChart === 'monthly' ? 'var(--primary)' : 'transparent',
-                color: activeChart === 'monthly' ? 'var(--primary)' : 'var(--foreground-muted)',
-                backgroundColor: 'transparent'
-              }}
-            >
-              Monthly Timeline (1938-39)
-            </button>
-            <button
-              onClick={() => setActiveChart('yearly')}
-              className={`px-4 py-3 text-sm font-mono transition-all ${
-                activeChart === 'yearly' ? 'border-b-2' : ''
-              }`}
-              style={{
-                borderColor: activeChart === 'yearly' ? 'var(--primary)' : 'transparent',
-                color: activeChart === 'yearly' ? 'var(--primary)' : 'var(--foreground-muted)',
-                backgroundColor: 'transparent'
-              }}
-            >
-              Yearly Overview (1933-45)
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* All Content */}
+      <div className="max-w-7xl mx-auto px-4 py-8 space-y-12">
+        
+        {/* 3D Berlin Map Section */}
+        <section>
+          <h2 className="text-xl font-bold font-mono mb-4">3D Interactive Berlin Map</h2>
+          <District3DMap theme={theme} />
+        </section>
 
-      {/* Chart Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {activeChart === 'districts' && <BerlinDistrictsChart theme={theme} />}
-        {activeChart === 'monthly' && <MonthlyDestructionChart theme={theme} />}
-        {activeChart === 'yearly' && <YearlyDestructionChart theme={theme} />}
+        {/* Analytics Grid */}
+        <section>
+          <h2 className="text-xl font-bold font-mono mb-6">Timeline Analysis</h2>
+          
+          {/* Monthly and Yearly Charts Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            {/* Monthly Chart */}
+            <div>
+              <MonthlyDestructionChart theme={theme} />
+            </div>
+            
+            {/* Yearly Chart */}
+            <div>
+              <YearlyDestructionChart theme={theme} />
+            </div>
+            
+          </div>
+        </section>
+
       </div>
 
       {/* Back to Main Button */}
@@ -106,9 +96,5 @@ function BarChartsContent() {
 }
 
 export default function BarChartsPage() {
-  return (
-    <TranslationProvider>
-      <BarChartsContent />
-    </TranslationProvider>
-  );
+  return <BarChartsContent />;
 }

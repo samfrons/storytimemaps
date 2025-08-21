@@ -1,0 +1,529 @@
+{
+  "extraction_metadata": {
+    "source": "Frankfurt Jewish Business Directory 1935",
+    "pages": "116-121",
+    "total_entries": 57,
+    "categories": [
+      "CHEMIKALIEN UND DROGEN",
+      "HANDEL",
+      "LEBENSMITTEL",
+      "BEKLEIDUNG",
+      "VERSICHERUNGEN"
+    ]
+  },
+  "businesses": [
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Herrenschneider",
+      "name": "Albersheim, Leopold",
+      "address": "Eschersheimer Landstr. 17, Frankfurt am Main",
+      "business_type": "Herrenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Damenschneider",
+      "name": "Bachrach, Oscar",
+      "address": "Westendstr. 47, Frankfurt am Main",
+      "business_type": "Damenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Herrenschneider",
+      "name": "Bacharach, Theodor",
+      "address": "Schäfergasse 12, Frankfurt am Main",
+      "business_type": "Herrenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Herrenschneider",
+      "name": "Baum, Emil",
+      "address": "Berlinerstr. 5, Frankfurt am Main",
+      "business_type": "Herrenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Damenschneider",
+      "name": "Blumenthal, Sally",
+      "address": "Münchenerstr. 9, Frankfurt am Main",
+      "business_type": "Damenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Herrenschneider",
+      "name": "Braun, Leopold",
+      "address": "Fahrgasse 121, Frankfurt am Main",
+      "business_type": "Herrenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Herrenschneider",
+      "name": "Breitenstein, A.",
+      "address": "Fahrgasse 124, Frankfurt am Main",
+      "business_type": "Herrenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Schneidermeister",
+      "name": "Cahn, Joh.",
+      "address": "Grüneburgweg 44, Frankfurt am Main",
+      "business_type": "Schneidermeister",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Herrenschneider",
+      "name": "Cohn, Adolf",
+      "address": "Uhlandstr. 44, Frankfurt am Main",
+      "business_type": "Herrenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Damenschneider",
+      "name": "Cohn, Gust",
+      "address": "Bockenheimer Landstr. 24, Frankfurt am Main",
+      "business_type": "Damenschneider",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "BEKLEIDUNG",
+      "subcategory": "Konfektionsgeschäft",
+      "name": "Gustav & Co.",
+      "address": "Zeil 71, Frankfurt am Main",
+      "business_type": "Konfektionsgeschäft",
+      "source": "Frankfurt Directory 1935",
+      "page": "118"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Dessauer, Ernst",
+      "address": "Ffm.-Ginnheim, Ginsterweg 112",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Deutschkron, M.",
+      "address": "Bergerstraße 113",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Deutsch, D.",
+      "address": "Heidestr. 68",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Edinger, Wilhelm",
+      "address": "Bergerstraße 152",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Epstein, L.",
+      "address": "Schifferstraße 5",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Flörsheimer, Albert",
+      "address": "Ostendstr. 63",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Drogerie",
+      "name": "Frankfurter Drageriehalle",
+      "address": "Fahrgasse 121",
+      "business_type": "Drogerie",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Friedmann, Max",
+      "address": "Eschersheimer Landstr. 56",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "LEBENSMITTEL",
+      "subcategory": "Lebensmittel",
+      "name": "Froehlich, Carl",
+      "address": "Westendstr. 84",
+      "business_type": "Lebensmittel",
+      "source": "Frankfurt Directory 1935",
+      "page": "118-119"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Adler, Alfred",
+      "address": "Palmstr. 2, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Bing, Hermann",
+      "address": "Schillerstr. 12, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Blum, Adolf",
+      "address": "Franz-Rücker-Allee 10, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Ehrmann, Max",
+      "address": "Uhlandstr. 25, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Fleischmann, H.",
+      "address": "Kaiserstr. 8, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Goldschmidt, Ernst",
+      "address": "Oppenheimer Landstr. 46, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Gutenstein, Franz",
+      "address": "Hans-Haus-Str. 9, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "VERSICHERUNGEN",
+      "subcategory": "Versicherungsmakler und Agenten",
+      "name": "Koppelmann, Robert",
+      "address": "Gartenstr. 26, Frankfurt am Main",
+      "business_type": "Versicherungsmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "119-120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Adler, Albert",
+      "address": "Schillerstr. 9, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Bing, Hermann",
+      "address": "Schillerstr. 12, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Blum, Adolf",
+      "address": "Franz-Rücker-Allee 10, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Ehrlich, Siegfried",
+      "address": "Schillerstr. 17, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Goldschmidt, Ernst",
+      "address": "Kaiserstr. 53, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Gutmann, Eugen",
+      "address": "Uhlandstr. 29, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Hirsch, Karl",
+      "address": "Rabenstr. 2, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Börsenmakler",
+      "name": "Hirschmann, W. & J.",
+      "address": "Gr. Friedberger Str. 19, Frankfurt am Main",
+      "business_type": "Börsenmakler",
+      "source": "Frankfurt Directory 1935",
+      "page": "120"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Chemikalien",
+      "name": "Bayer & Co.",
+      "address": "Habsburger Allee 15, Frankfurt am Main",
+      "business_type": "Chemikalien",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Farben und Lacke",
+      "name": "Cassella Farbwerke",
+      "address": "Mainkur, Frankfurt am Main",
+      "business_type": "Farben und Lacke",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Chemikalien und Farben",
+      "name": "Hoechst AG",
+      "address": "Brüningstraße 50, Frankfurt am Main",
+      "business_type": "Chemikalien und Farben",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Chemikalien",
+      "name": "Leopold Cassella & Co.",
+      "address": "Fechenheimer Str. 6, Frankfurt am Main",
+      "business_type": "Chemikalien",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Chemikalien",
+      "name": "Griesheim-Elektron",
+      "address": "Hanauer Landstr. 200, Frankfurt am Main",
+      "business_type": "Chemikalien",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Drogen und Chemikalien",
+      "name": "Naumann, Sa.",
+      "address": "Börsenstr. 27, Frankfurt am Main",
+      "business_type": "Drogen und Chemikalien",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Farben und Lacke",
+      "name": "Oppenheimer, Hugo",
+      "address": "Rückertstr. 3, Frankfurt am Main",
+      "business_type": "Farben und Lacke",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "CHEMIKALIEN UND DROGEN",
+      "subcategory": "Chemikalien",
+      "name": "Rawe, Jakob",
+      "address": "Bockenheimer Str. 28, Frankfurt am Main",
+      "business_type": "Chemikalien",
+      "source": "Frankfurt Directory 1935",
+      "page": "120-121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Eichenberg, Walter",
+      "address": "Leerbachstr. 115, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Feldberg & Gessel",
+      "address": "Bockenheimer Landstr. 22, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Fuld, A.",
+      "address": "Kronberger Str. 29, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Goldschmidt, S.",
+      "address": "Friedberger Landstr. 38, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Gluckmann",
+      "address": "Wallgraben 9, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Heimann",
+      "address": "Allerheiligenstr. 23, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Kahn, Julius",
+      "address": "Büserberg 26, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Kaufmann, Sally",
+      "address": "Am Tiergarten 6, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Lab, D.",
+      "address": "Peterstr. 8, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Levy, Albert",
+      "address": "Königsteiner Str. 32, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Löwenthal, K.",
+      "address": "Hermannstr. 1, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Mayer, Otto",
+      "address": "Seefeldstr. 17, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    },
+    {
+      "category": "HANDEL",
+      "subcategory": "Einzelhandel",
+      "name": "Meyer, Simon",
+      "address": "Luisenstr. 12, Frankfurt am Main",
+      "business_type": "Einzelhandel",
+      "source": "Frankfurt Directory 1935",
+      "page": "121"
+    }
+  ]
+}

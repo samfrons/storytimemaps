@@ -1,2 +1,2 @@
-// Re-export from TranslationContext for backward compatibility
-export { useTranslation } from './TranslationContext';
+// Enhanced react-i18next integration
+export { useTranslation, default } from './useTranslationNew';

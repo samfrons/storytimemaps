@@ -1,0 +1,117 @@
+{
+  "hero": {
+    "title": "Jewish Businesses in Berlin",
+    "subtitle": "A Historical Journey Through Time",
+    "period": "1900-1945"
+  },
+  "intro": {
+    "title": "Preserving Memory Through Data",
+    "mapTitle": "Interactive Visualization",
+    "paragraph1": "This project builds upon Dr. Christoph Kreutzmüller's groundbreaking research documented in 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' (2015). His decade-long work with the Leo Baeck Institute created an unprecedented archive of Jewish businesses across Germany.",
+    "paragraph2": "Our interactive map transforms this scholarly database into an accessible digital experience, documenting Jewish-owned businesses in Berlin from 1900 to 1945. Each marker represents a family enterprise - from corner shops to department stores - that formed the economic fabric of the city.",
+    "paragraph3": "Navigate through time to explore how these businesses thrived, struggled, and ultimately faced forced closure. By combining historical research with modern visualization, we aim to make this important history accessible to new generations."
+  },
+  "preview": {
+    "title": "Featured Businesses",
+    "subtitle": "Explore stories from our collection"
+  },
+  "statistics": {
+    "title": "The Collection",
+    "totalBusinesses": "Total Businesses",
+    "timeSpan": "Years Covered",
+    "categories": "Business Categories",
+    "peakYear": "Peak Year",
+    "yearLabel": "Year"
+  },
+  "methodology": {
+    "title": "Research & Methodology",
+    "subtitle": "How We Built This Digital Archive",
+    "archiveWork": "Archive Research",
+    "archiveDesc": "Over 10 years of meticulous research through municipal records, trade directories, and family archives",
+    "dataProcessing": "Data Processing",
+    "dataDesc": "Systematic digitization and verification of business records, addresses, and operational timelines",
+    "visualization": "Visualization Design",
+    "visualizationDesc": "Careful translation of historical data into accessible, interactive experiences"
+  },
+  "timeline": {
+    "title": "Historical Context",
+    "subtitle": "Key Moments in the Destruction of Jewish Commerce",
+    "boycott1933": "April 1933: Nationwide boycott of Jewish businesses",
+    "laws1935": "1935: Nuremberg Laws restrict Jewish economic activity",
+    "aryanization1938": "1938: Systematic 'Aryanization' of Jewish businesses",
+    "kristallnacht1938": "November 1938: Kristallnacht - widespread destruction",
+    "final1941": "1941-1945: Final liquidation of remaining businesses"
+  },
+  "insights": {
+    "title": "Data Insights",
+    "subtitle": "What the Numbers Reveal",
+    "peakPeriod": "Peak Period",
+    "peakDesc": "Most Jewish businesses operated between 1920-1933",
+    "geographic": "Geographic Distribution",
+    "geographicDesc": "Concentrated in Mitte, Charlottenburg, and commercial districts",
+    "decline": "Rapid Decline",
+    "declineDesc": "75% of businesses closed between 1933-1938",
+    "legacy": "Lost Legacy",
+    "legacyDesc": "Thousands of family enterprises erased from Berlin's economy"
+  },
+  "navigation": {
+    "title": "How to Explore",
+    "subtitle": "Navigate Through Time and Space",
+    "timeSlider": "Time Slider",
+    "timeDesc": "Move through decades to see businesses open and close",
+    "markers": "Business Markers",
+    "markersDesc": "Click markers for detailed business stories and photographs",
+    "search": "Search & Filter",
+    "searchDesc": "Find specific businesses, streets, or business types",
+    "stories": "Featured Stories",
+    "storiesDesc": "Read in-depth profiles of selected businesses and families"
+  },
+  "research": {
+    "title": "Research Foundation",
+    "subtitle": "Standing on the Shoulders of Giants",
+    "kreutzmuller": {
+      "title": "Dr. Christoph Kreutzmüller's Pioneering Work",
+      "description": "This project builds directly upon Dr. Kreutzmüller's groundbreaking 2015 study 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany.' His team spent over a decade meticulously documenting the systematic destruction of Jewish businesses across Germany.",
+      "methodology": "Working with the Leo Baeck Institute, Dr. Kreutzmüller and his researchers analyzed thousands of archival documents, municipal records, trade directories, and survivor testimonies to create an unprecedented database of Jewish commercial life before and during the Nazi period."
+    },
+    "database": {
+      "title": "The Leo Baeck Institute Database",
+      "description": "The comprehensive database housed at the Leo Baeck Institute contains detailed records of thousands of Jewish businesses, including registration documents, 'Aryanization' records, forced sales documentation, and personal testimonies from business owners and their families.",
+      "scope": "This invaluable scholarly resource documents not just the businesses themselves, but the human stories behind them - families displaced, livelihoods destroyed, and communities forever changed."
+    },
+    "transformation": {
+      "title": "From Archive to Accessibility",
+      "description": "StoryTimeMaps transforms this scholarly database into an interactive digital experience, making Dr. Kreutzmüller's research accessible to students, educators, and the general public while maintaining historical accuracy and academic rigor."
+    }
+  },
+  "future": {
+    "title": "Future Initiatives",
+    "subtitle": "Bringing Digital Memory into Physical Space",
+    "plaques": {
+      "title": "Memorial Plaques Initiative",
+      "description": "Inspired by the Stolpersteine (stumbling stones) project, we envision installing memorial plaques at the original locations of documented Jewish businesses throughout Berlin.",
+      "vision": "These plaques would serve as permanent reminders of the vibrant Jewish commercial life that once flourished in these neighborhoods, connecting digital documentation with physical remembrance."
+    },
+    "community": {
+      "title": "Community Engagement",
+      "description": "We're working with local communities, schools, and Berlin's Jewish organizations to develop educational programs that connect this historical data with contemporary discussions about memory, commerce, and community."
+    },
+    "expansion": {
+      "title": "Geographic Expansion",
+      "description": "Future phases will extend beyond Berlin to document Jewish businesses in other German cities, creating a comprehensive national picture of economic persecution and loss."
+    }
+  },
+  "cta": {
+    "exploreMap": "Explore the Interactive Map",
+    "learnMore": "Learn More About the Project",
+    "viewData": "View Raw Data",
+    "readResearch": "Read the Research",
+    "buyBook": "Read 'Final Sale'",
+    "leoBackInstitute": "Leo Baeck Institute",
+    "supportPlaques": "Support Memorial Plaques"
+  },
+  "language": {
+    "switchTo": "Deutsch",
+    "current": "English"
+  }
+}

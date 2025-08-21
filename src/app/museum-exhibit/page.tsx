@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import AttractMode from './components/AttractMode';
 import SessionManager from './components/SessionManager';
 import ExhibitTimeline from './components/ExhibitTimeline';
-import { TranslationProvider } from '../../i18n/TranslationContext';
+// TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation';
 
 const TouchMap = dynamic(() => import('./components/TouchMapSimple'), { 
@@ -310,9 +310,5 @@ function MuseumExhibitContent() {
 }
 
 export default function MuseumExhibitPage() {
-  return (
-    <TranslationProvider>
-      <MuseumExhibitContent />
-    </TranslationProvider>
-  );
+  return <MuseumExhibitContent / />;
 }

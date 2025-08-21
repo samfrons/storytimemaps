@@ -1,0 +1,108 @@
+{
+  "businessStates": {
+    "active": "Aktiv",
+    "declining": "Rückläufig",
+    "closed": "Geschlossen"
+  },
+  "mainPage": {
+    "intro": {
+      "title": "Jüdische Geschäfte",
+      "subtitle": "Berlin 1900-1945",
+      "description1": "Erkunden Sie den vollständigen Datensatz von über 10.000 jüdischen Geschäften, die einst das Rückgrat des Berliner Wirtschaftslebens bildeten.",
+      "description2": "Navigieren Sie durch die Zeit, um ihren Aufstieg, ihre Kämpfe und die tragischen Auswirkungen der Nazi-Verfolgung zu erleben.",
+      "letsExplore": "Los geht's",
+      "credits": "Daten: Dr. Christoph Kreutzmüller | Visualisierung: StoryTimeMaps"
+    },
+    "info": {
+      "title": "Über dieses Projekt",
+      "historicalContext": "Historischer Kontext",
+      "historicalContextDesc": "Zwischen 1900 und 1945 betrieben jüdische Unternehmer Tausende von Geschäften in Berlin, von kleinen Läden bis zu großen Kaufhäusern. Diese Karte dokumentiert ihre Standorte, Typen und Schicksale während der Nazi-Ära.",
+      "theData": "Die Daten",
+      "theDataDesc": "Unsere Datenbank enthält über 8.000 verifizierte Geschäftsaufzeichnungen, zusammengestellt aus historischen Verzeichnissen, Registrierungsdokumenten und Zeugnissen von Überlebenden. Jeder Eintrag repräsentiert nicht nur ein Geschäft, sondern den Lebensunterhalt einer Familie und ihren Beitrag zur Berliner Wirtschaft.",
+      "timelineNavigation": "Zeitleisten-Navigation",
+      "timelineNavigationDesc": "Verwenden Sie die Zeitleisten-Steuerung, um zu sehen, wie sich die Geschäftslandschaft über 45 Jahre veränderte. Beobachten Sie, wie Geschäfte in den 1920er Jahren florierten, und erleben Sie dann die verheerenden Auswirkungen der Nazi-Politik ab 1933.",
+      "colorCoding": "Farbcodierung",
+      "activeBusinesses": "Aktive Geschäfte",
+      "businessesUnderPressure": "Geschäfte unter Druck",
+      "closedLiquidated": "Geschlossene/Liquidierte Geschäfte",
+      "researchTeam": "Forschungsteam",
+      "researchTeamDesc1": "Historische Forschung & Datenerfassung",
+      "researchTeamDesc2": "Humboldt-Universität zu Berlin",
+      "researchTeamDesc3": "Interaktive Visualisierung & Webentwicklung",
+      "researchTeamDesc4": "Geschichte durch Technologie zugänglich machen",
+      "academicCitation": "Für akademische Zitate verwenden Sie bitte: Kreutzmüller, C. (2024). \"Jüdische Geschäfte in Berlin 1900-1945: Ein digitales Archiv\""
+    },
+    "storyList": {
+      "searchPlaceholder": "Geschäfte suchen...",
+      "allCategories": "Alle Kategorien",
+      "activeBusinessLabel": "Aktives Geschäft",
+      "decliningBusinessLabel": "Rückläufig",
+      "closedBusinessLabel": "Geschlossen"
+    },
+    "map": {
+      "viewMore": "Mehr anzeigen →"
+    },
+    "storyDetails": {
+      "viewDetails": "DETAILS ANZEIGEN",
+      "activePeriod": "Aktive Periode",
+      "businessType": "Geschäftstyp",
+      "address": "Adresse",
+      "description": "Beschreibung",
+      "close": "Schließen",
+      "previous": "Zurück",
+      "next": "Weiter"
+    },
+    "businessTypes": {
+      "TAILORING": "SCHNEIDEREI",
+      "TAILOR_SHOP": "SCHNEIDEREI",
+      "DEPARTMENT STORE": "KAUFHAUS",
+      "DEPARTMENT_STORE": "KAUFHAUS",
+      "THEATER": "THEATER",
+      "THEATER_CAFÉ": "THEATER CAFÉ",
+      "CAFE": "CAFÉ",
+      "CAFÉ": "CAFÉ",
+      "RESTAURANT": "RESTAURANT",
+      "BAKERY": "BÄCKEREI",
+      "GROCERY": "LEBENSMITTEL",
+      "PHARMACY": "APOTHEKE",
+      "CLOTHING": "BEKLEIDUNG",
+      "JEWELRY": "SCHMUCK",
+      "FURNITURE": "MÖBEL",
+      "BOOKSTORE": "BUCHHANDLUNG",
+      "PHOTOGRAPHY": "FOTOGRAFIE",
+      "BANK": "BANK",
+      "HOTEL": "HOTEL",
+      "BUTCHER": "METZGEREI",
+      "INDUSTRY": "INDUSTRIE",
+      "SERVICES": "DIENSTLEISTUNGEN",
+      "TRADE": "HANDEL",
+      "RETAIL": "EINZELHANDEL",
+      "FINANCE": "FINANZ"
+    },
+    "businessDescriptions": {
+      "tailor_shop": "Ein kleines Schneidergeschäft im Besitz von {owner}. Das Geschäft war bekannt für hochwertige Handwerkskunst.",
+      "department_store": "Eines der prominenten jüdischen Kaufhäuser Berlins. Das {name} bot eine breite Produktpalette.",
+      "theater_cafe": "Ein beliebtes Café, das von Künstlern und Intellektuellen in der Nähe des Deutschen Theaters frequentiert wurde."
+    },
+    "overlay": {
+      "featuredStories": "Ausgewählte Geschichten",
+      "detailedNarratives": "detaillierte Erzählungen",
+      "personalAccounts": "Persönliche Berichte mit reichem historischem Kontext, Fotografien und detaillierten Geschichten",
+      "historicalDatabase": "Historische Datenbank",
+      "businessRecords": "Geschäftsaufzeichnungen",
+      "completeRegistry": "Vollständiges Register für genealogische Forschung und umfassende historische Analyse",
+      "featuredStoriesModeActive": "Modus Ausgewählte Geschichten Aktiv",
+      "viewingBusinesses": "Betrachten Sie {count} Geschäfte mit detaillierten persönlichen Erzählungen, Fotografien und reichem historischem Kontext.",
+      "intimateGlimpses": "Diese Geschichten bieten intime Einblicke in das Leben von Geschäftsinhabern und ihren Familien während dieser Zeit.",
+      "historicalDatabaseModeActive": "Modus Historische Datenbank Aktiv",
+      "viewingAllRecords": "Betrachten Sie alle {count} Geschäftsaufzeichnungen aus dem vollständigen historischen Register.",
+      "comprehensiveDataset": "Dieser umfassende Datensatz enthält grundlegende Informationen für genealogische Forschung und akademische Studien.",
+      "personalStories": "Persönliche Geschichten",
+      "historicalPhotos": "Historische Fotos",
+      "detailedContext": "Detaillierter Kontext",
+      "completeRegistryTag": "Vollständiges Register",
+      "researchData": "Forschungsdaten",
+      "genealogy": "Genealogie"
+    }
+  }
+}

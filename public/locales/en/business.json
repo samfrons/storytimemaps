@@ -1,0 +1,108 @@
+{
+  "businessStates": {
+    "active": "Active",
+    "declining": "Declining",
+    "closed": "Closed"
+  },
+  "mainPage": {
+    "intro": {
+      "title": "Jewish Businesses",
+      "subtitle": "Berlin 1900-1945",
+      "description1": "Explore the complete dataset of over 10,000 Jewish-owned businesses that once formed the backbone of Berlin's commercial life.",
+      "description2": "Navigate through time to witness their rise, struggles, and the tragic impact of Nazi persecution.",
+      "letsExplore": "Let's Explore",
+      "credits": "Data: Dr. Christoph Kreutzmüller | Visualization: StoryTimeMaps"
+    },
+    "info": {
+      "title": "About This Project",
+      "historicalContext": "Historical Context",
+      "historicalContextDesc": "Between 1900 and 1945, Jewish entrepreneurs operated thousands of businesses in Berlin, from small shops to major department stores. This map documents their locations, types, and fates during the Nazi era.",
+      "theData": "The Data",
+      "theDataDesc": "Our database contains over 10,000 verified business records, compiled from historical directories, registration documents, and survivor testimonies. Each entry represents not just a business, but a family's livelihood and contribution to Berlin's economy.",
+      "timelineNavigation": "Timeline Navigation",
+      "timelineNavigationDesc": "Use the timeline controls to see how the business landscape changed over 45 years. Watch businesses flourish in the 1920s, then witness the devastating impact of Nazi policies from 1933 onwards.",
+      "colorCoding": "Color Coding",
+      "activeBusinesses": "Active businesses",
+      "businessesUnderPressure": "Businesses under pressure",
+      "closedLiquidated": "Closed/Liquidated businesses",
+      "researchTeam": "Research Team",
+      "researchTeamDesc1": "Historical Research & Data Compilation",
+      "researchTeamDesc2": "Humboldt University Berlin",
+      "researchTeamDesc3": "Interactive Visualization & Web Development",
+      "researchTeamDesc4": "Making history accessible through technology",
+      "academicCitation": "For academic citations, please reference: Kreutzmüller, C. (2024). \"Jewish Businesses in Berlin 1900-1945: A Digital Archive\""
+    },
+    "storyList": {
+      "searchPlaceholder": "Search businesses...",
+      "allCategories": "All Categories",
+      "activeBusinessLabel": "Active Business",
+      "decliningBusinessLabel": "Declining",
+      "closedBusinessLabel": "Closed"
+    },
+    "map": {
+      "viewMore": "View more →"
+    },
+    "storyDetails": {
+      "viewDetails": "VIEW DETAILS",
+      "activePeriod": "Active Period",
+      "businessType": "Business Type",
+      "address": "Address",
+      "description": "Description",
+      "close": "Close",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "businessTypes": {
+      "TAILORING": "TAILORING",
+      "TAILOR_SHOP": "TAILOR SHOP",
+      "DEPARTMENT STORE": "DEPARTMENT STORE",
+      "DEPARTMENT_STORE": "DEPARTMENT STORE",
+      "THEATER": "THEATER",
+      "THEATER_CAFÉ": "THEATER CAFÉ",
+      "CAFE": "CAFE",
+      "CAFÉ": "CAFÉ",
+      "RESTAURANT": "RESTAURANT",
+      "BAKERY": "BAKERY",
+      "GROCERY": "GROCERY",
+      "PHARMACY": "PHARMACY",
+      "CLOTHING": "CLOTHING",
+      "JEWELRY": "JEWELRY",
+      "FURNITURE": "FURNITURE",
+      "BOOKSTORE": "BOOKSTORE",
+      "PHOTOGRAPHY": "PHOTOGRAPHY",
+      "BANK": "BANK",
+      "HOTEL": "HOTEL",
+      "BUTCHER": "BUTCHER",
+      "INDUSTRY": "INDUSTRY",
+      "SERVICES": "SERVICES",
+      "TRADE": "TRADE",
+      "RETAIL": "RETAIL",
+      "FINANCE": "FINANCE"
+    },
+    "businessDescriptions": {
+      "tailor_shop": "A small tailoring business owned by {owner}. The shop was known for quality craftsmanship.",
+      "department_store": "One of Berlin's prominent Jewish-owned department stores. The {name} offered a wide range of products.",
+      "theater_cafe": "A popular café frequented by artists and intellectuals near the Deutsches Theater."
+    },
+    "overlay": {
+      "featuredStories": "Featured Stories",
+      "detailedNarratives": "detailed narratives",
+      "personalAccounts": "Personal accounts with rich historical context, photographs, and detailed stories",
+      "historicalDatabase": "Historical Database",
+      "businessRecords": "business records",
+      "completeRegistry": "Complete registry for genealogical research and comprehensive historical analysis",
+      "featuredStoriesModeActive": "Featured Stories Mode Active",
+      "viewingBusinesses": "Viewing {count} businesses with detailed personal narratives, photographs, and rich historical context.",
+      "intimateGlimpses": "These stories provide intimate glimpses into the lives of business owners and their families during this period.",
+      "historicalDatabaseModeActive": "Historical Database Mode Active",
+      "viewingAllRecords": "Viewing all {count} business records from the complete historical registry.",
+      "comprehensiveDataset": "This comprehensive dataset includes basic information for genealogical research and academic study.",
+      "personalStories": "Personal Stories",
+      "historicalPhotos": "Historical Photos",
+      "detailedContext": "Detailed Context",
+      "completeRegistryTag": "Complete Registry",
+      "researchData": "Research Data",
+      "genealogy": "Genealogy"
+    }
+  }
+}

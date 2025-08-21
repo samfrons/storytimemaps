@@ -8,9 +8,10 @@ import StoryList from './components/StoryList';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import ModeToggle from './components/ModeToggle';
 import ContentPreview from './components/ContentPreview';
+import LanguageToggle from './components/LanguageToggle';
 import { useStoryMapLogicTest as useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogicTest';
 import { useIsMounted } from '../hooks/useIsMounted';
-import { TranslationProvider } from '../i18n/TranslationContext';
+// TranslationProvider now in root layout
 import { useTranslation } from '../i18n/useTranslation';
 
 const MapboxMap = dynamic(() => import('./components/MapboxMap'), { 
@@ -23,7 +24,7 @@ const MapboxMap = dynamic(() => import('./components/MapboxMap'), {
 });
 
 function MapPageContent() {
-  const { t, language, toggleLanguage } = useTranslation();
+  const { t, language, toggleLanguage, switchToLanguage } = useTranslation();
   const { theme, setTheme } = useTheme();
   const mounted = useIsMounted();
   const router = useRouter();
@@ -353,6 +354,7 @@ function MapPageContent() {
               i
             </button>
 
+
             {/* Bar Charts Button */}
             <a
               href="/barcharts"
@@ -384,30 +386,16 @@ function MapPageContent() {
               <button
                 onClick={() => {
                   if (language !== 'en') {
-                    toggleLanguage();
+                    switchToLanguage('en');
                     const params = new URLSearchParams(searchParams.toString());
                     params.set('lang', 'en');
                     const queryString = params.toString();
                     router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
                   }
                 }}
-                className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
-                style={{
-                  backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
-                  borderColor: 'var(--border)',
-                  color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
-                  cursor: 'pointer',
-                  transform: 'scale(1)',
-                  transition: 'transform 0.2s ease-in-out, background-color 0.2s',
-                  fontSize: '12px',
-                  fontFamily: 'Space Mono, monospace'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:scale-110 text-xs font-mono ${
+                  language === 'en' ? 'lang-btn-active' : 'lang-btn'
+                }`}
                 aria-label="Switch to English"
               >
                 EN
@@ -415,33 +403,37 @@ function MapPageContent() {
               <button
                 onClick={() => {
                   if (language !== 'de') {
-                    toggleLanguage();
+                    switchToLanguage('de');
                     const params = new URLSearchParams(searchParams.toString());
                     params.set('lang', 'de');
                     const queryString = params.toString();
                     router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
                   }
                 }}
-                className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
-                style={{
-                  backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
-                  borderColor: 'var(--border)',
-                  color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
-                  cursor: 'pointer',
-                  transform: 'scale(1)',
-                  transition: 'transform 0.2s ease-in-out, background-color 0.2s',
-                  fontSize: '12px',
-                  fontFamily: 'Space Mono, monospace'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:scale-110 text-xs font-mono ${
+                  language === 'de' ? 'lang-btn-active' : 'lang-btn'
+                }`}
                 aria-label="Switch to German"
               >
                 DE
+              </button>
+              <button
+                onClick={() => {
+                  if (language !== 'yi') {
+                    switchToLanguage('yi');
+                    const params = new URLSearchParams(searchParams.toString());
+                    params.set('lang', 'yi');
+                    const queryString = params.toString();
+                    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+                  }
+                }}
+                className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:scale-110 text-xs font-mono ${
+                  language === 'yi' ? 'lang-btn-active' : 'lang-btn'
+                }`}
+                aria-label="Switch to Yiddish"
+                title="ייִדיש (Yiddish)"
+              >
+                YI
               </button>
             </div>
 
@@ -653,7 +645,7 @@ function MapPageContent() {
           <button
             onClick={() => {
               if (language !== 'en') {
-                toggleLanguage();
+                switchToLanguage('en');
                 const params = new URLSearchParams(searchParams.toString());
                 params.set('lang', 'en');
                 const queryString = params.toString();
@@ -661,15 +653,9 @@ function MapPageContent() {
               }
               // Don't close mobile menu on language change
             }}
-            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
-            style={{
-              backgroundColor: language === 'en' ? 'var(--primary)' : 'var(--input-bg)',
-              borderColor: 'var(--border)',
-              color: language === 'en' ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              fontSize: '12px',
-              fontFamily: 'Space Mono, monospace'
-            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer text-xs font-mono ${
+              language === 'en' ? 'lang-btn-active' : 'lang-btn'
+            }`}
             aria-label="Switch to English"
           >
             EN
@@ -677,7 +663,7 @@ function MapPageContent() {
           <button
             onClick={() => {
               if (language !== 'de') {
-                toggleLanguage();
+                switchToLanguage('de');
                 const params = new URLSearchParams(searchParams.toString());
                 params.set('lang', 'de');
                 const queryString = params.toString();
@@ -685,18 +671,31 @@ function MapPageContent() {
               }
               // Don't close mobile menu on language change
             }}
-            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
-            style={{
-              backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
-              borderColor: 'var(--border)',
-              color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              fontSize: '12px',
-              fontFamily: 'Space Mono, monospace'
-            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer text-xs font-mono ${
+              language === 'de' ? 'lang-btn-active' : 'lang-btn'
+            }`}
             aria-label="Switch to German"
           >
             DE
+          </button>
+          <button
+            onClick={() => {
+              if (language !== 'yi') {
+                switchToLanguage('yi');
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('lang', 'yi');
+                const queryString = params.toString();
+                router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+              }
+              // Don't close mobile menu on language change
+            }}
+            className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer text-xs font-mono ${
+              language === 'yi' ? 'lang-btn-active' : 'lang-btn'
+            }`}
+            aria-label="Switch to Yiddish"
+            title="ייִדיש (Yiddish)"
+          >
+            YI
           </button>
         </div>
       )}
@@ -775,8 +774,10 @@ function MapPageContent() {
         {/* Close button */}
         <button
           onClick={handleLetsGo}
-          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors z-10 hover:opacity-80 hot-close-button"
+          className="absolute w-10 h-10 flex items-center justify-center border transition-colors z-10 hover:opacity-80 hot-close-button"
           style={{
+            top: 'max(2vh, 1rem)',
+            right: 'max(2vw, 1rem)',
             backgroundColor: 'var(--input-bg)',
             borderColor: 'var(--border)',
             color: 'var(--foreground)',
@@ -789,7 +790,11 @@ function MapPageContent() {
           </svg>
         </button>
         
-        <div className="relative h-full flex items-start md:items-center justify-center px-4 sm:px-6 md:px-8 py-8 md:py-0 overflow-y-auto" style={{ marginTop: '2rem' }}>
+        <div className="relative min-h-full flex items-center justify-center px-4 sm:px-6 md:px-8 overflow-y-auto" style={{ 
+          paddingTop: 'max(2vh, 1rem)', 
+          paddingBottom: 'max(2vh, 1rem)',
+          minHeight: '100vh'
+        }}>
           <div className="max-w-4xl mx-auto text-center relative z-10">
 
             <div className="relative space-y-8">
@@ -865,7 +870,10 @@ function MapPageContent() {
         </div>
         
         <div className="relative h-full overflow-y-auto">
-          <div className="p-8">
+          <div style={{ 
+            padding: 'max(2vh, 1rem) max(2vw, 1rem)', 
+            paddingTop: 'max(4vh, 3rem)' 
+          }}>
             {/* Close button */}
             <button
               onClick={() => {
@@ -875,8 +883,10 @@ function MapPageContent() {
                 const queryString = params.toString();
                 router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
               }}
-              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors hover:opacity-80"
+              className="absolute w-10 h-10 flex items-center justify-center border transition-colors hover:opacity-80"
               style={{
+                top: 'max(2vh, 1rem)',
+                right: 'max(2vw, 1rem)',
                 backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--border)',
                 color: 'var(--foreground)',
@@ -889,7 +899,7 @@ function MapPageContent() {
               </svg>
             </button>
 
-            <div className="space-y-8 pt-16 md:pt-0">
+            <div className="space-y-8">
               <div>
                 <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>{t('mainPage.info.title')}</h2>
                 <div className="w-20 h-1" style={{ backgroundColor: 'var(--primary)' }} />
@@ -1005,11 +1015,7 @@ function MapPageContent() {
 }
 
 function MapPage() {
-  return (
-    <TranslationProvider>
-      <MapPageContent />
-    </TranslationProvider>
-  );
+  return <MapPageContent />;
 }
 
 export default function HomePage() {

@@ -1,3 +1,5 @@
+import { TFunction } from 'react-i18next';
+
 interface Story {
   title?: string;
   description?: string | null;
@@ -60,7 +62,8 @@ export const inferBusinessCategory = (story: Story): string => {
 
 export const getTranslatedDescription = (
   story: Story,
-  language: string
+  language: string,
+  t?: TFunction
 ): string => {
   // For German translations, provide context-aware descriptions
   if (language === 'de') {
@@ -163,6 +166,71 @@ export const getTranslatedDescription = (
     }
     
     return `Ein jüdisches Geschäft in Berlin. ${title} war ein wichtiger Teil der lokalen Wirtschaft vor der Nazi-Verfolgung.`;
+  } else if (language === 'yi') {
+    // Yiddish translations with cultural context
+    const businessType = story.businessType?.toLowerCase() || story.category?.toLowerCase() || '';
+    const description = story.description?.toLowerCase() || '';
+    const title = story.title || '';
+    
+    // Tailor shop
+    if (description.includes('tailoring business') || businessType.includes('tailor') || businessType === 'tailoring') {
+      const owner = title.split(' - ')[0] || 'der mishpokhe';
+      if (description.includes('kristallnacht')) {
+        return `A kleyn shnayder gesheft in aygntum fun ${owner} un zayn mishpokhe. Dos gesheft iz geven bakant far fayne her-kleydung. Beeys der Kristalnakht in November 1938 hobn di fenster gebroksn un dos gesheft hot muzn zikh shlisn.`;
+      }
+      return `A kleyn shnayder gesheft in aygntum fun ${owner}. Dos gesheft iz geven bakant far kvalitet handverk.`;
+    }
+    
+    // Department store
+    if (description.includes('department store') || businessType.includes('department') || businessType.includes('store')) {
+      if (description.includes('forced to sell')) {
+        return `Eyns fun Berlins prominente yidishe varenhayzer. Di aygntimer hobn iber 15 yor geboyt a derfolgrayhe gesheft, eyder zey hobn geven getsvungen tsu farkoyf unter druk in 1935 in ramen fun sistematishe ekonomishe farfolgung.`;
+      }
+      return `Eyns fun Berlins prominente yidishe varenhayzer. ${title} hot ongegebn a brayte produktn-rime.`;
+    }
+    
+    // Theater Café
+    if (description.includes('artists and intellectuals') || businessType.includes('theater') || businessType.includes('cafe') || businessType.includes('café')) {
+      return 'A populer kafe bazukht fun kinstler un intelektualn leben dem Daytshn Teater.';
+    }
+    
+    if (businessType.includes('restaurant')) {
+      return `A yidish restoran in hartsn fun Berlin. ${story.title} iz geven bakant far traditsyonele kikhe.`;
+    }
+    
+    if (businessType.includes('bakery') || businessType.includes('bekeray')) {
+      return 'A traditsyonele yidishe bekeray, bakant far ire handverk-gebeks.';
+    }
+    
+    if (businessType.includes('pharmacy') || businessType.includes('apteyk')) {
+      return 'An apteyk in aygntum fun a yidishe mishpokhe, vos hot gedint der lokaler kehile.';
+    }
+    
+    if (businessType.includes('clothing') || businessType.includes('kleydung')) {
+      return 'A kleydung-gesheft vos hot farbundn moderne mode mit traditsyonele handverk.';
+    }
+    
+    if (businessType.includes('jewelry') || businessType.includes('tsirung')) {
+      return 'A tsirung-gesheft, bakant far fayn handverk un oysgetseykhnte dizayns.';
+    }
+    
+    if (businessType.includes('furniture') || businessType.includes('mebl')) {
+      return 'A mebl-gesheft vos hot ongegebn hoykh-kvalidike aynrikhtung-zakhn.';
+    }
+    
+    if (businessType.includes('bookstore') || businessType.includes('bikher-krom')) {
+      return 'A bikher-krom vos hot gedint vi a kulturel tsentrum fun der yidisher kehile.';
+    }
+    
+    // Default Yiddish description
+    const startYear = story.startDate ? new Date(story.startDate).getFullYear() : null;
+    const endYear = story.endDate ? new Date(story.endDate).getFullYear() : null;
+    
+    if (startYear && endYear) {
+      return `A yidish gesheft in Berlin, vos hot operirt fun ${startYear} biz ${endYear}. ${title} iz geven a teyl fun dem lebedikn yidishn geshefts-lebn fun der shtot.`;
+    }
+    
+    return `A yidish gesheft in Berlin. ${title} iz geven an vikhtiker teyl fun der lokaler ekonomye far der Nazi farfolgung.`;
   }
   
   // Return original English description
@@ -187,6 +255,24 @@ export const getTranslatedBusinessName = (
       .replace('Bookstore', 'Buchhandlung')
       .replace('Furniture', 'Möbel')
       .replace('Clothing', 'Bekleidung');
+  } else if (language === 'yi') {
+    // Yiddish business name translations
+    return title
+      .replace('Tailor Shop', 'Shnayder Krom')
+      .replace('Department Store', 'Varenhayz')
+      .replace('Brothers', 'Gebrider')
+      .replace('and Sons', 'un Zin')
+      .replace('& Sons', '& Zin')
+      .replace('Bakery', 'Bekeray')
+      .replace('Pharmacy', 'Apteyk')
+      .replace('Bookstore', 'Bikher-Krom')
+      .replace('Furniture', 'Mebl')
+      .replace('Clothing', 'Kleydung')
+      .replace('Café', 'Kafe')
+      .replace('Restaurant', 'Restoran')
+      .replace('Theater', 'Teater')
+      .replace('Hotel', 'Hotel')
+      .replace('Bank', 'Bank');
   }
   return title;
 };

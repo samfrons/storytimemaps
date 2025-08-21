@@ -1,0 +1,117 @@
+{
+  "hero": {
+    "title": "Jüdische Geschäfte in Berlin",
+    "subtitle": "Eine historische Zeitreise",
+    "period": "1900-1945"
+  },
+  "intro": {
+    "title": "Erinnerung durch Daten bewahren",
+    "mapTitle": "Interaktive Visualisierung",
+    "paragraph1": "Dieses Projekt baut auf der bahnbrechenden Forschung von Dr. Christoph Kreutzmüller auf, dokumentiert in 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' (2015). Seine jahrzehntelange Arbeit mit dem Leo Baeck Institut schuf ein beispielloses Archiv jüdischer Unternehmen in ganz Deutschland.",
+    "paragraph2": "Unsere interaktive Karte verwandelt diese wissenschaftliche Datenbank in eine zugängliche digitale Erfahrung und dokumentiert jüdische Geschäfte in Berlin von 1900 bis 1945. Jede Markierung repräsentiert ein Familienunternehmen - von Eckläden bis zu Kaufhäusern - das das wirtschaftliche Gefüge der Stadt bildete.",
+    "paragraph3": "Navigieren Sie durch die Zeit, um zu erkunden, wie diese Geschäfte florierten, kämpften und schließlich der Zwangsschließung gegenüberstanden. Durch die Kombination historischer Forschung mit moderner Visualisierung möchten wir diese wichtige Geschichte für neue Generationen zugänglich machen."
+  },
+  "preview": {
+    "title": "Ausgewählte Geschäfte",
+    "subtitle": "Entdecken Sie Geschichten aus unserer Sammlung"
+  },
+  "statistics": {
+    "title": "Die Sammlung",
+    "totalBusinesses": "Geschäfte gesamt",
+    "timeSpan": "Erfasste Jahre",
+    "categories": "Geschäftskategorien",
+    "peakYear": "Spitzenjahr",
+    "yearLabel": "Jahr"
+  },
+  "methodology": {
+    "title": "Forschung & Methodik",
+    "subtitle": "Wie wir dieses digitale Archiv aufgebaut haben",
+    "archiveWork": "Archivforschung",
+    "archiveDesc": "Über 10 Jahre akribische Forschung in städtischen Aufzeichnungen, Geschäftsverzeichnissen und Familienarchiven",
+    "dataProcessing": "Datenverarbeitung",
+    "dataDesc": "Systematische Digitalisierung und Verifizierung von Geschäftsunterlagen, Adressen und Betriebszeiträumen",
+    "visualization": "Visualisierungsdesign",
+    "visualizationDesc": "Sorgfältige Übersetzung historischer Daten in zugängliche, interaktive Erfahrungen"
+  },
+  "timeline": {
+    "title": "Historischer Kontext",
+    "subtitle": "Schlüsselmomente der Zerstörung des jüdischen Handels",
+    "boycott1933": "April 1933: Landesweiter Boykott jüdischer Geschäfte",
+    "laws1935": "1935: Nürnberger Gesetze beschränken jüdische Wirtschaftstätigkeit",
+    "aryanization1938": "1938: Systematische 'Arisierung' jüdischer Unternehmen",
+    "kristallnacht1938": "November 1938: Kristallnacht - weitreichende Zerstörung",
+    "final1941": "1941-1945: Endgültige Liquidation verbliebener Geschäfte"
+  },
+  "insights": {
+    "title": "Dateneinblicke",
+    "subtitle": "Was die Zahlen zeigen",
+    "peakPeriod": "Blütezeit",
+    "peakDesc": "Die meisten jüdischen Geschäfte operierten zwischen 1920-1933",
+    "geographic": "Geografische Verteilung",
+    "geographicDesc": "Konzentriert in Mitte, Charlottenburg und Geschäftsvierteln",
+    "decline": "Schneller Rückgang",
+    "declineDesc": "75% der Geschäfte schlossen zwischen 1933-1938",
+    "legacy": "Verlorenes Erbe",
+    "legacyDesc": "Tausende Familienunternehmen aus Berlins Wirtschaft gelöscht"
+  },
+  "navigation": {
+    "title": "Wie erkunden",
+    "subtitle": "Durch Zeit und Raum navigieren",
+    "timeSlider": "Zeitschieber",
+    "timeDesc": "Bewegen Sie sich durch Jahrzehnte um zu sehen wie Geschäfte öffnen und schließen",
+    "markers": "Geschäftsmarkierungen",
+    "markersDesc": "Klicken Sie Markierungen für detaillierte Geschichten und Fotografien",
+    "search": "Suchen & Filtern",
+    "searchDesc": "Finden Sie spezifische Geschäfte, Straßen oder Geschäftstypen",
+    "stories": "Ausgewählte Geschichten",
+    "storiesDesc": "Lesen Sie tiefgehende Profile ausgewählter Geschäfte und Familien"
+  },
+  "research": {
+    "title": "Forschungsgrundlage",
+    "subtitle": "Auf den Schultern von Giganten stehend",
+    "kreutzmuller": {
+      "title": "Dr. Christoph Kreutzmüllers Pionierarbeit",
+      "description": "Dieses Projekt baut direkt auf Dr. Kreutzmüllers bahnbrechender Studie von 2015 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' auf. Sein Team verbrachte über ein Jahrzehnt damit, die systematische Zerstörung jüdischer Unternehmen in ganz Deutschland akribisch zu dokumentieren.",
+      "methodology": "In Zusammenarbeit mit dem Leo Baeck Institut analysierten Dr. Kreutzmüller und seine Forscher Tausende von Archivdokumenten, städtischen Aufzeichnungen, Geschäftsverzeichnissen und Überlebendenberichten, um eine beispiellose Datenbank des jüdischen Handelslebens vor und während der NS-Zeit zu erstellen."
+    },
+    "database": {
+      "title": "Die Leo Baeck Institut Datenbank",
+      "description": "Die umfassende Datenbank im Leo Baeck Institut enthält detaillierte Aufzeichnungen von Tausenden jüdischer Unternehmen, einschließlich Registrierungsdokumenten, 'Arisierungs'-Aufzeichnungen, Zwangsverkaufsdokumentationen und persönlichen Zeugnissen von Geschäftsinhabern und ihren Familien.",
+      "scope": "Diese unschätzbare wissenschaftliche Ressource dokumentiert nicht nur die Unternehmen selbst, sondern die menschlichen Geschichten dahinter - vertriebene Familien, zerstörte Existenzen und für immer veränderte Gemeinschaften."
+    },
+    "transformation": {
+      "title": "Vom Archiv zur Zugänglichkeit",
+      "description": "StoryTimeMaps verwandelt diese wissenschaftliche Datenbank in eine interaktive digitale Erfahrung und macht Dr. Kreutzmüllers Forschung für Studenten, Pädagogen und die Öffentlichkeit zugänglich, während historische Genauigkeit und akademische Strenge bewahrt werden."
+    }
+  },
+  "future": {
+    "title": "Zukunftsinitiativen",
+    "subtitle": "Digitale Erinnerung in den physischen Raum bringen",
+    "plaques": {
+      "title": "Memorial-Plakett-Initiative",
+      "description": "Inspiriert vom Stolpersteine-Projekt stellen wir uns vor, Gedenkplaketten an den ursprünglichen Standorten dokumentierter jüdischer Geschäfte in ganz Berlin zu installieren.",
+      "vision": "Diese Plaketten würden als permanente Erinnerung an das lebendige jüdische Handelsleben dienen, das einst in diesen Nachbarschaften blühte, und digitale Dokumentation mit physischem Gedenken verbinden."
+    },
+    "community": {
+      "title": "Gemeinschaftsengagement",
+      "description": "Wir arbeiten mit lokalen Gemeinschaften, Schulen und Berliner jüdischen Organisationen zusammen, um Bildungsprogramme zu entwickeln, die diese historischen Daten mit zeitgenössischen Diskussionen über Erinnerung, Handel und Gemeinschaft verbinden."
+    },
+    "expansion": {
+      "title": "Geografische Erweiterung",
+      "description": "Zukünftige Phasen werden sich über Berlin hinaus erstrecken, um jüdische Unternehmen in anderen deutschen Städten zu dokumentieren und ein umfassendes nationales Bild wirtschaftlicher Verfolgung und Verluste zu schaffen."
+    }
+  },
+  "cta": {
+    "exploreMap": "Interaktive Karte erkunden",
+    "learnMore": "Mehr über das Projekt erfahren",
+    "viewData": "Rohdaten ansehen",
+    "readResearch": "Forschung lesen",
+    "buyBook": "'Final Sale' lesen",
+    "leoBackInstitute": "Leo Baeck Institut",
+    "supportPlaques": "Gedenkplaketten unterstützen"
+  },
+  "language": {
+    "switchTo": "English",
+    "current": "Deutsch"
+  }
+}

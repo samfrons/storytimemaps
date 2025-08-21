@@ -1,0 +1,1329 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "Frankfurt am Main Jewish Businesses 1935",
+    "total_features": 57,
+    "geocoded": 49,
+    "fallback": 8,
+    "failed": 0,
+    "extraction_date": "2025-08-20T19:56:37.180955",
+    "center": [
+      8.6821,
+      50.1109
+    ],
+    "zoom": 12
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6753724,
+          50.1238428
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "name": "Albersheim, Leopold",
+        "owner": "Albersheim, Leopold",
+        "address": "Eschersheimer Landstr. 17, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Herrenschneider",
+        "business_type": "Herrenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6608742,
+          50.114063
+        ]
+      },
+      "properties": {
+        "id": 2,
+        "name": "Bachrach, Oscar",
+        "owner": "Bachrach, Oscar",
+        "address": "Westendstr. 47, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Damenschneider",
+        "business_type": "Damenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6850506,
+          50.1155009
+        ]
+      },
+      "properties": {
+        "id": 3,
+        "name": "Bacharach, Theodor",
+        "owner": "Bacharach, Theodor",
+        "address": "Schäfergasse 12, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Herrenschneider",
+        "business_type": "Herrenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6839862,
+          50.1122014
+        ]
+      },
+      "properties": {
+        "id": 4,
+        "name": "Baum, Emil",
+        "owner": "Baum, Emil",
+        "address": "Berlinerstr. 5, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Herrenschneider",
+        "business_type": "Herrenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6713954,
+          50.1080296
+        ]
+      },
+      "properties": {
+        "id": 5,
+        "name": "Blumenthal, Sally",
+        "owner": "Blumenthal, Sally",
+        "address": "Münchenerstr. 9, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Damenschneider",
+        "business_type": "Damenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6873392,
+          50.110136
+        ]
+      },
+      "properties": {
+        "id": 6,
+        "name": "Braun, Leopold",
+        "owner": "Braun, Leopold",
+        "address": "Fahrgasse 121, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Herrenschneider",
+        "business_type": "Herrenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6873392,
+          50.110136
+        ]
+      },
+      "properties": {
+        "id": 7,
+        "name": "Breitenstein, A.",
+        "owner": "Breitenstein, A.",
+        "address": "Fahrgasse 124, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Herrenschneider",
+        "business_type": "Herrenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6706445,
+          50.1215038
+        ]
+      },
+      "properties": {
+        "id": 8,
+        "name": "Cahn, Joh.",
+        "owner": "Cahn, Joh.",
+        "address": "Grüneburgweg 44, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Schneidermeister",
+        "business_type": "Schneidermeister",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6968294,
+          50.111861
+        ]
+      },
+      "properties": {
+        "id": 9,
+        "name": "Cohn, Adolf",
+        "owner": "Cohn, Adolf",
+        "address": "Uhlandstr. 44, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Herrenschneider",
+        "business_type": "Herrenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6664733,
+          50.1173267
+        ]
+      },
+      "properties": {
+        "id": 10,
+        "name": "Cohn, Gust",
+        "owner": "Cohn, Gust",
+        "address": "Bockenheimer Landstr. 24, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Damenschneider",
+        "business_type": "Damenschneider",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6852624,
+          50.114361
+        ]
+      },
+      "properties": {
+        "id": 11,
+        "name": "Gustav & Co.",
+        "owner": "Gustav & Co.",
+        "address": "Zeil 71, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "BEKLEIDUNG",
+        "subcategory": "Konfektionsgeschäft",
+        "business_type": "Konfektionsgeschäft",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.685290068324532,
+          50.10962453991439
+        ]
+      },
+      "properties": {
+        "id": 12,
+        "name": "Dessauer, Ernst",
+        "owner": "Dessauer, Ernst",
+        "address": "Ffm.-Ginnheim, Ginsterweg 112",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.7021446,
+          50.1235102
+        ]
+      },
+      "properties": {
+        "id": 13,
+        "name": "Deutschkron, M.",
+        "owner": "Deutschkron, M.",
+        "address": "Bergerstraße 113",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.7025145,
+          50.1249072
+        ]
+      },
+      "properties": {
+        "id": 14,
+        "name": "Deutsch, D.",
+        "owner": "Deutsch, D.",
+        "address": "Heidestr. 68",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.704234,
+          50.1241799
+        ]
+      },
+      "properties": {
+        "id": 15,
+        "name": "Edinger, Wilhelm",
+        "owner": "Edinger, Wilhelm",
+        "address": "Bergerstraße 152",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6897099,
+          50.1035035
+        ]
+      },
+      "properties": {
+        "id": 16,
+        "name": "Epstein, L.",
+        "owner": "Epstein, L.",
+        "address": "Schifferstraße 5",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.7014357,
+          50.1121501
+        ]
+      },
+      "properties": {
+        "id": 17,
+        "name": "Flörsheimer, Albert",
+        "owner": "Flörsheimer, Albert",
+        "address": "Ostendstr. 63",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6873392,
+          50.110136
+        ]
+      },
+      "properties": {
+        "id": 18,
+        "name": "Frankfurter Drageriehalle",
+        "owner": "Frankfurter Drageriehalle",
+        "address": "Fahrgasse 121",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Drogerie",
+        "business_type": "Drogerie",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6759981,
+          50.1220355
+        ]
+      },
+      "properties": {
+        "id": 19,
+        "name": "Friedmann, Max",
+        "owner": "Friedmann, Max",
+        "address": "Eschersheimer Landstr. 56",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6565139,
+          50.1155969
+        ]
+      },
+      "properties": {
+        "id": 20,
+        "name": "Froehlich, Carl",
+        "owner": "Froehlich, Carl",
+        "address": "Westendstr. 84",
+        "district": "Frankfurt",
+        "category": "LEBENSMITTEL",
+        "subcategory": "Lebensmittel",
+        "business_type": "Lebensmittel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6936446,
+          50.1171136
+        ]
+      },
+      "properties": {
+        "id": 21,
+        "name": "Adler, Alfred",
+        "owner": "Adler, Alfred",
+        "address": "Palmstr. 2, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6787558,
+          50.1147654
+        ]
+      },
+      "properties": {
+        "id": 22,
+        "name": "Bing, Hermann",
+        "owner": "Bing, Hermann",
+        "address": "Schillerstr. 12, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6472875,
+          50.1255486
+        ]
+      },
+      "properties": {
+        "id": 23,
+        "name": "Blum, Adolf",
+        "owner": "Blum, Adolf",
+        "address": "Franz-Rücker-Allee 10, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6965417,
+          50.1121651
+        ]
+      },
+      "properties": {
+        "id": 24,
+        "name": "Ehrmann, Max",
+        "owner": "Ehrmann, Max",
+        "address": "Uhlandstr. 25, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.675934,
+          50.1113694
+        ]
+      },
+      "properties": {
+        "id": 25,
+        "name": "Fleischmann, H.",
+        "owner": "Fleischmann, H.",
+        "address": "Kaiserstr. 8, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6801181,
+          50.1007559
+        ]
+      },
+      "properties": {
+        "id": 26,
+        "name": "Goldschmidt, Ernst",
+        "owner": "Goldschmidt, Ernst",
+        "address": "Oppenheimer Landstr. 46, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.683429690124186,
+          50.11507070206344
+        ]
+      },
+      "properties": {
+        "id": 27,
+        "name": "Gutenstein, Franz",
+        "owner": "Gutenstein, Franz",
+        "address": "Hans-Haus-Str. 9, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6687923,
+          50.0993316
+        ]
+      },
+      "properties": {
+        "id": 28,
+        "name": "Koppelmann, Robert",
+        "owner": "Koppelmann, Robert",
+        "address": "Gartenstr. 26, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "VERSICHERUNGEN",
+        "subcategory": "Versicherungsmakler und Agenten",
+        "business_type": "Versicherungsmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6783622,
+          50.1146223
+        ]
+      },
+      "properties": {
+        "id": 29,
+        "name": "Adler, Albert",
+        "owner": "Adler, Albert",
+        "address": "Schillerstr. 9, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6787558,
+          50.1147654
+        ]
+      },
+      "properties": {
+        "id": 30,
+        "name": "Bing, Hermann",
+        "owner": "Bing, Hermann",
+        "address": "Schillerstr. 12, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6472875,
+          50.1255486
+        ]
+      },
+      "properties": {
+        "id": 31,
+        "name": "Blum, Adolf",
+        "owner": "Blum, Adolf",
+        "address": "Franz-Rücker-Allee 10, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6786036,
+          50.115864
+        ]
+      },
+      "properties": {
+        "id": 32,
+        "name": "Ehrlich, Siegfried",
+        "owner": "Ehrlich, Siegfried",
+        "address": "Schillerstr. 17, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6693044,
+          50.1082558
+        ]
+      },
+      "properties": {
+        "id": 33,
+        "name": "Goldschmidt, Ernst",
+        "owner": "Goldschmidt, Ernst",
+        "address": "Kaiserstr. 53, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6965417,
+          50.1121651
+        ]
+      },
+      "properties": {
+        "id": 34,
+        "name": "Gutmann, Eugen",
+        "owner": "Gutmann, Eugen",
+        "address": "Uhlandstr. 29, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.681677029317534,
+          50.10603787778862
+        ]
+      },
+      "properties": {
+        "id": 35,
+        "name": "Hirsch, Karl",
+        "owner": "Hirsch, Karl",
+        "address": "Rabenstr. 2, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6860875,
+          50.1155081
+        ]
+      },
+      "properties": {
+        "id": 36,
+        "name": "Hirschmann, W. & J.",
+        "owner": "Hirschmann, W. & J.",
+        "address": "Gr. Friedberger Str. 19, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Börsenmakler",
+        "business_type": "Börsenmakler",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.678882777322718,
+          50.10850795249668
+        ]
+      },
+      "properties": {
+        "id": 37,
+        "name": "Bayer & Co.",
+        "owner": "Bayer & Co.",
+        "address": "Habsburger Allee 15, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Chemikalien",
+        "business_type": "Chemikalien",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.767312,
+          50.1345505
+        ]
+      },
+      "properties": {
+        "id": 38,
+        "name": "Cassella Farbwerke",
+        "owner": "Cassella Farbwerke",
+        "address": "Mainkur, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Farben und Lacke",
+        "business_type": "Farben und Lacke",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.5379968,
+          50.0963086
+        ]
+      },
+      "properties": {
+        "id": 39,
+        "name": "Hoechst AG",
+        "owner": "Hoechst AG",
+        "address": "Brüningstraße 50, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Chemikalien und Farben",
+        "business_type": "Chemikalien und Farben",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.709276,
+          50.1247517
+        ]
+      },
+      "properties": {
+        "id": 40,
+        "name": "Leopold Cassella & Co.",
+        "owner": "Leopold Cassella & Co.",
+        "address": "Fechenheimer Str. 6, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Chemikalien",
+        "business_type": "Chemikalien",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.724093,
+          50.1151694
+        ]
+      },
+      "properties": {
+        "id": 41,
+        "name": "Griesheim-Elektron",
+        "owner": "Griesheim-Elektron",
+        "address": "Hanauer Landstr. 200, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Chemikalien",
+        "business_type": "Chemikalien",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6767648,
+          50.1159593
+        ]
+      },
+      "properties": {
+        "id": 42,
+        "name": "Naumann, Sa.",
+        "owner": "Naumann, Sa.",
+        "address": "Börsenstr. 27, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Drogen und Chemikalien",
+        "business_type": "Drogen und Chemikalien",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6994958,
+          50.1123084
+        ]
+      },
+      "properties": {
+        "id": 43,
+        "name": "Oppenheimer, Hugo",
+        "owner": "Oppenheimer, Hugo",
+        "address": "Rückertstr. 3, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Farben und Lacke",
+        "business_type": "Farben und Lacke",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6623235,
+          50.1183832
+        ]
+      },
+      "properties": {
+        "id": 44,
+        "name": "Rawe, Jakob",
+        "owner": "Rawe, Jakob",
+        "address": "Bockenheimer Str. 28, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "CHEMIKALIEN UND DROGEN",
+        "subcategory": "Chemikalien",
+        "business_type": "Chemikalien",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6714443,
+          50.1241544
+        ]
+      },
+      "properties": {
+        "id": 45,
+        "name": "Eichenberg, Walter",
+        "owner": "Eichenberg, Walter",
+        "address": "Leerbachstr. 115, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6672456,
+          50.1171776
+        ]
+      },
+      "properties": {
+        "id": 46,
+        "name": "Feldberg & Gessel",
+        "owner": "Feldberg & Gessel",
+        "address": "Bockenheimer Landstr. 22, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6661179,
+          50.1195683
+        ]
+      },
+      "properties": {
+        "id": 47,
+        "name": "Fuld, A.",
+        "owner": "Fuld, A.",
+        "address": "Kronberger Str. 29, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.7063736,
+          50.145862
+        ]
+      },
+      "properties": {
+        "id": 48,
+        "name": "Goldschmidt, S.",
+        "owner": "Goldschmidt, S.",
+        "address": "Friedberger Landstr. 38, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.68603355332299,
+          50.10606240470188
+        ]
+      },
+      "properties": {
+        "id": 49,
+        "name": "Gluckmann",
+        "owner": "Gluckmann",
+        "address": "Wallgraben 9, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6889541,
+          50.1135199
+        ]
+      },
+      "properties": {
+        "id": 50,
+        "name": "Heimann",
+        "owner": "Heimann",
+        "address": "Allerheiligenstr. 23, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.685329092800997,
+          50.106973182023545
+        ]
+      },
+      "properties": {
+        "id": 51,
+        "name": "Kahn, Julius",
+        "owner": "Kahn, Julius",
+        "address": "Büserberg 26, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6998176,
+          50.1148429
+        ]
+      },
+      "properties": {
+        "id": 52,
+        "name": "Kaufmann, Sally",
+        "owner": "Kaufmann, Sally",
+        "address": "Am Tiergarten 6, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.680862474286153,
+          50.108983661723165
+        ]
+      },
+      "properties": {
+        "id": 53,
+        "name": "Lab, D.",
+        "owner": "Lab, D.",
+        "address": "Peterstr. 8, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.5462901,
+          50.1040062
+        ]
+      },
+      "properties": {
+        "id": 54,
+        "name": "Levy, Albert",
+        "owner": "Levy, Albert",
+        "address": "Königsteiner Str. 32, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6860127,
+          50.1228641
+        ]
+      },
+      "properties": {
+        "id": 55,
+        "name": "Löwenthal, K.",
+        "owner": "Löwenthal, K.",
+        "address": "Hermannstr. 1, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.68287351152058,
+          50.115257506875054
+        ]
+      },
+      "properties": {
+        "id": 56,
+        "name": "Mayer, Otto",
+        "owner": "Mayer, Otto",
+        "address": "Seefeldstr. 17, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.6962354,
+          50.1210459
+        ]
+      },
+      "properties": {
+        "id": 57,
+        "name": "Meyer, Simon",
+        "owner": "Meyer, Simon",
+        "address": "Luisenstr. 12, Frankfurt am Main",
+        "district": "Frankfurt",
+        "category": "HANDEL",
+        "subcategory": "Einzelhandel",
+        "business_type": "Einzelhandel",
+        "founded_date": "1920-01-01",
+        "closing_date": "1938-11-09",
+        "source": "Frankfurt Jewish Business Directory 1935"
+      }
+    }
+  ]
+}

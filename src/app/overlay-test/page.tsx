@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import StoryList from '../components/StoryList';
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../../hooks/useStoryMapLogic';
-import { TranslationProvider } from '../../i18n/TranslationContext';
+// TranslationProvider now in root layout
 
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), { 
   ssr: false,
@@ -312,8 +312,10 @@ function OverlayTestPageContent() {
         {/* Close button */}
         <button
           onClick={handleLetsGo}
-          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors z-10 hover:opacity-80"
+          className="absolute w-10 h-10 flex items-center justify-center border transition-colors z-10 hover:opacity-80"
           style={{
+            top: 'max(2vh, 1rem)',
+            right: 'max(2vw, 1rem)',
             backgroundColor: 'var(--input-bg, rgba(var(--muted-rgb), 0.5))',
             borderColor: 'var(--border)',
             color: 'var(--foreground)'
@@ -325,7 +327,11 @@ function OverlayTestPageContent() {
           </svg>
         </button>
         
-        <div className="relative h-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20 md:py-0" style={{ marginTop: '4rem' }}>
+        <div className="relative min-h-full flex items-center justify-center px-4 sm:px-6 md:px-8" style={{ 
+          paddingTop: 'max(2vh, 1rem)', 
+          paddingBottom: 'max(2vh, 1rem)',
+          minHeight: '100vh'
+        }}>
           <div className="max-w-4xl mx-auto text-center relative z-10">
 
             <div className="relative space-y-8">
@@ -399,12 +405,17 @@ function OverlayTestPageContent() {
         </div>
         
         <div className="relative h-full overflow-y-auto">
-          <div className="p-8">
+          <div style={{ 
+            padding: 'max(2vh, 1rem) max(2vw, 1rem)', 
+            paddingTop: 'max(4vh, 3rem)' 
+          }}>
             {/* Close button */}
             <button
               onClick={() => setShowInfo(false)}
-              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center border transition-colors hover:opacity-80"
+              className="absolute w-10 h-10 flex items-center justify-center border transition-colors hover:opacity-80"
               style={{
+                top: 'max(2vh, 1rem)',
+                right: 'max(2vw, 1rem)',
                 backgroundColor: 'var(--input-bg, rgba(var(--muted-rgb), 0.5))',
                 borderColor: 'var(--border)',
                 color: 'var(--foreground)'
@@ -416,7 +427,7 @@ function OverlayTestPageContent() {
               </svg>
             </button>
 
-            <div className="space-y-8 pt-16 md:pt-0">
+            <div className="space-y-8">
               <div>
                 <h2 className="text-3xl font-light mb-2 font-['Space_Mono'] font-mono" style={{ color: 'var(--foreground)' }}>About This Project</h2>
                 <div className="w-20 h-1" style={{ backgroundColor: 'var(--primary)' }} />
@@ -539,9 +550,5 @@ function OverlayTestPageContent() {
 }
 
 export default function OverlayTestPage() {
-  return (
-    <TranslationProvider>
-      <OverlayTestPageContent />
-    </TranslationProvider>
-  );
+  return <OverlayTestPageContent />;
 }

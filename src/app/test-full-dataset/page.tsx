@@ -10,7 +10,7 @@ import ModeToggle from '../components/ModeToggle';
 import ContentPreview from '../components/ContentPreview';
 import { useStoryMapLogicTest as useStoryMapLogic, berlinCoordinates, defaultZoom } from '../../hooks/useStoryMapLogicTest';
 import { useIsMounted } from '../../hooks/useIsMounted';
-import { TranslationProvider } from '../../i18n/TranslationContext';
+// TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation';
 
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), { 
@@ -902,11 +902,7 @@ function TestFullDatasetPageContent() {
 }
 
 function TestFullDatasetPage() {
-  return (
-    <TranslationProvider>
-      <TestFullDatasetPageContent />
-    </TranslationProvider>
-  );
+  return <TestFullDatasetPageContent />;
 }
 
 export default function TestFullDatasetPageWrapper() {

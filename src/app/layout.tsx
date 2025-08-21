@@ -3,6 +3,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import { I18nProvider } from '../i18n/I18nProvider'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -146,17 +147,20 @@ export default function RootLayout({
         `}</style>
       </head>
       <body className="font-sans">
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="moody"
-          themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival']}
-          enableSystem={false}
-          enableColorScheme={true}
-          disableTransitionOnChange={false}
-          storageKey="storymap-theme"
-        >
-          {children}
-        </ThemeProvider>
+        <I18nProvider>
+          <ThemeProvider
+            attribute="data-theme"
+            defaultTheme="moody"
+            themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival']}
+            enableSystem={false}
+            enableColorScheme={true}
+            disableTransitionOnChange={true}
+            storageKey="storymap-theme"
+            forcedTheme={undefined}
+          >
+            {children}
+          </ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   )

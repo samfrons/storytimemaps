@@ -1,0 +1,58 @@
+id,name,owner,address,district,category,subcategory,business_type
+1,"Albersheim, Leopold","Albersheim, Leopold","Eschersheimer Landstr. 17, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Herrenschneider,Herrenschneider
+2,"Bachrach, Oscar","Bachrach, Oscar","Westendstr. 47, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Damenschneider,Damenschneider
+3,"Bacharach, Theodor","Bacharach, Theodor","Schäfergasse 12, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Herrenschneider,Herrenschneider
+4,"Baum, Emil","Baum, Emil","Berlinerstr. 5, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Herrenschneider,Herrenschneider
+5,"Blumenthal, Sally","Blumenthal, Sally","Münchenerstr. 9, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Damenschneider,Damenschneider
+6,"Braun, Leopold","Braun, Leopold","Fahrgasse 121, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Herrenschneider,Herrenschneider
+7,"Breitenstein, A.","Breitenstein, A.","Fahrgasse 124, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Herrenschneider,Herrenschneider
+8,"Cahn, Joh.","Cahn, Joh.","Grüneburgweg 44, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Schneidermeister,Schneidermeister
+9,"Cohn, Adolf","Cohn, Adolf","Uhlandstr. 44, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Herrenschneider,Herrenschneider
+10,"Cohn, Gust","Cohn, Gust","Bockenheimer Landstr. 24, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Damenschneider,Damenschneider
+11,Gustav & Co.,Gustav & Co.,"Zeil 71, Frankfurt am Main",Frankfurt,BEKLEIDUNG,Konfektionsgeschäft,Konfektionsgeschäft
+12,"Dessauer, Ernst","Dessauer, Ernst","Ffm.-Ginnheim, Ginsterweg 112",Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+13,"Deutschkron, M.","Deutschkron, M.",Bergerstraße 113,Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+14,"Deutsch, D.","Deutsch, D.",Heidestr. 68,Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+15,"Edinger, Wilhelm","Edinger, Wilhelm",Bergerstraße 152,Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+16,"Epstein, L.","Epstein, L.",Schifferstraße 5,Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+17,"Flörsheimer, Albert","Flörsheimer, Albert",Ostendstr. 63,Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+18,Frankfurter Drageriehalle,Frankfurter Drageriehalle,Fahrgasse 121,Frankfurt,LEBENSMITTEL,Drogerie,Drogerie
+19,"Friedmann, Max","Friedmann, Max",Eschersheimer Landstr. 56,Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+20,"Froehlich, Carl","Froehlich, Carl",Westendstr. 84,Frankfurt,LEBENSMITTEL,Lebensmittel,Lebensmittel
+21,"Adler, Alfred","Adler, Alfred","Palmstr. 2, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+22,"Bing, Hermann","Bing, Hermann","Schillerstr. 12, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+23,"Blum, Adolf","Blum, Adolf","Franz-Rücker-Allee 10, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+24,"Ehrmann, Max","Ehrmann, Max","Uhlandstr. 25, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+25,"Fleischmann, H.","Fleischmann, H.","Kaiserstr. 8, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+26,"Goldschmidt, Ernst","Goldschmidt, Ernst","Oppenheimer Landstr. 46, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+27,"Gutenstein, Franz","Gutenstein, Franz","Hans-Haus-Str. 9, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+28,"Koppelmann, Robert","Koppelmann, Robert","Gartenstr. 26, Frankfurt am Main",Frankfurt,VERSICHERUNGEN,Versicherungsmakler und Agenten,Versicherungsmakler
+29,"Adler, Albert","Adler, Albert","Schillerstr. 9, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+30,"Bing, Hermann","Bing, Hermann","Schillerstr. 12, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+31,"Blum, Adolf","Blum, Adolf","Franz-Rücker-Allee 10, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+32,"Ehrlich, Siegfried","Ehrlich, Siegfried","Schillerstr. 17, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+33,"Goldschmidt, Ernst","Goldschmidt, Ernst","Kaiserstr. 53, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+34,"Gutmann, Eugen","Gutmann, Eugen","Uhlandstr. 29, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+35,"Hirsch, Karl","Hirsch, Karl","Rabenstr. 2, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+36,"Hirschmann, W. & J.","Hirschmann, W. & J.","Gr. Friedberger Str. 19, Frankfurt am Main",Frankfurt,HANDEL,Börsenmakler,Börsenmakler
+37,Bayer & Co.,Bayer & Co.,"Habsburger Allee 15, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Chemikalien,Chemikalien
+38,Cassella Farbwerke,Cassella Farbwerke,"Mainkur, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Farben und Lacke,Farben und Lacke
+39,Hoechst AG,Hoechst AG,"Brüningstraße 50, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Chemikalien und Farben,Chemikalien und Farben
+40,Leopold Cassella & Co.,Leopold Cassella & Co.,"Fechenheimer Str. 6, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Chemikalien,Chemikalien
+41,Griesheim-Elektron,Griesheim-Elektron,"Hanauer Landstr. 200, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Chemikalien,Chemikalien
+42,"Naumann, Sa.","Naumann, Sa.","Börsenstr. 27, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Drogen und Chemikalien,Drogen und Chemikalien
+43,"Oppenheimer, Hugo","Oppenheimer, Hugo","Rückertstr. 3, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Farben und Lacke,Farben und Lacke
+44,"Rawe, Jakob","Rawe, Jakob","Bockenheimer Str. 28, Frankfurt am Main",Frankfurt,CHEMIKALIEN UND DROGEN,Chemikalien,Chemikalien
+45,"Eichenberg, Walter","Eichenberg, Walter","Leerbachstr. 115, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+46,Feldberg & Gessel,Feldberg & Gessel,"Bockenheimer Landstr. 22, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+47,"Fuld, A.","Fuld, A.","Kronberger Str. 29, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+48,"Goldschmidt, S.","Goldschmidt, S.","Friedberger Landstr. 38, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+49,Gluckmann,Gluckmann,"Wallgraben 9, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+50,Heimann,Heimann,"Allerheiligenstr. 23, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+51,"Kahn, Julius","Kahn, Julius","Büserberg 26, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+52,"Kaufmann, Sally","Kaufmann, Sally","Am Tiergarten 6, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+53,"Lab, D.","Lab, D.","Peterstr. 8, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+54,"Levy, Albert","Levy, Albert","Königsteiner Str. 32, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+55,"Löwenthal, K.","Löwenthal, K.","Hermannstr. 1, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+56,"Mayer, Otto","Mayer, Otto","Seefeldstr. 17, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel
+57,"Meyer, Simon","Meyer, Simon","Luisenstr. 12, Frankfurt am Main",Frankfurt,HANDEL,Einzelhandel,Einzelhandel

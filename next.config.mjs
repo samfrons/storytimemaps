@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // App Router doesn't use i18n config - we handle it client-side
   transpilePackages: ['mapbox-gl', 'react-map-gl'],
   
   images: {

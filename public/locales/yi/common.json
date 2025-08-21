@@ -1,0 +1,122 @@
+{
+  "hero": {
+    "title": "Yidishe Gesheftn in Berlin",
+    "subtitle": "A Historishe Rayze Durkh Tsayt",
+    "period": "1900-1945"
+  },
+  "intro": {
+    "title": "Bahaltn Zikorn Durkh Datn",
+    "mapTitle": "Interaktive Vizualizatsye",
+    "paragraph1": "Dos proyekt boyt zikh oyf Dr. Christoph Kreutzmüller's bahnbrekhndike forshung dokumentirt in 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' (2015). Zayn tsen-yorike arbet mitn Leo Baeck Institut hot geshafn an umgeheyer arkhiv fun yidishe gesheftn iber gants Daytshland.",
+    "paragraph2": "Unzer interaktive mape farvandlt di visnshaftlekhe datenbaze in a tsugeynglekhe digitale derfarung, dokumentirndik yidish-aygntimlekhe gesheftn in Berlin fun 1900 biz 1945. Yeder marker shtelt for a mishpokhe unternemung - fun ek-kromen tsu groyse gesheftn - vos hobn geformt di ekonomishe shtof fun der shtot.",
+    "paragraph3": "Navigirt durkh tsayt tsu oysforshn vi di gesheftn hobn gebliet, gekemft, un letsns zikh getrofn mit tsvang-farshlisung. Durkh kombinirnדik historishe forshung mit moderner vizualizatsye, viln mir makhn di vikhtige geshikhte tsugeynglekh far naye doyres."
+  },
+  "preview": {
+    "title": "Oysgeklibene Gesheftn",
+    "subtitle": "Antdekt geshikhtes fun unzer zamlung"
+  },
+  "statistics": {
+    "title": "Di Zamlung",
+    "totalBusinesses": "Ale Gesheftn",
+    "timeSpan": "Yorn Gedekt",
+    "categories": "Gesheft Kategoryes",
+    "peakYear": "Hekher Yor",
+    "yearLabel": "Yor"
+  },
+  "methodology": {
+    "title": "Forshung & Metodologye",
+    "subtitle": "Vi Mir Hobn Geboyt Dos Digitale Arkhiv",
+    "archiveWork": "Arkhiv Forshung",
+    "archiveDesc": "Iber 10 yor fun pinktlekher forshung durkh shtotishe rekords, handl-direktoryes, un mishpokhe arkhivn",
+    "dataProcessing": "Datn Fararbet",
+    "dataDesc": "Sistematishe digitalizatsye un verifitsirung fun gesheft-rekords, adreses, un operatsyonele tsayt-linyes",
+    "visualization": "Vizualizatsye Dizayn",
+    "visualizationDesc": "Forsikhtike iberzetsung fun historishe datn in tsugeynglekhe, interaktive derfarungen"
+  },
+  "timeline": {
+    "title": "Historisher Kontekst",
+    "subtitle": "Hoypt-Momentn in der Tseshterung fun Yidishn Handl",
+    "boycott1933": "April 1933: Land-vayter boykot fun yidishe gesheftn",
+    "laws1935": "1935: Nirnberger Gezetsen bashrenken yidishe ekonomishe tetikayt",
+    "aryanization1938": "1938: Sistematishe 'Arizirung' fun yidishe unternemungen",
+    "kristallnacht1938": "November 1938: Kristalnakht - umfangraykhe tseshterung",
+    "final1941": "1941-1945: Endgiltike likvidatsye fun farbliebene gesheftn"
+  },
+  "insights": {
+    "title": "Datn Aynbliken",
+    "subtitle": "Vos Di Tsifern Vayzen",
+    "peakPeriod": "Bliy-Tsayt",
+    "peakDesc": "Merste yidishe gesheftn hobn operirt tsvishn 1920-1933",
+    "geographic": "Geografishe Fartaylung",
+    "geographicDesc": "Kontsentrirt in Mitte, Charlottenburg, un handls-distriktn",
+    "decline": "Shneler Arop",
+    "declineDesc": "75% fun gesheftn hobn zikh farshlosn tsvishn 1933-1938",
+    "legacy": "Farlorene Yerushe",
+    "legacyDesc": "Toyzeter fun mishpokhe unternemungen oysgemekit fun Berlins ekonomye"
+  },
+  "navigation": {
+    "title": "Vi Tsu Oysforshn",
+    "subtitle": "Navigir Durkh Tsayt un Ort",
+    "timeSlider": "Tsayt Gliters",
+    "timeDesc": "Baweg zikh durkh yortsentn tsu zen gesheftn efenen un shlisn",
+    "markers": "Gesheft Markirer",
+    "markersDesc": "Klik markirer far detaylirte gesheft geshikhtes un fotografyes",
+    "search": "Zukhn & Filtrirn",
+    "searchDesc": "Gefin spetsifishe gesheftn, gasn, oder gesheft tipn",
+    "stories": "Oysgeklibene Geshikhtes",
+    "storiesDesc": "Leyen tife profiln fun oysgeklibene gesheftn un mishpokhes"
+  },
+  "research": {
+    "title": "Forshung Fundament",
+    "subtitle": "Shteyendik Oyf Di Pleytses Fun Rizn",
+    "kreutzmuller": {
+      "title": "Dr. Christoph Kreutzmüller's Pioner Arbet",
+      "description": "Dos proyekt boyt zikh direkt oyf Dr. Kreutzmüller's bahnbrekhndike 2015 shtudye 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany.' Zayn komande hot farbrakht iber a yortsen dokumentirndik di sistematishe tseshterung fun yidishe gesheftn iber gants Daytshland.",
+      "methodology": "Arbetndik mitn Leo Baeck Institut, Dr. Kreutzmüller un zayne forsher hobn analizirt toyzeter fun arkhiv dokumentn, shtotishe rekords, handl-direktoryes, un iberleber tsaygnshaftn tsu shafn an umgeheyer datenbaze fun yidishn handls-lebn far un beeys der Nazi tsayt."
+    },
+    "database": {
+      "title": "Di Leo Baeck Institut Datenbaze",
+      "description": "Di umfasenדike datenbaze baym Leo Baeck Institut antהalt detaylirte rekords fun toyzeter yidishe gesheftn, arayngerkhnt registratsye dokumentn, 'Arizirung' rekords, tsvang-farkoyf dokumentatsye, un perzenלekhe tsaygnshaftn fun gesheft aygntimer un zeyer mishpokhes.",
+      "scope": "Di unbatsalbare visnshaftlekhe resurs dokumentirt nisht nor di gesheftn aleyn, ober di mentshלekhe geshikhtes hinter zey - fartribene mishpokhes, tseshterteפarnoses, un oyf eybik geenderte kehiles."
+    },
+    "transformation": {
+      "title": "Fun Arkhiv Tsu Tsugeynglekheyt",
+      "description": "StoryTimeMaps farvandlt di visnshaftlekhe datenbaze in an interaktive digitale derfarung, makhndik Dr. Kreutzmüller's forshung tsugeynglekh far studentn, lerers, un dem breyt oylem vayl haltn historishe genoykayt un akademishe shtrengekayt."
+    }
+  },
+  "future": {
+    "title": "Tsukunft Initiativen",
+    "subtitle": "Brengen Digitale Zikorn in Fizishn Ort",
+    "plaques": {
+      "title": "Denkmal-Plaketen Initiative",
+      "description": "Inspirirt durkh di Stolpersteine proyekt, mir shteln zikh for instalirn denkmal plaketen bay di originele erter fun dokumentirte yidishe gesheftn iber Berlin.",
+      "vision": "Di plaketen voltn gedint vi shtendike dermonung fun dem lebedikn yidishn handls-lebn vos hot amol gebliet in di gegnt, farbindndik digitale dokumentatsye mit fizishe dermonung."
+    },
+    "community": {
+      "title": "Kehile Bashteyung",
+      "description": "Mir arbetn mit lokale kehiles, shuln, un Berliner yidishe organizatsyes tsu antviklen khinukh programen vos farbindn di historishe datn mit hayntike diskusyes vegn zikorn, handl, un kehile."
+    },
+    "expansion": {
+      "title": "Geografishe Derbreyterung",
+      "description": "Tsukunftige fazn veln zikh oysfirn vayter fun Berlin tsu dokumentirn yidishe gesheftn in andere daytshe shtet, shafndik a umfasndike natsyonale bild fun ekonomisher farfolgung un farlust."
+    }
+  },
+  "cta": {
+    "exploreMap": "Oysforshn Di Interaktive Mape",
+    "learnMore": "Lernen Mer Vegn Proyekt",
+    "viewData": "Zen Roy Datn",
+    "readResearch": "Leyenen Forshung",
+    "buyBook": "Leyenen 'Final Sale'",
+    "leoBackInstitute": "Leo Baeck Institut",
+    "supportPlaques": "Shtitsn Denkmal Plaketen"
+  },
+  "language": {
+    "switchTo": "English",
+    "current": "ייִדיש"
+  },
+  "businessStates": {
+    "active": "Aktiv",
+    "declining": "Aropgeeyendik",
+    "closed": "Farshlosn"
+  }
+}

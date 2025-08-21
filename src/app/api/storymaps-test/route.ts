@@ -123,10 +123,11 @@ export async function GET(request: NextRequest) {
       }
     };
     
-    // Add cache headers for better performance
+    // Add cache and compression headers for better performance
     const headers = {
       'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
-      'Vary': 'Accept-Encoding'
+      'Vary': 'Accept-Encoding',
+      'Content-Type': 'application/json; charset=utf-8'
     };
     
     return NextResponse.json(responseData, { headers });

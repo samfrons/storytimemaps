@@ -1,0 +1,140 @@
+{
+  "mainPage": {
+    "intro": {
+      "title": "Yidishe Gesheftn",
+      "subtitle": "Berlin 1900-1945",
+      "description1": "Oysforsht dem fulshtendikn datensats fun iber 10,000 yidish-aygntimlekhe gesheftn vos hobn amol geformt dem rukngrat fun Berlins handls-lebn.",
+      "description2": "Navigirt durkh tsayt tsu zayn eydes fun zeyer oyfshtayg, kemfn, un di tragishe virking fun Nazi farfolgung.",
+      "letsExplore": "Lomir Oysforshn",
+      "credits": "Datn: Dr. Christoph Kreutzmüller | Vizualizatsye: StoryTimeMaps"
+    },
+    "info": {
+      "title": "Vegn Dos Proyekt",
+      "historicalContext": "Historisher Kontekst",
+      "historicalContextDesc": "Tsvishn 1900 un 1945, yidishe unternemers hobn operirt toyzeter fun gesheftn in Berlin, fun kleyne kromen tsu groyse varenhayzer. Di mape dokumentirt zeyer erter, tipn, un goroles beeys der Nazi ere.",
+      "theData": "Di Datn",
+      "theDataDesc": "Unzer datenbaze antהalt iber 10,000 verifitsirte gesheft rekords, tsuzamengeshtelt fun historishe direktoryes, registratsye dokumentn, un iberleber tsaygnshaftn. Yeder ayntrag shtelt for nisht nor a gesheft, ober a mishpokhes parnose un baytrag tsu Berlins ekonomye.",
+      "timelineNavigation": "Tsaytlinie Navigatsye",
+      "timelineNavigationDesc": "Nutst di tsaytlinie kontroln tsu zen vi di gesheft landshaft hot zikh geendert iber 45 yor. Zet vi gesheftn blien in di 1920er, un zayt eydes fun di khurbndike virkungen fun Nazi politik fun 1933 vayter.",
+      "colorCoding": "Farb Kodirung",
+      "activeBusinesses": "Aktive gesheftn",
+      "businessesUnderPressure": "Gesheftn unter druk",
+      "closedLiquidated": "Farshlosene/Likvidirte gesheftn",
+      "researchTeam": "Forshung Komande",
+      "researchTeamDesc1": "Historishe Forshung & Datn Tsuzamenshteln",
+      "researchTeamDesc2": "Humboldt Universitet Berlin",
+      "researchTeamDesc3": "Interaktive Vizualizatsye & Veb Antviklung",
+      "researchTeamDesc4": "Makhndik geshikhte tsugeynglekh durkh tekhnologye",
+      "academicCitation": "Far akademishe tsitaten, bitע nutst: Kreutzmüller, C. (2024). \"Yidishe Gesheftn in Berlin 1900-1945: A Digitale Arkhiv\""
+    },
+    "storyList": {
+      "searchPlaceholder": "Zukhn gesheftn...",
+      "allCategories": "Ale Kategoryes",
+      "activeBusinessLabel": "Aktiv Gesheft",
+      "decliningBusinessLabel": "Aropgeyendik",
+      "closedBusinessLabel": "Farshlosn"
+    },
+    "map": {
+      "viewMore": "Zen mer →"
+    },
+    "storyDetails": {
+      "viewDetails": "ZEN DETAYLN",
+      "activePeriod": "Aktive Period",
+      "businessType": "Gesheft Tip",
+      "address": "Adres",
+      "description": "Bashraybung",
+      "close": "Shlisn",
+      "previous": "Frier",
+      "next": "Vayter"
+    },
+    "businessTypes": {
+      "TAILORING": "SHNAYDЕRAY",
+      "TAILOR_SHOP": "SHNAYDER KROM",
+      "DEPARTMENT STORE": "VARENHAYZ",
+      "DEPARTMENT_STORE": "VARENHAYZ",
+      "THEATER": "TEATER",
+      "THEATER_CAFÉ": "TEATER KAFE",
+      "CAFE": "KAFE",
+      "CAFÉ": "KAFE",
+      "RESTAURANT": "RESTORAN",
+      "BAKERY": "BEKERAY",
+      "GROCERY": "SHPAYZKROM",
+      "PHARMACY": "APTEYK",
+      "CLOTHING": "KLEYDUNG",
+      "JEWELRY": "TSIRUNG",
+      "FURNITURE": "MEBL",
+      "BOOKSTORE": "BIKHER-KROM",
+      "PHOTOGRAPHY": "FOTOGRAFYE",
+      "BANK": "BANK",
+      "HOTEL": "HOTEL",
+      "BUTCHER": "FLAYSH-KROM",
+      "INDUSTRY": "INDUSTRIYE",
+      "SERVICES": "DINST",
+      "TRADE": "HANDL",
+      "RETAIL": "KHOYZEK-HANDL",
+      "FINANCE": "FINANTS"
+    },
+    "businessDescriptions": {
+      "tailor_shop": "A kleyn shnayder gesheft in aygntum fun {owner}. Dos gesheft iz geven bakant far kvalitet handverk.",
+      "department_store": "Eyns fun Berlins prominente yidish-aygntimlekhe varenhayzer. Dos {name} hot ongegebn a brayte produktn-gamе.",
+      "theater_cafe": "A populer kafe bazukht fun kinstler un intelektualn leben dem Daytshn Teater."
+    },
+    "overlay": {
+      "featuredStories": "Oysgeklibene Geshikhtes",
+      "detailedNarratives": "detaylirte dertseylungen",
+      "personalAccounts": "Perzenלekhe barikhtn mit raykhn historishn kontekst, fotografyes, un detaylirte geshikhtes",
+      "historicalDatabase": "Historishe Datenbaze",
+      "businessRecords": "gesheft rekords",
+      "completeRegistry": "Fulshtendiker registir far genealogishe forshung un umfasndike historishe analize",
+      "featuredStoriesModeActive": "Oysgeklibene Geshikhtes Modus Aktiv",
+      "viewingBusinesses": "Kukt oyf {count} gesheftn mit detaylirte perzenלekhe dertseylungen, fotografyes, un raykhn historishn kontekst.",
+      "intimateGlimpses": "Di geshikhtes gibn intime blikn in di lebn fun gesheft aygntimer un zeyer mishpokhes beeys der period.",
+      "historicalDatabaseModeActive": "Historishe Datenbaze Modus Aktiv",
+      "viewingAllRecords": "Kukt oyf ale {count} gesheft rekords fun dem fulshtendikn historishn registir.",
+      "comprehensiveDataset": "Der umfasndiker datensats antהalt gruntlekhe informatsye far genealogishe forshung un akademishe shtudye.",
+      "personalStories": "Perzenлekhe Geshikhtes",
+      "historicalPhotos": "Historishe Fotografyes",
+      "detailedContext": "Detaylirter Kontekst",
+      "completeRegistryTag": "Fulshtendiker Registir",
+      "researchData": "Forshung Datn",
+      "genealogy": "Yikhes-forshung"
+    }
+  },
+  "businessTypes": {
+    "TAILORING": "SHNAYDЕRAY",
+    "TAILOR_SHOP": "SHNAYDER KROM",
+    "DEPARTMENT STORE": "VARENHAYZ",
+    "DEPARTMENT_STORE": "VARENHAYZ",
+    "THEATER": "TEATER",
+    "THEATER_CAFÉ": "TEATER KAFE",
+    "CAFE": "KAFE",
+    "CAFÉ": "KAFE",
+    "RESTAURANT": "RESTORAN",
+    "BAKERY": "BEKERAY",
+    "GROCERY": "SHPAYZKROM",
+    "PHARMACY": "APTEYK",
+    "CLOTHING": "KLEYDUNG",
+    "JEWELRY": "TSIRUNG",
+    "FURNITURE": "MEBL",
+    "BOOKSTORE": "BIKHER-KROM",
+    "PHOTOGRAPHY": "FOTOGRAFYE",
+    "BANK": "BANK",
+    "HOTEL": "HOTEL",
+    "BUTCHER": "FLAYSH-KROM",
+    "INDUSTRY": "INDUSTRIYE",
+    "SERVICES": "DINST",
+    "TRADE": "HANDL",
+    "RETAIL": "KHOYZEK-HANDL",
+    "FINANCE": "FINANTS"
+  },
+  "businessDescriptions": {
+    "tailor_shop": "A kleyn shnayder gesheft in aygntum fun {owner}. Dos gesheft iz geven bakant far kvalitet handverk.",
+    "department_store": "Eyns fun Berlins prominente yidish-aygntimlekhe varenhayzer. Dos {name} hot ongegebn a brayte produktn-gamе.",
+    "theater_cafe": "A populer kafe bazukht fun kinstler un intelektualn leben dem Daytshn Teater."
+  },
+  "businessStates": {
+    "active": "Aktiv",
+    "declining": "Aropgeyendik",
+    "closed": "Farshlosn"
+  }
+}

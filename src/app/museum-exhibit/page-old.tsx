@@ -6,7 +6,7 @@ import AttractMode from './components/AttractMode';
 import SessionManager from './components/SessionManager';
 import ExhibitTimeline from './components/ExhibitTimeline';
 import LanguageSelector from './components/LanguageSelector';
-import { TranslationProvider } from '../../i18n/TranslationContext';
+// TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation';
 // import './styles/brutalist.css';
 
@@ -330,9 +330,5 @@ function MuseumExhibitContent() {
 }
 
 export default function MuseumExhibitPage() {
-  return (
-    <TranslationProvider>
-      <MuseumExhibitContent />
-    </TranslationProvider>
-  );
+  return <MuseumExhibitContent / />;
 }

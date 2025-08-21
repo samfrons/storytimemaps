@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import AttractMode from './components/AttractMode';
 import SessionManager from './components/SessionManager';
@@ -310,5 +310,13 @@ function MuseumExhibitContent() {
 }
 
 export default function MuseumExhibitPage() {
-  return <MuseumExhibitContent />;
+  return (
+    <Suspense fallback={
+      <div className="fixed inset-0 flex items-center justify-center" style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="text-4xl font-black uppercase tracking-tight" style={{ color: '#000000' }}>LOADING...</div>
+      </div>
+    }>
+      <MuseumExhibitContent />
+    </Suspense>
+  );
 }

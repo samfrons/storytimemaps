@@ -304,15 +304,15 @@
 
 /* Archival Theme - Based on Arolsen Archives design */
 [data-theme="archival"] {
-  --primary: #2c4a7c; /* Navy-slate rich blue for active */
+  --primary: #2c4a7c; /* Navy-slate rich blue for UI elements */
   --primary-rgb: 44, 74, 124;
   --primary-light: #3d5a8c;
   --secondary: #ffffff;
-  --warning: #5a7397; /* Medium shade blue for declining */
+  --warning: #5a7397; /* Medium shade blue for declining UI */
   --warning-rgb: 90, 115, 151;
-  --danger: #8b9cae; /* Light shade blue for closed */
+  --danger: #8b9cae; /* Light shade blue for closed UI */
   --danger-rgb: 139, 156, 174;
-  --success: #2c4a7c; /* Navy-slate rich blue for active/success */
+  --success: #2c4a7c; /* Navy-slate rich blue for active/success UI */
   --success-rgb: 44, 74, 124;
   --background: #f8f9fa; /* Light gray background */
   --background-rgb: 248, 249, 250;
@@ -320,7 +320,7 @@
   --foreground-muted: #495057; /* Gray text */
   --muted: #e9ecef; /* Light gray */
   --muted-rgb: 233, 236, 239;
-  --border: #2c4a7c; /* Navy blue borders */
+  --border: #5a7397; /* Medium slate blue borders for better contrast */
   --shadow: rgba(44, 74, 124, 0.15);
   --map-overlay: rgba(44, 74, 124, 0.05);
   --accent-orange: #3d5a80;
@@ -336,12 +336,16 @@
   --card-bg: rgba(255, 255, 255, 1);
   --card-bg-rgb: 255, 255, 255;
   --placeholder-color: #6c757d;
-  --active-text: #ffffff; /* White text on blue backgrounds */
-  --active-text-secondary: #ffffff;
-  --declining-text: #ffffff; /* White text on medium blue */
-  --declining-text-secondary: #f8f9fa;
-  --closed-text: #ffffff; /* White text on light blue */
-  --closed-text-secondary: #ffffff;
+  --active-text: #2c4a7c; /* Dark blue text for better contrast on light backgrounds */
+  --active-text-secondary: #2c4a7c;
+  --declining-text: #2c4a7c; /* Dark blue text for better contrast */
+  --declining-text-secondary: #2c4a7c;
+  --closed-text: #2c4a7c; /* Dark blue text on light blue background for better contrast */
+  --closed-text-secondary: #2c4a7c;
+  /* Popup-specific background colors */
+  --popup-active-bg: #e8edf4; /* Light off-white slate blue for active popups */
+  --popup-declining-bg: #dfe4eb; /* Lighter off-white shade for declining popups */
+  --popup-closed-bg: #f5f7f9; /* Very light off-white for closed popups */
 }
 
 /* Mapbox popup arrow styling - uses theme primary color for active state */

@@ -15,7 +15,8 @@
     "original_address": "Gervinusstr. 17/19, Berlin",
     "cleaned_address": "Gervinusstraße 17/19, Berlin",
     "cleaning_issues": "clean",
-    "needs_manual_review": false
+    "needs_manual_review": false,
+    "hasTimelineData": true
   },
   {
     "id": "business_00002",
@@ -33,7 +34,8 @@
     "original_address": "Luisenstr. 31, Berlin",
     "cleaned_address": "Luisenstraße 31, Berlin",
     "cleaning_issues": "clean",
-    "needs_manual_review": false
+    "needs_manual_review": false,
+    "hasTimelineData": true
   },
   {
     "id": "business_00003",

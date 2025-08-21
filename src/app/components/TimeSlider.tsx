@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
+import { useDebounce } from '../../hooks/useDebounce';
 
 
 interface TimeSliderProps {
@@ -15,7 +16,11 @@ interface TimeSliderProps {
 
 const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, onChange }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
   const { t } = useTranslation();
+  
+  // Debounce for optimistic UI updates during scrubbing
+  const debouncedDate = useDebounce(currentDate, 100);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(parseInt(e.target.value));
@@ -69,11 +74,19 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
               </svg>
             )}
           </button>
-          <span className="text-xs font-mono font-bold px-3 py-1.5 border shadow-sm uppercase tracking-wide" style={{
-            color: 'var(--foreground)',
-            backgroundColor: 'var(--input-bg)',
-            borderColor: 'var(--border)'
-          }}>
+          <span 
+            className={`text-xs font-mono font-bold px-3 py-1.5 border shadow-sm uppercase tracking-wide transition-all duration-200 ${
+              isInteracting ? 'scale-105 shadow-lg' : 'scale-100'
+            }`} 
+            style={{
+              color: isInteracting ? 'var(--primary)' : 'var(--foreground)',
+              backgroundColor: isInteracting ? 'rgba(var(--primary-rgb), 0.1)' : 'var(--input-bg)',
+              borderColor: isInteracting ? 'var(--primary)' : 'var(--border)'
+            }}
+          >
+            {isInteracting && (
+              <span className="inline-block mr-1 animate-pulse">⚡</span>
+            )}
             {`${String(currentDate.getMonth() + 1).padStart(2, '0')}.${currentDate.getFullYear()}`}
           </span>
         </div>
@@ -101,7 +114,11 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
             max={maxDate.getTime()}
             value={currentDate.getTime()}
             onChange={handleChange}
-            className="relative w-full h-4 bg-transparent appearance-none cursor-pointer z-10
+            onMouseDown={() => setIsInteracting(true)}
+            onMouseUp={() => setIsInteracting(false)}
+            onTouchStart={() => setIsInteracting(true)}
+            onTouchEnd={() => setIsInteracting(false)}
+            className={`relative w-full h-4 bg-transparent appearance-none cursor-pointer z-10 transition-all duration-200
               [&::-webkit-slider-thumb]:appearance-none
               [&::-webkit-slider-thumb]:w-5
               [&::-webkit-slider-thumb]:h-5
@@ -111,6 +128,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
               [&::-webkit-slider-thumb]:shadow-md
               [&::-webkit-slider-thumb]:cursor-pointer
               [&::-webkit-slider-thumb]:transition-all
+              [&::-webkit-slider-thumb]:duration-200
               [&::-webkit-slider-thumb]:hover:scale-125
               [&::-moz-range-thumb]:w-5
               [&::-moz-range-thumb]:h-5
@@ -120,7 +138,9 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
               [&::-moz-range-thumb]:shadow-md
               [&::-moz-range-thumb]:cursor-pointer
               [&::-moz-range-thumb]:transition-all
-              [&::-moz-range-thumb]:hover:scale-125"
+              [&::-moz-range-thumb]:duration-200
+              [&::-moz-range-thumb]:hover:scale-125
+              ${isInteracting ? 'scale-[1.02]' : 'scale-100'}`}
           />
         </div>
         

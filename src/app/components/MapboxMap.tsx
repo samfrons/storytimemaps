@@ -7,6 +7,7 @@ import { useTheme } from 'next-themes'
 import mapboxgl from 'mapbox-gl'
 import { useMobileOptimizations } from '../../hooks/useMobileOptimizations'
 import { useTranslation } from '../../i18n/useTranslation'
+import { loadTimelineData, getTimelineContentForDate } from '../../utils/timelineLoader'
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
@@ -429,7 +430,7 @@ interface MapboxMapProps {
   onMarkerClick?: (id: string) => void
   activeMarkerId?: string | null
   currentDate?: Date
-  enrichedStories?: Array<{ id: string; startDate?: string | null; endDate?: string | null; description?: string | null }>
+  enrichedStories?: Array<{ id: string; startDate?: string | null; endDate?: string | null; description?: string | null; hasTimelineData?: boolean }>
   isTestMode?: boolean
   city?: 'berlin' | 'frankfurt'
   data?: any
@@ -480,9 +481,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       description?: string | null
       startDate?: string | null
       endDate?: string | null
+      hasTimelineData?: boolean
       [key: string]: unknown
     }
   } | null>(null)
+  const [popupTimelineData, setPopupTimelineData] = useState<{ [key: string]: any }>({})
 
   // Get colors from CSS variables - client-side only
   const [colors, setColors] = useState({
@@ -1307,7 +1310,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
             pointerEvents: 'auto'
           }}
-          onClick={(e) => {
+          onClick={async (e) => {
             e.stopPropagation()
             if (onBusinessSelect && data) {
               // For Frankfurt data, find the business in the GeoJSON
@@ -1318,7 +1321,16 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             } else if (onMarkerClick) {
               onMarkerClick(properties.id!)
             }
-            const enrichedStory = enrichedStories.find(s => s.id === properties.id) || {}
+            const enrichedStory = enrichedStories.find(s => s.id === properties.id)
+            
+            // Load timeline data if available
+            if (enrichedStory?.hasTimelineData && properties.id) {
+              const timelineData = await loadTimelineData(properties.id)
+              if (timelineData) {
+                setPopupTimelineData(prev => ({ ...prev, [properties.id!]: timelineData }))
+              }
+            }
+            
             setPopupInfo({
               longitude: lng,
               latitude: lat,
@@ -1344,7 +1356,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         key={`marker-${properties.id}`}
         longitude={lng}
         latitude={lat}
-        onClick={() => {
+        onClick={async () => {
           if (onBusinessSelect && data) {
             // For Frankfurt data, find the business in the GeoJSON
             const business = data.features?.find((f: any) => f.properties.id?.toString() === properties.id)
@@ -1355,6 +1367,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             onMarkerClick(properties.id!)
           }
           const enrichedStory = enrichedStories.find(s => s.id === properties.id)
+          
+          // Load timeline data if available
+          if (enrichedStory?.hasTimelineData && properties.id) {
+            const timelineData = await loadTimelineData(properties.id)
+            if (timelineData) {
+              setPopupTimelineData(prev => ({ ...prev, [properties.id!]: timelineData }))
+            }
+          }
+          
           setPopupInfo({
             longitude: lng,
             latitude: lat,
@@ -1559,19 +1580,25 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 minWidth: '200px',
                 maxWidth: '300px',
                 padding: '14px',
-                background: popupInfo.properties.state === 'declining' ? `${colors.declining}fa` :
-                           popupInfo.properties.state === 'closed' ? `${colors.closed}fa` :
-                           `${colors.active}fa`,
+                background: theme === 'archival' ? 
+                           (popupInfo.properties.state === 'declining' ? 'var(--popup-declining-bg)' :
+                            popupInfo.properties.state === 'closed' ? 'var(--popup-closed-bg)' :
+                            'var(--popup-active-bg)') :
+                           (popupInfo.properties.state === 'declining' ? `${colors.declining}fa` :
+                            popupInfo.properties.state === 'closed' ? `${colors.closed}fa` :
+                            `${colors.active}fa`),
                 color: popupInfo.properties.state === 'closed' ? 'var(--closed-text)' : 
                        popupInfo.properties.state === 'declining' ? 'var(--declining-text)' :
                        theme === 'bauhaus' ? 'var(--active-text)' : 
-                       theme === 'moody' || !theme ? 'var(--active-text)' : '#2a2a2a',
+                       theme === 'moody' || !theme ? 'var(--active-text)' :
+                       theme === 'archival' ? 'var(--active-text)' : '#2a2a2a',
                 fontFamily: 'Space Mono, monospace',
-                border: `2px solid ${
-                  popupInfo.properties.state === 'declining' ? colors.declining :
-                  popupInfo.properties.state === 'closed' ? colors.closed :
-                  colors.active
-                }`
+                border: theme === 'archival' ? `2px solid #5a7397` : 
+                        `2px solid ${
+                          popupInfo.properties.state === 'declining' ? colors.declining :
+                          popupInfo.properties.state === 'closed' ? colors.closed :
+                          colors.active
+                        }`
               }}
             >
               <h3 className="font-bold text-base mb-2" style={{ 
@@ -1592,16 +1619,46 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                        ${new Date(popupInfo.properties.endDate).getFullYear()}`
                     }
                   </div>
-                  {popupInfo.properties.description && (
-                    <p className="text-xs line-clamp-3" style={{ 
-                      color: 'inherit',
-                      opacity: 0.9
-                    }}>
-                      {popupInfo.properties.description}
-                    </p>
+                  {(() => {
+                    // Get timeline-aware description if available
+                    const timelineData = popupInfo.properties.id && popupTimelineData[popupInfo.properties.id]
+                    const timelineContent = timelineData && selectedDate 
+                      ? getTimelineContentForDate(timelineData, selectedDate)
+                      : null
+                    const description = timelineContent?.description || popupInfo.properties.description
+                    
+                    return description ? (
+                      <p className="text-xs line-clamp-3" style={{ 
+                        color: 'inherit',
+                        opacity: 0.9
+                      }}>
+                        {description}
+                      </p>
+                    ) : null
+                  })()}
+                  {/* Timeline Data Availability Indicator */}
+                  {Boolean(popupInfo.properties.hasTimelineData) && (
+                    <div 
+                      className="flex items-center gap-1 text-xs mb-2 px-2 py-1"
+                      style={{ 
+                        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        color: 'inherit'
+                      }}
+                    >
+                      <svg 
+                        className="w-3 h-3" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span style={{ opacity: 0.9 }}>Timeline data available</span>
+                    </div>
                   )}
                   <div 
-                    className="text-xs mt-3 font-bold cursor-pointer uppercase tracking-wide"
+                    className="text-xs mt-3 font-bold cursor-pointer uppercase tracking-wide flex items-center justify-between"
                     style={{
                       color: 'inherit',
                       textDecoration: 'underline',
@@ -1622,7 +1679,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                       setPopupInfo(null);
                     }}
                   >
-                    {t('mainPage.map.viewMore') || 'View more →'}
+                    <span>{t('mainPage.map.viewMore') || 'View more →'}</span>
+                    {Boolean(popupInfo.properties.hasTimelineData) && (
+                      <svg 
+                        className="w-3 h-3 ml-1" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        style={{ opacity: 0.7 }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    )}
                   </div>
                 </>
               )}

@@ -1,0 +1,35 @@
+{
+  "businessId": "business_00002",
+  "timeline": [
+    {
+      "startDate": "1923-01-01",
+      "endDate": "1930-12-31",
+      "description": "A property protection and security services company serving Berlin's growing commercial district. The AG für Eigentumschutz provided security services for businesses and wealthy individuals.",
+      "longDescription": "Established in 1923 during the economic recovery period following World War I, the AG für Eigentumschutz positioned itself as a premier security and property protection service in Berlin. Located on Luisenstraße, the company served a diverse clientele including banks, wealthy merchants, and prominent businesses throughout the city. The company employed trained security personnel and utilized modern protection methods, becoming known for their reliable and discreet services. During this period, the business grew steadily as Berlin's commercial sector expanded and the need for professional security services increased.",
+      "media": [
+        {
+          "url": "/images/security/office-1920s.webp",
+          "caption": "Professional security office headquarters, 1920s",
+          "type": "image",
+          "startDate": "1923-01-01",
+          "endDate": "1930-12-31"
+        }
+      ]
+    },
+    {
+      "startDate": "1931-01-01",
+      "endDate": "1937-12-31",
+      "description": "The company faces increasing political pressures and changing regulations. As the Nazi party gains power, many Jewish-owned businesses reduce their use of independent security services.",
+      "longDescription": "The early 1930s brought significant challenges for the AG für Eigentumschutz as Germany's political landscape shifted dramatically. With the rise of the Nazi party and increasing anti-Semitic policies, many of the company's traditional clients - including Jewish-owned businesses - either closed or were forced to reduce their operations. The company attempted to adapt by focusing on industrial clients and government contracts, but found it increasingly difficult to maintain its previous level of business. Despite these challenges, the company continued operations until 1937, when changing political conditions and economic pressures finally forced its closure.",
+      "media": [
+        {
+          "url": "/images/security/difficult-times-1935.webp",
+          "caption": "Company operations during challenging political period, 1935",
+          "type": "image",
+          "startDate": "1931-01-01",
+          "endDate": "1937-12-31"
+        }
+      ]
+    }
+  ]
+}

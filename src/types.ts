@@ -4,6 +4,27 @@ export interface MediaItem {
   type?: 'image' | 'video';
 }
 
+export interface TimelineMediaItem {
+  url: string;
+  caption?: string;
+  type?: 'image' | 'video';
+  startDate: string;    // ISO date when this media becomes relevant
+  endDate?: string;     // ISO date when this media stops being relevant
+}
+
+export interface TimelineContent {
+  startDate: string;
+  endDate?: string;
+  description?: string;
+  longDescription?: string;
+  media?: TimelineMediaItem[];
+}
+
+export interface TimelineData {
+  businessId: string;
+  timeline: TimelineContent[];
+}
+
 export interface StoryMap {
   id: string;
   title: string;
@@ -20,6 +41,7 @@ export interface StoryMap {
   media?: MediaItem[] | null;
   mediaLink?: string;
   imageUrls?: string[]; 
+  hasTimelineData?: boolean;  // Flag to indicate timeline data availability
 }
 
 export interface MarkerData {

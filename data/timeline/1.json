@@ -1,0 +1,57 @@
+{
+  "businessId": "1",
+  "timeline": [
+    {
+      "startDate": "1925-01-01",
+      "endDate": "1933-01-30",
+      "description": "A thriving tailoring business in the heart of Berlin's bustling Rosenthaler Straße. Elias Braun and his family have built a respected reputation for fine men's clothing, serving both Jewish and non-Jewish customers from across the city.",
+      "longDescription": "Established in 1925, Elias Braun's tailor shop quickly became a cornerstone of Rosenthaler Straße's commercial district. The shop specialized in bespoke men's suits, drawing customers from Berlin's growing middle class. Elias, trained in traditional tailoring techniques, employed three skilled seamsters and maintained a steady stream of orders. The family lived above the shop, with the workshop occupying the ground floor and display windows showcasing the latest fashions. During this period, the business flourished as Berlin's economy recovered from the post-war recession.",
+      "media": [
+        {
+          "url": "/images/ebraun/ebraun1.webp",
+          "caption": "The prosperous tailor shop in its heyday, 1920s",
+          "type": "image",
+          "startDate": "1925-01-01",
+          "endDate": "1933-01-30"
+        },
+        {
+          "url": "/images/ebraun/ebraun2.webp", 
+          "caption": "Elias Braun with his family and employees, circa 1930",
+          "type": "image",
+          "startDate": "1925-01-01",
+          "endDate": "1933-01-30"
+        }
+      ]
+    },
+    {
+      "startDate": "1933-01-30",
+      "endDate": "1938-11-08",
+      "description": "As Nazi persecution intensifies, the tailor shop struggles under increasing restrictions and boycotts. Non-Jewish customers stay away, and new regulations make business operations increasingly difficult for the Braun family.",
+      "longDescription": "Following Hitler's rise to power in January 1933, Elias Braun's business faced immediate challenges. The Nazi boycott of Jewish businesses in April 1933 marked the beginning of systematic economic persecution. Regular customers stopped coming, fearful of association with Jewish-owned establishments. New regulations required special permits for Jewish businesses, and Elias was forced to dismiss his non-Jewish employees. The family struggled to maintain the shop as their customer base dwindled to primarily Jewish patrons. Windows were occasionally marked with anti-Semitic graffiti, and the once-thriving business became a shadow of its former self.",
+      "media": [
+        {
+          "url": "/images/ebraun/ebraun3.webp",
+          "caption": "The shop during the boycott period - empty streets and marked windows",
+          "type": "image", 
+          "startDate": "1933-01-30",
+          "endDate": "1938-11-08"
+        }
+      ]
+    },
+    {
+      "startDate": "1938-11-09",
+      "endDate": "1945-12-31",
+      "description": "The tailor shop is destroyed during Kristallnacht. Windows are smashed, inventory stolen, and the family is forced to flee. The business that served Berlin's community for over a decade is lost forever.",
+      "longDescription": "On the night of November 9-10, 1938, during the coordinated attacks known as Kristallnacht, Elias Braun's tailor shop was targeted by SA storm troopers and local civilians. The shop windows were smashed, bolts of fabric were destroyed or stolen, and sewing machines were damaged beyond repair. The family, fearing for their safety, fled their home above the shop that same night. Elias attempted to return days later to salvage what remained, but found the premises had been completely ransacked. The building was later seized by the Nazi authorities, and the space was eventually converted to a non-Jewish business. The Braun family's decade of hard work and community presence was erased in a single night of violence.",
+      "media": [
+        {
+          "url": "/images/ebraun/ebraun4.webp",
+          "caption": "Aftermath of Kristallnacht - the destroyed tailor shop, November 1938",
+          "type": "image",
+          "startDate": "1938-11-09",
+          "endDate": "1945-12-31"
+        }
+      ]
+    }
+  ]
+}

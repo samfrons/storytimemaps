@@ -902,17 +902,17 @@ function TestFullDatasetPageContent() {
 }
 
 function TestFullDatasetPage() {
-  return <TestFullDatasetPageContent />;
-}
-
-export default function TestFullDatasetPageWrapper() {
   return (
     <Suspense fallback={
       <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
         <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading test environment...</div>
       </div>
     }>
-      <TestFullDatasetPage />
+      <TestFullDatasetPageContent />
     </Suspense>
   );
+}
+
+export default function TestFullDatasetPageWrapper() {
+  return <TestFullDatasetPage />;
 }

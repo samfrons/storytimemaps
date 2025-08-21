@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import StoryList from '../components/StoryList';
@@ -550,5 +550,13 @@ function OverlayTestPageContent() {
 }
 
 export default function OverlayTestPage() {
-  return <OverlayTestPageContent />;
+  return (
+    <Suspense fallback={
+      <div className="w-full h-screen flex items-center justify-center bg-[#4a4a57]">
+        <div className="text-[#97d8c0] font-mono">Loading overlay test...</div>
+      </div>
+    }>
+      <OverlayTestPageContent />
+    </Suspense>
+  );
 }

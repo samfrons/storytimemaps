@@ -310,5 +310,5 @@ function MuseumExhibitContent() {
 }
 
 export default function MuseumExhibitPage() {
-  return <MuseumExhibitContent / />;
+  return <MuseumExhibitContent />;
 }

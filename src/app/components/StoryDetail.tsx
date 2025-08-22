@@ -183,7 +183,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
     }
     
     return mediaItems;
-  }, [story.media, story.imageUrls, story.hasTimelineData, timelineMedia, timelineError]);
+  }, [story.media, story.imageUrls, story.hasTimelineData, timelineMedia, timelineError, t]);
   
   const currentMedia = allMedia[selectedMediaIndex];
   

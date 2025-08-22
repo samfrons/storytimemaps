@@ -47,10 +47,13 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
     if (story.hasTimelineData && isOpen) {
       loadTimelineData(story.id).then((data: TimelineData | null) => {
         if (data && data.timeline) {
-          const changePoints = data.timeline.map(period => [
-            new Date(period.startDate),
-            new Date(period.endDate)
-          ]).flat();
+          const changePoints = data.timeline.flatMap(period => {
+            const points: Date[] = [new Date(period.startDate)];
+            if (period.endDate) {
+              points.push(new Date(period.endDate));
+            }
+            return points;
+          });
           // Remove duplicates and sort
           const uniquePoints = Array.from(new Set(changePoints.map(d => d.getTime())))
             .map(time => new Date(time))

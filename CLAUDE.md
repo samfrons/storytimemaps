@@ -1,5 +1,49 @@
 # Claude Code Instructions for StoryMaps Project
 
+## ⚠️ CRITICAL: Theme System Rules - DO NOT BREAK THESE
+
+### Theme Switching Implementation (NEVER CHANGE WITHOUT CAREFUL CONSIDERATION)
+1. **NO DOUBLE SETTING**: Theme is set ONCE per user action
+   - Components call `setTheme()` then update URL with `router.replace()`
+   - URL param reading happens ONLY on mount, not on every URL change
+   - The mount effect in page.tsx has `// eslint-disable-next-line` - DO NOT remove this
+
+2. **NO CSS TRANSITIONS ON COLORS**: 
+   - Global CSS has NO transitions on background-color or color properties
+   - This prevents flashing during theme changes
+   - Only transform, opacity, and box-shadow should have transitions
+
+3. **THEME PROVIDER SETTINGS** (in layout.tsx):
+   ```tsx
+   disableTransitionOnChange={true}  // MUST be true
+   enableColorScheme={false}          // MUST be false
+   enableSystem={false}               // MUST be false
+   ```
+
+4. **URL UPDATE PATTERN**:
+   - Use `router.replace()` NOT `router.push()` to avoid history spam
+   - Update URL AFTER calling `setTheme()` to maintain sharing capability
+
+5. **COLOR CONTRAST RULES**:
+   - Light themes (cool, cold) need high opacity backgrounds (0.9-0.95)
+   - Check `--active-text` matches the theme's background (dark text on light bg)
+   - Always test readability when modifying theme colors
+
+### Files That Control Theme System:
+- `/src/app/layout.tsx` - ThemeProvider configuration
+- `/src/app/page.tsx` - URL param reading (mount effect ONLY)
+- `/src/app/components/Sidebar.tsx` - Theme switching handler
+- `/src/app/globals.css` - Theme color definitions (NO color transitions!)
+
+### Testing Theme Changes:
+Before ANY theme system changes:
+1. Switch between all themes rapidly - should be instant, no flash
+2. Check URL updates when switching
+3. Refresh page with ?theme=cool in URL - should load correct theme
+4. Verify text is readable in all themes
+
+---
+
 ## Project Context
 This is a historical data visualization project showing Jewish businesses in Berlin from 1900-1945. The application must be respectful and historically accurate while providing an engaging user experience.
 
@@ -284,6 +328,26 @@ pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hks
 - Apply custom styles after map loads
 - Use dark-v11 as base style
 - Modify layers individually with error handling
+
+## File Location Rules
+
+### Static Files (Must be in /public directory)
+- **Timeline data**: `/public/data/timeline/[businessId].json`
+- **Images**: `/public/images/[category]/[filename].webp`
+- **CSV/JSON data**: `/public/data/[filename].[ext]`
+- **Any file served via HTTP**: Must be in `/public/` directory tree
+
+### Source Code Files
+- **Components**: `/src/app/components/`
+- **Pages**: `/src/app/[page-name]/page.tsx`
+- **Utilities**: `/src/app/utils/`
+- **Hooks**: `/src/app/hooks/`
+- **API Routes**: `/src/app/api/[route-name]/route.ts`
+
+### CRITICAL: Next.js Static File Serving
+- Files MUST be in `/public/` to be accessible via HTTP
+- Access static files using path relative to public: `/data/timeline/1.json` serves `/public/data/timeline/1.json`
+- 404 errors for static files mean they're not in `/public/` directory
 
 ## File Naming Conventions
 - Components: PascalCase (e.g., `BusinessDetailModal.tsx`)

@@ -124,17 +124,19 @@ async function fetchTimelineData(businessId: string): Promise<TimelineData | nul
  * Gets the appropriate timeline content for a specific date
  * @param timelineData - The timeline data for the business
  * @param currentDate - The current timeline date
- * @returns TimelineContent or null if no matching period found
+ * @returns TimelineContent or null if no timeline data exists
  */
 export function getTimelineContentForDate(
   timelineData: TimelineData | null, 
   currentDate: Date
 ): TimelineContent | null {
-  if (!timelineData) return null;
+  if (!timelineData || !timelineData.timeline || timelineData.timeline.length === 0) {
+    return null;
+  }
 
   const currentTime = currentDate.getTime();
 
-  // Find the timeline content that matches the current date
+  // First, try to find exact match
   for (const content of timelineData.timeline) {
     const startTime = new Date(content.startDate).getTime();
     const endTime = content.endDate ? new Date(content.endDate).getTime() : Infinity;
@@ -144,7 +146,37 @@ export function getTimelineContentForDate(
     }
   }
 
-  return null;
+  // If no exact match, find the nearest period
+  // Sort timeline by start date to ensure correct ordering
+  const sortedTimeline = [...timelineData.timeline].sort((a, b) => 
+    new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
+
+  // If before all periods, return the first period
+  const firstPeriodStart = new Date(sortedTimeline[0].startDate).getTime();
+  if (currentTime < firstPeriodStart) {
+    return sortedTimeline[0];
+  }
+
+  // If after all periods, return the last period
+  const lastPeriod = sortedTimeline[sortedTimeline.length - 1];
+  const lastPeriodEnd = lastPeriod.endDate 
+    ? new Date(lastPeriod.endDate).getTime() 
+    : Infinity;
+  if (currentTime > lastPeriodEnd) {
+    return lastPeriod;
+  }
+
+  // If between periods, return the previous period (most recent valid state)
+  for (let i = sortedTimeline.length - 1; i >= 0; i--) {
+    const periodStart = new Date(sortedTimeline[i].startDate).getTime();
+    if (currentTime >= periodStart) {
+      return sortedTimeline[i];
+    }
+  }
+
+  // Fallback to first period (should never reach here)
+  return sortedTimeline[0];
 }
 
 /**

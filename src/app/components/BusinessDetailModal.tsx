@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { StoryMap } from '../../types';
+import { StoryMap, TimelineData } from '../../types';
 import StoryDetail from './StoryDetail';
 import TimeSlider from './TimeSlider';
 import { useTranslation } from '../../i18n/useTranslation';
+import { loadTimelineData } from '../../utils/timelineLoader';
 
 interface BusinessDetailModalProps {
   story: StoryMap;
@@ -38,7 +39,27 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [timelineChangePoints, setTimelineChangePoints] = useState<Date[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // Load timeline change points when modal opens
+  useEffect(() => {
+    if (story.hasTimelineData && isOpen) {
+      loadTimelineData(story.id).then((data: TimelineData | null) => {
+        if (data && data.timeline) {
+          const changePoints = data.timeline.map(period => [
+            new Date(period.startDate),
+            new Date(period.endDate)
+          ]).flat();
+          // Remove duplicates and sort
+          const uniquePoints = Array.from(new Set(changePoints.map(d => d.getTime())))
+            .map(time => new Date(time))
+            .sort((a, b) => a.getTime() - b.getTime());
+          setTimelineChangePoints(uniquePoints);
+        }
+      });
+    }
+  }, [story.hasTimelineData, story.id, isOpen]);
 
   useEffect(() => {
     if (isOpen && originRect) {
@@ -224,6 +245,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
               maxDate={maxDate}
               currentDate={currentDate}
               onChange={onDateChange}
+              timelineChangePoints={timelineChangePoints}
             />
           </div>
         )}

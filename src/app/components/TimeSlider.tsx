@@ -12,9 +12,10 @@ interface TimeSliderProps {
   maxDate: Date;
   currentDate: Date;
   onChange: (date: Date) => void;
+  timelineChangePoints?: Date[];
 }
 
-const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, onChange }) => {
+const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, onChange, timelineChangePoints = [] }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
   const { t } = useTranslation();
@@ -105,6 +106,26 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ minDate, maxDate, currentDate, 
                 className="h-full transition-all duration-300 ease-out"
                 style={{ width: `${percentage}%`, backgroundColor: 'var(--danger)' }}
               />
+              {/* Timeline change indicators */}
+              {timelineChangePoints.map((changePoint, index) => {
+                const changePercentage = ((changePoint.getTime() - minDate.getTime()) / (maxDate.getTime() - minDate.getTime())) * 100;
+                return (
+                  <div
+                    key={index}
+                    className="absolute top-0 bottom-0 w-1"
+                    style={{
+                      left: `${changePercentage}%`,
+                      backgroundColor: 'var(--primary)',
+                      opacity: 0.8,
+                      transform: 'translateX(-50%)'
+                    }}
+                    title={t('timeline.changeIndicator', { 
+                      date: changePoint.toLocaleDateString('en-GB', { month: '2-digit', year: 'numeric' }).replace('/', '.'),
+                      ns: 'business'
+                    })}
+                  />
+                );
+              })}
             </div>
           </div>
           

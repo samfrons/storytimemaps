@@ -80,8 +80,8 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
     bearing: 0,
   });
 
-  // Calculate visible businesses and their states based on current date
-  const visibleBusinesses = useMemo(() => {
+  // Calculate ALL businesses and their states based on current date (for popup content)
+  const allBusinessesWithStatus = useMemo(() => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     
@@ -108,8 +108,13 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
       }
       
       return { ...business, status, visible };
-    }).filter(b => b.visible);
+    });
   }, [currentDate, businesses]);
+
+  // Calculate visible businesses (for map markers - only show visible ones)
+  const visibleBusinesses = useMemo(() => {
+    return allBusinessesWithStatus.filter(b => b.visible);
+  }, [allBusinessesWithStatus]);
 
   // Update statistics
   useEffect(() => {
@@ -474,6 +479,7 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
       case 'takenOver': return '#FF6B35'; // Bright orange
       case 'closing': return '#FF6B35'; // Bright orange
       case 'closed': return '#C589E8'; // Bright purple
+      case 'future': return '#E0E0E0'; // Light gray
       default: return '#000000';
     }
   };
@@ -596,7 +602,7 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
 
         {/* Selected business popup */}
         {selectedBusiness && (() => {
-          const business = visibleBusinesses.find(b => b.id === selectedBusiness);
+          const business = allBusinessesWithStatus.find(b => b.id === selectedBusiness);
           if (!business) return null;
           
           return (
@@ -617,6 +623,9 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
                   {business.status === 'closed' && (
                     <div className="font-bold" style={{ color: '#C589E8' }}>Forced closure: {business.closedYear}</div>
                   )}
+                  {business.status === 'future' && (
+                    <div className="font-bold" style={{ color: '#8B8B8B' }}>Will be established in {business.establishedYear}</div>
+                  )}
                   <div className="mt-3 pt-3" style={{ borderTop: '4px solid #000000' }}>
                     <div className="p-2" style={{ backgroundColor: getMarkerColor(business.status), border: '2px solid #000000' }}>
                       <span className="font-black uppercase" style={{ color: '#000000' }}>
@@ -625,7 +634,8 @@ const TouchMapSimple: React.FC<TouchMapProps> = ({
                          business.status === 'declining' ? 'Declining' :
                          business.status === 'takenOver' ? 'Taken Over' :
                          business.status === 'closing' ? 'Being Liquidated' :
-                         'Closed'}
+                         business.status === 'closed' ? 'Closed' :
+                         'Not Yet Established'}
                       </span>
                     </div>
                   </div>

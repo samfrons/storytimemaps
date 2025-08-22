@@ -26,7 +26,8 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
   const [isLoadingDetailed, setIsLoadingDetailed] = React.useState(false);
   
   // Debounce rapid timeline changes to prevent flicker
-  const debouncedCurrentDate = useDebounce(currentDate, 150);
+  // Use shorter debounce for better responsiveness during auto-play
+  const debouncedCurrentDate = useDebounce(currentDate, 50);
 
   // Subscribe to fine-grained loading state for this business
   React.useEffect(() => {
@@ -117,10 +118,21 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
   // Determine content based on timeline data availability
   const currentContent = React.useMemo(() => {
     if (story.hasTimelineData && timelineContent && !timelineError) {
-      // Use timeline content (complete replacement)
+      // Use timeline content with translation keys
+      const descriptionKey = (timelineContent as any).descriptionKey;
+      const longDescriptionKey = (timelineContent as any).longDescriptionKey;
+      
+      // Try to translate if keys exist, otherwise use fallback
+      const translatedDescription = descriptionKey ? 
+        t(descriptionKey, { ns: 'business', defaultValue: timelineContent.description }) : 
+        timelineContent.description;
+      const translatedLongDescription = longDescriptionKey ? 
+        t(longDescriptionKey, { ns: 'business', defaultValue: timelineContent.longDescription }) : 
+        timelineContent.longDescription;
+      
       return {
-        description: timelineContent.description || story.description,
-        longDescription: timelineContent.longDescription || story.longDescription,
+        description: translatedDescription || story.description,
+        longDescription: translatedLongDescription || story.longDescription,
         hasTimelineContent: true
       };
     }
@@ -131,7 +143,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
       longDescription: story.longDescription,
       hasTimelineContent: false
     };
-  }, [story, timelineContent, timelineError]);
+  }, [story, timelineContent, timelineError, t]);
 
   // Combine legacy imageUrls with new media array, prioritizing timeline media
   const allMedia = React.useMemo(() => {
@@ -139,12 +151,19 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
     
     // Add timeline media first (highest priority) if available and not in error state
     if (story.hasTimelineData && timelineMedia.length > 0 && !timelineError) {
-      // Convert TimelineMediaItem to MediaItem for compatibility
-      mediaItems.push(...timelineMedia.map(item => ({
-        url: item.url,
-        type: item.type || 'image' as const,
-        caption: item.caption
-      })));
+      // Convert TimelineMediaItem to MediaItem with translated captions
+      mediaItems.push(...timelineMedia.map(item => {
+        const captionKey = (item as any).captionKey;
+        const translatedCaption = captionKey ?
+          t(captionKey, { ns: 'business', defaultValue: item.caption }) :
+          item.caption;
+        
+        return {
+          url: item.url,
+          type: item.type || 'image' as const,
+          caption: translatedCaption
+        };
+      }));
     } else {
       // Add new media array items (higher priority than legacy)
       if (story.media && story.media.length > 0) {
@@ -175,7 +194,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
           <div 
             className={`relative w-full min-h-[12rem] max-h-[24rem] transition-all duration-400 ease-[cubic-bezier(0.4,0.0,0.2,1)] ${
               isTransitioning && contentStage === 'media' 
-                ? 'opacity-20 transform scale-[0.97] brightness-75' 
+                ? 'transform scale-[0.97]' 
                 : 'opacity-100 transform scale-100 brightness-100'
             }`}
             style={{ 
@@ -278,7 +297,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
       
       <div className={`grid grid-cols-1 gap-4 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isTransitioning && (contentStage === 'details' || contentStage === 'description' || contentStage === 'media')
-          ? 'opacity-40 transform translateY(6px) scale-[0.99]' 
+          ? 'transform translateY(6px) scale-[0.99]' 
           : 'opacity-100 transform translateY(0) scale-100'
       }`}>
         <div className="flex items-start gap-3">
@@ -414,7 +433,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
               <span 
                 className={`ml-2 text-xs normal-case transition-all duration-300 ${
                   isTransitioning && contentStage !== 'complete' 
-                    ? 'opacity-40 transform scale-95' 
+                    ? 'transform scale-95' 
                     : 'opacity-100 transform scale-100'
                 }`}
                 style={{ color: 'var(--accent-orange)' }}
@@ -446,14 +465,12 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
           <div 
             className={`transition-all duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
               isTransitioning && (contentStage === 'description' || contentStage === 'media')
-                ? 'opacity-20 transform translateY(12px) scale-[0.98]' 
+                ? 'transform translateY(12px) scale-[0.98]' 
                 : 'opacity-100 transform translateY(0) scale-100'
             }`}
             style={{
-              // Add subtle filter effect for historical document feel during transitions
-              filter: isTransitioning && (contentStage === 'description' || contentStage === 'media')
-                ? 'blur(0.5px) sepia(5%)'
-                : 'none'
+              // No filter effects during transitions
+              filter: 'none'
             }}
           >
             {currentContent.description && (

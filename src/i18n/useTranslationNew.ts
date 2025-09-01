@@ -16,7 +16,24 @@ export const useTranslation = () => {
   const searchParams = useSearchParams();
 
   // Get current language - support en, de, yi
-  const language = (['de', 'yi'].includes(i18n.language) ? i18n.language : 'en') as 'en' | 'de' | 'yi';
+  // Ensure consistent language detection between server and client
+  const getLanguage = (): 'en' | 'de' | 'yi' => {
+    // Check URL params first for SSR consistency
+    const urlLang = searchParams.get('lang');
+    if (urlLang && ['en', 'de', 'yi'].includes(urlLang)) {
+      return urlLang as 'en' | 'de' | 'yi';
+    }
+    
+    // Fall back to i18n.language if available and valid
+    if (i18n && i18n.language && ['de', 'yi'].includes(i18n.language)) {
+      return i18n.language as 'en' | 'de' | 'yi';
+    }
+    
+    // Default to English for SSR consistency
+    return 'en';
+  };
+  
+  const language = getLanguage();
 
   // Switch to specific language
   const switchToLanguage = useCallback((targetLang: 'en' | 'de' | 'yi') => {

@@ -114,6 +114,22 @@
     "switchTo": "English",
     "current": "Deutsch"
   },
+  "common": {
+    "loading": "Laden...",
+    "loadingMap": "Karte wird geladen...",
+    "loadingMore": "Mehr laden...",
+    "unknown": "Unbekannt",
+    "unknownAddress": "Unbekannte Adresse",
+    "close": "Schließen",
+    "error": "Fehler",
+    "registered": "Registriert",
+    "closed": "Geschlossen",
+    "yes": "Ja",
+    "no": "Nein",
+    "menu": "Menü",
+    "search": "Suchen",
+    "filter": "Filtern"
+  },
   "barcharts": {
     "title": "Interaktive Datenvisualisierungen",
     "subtitle": "3D-Kartenerkundung mit Zeitlinienanalyse der Zerstörung jüdischer Geschäfte in Berlin",

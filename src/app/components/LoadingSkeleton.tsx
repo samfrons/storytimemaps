@@ -1,8 +1,11 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from '../../i18n/useTranslation';
 
 const LoadingSkeleton: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="w-full h-full flex">
       {/* Map skeleton */}
@@ -10,7 +13,7 @@ const LoadingSkeleton: React.FC = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-gray-400 border-t-transparent animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-600 dark:text-gray-400 font-mono">Loading map...</p>
+            <p className="text-gray-600 dark:text-gray-400 font-mono">{t('common.loadingMap')}</p>
           </div>
         </div>
       </div>

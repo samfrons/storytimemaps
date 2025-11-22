@@ -114,6 +114,22 @@
     "switchTo": "English",
     "current": "ייִדיש"
   },
+  "common": {
+    "loading": "לאָדן...",
+    "loadingMap": "מאַפּע לאָדן...",
+    "loadingMore": "לאָדן מער...",
+    "unknown": "אומבאַוווּסט",
+    "unknownAddress": "אומבאַוווּסטע אַדרעס",
+    "close": "שליסן",
+    "error": "גרייַז",
+    "registered": "רעגיסטרירט",
+    "closed": "פֿאַרמאַכט",
+    "yes": "יאָ",
+    "no": "ניין",
+    "menu": "מעניו",
+    "search": "זוכן",
+    "filter": "פֿילטער"
+  },
   "businessStates": {
     "active": "Aktiv",
     "declining": "Aropgeeyendik",

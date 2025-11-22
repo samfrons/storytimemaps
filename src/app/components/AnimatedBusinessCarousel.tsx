@@ -124,13 +124,13 @@ const AnimatedBusinessCarousel: React.FC<AnimatedBusinessCarouselProps> = ({ bus
                 <span className="text-[#f5cdb4]">Type:</span> {currentBusiness.business_type}
               </div>
               <div>
-                <span className="text-[#f5cdb4]">Address:</span> {currentBusiness.address}
+                <span style={{ color: 'var(--foreground-muted)' }}>Address:</span> {currentBusiness.address}
               </div>
-              <div className="pt-3 border-t border-[#6b6275]">
-                <span className="text-[#f5cdb4]">Registered:</span> {currentBusiness.registration_date || 'Unknown'}
+              <div className="pt-3 border-t" style={{ borderColor: 'var(--border)' }}>
+                <span style={{ color: 'var(--foreground-muted)' }}>{t('common.registered')}:</span> {currentBusiness.registration_date || t('common.unknown')}
                 {currentBusiness.dissolution_date && (
                   <>
-                    <span className="text-[#f5cdb4] ml-4">Closed:</span> {currentBusiness.dissolution_date}
+                    <span style={{ color: 'var(--foreground-muted)' }} className="ml-4">{t('common.closed')}:</span> {currentBusiness.dissolution_date}
                   </>
                 )}
               </div>

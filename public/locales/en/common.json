@@ -114,6 +114,22 @@
     "switchTo": "Deutsch",
     "current": "English"
   },
+  "common": {
+    "loading": "Loading...",
+    "loadingMap": "Loading map...",
+    "loadingMore": "Loading more...",
+    "unknown": "Unknown",
+    "unknownAddress": "Unknown address",
+    "close": "Close",
+    "error": "Error",
+    "registered": "Registered",
+    "closed": "Closed",
+    "yes": "Yes",
+    "no": "No",
+    "menu": "Menu",
+    "search": "Search",
+    "filter": "Filter"
+  },
   "barcharts": {
     "title": "Interactive Data Visualizations",
     "subtitle": "3D map exploration with timeline analysis of Jewish business destruction in Berlin",

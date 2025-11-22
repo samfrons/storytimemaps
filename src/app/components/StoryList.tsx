@@ -470,7 +470,7 @@ const StoryList: React.FC<StoryListProps> = ({
                 }}
               />
             </div>
-            <p className="text-[10px] font-mono mt-1 opacity-60">Loading more...</p>
+            <p className="text-[10px] font-mono mt-1 opacity-60">{t('common.loadingMore')}</p>
           </div>
         )}
         
@@ -565,7 +565,7 @@ const StoryList: React.FC<StoryListProps> = ({
                   style={{
                     color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
                   }}>
-                    {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
+                    {story.startDate ? new Date(story.startDate).getFullYear() : t('common.unknown')} - {story.endDate === 'Unknown' ? t('common.unknown') : (story.endDate ? new Date(story.endDate).getFullYear() : t('common.unknown'))}
                   </span>
                   {(() => {
                     // First try to extract business type from title (e.g., "Name - Business Type")

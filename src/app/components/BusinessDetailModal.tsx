@@ -130,7 +130,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
               style={{ color: 'var(--foreground-muted)' }}
             >
               <span style={{ color: 'var(--accent-orange)' }}>
-                {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
+                {story.startDate ? new Date(story.startDate).getFullYear() : t('common.unknown')} - {story.endDate === 'Unknown' ? t('common.unknown') : (story.endDate ? new Date(story.endDate).getFullYear() : t('common.unknown'))}
               </span>
               {story.category && (
                 <span 

@@ -57,7 +57,7 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
           name: business.title,
           business_type: business.category,
           address: business.address,
-          registration_date: business.startDate ? new Date(business.startDate).getFullYear().toString() : 'Unknown',
+          registration_date: business.startDate ? new Date(business.startDate).getFullYear().toString() : t('common.unknown'),
           dissolution_date: business.endDate ? new Date(business.endDate).getFullYear().toString() : '',
           category: business.category,
           description: business.description,
@@ -75,11 +75,11 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
       
       selectedBusinesses.push({
         name: props.name,
-        business_type: props.business_type || 'Unknown',
-        address: props.address || 'Unknown address',
-        registration_date: props.registration_date || props.date_range?.split('-')[0] || 'Unknown',
+        business_type: props.business_type || t('common.unknown'),
+        address: props.address || t('common.unknownAddress'),
+        registration_date: props.registration_date || props.date_range?.split('-')[0] || t('common.unknown'),
         dissolution_date: props.dissolution_date || props.liquidation_date || '',
-        category: props.category || 'Unknown'
+        category: props.category || t('common.unknown')
       });
       
       categories.add(props.category);
@@ -98,7 +98,7 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
       const props = feature.properties;
       
       // Count categories
-      const category = props.category || 'Unknown';
+      const category = props.category || t('common.unknown');
       categories[category] = (categories[category] || 0) + 1;
       
       // Count by registration year

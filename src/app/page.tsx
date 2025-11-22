@@ -53,24 +53,24 @@ function MapPageContent() {
     }
   }, [mounted, searchParams, setTheme]); // Re-run when URL changes
   
-  // Handle non-theme URL parameters
+  // Handle non-theme URL parameters (about and intro logic only)
   useEffect(() => {
     if (!mounted) return;
-    
+
     // Check for about parameter
     const aboutParam = searchParams.get('about');
     if (aboutParam === 'true') {
       setShowInfo(true);
       setShowIntro(false);
     }
-    
+
     // Show intro only on root page without significant params AND if not explicitly closed
     // Don't consider language/theme params as "significant" for intro display
     const significantParams = Array.from(searchParams.keys()).filter(
       key => key !== 'lang' && key !== 'theme'
     );
     const hasSignificantParams = significantParams.length > 0;
-    
+
     if (hasSignificantParams) {
       setShowIntro(false);
     } else if (!introExplicitlyClosed) {
@@ -78,6 +78,7 @@ function MapPageContent() {
       setShowIntro(true);
     }
   }, [searchParams, mounted, introExplicitlyClosed]);
+
   const {
     visibleStories,
     activeStoryId,
@@ -94,6 +95,18 @@ function MapPageContent() {
     setViewMode,
     storiesWithDetailCount
   } = useStoryMapLogic();
+
+  // Handle business parameter (from QR codes) - must be after useStoryMapLogic
+  useEffect(() => {
+    if (!mounted) return;
+
+    const businessParam = searchParams.get('business');
+    if (businessParam) {
+      setActiveStoryId(businessParam);
+      setShowIntro(false);
+      setShowInfo(false);
+    }
+  }, [searchParams, mounted, setActiveStoryId]);
 
 
 

@@ -1,0 +1,72 @@
+{
+  "generated": "2025-11-22T16:31:14.210Z",
+  "baseUrl": "https://storytimemaps.com",
+  "qrOptions": {
+    "errorCorrectionLevel": "H",
+    "type": "svg",
+    "margin": 4,
+    "width": 1000,
+    "color": {
+      "dark": "#000000",
+      "light": "#FFFFFF"
+    }
+  },
+  "businesses": [
+    {
+      "id": "1",
+      "name": "Elias Braun - Tailor Shop",
+      "address": "Rosenthaler Straße 40, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=1",
+      "qrFile": "business-1-elias-braun-tailor-shop.svg"
+    },
+    {
+      "id": "2",
+      "name": "Breslauer Brothers Department Store",
+      "address": "Unter den Linden 15, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=2",
+      "qrFile": "business-2-breslauer-brothers-department-store.svg"
+    },
+    {
+      "id": "3",
+      "name": "Deutsches Theater Café",
+      "address": "Schumannstraße 13a, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=3",
+      "qrFile": "business-3-deutsches-theater-caf.svg"
+    },
+    {
+      "id": "4",
+      "name": "Ebro Textiles",
+      "address": "Alexanderstraße 125, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=4",
+      "qrFile": "business-4-ebro-textiles.svg"
+    },
+    {
+      "id": "5",
+      "name": "Hoxter & Sons Bookshop",
+      "address": "Oranienburger Straße 28, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=5",
+      "qrFile": "business-5-hoxter-sons-bookshop.svg"
+    },
+    {
+      "id": "6",
+      "name": "Pelz Furrier",
+      "address": "Friedrichstraße 180, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=6",
+      "qrFile": "business-6-pelz-furrier.svg"
+    },
+    {
+      "id": "7",
+      "name": "Product X Manufacturing",
+      "address": "Warschauer Straße 45, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=7",
+      "qrFile": "business-7-product-x-manufacturing.svg"
+    },
+    {
+      "id": "8",
+      "name": "Eggs & Dairy Distributors",
+      "address": "Hackescher Markt 12, Berlin, Germany",
+      "url": "https://storytimemaps.com/?business=8",
+      "qrFile": "business-8-eggs-dairy-distributors.svg"
+    }
+  ]
+}

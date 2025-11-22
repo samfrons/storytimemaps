@@ -2,8 +2,13 @@
 const nextConfig = {
   // App Router doesn't use i18n config - we handle it client-side
   transpilePackages: ['mapbox-gl', 'react-map-gl'],
-  
+
+  // Enable static export for mobile builds
+  output: process.env.MOBILE_BUILD === 'true' ? 'export' : undefined,
+
   images: {
+    // Use unoptimized images for mobile builds (static export requirement)
+    unoptimized: process.env.MOBILE_BUILD === 'true',
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

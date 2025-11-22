@@ -5,10 +5,24 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:mobile": "MOBILE_BUILD=true next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cap:init": "npx cap init",
+    "cap:add:ios": "npx cap add ios",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npm run build:mobile && npx cap sync",
+    "cap:open:ios": "npx cap open ios",
+    "cap:open:android": "npx cap open android",
+    "cap:run:ios": "npm run cap:sync && npx cap run ios",
+    "cap:run:android": "npm run cap:sync && npx cap run android",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@types/mapbox-gl": "^3.4.1",
     "@types/supercluster": "^7.1.3",
     "i18next": "^25.4.0",

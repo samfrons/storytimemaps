@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
+// Required for static export (mobile builds)
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json');
 
 interface Metadata {

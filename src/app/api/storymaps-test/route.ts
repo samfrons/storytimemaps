@@ -3,6 +3,10 @@ import fs from 'fs/promises';
 import path from 'path';
 import { inferBusinessCategory } from '../../../utils/businessTranslations';
 
+// Required for static export (mobile builds)
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps_test_full.json');
 const STORIES_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json');
 const DEFAULT_PAGE_SIZE = 10000;  // Load all businesses by default for testing

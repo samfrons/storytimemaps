@@ -7,6 +7,24 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* Native mobile safe areas (iOS notch, Android navigation) */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+}
+
+/* Platform-specific viewport handling */
+.platform-ios,
+.platform-android {
+  /* Ensure content respects safe areas on mobile */
+  padding-top: var(--sat);
+  padding-right: var(--sar);
+  padding-bottom: var(--sab);
+  padding-left: var(--sal);
+}
+
 /* Default/Moody Theme */
 :root,
 [data-theme="moody"] {

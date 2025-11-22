@@ -1,25 +1,36 @@
 import './globals.css'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import { I18nProvider } from '../i18n/I18nProvider'
 
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-  preload: true,
-  weight: ['400', '500', '600']
-})
+// Conditionally import Google Fonts only for non-mobile builds
+// For mobile builds (MOBILE_BUILD=true), we'll use system fonts
+const isMobileBuild = process.env.MOBILE_BUILD === 'true';
 
-const spaceMono = Space_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-space-mono',
-  preload: true,
-  weight: ['400', '700']
-})
+let inter: any = null;
+let spaceMono: any = null;
+
+if (!isMobileBuild) {
+  // Only import Google Fonts for web builds
+  const { Inter, Space_Mono } = require('next/font/google');
+
+  inter = Inter({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-inter',
+    preload: true,
+    weight: ['400', '500', '600']
+  });
+
+  spaceMono = Space_Mono({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-space-mono',
+    preload: true,
+    weight: ['400', '700']
+  });
+}
 
 export const metadata: Metadata = {
   title: 'Jewish Businesses in Berlin 1900-1945',
@@ -50,8 +61,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // For mobile builds, use system font classes instead of Google Font variables
+  const fontClasses = isMobileBuild
+    ? 'font-sans'
+    : `${inter?.variable || ''} ${spaceMono?.variable || ''}`;
+
   return (
-    <html lang="en" className={`${inter.variable} ${spaceMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={fontClasses} suppressHydrationWarning>
       <head>
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//api.mapbox.com" />

@@ -2,24 +2,28 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 
-// Mock the translation hook
+// Mock the translation hook with proper state management
 const mockSwitchToLanguage = vi.fn();
-let mockLanguage = 'en';
+const languageState = {
+  current: 'en'
+};
 
 vi.mock('../../i18n/useTranslation', () => ({
   useTranslation: () => ({
-    language: mockLanguage,
+    language: languageState.current,
     switchToLanguage: (lang: string) => {
-      mockLanguage = lang;
+      languageState.current = lang;
       mockSwitchToLanguage(lang);
     },
     t: (key: string) => key,
   }),
 }));
 
+// Import after mock
+import { useTranslation } from '../../i18n/useTranslation';
+
 // Simple language toggle component for testing
 const LanguageToggle: React.FC = () => {
-  const { useTranslation } = require('../../i18n/useTranslation');
   const { language, switchToLanguage } = useTranslation();
 
   return (
@@ -49,7 +53,7 @@ const LanguageToggle: React.FC = () => {
 
 describe('Language Toggle Component', () => {
   beforeEach(() => {
-    mockLanguage = 'en';
+    languageState.current = 'en';
     mockSwitchToLanguage.mockClear();
   });
 
@@ -93,7 +97,7 @@ describe('Language Toggle Component', () => {
     });
 
     it('should switch back to English when English button is clicked', async () => {
-      mockLanguage = 'de';
+      languageState.current = 'de';
       render(<LanguageToggle />);
 
       const englishButton = screen.getByTestId('switch-to-en');

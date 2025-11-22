@@ -2,15 +2,17 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 
-// Mock next-themes
+// Mock next-themes with proper state management
 const mockSetTheme = vi.fn();
-let currentTheme = 'moody';
+const themeState = {
+  current: 'moody'
+};
 
 vi.mock('next-themes', () => ({
   useTheme: () => ({
-    theme: currentTheme,
+    theme: themeState.current,
     setTheme: (newTheme: string) => {
-      currentTheme = newTheme;
+      themeState.current = newTheme;
       mockSetTheme(newTheme);
     },
     themes: ['moody', 'hot', 'cold', 'warm', 'cool', 'bauhaus', 'art-nouveau'],
@@ -18,9 +20,11 @@ vi.mock('next-themes', () => ({
   ThemeProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
+// Import after mock is set up
+import { useTheme } from 'next-themes';
+
 // Simple test component that uses theme
 const ThemedComponent: React.FC = () => {
-  const { useTheme } = require('next-themes');
   const { theme, setTheme, themes } = useTheme();
 
   return (
@@ -28,7 +32,7 @@ const ThemedComponent: React.FC = () => {
       <div style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
         <p>Current theme: {theme}</p>
         <div>
-          {themes.map((t: string) => (
+          {themes?.map((t: string) => (
             <button
               key={t}
               onClick={() => setTheme(t)}
@@ -45,7 +49,7 @@ const ThemedComponent: React.FC = () => {
 
 describe('Theme Switching Functionality', () => {
   beforeEach(() => {
-    currentTheme = 'moody';
+    themeState.current = 'moody';
     mockSetTheme.mockClear();
   });
 
@@ -233,6 +237,7 @@ describe('Theme Consistency', () => {
     const button = container.querySelector('button');
     const style = button?.getAttribute('style');
 
-    expect(style).toContain('outline: none');
+    // Check that outline is removed (can be 'none' or broken down into color/style/width)
+    expect(style).toMatch(/outline[:-].*none/);
   });
 });

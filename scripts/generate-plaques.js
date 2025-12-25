@@ -18,7 +18,7 @@ const OUTPUT_DIR = path.join(__dirname, '../public/plaques');
 
 // Plaque dimensions - horizontal orientation
 const PLAQUE_WIDTH = 800;
-const PLAQUE_HEIGHT = 500;
+const PLAQUE_HEIGHT = 450;
 
 // Style 1: Berlin Gedenktafel (white/blue)
 const BERLIN_COLORS = {
@@ -75,22 +75,6 @@ function extractBusinessType(business) {
 }
 
 /**
- * Format date for display (MM.YYYY format)
- */
-function formatDate(dateStr) {
-  if (!dateStr || dateStr === 'Unknown') return null;
-  try {
-    const date = new Date(dateStr);
-    if (isNaN(date.getTime())) return null;
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}.${year}`;
-  } catch {
-    return null;
-  }
-}
-
-/**
  * Get just the year from a date string
  */
 function getYear(dateStr) {
@@ -115,7 +99,7 @@ function formatAddress(address) {
 /**
  * Generate QR code as SVG path data
  */
-async function generateQRCodeSVG(url, size = 100) {
+async function generateQRCodeSVG(url, size = 140) {
   try {
     const svgString = await QRCode.toString(url, {
       type: 'svg',
@@ -147,6 +131,16 @@ function escapeXML(str) {
 }
 
 /**
+ * Calculate font size for business name based on length
+ */
+function getNameFontSize(name) {
+  if (name.length <= 20) return 36;
+  if (name.length <= 28) return 32;
+  if (name.length <= 35) return 28;
+  return 24;
+}
+
+/**
  * Generate Berlin-style SVG plaque (white with blue text)
  */
 async function generateBerlinStyleSVG(business) {
@@ -158,7 +152,7 @@ async function generateBerlinStyleSVG(business) {
   const dateRange = startYear && endYear ? `${startYear} – ${endYear}` : (startYear || endYear || '');
 
   const businessUrl = `${BASE_URL}/?id=${business.id}`;
-  const qrSvg = await generateQRCodeSVG(businessUrl, 90);
+  const qrSvg = await generateQRCodeSVG(businessUrl, 140);
 
   let qrContent = '';
   if (qrSvg) {
@@ -167,6 +161,10 @@ async function generateBerlinStyleSVG(business) {
       qrContent = match[1];
     }
   }
+
+  const nameFontSize = getNameFontSize(name);
+  const textAreaWidth = PLAQUE_WIDTH - 230; // Leave space for QR code
+  const textCenterX = 50 + (textAreaWidth / 2);
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${PLAQUE_WIDTH} ${PLAQUE_HEIGHT}" width="${PLAQUE_WIDTH}" height="${PLAQUE_HEIGHT}">
@@ -190,42 +188,42 @@ async function generateBerlinStyleSVG(business) {
         fill="${BERLIN_COLORS.background}"/>
 
   <!-- Business Type (top, smaller) -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="70" class="text"
+  <text x="${textCenterX}" y="65" text-anchor="middle" class="text"
         font-size="16" fill="${BERLIN_COLORS.textMuted}" font-style="italic">
     ${businessType}
   </text>
 
   <!-- Business Name (large, centered) -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="130" class="title"
-        font-size="36" fill="${BERLIN_COLORS.text}" font-weight="600" letter-spacing="1">
-    ${name.length > 30 ? name.substring(0, 27) + '...' : name}
+  <text x="${textCenterX}" y="115" text-anchor="middle" class="title"
+        font-size="${nameFontSize}" fill="${BERLIN_COLORS.text}" font-weight="600">
+    ${name}
   </text>
 
   <!-- Dates -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="180" class="text"
+  <text x="${textCenterX}" y="165" text-anchor="middle" class="text"
         font-size="22" fill="${BERLIN_COLORS.text}">
     ${dateRange}
   </text>
 
   <!-- Address -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="240" class="text"
+  <text x="${textCenterX}" y="215" text-anchor="middle" class="text"
         font-size="18" fill="${BERLIN_COLORS.textMuted}">
     ${address}
   </text>
 
   <!-- Divider line -->
-  <line x1="60" y1="280" x2="${PLAQUE_WIDTH - 180}" y2="280"
-        stroke="${BERLIN_COLORS.textMuted}" stroke-width="0.5" opacity="0.5"/>
+  <line x1="80" y1="250" x2="${textAreaWidth - 30}" y2="250"
+        stroke="${BERLIN_COLORS.textMuted}" stroke-width="0.5" opacity="0.4"/>
 
   <!-- URL at bottom -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="450" class="url"
-        font-size="14" fill="${BERLIN_COLORS.textMuted}" letter-spacing="1">
+  <text x="${textCenterX}" y="400" text-anchor="middle" class="url"
+        font-size="13" fill="${BERLIN_COLORS.textMuted}" letter-spacing="1">
     storytimemaps.com
   </text>
 
   <!-- QR Code Section (right side) -->
-  <g transform="translate(${PLAQUE_WIDTH - 150}, ${PLAQUE_HEIGHT / 2 - 60})">
-    <rect x="-10" y="-10" width="120" height="120" fill="#ffffff" stroke="${BERLIN_COLORS.textMuted}" stroke-width="0.5"/>
+  <g transform="translate(${PLAQUE_WIDTH - 190}, ${PLAQUE_HEIGHT / 2 - 85})">
+    <rect x="-8" y="-8" width="156" height="156" fill="#ffffff" stroke="${BERLIN_COLORS.textMuted}" stroke-width="0.5"/>
     <g transform="translate(0, 0)">
       ${qrContent}
     </g>
@@ -248,7 +246,7 @@ async function generateBrassStyleSVG(business) {
   const dateRange = startYear && endYear ? `${startYear} – ${endYear}` : (startYear || endYear || '');
 
   const businessUrl = `${BASE_URL}/?id=${business.id}`;
-  const qrSvg = await generateQRCodeSVG(businessUrl, 90);
+  const qrSvg = await generateQRCodeSVG(businessUrl, 140);
 
   let qrContent = '';
   if (qrSvg) {
@@ -257,6 +255,10 @@ async function generateBrassStyleSVG(business) {
       qrContent = match[1];
     }
   }
+
+  const nameFontSize = getNameFontSize(name);
+  const textAreaWidth = PLAQUE_WIDTH - 230;
+  const textCenterX = 50 + (textAreaWidth / 2);
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${PLAQUE_WIDTH} ${PLAQUE_HEIGHT}" width="${PLAQUE_WIDTH}" height="${PLAQUE_HEIGHT}">
@@ -274,19 +276,10 @@ async function generateBrassStyleSVG(business) {
       <stop offset="75%" style="stop-color:#b8960f"/>
       <stop offset="100%" style="stop-color:#c9a227"/>
     </linearGradient>
-    <!-- Subtle texture overlay -->
-    <filter id="noise">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
-      <feColorMatrix type="saturate" values="0"/>
-      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
-    </filter>
   </defs>
 
   <!-- Main brass background -->
   <rect width="${PLAQUE_WIDTH}" height="${PLAQUE_HEIGHT}" fill="url(#brassGradient)"/>
-
-  <!-- Subtle worn texture overlay -->
-  <rect width="${PLAQUE_WIDTH}" height="${PLAQUE_HEIGHT}" fill="url(#brassGradient)" opacity="0.95"/>
 
   <!-- Corner screws -->
   <circle cx="25" cy="25" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
@@ -299,38 +292,38 @@ async function generateBrassStyleSVG(business) {
   <circle cx="${PLAQUE_WIDTH - 25}" cy="${PLAQUE_HEIGHT - 25}" r="3" fill="#5a4a35"/>
 
   <!-- Business Type (top, smaller) -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="80" class="text"
+  <text x="${textCenterX}" y="70" text-anchor="middle" class="text"
         font-size="16" fill="${BRASS_COLORS.textMuted}" font-style="italic">
     ${businessType}
   </text>
 
   <!-- Business Name (large, centered) -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="150" class="title"
-        font-size="38" fill="${BRASS_COLORS.text}" font-weight="600">
-    ${name.length > 30 ? name.substring(0, 27) + '...' : name}
+  <text x="${textCenterX}" y="125" text-anchor="middle" class="title"
+        font-size="${nameFontSize}" fill="${BRASS_COLORS.text}" font-weight="600">
+    ${name}
   </text>
 
   <!-- Dates -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="205" class="text"
+  <text x="${textCenterX}" y="175" text-anchor="middle" class="text"
         font-size="24" fill="${BRASS_COLORS.text}">
     ${dateRange}
   </text>
 
   <!-- Address -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="270" class="text"
+  <text x="${textCenterX}" y="225" text-anchor="middle" class="text"
         font-size="18" fill="${BRASS_COLORS.textMuted}">
     ${address}
   </text>
 
   <!-- URL at bottom -->
-  <text x="${PLAQUE_WIDTH / 2 - 60}" y="450" class="url"
-        font-size="14" fill="${BRASS_COLORS.textMuted}" letter-spacing="1">
+  <text x="${textCenterX}" y="405" text-anchor="middle" class="url"
+        font-size="13" fill="${BRASS_COLORS.textMuted}" letter-spacing="1">
     storytimemaps.com
   </text>
 
   <!-- QR Code Section (right side) -->
-  <g transform="translate(${PLAQUE_WIDTH - 150}, ${PLAQUE_HEIGHT / 2 - 60})">
-    <rect x="-10" y="-10" width="120" height="120" fill="#ffffff" stroke="${BRASS_COLORS.text}" stroke-width="1"/>
+  <g transform="translate(${PLAQUE_WIDTH - 190}, ${PLAQUE_HEIGHT / 2 - 85})">
+    <rect x="-8" y="-8" width="156" height="156" fill="#ffffff" stroke="${BRASS_COLORS.text}" stroke-width="1"/>
     <g transform="translate(0, 0)">
       ${qrContent}
     </g>

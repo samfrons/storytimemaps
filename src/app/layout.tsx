@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import { I18nProvider } from '../i18n/I18nProvider'
+import { AuthProvider } from '../contexts/AuthContext'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -162,7 +163,9 @@ export default function RootLayout({
             storageKey="storymap-theme"
             forcedTheme={undefined}
           >
-            {children}
+            <AuthProvider>
+              {children}
+            </AuthProvider>
           </ThemeProvider>
         </I18nProvider>
       </body>

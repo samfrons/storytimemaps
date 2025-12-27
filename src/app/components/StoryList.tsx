@@ -5,6 +5,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
+import { useRouter, useSearchParams } from 'next/navigation';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';
 import BusinessDetailModal from './BusinessDetailModal';
@@ -39,6 +40,8 @@ const StoryList: React.FC<StoryListProps> = ({
   const [modalOpen, setModalOpen] = useState(false);
   const { theme } = useTheme();
   const { t, language } = useTranslation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,6 +59,11 @@ const StoryList: React.FC<StoryListProps> = ({
     setOriginRect(rect);
     setSelectedStory(story);
     setModalOpen(true);
+
+    // Update URL with business id for deep linking
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('id', story.id);
+    router.replace(`/?${params.toString()}`, { scroll: false });
   };
 
   const closeModal = () => {
@@ -64,6 +72,12 @@ const StoryList: React.FC<StoryListProps> = ({
       setSelectedStory(null);
       setOriginRect(null);
     }, 600);
+
+    // Remove id from URL when closing modal
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('id');
+    const queryString = params.toString();
+    router.replace(queryString ? `/?${queryString}` : '/', { scroll: false });
   };
 
   const handleDropdownToggle = () => {

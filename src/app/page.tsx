@@ -57,21 +57,21 @@ function MapPageContent() {
   // Handle non-theme URL parameters
   useEffect(() => {
     if (!mounted) return;
-    
+
     // Check for about parameter
     const aboutParam = searchParams.get('about');
     if (aboutParam === 'true') {
       setShowInfo(true);
       setShowIntro(false);
     }
-    
+
     // Show intro only on root page without significant params AND if not explicitly closed
     // Don't consider language/theme params as "significant" for intro display
     const significantParams = Array.from(searchParams.keys()).filter(
       key => key !== 'lang' && key !== 'theme'
     );
     const hasSignificantParams = significantParams.length > 0;
-    
+
     if (hasSignificantParams) {
       setShowIntro(false);
     } else if (!introExplicitlyClosed) {
@@ -79,6 +79,7 @@ function MapPageContent() {
       setShowIntro(true);
     }
   }, [searchParams, mounted, introExplicitlyClosed]);
+
   const {
     visibleStories,
     activeStoryId,
@@ -96,7 +97,25 @@ function MapPageContent() {
     storiesWithDetailCount
   } = useStoryMapLogic();
 
+  // State for deep link auto-open
+  const [deepLinkId, setDeepLinkId] = useState<string | null>(null);
 
+  // Handle ?id= parameter for deep linking to specific businesses
+  useEffect(() => {
+    if (!mounted || isLoading) return;
+
+    const idParam = searchParams.get('id');
+    if (idParam) {
+      // Set to stories mode and select the business
+      setViewMode('stories');
+      setActiveStoryId(idParam);
+      handleMarkerClick(idParam);
+      setShowIntro(false);
+      setIntroExplicitlyClosed(true);
+      // Set deep link ID to auto-open the detail modal
+      setDeepLinkId(idParam);
+    }
+  }, [mounted, isLoading, searchParams, setViewMode, setActiveStoryId, handleMarkerClick]);
 
   const handleStoryClick = (storyId: string) => {
     setActiveStoryId(storyId);
@@ -457,6 +476,7 @@ function MapPageContent() {
               currentDate={currentDate}
               setCurrentDate={setCurrentDate}
               onStoryClick={handleStoryClick}
+              autoOpenDetailId={deepLinkId}
             />
           </div>
           

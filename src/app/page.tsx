@@ -97,6 +97,9 @@ function MapPageContent() {
     storiesWithDetailCount
   } = useStoryMapLogic();
 
+  // State for deep link auto-open
+  const [deepLinkId, setDeepLinkId] = useState<string | null>(null);
+
   // Handle ?id= parameter for deep linking to specific businesses
   useEffect(() => {
     if (!mounted || isLoading) return;
@@ -109,6 +112,8 @@ function MapPageContent() {
       handleMarkerClick(idParam);
       setShowIntro(false);
       setIntroExplicitlyClosed(true);
+      // Set deep link ID to auto-open the detail modal
+      setDeepLinkId(idParam);
     }
   }, [mounted, isLoading, searchParams, setViewMode, setActiveStoryId, handleMarkerClick]);
 
@@ -471,6 +476,7 @@ function MapPageContent() {
               currentDate={currentDate}
               setCurrentDate={setCurrentDate}
               onStoryClick={handleStoryClick}
+              autoOpenDetailId={deepLinkId}
             />
           </div>
           

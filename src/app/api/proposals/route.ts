@@ -14,6 +14,14 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
 
+    // Return error if Supabase is not configured
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Authentication service is not configured' },
+        { status: 503 }
+      );
+    }
+
     // Check if user is authenticated
     const {
       data: { user },
@@ -67,6 +75,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
+
+    // Return error if Supabase is not configured
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Authentication service is not configured' },
+        { status: 503 }
+      );
+    }
 
     // Check if user is authenticated
     const {

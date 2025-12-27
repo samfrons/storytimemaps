@@ -4,15 +4,26 @@ import { NextResponse, type NextRequest } from 'next/server';
 /**
  * Supabase middleware for refreshing auth sessions
  * This should be used in middleware.ts to keep sessions fresh
+ * If Supabase is not configured, this middleware passes through without doing anything
  */
 export async function updateSession(request: NextRequest) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // If Supabase is not configured, just pass through
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return NextResponse.next({
+      request,
+    });
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -45,11 +56,10 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith(route)
   );
 
-  // Redirect to login if accessing protected route while not authenticated
+  // Redirect to home if accessing protected route while not authenticated
   if (!user && isProtectedRoute) {
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    url.searchParams.set('redirectTo', request.nextUrl.pathname);
+    url.pathname = '/';
     return NextResponse.redirect(url);
   }
 

@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = useMemo(() => createClient(), []);
 
   const fetchProfile = async (userId: string) => {
+    if (!supabase) return;
     try {
       const { data, error } = await supabase
         .from('user_profiles')
@@ -43,12 +44,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const refreshProfile = async () => {
-    if (user) {
+    if (user && supabase) {
       await fetchProfile(user.id);
     }
   };
 
   useEffect(() => {
+    // If Supabase is not configured, just finish loading
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -77,6 +84,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [supabase]);
 
   const signUp = async (email: string, password: string, displayName?: string) => {
+    if (!supabase) {
+      return { error: new Error('Authentication is not configured') };
+    }
     try {
       const { error } = await supabase.auth.signUp({
         email,
@@ -94,6 +104,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) {
+      return { error: new Error('Authentication is not configured') };
+    }
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -106,7 +119,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
   };
 
   const value = useMemo(

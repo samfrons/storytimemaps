@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 interface ExhibitTimelineProps {
   minDate: Date;
@@ -27,27 +27,37 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
   const [autoPlay, setAutoPlay] = useState(false);
   const [speed, setSpeed] = useState(1);
   const [hoveredYear, setHoveredYear] = useState<number | null>(null);
+  const currentDateRef = useRef(currentDate);
+  
+  // Keep ref in sync with prop
+  useEffect(() => {
+    currentDateRef.current = currentDate;
+  }, [currentDate]);
 
   // Auto-play functionality
   useEffect(() => {
     if (!autoPlay || !isPlaying) return;
 
     const interval = setInterval(() => {
-      onChange(new Date(
+      // Use ref to get current date and avoid stale closure
+      const current = currentDateRef.current;
+      const newDate = new Date(
         Math.min(
-          currentDate.getTime() + (30 * 24 * 60 * 60 * 1000 * speed), // Add days based on speed
+          current.getTime() + (30 * 24 * 60 * 60 * 1000 * speed), // Add days based on speed
           maxDate.getTime()
         )
-      ));
+      );
       
       // Loop back to start when reaching the end
-      if (currentDate >= maxDate) {
+      if (newDate >= maxDate) {
         onChange(minDate);
+      } else {
+        onChange(newDate);
       }
     }, 100);
 
     return () => clearInterval(interval);
-  }, [autoPlay, currentDate, maxDate, minDate, onChange, speed, isPlaying]);
+  }, [autoPlay, maxDate, minDate, onChange, speed, isPlaying]);
 
   const handleSliderChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const timestamp = parseInt(e.target.value);

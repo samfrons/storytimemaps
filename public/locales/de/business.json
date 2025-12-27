@@ -104,5 +104,34 @@
       "researchData": "Forschungsdaten",
       "genealogy": "Genealogie"
     }
+  },
+  "timeline": {
+    "eliasBraun": {
+      "period1": {
+        "description": "Ein florierendes Schneidergeschäft im Herzen der belebten Rosenthaler Straße in Berlin. Elias Braun und seine Familie haben sich einen respektierten Ruf für feine Herrenkleidung erarbeitet und bedienen sowohl jüdische als auch nichtjüdische Kunden aus der ganzen Stadt.",
+        "longDescription": "Das 1925 gegründete Schneidergeschäft von Elias Braun wurde schnell zu einem Eckpfeiler des Geschäftsviertels in der Rosenthaler Straße. Das Geschäft spezialisierte sich auf maßgeschneiderte Herrenanzüge und zog Kunden aus Berlins wachsender Mittelschicht an. Elias, ausgebildet in traditionellen Schneidertechniken, beschäftigte drei qualifizierte Näherinnen und hatte einen stetigen Strom von Aufträgen. Die Familie wohnte über dem Geschäft, die Werkstatt befand sich im Erdgeschoss und die Schaufenster zeigten die neueste Mode. In dieser Zeit florierte das Geschäft, als sich Berlins Wirtschaft von der Nachkriegsrezession erholte.",
+        "media1": {
+          "caption": "Das prosperierende Schneidergeschäft in seiner Blütezeit, 1920er Jahre"
+        },
+        "media2": {
+          "caption": "Elias Braun mit seiner Familie und Angestellten, ca. 1930"
+        }
+      },
+      "period2": {
+        "description": "Als die Nazi-Verfolgung sich intensiviert, kämpft das Schneidergeschäft unter zunehmenden Einschränkungen und Boykotten. Nichtjüdische Kunden bleiben fern, und neue Vorschriften erschweren der Familie Braun zunehmend die Geschäftsführung.",
+        "longDescription": "Nach Hitlers Machtergreifung im Januar 1933 sah sich Elias Brauns Geschäft sofortigen Herausforderungen gegenüber. Der Nazi-Boykott jüdischer Geschäfte im April 1933 markierte den Beginn systematischer wirtschaftlicher Verfolgung. Stammkunden blieben aus Angst vor der Verbindung mit jüdischen Geschäften fern. Neue Vorschriften erforderten spezielle Genehmigungen für jüdische Geschäfte, und Elias war gezwungen, seine nichtjüdischen Angestellten zu entlassen. Die Familie kämpfte darum, das Geschäft aufrechtzuerhalten, da ihr Kundenstamm hauptsächlich auf jüdische Kunden schrumpfte. Fenster wurden gelegentlich mit antisemitischen Graffiti markiert, und das einst florierende Geschäft wurde zu einem Schatten seiner selbst.",
+        "media1": {
+          "caption": "Das Geschäft während der Boykottzeit - leere Straßen und markierte Fenster"
+        }
+      },
+      "period3": {
+        "description": "Das Schneidergeschäft wird während der Kristallnacht zerstört. Fenster werden zerschlagen, Inventar gestohlen, und die Familie ist zur Flucht gezwungen. Das Geschäft, das über ein Jahrzehnt der Berliner Gemeinschaft diente, ist für immer verloren.",
+        "longDescription": "In der Nacht vom 9. auf den 10. November 1938, während der koordinierten Angriffe, die als Kristallnacht bekannt sind, wurde Elias Brauns Schneidergeschäft von SA-Sturmtruppen und örtlichen Zivilisten angegriffen. Die Schaufenster wurden eingeschlagen, Stoffballen wurden zerstört oder gestohlen, und Nähmaschinen wurden irreparabel beschädigt. Die Familie floh aus Angst um ihre Sicherheit noch in derselben Nacht aus ihrer Wohnung über dem Geschäft. Elias versuchte Tage später zurückzukehren, um zu retten, was übrig geblieben war, fand aber die Räumlichkeiten vollständig geplündert vor. Das Gebäude wurde später von den Nazi-Behörden beschlagnahmt und der Raum wurde schließlich in ein nichtjüdisches Geschäft umgewandelt. Die jahrzehntelange harte Arbeit und Gemeinschaftspräsenz der Familie Braun wurde in einer einzigen Nacht der Gewalt ausgelöscht.",
+        "media1": {
+          "caption": "Nachwirkungen der Kristallnacht - das zerstörte Schneidergeschäft, November 1938"
+        }
+      }
+    },
+    "changeIndicator": "Inhalt ändert sich am {date}"
   }
 }

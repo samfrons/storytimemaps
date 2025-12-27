@@ -1,0 +1,35 @@
+{
+  "businessId": "business_00001",
+  "timeline": [
+    {
+      "startDate": "1917-01-01",
+      "endDate": "1925-12-31",
+      "description": "A industrial gas production company in Berlin's industrial district. The AG für Brennstoffvergasung operated during the early industrial boom period, specializing in fuel gasification technology.",
+      "longDescription": "Founded in 1917 during World War I, the AG für Brennstoffvergasung was established in response to Germany's need for alternative fuel production methods. Located in Gervinusstraße, the company pioneered gasification techniques that converted solid fuels into gas form for industrial use. The facility employed skilled engineers and workers, contributing to Berlin's industrial development during the challenging war and post-war years. The company's operations expanded rapidly as demand for alternative energy sources grew throughout the early 1920s.",
+      "media": [
+        {
+          "url": "/images/industrial/gas-plant-1920.webp",
+          "caption": "Industrial gas production facility, circa 1920",
+          "type": "image",
+          "startDate": "1917-01-01",
+          "endDate": "1925-12-31"
+        }
+      ]
+    },
+    {
+      "startDate": "1926-01-01",
+      "endDate": "1934-12-31",
+      "description": "Economic pressures and technological changes begin to affect the gasification industry. The company struggles to compete with newer energy technologies and faces financial difficulties.",
+      "longDescription": "By the mid-1920s, the AG für Brennstoffvergasung faced increasing challenges as new energy technologies emerged and economic conditions worsened. The company attempted to modernize its facilities and expand into new markets, but competition from electric power and improved coal processing methods reduced demand for gasification services. Despite efforts to adapt, the company's financial position deteriorated throughout the late 1920s and early 1930s. The facility continued operations but with reduced capacity and workforce, eventually closing its doors in 1934 as the industrial landscape of Berlin continued to evolve.",
+      "media": [
+        {
+          "url": "/images/industrial/decline-1930.webp",
+          "caption": "Company facilities during economic decline, 1930s",
+          "type": "image",
+          "startDate": "1926-01-01",
+          "endDate": "1934-12-31"
+        }
+      ]
+    }
+  ]
+}

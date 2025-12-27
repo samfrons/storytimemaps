@@ -1,0 +1,57 @@
+{
+  "businessId": "2", 
+  "timeline": [
+    {
+      "startDate": "1920-03-15",
+      "endDate": "1933-01-30",
+      "description": "One of Berlin's most successful Jewish-owned department stores, the Breslauer Brothers establishment on Unter den Linden represents the height of German-Jewish commercial success in the Weimar era.",
+      "longDescription": "Founded in March 1920 by brothers Marcus and Samuel Breslauer, this department store quickly became a landmark on Berlin's most prestigious boulevard. The four-story building housed departments for clothing, household goods, furniture, and luxury items. The brothers employed over 150 staff members and pioneered innovative retail practices, including fixed pricing and seasonal sales. Their store attracted customers from across Berlin and neighboring cities, becoming a symbol of German-Jewish integration and commercial success. The elegant Art Deco facade and spacious interior made shopping an experience rather than merely a transaction.",
+      "media": [
+        {
+          "url": "/images/breslaur/breslaur1.webp",
+          "caption": "The grand opening of Breslauer Brothers Department Store, 1920",
+          "type": "image",
+          "startDate": "1920-03-15",
+          "endDate": "1933-01-30"
+        },
+        {
+          "url": "/images/breslaur/breslaur2.webp",
+          "caption": "The bustling main floor during peak shopping hours, circa 1928",
+          "type": "image",
+          "startDate": "1920-03-15", 
+          "endDate": "1933-01-30"
+        }
+      ]
+    },
+    {
+      "startDate": "1933-01-30",
+      "endDate": "1935-04-01",
+      "description": "Under mounting Nazi pressure and economic boycotts, the Breslauer Brothers face impossible choices. The once-thriving department store struggles as customers disappear and official harassment intensifies.",
+      "longDescription": "The Nazi rise to power in 1933 marked the beginning of the end for the Breslauer Brothers empire. The April 1933 boycott devastated their customer base, with SA guards stationed outside their doors to deter shoppers. New regulations prohibited Jewish businesses from participating in certain trade associations, and suppliers began refusing to work with them. The brothers were forced to lay off most of their staff and watched helplessly as their life's work crumbled. By 1934, they faced bankruptcy and mounting pressure from Nazi officials who demanded they sell at far below market value. The store that once employed 150 people was reduced to a skeleton staff of family members desperately trying to keep the doors open.",
+      "media": [
+        {
+          "url": "/images/breslaur/breslaur2.webp",
+          "caption": "Empty aisles during the boycott period - a stark contrast to earlier prosperity",
+          "type": "image",
+          "startDate": "1933-01-30",
+          "endDate": "1935-04-01"
+        }
+      ]
+    },
+    {
+      "startDate": "1935-04-01",
+      "endDate": "1945-12-31", 
+      "description": "The Breslauer Brothers are forced to sell their department store under duress for a fraction of its value. The family business that took fifteen years to build is lost through systematic economic persecution.",
+      "longDescription": "In April 1935, facing insurmountable pressure and threats of confiscation, Marcus and Samuel Breslauer were forced to sell their department store to a non-Jewish buyer for approximately 20% of its assessed value. The sale was labeled 'voluntary' by Nazi authorities, but the brothers had no choice - refusal would have meant arrest and complete confiscation without compensation. The new owners immediately renamed the store and removed all traces of the Breslauer legacy. The brothers used the meager proceeds to help family members emigrate, though they themselves remained in Berlin until 1938. The department store continued operating under new ownership throughout the war, serving the very population that had driven its original owners to ruin.",
+      "media": [
+        {
+          "url": "/images/breslaur/breslaur1.webp",
+          "caption": "The former Breslauer Brothers store under new ownership, name changed, 1936",
+          "type": "image",
+          "startDate": "1935-04-01",
+          "endDate": "1945-12-31"
+        }
+      ]
+    }
+  ]
+}

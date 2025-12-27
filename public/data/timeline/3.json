@@ -1,0 +1,63 @@
+{
+  "business": {
+    "id": "3",
+    "name": "Elias Braun Tailor Shop",
+    "address": "Rosenthaler Straße 42, Berlin",
+    "category": "Tailoring",
+    "established": "1925-03-15",
+    "businessType": "Tailoring"
+  },
+  "timeline": [
+    {
+      "startDate": "1925-03-15",
+      "endDate": "1932-12-31",
+      "title": "The Golden Years",
+      "description": "A thriving tailor shop in the heart of Berlin's bustling Rosenthaler Straße. Elias Braun and his family built a respected reputation for fine men's clothing, serving both Jewish and non-Jewish customers from across the city.",
+      "longDescription": "Founded in 1925, Elias Braun's tailor shop quickly became a cornerstone of the Rosenthaler Straße business district. The shop specialized in custom men's suits, attracting customers from Berlin's growing middle class. Elias, trained in traditional tailoring techniques, employed three skilled seamstresses and maintained a steady stream of orders. The family lived above the shop, with the workshop on the ground floor and large windows displaying the latest fashions. During this period, the business flourished as Berlin's economy recovered from the post-war recession.",
+      "media": [
+        {
+          "type": "image",
+          "path": "/images/businesses/tailoring/elias_braun_1920s.jpg",
+          "caption": "The thriving tailor shop in its heyday, 1920s",
+          "alt": "Elias Braun's tailor shop exterior showing storefront and family"
+        },
+        {
+          "type": "image", 
+          "path": "/images/businesses/tailoring/family_portrait_1930.jpg",
+          "caption": "Elias Braun with his family and employees, circa 1930",
+          "alt": "Group portrait of Elias Braun, family members, and shop employees"
+        }
+      ]
+    },
+    {
+      "startDate": "1933-01-01",
+      "endDate": "1938-11-08",
+      "title": "Under Pressure",
+      "description": "As Nazi persecution intensifies, the tailor shop struggles under increasing restrictions and boycotts. Non-Jewish customers stay away, and new regulations make business operations increasingly difficult for the Braun family.",
+      "longDescription": "After Hitler's rise to power in January 1933, Elias Braun's shop immediately faced difficulties. The Nazi boycott of Jewish businesses in April 1933 marked the beginning of systematic economic persecution. Regular customers stopped coming, fearing association with Jewish-owned establishments. New regulations required special permits for Jewish businesses, and Elias was forced to dismiss his non-Jewish employees. The family struggled to maintain the business as their customer base dwindled to primarily Jewish patrons. Windows were occasionally marked with antisemitic graffiti, and the once-thriving shop became a shadow of its former self.",
+      "media": [
+        {
+          "type": "image",
+          "path": "/images/businesses/tailoring/boycott_period.jpg", 
+          "caption": "The shop during the boycott period - empty streets and marked windows",
+          "alt": "Tailor shop during boycott showing empty street and damaged storefront"
+        }
+      ]
+    },
+    {
+      "startDate": "1938-11-09",
+      "endDate": "1938-11-10",
+      "title": "Kristallnacht Destruction",
+      "description": "The tailor shop is destroyed during Kristallnacht. Windows are smashed, inventory stolen, and the family is forced to flee. The business that served Berlin's community for over a decade is lost forever.",
+      "longDescription": "On the night of November 9-10, 1938, during the coordinated attacks known as Kristallnacht, Elias Braun's tailor shop was targeted by SA storm troopers and local civilians. The shop windows were smashed, bolts of fabric were destroyed or stolen, and sewing machines were damaged beyond repair. The family, fearing for their safety, fled their home above the shop that same night. Elias attempted to return days later to salvage what remained, but found the premises had been completely ransacked. The building was later seized by the Nazi authorities, and the space was eventually converted to a non-Jewish business. The Braun family's decade of hard work and community presence was erased in a single night of violence.",
+      "media": [
+        {
+          "type": "image",
+          "path": "/images/businesses/tailoring/kristallnacht_aftermath.jpg",
+          "caption": "Aftermath of Kristallnacht - the destroyed tailor shop, November 1938",
+          "alt": "Destroyed tailor shop interior showing smashed windows and scattered fabric"
+        }
+      ]
+    }
+  ]
+}

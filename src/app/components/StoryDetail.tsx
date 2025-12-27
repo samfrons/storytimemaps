@@ -2,41 +2,188 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { StoryMap } from '../../types';
+import { StoryMap, TimelineData, TimelineContent, MediaItem } from '../../types';
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
 import { useTranslation } from '../../i18n/useTranslation';
+import { loadTimelineData, getTimelineContentForDate, getTimelineMediaForDate, subscribeToLoadingState } from '../../utils/timelineLoader';
+import { useDebounce } from '../../hooks/useDebounce';
 
 interface StoryDetailProps {
   story: StoryMap;
+  currentDate: Date;
 }
 
-const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
+const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
   const { t } = useTranslation();
   const [selectedMediaIndex, setSelectedMediaIndex] = React.useState(0);
   const [showFullDescription, setShowFullDescription] = React.useState(false);
+  const [timelineData, setTimelineData] = React.useState<TimelineData | null>(null);
+  const [timelineLoading, setTimelineLoading] = React.useState(false);
+  const [timelineError, setTimelineError] = React.useState(false);
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
+  const [contentStage, setContentStage] = React.useState<'media' | 'description' | 'details' | 'complete'>('complete');
+  const [previousTimelineContent, setPreviousTimelineContent] = React.useState<TimelineContent | null>(null);
+  const [isLoadingDetailed, setIsLoadingDetailed] = React.useState(false);
   
-  // Combine legacy imageUrls with new media array
-  const allMedia = React.useMemo(() => {
-    const mediaItems = [];
+  // Debounce rapid timeline changes to prevent flicker
+  // Use shorter debounce for better responsiveness during auto-play
+  const debouncedCurrentDate = useDebounce(currentDate, 50);
+
+  // Subscribe to fine-grained loading state for this business
+  React.useEffect(() => {
+    if (!story.hasTimelineData) return;
     
-    // Add new media array items first (higher priority)
-    if (story.media && story.media.length > 0) {
-      mediaItems.push(...story.media);
+    const unsubscribe = subscribeToLoadingState(story.id, (loading) => {
+      setIsLoadingDetailed(loading);
+    });
+    
+    return unsubscribe;
+  }, [story.id, story.hasTimelineData]);
+
+  // Load timeline data when component mounts and story has timeline data
+  React.useEffect(() => {
+    if (!story.hasTimelineData) return;
+
+    setTimelineLoading(true);
+    setTimelineError(false);
+
+    loadTimelineData(story.id)
+      .then(data => {
+        setTimelineData(data);
+        setTimelineError(data === null);
+      })
+      .catch(() => {
+        setTimelineError(true);
+        setTimelineData(null);
+      })
+      .finally(() => {
+        setTimelineLoading(false);
+      });
+  }, [story.id, story.hasTimelineData]);
+
+  // Get timeline content for debounced date to prevent flicker
+  const timelineContent = React.useMemo(() => {
+    if (!timelineData || !story.hasTimelineData) return null;
+    return getTimelineContentForDate(timelineData, debouncedCurrentDate);
+  }, [timelineData, debouncedCurrentDate, story.hasTimelineData]);
+
+  // Get timeline content for immediate feedback (non-debounced for quick preview)
+  const immediateTimelineContent = React.useMemo(() => {
+    if (!timelineData || !story.hasTimelineData) return null;
+    return getTimelineContentForDate(timelineData, currentDate);
+  }, [timelineData, currentDate, story.hasTimelineData]);
+
+  // Get timeline-aware media for debounced date
+  const timelineMedia = React.useMemo(() => {
+    if (!timelineData || !story.hasTimelineData) return [];
+    return getTimelineMediaForDate(timelineData, debouncedCurrentDate);
+  }, [timelineData, debouncedCurrentDate, story.hasTimelineData]);
+
+  // Handle staggered content transitions when timeline content changes
+  React.useEffect(() => {
+    if (story.hasTimelineData && timelineContent && timelineContent !== previousTimelineContent) {
+      setIsTransitioning(true);
+      setPreviousTimelineContent(timelineContent);
+      
+      // Narrative-driven staggered animation sequence: media → description → details
+      // Each stage represents a deeper dive into the historical context
+      setContentStage('media');
+      
+      const mediaTimer = setTimeout(() => {
+        setContentStage('description');
+      }, 120); // Slightly longer to let media settle
+      
+      const descriptionTimer = setTimeout(() => {
+        setContentStage('details');
+      }, 240); // Consistent timing progression
+      
+      const completeTimer = setTimeout(() => {
+        setContentStage('complete');
+        setIsTransitioning(false);
+      }, 400); // Total transition time: 400ms for smooth narrative flow
+      
+      return () => {
+        clearTimeout(mediaTimer);
+        clearTimeout(descriptionTimer);
+        clearTimeout(completeTimer);
+      };
+    }
+  }, [timelineContent, previousTimelineContent, story.hasTimelineData]);
+
+  // Reset media selection when timeline content changes
+  React.useEffect(() => {
+    setSelectedMediaIndex(0);
+  }, [timelineContent]);
+  
+  // Determine content based on timeline data availability
+  const currentContent = React.useMemo(() => {
+    if (story.hasTimelineData && timelineContent && !timelineError) {
+      // Use timeline content with translation keys
+      const descriptionKey = (timelineContent as any).descriptionKey;
+      const longDescriptionKey = (timelineContent as any).longDescriptionKey;
+      
+      // Try to translate if keys exist, otherwise use fallback
+      const translatedDescription = descriptionKey ? 
+        t(descriptionKey, { ns: 'business', defaultValue: timelineContent.description }) : 
+        timelineContent.description;
+      const translatedLongDescription = longDescriptionKey ? 
+        t(longDescriptionKey, { ns: 'business', defaultValue: timelineContent.longDescription }) : 
+        timelineContent.longDescription;
+      
+      return {
+        description: translatedDescription || story.description,
+        longDescription: translatedLongDescription || story.longDescription,
+        hasTimelineContent: true
+      };
     }
     
-    // Add legacy imageUrls as image media items
-    if (story.imageUrls && story.imageUrls.length > 0) {
-      story.imageUrls.forEach((url, index) => {
-        mediaItems.push({
-          url,
-          type: 'image' as const,
-          caption: `Image ${index + 1}`
+    // Use static content as fallback
+    return {
+      description: story.description,
+      longDescription: story.longDescription,
+      hasTimelineContent: false
+    };
+  }, [story, timelineContent, timelineError, t]);
+
+  // Combine legacy imageUrls with new media array, prioritizing timeline media
+  const allMedia = React.useMemo(() => {
+    const mediaItems: MediaItem[] = [];
+    
+    // Add timeline media first (highest priority) if available and not in error state
+    if (story.hasTimelineData && timelineMedia.length > 0 && !timelineError) {
+      // Convert TimelineMediaItem to MediaItem with translated captions
+      mediaItems.push(...timelineMedia.map(item => {
+        const captionKey = (item as any).captionKey;
+        const translatedCaption = captionKey ?
+          t(captionKey, { ns: 'business', defaultValue: item.caption }) :
+          item.caption;
+        
+        return {
+          url: item.url,
+          type: item.type || 'image' as const,
+          caption: translatedCaption
+        };
+      }));
+    } else {
+      // Add new media array items (higher priority than legacy)
+      if (story.media && story.media.length > 0) {
+        mediaItems.push(...story.media);
+      }
+      
+      // Add legacy imageUrls as image media items
+      if (story.imageUrls && story.imageUrls.length > 0) {
+        story.imageUrls.forEach((url, index) => {
+          mediaItems.push({
+            url,
+            type: 'image' as const,
+            caption: `Image ${index + 1}`
+          });
         });
-      });
+      }
     }
     
     return mediaItems;
-  }, [story.media, story.imageUrls]);
+  }, [story.media, story.imageUrls, story.hasTimelineData, timelineMedia, timelineError, t]);
   
   const currentMedia = allMedia[selectedMediaIndex];
   
@@ -45,8 +192,18 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
       {allMedia.length > 0 && (
         <div className="space-y-2">
           <div 
-            className="relative w-full min-h-[12rem] max-h-[24rem]"
-            style={{ backgroundColor: 'var(--background)' }}
+            className={`relative w-full min-h-[12rem] max-h-[24rem] transition-all duration-400 ease-[cubic-bezier(0.4,0.0,0.2,1)] ${
+              isTransitioning && contentStage === 'media' 
+                ? 'transform scale-[0.97]' 
+                : 'opacity-100 transform scale-100 brightness-100'
+            }`}
+            style={{ 
+              backgroundColor: 'var(--background)',
+              // Subtle vignette effect during transition to focus attention
+              background: isTransitioning && contentStage === 'media' 
+                ? `radial-gradient(ellipse at center, transparent 20%, rgba(var(--background-rgb), 0.3) 100%), var(--background)`
+                : 'var(--background)'
+            }}
           >
             {currentMedia?.type === 'video' ? (
               <video
@@ -138,7 +295,11 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
         </div>
       )}
       
-      <div className="grid grid-cols-1 gap-4">
+      <div className={`grid grid-cols-1 gap-4 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        isTransitioning && (contentStage === 'details' || contentStage === 'description' || contentStage === 'media')
+          ? 'transform translateY(6px) scale-[0.99]' 
+          : 'opacity-100 transform translateY(0) scale-100'
+      }`}>
         <div className="flex items-start gap-3">
           <svg 
             className="w-4 h-4 mt-0.5 flex-shrink-0" 
@@ -226,57 +387,150 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
         </div>
       </div>
       
-      {(story.description || story.longDescription) && (
+      {(currentContent.description || currentContent.longDescription) && (
         <div 
-          className="pt-4 border-t"
+          className={`pt-4 border-t transition-all duration-300 ease-out ${
+            isTransitioning && contentStage !== 'complete'
+              ? 'opacity-60 transform translateY(8px)' 
+              : 'opacity-100 transform translateY(0)'
+          }`}
           style={{ borderTopColor: 'var(--border)' }}
         >
           <h5 
             className="font-mono text-xs font-bold uppercase tracking-wider mb-3"
             style={{ color: 'var(--foreground-muted)' }}
           >
-            Historical Context
+            {currentContent.hasTimelineContent ? 'Timeline Context' : 'Historical Context'}
+            {(timelineLoading || isLoadingDetailed) && (
+              <span 
+                className="ml-2 text-xs normal-case flex items-center gap-1"
+                style={{ color: 'var(--primary)' }}
+              >
+                <svg 
+                  className="w-3 h-3 animate-spin" 
+                  fill="none" 
+                  viewBox="0 0 24 24"
+                >
+                  <circle 
+                    className="opacity-25" 
+                    cx="12" 
+                    cy="12" 
+                    r="10" 
+                    stroke="currentColor" 
+                    strokeWidth="4"
+                  />
+                  <path 
+                    className="opacity-75" 
+                    fill="currentColor" 
+                    d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+                Loading timeline data...
+              </span>
+            )}
+            {/* Show period indicator for immediate feedback with smooth transition */}
+            {story.hasTimelineData && immediateTimelineContent && !timelineLoading && !isLoadingDetailed && (
+              <span 
+                className={`ml-2 text-xs normal-case transition-all duration-300 ${
+                  isTransitioning && contentStage !== 'complete' 
+                    ? 'transform scale-95' 
+                    : 'opacity-100 transform scale-100'
+                }`}
+                style={{ color: 'var(--accent-orange)' }}
+              >
+                • {new Date(immediateTimelineContent.startDate).toLocaleDateString('en-GB', { 
+                  month: '2-digit', 
+                  year: 'numeric' 
+                }).replace('/', '.')}
+                {immediateTimelineContent.endDate && ' - ' + new Date(immediateTimelineContent.endDate).toLocaleDateString('en-GB', { 
+                  month: '2-digit', 
+                  year: 'numeric' 
+                }).replace('/', '.')}
+              </span>
+            )}
+            {/* Optimistic loading state for timeline transitions */}
+            {story.hasTimelineData && !immediateTimelineContent && !timelineLoading && !isLoadingDetailed && (
+              <span 
+                className="ml-2 text-xs normal-case opacity-60"
+                style={{ color: 'var(--foreground-muted)' }}
+              >
+                • No data for {currentDate.toLocaleDateString('en-GB', { 
+                  month: '2-digit', 
+                  year: 'numeric' 
+                }).replace('/', '.')}
+              </span>
+            )}
           </h5>
           
-          {story.description && (
-            <p 
-              className="font-mono text-xs leading-relaxed mb-3"
-              style={{ color: 'var(--foreground)' }}
-            >
-              {story.description}
-            </p>
-          )}
-          
-          {story.longDescription && (
-            <div className="space-y-3">
-              <div 
-                className={`font-mono text-xs leading-relaxed ${!showFullDescription ? 'line-clamp-4' : ''}`}
+          <div 
+            className={`transition-all duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+              isTransitioning && (contentStage === 'description' || contentStage === 'media')
+                ? 'transform translateY(12px) scale-[0.98]' 
+                : 'opacity-100 transform translateY(0) scale-100'
+            }`}
+            style={{
+              // No filter effects during transitions
+              filter: 'none'
+            }}
+          >
+            {currentContent.description && (
+              <p 
+                className="font-mono text-xs leading-relaxed mb-3"
                 style={{ color: 'var(--foreground)' }}
               >
-                {story.longDescription}
+                {currentContent.description}
+              </p>
+            )}
+            
+            {currentContent.longDescription && (
+              <div className="space-y-3">
+                <div 
+                  className={`font-mono text-xs leading-relaxed ${!showFullDescription ? 'line-clamp-4' : ''}`}
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  {currentContent.longDescription}
+                </div>
+                
+                <button
+                  onClick={() => setShowFullDescription(!showFullDescription)}
+                  className="text-xs font-mono font-semibold transition-colors cursor-pointer"
+                  style={{ color: 'var(--primary)' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'var(--accent-yellow)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'var(--primary)';
+                  }}
+                >
+                  {showFullDescription ? 'Read less' : 'Read more'} →
+                </button>
               </div>
-              
-              <button
-                onClick={() => setShowFullDescription(!showFullDescription)}
-                className="text-xs font-mono font-semibold transition-colors cursor-pointer"
-                style={{ color: 'var(--primary)' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = 'var(--accent-yellow)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'var(--primary)';
+            )}
+
+            {/* Error state indicator */}
+            {story.hasTimelineData && timelineError && (
+              <div 
+                className="p-2 mt-2 border text-xs font-mono"
+                style={{ 
+                  backgroundColor: 'rgba(var(--danger), 0.1)',
+                  borderColor: 'var(--danger)',
+                  color: 'var(--danger)'
                 }}
               >
-                {showFullDescription ? 'Read less' : 'Read more'} →
-              </button>
-            </div>
-          )}
+                Timeline data unavailable. Showing static content.
+              </div>
+            )}
+          </div>
         </div>
       )}
       
       {story.businessType && (
         <div 
-          className="pt-4 border-t"
+          className={`pt-4 border-t transition-all duration-300 ease-out ${
+            isTransitioning && contentStage !== 'complete'
+              ? 'opacity-60 transform translateY(8px)' 
+              : 'opacity-100 transform translateY(0)'
+          }`}
           style={{ borderTopColor: 'var(--border)' }}
         >
           <h5 
@@ -334,4 +588,4 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story }) => {
   );
 };
 
-export default StoryDetail;
+export default React.memo(StoryDetail);

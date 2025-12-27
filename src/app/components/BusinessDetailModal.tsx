@@ -1,15 +1,21 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { StoryMap } from '../../types';
+import { StoryMap, TimelineData } from '../../types';
 import StoryDetail from './StoryDetail';
+import TimeSlider from './TimeSlider';
 import { useTranslation } from '../../i18n/useTranslation';
+import { loadTimelineData } from '../../utils/timelineLoader';
 
 interface BusinessDetailModalProps {
   story: StoryMap;
   isOpen: boolean;
   onClose: () => void;
   originRect: DOMRect | null;
+  currentDate: Date;
+  minDate: Date;
+  maxDate: Date;
+  onDateChange: (date: Date) => void;
   onNavigate?: (direction: 'prev' | 'next') => void;
   hasPrevious?: boolean;
   hasNext?: boolean;
@@ -20,6 +26,10 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   isOpen, 
   onClose, 
   originRect,
+  currentDate,
+  minDate,
+  maxDate,
+  onDateChange,
   onNavigate,
   hasPrevious = false,
   hasNext = false
@@ -29,7 +39,30 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [timelineChangePoints, setTimelineChangePoints] = useState<Date[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // Load timeline change points when modal opens
+  useEffect(() => {
+    if (story.hasTimelineData && isOpen) {
+      loadTimelineData(story.id).then((data: TimelineData | null) => {
+        if (data && data.timeline) {
+          const changePoints = data.timeline.flatMap(period => {
+            const points: Date[] = [new Date(period.startDate)];
+            if (period.endDate) {
+              points.push(new Date(period.endDate));
+            }
+            return points;
+          });
+          // Remove duplicates and sort
+          const uniquePoints = Array.from(new Set(changePoints.map(d => d.getTime())))
+            .map(time => new Date(time))
+            .sort((a, b) => a.getTime() - b.getTime());
+          setTimelineChangePoints(uniquePoints);
+        }
+      });
+    }
+  }, [story.hasTimelineData, story.id, isOpen]);
 
   useEffect(() => {
     if (isOpen && originRect) {
@@ -132,6 +165,29 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
               <span style={{ color: 'var(--accent-orange)' }}>
                 {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
               </span>
+              {/* Timeline breadcrumb showing current viewing period */}
+              <span 
+                className="px-2 py-1 flex items-center gap-1"
+                style={{ 
+                  backgroundColor: 'rgba(var(--primary-rgb), 0.15)',
+                  borderColor: 'var(--primary)',
+                  border: '1px solid',
+                  color: 'var(--primary)'
+                }}
+              >
+                <svg 
+                  className="w-3 h-3" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Viewing: {currentDate.toLocaleDateString('en-GB', { 
+                  month: '2-digit', 
+                  year: 'numeric' 
+                }).replace('/', '.')}
+              </span>
               {story.category && (
                 <span 
                   className="px-2 py-1 uppercase tracking-wide"
@@ -176,13 +232,36 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           </button>
         </div>
         
+        {/* Timeline Slider - Only show if business has timeline data */}
+        {story.hasTimelineData && (
+          <div 
+            className={`px-6 py-4 border-b transition-opacity duration-300 ${
+              showContent && !isTransitioning ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              borderBottomColor: 'var(--border)',
+              backgroundColor: 'var(--background)'
+            }}
+          >
+            <TimeSlider 
+              minDate={minDate}
+              maxDate={maxDate}
+              currentDate={currentDate}
+              onChange={onDateChange}
+              timelineChangePoints={timelineChangePoints}
+            />
+          </div>
+        )}
+        
         {/* Content */}
         <div 
-          className={`p-6 overflow-y-auto h-[calc(100%-88px)] transition-opacity duration-300 ${
+          className={`p-6 overflow-y-auto ${
+            story.hasTimelineData ? 'h-[calc(100%-220px)]' : 'h-[calc(100%-88px)]'
+          } transition-opacity duration-300 ${
             showContent && !isTransitioning ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <StoryDetail story={story} />
+          <StoryDetail story={story} currentDate={currentDate} />
           
           {/* Navigation Buttons */}
           <div 

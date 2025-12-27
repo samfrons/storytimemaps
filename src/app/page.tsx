@@ -39,19 +39,20 @@ function MapPageContent() {
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   // const [isThemeSwitching, setIsThemeSwitching] = useState(false); // Removed - no longer needed
   
-  // Force theme from URL to override localStorage
+  // CRITICAL: Set theme from URL on initial mount ONLY - DO NOT add URL/theme to deps
+  // This prevents double-setting when we update the URL after theme change
   useEffect(() => {
     if (!mounted) return;
     
     const themeParam = searchParams.get('theme');
     if (themeParam && ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(themeParam)) {
-      // Force set theme from URL - no checking if different
-      // Small timeout ensures it runs after next-themes loads from localStorage
-      setTimeout(() => {
+      // Only set theme if it's different from current theme
+      if (theme !== themeParam) {
         setTheme(themeParam);
-      }, 50);
+      }
     }
-  }, [mounted, searchParams, setTheme]); // Re-run when URL changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted]); // WARNING: Only run on mount - adding deps will cause theme flashing!
   
   // Handle non-theme URL parameters
   useEffect(() => {
@@ -126,14 +127,14 @@ function MapPageContent() {
     
     setShowThemeMenu(false);
     
-    // Simply set the theme - let next-themes handle everything
+    // Set the theme
     setTheme(newTheme);
     
-    // Update URL parameter for sharing
+    // Update URL for sharing (using replace to avoid history spam)
     const params = new URLSearchParams(searchParams.toString());
     params.set('theme', newTheme);
     const queryString = params.toString();
-    router.push(queryString ? `/?${queryString}` : '/', { scroll: false });
+    router.replace(queryString ? `/?${queryString}` : '/', { scroll: false });
   }, [mounted, theme, setTheme, searchParams, router]);
 
   const handleLetsGo = useCallback(() => {
@@ -774,7 +775,7 @@ function MapPageContent() {
         }`}
         style={{ 
           zIndex: 9999,
-          backgroundColor: 'rgba(var(--background-rgb), 0.98)'
+          backgroundColor: 'rgba(var(--background-rgb), 0.95)'
         }}
       >
         {/* Animated Map Background with Ken Burns Effect - Lazy loaded */}
@@ -872,7 +873,7 @@ function MapPageContent() {
         }`}
         style={{ 
           zIndex: 9998,
-          backgroundColor: 'rgba(var(--background-rgb), 0.98)'
+          backgroundColor: 'rgba(var(--background-rgb), 0.95)'
         }}
       >
         {/* Animated Map Background with Ken Burns Effect - Lazy loaded */}

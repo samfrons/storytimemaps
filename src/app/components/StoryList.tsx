@@ -5,6 +5,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
+import { useRouter, useSearchParams } from 'next/navigation';
 import TimeSlider from './TimeSlider';
 import { StoryMap } from '../../types';
 import BusinessDetailModal from './BusinessDetailModal';
@@ -12,6 +13,7 @@ import { throttle } from '../../utils/performance';
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
 import { useTranslation } from '../../i18n/useTranslation';
 import { getTranslatedDescription, getTranslatedBusinessName } from '../../utils/businessTranslations';
+import { loadTimelineData, getTimelineContentForDate } from '../../utils/timelineLoader';
 
 interface StoryListProps {
   visibleStories: StoryMap[];
@@ -38,6 +40,8 @@ const StoryList: React.FC<StoryListProps> = ({
   const [modalOpen, setModalOpen] = useState(false);
   const { theme } = useTheme();
   const { t, language } = useTranslation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,12 +52,18 @@ const StoryList: React.FC<StoryListProps> = ({
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const listRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [timelineDescriptions, setTimelineDescriptions] = useState<{ [key: string]: string | null }>({});
 
   const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
     const rect = element.getBoundingClientRect();
     setOriginRect(rect);
     setSelectedStory(story);
     setModalOpen(true);
+
+    // Update URL with business id for deep linking
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('id', story.id);
+    router.replace(`/?${params.toString()}`, { scroll: false });
   };
 
   const closeModal = () => {
@@ -62,6 +72,12 @@ const StoryList: React.FC<StoryListProps> = ({
       setSelectedStory(null);
       setOriginRect(null);
     }, 600);
+
+    // Remove id from URL when closing modal
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('id');
+    const queryString = params.toString();
+    router.replace(queryString ? `/?${queryString}` : '/', { scroll: false });
   };
 
   const handleDropdownToggle = () => {
@@ -165,6 +181,31 @@ const StoryList: React.FC<StoryListProps> = ({
       };
     }
   }, [isHeaderCollapsed]);
+
+  // Load timeline descriptions for businesses with timeline data
+  useEffect(() => {
+    const loadTimelineDescriptions = async () => {
+      const descriptions: { [key: string]: string | null } = {};
+      
+      for (const story of visibleStories) {
+        if (story.hasTimelineData) {
+          try {
+            const timelineData = await loadTimelineData(story.id);
+            if (timelineData) {
+              const timelineContent = getTimelineContentForDate(timelineData, currentDate);
+              descriptions[story.id] = timelineContent?.description || null;
+            }
+          } catch (error) {
+            console.warn(`Failed to load timeline data for ${story.id}:`, error);
+          }
+        }
+      }
+      
+      setTimelineDescriptions(descriptions);
+    };
+
+    loadTimelineDescriptions();
+  }, [visibleStories, currentDate]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -514,12 +555,36 @@ const StoryList: React.FC<StoryListProps> = ({
             <div className="p-4">
               <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h3 className="font-mono font-semibold text-sm transition-colors"
-                style={{
-                  color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
-                }}>
-                  {getTranslatedBusinessName(story.title, language)}
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-mono font-semibold text-sm transition-colors"
+                  style={{
+                    color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
+                  }}>
+                    {getTranslatedBusinessName(story.title, language)}
+                  </h3>
+                  {/* Timeline Data Availability Indicator */}
+                  {story.hasTimelineData && (
+                    <div 
+                      className="flex items-center justify-center w-4 h-4 transition-opacity"
+                      style={{
+                        opacity: 0.6
+                      }}
+                      title="Timeline data available - view details for historical progression"
+                    >
+                      <svg 
+                        className="w-3 h-3" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        style={{
+                          color: story.id === activeStoryId ? 'var(--story-text-color, var(--primary))' : 'var(--primary)'
+                        }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
                 {story.address && (
                   <div className="flex items-center gap-1.5 text-xs font-mono mt-1"
                   style={{
@@ -570,11 +635,16 @@ const StoryList: React.FC<StoryListProps> = ({
                   
                   if (isGeneric) return null;
                   
+                  // Use timeline description if available, otherwise fall back to static description
+                  const description = story.hasTimelineData && timelineDescriptions[story.id] 
+                    ? timelineDescriptions[story.id] 
+                    : getTranslatedDescription(story, language);
+                  
                   return (
                     <p className="text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed"
                     style={{
                       color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
-                    }}>{getTranslatedDescription(story, language)}</p>
+                    }}>{description}</p>
                   );
                 })()}
                 
@@ -684,6 +754,10 @@ const StoryList: React.FC<StoryListProps> = ({
           isOpen={modalOpen}
           onClose={closeModal}
           originRect={originRect}
+          currentDate={currentDate}
+          minDate={minDate}
+          maxDate={maxDate}
+          onDateChange={setCurrentDate}
           onNavigate={handleModalNavigation}
           hasPrevious={allFilteredStories.findIndex(s => s.id === selectedStory.id) > 0}
           hasNext={allFilteredStories.findIndex(s => s.id === selectedStory.id) < allFilteredStories.length - 1}

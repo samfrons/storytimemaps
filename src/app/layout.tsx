@@ -148,12 +148,16 @@ export default function RootLayout({
       </head>
       <body className="font-sans">
         <I18nProvider>
+          {/* CRITICAL: Theme Provider Settings - DO NOT CHANGE
+              disableTransitionOnChange MUST be true to prevent flashing
+              enableColorScheme MUST be false to prevent browser interference
+              enableSystem MUST be false for consistent behavior */}
           <ThemeProvider
             attribute="data-theme"
             defaultTheme="moody"
             themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival']}
             enableSystem={false}
-            enableColorScheme={true}
+            enableColorScheme={false}
             disableTransitionOnChange={true}
             storageKey="storymap-theme"
             forcedTheme={undefined}

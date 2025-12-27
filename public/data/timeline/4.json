@@ -1,0 +1,57 @@
+{
+  "business": {
+    "id": "4", 
+    "name": "Goldstein Bakery",
+    "address": "Münzstraße 18, Berlin",
+    "category": "Food & Beverage",
+    "established": "1920-05-10",
+    "businessType": "Bakery"
+  },
+  "timeline": [
+    {
+      "startDate": "1920-05-10",
+      "endDate": "1933-03-31", 
+      "title": "Community Cornerstone",
+      "description": "The Goldstein Bakery serves as a vital community hub, providing fresh bread, pastries, and kosher baked goods to Berlin's Jewish quarter. The family's traditional recipes draw customers from across the city.",
+      "longDescription": "Established in May 1920, the Goldstein Bakery became an essential part of daily life in Berlin's Jewish quarter. Aaron Goldstein and his wife Sarah brought traditional baking techniques from Eastern Europe, specializing in challah, rye breads, and holiday pastries. Their bakery opened before dawn each day, filling the street with the aroma of fresh bread. Beyond serving the local Jewish community, the bakery attracted customers citywide who appreciated the quality and authenticity of their products.",
+      "media": [
+        {
+          "type": "image",
+          "path": "/images/businesses/bakery/goldstein_bakery_1920s.jpg",
+          "caption": "Goldstein Bakery in the early morning hours, 1920s",
+          "alt": "Bakery storefront with fresh bread displays and early morning customers"
+        }
+      ]
+    },
+    {
+      "startDate": "1933-04-01",
+      "endDate": "1935-09-30",
+      "title": "Economic Strangulation", 
+      "description": "Nazi boycotts and regulations systematically destroy the bakery's customer base. Supply chains are disrupted, and the family faces increasing harassment from authorities and local antisemites.",
+      "longDescription": "The Nazi boycott of April 1, 1933 immediately impacted the Goldstein Bakery. Non-Jewish customers stopped coming, while suppliers became reluctant to deliver flour and other essential ingredients. New licensing requirements and health inspections specifically targeted Jewish businesses. The family was forced to reduce operating hours and lay off employees as revenue plummeted. By 1935, harassment from local Nazi supporters made daily operations nearly impossible.",
+      "media": [
+        {
+          "type": "image",
+          "path": "/images/businesses/bakery/empty_shelves_1934.jpg",
+          "caption": "Empty bakery shelves during the economic boycott, 1934",
+          "alt": "Interior of bakery showing mostly empty display cases and shelves"
+        }
+      ]
+    },
+    {
+      "startDate": "1935-10-01",
+      "endDate": "1935-10-01",
+      "title": "Final Closure",
+      "description": "Unable to sustain operations under Nazi persecution, the Goldstein family is forced to permanently close their bakery. The building is later seized and converted to an 'Aryan' business.",
+      "longDescription": "By October 1935, the Goldstein Bakery could no longer sustain operations. With no customers, unreliable suppliers, and constant official harassment, Aaron and Sarah Goldstein made the difficult decision to close permanently. The family attempted to emigrate, selling their remaining equipment and inventory at a fraction of its value. The building was subsequently seized by Nazi authorities and converted to a German-owned bakery, erasing the Goldstein family's 15-year contribution to the community.",
+      "media": [
+        {
+          "type": "image",
+          "path": "/images/businesses/bakery/closed_sign_1935.jpg",
+          "caption": "The permanent closure notice, October 1935",
+          "alt": "Closed bakery with official closure notice posted on the door"
+        }
+      ]
+    }
+  ]
+}

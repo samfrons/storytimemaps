@@ -11,6 +11,7 @@
     "midDate": "1935-01-01",
     "endDate": "1938-11-09",
     "category": "business",
+    "hasTimelineData": true,
     "imageUrls": [
       "/images/ebraun/ebraun1.webp",
       "/images/ebraun/ebraun2.webp",
@@ -30,6 +31,7 @@
     "midDate": "1933-01-01",
     "endDate": "1935-04-01",
     "category": "business",
+    "hasTimelineData": true,
     "imageUrls": [
       "/images/breslaur/breslaur1.webp",
       "/images/breslaur/breslaur2.webp"

@@ -40,13 +40,15 @@ export default function Sidebar({
   const isBarchartsPage = pathname === '/barcharts';
 
   const handleThemeSwitch = (newTheme: string) => {
+    // Set the theme
+    setTheme(newTheme);
+    setShowThemeMenu(false);
+    
+    // Update URL for sharing (after theme is set)
     const params = new URLSearchParams(searchParams.toString());
     params.set('theme', newTheme);
     const queryString = params.toString();
-    
-    setTheme(newTheme);
-    router.push(pathname + (queryString ? `?${queryString}` : ''), { scroll: false });
-    setShowThemeMenu(false);
+    router.replace(pathname + (queryString ? `?${queryString}` : ''), { scroll: false });
   };
 
   const goHome = () => {

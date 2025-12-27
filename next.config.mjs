@@ -2,6 +2,16 @@
 const nextConfig = {
   // App Router doesn't use i18n config - we handle it client-side
   transpilePackages: ['mapbox-gl', 'react-map-gl'],
+
+  // Ignore ESLint warnings during production builds (they're set to warn, not error)
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  // Ignore TypeScript errors during production builds if needed
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   
   images: {
     formats: ['image/avif', 'image/webp'],

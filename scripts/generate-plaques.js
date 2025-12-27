@@ -13,7 +13,7 @@ const path = require('path');
 const QRCode = require('qrcode');
 
 // Configuration
-const BASE_URL = 'https://storymaps.storytimemaps.com';
+const BASE_URL = 'https://www.storytimemaps.com';
 const OUTPUT_DIR = path.join(__dirname, '../public/plaques');
 
 // Plaque dimensions - horizontal orientation
@@ -163,8 +163,6 @@ async function generateBerlinStyleSVG(business) {
   }
 
   const nameFontSize = getNameFontSize(name);
-  const textAreaWidth = PLAQUE_WIDTH - 230; // Leave space for QR code
-  const textCenterX = 50 + (textAreaWidth / 2);
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${PLAQUE_WIDTH} ${PLAQUE_HEIGHT}" width="${PLAQUE_WIDTH}" height="${PLAQUE_HEIGHT}">
@@ -188,41 +186,41 @@ async function generateBerlinStyleSVG(business) {
         fill="${BERLIN_COLORS.background}"/>
 
   <!-- Business Type (top, smaller) -->
-  <text x="${textCenterX}" y="65" text-anchor="middle" class="text"
+  <text x="335" y="65" text-anchor="middle" class="text"
         font-size="16" fill="${BERLIN_COLORS.textMuted}" font-style="italic">
     ${businessType}
   </text>
 
   <!-- Business Name (large, centered) -->
-  <text x="${textCenterX}" y="115" text-anchor="middle" class="title"
+  <text x="335" y="115" text-anchor="middle" class="title"
         font-size="${nameFontSize}" fill="${BERLIN_COLORS.text}" font-weight="600">
     ${name}
   </text>
 
   <!-- Dates -->
-  <text x="${textCenterX}" y="165" text-anchor="middle" class="text"
+  <text x="335" y="165" text-anchor="middle" class="text"
         font-size="22" fill="${BERLIN_COLORS.text}">
     ${dateRange}
   </text>
 
   <!-- Address -->
-  <text x="${textCenterX}" y="215" text-anchor="middle" class="text"
+  <text x="335" y="215" text-anchor="middle" class="text"
         font-size="18" fill="${BERLIN_COLORS.textMuted}">
     ${address}
   </text>
 
   <!-- Divider line -->
-  <line x1="80" y1="250" x2="${textAreaWidth - 30}" y2="250"
+  <line x1="80" y1="250" x2="540" y2="250"
         stroke="${BERLIN_COLORS.textMuted}" stroke-width="0.5" opacity="0.4"/>
 
   <!-- URL at bottom -->
-  <text x="${textCenterX}" y="400" text-anchor="middle" class="url"
+  <text x="335" y="400" text-anchor="middle" class="url"
         font-size="13" fill="${BERLIN_COLORS.textMuted}" letter-spacing="1">
     storytimemaps.com
   </text>
 
   <!-- QR Code Section (right side) -->
-  <g transform="translate(${PLAQUE_WIDTH - 190}, ${PLAQUE_HEIGHT / 2 - 85})">
+  <g transform="translate(610, 140)">
     <rect x="-8" y="-8" width="156" height="156" fill="#ffffff" stroke="${BERLIN_COLORS.textMuted}" stroke-width="0.5"/>
     <g transform="translate(0, 0)">
       ${qrContent}
@@ -257,8 +255,6 @@ async function generateBrassStyleSVG(business) {
   }
 
   const nameFontSize = getNameFontSize(name);
-  const textAreaWidth = PLAQUE_WIDTH - 230;
-  const textCenterX = 50 + (textAreaWidth / 2);
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${PLAQUE_WIDTH} ${PLAQUE_HEIGHT}" width="${PLAQUE_WIDTH}" height="${PLAQUE_HEIGHT}">
@@ -284,45 +280,45 @@ async function generateBrassStyleSVG(business) {
   <!-- Corner screws -->
   <circle cx="25" cy="25" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
   <circle cx="25" cy="25" r="3" fill="#5a4a35"/>
-  <circle cx="${PLAQUE_WIDTH - 25}" cy="25" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
-  <circle cx="${PLAQUE_WIDTH - 25}" cy="25" r="3" fill="#5a4a35"/>
-  <circle cx="25" cy="${PLAQUE_HEIGHT - 25}" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
-  <circle cx="25" cy="${PLAQUE_HEIGHT - 25}" r="3" fill="#5a4a35"/>
-  <circle cx="${PLAQUE_WIDTH - 25}" cy="${PLAQUE_HEIGHT - 25}" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
-  <circle cx="${PLAQUE_WIDTH - 25}" cy="${PLAQUE_HEIGHT - 25}" r="3" fill="#5a4a35"/>
+  <circle cx="775" cy="25" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
+  <circle cx="775" cy="25" r="3" fill="#5a4a35"/>
+  <circle cx="25" cy="425" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
+  <circle cx="25" cy="425" r="3" fill="#5a4a35"/>
+  <circle cx="775" cy="425" r="8" fill="${BRASS_COLORS.screwColor}" stroke="#6b5a45" stroke-width="1"/>
+  <circle cx="775" cy="425" r="3" fill="#5a4a35"/>
 
   <!-- Business Type (top, smaller) -->
-  <text x="${textCenterX}" y="70" text-anchor="middle" class="text"
+  <text x="335" y="70" text-anchor="middle" class="text"
         font-size="16" fill="${BRASS_COLORS.textMuted}" font-style="italic">
     ${businessType}
   </text>
 
   <!-- Business Name (large, centered) -->
-  <text x="${textCenterX}" y="125" text-anchor="middle" class="title"
+  <text x="335" y="125" text-anchor="middle" class="title"
         font-size="${nameFontSize}" fill="${BRASS_COLORS.text}" font-weight="600">
     ${name}
   </text>
 
   <!-- Dates -->
-  <text x="${textCenterX}" y="175" text-anchor="middle" class="text"
+  <text x="335" y="175" text-anchor="middle" class="text"
         font-size="24" fill="${BRASS_COLORS.text}">
     ${dateRange}
   </text>
 
   <!-- Address -->
-  <text x="${textCenterX}" y="225" text-anchor="middle" class="text"
+  <text x="335" y="225" text-anchor="middle" class="text"
         font-size="18" fill="${BRASS_COLORS.textMuted}">
     ${address}
   </text>
 
   <!-- URL at bottom -->
-  <text x="${textCenterX}" y="405" text-anchor="middle" class="url"
+  <text x="335" y="405" text-anchor="middle" class="url"
         font-size="13" fill="${BRASS_COLORS.textMuted}" letter-spacing="1">
     storytimemaps.com
   </text>
 
   <!-- QR Code Section (right side) -->
-  <g transform="translate(${PLAQUE_WIDTH - 190}, ${PLAQUE_HEIGHT / 2 - 85})">
+  <g transform="translate(610, 140)">
     <rect x="-8" y="-8" width="156" height="156" fill="#ffffff" stroke="${BRASS_COLORS.text}" stroke-width="1"/>
     <g transform="translate(0, 0)">
       ${qrContent}

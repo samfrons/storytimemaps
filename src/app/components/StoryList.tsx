@@ -21,6 +21,7 @@ interface StoryListProps {
   currentDate: Date;
   setCurrentDate: (date: Date) => void;
   onStoryClick: (storyId: string) => void;
+  autoOpenDetailId?: string | null;
 }
 
 const StoryList: React.FC<StoryListProps> = ({
@@ -30,7 +31,8 @@ const StoryList: React.FC<StoryListProps> = ({
   maxDate,
   currentDate,
   setCurrentDate,
-  onStoryClick
+  onStoryClick,
+  autoOpenDetailId
 }) => {
   const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -127,6 +129,22 @@ const StoryList: React.FC<StoryListProps> = ({
       listRef.current.scrollTo({ top: scrollTop, behavior: 'smooth' });
     }
   }, [activeStoryId]);
+
+  // Auto-open detail modal when autoOpenDetailId is set (from URL deep link)
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
+  useEffect(() => {
+    if (autoOpenDetailId && !hasAutoOpened && visibleStories.length > 0) {
+      const story = visibleStories.find(s => s.id === autoOpenDetailId);
+      if (story) {
+        // Small delay to let the UI settle
+        setTimeout(() => {
+          setSelectedStory(story);
+          setModalOpen(true);
+          setHasAutoOpened(true);
+        }, 500);
+      }
+    }
+  }, [autoOpenDetailId, visibleStories, hasAutoOpened]);
 
   useEffect(() => {
     const handleScroll = throttle(() => {
@@ -678,6 +696,7 @@ const StoryList: React.FC<StoryListProps> = ({
 export default React.memo(StoryList, (prevProps, nextProps) => {
   return (
     prevProps.activeStoryId === nextProps.activeStoryId &&
+    prevProps.autoOpenDetailId === nextProps.autoOpenDetailId &&
     prevProps.currentDate.getTime() === nextProps.currentDate.getTime() &&
     prevProps.minDate.getTime() === nextProps.minDate.getTime() &&
     prevProps.maxDate.getTime() === nextProps.maxDate.getTime() &&

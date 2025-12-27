@@ -6,6 +6,8 @@ import StoryDetail from './StoryDetail';
 import TimeSlider from './TimeSlider';
 import { useTranslation } from '../../i18n/useTranslation';
 import { loadTimelineData } from '../../utils/timelineLoader';
+import { useAuth } from '../../contexts/AuthContext';
+import ProposalForm from '../../components/proposals/ProposalForm';
 
 interface BusinessDetailModalProps {
   story: StoryMap;
@@ -35,11 +37,13 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   hasNext = false
 }) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [timelineChangePoints, setTimelineChangePoints] = useState<Date[]>([]);
+  const [showProposalForm, setShowProposalForm] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Load timeline change points when modal opens
@@ -262,7 +266,37 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           }`}
         >
           <StoryDetail story={story} currentDate={currentDate} />
-          
+
+          {/* Suggest Edit Button - Only show if user is logged in */}
+          {user && (
+            <div
+              className="mt-6 pt-6 border-t"
+              style={{ borderTopColor: 'var(--border)' }}
+            >
+              <button
+                onClick={() => setShowProposalForm(true)}
+                className="w-full font-mono text-xs font-semibold py-3 px-4 border transition-all duration-200 uppercase tracking-wide flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  backgroundColor: 'var(--primary)',
+                  borderColor: 'var(--primary)',
+                  color: 'var(--background)',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '0.9';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                }}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                Suggest Edit to this Location
+              </button>
+            </div>
+          )}
+
           {/* Navigation Buttons */}
           <div 
             className="mt-6 pt-6 border-t"
@@ -326,6 +360,14 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Proposal Form Modal */}
+      <ProposalForm
+        isOpen={showProposalForm}
+        onClose={() => setShowProposalForm(false)}
+        existingBusiness={story}
+        proposalType="edit_location"
+      />
     </div>
   );
 };

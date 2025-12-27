@@ -1,0 +1,235 @@
+'use client';
+
+import React, { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
+
+interface LoginModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSwitchToSignup: () => void;
+}
+
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToSignup }) => {
+  const { t } = useTranslation();
+  const { signIn } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const { error } = await signIn(email, password);
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    } else {
+      onClose();
+      setEmail('');
+      setPassword('');
+      setLoading(false);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ backgroundColor: 'rgba(var(--background-rgb), 0.8)' }}
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-md p-6"
+        style={{
+          backgroundColor: 'var(--card-bg)',
+          border: '1px solid var(--border)',
+          boxShadow: '0 4px 12px rgba(var(--shadow), 0.3)',
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="mb-6">
+          <h2
+            className="text-2xl font-mono font-bold mb-2"
+            style={{ color: 'var(--primary)' }}
+          >
+            {t('Login')}
+          </h2>
+          <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
+            Sign in to propose changes and additions
+          </p>
+        </div>
+
+        {/* Error message */}
+        {error && (
+          <div
+            className="mb-4 p-3"
+            style={{
+              backgroundColor: 'rgba(var(--danger-rgb), 0.1)',
+              border: '1px solid var(--danger)',
+            }}
+          >
+            <p className="text-sm font-mono" style={{ color: 'var(--danger)' }}>
+              {error}
+            </p>
+          </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-mono mb-2"
+              style={{ color: 'var(--foreground)' }}
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-3 font-mono text-sm"
+              style={{
+                backgroundColor: 'var(--input-bg)',
+                color: 'var(--foreground)',
+                border: '1px solid var(--border)',
+                outline: 'none',
+              }}
+              onFocus={(e) => {
+                e.target.style.outline = 'none';
+                e.target.style.boxShadow = 'none';
+                e.target.style.borderColor = 'var(--primary)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = 'var(--border)';
+              }}
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-mono mb-2"
+              style={{ color: 'var(--foreground)' }}
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-3 font-mono text-sm"
+              style={{
+                backgroundColor: 'var(--input-bg)',
+                color: 'var(--foreground)',
+                border: '1px solid var(--border)',
+                outline: 'none',
+              }}
+              onFocus={(e) => {
+                e.target.style.outline = 'none';
+                e.target.style.boxShadow = 'none';
+                e.target.style.borderColor = 'var(--primary)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = 'var(--border)';
+              }}
+              placeholder="••••••••"
+            />
+          </div>
+
+          {/* Buttons */}
+          <div className="flex gap-3 mt-6">
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 px-4 py-3 font-mono text-sm font-bold transition-opacity"
+              style={{
+                backgroundColor: 'var(--primary)',
+                color: 'var(--background)',
+                border: 'none',
+                outline: 'none',
+                opacity: loading ? 0.6 : 1,
+                cursor: loading ? 'not-allowed' : 'pointer',
+              }}
+              onFocus={(e) => {
+                e.target.style.outline = 'none';
+                e.target.style.boxShadow = 'none';
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) e.currentTarget.style.opacity = '0.8';
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) e.currentTarget.style.opacity = '1';
+              }}
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-3 font-mono text-sm transition-opacity"
+              style={{
+                backgroundColor: 'transparent',
+                color: 'var(--foreground-muted)',
+                border: '1px solid var(--border)',
+                outline: 'none',
+              }}
+              onFocus={(e) => {
+                e.target.style.outline = 'none';
+                e.target.style.boxShadow = 'none';
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = '0.7';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = '1';
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+
+        {/* Switch to signup */}
+        <div className="mt-6 text-center">
+          <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
+            Don&apos;t have an account?{' '}
+            <button
+              onClick={onSwitchToSignup}
+              className="font-mono font-bold"
+              style={{
+                color: 'var(--primary)',
+                background: 'none',
+                border: 'none',
+                outline: 'none',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+              }}
+              onFocus={(e) => {
+                e.target.style.outline = 'none';
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              Sign up
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default React.memo(LoginModal);

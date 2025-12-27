@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useTranslation } from '../../i18n/useTranslation';
+import { useAuth } from '../../contexts/AuthContext';
+import LoginModal from '../../components/auth/LoginModal';
+import SignupModal from '../../components/auth/SignupModal';
 
 interface SidebarProps {
   viewMode?: 'stories' | 'database';
@@ -26,10 +29,13 @@ export default function Sidebar({
 }: SidebarProps) {
   const { theme, setTheme } = useTheme();
   const { language, switchToLanguage } = useTranslation();
+  const { user } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [showThemeMenu, setShowThemeMenu] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -340,6 +346,81 @@ export default function Sidebar({
           YI
         </button>
       </div>
+
+      {/* Auth Button - Only show if not logged in */}
+      {mounted && !user && (
+        <button
+          onClick={() => setShowLoginModal(true)}
+          className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+          style={{
+            backgroundColor: 'var(--input-bg)',
+            borderColor: 'var(--border)',
+            color: 'var(--foreground)',
+            cursor: 'pointer',
+            transform: 'scale(1)',
+            transition: 'transform 0.2s ease-in-out, background-color 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+          aria-label="Login / Sign Up"
+          title="Login to propose changes"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </button>
+      )}
+
+      {/* User Profile Button - Only show if logged in */}
+      {mounted && user && (
+        <button
+          onClick={() => router.push('/dashboard')}
+          className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+          style={{
+            backgroundColor: 'var(--primary)',
+            borderColor: 'var(--border)',
+            color: 'var(--background)',
+            cursor: 'pointer',
+            transform: 'scale(1)',
+            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            fontFamily: 'monospace'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+          aria-label="User Dashboard"
+          title="My Dashboard"
+        >
+          {user.email?.[0].toUpperCase() || 'U'}
+        </button>
+      )}
+
+      {/* Auth Modals */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onSwitchToSignup={() => {
+          setShowLoginModal(false);
+          setShowSignupModal(true);
+        }}
+      />
+      <SignupModal
+        isOpen={showSignupModal}
+        onClose={() => setShowSignupModal(false)}
+        onSwitchToLogin={() => {
+          setShowSignupModal(false);
+          setShowLoginModal(true);
+        }}
+      />
     </div>
   );
 }

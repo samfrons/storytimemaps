@@ -1,6 +1,6 @@
 # Memorial Plaques
 
-Generated 2025-12-25T21:31:55.127Z
+Generated 2025-12-27T13:54:17.613Z
 
 ## Styles
 
@@ -15,91 +15,91 @@ Two plaque styles are available for each business:
    - Type: Tailoring
    - Location: Rosenthaler Straße 40, Berlin
    - Operated: 1925 – 1938
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=1
+   - QR Code URL: https://www.storytimemaps.com/?id=1
 
 2. **Breslauer Brothers Department Store**
    - Type: Department Store
    - Location: Unter den Linden 15, Berlin
    - Operated: 1920 – 1935
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=2
+   - QR Code URL: https://www.storytimemaps.com/?id=2
 
 3. **Deutsches Theater Café**
    - Type: Café
    - Location: Schumannstraße 13a, Berlin
    - Operated: 1928 – 1933
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=3
+   - QR Code URL: https://www.storytimemaps.com/?id=3
 
 4. **Ebro Textiles**
    - Type: Textiles
    - Location: Alexanderstraße 125, Berlin
    - Operated: 1922 – 1939
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=4
+   - QR Code URL: https://www.storytimemaps.com/?id=4
 
 5. **Hoxter & Sons Bookshop**
    - Type: Bookshop
    - Location: Oranienburger Straße 28, Berlin
    - Operated: 1910 – 1938
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=5
+   - QR Code URL: https://www.storytimemaps.com/?id=5
 
 6. **Pelz Furrier**
    - Type: Furrier
    - Location: Friedrichstraße 180, Berlin
    - Operated: 1918 – 1937
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=6
+   - QR Code URL: https://www.storytimemaps.com/?id=6
 
 7. **Product X Manufacturing**
    - Type: Manufacturing
    - Location: Warschauer Straße 45, Berlin
    - Operated: 1926 – 1936
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=7
+   - QR Code URL: https://www.storytimemaps.com/?id=7
 
 8. **Eggs & Dairy Distributors**
    - Type: Food Distribution
    - Location: Hackescher Markt 12, Berlin
    - Operated: 1923 – 1935
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=8
+   - QR Code URL: https://www.storytimemaps.com/?id=8
 
 9. **Jonas & Co. Law Firm**
    - Type: Law Practice
    - Location: Neue Friedrichstraße 60, Berlin
    - Operated: 1908 – 1933
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=9
+   - QR Code URL: https://www.storytimemaps.com/?id=9
 
 10. **Kutschera Photography Studio**
    - Type: Photography
    - Location: Potsdamer Straße 125, Berlin
    - Operated: 1930 – 1938
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=10
+   - QR Code URL: https://www.storytimemaps.com/?id=10
 
 11. **P. Kunst Gallery**
    - Type: Art Gallery
    - Location: Unter den Linden 35, Berlin
    - Operated: 1924 – 1937
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=11
+   - QR Code URL: https://www.storytimemaps.com/?id=11
 
 12. **Ruilos Import Export**
    - Type: Import/Export
    - Location: Spandauer Straße 15, Berlin
    - Operated: 1921 – 1938
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=12
+   - QR Code URL: https://www.storytimemaps.com/?id=12
 
 13. **Wassermann Medical Practice**
    - Type: Medical Practice
    - Location: Rosenstraße 22, Berlin
    - Operated: 1915 – 1938
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=13
+   - QR Code URL: https://www.storytimemaps.com/?id=13
 
 14. **Butter & Fine Foods**
    - Type: Import/Export
    - Location: Gendarmenmarkt 8, Berlin
    - Operated: 1927 – 1936
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=14
+   - QR Code URL: https://www.storytimemaps.com/?id=14
 
 15. **YVA Photography Agency**
    - Type: Photography
    - Location: Kaiserdamm 118, Berlin
    - Operated: 1925 – 1938
-   - QR Code URL: https://storymaps.storytimemaps.com/?id=15
+   - QR Code URL: https://www.storytimemaps.com/?id=15
 
 
 ## Files

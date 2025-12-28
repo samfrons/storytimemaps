@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['next/core-web-vitals', 'next/typescript'],
+  extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
   rules: {
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
@@ -14,15 +14,18 @@ module.exports = {
         'no-restricted-syntax': [
           'warn',
           {
-            selector: "ConditionalExpression[test.type='BinaryExpression'][test.left.type='UnaryExpression'][test.left.operator='typeof'][test.left.argument.name='window']",
-            message: 'Avoid typeof window checks in render. Use useEffect or a client-only wrapper instead.'
+            selector:
+              "ConditionalExpression[test.type='BinaryExpression'][test.left.type='UnaryExpression'][test.left.operator='typeof'][test.left.argument.name='window']",
+            message:
+              'Avoid typeof window checks in render. Use useEffect or a client-only wrapper instead.',
           },
           {
             selector: "ConditionalExpression[test.callee.object.name='localStorage']",
-            message: 'localStorage access can cause hydration mismatches. Use a state variable with useEffect instead.'
-          }
-        ]
-      }
-    }
-  ]
-};
+            message:
+              'localStorage access can cause hydration mismatches. Use a state variable with useEffect instead.',
+          },
+        ],
+      },
+    },
+  ],
+}

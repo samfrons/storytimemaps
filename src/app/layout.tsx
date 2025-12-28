@@ -5,13 +5,14 @@ import { Inter, Space_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { AuthProvider } from '../contexts/AuthContext'
+import AppErrorBoundary from '../components/AppErrorBoundary'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
   preload: true,
-  weight: ['400', '500', '600']
+  weight: ['400', '500', '600'],
 })
 
 const spaceMono = Space_Mono({
@@ -19,7 +20,7 @@ const spaceMono = Space_Mono({
   display: 'swap',
   variable: '--font-space-mono',
   preload: true,
-  weight: ['400', '700']
+  weight: ['400', '700'],
 })
 
 export const metadata: Metadata = {
@@ -27,11 +28,11 @@ export const metadata: Metadata = {
   description: 'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945',
   other: {
     'dns-prefetch': '//api.mapbox.com',
-    'preconnect': 'https://api.mapbox.com',
+    preconnect: 'https://api.mapbox.com',
     'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
-  }
+  },
 }
 
 export const viewport: Viewport = {
@@ -41,16 +42,12 @@ export const viewport: Viewport = {
   userScalable: true,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#4a4a57' }
+    { media: '(prefers-color-scheme: dark)', color: '#4a4a57' },
   ],
-  colorScheme: 'dark light'
+  colorScheme: 'dark light',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceMono.variable}`} suppressHydrationWarning>
       <head>
@@ -58,11 +55,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//api.mapbox.com" />
         <link rel="dns-prefetch" href="//events.mapbox.com" />
         <link rel="dns-prefetch" href="//tiles.mapbox.com" />
-        
+
         {/* Preconnect to critical origins */}
         <link rel="preconnect" href="https://api.mapbox.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://events.mapbox.com" crossOrigin="anonymous" />
-        
+
         {/* Preload critical custom fonts */}
         <link
           rel="preload"
@@ -78,32 +75,23 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        
+
         {/* Preload critical resources */}
-        <link 
-          rel="preload" 
-          href="/api/storymaps/metadata" 
-          as="fetch" 
-          crossOrigin="anonymous" 
-        />
-        
+        <link rel="preload" href="/api/storymaps/metadata" as="fetch" crossOrigin="anonymous" />
+
         {/* Preload critical background image only when needed */}
-        <link 
-          rel="prefetch" 
-          href="/berlin-map.png" 
-          as="image"
-        />
-        
+        <link rel="prefetch" href="/berlin-map.png" as="image" />
+
         {/* Resource hints for better performance */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        
+
         {/* Mobile-specific optimizations */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no" />
-        
+
         {/* Disable tap highlight on mobile for better performance */}
         <style>{`
           @media (max-width: 768px) {
@@ -164,7 +152,7 @@ export default function RootLayout({
             forcedTheme={undefined}
           >
             <AuthProvider>
-              {children}
+              <AppErrorBoundary>{children}</AppErrorBoundary>
             </AuthProvider>
           </ThemeProvider>
         </I18nProvider>

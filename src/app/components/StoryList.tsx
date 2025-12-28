@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import TimeSlider from './TimeSlider'
 import { StoryMap } from '../../types'
 import BusinessDetailModal from './BusinessDetailModal'
+import ErrorBoundary from '../../components/ErrorBoundary'
 import { throttle } from '../../utils/performance'
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes'
 import { useTranslation } from '../../i18n/useTranslation'
@@ -868,22 +869,24 @@ const StoryList: React.FC<StoryListProps> = ({
 
       {/* Business Detail Modal */}
       {selectedStory && (
-        <BusinessDetailModal
-          story={selectedStory}
-          isOpen={modalOpen}
-          onClose={closeModal}
-          originRect={originRect}
-          currentDate={currentDate}
-          minDate={minDate}
-          maxDate={maxDate}
-          onDateChange={setCurrentDate}
-          onNavigate={handleModalNavigation}
-          hasPrevious={allFilteredStories.findIndex((s) => s.id === selectedStory.id) > 0}
-          hasNext={
-            allFilteredStories.findIndex((s) => s.id === selectedStory.id) <
-            allFilteredStories.length - 1
-          }
-        />
+        <ErrorBoundary componentName="Business Details">
+          <BusinessDetailModal
+            story={selectedStory}
+            isOpen={modalOpen}
+            onClose={closeModal}
+            originRect={originRect}
+            currentDate={currentDate}
+            minDate={minDate}
+            maxDate={maxDate}
+            onDateChange={setCurrentDate}
+            onNavigate={handleModalNavigation}
+            hasPrevious={allFilteredStories.findIndex((s) => s.id === selectedStory.id) > 0}
+            hasNext={
+              allFilteredStories.findIndex((s) => s.id === selectedStory.id) <
+              allFilteredStories.length - 1
+            }
+          />
+        </ErrorBoundary>
       )}
     </div>
   )

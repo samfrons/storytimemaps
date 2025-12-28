@@ -3,23 +3,13 @@
 import { useState, useEffect, useCallback } from 'react'
 import { StoryMap } from '../types'
 import { useTranslation } from '../i18n/useTranslation'
-
-interface BusinessFeature {
-  type: 'Feature'
-  geometry: {
-    type: 'Point'
-    coordinates: [number, number]
-  }
-  properties: {
-    name: string
-    business_type: string
-    category: string
-    address: string
-    registration_date: string
-    liquidation_date: string
-    takeover_date: string
-  }
-}
+import {
+  fetchInitialBundle,
+  fetchBusinessesPage,
+  fetchAllBusinesses,
+  convertToGeoJSON,
+  type BusinessFeature,
+} from '../services'
 
 interface UseStorymapsDataReturn {
   jewishBusinesses: BusinessFeature[]
@@ -32,8 +22,8 @@ interface UseStorymapsDataReturn {
 }
 
 /**
- * Hook for fetching and managing storymaps data from the API.
- * Handles initial data loading, pagination, and full dataset loading.
+ * Hook for fetching and managing storymaps data.
+ * Uses the service layer for API abstraction and caching.
  */
 export function useStorymapsData(): UseStorymapsDataReturn {
   const { language } = useTranslation()
@@ -43,53 +33,20 @@ export function useStorymapsData(): UseStorymapsDataReturn {
   const [isLoading, setIsLoading] = useState(true)
   const [totalItems, setTotalItems] = useState(10847)
 
-  // Convert StoryMap array to GeoJSON BusinessFeature array
-  const convertToGeoJSON = useCallback((data: StoryMap[]): BusinessFeature[] => {
-    return data.map((story) => ({
-      type: 'Feature' as const,
-      geometry: {
-        type: 'Point' as const,
-        coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number],
-      },
-      properties: {
-        name: story.title,
-        business_type: story.businessType || '',
-        category: story.category || '',
-        address: story.address || '',
-        registration_date: story.startDate || '',
-        liquidation_date: story.endDate || '',
-        takeover_date: story.midDate || '',
-      },
-    }))
-  }, [])
-
   // Fetch initial data on mount
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         setIsLoading(true)
 
-        // Load stories data (detailed narratives)
-        const storiesResponse = await fetch('/api/storymaps-test?stories=true')
-        if (!storiesResponse.ok) {
-          throw new Error(`HTTP error! status: ${storiesResponse.status}`)
-        }
-        const storiesData = await storiesResponse.json()
-        const storiesDataArray = Array.isArray(storiesData) ? storiesData : storiesData.data || []
-
-        // Load initial dataset (first page)
-        const initialResponse = await fetch('/api/storymaps-test?page=1&pageSize=200')
-        if (!initialResponse.ok) {
-          throw new Error(`HTTP error! status: ${initialResponse.status}`)
-        }
-        const initialData = await initialResponse.json()
-        const initialDataArray = Array.isArray(initialData) ? initialData : initialData.data || []
+        // Use service to fetch both datasets in parallel
+        const { initialData, stories } = await fetchInitialBundle()
 
         // Store datasets
-        setFullDatabaseData(initialDataArray)
-        setDetailedStoriesData(storiesDataArray)
-        setTotalItems(initialDataArray.length)
-        setJewishBusinesses(convertToGeoJSON(initialDataArray))
+        setFullDatabaseData(initialData)
+        setDetailedStoriesData(stories)
+        setTotalItems(initialData.length)
+        setJewishBusinesses(convertToGeoJSON(initialData))
       } catch (error) {
         console.error('Error fetching initial data:', error)
         setFullDatabaseData([])
@@ -101,18 +58,13 @@ export function useStorymapsData(): UseStorymapsDataReturn {
     }
 
     fetchInitialData()
-  }, [language, convertToGeoJSON])
+  }, [language])
 
   // Progressive loading for pagination
   const loadMoreBusinesses = useCallback(
     async (page: number, pageSize: number = 200): Promise<StoryMap[]> => {
       try {
-        const response = await fetch(`/api/storymaps-test?page=${page}&pageSize=${pageSize}`)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        const data = await response.json()
-        return Array.isArray(data) ? data : data.data || []
+        return await fetchBusinessesPage(page, pageSize)
       } catch (error) {
         console.error('Error loading more businesses:', error)
         return []
@@ -127,12 +79,7 @@ export function useStorymapsData(): UseStorymapsDataReturn {
 
     try {
       setIsLoading(true)
-      const response = await fetch('/api/storymaps-test?all=true')
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      const allData = Array.isArray(data) ? data : data.data || []
+      const allData = await fetchAllBusinesses()
 
       setFullDatabaseData(allData)
       setTotalItems(allData.length)
@@ -142,7 +89,7 @@ export function useStorymapsData(): UseStorymapsDataReturn {
     } finally {
       setIsLoading(false)
     }
-  }, [fullDatabaseData.length, convertToGeoJSON])
+  }, [fullDatabaseData.length])
 
   return {
     jewishBusinesses,

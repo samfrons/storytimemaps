@@ -3,6 +3,17 @@
  * Contains complete Mapbox GL style objects for each supported theme.
  */
 
+// Mapbox style objects are validated by Mapbox at runtime
+// Using a permissive type to avoid complex nested type conflicts
+type MapboxStyleObject = {
+  version: 8
+  name?: string
+  sources: Record<string, unknown>
+  sprite?: string
+  glyphs?: string
+  layers: unknown[]
+}
+
 // Complete custom style for moody theme
 export const MOODY_STYLE = {
   version: 8 as const,
@@ -329,8 +340,8 @@ export const BAUHAUS_STYLE = {
 }
 
 // Get minimal dark archival map style
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const ARCHIVAL_STYLE: any = {
+// Mapbox style object - uses explicit type due to complex nested structure
+export const ARCHIVAL_STYLE: MapboxStyleObject = {
   version: 8,
   sources: {
     mapbox: {
@@ -403,8 +414,7 @@ export const ARCHIVAL_STYLE: any = {
 /**
  * Get custom map style for each theme
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getThemeMapStyle = (theme: string | undefined): any => {
+export const getThemeMapStyle = (theme: string | undefined): MapboxStyleObject | string => {
   switch (theme) {
     case 'moody':
       return MOODY_STYLE // Use complete moody style

@@ -76,7 +76,7 @@ describe('useStorymapsData', () => {
     mockFetchInitialBundle.mockResolvedValueOnce({
       initialData: mockInitialData,
       stories: [],
-    } as ReturnType<typeof fetchInitialBundle> extends Promise<infer T> ? T : never)
+    } as unknown as Awaited<ReturnType<typeof fetchInitialBundle>>)
 
     const { result } = renderHook(() => useStorymapsData())
 
@@ -116,9 +116,9 @@ describe('useStorymapsData', () => {
     mockFetchInitialBundle.mockResolvedValueOnce({
       initialData: mockInitialData,
       stories: [],
-    } as ReturnType<typeof fetchInitialBundle> extends Promise<infer T> ? T : never)
+    } as unknown as Awaited<ReturnType<typeof fetchInitialBundle>>)
     mockFetchBusinessesPage.mockResolvedValueOnce(
-      mockMoreData as ReturnType<typeof fetchBusinessesPage> extends Promise<infer T> ? T : never
+      mockMoreData as unknown as Awaited<ReturnType<typeof fetchBusinessesPage>>
     )
 
     const { result } = renderHook(() => useStorymapsData())
@@ -144,9 +144,9 @@ describe('useStorymapsData', () => {
     mockFetchInitialBundle.mockResolvedValueOnce({
       initialData: mockInitialData,
       stories: [],
-    } as ReturnType<typeof fetchInitialBundle> extends Promise<infer T> ? T : never)
+    } as unknown as Awaited<ReturnType<typeof fetchInitialBundle>>)
     mockFetchAllBusinesses.mockResolvedValueOnce(
-      mockAllData as ReturnType<typeof fetchAllBusinesses> extends Promise<infer T> ? T : never
+      mockAllData as unknown as Awaited<ReturnType<typeof fetchAllBusinesses>>
     )
 
     const { result } = renderHook(() => useStorymapsData())

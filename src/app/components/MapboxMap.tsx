@@ -20,6 +20,7 @@ import {
   type ThemeColors,
 } from './map/mapStyles'
 import MapPopup from './map/MapPopup'
+import { GeoJSONFeatureCollection, GeoJSONFeature, TimelineData } from '../../types'
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
@@ -52,11 +53,9 @@ interface MapboxMapProps {
     hasTimelineData?: boolean
   }>
   isTestMode?: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?: any
+  data?: GeoJSONFeatureCollection
   selectedDate?: Date
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onBusinessSelect?: (business: any) => void
+  onBusinessSelect?: (business: GeoJSONFeature) => void
 }
 
 const MapboxMap: React.FC<MapboxMapProps> = ({
@@ -104,8 +103,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       [key: string]: unknown
     }
   } | null>(null)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [popupTimelineData, setPopupTimelineData] = useState<{ [key: string]: any }>({})
+  const [popupTimelineData, setPopupTimelineData] = useState<{ [key: string]: TimelineData }>({})
 
   // Get mobile optimizations
   const { isMobile } = useMobileOptimizations()
@@ -546,11 +544,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             }}
             onClick={async (e) => {
               e.stopPropagation()
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               if (onBusinessSelect && data) {
                 const business = data.features?.find(
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (f: any) => f.properties.id?.toString() === properties.id
+                  (f: GeoJSONFeature) => f.properties.id?.toString() === properties.id
                 )
                 if (business) {
                   onBusinessSelect(business)
@@ -593,11 +589,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         longitude={lng}
         latitude={lat}
         onClick={async () => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           if (onBusinessSelect && data) {
             const business = data.features?.find(
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (f: any) => f.properties.id?.toString() === properties.id
+              (f: GeoJSONFeature) => f.properties.id?.toString() === properties.id
             )
             if (business) {
               onBusinessSelect(business)
@@ -784,7 +778,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             }, 100)
           })
         }}
-        mapStyle={getThemeMapStyle(theme)}
+        mapStyle={getThemeMapStyle(theme) as string | mapboxgl.Style}
         mapboxAccessToken={MAPBOX_TOKEN}
         style={{ width: '100%', height: '100%' }}
         maxZoom={20}

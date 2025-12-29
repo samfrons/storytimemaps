@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface AuthModalProps {
@@ -35,6 +35,19 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Handle modal open/close animation
+  useEffect(() => {
+    if (isOpen) {
+      // Small delay to trigger CSS transition
+      requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+    } else {
+      setIsVisible(false);
+    }
+  }, [isOpen]);
 
   const resetForm = useCallback(() => {
     setStep('email');
@@ -49,8 +62,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   }, []);
 
   const handleClose = () => {
-    resetForm();
-    onClose();
+    setIsVisible(false);
+    // Wait for animation to complete before closing
+    setTimeout(() => {
+      resetForm();
+      onClose();
+    }, 200);
   };
 
   const handleGoogleSignIn = async () => {
@@ -157,265 +174,340 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: 'rgba(var(--background-rgb), 0.8)' }}
-      onClick={handleClose}
-    >
-      <div
-        className="w-full max-w-md p-6"
-        style={{
-          backgroundColor: 'var(--card-bg)',
-          border: '1px solid var(--border)',
-          boxShadow: '0 4px 12px rgba(var(--shadow), 0.3)',
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="mb-6">
-          <h2
-            className="text-2xl font-mono font-bold mb-2"
-            style={{ color: 'var(--primary)' }}
-          >
-            {step === 'email' && 'Continue to StoryMaps'}
-            {step === 'signin' && 'Welcome Back'}
-            {step === 'signup' && 'Create Your Account'}
-          </h2>
-          <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
-            {step === 'email' && 'Sign in or create an account to contribute historical data'}
-            {step === 'signin' && 'Enter your password to continue'}
-            {step === 'signup' && 'Complete your registration to start contributing'}
-          </p>
+    <>
+      {/* CSS for transitions */}
+      <style jsx>{`
+        .auth-modal-backdrop {
+          transition: opacity 0.2s ease-out;
+        }
 
-          {step === 'signup' && (
+        .auth-modal-panel {
+          transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+
+        .auth-input {
+          transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .auth-input:focus {
+          border-color: var(--primary) !important;
+          box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
+        }
+
+        .auth-btn-primary {
+          transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+        }
+
+        .auth-btn-primary:hover:not(:disabled) {
+          opacity: 0.85;
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .auth-btn-primary:active:not(:disabled) {
+          opacity: 0.9;
+          transform: translateY(0);
+          box-shadow: none;
+        }
+
+        .auth-btn-secondary {
+          transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+        }
+
+        .auth-btn-secondary:hover:not(:disabled) {
+          background-color: var(--input-bg) !important;
+          border-color: var(--primary) !important;
+          transform: translateY(-1px);
+        }
+
+        .auth-btn-secondary:active:not(:disabled) {
+          transform: translateY(0);
+          background-color: var(--muted) !important;
+        }
+
+        .auth-link {
+          transition: color 0.15s ease, opacity 0.15s ease;
+          position: relative;
+        }
+
+        .auth-link::after {
+          content: '';
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background-color: currentColor;
+          transform: scaleX(1);
+          transition: transform 0.15s ease;
+        }
+
+        .auth-link:hover {
+          opacity: 0.8;
+        }
+
+        .auth-link:hover::after {
+          transform: scaleX(0.8);
+        }
+
+        .auth-link:active {
+          opacity: 0.6;
+        }
+
+        .auth-cancel {
+          transition: color 0.15s ease, opacity 0.15s ease;
+        }
+
+        .auth-cancel:hover:not(:disabled) {
+          color: var(--foreground) !important;
+          opacity: 1;
+        }
+
+        .auth-cancel:active:not(:disabled) {
+          opacity: 0.7;
+        }
+
+        .auth-message {
+          animation: slideIn 0.2s ease-out;
+        }
+
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
+      <div
+        className="auth-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4"
+        style={{
+          backgroundColor: 'rgba(var(--background-rgb), 0.8)',
+          opacity: isVisible ? 1 : 0,
+        }}
+        onClick={handleClose}
+      >
+        <div
+          className="auth-modal-panel w-full max-w-md p-6"
+          style={{
+            backgroundColor: 'var(--card-bg)',
+            border: '1px solid var(--border)',
+            boxShadow: '0 4px 24px rgba(var(--shadow), 0.4)',
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(-16px) scale(0.98)',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="mb-6">
+            <h2
+              className="text-2xl font-mono font-bold mb-2"
+              style={{ color: 'var(--primary)' }}
+            >
+              {step === 'email' && 'Continue to StoryMaps'}
+              {step === 'signin' && 'Welcome Back'}
+              {step === 'signup' && 'Create Your Account'}
+            </h2>
+            <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
+              {step === 'email' && 'Sign in or create an account to contribute historical data'}
+              {step === 'signin' && 'Enter your password to continue'}
+              {step === 'signup' && 'Complete your registration to start contributing'}
+            </p>
+
+            {step === 'signup' && (
+              <div
+                className="auth-message mt-3 p-3 text-xs font-mono"
+                style={{
+                  backgroundColor: 'rgba(var(--primary-rgb), 0.1)',
+                  border: '1px solid var(--border)',
+                }}
+              >
+                <p style={{ color: 'var(--foreground)' }}>
+                  <strong>For historians &amp; researchers:</strong> Your contributions help document Jewish commercial history in Berlin.
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Success message */}
+          {success && (
             <div
-              className="mt-3 p-3 text-xs font-mono"
+              className="auth-message mb-4 p-3"
               style={{
-                backgroundColor: 'rgba(var(--primary-rgb), 0.1)',
-                border: '1px solid var(--border)',
+                backgroundColor: 'rgba(var(--success-rgb), 0.1)',
+                border: '1px solid var(--success)',
               }}
             >
-              <p style={{ color: 'var(--foreground)' }}>
-                <strong>For historians &amp; researchers:</strong> Your contributions help document Jewish commercial history in Berlin.
+              <p className="text-sm font-mono" style={{ color: 'var(--success)' }}>
+                Account created! Please check your email to confirm your account.
               </p>
             </div>
           )}
-        </div>
 
-        {/* Success message */}
-        {success && (
-          <div
-            className="mb-4 p-3"
-            style={{
-              backgroundColor: 'rgba(var(--success-rgb), 0.1)',
-              border: '1px solid var(--success)',
-            }}
-          >
-            <p className="text-sm font-mono" style={{ color: 'var(--success)' }}>
-              Account created! Please check your email to confirm your account.
-            </p>
-          </div>
-        )}
-
-        {/* Error message */}
-        {error && (
-          <div
-            className="mb-4 p-3"
-            style={{
-              backgroundColor: 'rgba(var(--danger-rgb), 0.1)',
-              border: '1px solid var(--danger)',
-            }}
-          >
-            <p className="text-sm font-mono" style={{ color: 'var(--danger)' }}>
-              {error}
-            </p>
-          </div>
-        )}
-
-        {/* Google Sign In - always available */}
-        {!success && (
-          <>
-            <button
-              type="button"
-              onClick={handleGoogleSignIn}
-              disabled={googleLoading || loading}
-              className="w-full flex items-center justify-center gap-3 px-4 py-3 font-mono text-sm transition-opacity mb-4"
+          {/* Error message */}
+          {error && (
+            <div
+              className="auth-message mb-4 p-3"
               style={{
-                backgroundColor: 'var(--card-bg)',
-                color: 'var(--foreground)',
-                border: '1px solid var(--border)',
-                outline: 'none',
-                opacity: googleLoading || loading ? 0.6 : 1,
-                cursor: googleLoading || loading ? 'not-allowed' : 'pointer',
-              }}
-              onFocus={(e) => {
-                e.target.style.outline = 'none';
-                e.target.style.boxShadow = 'none';
-              }}
-              onMouseEnter={(e) => {
-                if (!googleLoading && !loading) {
-                  e.currentTarget.style.backgroundColor = 'var(--input-bg)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--card-bg)';
+                backgroundColor: 'rgba(var(--danger-rgb), 0.1)',
+                border: '1px solid var(--danger)',
               }}
             >
-              <GoogleIcon />
-              {googleLoading ? 'Connecting...' : 'Continue with Google'}
-            </button>
-
-            {/* Divider */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
-              <span className="text-xs font-mono" style={{ color: 'var(--foreground-muted)' }}>
-                or continue with email
-              </span>
-              <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
+              <p className="text-sm font-mono" style={{ color: 'var(--danger)' }}>
+                {error}
+              </p>
             </div>
-          </>
-        )}
+          )}
 
-        {/* Email Step */}
-        {step === 'email' && !success && (
-          <form onSubmit={handleEmailSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-mono mb-2"
-                style={{ color: 'var(--foreground)' }}
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoFocus
-                className="w-full px-4 py-3 font-mono text-sm"
+          {/* Google Sign In - always available */}
+          {!success && (
+            <>
+              <button
+                type="button"
+                onClick={handleGoogleSignIn}
+                disabled={googleLoading || loading}
+                className="auth-btn-secondary w-full flex items-center justify-center gap-3 px-4 py-3 font-mono text-sm mb-4"
                 style={{
-                  backgroundColor: 'var(--input-bg)',
+                  backgroundColor: 'var(--card-bg)',
                   color: 'var(--foreground)',
                   border: '1px solid var(--border)',
                   outline: 'none',
+                  opacity: googleLoading || loading ? 0.6 : 1,
+                  cursor: googleLoading || loading ? 'not-allowed' : 'pointer',
                 }}
-                onFocus={(e) => {
-                  e.target.style.outline = 'none';
-                  e.target.style.boxShadow = 'none';
-                  e.target.style.borderColor = 'var(--primary)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'var(--border)';
-                }}
-                placeholder="your@email.com"
-              />
-            </div>
+              >
+                <GoogleIcon />
+                {googleLoading ? 'Connecting...' : 'Continue with Google'}
+              </button>
 
-            <button
-              type="submit"
-              className="w-full px-4 py-3 font-mono text-sm font-bold transition-opacity"
-              style={{
-                backgroundColor: 'var(--primary)',
-                color: 'var(--background)',
-                border: 'none',
-                outline: 'none',
-              }}
-              onFocus={(e) => {
-                e.target.style.outline = 'none';
-                e.target.style.boxShadow = 'none';
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = '0.8';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = '1';
-              }}
-            >
-              Continue
-            </button>
-          </form>
-        )}
+              {/* Divider */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
+                <span className="text-xs font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                  or continue with email
+                </span>
+                <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
+              </div>
+            </>
+          )}
 
-        {/* Sign In Step */}
-        {step === 'signin' && !success && (
-          <form onSubmit={handleSignIn} className="space-y-4">
-            <div>
-              <div className="flex items-center justify-between mb-2">
+          {/* Email Step */}
+          {step === 'email' && !success && (
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
+              <div>
                 <label
-                  htmlFor="email-display"
-                  className="text-sm font-mono"
+                  htmlFor="email"
+                  className="block text-sm font-mono mb-2"
                   style={{ color: 'var(--foreground)' }}
                 >
-                  Email
+                  Email Address
                 </label>
-                <button
-                  type="button"
-                  onClick={() => { setStep('email'); setPassword(''); setError(null); }}
-                  className="text-xs font-mono"
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoFocus
+                  className="auth-input w-full px-4 py-3 font-mono text-sm"
                   style={{
-                    color: 'var(--primary)',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    textDecoration: 'underline',
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--foreground)',
+                    border: '1px solid var(--border)',
+                    outline: 'none',
                   }}
-                >
-                  Change
-                </button>
+                  placeholder="your@email.com"
+                />
               </div>
-              <div
-                className="px-4 py-3 font-mono text-sm"
-                style={{
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'var(--foreground-muted)',
-                  border: '1px solid var(--border)',
-                }}
-              >
-                {email}
-              </div>
-            </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-mono mb-2"
-                style={{ color: 'var(--foreground)' }}
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoFocus
-                className="w-full px-4 py-3 font-mono text-sm"
+              <button
+                type="submit"
+                className="auth-btn-primary w-full px-4 py-3 font-mono text-sm font-bold"
                 style={{
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
+                  backgroundColor: 'var(--primary)',
+                  color: 'var(--background)',
+                  border: 'none',
                   outline: 'none',
                 }}
-                onFocus={(e) => {
-                  e.target.style.outline = 'none';
-                  e.target.style.boxShadow = 'none';
-                  e.target.style.borderColor = 'var(--primary)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'var(--border)';
-                }}
-                placeholder="••••••••"
-              />
-            </div>
+              >
+                Continue
+              </button>
+            </form>
+          )}
 
-            <div className="flex gap-3">
+          {/* Sign In Step */}
+          {step === 'signin' && !success && (
+            <form onSubmit={handleSignIn} className="space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label
+                    htmlFor="email-display"
+                    className="text-sm font-mono"
+                    style={{ color: 'var(--foreground)' }}
+                  >
+                    Email
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => { setStep('email'); setPassword(''); setError(null); }}
+                    className="auth-link text-xs font-mono"
+                    style={{
+                      color: 'var(--primary)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                    }}
+                  >
+                    Change
+                  </button>
+                </div>
+                <div
+                  className="px-4 py-3 font-mono text-sm"
+                  style={{
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--foreground-muted)',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  {email}
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-mono mb-2"
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoFocus
+                  className="auth-input w-full px-4 py-3 font-mono text-sm"
+                  style={{
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--foreground)',
+                    border: '1px solid var(--border)',
+                    outline: 'none',
+                  }}
+                  placeholder="••••••••"
+                />
+              </div>
+
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-4 py-3 font-mono text-sm font-bold transition-opacity"
+                className="auth-btn-primary w-full px-4 py-3 font-mono text-sm font-bold"
                 style={{
                   backgroundColor: 'var(--primary)',
                   color: 'var(--background)',
@@ -424,272 +516,213 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   opacity: loading ? 0.6 : 1,
                   cursor: loading ? 'not-allowed' : 'pointer',
                 }}
-                onFocus={(e) => {
-                  e.target.style.outline = 'none';
-                  e.target.style.boxShadow = 'none';
-                }}
-                onMouseEnter={(e) => {
-                  if (!loading) e.currentTarget.style.opacity = '0.8';
-                }}
-                onMouseLeave={(e) => {
-                  if (!loading) e.currentTarget.style.opacity = '1';
-                }}
               >
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
-            </div>
 
-            {/* Switch to signup */}
-            <div className="text-center pt-2">
-              <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
-                New here?{' '}
-                <button
-                  type="button"
-                  onClick={() => { setStep('signup'); setPassword(''); setError(null); }}
-                  className="font-mono font-bold"
+              {/* Switch to signup */}
+              <div className="text-center pt-2">
+                <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
+                  New here?{' '}
+                  <button
+                    type="button"
+                    onClick={() => { setStep('signup'); setPassword(''); setError(null); }}
+                    className="auth-link font-mono font-bold"
+                    style={{
+                      color: 'var(--primary)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                    }}
+                  >
+                    Create an account
+                  </button>
+                </p>
+              </div>
+            </form>
+          )}
+
+          {/* Sign Up Step */}
+          {step === 'signup' && !success && (
+            <form onSubmit={handleSignUp} className="space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label
+                    htmlFor="email-display"
+                    className="text-sm font-mono"
+                    style={{ color: 'var(--foreground)' }}
+                  >
+                    Email
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => { setStep('email'); setPassword(''); setConfirmPassword(''); setError(null); }}
+                    className="auth-link text-xs font-mono"
+                    style={{
+                      color: 'var(--primary)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                    }}
+                  >
+                    Change
+                  </button>
+                </div>
+                <div
+                  className="px-4 py-3 font-mono text-sm"
                   style={{
-                    color: 'var(--primary)',
-                    background: 'none',
-                    border: 'none',
-                    outline: 'none',
-                    cursor: 'pointer',
-                    textDecoration: 'underline',
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.outline = 'none';
-                    e.target.style.boxShadow = 'none';
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--foreground-muted)',
+                    border: '1px solid var(--border)',
                   }}
                 >
-                  Create an account
-                </button>
-              </p>
-            </div>
-          </form>
-        )}
+                  {email}
+                </div>
+              </div>
 
-        {/* Sign Up Step */}
-        {step === 'signup' && !success && (
-          <form onSubmit={handleSignUp} className="space-y-4">
-            <div>
-              <div className="flex items-center justify-between mb-2">
+              <div>
                 <label
-                  htmlFor="email-display"
-                  className="text-sm font-mono"
+                  htmlFor="displayName"
+                  className="block text-sm font-mono mb-2"
                   style={{ color: 'var(--foreground)' }}
                 >
-                  Email
+                  Display Name
                 </label>
-                <button
-                  type="button"
-                  onClick={() => { setStep('email'); setPassword(''); setConfirmPassword(''); setError(null); }}
-                  className="text-xs font-mono"
+                <input
+                  type="text"
+                  id="displayName"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  autoFocus
+                  className="auth-input w-full px-4 py-3 font-mono text-sm"
                   style={{
-                    color: 'var(--primary)',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    textDecoration: 'underline',
-                  }}
-                >
-                  Change
-                </button>
-              </div>
-              <div
-                className="px-4 py-3 font-mono text-sm"
-                style={{
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'var(--foreground-muted)',
-                  border: '1px solid var(--border)',
-                }}
-              >
-                {email}
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="displayName"
-                className="block text-sm font-mono mb-2"
-                style={{ color: 'var(--foreground)' }}
-              >
-                Display Name
-              </label>
-              <input
-                type="text"
-                id="displayName"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                autoFocus
-                className="w-full px-4 py-3 font-mono text-sm"
-                style={{
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                  outline: 'none',
-                }}
-                onFocus={(e) => {
-                  e.target.style.outline = 'none';
-                  e.target.style.boxShadow = 'none';
-                  e.target.style.borderColor = 'var(--primary)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'var(--border)';
-                }}
-                placeholder="Your Name"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password-new"
-                className="block text-sm font-mono mb-2"
-                style={{ color: 'var(--foreground)' }}
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password-new"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full px-4 py-3 font-mono text-sm"
-                style={{
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                  outline: 'none',
-                }}
-                onFocus={(e) => {
-                  e.target.style.outline = 'none';
-                  e.target.style.boxShadow = 'none';
-                  e.target.style.borderColor = 'var(--primary)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'var(--border)';
-                }}
-                placeholder="••••••••"
-              />
-              <p className="text-xs mt-1 font-mono" style={{ color: 'var(--foreground-muted)' }}>
-                At least 6 characters
-              </p>
-            </div>
-
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-mono mb-2"
-                style={{ color: 'var(--foreground)' }}
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                className="w-full px-4 py-3 font-mono text-sm"
-                style={{
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                  outline: 'none',
-                }}
-                onFocus={(e) => {
-                  e.target.style.outline = 'none';
-                  e.target.style.boxShadow = 'none';
-                  e.target.style.borderColor = 'var(--primary)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'var(--border)';
-                }}
-                placeholder="••••••••"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full px-4 py-3 font-mono text-sm font-bold transition-opacity"
-              style={{
-                backgroundColor: 'var(--primary)',
-                color: 'var(--background)',
-                border: 'none',
-                outline: 'none',
-                opacity: loading ? 0.6 : 1,
-                cursor: loading ? 'not-allowed' : 'pointer',
-              }}
-              onFocus={(e) => {
-                e.target.style.outline = 'none';
-                e.target.style.boxShadow = 'none';
-              }}
-              onMouseEnter={(e) => {
-                if (!loading) e.currentTarget.style.opacity = '0.8';
-              }}
-              onMouseLeave={(e) => {
-                if (!loading) e.currentTarget.style.opacity = '1';
-              }}
-            >
-              {loading ? 'Creating account...' : 'Create Account'}
-            </button>
-
-            {/* Switch to signin */}
-            <div className="text-center pt-2">
-              <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
-                Already have an account?{' '}
-                <button
-                  type="button"
-                  onClick={() => { setStep('signin'); setPassword(''); setConfirmPassword(''); setError(null); }}
-                  className="font-mono font-bold"
-                  style={{
-                    color: 'var(--primary)',
-                    background: 'none',
-                    border: 'none',
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--foreground)',
+                    border: '1px solid var(--border)',
                     outline: 'none',
-                    cursor: 'pointer',
-                    textDecoration: 'underline',
                   }}
-                  onFocus={(e) => {
-                    e.target.style.outline = 'none';
-                    e.target.style.boxShadow = 'none';
-                  }}
-                >
-                  Sign in
-                </button>
-              </p>
-            </div>
-          </form>
-        )}
+                  placeholder="Your Name"
+                />
+              </div>
 
-        {/* Cancel button */}
-        {!success && (
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={handleClose}
-              disabled={loading || googleLoading}
-              className="text-sm font-mono transition-opacity"
-              style={{
-                color: 'var(--foreground-muted)',
-                background: 'none',
-                border: 'none',
-                cursor: loading || googleLoading ? 'not-allowed' : 'pointer',
-                opacity: loading || googleLoading ? 0.6 : 1,
-              }}
-              onMouseEnter={(e) => {
-                if (!loading && !googleLoading) e.currentTarget.style.opacity = '0.7';
-              }}
-              onMouseLeave={(e) => {
-                if (!loading && !googleLoading) e.currentTarget.style.opacity = '1';
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        )}
+              <div>
+                <label
+                  htmlFor="password-new"
+                  className="block text-sm font-mono mb-2"
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password-new"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="auth-input w-full px-4 py-3 font-mono text-sm"
+                  style={{
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--foreground)',
+                    border: '1px solid var(--border)',
+                    outline: 'none',
+                  }}
+                  placeholder="••••••••"
+                />
+                <p className="text-xs mt-1 font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                  At least 6 characters
+                </p>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-mono mb-2"
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  className="auth-input w-full px-4 py-3 font-mono text-sm"
+                  style={{
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--foreground)',
+                    border: '1px solid var(--border)',
+                    outline: 'none',
+                  }}
+                  placeholder="••••••••"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="auth-btn-primary w-full px-4 py-3 font-mono text-sm font-bold"
+                style={{
+                  backgroundColor: 'var(--primary)',
+                  color: 'var(--background)',
+                  border: 'none',
+                  outline: 'none',
+                  opacity: loading ? 0.6 : 1,
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {loading ? 'Creating account...' : 'Create Account'}
+              </button>
+
+              {/* Switch to signin */}
+              <div className="text-center pt-2">
+                <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
+                  Already have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => { setStep('signin'); setPassword(''); setConfirmPassword(''); setError(null); }}
+                    className="auth-link font-mono font-bold"
+                    style={{
+                      color: 'var(--primary)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                    }}
+                  >
+                    Sign in
+                  </button>
+                </p>
+              </div>
+            </form>
+          )}
+
+          {/* Cancel button */}
+          {!success && (
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={handleClose}
+                disabled={loading || googleLoading}
+                className="auth-cancel text-sm font-mono"
+                style={{
+                  color: 'var(--foreground-muted)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: loading || googleLoading ? 'not-allowed' : 'pointer',
+                  opacity: loading || googleLoading ? 0.6 : 1,
+                  padding: '4px 8px',
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

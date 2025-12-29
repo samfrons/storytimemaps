@@ -201,6 +201,21 @@
       "about": "Über das Projekt"
     }
   },
+  "share": {
+    "shareStory": "Geschichte teilen",
+    "shareWebsite": "Teilen",
+    "copyLink": "Link kopieren",
+    "copyLinkDesc": "Link in die Zwischenablage kopieren",
+    "email": "E-Mail",
+    "emailDesc": "Per E-Mail senden",
+    "facebookDesc": "Auf Facebook teilen",
+    "twitterDesc": "Auf X teilen",
+    "instagramDesc": "Text für Instagram kopieren",
+    "shareVia": "Teilen über...",
+    "shareViaDesc": "System-Teiloptionen verwenden",
+    "copied": "Kopiert!",
+    "linkPreview": "Link-Vorschau"
+  },
   "barcharts": {
     "title": "Interaktive Datenvisualisierungen",
     "subtitle": "3D-Kartenerkundung mit Zeitlinienanalyse der Zerstörung jüdischer Geschäfte in Berlin",

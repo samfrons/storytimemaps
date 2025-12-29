@@ -73,3 +73,31 @@ export interface GeoJSONFeatureCollection {
   features: GeoJSONFeature[];
 }
 
+// Year Marker types for featured story listings
+export interface YearMarker {
+  id: string;
+  year: number;                    // The year this marker represents
+  month?: number;                  // Optional month (1-12) for more precise positioning
+  day?: number;                    // Optional day for exact date events
+  title: string;                   // Display title
+  description: string;             // Short description shown in list
+  longDescription?: string;        // Extended description for expanded view
+  imageUrl?: string;               // Optional image for the marker
+  imageCaption?: string;           // Caption for the image
+  // i18n support - translation keys
+  titleKey?: string;
+  descriptionKey?: string;
+  longDescriptionKey?: string;
+  imageCaptionKey?: string;
+  // Visual styling and categorization
+  type: 'historical-event' | 'period-start' | 'period-end' | 'milestone' | 'legislation';
+  // Whether to always show or only show when timeline reaches this point
+  showAlways?: boolean;
+  // Priority for sorting when multiple markers share the same year
+  priority?: number;
+}
+
+export interface YearMarkersConfig {
+  markers: YearMarker[];
+}
+

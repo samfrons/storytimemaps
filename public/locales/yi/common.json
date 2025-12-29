@@ -152,22 +152,22 @@
       "compactDescription": "Helft undz instalirn denkmal plaketen bay di originele erter fun yidishe gesheftn iber Berlin - farbindndik digitale dokumentatsye mit fizisher dermonung.",
       "learnMore": "Lernt mer vegn di initsyativ",
       "visionTitle": "Unzer Vizye",
-      "visionDescription": "Mir shtelן zikh for a Berlin vu di zikorn fun yidishn handls-lebn iz bahitn nisht nor digital, ober in di gasn aleyn vu di gesheftn hobn amol gebliet. Yede plakete vet dertseyln di geshikhte fun a mishpokhe unternemung.",
+      "visionDescription": "Mir shteln zikh for a Berlin vu di zikorn fun yidishn handls-lebn iz bahitn nisht nor digital, ober in di gasn aleyn vu di gesheftn hobn amol gebliet. Yede plakete vet dertseyln di geshikhte fun a mishpokhe unternemung.",
       "stolpersteineTitle": "Inspirirt fun Stolpersteine",
       "stolpersteineDescription": "Vi Gunter Demnigs shtarke Stolpersteine proyekt vos gedenkt ayntsike mentshn, voltn unzere denkmal plaketen mekhabed zayn di gesheft-erter vu yidishe mishpokhes hobn geboyt zeyer parnose.",
       "stolpersteineFocus": "Stolpersteine Fokus",
       "businessPlaquesFocus": "Gesheft Plaketen Fokus",
       "individualVictims": "Ayntsike korbones",
       "residentialAddresses": "Voyn adreses",
-      "personalStories": "Perzenלekhe geshikhtes",
+      "personalStories": "Perzenlekhe geshikhtes",
       "commercialEnterprises": "Handl unternemungen",
       "businessLocations": "Gesheft erter",
-      "economicPersecution": "Ekonomishe rדife",
+      "economicPersecution": "Ekonomishe rdife",
       "berlinStyle": "Berliner Shtil",
       "brassStyle": "Messing Shtil",
       "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
       "ctaDescription": "Mir zukhn shutfes mit kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet iber Berlin.",
-      "supportInitiative": "Shتtst di Initsyativ",
+      "supportInitiative": "Shtitst di Initsyativ",
       "learnStolpersteine": "Lernt vegn Stolpersteine"
     },
     "nav": {
@@ -189,13 +189,13 @@
     },
     "partners": {
       "title": "Zukhn Shutfes",
-      "description": "Di initsyativ farlאngt tsuזamenארbet iber fiل sektorn. Mir zukhn aktiv shutfes tsu helfn brengen denkmal plaketen in Berlins gasn.",
+      "description": "Di initsyativ farlangt tsuzamenarbeit iber fil sektorn. Mir zukhn aktiv shutfes tsu helfn brengen denkmal plaketen in Berlins gasn.",
       "culturalInstitutions": "Kulturele Institutsyes",
       "educationalOrganizations": "Bildungs Organizatsyes",
       "jewishCommunity": "Yidishe Kehile Organizatsyes",
-      "cityPlanning": "Shtot Plאnung & Bahitung",
+      "cityPlanning": "Shtot Planung & Bahitung",
       "becomePartner": "Ver a Shutef",
-      "supportProject": "Shتtst dos Proyekt"
+      "supportProject": "Shtitst dos Proyekt"
     },
     "footer": {
       "exploreTitle": "Oysforshn dos Gantse Arkhiv",
@@ -205,6 +205,21 @@
       "map": "Interaktive Mape",
       "about": "Vegn dem Proyekt"
     }
+  },
+  "share": {
+    "shareStory": "טיילן געשיכטע",
+    "shareWebsite": "טיילן",
+    "copyLink": "קאָפּירן לינק",
+    "copyLinkDesc": "קאָפּירן לינק צו קליפּבאָרד",
+    "email": "בליצפּאָסט",
+    "emailDesc": "שיקן דורך בליצפּאָסט",
+    "facebookDesc": "טיילן אויף Facebook",
+    "twitterDesc": "טיילן אויף X",
+    "instagramDesc": "קאָפּירן טעקסט פֿאַר Instagram",
+    "shareVia": "טיילן דורך...",
+    "shareViaDesc": "ניצן סיסטעם טייל אָפּציעס",
+    "copied": "קאָפּירט!",
+    "linkPreview": "לינק פאָרויסזעען"
   },
   "barcharts": {
     "title": "אינטעראַקטיווע דאַטן וויזואַליזאַציעס",

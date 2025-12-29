@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryMaps Mobile UI/UX Mockups</title>
+  <style>
+    :root {
+      --background: #4a4a57;
+      --foreground: #f5cdb4;
+      --primary: #97d8c0;
+      --secondary: #eca27d;
+      --border: #6b6275;
+      --muted: #8b7d8e;
+      --card-bg: rgba(74, 74, 87, 0.95);
+      --warning: #ffcb51;
+      --danger: #ee5760;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--primary);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .mockup-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .mockup-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+
+    .mockup-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+
+    .mockup-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      color: var(--foreground);
+      margin-bottom: 12px;
+    }
+
+    .mockup-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+
+    .feature-list li {
+      font-size: 13px;
+      color: var(--foreground);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(107, 98, 117, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-list li:last-child {
+      border-bottom: none;
+    }
+
+    .feature-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .view-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .view-btn:hover {
+      background: var(--primary);
+      color: var(--background);
+    }
+
+    /* Summary Section */
+    .summary {
+      margin-top: 60px;
+      padding: 30px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+
+    .summary h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      font-family: 'Space Mono', monospace;
+      color: var(--secondary);
+      font-weight: 400;
+    }
+
+    .comparison-table td:first-child {
+      font-family: 'Space Mono', monospace;
+      color: var(--foreground);
+    }
+
+    .check {
+      color: var(--primary);
+    }
+
+    .cross {
+      color: var(--danger);
+    }
+
+    .partial {
+      color: var(--warning);
+    }
+
+    /* Recommendation */
+    .recommendation {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(151, 216, 192, 0.1);
+      border-left: 3px solid var(--primary);
+    }
+
+    .recommendation h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .recommendation p {
+      font-size: 14px;
+      color: var(--foreground);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      .mockup-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-table {
+        font-size: 11px;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 8px 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>MOBILE UI/UX MOCKUPS</h1>
+      <p class="subtitle">
+        Five different approaches to improve the mobile experience for StoryMaps.
+        Each mockup addresses the crowded split-screen layout in a different way.
+      </p>
+    </header>
+
+    <div class="mockup-grid">
+      <!-- Mockup 1 -->
+      <div class="mockup-card">
+        <div class="mockup-number">MOCKUP 01</div>
+        <h2 class="mockup-title">Bottom Tab Navigation</h2>
+        <p class="mockup-desc">
+          iOS/Android-style bottom tabs for switching between full-screen views.
+          Clean separation between map, list, timeline, and stats.
+        </p>
+        <ul class="feature-list">
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Full-screen content visibility
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Familiar navigation pattern
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Quick access to all sections
+          </li>
+        </ul>
+        <a href="01-bottom-tabs.html" class="view-btn">View Mockup</a>
+      </div>
+
+      <!-- Mockup 2 -->
+      <div class="mockup-card">
+        <div class="mockup-number">MOCKUP 02</div>
+        <h2 class="mockup-title">Draggable Bottom Sheet</h2>
+        <p class="mockup-desc">
+          Google Maps-style bottom sheet that can be dragged up to reveal the list.
+          Map is always visible as primary content.
+        </p>
+        <ul class="feature-list">
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Map always visible
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Natural gesture interaction
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Three height states
+          </li>
+        </ul>
+        <a href="02-bottom-sheet.html" class="view-btn">View Mockup</a>
+      </div>
+
+      <!-- Mockup 3 -->
+      <div class="mockup-card">
+        <div class="mockup-number">MOCKUP 03</div>
+        <h2 class="mockup-title">Floating Action Button</h2>
+        <p class="mockup-desc">
+          Minimal UI with a central FAB that expands to show navigation options.
+          List slides in from the side when selected.
+        </p>
+        <ul class="feature-list">
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Maximum map visibility
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            One-button access to all
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Clean, minimal interface
+          </li>
+        </ul>
+        <a href="03-fab-menu.html" class="view-btn">View Mockup</a>
+      </div>
+
+      <!-- Mockup 4 -->
+      <div class="mockup-card">
+        <div class="mockup-number">MOCKUP 04</div>
+        <h2 class="mockup-title">Swipeable Full-Screen Views</h2>
+        <p class="mockup-desc">
+          Horizontal swipe between full-screen views with page dots indicator.
+          Each view gets maximum screen real estate.
+        </p>
+        <ul class="feature-list">
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Full content for each view
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Natural swipe gestures
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Includes dedicated timeline
+          </li>
+        </ul>
+        <a href="04-swipe-views.html" class="view-btn">View Mockup</a>
+      </div>
+
+      <!-- Mockup 5 -->
+      <div class="mockup-card">
+        <div class="mockup-number">MOCKUP 05</div>
+        <h2 class="mockup-title">Split View with Maximize</h2>
+        <p class="mockup-desc">
+          Enhanced split view with toggles to maximize either pane.
+          Keeps both views accessible while allowing focus.
+        </p>
+        <ul class="feature-list">
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Preserves split for context
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            One-tap maximize
+          </li>
+          <li>
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Flexible view ratios
+          </li>
+        </ul>
+        <a href="05-split-maximize.html" class="view-btn">View Mockup</a>
+      </div>
+    </div>
+
+    <!-- Comparison Summary -->
+    <div class="summary">
+      <h2>Feature Comparison</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Bottom Tabs</th>
+            <th>Bottom Sheet</th>
+            <th>FAB Menu</th>
+            <th>Swipe Views</th>
+            <th>Split Max</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Map + List visible together</td>
+            <td class="cross">No</td>
+            <td class="partial">Partial</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+          </tr>
+          <tr>
+            <td>Full-screen views</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+          </tr>
+          <tr>
+            <td>Gesture navigation</td>
+            <td class="cross">Tap only</td>
+            <td class="check">Drag</td>
+            <td class="partial">Tap</td>
+            <td class="check">Swipe</td>
+            <td class="partial">Tap</td>
+          </tr>
+          <tr>
+            <td>Familiar pattern</td>
+            <td class="check">Very</td>
+            <td class="check">Very</td>
+            <td class="check">Yes</td>
+            <td class="partial">Moderate</td>
+            <td class="partial">Unique</td>
+          </tr>
+          <tr>
+            <td>Timeline integration</td>
+            <td class="check">Tab</td>
+            <td class="partial">Button</td>
+            <td class="partial">FAB item</td>
+            <td class="check">Full page</td>
+            <td class="partial">Separate</td>
+          </tr>
+          <tr>
+            <td>Min taps to list</td>
+            <td>1</td>
+            <td>0 (drag)</td>
+            <td>2</td>
+            <td>0 (swipe)</td>
+            <td>0-1</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="recommendation">
+        <h3>Recommendation</h3>
+        <p>
+          For StoryMaps, <strong>Mockup 2 (Bottom Sheet)</strong> or <strong>Mockup 5 (Split with Maximize)</strong>
+          are recommended. The bottom sheet provides a familiar, map-centric experience similar to Google Maps,
+          while the split maximize option preserves the ability to see both views when needed.
+          Consider user testing to determine which better suits your audience.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

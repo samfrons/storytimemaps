@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile UI Mockup - Split View with Maximize</title>
+  <style>
+    :root {
+      --background: #4a4a57;
+      --foreground: #f5cdb4;
+      --primary: #97d8c0;
+      --secondary: #eca27d;
+      --border: #6b6275;
+      --muted: #8b7d8e;
+      --card-bg: rgba(74, 74, 87, 0.98);
+      --warning: #ffcb51;
+      --danger: #ee5760;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .mockup-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      margin: 20px auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    /* View Modes */
+    .mockup-container.map-focused .map-pane {
+      height: 70%;
+    }
+
+    .mockup-container.map-focused .list-pane {
+      height: 30%;
+    }
+
+    .mockup-container.list-focused .map-pane {
+      height: 30%;
+    }
+
+    .mockup-container.list-focused .list-pane {
+      height: 70%;
+    }
+
+    .mockup-container.map-full .map-pane {
+      height: 100%;
+    }
+
+    .mockup-container.map-full .list-pane {
+      height: 0;
+      overflow: hidden;
+    }
+
+    .mockup-container.list-full .map-pane {
+      height: 0;
+      overflow: hidden;
+    }
+
+    .mockup-container.list-full .list-pane {
+      height: 100%;
+    }
+
+    /* Split Container */
+    .split-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    /* Map Pane */
+    .map-pane {
+      height: 50%;
+      background: linear-gradient(135deg, #2a3a3a 0%, #1a2a2a 100%);
+      position: relative;
+      transition: height 0.3s ease;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .map-placeholder svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+
+    /* Map Controls */
+    .map-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px;
+      z-index: 10;
+    }
+
+    .time-badge {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+    }
+
+    .time-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .time-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      color: var(--primary);
+    }
+
+    .map-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pane-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .pane-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .pane-btn.active {
+      background: var(--primary);
+      color: var(--background);
+      border-color: var(--primary);
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      position: absolute;
+      bottom: 8px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .stat-chip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+    }
+
+    .stat-dot {
+      width: 6px;
+      height: 6px;
+    }
+
+    .stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--foreground);
+    }
+
+    .status-active { background: var(--primary); }
+    .status-declining { background: var(--warning); }
+    .status-closed { background: var(--danger); }
+
+    /* Divider Handle */
+    .divider {
+      height: 24px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: ns-resize;
+    }
+
+    .divider-handle {
+      width: 40px;
+      height: 4px;
+      background: var(--border);
+    }
+
+    /* View Toggle in Divider */
+    .view-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--background);
+      padding: 2px;
+      border: 1px solid var(--border);
+    }
+
+    .toggle-btn {
+      padding: 4px 10px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .toggle-btn.active {
+      background: var(--primary);
+      color: var(--background);
+    }
+
+    /* List Pane */
+    .list-pane {
+      height: 50%;
+      background: var(--background);
+      display: flex;
+      flex-direction: column;
+      transition: height 0.3s ease;
+      overflow: hidden;
+    }
+
+    .list-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card-bg);
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .filter-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .filter-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Quick Scroll Tabs */
+    .quick-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--card-bg);
+      flex-shrink: 0;
+    }
+
+    .quick-tab {
+      flex: 1;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .quick-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-count {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Business List */
+    .business-list {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .business-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(107, 98, 117, 0.4);
+      cursor: pointer;
+    }
+
+    .business-item:active {
+      background: rgba(151, 216, 192, 0.1);
+    }
+
+    .item-status {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+    }
+
+    .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--foreground);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-address {
+      font-size: 10px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-arrow {
+      width: 16px;
+      height: 16px;
+      color: var(--muted);
+    }
+
+    /* Floating View Toggle */
+    .floating-toggle {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2px;
+      background: var(--card-bg);
+      padding: 4px;
+      border: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .float-btn {
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .float-btn.active {
+      background: var(--primary);
+      color: var(--background);
+    }
+
+    .float-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Benefits annotation */
+    .mockup-info {
+      max-width: 390px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(151, 216, 192, 0.1);
+      border: 1px solid var(--primary);
+    }
+
+    .mockup-info h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .mockup-info ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .mockup-info li::before {
+      content: "+";
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .mockup-info .con::before {
+      content: "-";
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-container" id="mockup">
+    <div class="split-container">
+      <!-- Map Pane -->
+      <div class="map-pane">
+        <div class="map-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p>Interactive Map</p>
+        </div>
+
+        <div class="map-header">
+          <div class="time-badge">
+            <div class="time-label">Date</div>
+            <div class="time-value">03.1933</div>
+          </div>
+          <div class="map-actions">
+            <button class="pane-btn" onclick="setMode('map-focused')" title="Expand Map">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 3 21 3 21 9"/>
+                <polyline points="9 21 3 21 3 15"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+                <line x1="3" y1="21" x2="10" y2="14"/>
+              </svg>
+            </button>
+            <button class="pane-btn" onclick="setMode('map-full')" title="Full Screen Map">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+              </svg>
+            </button>
+            <button class="pane-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-chip">
+            <div class="stat-dot status-active"></div>
+            <span class="stat-num">89</span>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-dot status-declining"></div>
+            <span class="stat-num">28</span>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-dot status-closed"></div>
+            <span class="stat-num">10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider">
+        <div class="view-toggle">
+          <button class="toggle-btn" onclick="setMode('split')">Split</button>
+          <button class="toggle-btn active" onclick="setMode('map-focused')">Map</button>
+          <button class="toggle-btn" onclick="setMode('list-focused')">List</button>
+        </div>
+      </div>
+
+      <!-- List Pane -->
+      <div class="list-pane">
+        <div class="list-header">
+          <input type="text" class="search-input" placeholder="Search...">
+          <button class="filter-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+          </button>
+          <button class="pane-btn" onclick="setMode('list-full')" title="Full Screen List">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="quick-tabs">
+          <button class="quick-tab active">
+            <span class="tab-count">127</span>
+            <span>All</span>
+          </button>
+          <button class="quick-tab">
+            <span class="tab-count">89</span>
+            <span>Active</span>
+          </button>
+          <button class="quick-tab">
+            <span class="tab-count">28</span>
+            <span>Declining</span>
+          </button>
+          <button class="quick-tab">
+            <span class="tab-count">10</span>
+            <span>Closed</span>
+          </button>
+        </div>
+
+        <div class="business-list">
+          <div class="business-item">
+            <div class="item-status status-active"></div>
+            <div class="item-info">
+              <div class="item-name">Kaufhaus Wertheim</div>
+              <div class="item-address">Leipziger Platz 12-13</div>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+          <div class="business-item">
+            <div class="item-status status-declining"></div>
+            <div class="item-info">
+              <div class="item-name">Hermann Tietz</div>
+              <div class="item-address">Alexanderplatz 2</div>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+          <div class="business-item">
+            <div class="item-status status-active"></div>
+            <div class="item-info">
+              <div class="item-name">Pelzhaus Grunfeld</div>
+              <div class="item-address">Kurfurstendamm 234</div>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+          <div class="business-item">
+            <div class="item-status status-closed"></div>
+            <div class="item-info">
+              <div class="item-name">Bank M. M. Warburg</div>
+              <div class="item-address">Unter den Linden 15</div>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+          <div class="business-item">
+            <div class="item-status status-active"></div>
+            <div class="item-info">
+              <div class="item-name">Weinhandlung Mendelsohn</div>
+              <div class="item-address">Oranienburger Str. 28</div>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+          <div class="business-item">
+            <div class="item-status status-declining"></div>
+            <div class="item-info">
+              <div class="item-name">Schuhhaus Leiser</div>
+              <div class="item-address">Tauentzienstr. 8</div>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Toggle (visible in full-screen modes) -->
+    <div class="floating-toggle" id="floatingToggle" style="display: none;">
+      <button class="float-btn" onclick="setMode('split')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+        </svg>
+        Split
+      </button>
+      <button class="float-btn active" id="toggleMap" onclick="setMode('map-full')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Map
+      </button>
+      <button class="float-btn" id="toggleList" onclick="setMode('list-full')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="8" y1="6" x2="21" y2="6"/>
+          <line x1="8" y1="12" x2="21" y2="12"/>
+          <line x1="8" y1="18" x2="21" y2="18"/>
+        </svg>
+        List
+      </button>
+    </div>
+  </div>
+
+  <div class="mockup-info">
+    <h2>Mockup 5: Split View with Maximize</h2>
+    <ul>
+      <li>Preserves split view for context</li>
+      <li>One-tap to maximize either pane</li>
+      <li>Divider toggle for quick switching</li>
+      <li>Floating toggle in full-screen modes</li>
+      <li>Compact list items show more content</li>
+      <li>Quick filter tabs with counts</li>
+      <li class="con">More complex UI with multiple controls</li>
+      <li class="con">Split view still cramped on small screens</li>
+    </ul>
+  </div>
+
+  <script>
+    const mockup = document.getElementById('mockup');
+    const floatingToggle = document.getElementById('floatingToggle');
+    const toggleBtns = document.querySelectorAll('.toggle-btn');
+    const toggleMap = document.getElementById('toggleMap');
+    const toggleList = document.getElementById('toggleList');
+
+    function setMode(mode) {
+      mockup.className = 'mockup-container ' + mode;
+
+      // Update divider toggle
+      toggleBtns.forEach(btn => btn.classList.remove('active'));
+      if (mode === 'split') {
+        toggleBtns[0].classList.add('active');
+      } else if (mode.includes('map')) {
+        toggleBtns[1].classList.add('active');
+      } else if (mode.includes('list')) {
+        toggleBtns[2].classList.add('active');
+      }
+
+      // Show/hide floating toggle
+      if (mode === 'map-full' || mode === 'list-full') {
+        floatingToggle.style.display = 'flex';
+        toggleMap.classList.toggle('active', mode === 'map-full');
+        toggleList.classList.toggle('active', mode === 'list-full');
+      } else {
+        floatingToggle.style.display = 'none';
+      }
+    }
+
+    // Initialize with map-focused
+    setMode('map-focused');
+  </script>
+</body>
+</html>

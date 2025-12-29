@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile UI Mockup - Swipeable Views</title>
+  <style>
+    :root {
+      --background: #4a4a57;
+      --foreground: #f5cdb4;
+      --primary: #97d8c0;
+      --secondary: #eca27d;
+      --border: #6b6275;
+      --muted: #8b7d8e;
+      --card-bg: rgba(74, 74, 87, 0.98);
+      --warning: #ffcb51;
+      --danger: #ee5760;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .mockup-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      margin: 20px auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    /* Top Header */
+    .top-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--primary);
+      letter-spacing: 1px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Page Indicator */
+    .page-indicator {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 100;
+      background: var(--card-bg);
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+    }
+
+    .page-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .page-dot.active {
+      width: 24px;
+      background: var(--primary);
+    }
+
+    .page-label {
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    /* Swipeable Container */
+    .swipe-container {
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 300%;
+    }
+
+    .swipe-page {
+      width: 33.333%;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Map Page */
+    .map-page {
+      background: linear-gradient(135deg, #2a3a3a 0%, #1a2a2a 100%);
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .map-placeholder svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Map Overlay Elements */
+    .map-time-badge {
+      position: absolute;
+      top: 60px;
+      left: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+    }
+
+    .time-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .time-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .map-stats {
+      position: absolute;
+      top: 60px;
+      right: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    .stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--foreground);
+    }
+
+    .map-slider {
+      position: absolute;
+      bottom: 24px;
+      left: 16px;
+      right: 16px;
+    }
+
+    .slider-track {
+      height: 4px;
+      background: var(--border);
+      position: relative;
+    }
+
+    .slider-fill {
+      width: 45%;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .slider-thumb {
+      position: absolute;
+      top: -8px;
+      left: 45%;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      transform: translateX(-50%);
+    }
+
+    /* List Page */
+    .list-page {
+      background: var(--background);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .list-header {
+      padding: 60px 16px 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+    }
+
+    .search-box::placeholder {
+      color: var(--muted);
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .chip {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      background: var(--primary);
+      color: var(--background);
+      border-color: var(--primary);
+    }
+
+    .business-list {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .business-card {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(107, 98, 117, 0.4);
+    }
+
+    .business-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--foreground);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    .status-active { background: var(--primary); }
+    .status-declining { background: var(--warning); }
+    .status-closed { background: var(--danger); }
+
+    .business-address {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .business-category {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--secondary);
+      text-transform: uppercase;
+    }
+
+    /* Timeline Page */
+    .timeline-page {
+      background: var(--background);
+      display: flex;
+      flex-direction: column;
+      padding-top: 60px;
+    }
+
+    .timeline-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      color: var(--foreground);
+      margin-bottom: 4px;
+    }
+
+    .timeline-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .timeline-content {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 16px;
+    }
+
+    .timeline-event {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .timeline-marker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .event-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+    }
+
+    .event-line {
+      width: 2px;
+      flex: 1;
+      background: var(--border);
+      min-height: 60px;
+    }
+
+    .event-content {
+      flex: 1;
+      padding-bottom: 16px;
+    }
+
+    .event-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .event-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--foreground);
+      margin-bottom: 4px;
+    }
+
+    .event-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Swipe hint */
+    .swipe-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      animation: pulse 2s infinite;
+    }
+
+    .swipe-hint svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Navigation arrows */
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(74, 74, 87, 0.8);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+      z-index: 50;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .nav-arrow:hover {
+      opacity: 1;
+    }
+
+    .nav-arrow.left {
+      left: 0;
+      display: none;
+    }
+
+    .nav-arrow.right {
+      right: 0;
+    }
+
+    .nav-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Benefits annotation */
+    .mockup-info {
+      max-width: 390px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(151, 216, 192, 0.1);
+      border: 1px solid var(--primary);
+    }
+
+    .mockup-info h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .mockup-info ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .mockup-info li::before {
+      content: "+";
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .mockup-info .con::before {
+      content: "-";
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-container">
+    <!-- Top Header -->
+    <div class="top-header">
+      <span class="logo">STORYMAPS</span>
+      <div class="header-actions">
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Page Indicator -->
+    <div class="page-indicator">
+      <div class="page-dot active" onclick="goToPage(0)"></div>
+      <div class="page-dot" onclick="goToPage(1)"></div>
+      <div class="page-dot" onclick="goToPage(2)"></div>
+      <span class="page-label" id="pageLabel">Map View</span>
+    </div>
+
+    <!-- Swipeable Container -->
+    <div class="swipe-container" id="swipeContainer">
+      <!-- Map Page -->
+      <div class="swipe-page map-page">
+        <div class="map-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p>Interactive Map</p>
+        </div>
+
+        <div class="map-time-badge">
+          <div class="time-label">Current Date</div>
+          <div class="time-value">03.1933</div>
+        </div>
+
+        <div class="map-stats">
+          <div class="stat">
+            <div class="stat-dot status-active"></div>
+            <span class="stat-num">89</span>
+          </div>
+          <div class="stat">
+            <div class="stat-dot status-declining"></div>
+            <span class="stat-num">28</span>
+          </div>
+          <div class="stat">
+            <div class="stat-dot status-closed"></div>
+            <span class="stat-num">10</span>
+          </div>
+        </div>
+
+        <div class="map-slider">
+          <div class="slider-track">
+            <div class="slider-fill"></div>
+            <div class="slider-thumb"></div>
+          </div>
+        </div>
+
+        <div class="swipe-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+          Swipe for list
+        </div>
+      </div>
+
+      <!-- List Page -->
+      <div class="swipe-page list-page">
+        <div class="list-header">
+          <input type="text" class="search-box" placeholder="Search businesses...">
+          <div class="filter-chips">
+            <button class="chip active">All (127)</button>
+            <button class="chip">Active</button>
+            <button class="chip">Declining</button>
+            <button class="chip">Closed</button>
+          </div>
+        </div>
+        <div class="business-list">
+          <div class="business-card">
+            <div class="business-name">
+              <span class="status-dot status-active"></span>
+              Kaufhaus Wertheim
+            </div>
+            <div class="business-address">Leipziger Platz 12-13</div>
+            <div class="business-category">Department Store</div>
+          </div>
+          <div class="business-card">
+            <div class="business-name">
+              <span class="status-dot status-declining"></span>
+              Hermann Tietz
+            </div>
+            <div class="business-address">Alexanderplatz 2</div>
+            <div class="business-category">Department Store</div>
+          </div>
+          <div class="business-card">
+            <div class="business-name">
+              <span class="status-dot status-active"></span>
+              Pelzhaus Grunfeld
+            </div>
+            <div class="business-address">Kurfurstendamm 234</div>
+            <div class="business-category">Retail</div>
+          </div>
+          <div class="business-card">
+            <div class="business-name">
+              <span class="status-dot status-closed"></span>
+              Bank M. M. Warburg
+            </div>
+            <div class="business-address">Unter den Linden 15</div>
+            <div class="business-category">Banking</div>
+          </div>
+          <div class="business-card">
+            <div class="business-name">
+              <span class="status-dot status-active"></span>
+              Weinhandlung Mendelsohn
+            </div>
+            <div class="business-address">Oranienburger Str. 28</div>
+            <div class="business-category">Wine Trade</div>
+          </div>
+          <div class="business-card">
+            <div class="business-name">
+              <span class="status-dot status-declining"></span>
+              Schuhhaus Leiser
+            </div>
+            <div class="business-address">Tauentzienstr. 8</div>
+            <div class="business-category">Retail</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Page -->
+      <div class="swipe-page timeline-page">
+        <div class="timeline-header">
+          <div class="timeline-title">Historical Timeline</div>
+          <div class="timeline-subtitle">Key events affecting Jewish businesses</div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-event">
+            <div class="timeline-marker">
+              <div class="event-dot"></div>
+              <div class="event-line"></div>
+            </div>
+            <div class="event-content">
+              <div class="event-date">April 1, 1933</div>
+              <div class="event-title">Nationwide Boycott</div>
+              <div class="event-desc">SA and SS troops stand in front of Jewish-owned businesses, urging Germans not to buy from Jews.</div>
+            </div>
+          </div>
+          <div class="timeline-event">
+            <div class="timeline-marker">
+              <div class="event-dot" style="background: var(--warning)"></div>
+              <div class="event-line"></div>
+            </div>
+            <div class="event-content">
+              <div class="event-date">September 15, 1935</div>
+              <div class="event-title">Nuremberg Laws</div>
+              <div class="event-desc">Laws stripping Jews of German citizenship and prohibiting marriages between Jews and non-Jews.</div>
+            </div>
+          </div>
+          <div class="timeline-event">
+            <div class="timeline-marker">
+              <div class="event-dot" style="background: var(--danger)"></div>
+              <div class="event-line"></div>
+            </div>
+            <div class="event-content">
+              <div class="event-date">November 9, 1938</div>
+              <div class="event-title">Kristallnacht</div>
+              <div class="event-desc">Coordinated attacks on Jewish businesses, synagogues, and homes throughout Germany.</div>
+            </div>
+          </div>
+          <div class="timeline-event">
+            <div class="timeline-marker">
+              <div class="event-dot" style="background: var(--danger)"></div>
+              <div class="event-line"></div>
+            </div>
+            <div class="event-content">
+              <div class="event-date">December 1938</div>
+              <div class="event-title">Aryanization Complete</div>
+              <div class="event-desc">Forced transfer of all Jewish-owned businesses to non-Jewish ownership.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow left" id="navLeft" onclick="goToPage(currentPage - 1)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <button class="nav-arrow right" id="navRight" onclick="goToPage(currentPage + 1)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mockup-info">
+    <h2>Mockup 4: Swipeable Full-Screen Views</h2>
+    <ul>
+      <li>Full-screen content for each view</li>
+      <li>Natural swipe gestures between views</li>
+      <li>Clear page indicator shows position</li>
+      <li>Dedicated timeline view as third option</li>
+      <li>Arrow buttons for non-touch navigation</li>
+      <li class="con">Cannot see map and list simultaneously</li>
+      <li class="con">May feel like separate apps rather than integrated</li>
+      <li class="con">Three swipes needed to return to start</li>
+    </ul>
+  </div>
+
+  <script>
+    const container = document.getElementById('swipeContainer');
+    const dots = document.querySelectorAll('.page-dot');
+    const pageLabel = document.getElementById('pageLabel');
+    const navLeft = document.getElementById('navLeft');
+    const navRight = document.getElementById('navRight');
+    const labels = ['Map View', 'Business List', 'Timeline'];
+    let currentPage = 0;
+
+    function goToPage(page) {
+      if (page < 0 || page > 2) return;
+
+      currentPage = page;
+      container.style.transform = `translateX(-${page * 33.333}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === page);
+      });
+
+      pageLabel.textContent = labels[page];
+
+      navLeft.style.display = page === 0 ? 'none' : 'flex';
+      navRight.style.display = page === 2 ? 'none' : 'flex';
+    }
+
+    // Touch swipe support
+    let startX = 0;
+    let currentX = 0;
+
+    container.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    container.addEventListener('touchmove', (e) => {
+      currentX = e.touches[0].clientX;
+    });
+
+    container.addEventListener('touchend', () => {
+      const diff = startX - currentX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && currentPage < 2) {
+          goToPage(currentPage + 1);
+        } else if (diff < 0 && currentPage > 0) {
+          goToPage(currentPage - 1);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

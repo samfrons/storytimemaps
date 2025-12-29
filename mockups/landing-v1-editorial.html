@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryTimeMaps - Editorial Landing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #4a4a57;
+      --bg-light: #5a5a67;
+      --primary: #f5cdb4;
+      --accent: #eca27d;
+      --success: #97d8c0;
+      --warning: #ffcb51;
+      --danger: #ee5760;
+      --muted: #8b7d8e;
+      --border: #6b6275;
+    }
+
+    body {
+      font-family: 'Space Mono', monospace;
+      background-color: var(--bg);
+      color: var(--primary);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--muted);
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero .year-range {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .year {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .year-divider {
+      font-size: 3rem;
+      color: var(--border);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    /* Image Block Sections */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .section-grid.reverse {
+      direction: rtl;
+    }
+
+    .section-grid.reverse > * {
+      direction: ltr;
+    }
+
+    /* Image with color block cutout */
+    .image-block {
+      position: relative;
+      padding: 2rem;
+    }
+
+    .image-block::before {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      z-index: 0;
+    }
+
+    .image-block.green::before {
+      background-color: var(--success);
+      top: 0;
+      left: 0;
+    }
+
+    .image-block.orange::before {
+      background-color: var(--accent);
+      bottom: 0;
+      right: 0;
+    }
+
+    .image-block.yellow::before {
+      background-color: var(--warning);
+      top: 0;
+      right: 0;
+    }
+
+    .image-block.red::before {
+      background-color: var(--danger);
+      bottom: 0;
+      left: 0;
+    }
+
+    .image-block img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: auto;
+      filter: grayscale(30%) contrast(1.1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    /* Text content */
+    .text-content {
+      padding: 2rem 0;
+    }
+
+    .text-content .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .text-content h2 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .text-content p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .text-content p.highlight {
+      color: var(--primary);
+      font-size: 1.1rem;
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat {
+      text-align: left;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--success);
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 8rem 2rem;
+      text-align: center;
+      background-color: var(--bg-light);
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-section p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      border: 2px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .btn:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn.primary:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .section-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .section-grid.reverse {
+        direction: ltr;
+      }
+
+      .stats-row {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .hero .year-range {
+        gap: 1.5rem;
+      }
+
+      .year {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>MAPPING LOST HISTORY</h1>
+      <p class="subtitle">An Interactive Archive of Jewish-Owned Businesses in Berlin</p>
+      <div class="year-range">
+        <span class="year">1900</span>
+        <span class="year-divider">—</span>
+        <span class="year">1945</span>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll to explore</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M19 12l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Section 1: The Project -->
+  <section class="section">
+    <div class="section-grid">
+      <div class="image-block green">
+        <img src="../public/images/ebraun/ebraun1.webp" alt="Historic Berlin storefront">
+      </div>
+      <div class="text-content">
+        <span class="label">The Project</span>
+        <h2>Preserving Memory Through Data</h2>
+        <p class="highlight">
+          This interactive map documents over 10,000 Jewish-owned businesses that once
+          thrived in Berlin before the systematic persecution began.
+        </p>
+        <p>
+          Using archival research from the Humboldt University Berlin, we have reconstructed
+          the locations, ownership histories, and eventual fates of these enterprises—from
+          small family shops to major department stores.
+        </p>
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-number">10,000+</div>
+            <div class="stat-label">Businesses Documented</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">45</div>
+            <div class="stat-label">Years of History</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">15</div>
+            <div class="stat-label">Detailed Stories</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Timeline -->
+  <section class="section">
+    <div class="section-grid reverse">
+      <div class="image-block orange">
+        <img src="../public/images/breslaur/breslaur1.webp" alt="Berlin street scene">
+      </div>
+      <div class="text-content">
+        <span class="label">Timeline Navigation</span>
+        <h2>Watch History Unfold</h2>
+        <p class="highlight">
+          Drag the timeline slider to see how the business landscape changed month by month
+          from 1900 to 1945.
+        </p>
+        <p>
+          Each marker represents a real business. Colors indicate their status at that
+          moment in time—active, struggling under persecution, or closed. Watch as the
+          vibrant commercial district gradually empties.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Stories -->
+  <section class="section">
+    <div class="section-grid">
+      <div class="image-block yellow">
+        <img src="../public/images/ebraun/ebraun2.webp" alt="Business documents">
+      </div>
+      <div class="text-content">
+        <span class="label">Individual Stories</span>
+        <h2>Behind Every Marker, A Family</h2>
+        <p class="highlight">
+          Explore 15 deeply researched narratives that bring the human dimension
+          to these statistics.
+        </p>
+        <p>
+          Read about Erich Braun's fashion empire, the Breslaur pharmacy, and other
+          businesses whose stories have been meticulously reconstructed from archives,
+          photographs, and survivor testimonies.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Begin Your Exploration</h2>
+    <p>
+      Choose how you want to experience this archive: dive into curated stories
+      or explore the full database of historical records.
+    </p>
+    <div class="cta-buttons">
+      <a href="#" class="btn primary">Featured Stories</a>
+      <a href="#" class="btn">Full Database</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      Research by Dr. Christoph Kreutzmüller, Humboldt University Berlin<br>
+      Visualization by StoryTimeMaps
+    </p>
+  </footer>
+</body>
+</html>

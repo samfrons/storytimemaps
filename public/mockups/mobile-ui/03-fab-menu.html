@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile UI Mockup - Floating Action Button</title>
+  <style>
+    :root {
+      --background: #4a4a57;
+      --foreground: #f5cdb4;
+      --primary: #97d8c0;
+      --secondary: #eca27d;
+      --border: #6b6275;
+      --muted: #8b7d8e;
+      --card-bg: rgba(74, 74, 87, 0.98);
+      --warning: #ffcb51;
+      --danger: #ee5760;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .mockup-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      margin: 20px auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    /* Full Screen Map */
+    .map-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #2a3a3a 0%, #1a2a2a 100%);
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .map-placeholder svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 50;
+    }
+
+    .time-badge {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+    }
+
+    .time-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .time-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .top-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Stats Banner */
+    .stats-banner {
+      position: absolute;
+      top: 100px;
+      left: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .stat-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--foreground);
+    }
+
+    .stat-active .stat-dot { background: var(--primary); }
+    .stat-declining .stat-dot { background: var(--warning); }
+    .stat-closed .stat-dot { background: var(--danger); }
+
+    /* Time Slider */
+    .time-slider-container {
+      position: absolute;
+      bottom: 100px;
+      left: 16px;
+      right: 16px;
+      z-index: 50;
+    }
+
+    .time-markers {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .time-marker {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .time-slider {
+      height: 4px;
+      background: var(--border);
+      position: relative;
+    }
+
+    .time-slider-fill {
+      width: 45%;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .time-slider-thumb {
+      position: absolute;
+      top: -8px;
+      left: 45%;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border: 2px solid var(--background);
+      transform: translateX(-50%);
+    }
+
+    /* Floating Action Button */
+    .fab-container {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+    }
+
+    .fab-menu {
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    .fab-menu.open {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+
+    .fab-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .fab-label {
+      background: var(--card-bg);
+      padding: 8px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--foreground);
+      white-space: nowrap;
+      border: 1px solid var(--border);
+    }
+
+    .fab-circle {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+    }
+
+    .fab-circle svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .fab-main {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      border: none;
+      color: var(--background);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .fab-main.open {
+      transform: rotate(45deg);
+    }
+
+    .fab-main svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Side Panel (for list view) */
+    .side-panel {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 85%;
+      height: 100%;
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      z-index: 150;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-panel.open {
+      left: 0;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      color: var(--foreground);
+    }
+
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .close-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Search in panel */
+    .panel-search {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    /* Business List */
+    .business-list {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .business-card {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(107, 98, 117, 0.4);
+      cursor: pointer;
+    }
+
+    .business-card:active {
+      background: rgba(151, 216, 192, 0.1);
+    }
+
+    .business-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--foreground);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+    }
+
+    .business-address {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .business-category {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 140;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Demo hint */
+    .demo-hint {
+      position: absolute;
+      bottom: 100px;
+      right: 24px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 8px 16px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 90;
+    }
+
+    /* Benefits annotation */
+    .mockup-info {
+      max-width: 390px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(151, 216, 192, 0.1);
+      border: 1px solid var(--primary);
+    }
+
+    .mockup-info h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .mockup-info ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .mockup-info li::before {
+      content: "+";
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .mockup-info .con::before {
+      content: "-";
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-container">
+    <!-- Map Background -->
+    <div class="map-container">
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <p>Interactive Map</p>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="time-badge">
+        <div class="time-label">Current Date</div>
+        <div class="time-value">03.1933</div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Banner -->
+    <div class="stats-banner">
+      <div class="stat-item stat-active">
+        <div class="stat-dot"></div>
+        <span class="stat-value">89</span>
+      </div>
+      <div class="stat-item stat-declining">
+        <div class="stat-dot"></div>
+        <span class="stat-value">28</span>
+      </div>
+      <div class="stat-item stat-closed">
+        <div class="stat-dot"></div>
+        <span class="stat-value">10</span>
+      </div>
+    </div>
+
+    <!-- Time Slider -->
+    <div class="time-slider-container">
+      <div class="time-markers">
+        <span class="time-marker">1900</span>
+        <span class="time-marker">1920</span>
+        <span class="time-marker">1933</span>
+        <span class="time-marker">1945</span>
+      </div>
+      <div class="time-slider">
+        <div class="time-slider-fill"></div>
+        <div class="time-slider-thumb"></div>
+      </div>
+    </div>
+
+    <!-- Demo Hint -->
+    <div class="demo-hint">Tap the + button</div>
+
+    <!-- FAB Container -->
+    <div class="fab-container">
+      <div class="fab-menu" id="fabMenu">
+        <div class="fab-item" onclick="openPanel()">
+          <span class="fab-label">View List</span>
+          <div class="fab-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"/>
+              <line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/>
+              <line x1="3" y1="12" x2="3.01" y2="12"/>
+              <line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+          </div>
+        </div>
+        <div class="fab-item">
+          <span class="fab-label">Timeline</span>
+          <div class="fab-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+        </div>
+        <div class="fab-item">
+          <span class="fab-label">Statistics</span>
+          <div class="fab-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </div>
+        </div>
+        <div class="fab-item">
+          <span class="fab-label">Filters</span>
+          <div class="fab-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <button class="fab-main" id="fabMain" onclick="toggleFab()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+    <!-- Side Panel -->
+    <div class="side-panel" id="sidePanel">
+      <div class="panel-header">
+        <span class="panel-title">Businesses</span>
+        <button class="close-btn" onclick="closePanel()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel-search">
+        <input type="text" class="search-input" placeholder="Search businesses...">
+      </div>
+      <div class="business-list">
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-active"></span>
+            Kaufhaus Wertheim
+          </div>
+          <div class="business-address">Leipziger Platz 12-13</div>
+          <div class="business-category">Department Store</div>
+        </div>
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-declining"></span>
+            Hermann Tietz
+          </div>
+          <div class="business-address">Alexanderplatz 2</div>
+          <div class="business-category">Department Store</div>
+        </div>
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-active"></span>
+            Pelzhaus Grunfeld
+          </div>
+          <div class="business-address">Kurfurstendamm 234</div>
+          <div class="business-category">Retail</div>
+        </div>
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-closed"></span>
+            Bank M. M. Warburg
+          </div>
+          <div class="business-address">Unter den Linden 15</div>
+          <div class="business-category">Banking</div>
+        </div>
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-active"></span>
+            Weinhandlung Mendelsohn
+          </div>
+          <div class="business-address">Oranienburger Str. 28</div>
+          <div class="business-category">Wine Trade</div>
+        </div>
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-declining"></span>
+            Schuhhaus Leiser
+          </div>
+          <div class="business-address">Tauentzienstr. 8</div>
+          <div class="business-category">Retail</div>
+        </div>
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-active"></span>
+            Cafe Kranzler
+          </div>
+          <div class="business-address">Kurfurstendamm 18-19</div>
+          <div class="business-category">Hospitality</div>
+        </div>
+        <div class="business-card">
+          <div class="business-name">
+            <span class="status-indicator status-closed"></span>
+            Textilhaus Brenninkmeyer
+          </div>
+          <div class="business-address">Friedrichstr. 142</div>
+          <div class="business-category">Textiles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup-info">
+    <h2>Mockup 3: Floating Action Button</h2>
+    <ul>
+      <li>Maximum map visibility - minimal UI overlay</li>
+      <li>Quick access to all features from one button</li>
+      <li>Slide-in panel for list view</li>
+      <li>Clear visual hierarchy with FAB as focal point</li>
+      <li>Stats always visible on map</li>
+      <li class="con">Extra tap required to access any feature</li>
+      <li class="con">FAB can block map markers</li>
+      <li class="con">List panel covers most of screen</li>
+    </ul>
+  </div>
+
+  <script>
+    const fabMain = document.getElementById('fabMain');
+    const fabMenu = document.getElementById('fabMenu');
+    const sidePanel = document.getElementById('sidePanel');
+    const overlay = document.getElementById('overlay');
+    let fabOpen = false;
+
+    function toggleFab() {
+      fabOpen = !fabOpen;
+      fabMain.classList.toggle('open', fabOpen);
+      fabMenu.classList.toggle('open', fabOpen);
+      if (fabOpen) {
+        overlay.classList.add('visible');
+      } else {
+        overlay.classList.remove('visible');
+      }
+    }
+
+    function openPanel() {
+      sidePanel.classList.add('open');
+      fabOpen = false;
+      fabMain.classList.remove('open');
+      fabMenu.classList.remove('open');
+    }
+
+    function closePanel() {
+      sidePanel.classList.remove('open');
+      overlay.classList.remove('visible');
+    }
+
+    function closeAll() {
+      fabOpen = false;
+      fabMain.classList.remove('open');
+      fabMenu.classList.remove('open');
+      sidePanel.classList.remove('open');
+      overlay.classList.remove('visible');
+    }
+  </script>
+</body>
+</html>

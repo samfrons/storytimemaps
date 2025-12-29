@@ -131,7 +131,7 @@ export default function Sidebar({
               zIndex: 10000
             }}
           >
-            {['moody', 'hot', 'cold', 'warm', 'cool', 'bauhaus', 'art-nouveau', 'archival'].map((themeName) => (
+            {['moody', 'hot', 'cold', 'warm', 'cool', 'bauhaus', 'art-nouveau', 'archival', 'hoefe'].map((themeName) => (
               <button
                 key={themeName}
                 onClick={() => handleThemeSwitch(themeName)}

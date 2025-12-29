@@ -347,6 +347,119 @@
   --popup-closed-bg: #f5f7f9; /* Very light off-white for closed popups */
 }
 
+/* Hackesche Höfe Theme - Warm cream with elegant accents */
+[data-theme='hoefe'] {
+  --primary: #4a90a4; /* Steel blue */
+  --primary-rgb: 74, 144, 164;
+  --primary-light: #6badc2;
+  --secondary: #f5f0e1; /* Cream */
+  --warning: #e8a830; /* Amber/gold (declining) */
+  --warning-rgb: 232, 168, 48;
+  --danger: #8b4049; /* Burgundy (closed) */
+  --danger-rgb: 139, 64, 73;
+  --success: #7db5a4; /* Mint teal (active) */
+  --success-rgb: 125, 181, 164;
+  --background: #f5f0e1; /* Cream base */
+  --background-rgb: 245, 240, 225;
+  --foreground: #1a1a1a; /* Black text */
+  --foreground-muted: #5a5a5a;
+  --muted: #d4d0c8; /* Warm gray */
+  --muted-rgb: 212, 208, 200;
+  --border: #d4d0c8;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --map-overlay: rgba(245, 240, 225, 0.95);
+  --accent-orange: #e8a830;
+  --accent-yellow: #e8a830;
+  --accent-purple: #4a90a4;
+  --accent-coral: #8b4049;
+  --accent-navy: #1a1a1a;
+  --accent-chartreuse: #7db5a4;
+  --input-bg: rgba(255, 255, 255, 1);
+  --input-bg-rgb: 255, 255, 255;
+  --dropdown-bg: rgba(255, 255, 255, 1);
+  --dropdown-bg-rgb: 255, 255, 255;
+  --card-bg: rgba(255, 255, 255, 1);
+  --card-bg-rgb: 255, 255, 255;
+  --placeholder-color: #8a8a8a;
+  /* Marker text colors */
+  --active-text: #1a1a1a;
+  --active-text-secondary: #3a3a3a;
+  --declining-text: #1a1a1a;
+  --declining-text-secondary: #3a3a3a;
+  --closed-text: #ffffff;
+  --closed-text-secondary: #f0f0f0;
+  /* Hoefe-specific font variable */
+  --font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+/* Hoefe theme - Typography overrides */
+[data-theme='hoefe'] h1,
+[data-theme='hoefe'] h2,
+[data-theme='hoefe'] h3,
+[data-theme='hoefe'] h4,
+[data-theme='hoefe'] .font-kame,
+[data-theme='hoefe'] .font-kame-regular,
+[data-theme='hoefe'] .font-kame-black,
+[data-theme='hoefe'] .font-kame-book {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif !important;
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Hoefe theme - ALL larger text sizes use Playfair */
+[data-theme='hoefe'] .text-lg,
+[data-theme='hoefe'] .text-xl,
+[data-theme='hoefe'] .text-2xl,
+[data-theme='hoefe'] .text-3xl,
+[data-theme='hoefe'] .text-4xl,
+[data-theme='hoefe'] .text-5xl,
+[data-theme='hoefe'] .text-6xl,
+[data-theme='hoefe'] .text-7xl,
+[data-theme='hoefe'] .text-8xl,
+[data-theme='hoefe'] .text-9xl {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Hoefe theme - Year displays and stats */
+[data-theme='hoefe'] [class*='year'],
+[data-theme='hoefe'] .stat-value,
+[data-theme='hoefe'] .business-count {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif !important;
+  font-weight: 400 !important;
+}
+
+/* Hoefe theme - Small caps labels */
+[data-theme='hoefe'] .text-xs.uppercase,
+[data-theme='hoefe'] .category-label {
+  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+/* Hoefe theme - Body text uses Inter */
+[data-theme='hoefe'] p,
+[data-theme='hoefe'] .text-sm:not(.text-lg):not(.text-xl),
+[data-theme='hoefe'] .text-xs:not(.uppercase),
+[data-theme='hoefe'] label,
+[data-theme='hoefe'] input,
+[data-theme='hoefe'] button:not(.text-lg):not(.text-xl) {
+  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+}
+
+/* Hoefe theme - Override font-mono for body text only */
+[data-theme='hoefe'] .font-mono:not(.text-lg):not(.text-xl):not(.text-2xl):not(h1):not(h2):not(h3) {
+  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+}
+
+/* Hoefe theme - Refined panel/card styling */
+[data-theme='hoefe'] .mapboxgl-popup-content {
+  background: #ffffff !important;
+  border: 1px solid #d4d0c8 !important;
+}
+
 /* Mapbox popup arrow styling - uses theme primary color for active state */
 .popup-state-active .mapboxgl-popup-tip,
 .popup-state-future .mapboxgl-popup-tip,

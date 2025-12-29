@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card & Popup Typography Mockups - Hoefe Theme</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Hoefe theme colors */
+      --background: #f5f0e8;
+      --foreground: #2c3e50;
+      --foreground-muted: #5d6d7e;
+      --primary: #4a6fa5;
+      --border: #c8bfa9;
+      --border-light: #ddd5c8;
+      --card-bg: #faf7f2;
+
+      /* State colors - more dramatic */
+      --success: #6b9080;
+      --success-bg: #e8f4ef;
+      --success-border: #a8d4c0;
+
+      --warning: #b8860b;
+      --warning-bg: #fdf6e3;
+      --warning-border: #daa520;
+
+      --danger: #8b3a3a;
+      --danger-bg: #f5e6e6;
+      --danger-border: #c77070;
+
+      --accent-cream: #f5f0e8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      padding: 40px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--foreground);
+    }
+
+    .subtitle {
+      color: var(--foreground-muted);
+      font-size: 0.875rem;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--foreground-muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+    }
+
+    .option-label {
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* ============================================
+       LIST CARD STYLES - DRAMATIC STATE BACKGROUNDS
+       ============================================ */
+
+    .card {
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .card:hover {
+      transform: translateX(4px);
+    }
+
+    /* State-based backgrounds */
+    .card.state-active {
+      background: var(--success-bg);
+      border-left-color: var(--success);
+    }
+    .card.state-active:hover {
+      background: #dceee6;
+    }
+
+    .card.state-declining {
+      background: var(--warning-bg);
+      border-left-color: var(--warning);
+    }
+    .card.state-declining:hover {
+      background: #f8edd4;
+    }
+
+    .card.state-closed {
+      background: var(--danger-bg);
+      border-left-color: var(--danger);
+    }
+    .card.state-closed:hover {
+      background: #edd9d9;
+    }
+
+    .card .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--foreground);
+      margin-bottom: 6px;
+    }
+
+    .card .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: var(--foreground-muted);
+    }
+
+    .card .meta-row .dot {
+      width: 3px;
+      height: 3px;
+      background: var(--border);
+    }
+
+    .card .status-badge {
+      font-size: 0.5625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      margin-left: auto;
+    }
+
+    .card.state-active .status-badge {
+      background: var(--success);
+      color: white;
+    }
+    .card.state-declining .status-badge {
+      background: var(--warning);
+      color: white;
+    }
+    .card.state-closed .status-badge {
+      background: var(--danger);
+      color: white;
+    }
+
+    /* Divider line between cards */
+    .card + .card {
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    /* ============================================
+       OPTION B: SUBTLE TINT WITH STRONGER ACCENT
+       ============================================ */
+
+    .card-b {
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-left: 4px solid transparent;
+      margin-bottom: 8px;
+    }
+
+    .card-b.state-active {
+      background: linear-gradient(90deg, var(--success-bg) 0%, var(--card-bg) 40%);
+      border-left-color: var(--success);
+      border-color: var(--success-border);
+    }
+
+    .card-b.state-declining {
+      background: linear-gradient(90deg, var(--warning-bg) 0%, var(--card-bg) 40%);
+      border-left-color: var(--warning);
+      border-color: var(--warning-border);
+    }
+
+    .card-b.state-closed {
+      background: linear-gradient(90deg, var(--danger-bg) 0%, var(--card-bg) 40%);
+      border-left-color: var(--danger);
+      border-color: var(--danger-border);
+    }
+
+    /* ============================================
+       OPTION C: FULL DRAMATIC COLOR
+       ============================================ */
+
+    .card-c {
+      border: none;
+      padding: 18px 20px;
+    }
+
+    .card-c.state-active {
+      background: #c8e6d7;
+      border-left: 4px solid #2d6a4f;
+    }
+    .card-c.state-active .business-name { color: #1b4332; }
+    .card-c.state-active .meta-row { color: #40916c; }
+    .card-c.state-active .status-badge {
+      background: #2d6a4f;
+      color: white;
+    }
+
+    .card-c.state-declining {
+      background: #f9e4b7;
+      border-left: 4px solid #b8860b;
+    }
+    .card-c.state-declining .business-name { color: #6b4c00; }
+    .card-c.state-declining .meta-row { color: #8b6914; }
+    .card-c.state-declining .status-badge {
+      background: #b8860b;
+      color: white;
+    }
+
+    .card-c.state-closed {
+      background: #e8c4c4;
+      border-left: 4px solid #722f37;
+    }
+    .card-c.state-closed .business-name { color: #4a1c20; }
+    .card-c.state-closed .meta-row { color: #8b4049; }
+    .card-c.state-closed .status-badge {
+      background: #722f37;
+      color: white;
+    }
+
+    /* ============================================
+       POPUP STYLES - DRAMATIC STATE BACKGROUNDS
+       ============================================ */
+
+    .popup {
+      width: 300px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      transition: all 0.3s ease;
+    }
+
+    /* Popup Option A: Full background tint */
+    .popup-a {
+      border: 1px solid;
+    }
+
+    .popup-a.state-active {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+    }
+    .popup-a.state-declining {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+    }
+    .popup-a.state-closed {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+    }
+
+    .popup-a .content {
+      padding: 18px;
+    }
+
+    .popup-a .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .popup-a .category {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--foreground-muted);
+      margin-bottom: 14px;
+    }
+
+    .popup-a .divider {
+      height: 1px;
+      margin-bottom: 14px;
+    }
+    .popup-a.state-active .divider { background: var(--success-border); }
+    .popup-a.state-declining .divider { background: var(--warning-border); }
+    .popup-a.state-closed .divider { background: var(--danger-border); }
+
+    .popup-a .address {
+      font-size: 0.8125rem;
+      color: var(--foreground);
+      margin-bottom: 6px;
+    }
+
+    .popup-a .dates {
+      font-size: 0.75rem;
+      color: var(--foreground-muted);
+    }
+
+    .popup-a .status-bar {
+      padding: 12px 18px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      text-align: center;
+      color: white;
+    }
+    .popup-a.state-active .status-bar { background: var(--success); }
+    .popup-a.state-declining .status-bar { background: var(--warning); }
+    .popup-a.state-closed .status-bar { background: var(--danger); }
+
+    /* Popup Option B: Header bar + subtle tint */
+    .popup-b {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .popup-b .header-bar {
+      padding: 10px 18px;
+      color: white;
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .popup-b.state-active .header-bar { background: var(--success); }
+    .popup-b.state-declining .header-bar { background: var(--warning); }
+    .popup-b.state-closed .header-bar { background: var(--danger); }
+
+    .popup-b .content {
+      padding: 16px 18px;
+    }
+
+    .popup-b.state-active .content { background: linear-gradient(180deg, var(--success-bg) 0%, var(--card-bg) 100%); }
+    .popup-b.state-declining .content { background: linear-gradient(180deg, var(--warning-bg) 0%, var(--card-bg) 100%); }
+    .popup-b.state-closed .content { background: linear-gradient(180deg, var(--danger-bg) 0%, var(--card-bg) 100%); }
+
+    .popup-b .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.1875rem;
+      font-weight: 500;
+      color: var(--foreground);
+      margin-bottom: 10px;
+    }
+
+    .popup-b .meta-item {
+      font-size: 0.75rem;
+      color: var(--foreground-muted);
+      margin-bottom: 6px;
+    }
+
+    .popup-b .meta-label {
+      font-size: 0.5625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.6;
+    }
+
+    .popup-b .footer {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .popup-b .view-link {
+      font-size: 0.75rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Popup Option C: Bold side accent */
+    .popup-c {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      overflow: hidden;
+    }
+
+    .popup-c .accent-bar {
+      width: 6px;
+      flex-shrink: 0;
+    }
+    .popup-c.state-active .accent-bar { background: var(--success); }
+    .popup-c.state-declining .accent-bar { background: var(--warning); }
+    .popup-c.state-closed .accent-bar { background: var(--danger); }
+
+    .popup-c .main {
+      flex: 1;
+    }
+
+    .popup-c .content {
+      padding: 16px 18px;
+    }
+
+    .popup-c.state-active .content { background: var(--success-bg); }
+    .popup-c.state-declining .content { background: var(--warning-bg); }
+    .popup-c.state-closed .content { background: var(--danger-bg); }
+
+    .popup-c .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+
+    .popup-c .category-year {
+      font-size: 0.6875rem;
+      color: var(--foreground-muted);
+      margin-bottom: 12px;
+    }
+
+    .popup-c .category-year span {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .popup-c .address {
+      font-size: 0.8125rem;
+      color: var(--foreground);
+      margin-bottom: 4px;
+    }
+
+    .popup-c .coords {
+      font-size: 0.6875rem;
+      color: var(--foreground-muted);
+    }
+
+    .popup-c .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .popup-c .status-text {
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .popup-c.state-active .status-text { color: var(--success); }
+    .popup-c.state-declining .status-text { color: var(--warning); }
+    .popup-c.state-closed .status-text { color: var(--danger); }
+
+    .popup-c .view-link {
+      font-size: 0.75rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* ============================================
+       TIME SLIDER DEMO
+       ============================================ */
+
+    .time-demo {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 40px;
+    }
+
+    .time-demo-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+    }
+
+    .slider-container {
+      margin-bottom: 20px;
+    }
+
+    .slider-container input {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .date-display {
+      font-family: 'Inter', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .demo-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .demo-card {
+      padding: 14px 18px;
+      border-left: 4px solid transparent;
+      transition: all 0.4s ease;
+    }
+
+    .demo-card .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      transition: color 0.4s ease;
+    }
+
+    .demo-card .meta {
+      font-size: 0.75rem;
+      transition: color 0.4s ease;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Card & Popup Typography</h1>
+  <p class="subtitle">Hoefe Theme - Dramatic State-Based Backgrounds</p>
+
+  <!-- INTERACTIVE TIME DEMO -->
+  <div class="time-demo">
+    <div class="time-demo-title">Interactive Time Slider Demo</div>
+    <div class="slider-container">
+      <input type="range" id="timeSlider" min="1925" max="1940" value="1930" step="1">
+    </div>
+    <div class="date-display" id="dateDisplay">1930</div>
+
+    <div class="demo-cards" id="demoCards">
+      <div class="demo-card" id="card1" data-open="1925" data-decline="1933" data-close="1938">
+        <div class="business-name">Elias Braun Tailor Shop</div>
+        <div class="meta">Clothing & Textiles · Rosenthaler Straße 42</div>
+      </div>
+      <div class="demo-card" id="card2" data-open="1919" data-decline="1934" data-close="1936">
+        <div class="business-name">Goldstein & Sons Furriers</div>
+        <div class="meta">Luxury Goods · Friedrichstraße 112</div>
+      </div>
+      <div class="demo-card" id="card3" data-open="1897" data-decline="1935" data-close="1939">
+        <div class="business-name">Kaufhaus Wertheim</div>
+        <div class="meta">Department Store · Leipziger Platz 12</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slider = document.getElementById('timeSlider');
+    const dateDisplay = document.getElementById('dateDisplay');
+    const cards = document.querySelectorAll('.demo-card');
+
+    const colors = {
+      active: { bg: '#e8f4ef', border: '#6b9080', text: '#2c3e50', meta: '#40916c' },
+      declining: { bg: '#fdf6e3', border: '#b8860b', text: '#6b4c00', meta: '#8b6914' },
+      closed: { bg: '#f5e6e6', border: '#8b3a3a', text: '#4a1c20', meta: '#8b4049' },
+      future: { bg: '#f0f0f0', border: '#ccc', text: '#999', meta: '#bbb' }
+    };
+
+    function updateCards(year) {
+      dateDisplay.textContent = year;
+
+      cards.forEach(card => {
+        const openYear = parseInt(card.dataset.open);
+        const declineYear = parseInt(card.dataset.decline);
+        const closeYear = parseInt(card.dataset.close);
+
+        let state;
+        if (year < openYear) {
+          state = 'future';
+        } else if (year < declineYear) {
+          state = 'active';
+        } else if (year < closeYear) {
+          state = 'declining';
+        } else {
+          state = 'closed';
+        }
+
+        const c = colors[state];
+        card.style.background = c.bg;
+        card.style.borderLeftColor = c.border;
+        card.querySelector('.business-name').style.color = c.text;
+        card.querySelector('.meta').style.color = c.meta;
+      });
+    }
+
+    slider.addEventListener('input', (e) => updateCards(parseInt(e.target.value)));
+    updateCards(1930);
+  </script>
+
+  <!-- LIST CARDS SECTION -->
+  <div class="section">
+    <div class="section-title">List Card Options - State Backgrounds</div>
+
+    <div class="grid">
+      <!-- Option A: Solid tint -->
+      <div>
+        <div class="option-label">Option A: Solid State Tint</div>
+        <div class="cards-container">
+          <div class="card state-active">
+            <div class="business-name">Elias Braun Tailor Shop</div>
+            <div class="meta-row">
+              <span>Clothing & Textiles</span>
+              <div class="dot"></div>
+              <span>1925 - 1938</span>
+              <span class="status-badge">Active</span>
+            </div>
+          </div>
+          <div class="card state-declining">
+            <div class="business-name">Goldstein & Sons Furriers</div>
+            <div class="meta-row">
+              <span>Luxury Goods</span>
+              <div class="dot"></div>
+              <span>1919 - 1936</span>
+              <span class="status-badge">Declining</span>
+            </div>
+          </div>
+          <div class="card state-closed">
+            <div class="business-name">Kaufhaus Wertheim</div>
+            <div class="meta-row">
+              <span>Department Store</span>
+              <div class="dot"></div>
+              <span>1897 - 1939</span>
+              <span class="status-badge">Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option B: Gradient fade -->
+      <div>
+        <div class="option-label">Option B: Gradient Fade from Left</div>
+        <div class="cards-container" style="gap: 0;">
+          <div class="card card-b state-active">
+            <div class="business-name">Elias Braun Tailor Shop</div>
+            <div class="meta-row">
+              <span>Clothing & Textiles</span>
+              <div class="dot"></div>
+              <span>1925 - 1938</span>
+              <span class="status-badge">Active</span>
+            </div>
+          </div>
+          <div class="card card-b state-declining">
+            <div class="business-name">Goldstein & Sons Furriers</div>
+            <div class="meta-row">
+              <span>Luxury Goods</span>
+              <div class="dot"></div>
+              <span>1919 - 1936</span>
+              <span class="status-badge">Declining</span>
+            </div>
+          </div>
+          <div class="card card-b state-closed">
+            <div class="business-name">Kaufhaus Wertheim</div>
+            <div class="meta-row">
+              <span>Department Store</span>
+              <div class="dot"></div>
+              <span>1897 - 1939</span>
+              <span class="status-badge">Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option C: Bold dramatic -->
+      <div>
+        <div class="option-label">Option C: Bold Dramatic Color</div>
+        <div class="cards-container">
+          <div class="card card-c state-active">
+            <div class="business-name">Elias Braun Tailor Shop</div>
+            <div class="meta-row">
+              <span>Clothing & Textiles</span>
+              <div class="dot"></div>
+              <span>1925 - 1938</span>
+              <span class="status-badge">Active</span>
+            </div>
+          </div>
+          <div class="card card-c state-declining">
+            <div class="business-name">Goldstein & Sons Furriers</div>
+            <div class="meta-row">
+              <span>Luxury Goods</span>
+              <div class="dot"></div>
+              <span>1919 - 1936</span>
+              <span class="status-badge">Declining</span>
+            </div>
+          </div>
+          <div class="card card-c state-closed">
+            <div class="business-name">Kaufhaus Wertheim</div>
+            <div class="meta-row">
+              <span>Department Store</span>
+              <div class="dot"></div>
+              <span>1897 - 1939</span>
+              <span class="status-badge">Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP SECTION -->
+  <div class="section">
+    <div class="section-title">Map Popup Options - State Backgrounds</div>
+
+    <div class="grid">
+      <!-- Popup Option A -->
+      <div>
+        <div class="option-label">Option A: Full Tint + Bottom Bar</div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="popup popup-a state-active">
+            <div class="content">
+              <div class="business-name">Elias Braun Tailor Shop</div>
+              <div class="category">Clothing & Textiles</div>
+              <div class="divider"></div>
+              <div class="address">Rosenthaler Straße 42, 10178 Berlin</div>
+              <div class="dates">Est. 1925 · Closed 1938</div>
+            </div>
+            <div class="status-bar">Active · March 1930</div>
+          </div>
+          <div class="popup popup-a state-declining">
+            <div class="content">
+              <div class="business-name">Goldstein & Sons</div>
+              <div class="category">Luxury Goods</div>
+              <div class="divider"></div>
+              <div class="address">Friedrichstraße 112, 10117 Berlin</div>
+              <div class="dates">Est. 1919 · Closed 1936</div>
+            </div>
+            <div class="status-bar">Declining · April 1935</div>
+          </div>
+          <div class="popup popup-a state-closed">
+            <div class="content">
+              <div class="business-name">Kaufhaus Wertheim</div>
+              <div class="category">Department Store</div>
+              <div class="divider"></div>
+              <div class="address">Leipziger Platz 12, 10117 Berlin</div>
+              <div class="dates">Est. 1897 · Closed 1939</div>
+            </div>
+            <div class="status-bar">Closed · November 1938</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup Option B -->
+      <div>
+        <div class="option-label">Option B: Header Bar + Gradient</div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="popup popup-b state-active">
+            <div class="header-bar">Active · Thriving Business</div>
+            <div class="content">
+              <div class="business-name">Elias Braun Tailor Shop</div>
+              <div class="meta-item">
+                <div class="meta-label">Category</div>
+                <div>Clothing & Textiles</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Address</div>
+                <div>Rosenthaler Straße 42, Berlin</div>
+              </div>
+            </div>
+            <div class="footer">
+              <a href="#" class="view-link">View Full Story →</a>
+            </div>
+          </div>
+          <div class="popup popup-b state-declining">
+            <div class="header-bar">Declining · Under Pressure</div>
+            <div class="content">
+              <div class="business-name">Goldstein & Sons Furriers</div>
+              <div class="meta-item">
+                <div class="meta-label">Category</div>
+                <div>Luxury Goods</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Address</div>
+                <div>Friedrichstraße 112, Berlin</div>
+              </div>
+            </div>
+            <div class="footer">
+              <a href="#" class="view-link">View Full Story →</a>
+            </div>
+          </div>
+          <div class="popup popup-b state-closed">
+            <div class="header-bar">Closed · Forcibly Shut Down</div>
+            <div class="content">
+              <div class="business-name">Kaufhaus Wertheim</div>
+              <div class="meta-item">
+                <div class="meta-label">Category</div>
+                <div>Department Store</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Address</div>
+                <div>Leipziger Platz 12, Berlin</div>
+              </div>
+            </div>
+            <div class="footer">
+              <a href="#" class="view-link">View Full Story →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup Option C -->
+      <div>
+        <div class="option-label">Option C: Side Accent + Tinted Content</div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="popup popup-c state-active">
+            <div class="accent-bar"></div>
+            <div class="main">
+              <div class="content">
+                <div class="business-name">Elias Braun Tailor Shop</div>
+                <div class="category-year"><span>Clothing</span> · 1925 - 1938</div>
+                <div class="address">Rosenthaler Straße 42, Berlin</div>
+                <div class="coords">52.528967, 13.401847</div>
+              </div>
+              <div class="footer">
+                <span class="status-text">Active</span>
+                <a href="#" class="view-link">View Story →</a>
+              </div>
+            </div>
+          </div>
+          <div class="popup popup-c state-declining">
+            <div class="accent-bar"></div>
+            <div class="main">
+              <div class="content">
+                <div class="business-name">Goldstein & Sons Furriers</div>
+                <div class="category-year"><span>Luxury</span> · 1919 - 1936</div>
+                <div class="address">Friedrichstraße 112, Berlin</div>
+                <div class="coords">52.517037, 13.388860</div>
+              </div>
+              <div class="footer">
+                <span class="status-text">Declining</span>
+                <a href="#" class="view-link">View Story →</a>
+              </div>
+            </div>
+          </div>
+          <div class="popup popup-c state-closed">
+            <div class="accent-bar"></div>
+            <div class="main">
+              <div class="content">
+                <div class="business-name">Kaufhaus Wertheim</div>
+                <div class="category-year"><span>Dept. Store</span> · 1897 - 1939</div>
+                <div class="address">Leipziger Platz 12, Berlin</div>
+                <div class="coords">52.509717, 13.380033</div>
+              </div>
+              <div class="footer">
+                <span class="status-text">Closed</span>
+                <a href="#" class="view-link">View Story →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

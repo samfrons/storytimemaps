@@ -24,7 +24,37 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   title: 'Jewish Businesses in Berlin 1900-1945',
-  description: 'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945',
+  description: 'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore the history of Jewish entrepreneurship and discover the stories of businesses that shaped the city.',
+  keywords: ['Jewish history', 'Berlin history', 'Jewish businesses', 'Holocaust education', 'historical map', 'data visualization', 'Jewish heritage'],
+  authors: [{ name: 'StoryMaps Project' }],
+  creator: 'StoryMaps Project',
+  publisher: 'StoryMaps Project',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Jewish Businesses in Berlin 1900-1945',
+    title: 'Jewish Businesses in Berlin 1900-1945',
+    description: 'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore the history of Jewish entrepreneurship and discover the stories of businesses that shaped the city.',
+    images: [
+      {
+        url: '/images/og-share-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'Jewish Businesses in Berlin 1900-1945 - Interactive Historical Map',
+        type: 'image/svg+xml',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Jewish Businesses in Berlin 1900-1945',
+    description: 'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore history through data visualization.',
+    images: ['/images/og-share-image.svg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   other: {
     'dns-prefetch': '//api.mapbox.com',
     'preconnect': 'https://api.mapbox.com',

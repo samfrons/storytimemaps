@@ -119,6 +119,21 @@
     "declining": "Aropgeeyendik",
     "closed": "Farshlosn"
   },
+  "share": {
+    "shareStory": "טיילן געשיכטע",
+    "shareWebsite": "טיילן",
+    "copyLink": "קאָפּירן לינק",
+    "copyLinkDesc": "קאָפּירן לינק צו קליפּבאָרד",
+    "email": "בליצפּאָסט",
+    "emailDesc": "שיקן דורך בליצפּאָסט",
+    "facebookDesc": "טיילן אויף Facebook",
+    "twitterDesc": "טיילן אויף X",
+    "instagramDesc": "קאָפּירן טעקסט פֿאַר Instagram",
+    "shareVia": "טיילן דורך...",
+    "shareViaDesc": "ניצן סיסטעם טייל אָפּציעס",
+    "copied": "קאָפּירט!",
+    "linkPreview": "לינק פאָרויסזעען"
+  },
   "barcharts": {
     "title": "אינטעראַקטיווע דאַטן וויזואַליזאַציעס",
     "subtitle": "3D מאַפּע מיט צייט אַנאַליז פון חורבן פון ייִדישע געשעפטן אין בערלין",

@@ -92,6 +92,29 @@
       "description": "Inspiriert vom Stolpersteine-Projekt stellen wir uns vor, Gedenkplaketten an den ursprünglichen Standorten dokumentierter jüdischer Geschäfte in ganz Berlin zu installieren.",
       "vision": "Diese Plaketten würden als permanente Erinnerung an das lebendige jüdische Handelsleben dienen, das einst in diesen Nachbarschaften blühte, und digitale Dokumentation mit physischem Gedenken verbinden."
     },
+    "stolpersteine": {
+      "title": "Inspiriert von Stolpersteinen",
+      "description": "Wie Gunter Demnigs kraftvolles Stolpersteine-Projekt, das Einzelpersonen gedenkt, würden unsere Gedenkplaketten die Geschäftsräume ehren, in denen jüdische Familien ihren Lebensunterhalt aufbauten und ihre Gemeinden bedienten.",
+      "stolpersteineFocus": "Stolpersteine-Fokus",
+      "individualVictims": "Einzelne Opfer",
+      "residentialAddresses": "Wohnadressen",
+      "personalStories": "Persönliche Geschichten",
+      "familyDeportations": "Familiendeportationen",
+      "businessFocus": "Geschäftsplaketten-Fokus",
+      "commercialEnterprises": "Gewerbliche Unternehmen",
+      "businessLocations": "Geschäftsstandorte",
+      "economicPersecution": "Wirtschaftliche Verfolgung",
+      "communityImpact": "Gemeinschaftliche Auswirkungen"
+    },
+    "plaqueMockup": {
+      "hereStood": "HIER STAND",
+      "owner": "Eigentümer: Familie Pelz",
+      "forcedClosure": "Zwangsschließung",
+      "aryanized": "Arisiert"
+    },
+    "ctaTitle": "Helfen Sie, diese Gedenktafeln zum Leben zu erwecken",
+    "ctaDescription": "Wir suchen Partnerschaften mit Berlins kulturellen Einrichtungen, Bildungsorganisationen und Gemeindegruppen, um Gedenkplaketten zu verwirklichen. Diese Initiative erfordert Zusammenarbeit mit Stadtplanung, Denkmalschutz und jüdischen Gemeindeorganisationen.",
+    "learnStolpersteine": "Über Stolpersteine erfahren",
     "community": {
       "title": "Gemeinschaftsengagement",
       "description": "Wir arbeiten mit lokalen Gemeinschaften, Schulen und Berliner jüdischen Organisationen zusammen, um Bildungsprogramme zu entwickeln, die diese historischen Daten mit zeitgenössischen Diskussionen über Erinnerung, Handel und Gemeinschaft verbinden."
@@ -115,6 +138,8 @@
     "current": "Deutsch"
   },
   "plaques": {
+    "loading": "Plaketten werden geladen...",
+    "plaqueAltText": "Gedenkplakette für {{name}}",
     "hero": {
       "badge": "Erinnerungsinitiative",
       "title": "Memorial-Plakett-Initiative",

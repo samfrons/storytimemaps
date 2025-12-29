@@ -135,7 +135,7 @@ function PlaquesPageContent() {
                     }}>
                       <Image
                         src={`/plaques/${selectedStyle}-style/${getPlaqueFileName(plaque.id, plaque.name)}`}
-                        alt={`Memorial plaque for ${plaque.name}`}
+                        alt={t('plaques.plaqueAltText', { name: plaque.name.split(' - ')[0] }) || `Memorial plaque for ${plaque.name}`}
                         width={300}
                         height={200}
                         className="max-w-full max-h-full object-contain"
@@ -368,13 +368,20 @@ function PlaquesPageContent() {
   );
 }
 
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
+      <div className="font-mono" style={{ color: 'var(--primary)' }}>
+        <span className="block">Loading...</span>
+        <span className="block text-sm opacity-60">Laden... / לאָדן...</span>
+      </div>
+    </div>
+  );
+}
+
 export default function PlaquesPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
-        <div className="font-mono" style={{ color: 'var(--primary)' }}>Loading plaques...</div>
-      </div>
-    }>
+    <Suspense fallback={<LoadingFallback />}>
       <PlaquesPageContent />
     </Suspense>
   );

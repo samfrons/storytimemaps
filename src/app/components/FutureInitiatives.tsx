@@ -45,29 +45,27 @@ const FutureInitiatives: React.FC = () => {
 
             {/* Stolpersteine connection */}
             <div className="bg-[#ee5760]/10 p-6 border border-[#ee5760]/30 mb-6">
-              <h4 className="font-['Inter'] font-semibold text-[#ee5760] mb-3">🪨 Inspired by Stolpersteine</h4>
+              <h4 className="font-['Inter'] font-semibold text-[#ee5760] mb-3">🪨 {t('future.stolpersteine.title')}</h4>
               <p className="text-[#f5cdb4] font-['Inter'] mb-4">
-                Like Gunter Demnig&apos;s powerful Stolpersteine project, which commemorates individuals, 
-                our memorial plaques would honor the <strong>commercial spaces</strong> where Jewish families 
-                built their livelihoods and served their communities.
+                {t('future.stolpersteine.description')}
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <h5 className="text-[#ee5760] font-semibold mb-2">Stolpersteine Focus:</h5>
+                  <h5 className="text-[#ee5760] font-semibold mb-2">{t('future.stolpersteine.stolpersteineFocus')}:</h5>
                   <ul className="text-[#f5cdb4]/80 space-y-1">
-                    <li>• Individual victims</li>
-                    <li>• Residential addresses</li>
-                    <li>• Personal stories</li>
-                    <li>• Family deportations</li>
+                    <li>• {t('future.stolpersteine.individualVictims')}</li>
+                    <li>• {t('future.stolpersteine.residentialAddresses')}</li>
+                    <li>• {t('future.stolpersteine.personalStories')}</li>
+                    <li>• {t('future.stolpersteine.familyDeportations')}</li>
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-[#ee5760] font-semibold mb-2">Business Plaques Focus:</h5>
+                  <h5 className="text-[#ee5760] font-semibold mb-2">{t('future.stolpersteine.businessFocus')}:</h5>
                   <ul className="text-[#f5cdb4]/80 space-y-1">
-                    <li>• Commercial enterprises</li>
-                    <li>• Business locations</li>
-                    <li>• Economic persecution</li>
-                    <li>• Community impact</li>
+                    <li>• {t('future.stolpersteine.commercialEnterprises')}</li>
+                    <li>• {t('future.stolpersteine.businessLocations')}</li>
+                    <li>• {t('future.stolpersteine.economicPersecution')}</li>
+                    <li>• {t('future.stolpersteine.communityImpact')}</li>
                   </ul>
                 </div>
               </div>
@@ -76,11 +74,11 @@ const FutureInitiatives: React.FC = () => {
             {/* Mockup of plaque */}
             <div className="bg-[#6b6275] p-6 border-2 border-[#8b7d8e] text-center">
               <div className="text-[#f5cdb4] font-mono text-sm leading-tight">
-                <div className="mb-2 text-[#ee5760] font-bold">HIER STAND</div>
+                <div className="mb-2 text-[#ee5760] font-bold">{t('future.plaqueMockup.hereStood')}</div>
                 <div className="text-lg font-bold mb-1">PELZ FURRIER</div>
-                <div className="mb-2">Eigentümer: Familie Pelz</div>
+                <div className="mb-2">{t('future.plaqueMockup.owner')}</div>
                 <div className="text-xs mb-2">1918-1937</div>
-                <div className="text-xs">Zwangsschließung • Arisiert</div>
+                <div className="text-xs">{t('future.plaqueMockup.forcedClosure')} • {t('future.plaqueMockup.aryanized')}</div>
               </div>
             </div>
           </div>
@@ -116,28 +114,26 @@ const FutureInitiatives: React.FC = () => {
         {/* Call to action for support */}
         <div className="bg-gradient-to-r from-[#ee5760]/10 to-[#97d8c0]/10 p-8 border-2 border-[#ee5760]/30 text-center">
           <h4 className="text-2xl font-['Inter'] font-semibold text-[#f5cdb4] mb-4">
-            Help Bring These Memorials to Life
+            {t('future.ctaTitle')}
           </h4>
           <p className="text-[#f5cdb4]/90 font-['Inter'] text-lg mb-6 max-w-3xl mx-auto">
-            We&apos;re seeking partnerships with Berlin&apos;s cultural institutions, educational organizations, 
-            and community groups to make memorial plaques a reality. This initiative requires collaboration 
-            with city planning, historical preservation, and Jewish community organizations.
+            {t('future.ctaDescription')}
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
+            <a
               href="mailto:info@storytimemaps.com?subject=Memorial Plaques Initiative"
               className="inline-block px-8 py-4 bg-[#ee5760] text-white font-['Inter'] font-semibold text-lg hover:bg-[#f06570] transition-colors duration-300 shadow-lg"
             >
               {t('cta.supportPlaques')}
             </a>
-            <a 
+            <a
               href="https://www.stolpersteine.eu/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-8 py-4 bg-transparent border-2 border-[#97d8c0] text-[#97d8c0] font-['Inter'] font-semibold text-lg hover:bg-[#97d8c0] hover:text-[#1a1a1a] transition-all duration-300"
             >
-              Learn About Stolpersteine
+              {t('future.learnStolpersteine')}
             </a>
           </div>
         </div>

@@ -92,6 +92,29 @@
       "description": "Inspired by the Stolpersteine (stumbling stones) project, we envision installing memorial plaques at the original locations of documented Jewish businesses throughout Berlin.",
       "vision": "These plaques would serve as permanent reminders of the vibrant Jewish commercial life that once flourished in these neighborhoods, connecting digital documentation with physical remembrance."
     },
+    "stolpersteine": {
+      "title": "Inspired by Stolpersteine",
+      "description": "Like Gunter Demnig's powerful Stolpersteine project, which commemorates individuals, our memorial plaques would honor the commercial spaces where Jewish families built their livelihoods and served their communities.",
+      "stolpersteineFocus": "Stolpersteine Focus",
+      "individualVictims": "Individual victims",
+      "residentialAddresses": "Residential addresses",
+      "personalStories": "Personal stories",
+      "familyDeportations": "Family deportations",
+      "businessFocus": "Business Plaques Focus",
+      "commercialEnterprises": "Commercial enterprises",
+      "businessLocations": "Business locations",
+      "economicPersecution": "Economic persecution",
+      "communityImpact": "Community impact"
+    },
+    "plaqueMockup": {
+      "hereStood": "HERE STOOD",
+      "owner": "Owner: Pelz Family",
+      "forcedClosure": "Forced closure",
+      "aryanized": "Aryanized"
+    },
+    "ctaTitle": "Help Bring These Memorials to Life",
+    "ctaDescription": "We're seeking partnerships with Berlin's cultural institutions, educational organizations, and community groups to make memorial plaques a reality. This initiative requires collaboration with city planning, historical preservation, and Jewish community organizations.",
+    "learnStolpersteine": "Learn About Stolpersteine",
     "community": {
       "title": "Community Engagement",
       "description": "We're working with local communities, schools, and Berlin's Jewish organizations to develop educational programs that connect this historical data with contemporary discussions about memory, commerce, and community."
@@ -115,6 +138,8 @@
     "current": "English"
   },
   "plaques": {
+    "loading": "Loading plaques...",
+    "plaqueAltText": "Memorial plaque for {{name}}",
     "hero": {
       "badge": "Remembrance Initiative",
       "title": "Memorial Plaques Initiative",

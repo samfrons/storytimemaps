@@ -201,7 +201,7 @@ const PlaquesHero: React.FC<PlaquesHeroProps> = ({ showFullContent = true, compa
                 }}>
                   <Image
                     src={`/plaques/${selectedStyle}-style/${getPlaqueFileName(currentPlaque.id, currentPlaque.name)}`}
-                    alt={`Memorial plaque for ${currentPlaque.name}`}
+                    alt={t('plaques.plaqueAltText', { name: currentPlaque.name.split(' - ')[0] }) || `Memorial plaque for ${currentPlaque.name}`}
                     width={400}
                     height={300}
                     className="max-w-full max-h-full object-contain"

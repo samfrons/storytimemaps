@@ -92,6 +92,29 @@
       "description": "Inspirirt durkh di Stolpersteine proyekt, mir shteln zikh for instalirn denkmal plaketen bay di originele erter fun dokumentirte yidishe gesheftn iber Berlin.",
       "vision": "Di plaketen voltn gedint vi shtendike dermonung fun dem lebedikn yidishn handls-lebn vos hot amol gebliet in di gegnt, farbindndik digitale dokumentatsye mit fizishe dermonung."
     },
+    "stolpersteine": {
+      "title": "Inspirirt fun Stolpersteine",
+      "description": "Vi Gunter Demnigs shtarke Stolpersteine proyekt vos gedenkt ayntsike mentshn, voltn unzere denkmal plaketen mekhabed zayn di gesheft-erter vu yidishe mishpokhes hobn geboyt zeyer parnose un gedint zeyer kehiles.",
+      "stolpersteineFocus": "Stolpersteine Fokus",
+      "individualVictims": "Ayntsike korbones",
+      "residentialAddresses": "Voyn adreses",
+      "personalStories": "Perzenlekhe geshikhtes",
+      "familyDeportations": "Mishpokhe deportatsyes",
+      "businessFocus": "Gesheft Plaketen Fokus",
+      "commercialEnterprises": "Handl unternemungen",
+      "businessLocations": "Gesheft erter",
+      "economicPersecution": "Ekonomishe rdife",
+      "communityImpact": "Kehile virkung"
+    },
+    "plaqueMockup": {
+      "hereStood": "DO IZ GESHTANEN",
+      "owner": "Aygntimer: Mishpokhe Pelz",
+      "forcedClosure": "Tsvang-farshlisung",
+      "aryanized": "Arizirt"
+    },
+    "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
+    "ctaDescription": "Mir zukhn shutfes mit Berlins kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet. Di initsyativ farlאngt tsuזamenארbet mit shtot plאnung, historisher bahaltung, un yidishe kehile organizatsyes.",
+    "learnStolpersteine": "Lernt vegn Stolpersteine",
     "community": {
       "title": "Kehile Bashteyung",
       "description": "Mir arbetn mit lokale kehiles, shuln, un Berliner yidishe organizatsyes tsu antviklen khinukh programen vos farbindn di historishe datn mit hayntike diskusyes vegn zikorn, handl, un kehile."
@@ -120,6 +143,8 @@
     "closed": "Farshlosn"
   },
   "plaques": {
+    "loading": "Plaketen lodn...",
+    "plaqueAltText": "Denkmal plakete far {{name}}",
     "hero": {
       "badge": "Zikorn Initsyativ",
       "title": "Denkmal-Plaketen Initsyativ",

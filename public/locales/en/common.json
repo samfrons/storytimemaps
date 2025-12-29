@@ -114,6 +114,21 @@
     "switchTo": "Deutsch",
     "current": "English"
   },
+  "share": {
+    "shareStory": "Share Story",
+    "shareWebsite": "Share",
+    "copyLink": "Copy Link",
+    "copyLinkDesc": "Copy the link to clipboard",
+    "email": "Email",
+    "emailDesc": "Send via email",
+    "facebookDesc": "Share on Facebook",
+    "twitterDesc": "Share on X",
+    "instagramDesc": "Copy text for Instagram",
+    "shareVia": "Share via...",
+    "shareViaDesc": "Use system share options",
+    "copied": "Copied!",
+    "linkPreview": "Link Preview"
+  },
   "barcharts": {
     "title": "Interactive Data Visualizations",
     "subtitle": "3D map exploration with timeline analysis of Jewish business destruction in Berlin",

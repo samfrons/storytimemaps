@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { AuthProvider } from '../contexts/AuthContext'
 import AppErrorBoundary from '../components/AppErrorBoundary'
+import CookieConsentWrapper from './components/CookieConsentWrapper'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -176,6 +177,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             <AuthProvider>
               <AppErrorBoundary>{children}</AppErrorBoundary>
+              <CookieConsentWrapper />
             </AuthProvider>
           </ThemeProvider>
         </I18nProvider>

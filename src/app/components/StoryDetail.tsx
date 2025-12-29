@@ -7,6 +7,7 @@ import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
 import { useTranslation } from '../../i18n/useTranslation';
 import { loadTimelineData, getTimelineContentForDate, getTimelineMediaForDate, subscribeToLoadingState } from '../../utils/timelineLoader';
 import { useDebounce } from '../../hooks/useDebounce';
+import ShareModal from './ShareModal';
 
 interface StoryDetailProps {
   story: StoryMap;
@@ -24,6 +25,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
   const [contentStage, setContentStage] = React.useState<'media' | 'description' | 'details' | 'complete'>('complete');
   const [previousTimelineContent, setPreviousTimelineContent] = React.useState<TimelineContent | null>(null);
   const [isLoadingDetailed, setIsLoadingDetailed] = React.useState(false);
+  const [showShareModal, setShowShareModal] = React.useState(false);
   
   // Debounce rapid timeline changes to prevent flicker
   // Use shorter debounce for better responsiveness during auto-play
@@ -565,7 +567,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
         >
           View Sources
         </button>
-        <button 
+        <button
           className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 border transition-all shadow-sm hover:shadow uppercase tracking-wide"
           style={{
             backgroundColor: 'var(--primary)',
@@ -580,10 +582,19 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             e.currentTarget.style.backgroundColor = 'var(--primary)';
             e.currentTarget.style.borderColor = 'var(--primary)';
           }}
+          onClick={() => setShowShareModal(true)}
         >
-          Share Story
+          {t('share.shareStory', { ns: 'common', defaultValue: 'Share Story' })}
         </button>
       </div>
+
+      {/* Share Modal */}
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        story={story}
+        currentDate={currentDate}
+      />
     </div>
   );
 };

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile UI Mockup - Draggable Bottom Sheet</title>
+  <style>
+    :root {
+      --background: #4a4a57;
+      --foreground: #f5cdb4;
+      --primary: #97d8c0;
+      --secondary: #eca27d;
+      --border: #6b6275;
+      --muted: #8b7d8e;
+      --card-bg: rgba(74, 74, 87, 0.98);
+      --warning: #ffcb51;
+      --danger: #ee5760;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .mockup-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      margin: 20px auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    /* Full Screen Map */
+    .map-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #2a3a3a 0%, #1a2a2a 100%);
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .map-placeholder svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Top Controls */
+    .top-controls {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      gap: 12px;
+      z-index: 50;
+    }
+
+    .search-bar {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--foreground);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .search-bar input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-bar svg {
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+    }
+
+    .menu-btn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    /* Map Controls */
+    .map-controls {
+      position: absolute;
+      right: 16px;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      z-index: 50;
+    }
+
+    .map-btn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    .map-btn:first-child {
+      border-bottom: none;
+    }
+
+    /* Time Control */
+    .time-control {
+      position: absolute;
+      left: 16px;
+      top: 80px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 12px;
+      z-index: 50;
+    }
+
+    .time-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .time-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 20px;
+      color: var(--primary);
+    }
+
+    /* Bottom Sheet */
+    .bottom-sheet {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+    }
+
+    .bottom-sheet.collapsed {
+      transform: translateY(calc(100% - 160px));
+    }
+
+    .bottom-sheet.half {
+      transform: translateY(calc(100% - 420px));
+    }
+
+    .bottom-sheet.expanded {
+      transform: translateY(0);
+    }
+
+    /* Sheet Handle */
+    .sheet-handle {
+      padding: 12px 0 8px;
+      display: flex;
+      justify-content: center;
+      cursor: grab;
+    }
+
+    .handle-bar {
+      width: 36px;
+      height: 4px;
+      background: var(--border);
+    }
+
+    /* Sheet Header */
+    .sheet-header {
+      padding: 0 16px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sheet-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .sheet-title h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--foreground);
+      font-weight: 400;
+    }
+
+    .count-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--primary);
+      background: rgba(151, 216, 192, 0.15);
+      padding: 4px 10px;
+    }
+
+    /* Quick Filters */
+    .quick-filters {
+      display: flex;
+      gap: 8px;
+    }
+
+    .quick-filter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .quick-filter.active {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    /* Sheet Content */
+    .sheet-content {
+      height: calc(844px - 160px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Business Cards - Compact */
+    .business-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(107, 98, 117, 0.4);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .business-item:active {
+      background: rgba(151, 216, 192, 0.1);
+    }
+
+    .business-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .business-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--secondary);
+    }
+
+    .business-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .business-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: var(--foreground);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .business-address {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .business-status-indicator {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+    }
+
+    .status-active { background: var(--primary); }
+    .status-declining { background: var(--warning); }
+    .status-closed { background: var(--danger); }
+
+    /* Sheet Actions */
+    .sheet-actions {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .action-btn.primary {
+      background: var(--primary);
+      color: var(--background);
+      border-color: var(--primary);
+    }
+
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Instructions for demo */
+    .demo-hint {
+      position: absolute;
+      bottom: 170px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 8px 16px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    /* Benefits annotation */
+    .mockup-info {
+      max-width: 390px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(151, 216, 192, 0.1);
+      border: 1px solid var(--primary);
+    }
+
+    .mockup-info h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .mockup-info ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .mockup-info li::before {
+      content: "+";
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .mockup-info .con::before {
+      content: "-";
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-container">
+    <!-- Full Screen Map -->
+    <div class="map-container">
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <p>Interactive Map</p>
+      </div>
+    </div>
+
+    <!-- Top Controls -->
+    <div class="top-controls">
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" placeholder="Search businesses...">
+      </div>
+      <button class="menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Map Controls -->
+    <div class="map-controls">
+      <button class="map-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+      <button class="map-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Time Control -->
+    <div class="time-control">
+      <div class="time-label">Current Date</div>
+      <div class="time-value">03.1933</div>
+    </div>
+
+    <!-- Demo Hint -->
+    <div class="demo-hint" id="hint">Click sheet to toggle states</div>
+
+    <!-- Bottom Sheet -->
+    <div class="bottom-sheet collapsed" id="sheet">
+      <div class="sheet-handle" onclick="toggleSheet()">
+        <div class="handle-bar"></div>
+      </div>
+
+      <div class="sheet-header">
+        <div class="sheet-title">
+          <h2>Businesses in View</h2>
+          <span class="count-badge">127 visible</span>
+        </div>
+        <div class="quick-filters">
+          <button class="quick-filter active">
+            <div class="filter-dot status-active"></div>
+            Active
+          </button>
+          <button class="quick-filter">
+            <div class="filter-dot status-declining"></div>
+            Declining
+          </button>
+          <button class="quick-filter">
+            <div class="filter-dot status-closed"></div>
+            Closed
+          </button>
+        </div>
+      </div>
+
+      <div class="sheet-content">
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Kaufhaus Wertheim</div>
+            <div class="business-address">Leipziger Platz 12-13</div>
+          </div>
+          <div class="business-status-indicator status-active"></div>
+        </div>
+
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Hermann Tietz</div>
+            <div class="business-address">Alexanderplatz 2</div>
+          </div>
+          <div class="business-status-indicator status-declining"></div>
+        </div>
+
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Pelzhaus Grunfeld</div>
+            <div class="business-address">Kurfurstendamm 234</div>
+          </div>
+          <div class="business-status-indicator status-active"></div>
+        </div>
+
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="3" y1="9" x2="21" y2="9"/>
+              <line x1="9" y1="21" x2="9" y2="9"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Bank M. M. Warburg</div>
+            <div class="business-address">Unter den Linden 15</div>
+          </div>
+          <div class="business-status-indicator status-closed"></div>
+        </div>
+
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Cafe Kranzler</div>
+            <div class="business-address">Kurfurstendamm 18-19</div>
+          </div>
+          <div class="business-status-indicator status-active"></div>
+        </div>
+
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Weinhandlung Mendelsohn</div>
+            <div class="business-address">Oranienburger Str. 28</div>
+          </div>
+          <div class="business-status-indicator status-active"></div>
+        </div>
+
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Schuhhaus Leiser</div>
+            <div class="business-address">Tauentzienstr. 8</div>
+          </div>
+          <div class="business-status-indicator status-declining"></div>
+        </div>
+
+        <div class="business-item">
+          <div class="business-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+          </div>
+          <div class="business-info">
+            <div class="business-name">Textilhaus Brenninkmeyer</div>
+            <div class="business-address">Friedrichstr. 142</div>
+          </div>
+          <div class="business-status-indicator status-closed"></div>
+        </div>
+      </div>
+
+      <div class="sheet-actions">
+        <button class="action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+          Filters
+        </button>
+        <button class="action-btn primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Timeline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup-info">
+    <h2>Mockup 2: Draggable Bottom Sheet</h2>
+    <ul>
+      <li>Map is always visible - primary focus</li>
+      <li>Familiar pattern (Google Maps, Apple Maps)</li>
+      <li>Three states: collapsed, half, expanded</li>
+      <li>Quick filters visible in collapsed state</li>
+      <li>Search integrated at top of screen</li>
+      <li>Smooth gesture-based interaction</li>
+      <li class="con">List items harder to scan in collapsed state</li>
+      <li class="con">Requires gesture familiarity from users</li>
+    </ul>
+  </div>
+
+  <script>
+    const sheet = document.getElementById('sheet');
+    const hint = document.getElementById('hint');
+    const states = ['collapsed', 'half', 'expanded'];
+    let currentState = 0;
+
+    function toggleSheet() {
+      sheet.classList.remove(states[currentState]);
+      currentState = (currentState + 1) % states.length;
+      sheet.classList.add(states[currentState]);
+      hint.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

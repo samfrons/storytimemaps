@@ -6,6 +6,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useTranslation } from '../../i18n/useTranslation';
 import { useAuth } from '../../contexts/AuthContext';
 import AuthModal from '../../components/auth/AuthModal';
+import ShareModal from './ShareModal';
 
 interface SidebarProps {
   viewMode?: 'stories' | 'database';
@@ -34,6 +35,7 @@ export default function Sidebar({
   const pathname = usePathname();
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

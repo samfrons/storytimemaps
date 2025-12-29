@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslation } from '../../i18n/useTranslation';
+import { useAuth } from '@/contexts/AuthContext';
 import LanguageToggle from './LanguageToggle';
 import AnimatedBusinessCarousel from './AnimatedBusinessCarousel';
 import StatisticsSection from './StatisticsSection';
@@ -13,6 +14,7 @@ import InsightsSection from './InsightsSection';
 import NavigationGuide from './NavigationGuide';
 import ResearchSection from './ResearchSection';
 import FutureInitiatives from './FutureInitiatives';
+import AuthModal from '@/components/auth/AuthModal';
 
 interface BusinessFeature {
   properties: {
@@ -45,6 +47,8 @@ interface HomepageProps {
 
 const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Process business data for carousel - use storymap data with images
   const carouselBusinesses = useMemo(() => {
@@ -140,8 +144,32 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
         <div className="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-br from-blue-50 to-transparent rounded-full blur-3xl opacity-50" />
         <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-gradient-to-tr from-amber-50 to-transparent rounded-full blur-3xl opacity-40" />
         
-        <div className="absolute top-6 right-6 z-10">
+        <div className="absolute top-6 right-6 z-10 flex items-center gap-4">
           <LanguageToggle />
+          {!user ? (
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="px-4 py-2 font-mono text-sm font-bold transition-opacity hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--primary)',
+                color: 'var(--background)',
+                border: 'none',
+              }}
+            >
+              Sign In / Sign Up
+            </button>
+          ) : (
+            <Link
+              href="/dashboard"
+              className="px-4 py-2 font-mono text-sm transition-opacity hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--primary)',
+                color: 'var(--background)',
+              }}
+            >
+              Dashboard
+            </Link>
+          )}
         </div>
         
         <div className="relative pt-32 pb-28 px-6">
@@ -304,6 +332,106 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
       {/* Future Initiatives */}
       <FutureInitiatives />
 
+      {/* Contributor Call to Action */}
+      {!user && (
+        <section className="py-24 px-6" style={{ backgroundColor: 'var(--card-bg)' }}>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              {/* Left side - Messaging */}
+              <div className="space-y-6">
+                <div>
+                  <span className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--foreground-muted)' }}>
+                    For Researchers &amp; Historians
+                  </span>
+                  <h2 className="font-display text-4xl md:text-5xl font-light mt-4 leading-tight" style={{ color: 'var(--foreground)' }}>
+                    Help Preserve History
+                  </h2>
+                </div>
+
+                <p className="text-lg leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                  Whether you&apos;re an academic researcher, a local historian, or someone passionate about
+                  preserving Jewish heritage, your contributions make a difference.
+                </p>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center mt-0.5" style={{ color: 'var(--success)' }}>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-mono text-sm font-bold" style={{ color: 'var(--foreground)' }}>Add New Business Records</p>
+                      <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Share discoveries from archives, documents, and family records</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center mt-0.5" style={{ color: 'var(--success)' }}>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-mono text-sm font-bold" style={{ color: 'var(--foreground)' }}>Correct &amp; Enhance Data</p>
+                      <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Help improve accuracy with updated information and sources</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center mt-0.5" style={{ color: 'var(--success)' }}>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-mono text-sm font-bold" style={{ color: 'var(--foreground)' }}>Join Our Community</p>
+                      <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Connect with fellow historians and researchers worldwide</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right side - Sign up card */}
+              <div
+                className="p-8 space-y-6"
+                style={{
+                  backgroundColor: 'var(--background)',
+                  border: '1px solid var(--border)',
+                }}
+              >
+                <div>
+                  <h3 className="font-mono text-xl font-bold mb-2" style={{ color: 'var(--primary)' }}>
+                    Become a Contributor
+                  </h3>
+                  <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
+                    Create an account to start adding and editing historical business data. All contributions are reviewed by our team.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="w-full px-6 py-4 font-mono text-sm font-bold transition-opacity hover:opacity-80"
+                    style={{
+                      backgroundColor: 'var(--primary)',
+                      color: 'var(--background)',
+                      border: 'none',
+                    }}
+                  >
+                    Get Started
+                  </button>
+                </div>
+
+                <p className="text-xs text-center" style={{ color: 'var(--foreground-muted)' }}>
+                  By signing up, you agree to contribute data responsibly and respect historical accuracy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Modern Call to Action */}
       <section className="py-32 px-6 bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
         {/* Subtle gradient overlays */}
@@ -391,6 +519,12 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
           animation-delay: 1s;
         }
       `}</style>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
     </div>
   );
 };

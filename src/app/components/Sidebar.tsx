@@ -5,8 +5,7 @@ import { useTheme } from 'next-themes';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useTranslation } from '../../i18n/useTranslation';
 import { useAuth } from '../../contexts/AuthContext';
-import LoginModal from '../../components/auth/LoginModal';
-import SignupModal from '../../components/auth/SignupModal';
+import AuthModal from '../../components/auth/AuthModal';
 import ShareModal from './ShareModal';
 
 interface SidebarProps {
@@ -35,8 +34,7 @@ export default function Sidebar({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [showThemeMenu, setShowThemeMenu] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -378,7 +376,7 @@ export default function Sidebar({
       {/* Auth Button - Only show if not logged in */}
       {mounted && !user && (
         <button
-          onClick={() => setShowLoginModal(true)}
+          onClick={() => setShowAuthModal(true)}
           className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
           style={{
             backgroundColor: 'var(--input-bg)',
@@ -394,8 +392,8 @@ export default function Sidebar({
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
           }}
-          aria-label="Login / Sign Up"
-          title="Login to propose changes"
+          aria-label="Sign In / Sign Up"
+          title="Sign in to contribute"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -432,22 +430,10 @@ export default function Sidebar({
         </button>
       )}
 
-      {/* Auth Modals */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSwitchToSignup={() => {
-          setShowLoginModal(false);
-          setShowSignupModal(true);
-        }}
-      />
-      <SignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSwitchToLogin={() => {
-          setShowSignupModal(false);
-          setShowLoginModal(true);
-        }}
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
       />
 
       {/* Share Modal */}

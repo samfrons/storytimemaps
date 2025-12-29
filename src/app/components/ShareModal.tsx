@@ -23,6 +23,12 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, story, current
   const { t } = useTranslation();
   const [copied, setCopied] = React.useState(false);
   const [copyType, setCopyType] = React.useState<'link' | 'instagram' | null>(null);
+  const [supportsNativeShare, setSupportsNativeShare] = React.useState(false);
+
+  // Check for native share API support on client
+  React.useEffect(() => {
+    setSupportsNativeShare(typeof navigator !== 'undefined' && typeof navigator.share === 'function');
+  }, []);
 
   // Generate the share URL
   const getShareUrl = React.useCallback(() => {
@@ -281,7 +287,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, story, current
         {/* Share options */}
         <div className="p-2">
           {/* Native share button if available */}
-          {typeof navigator !== 'undefined' && navigator.share && (
+          {supportsNativeShare && (
             <button
               onClick={nativeShare}
               className="w-full flex items-center gap-3 p-3 transition-colors text-left"

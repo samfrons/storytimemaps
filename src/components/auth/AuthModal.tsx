@@ -174,116 +174,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <>
-      {/* CSS for transitions */}
-      <style jsx>{`
-        .auth-modal-backdrop {
-          transition: opacity 0.2s ease-out;
-        }
-
-        .auth-modal-panel {
-          transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-        }
-
-        .auth-input {
-          transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .auth-input:focus {
-          border-color: var(--primary) !important;
-          box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
-        }
-
-        .auth-btn-primary {
-          transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
-        }
-
-        .auth-btn-primary:hover:not(:disabled) {
-          opacity: 0.85;
-          transform: translateY(-1px);
-          box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
-        }
-
-        .auth-btn-primary:active:not(:disabled) {
-          opacity: 0.9;
-          transform: translateY(0);
-          box-shadow: none;
-        }
-
-        .auth-btn-secondary {
-          transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-        }
-
-        .auth-btn-secondary:hover:not(:disabled) {
-          background-color: var(--input-bg) !important;
-          border-color: var(--primary) !important;
-          transform: translateY(-1px);
-        }
-
-        .auth-btn-secondary:active:not(:disabled) {
-          transform: translateY(0);
-          background-color: var(--muted) !important;
-        }
-
-        .auth-link {
-          transition: color 0.15s ease, opacity 0.15s ease;
-          position: relative;
-        }
-
-        .auth-link::after {
-          content: '';
-          position: absolute;
-          bottom: -1px;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background-color: currentColor;
-          transform: scaleX(1);
-          transition: transform 0.15s ease;
-        }
-
-        .auth-link:hover {
-          opacity: 0.8;
-        }
-
-        .auth-link:hover::after {
-          transform: scaleX(0.8);
-        }
-
-        .auth-link:active {
-          opacity: 0.6;
-        }
-
-        .auth-cancel {
-          transition: color 0.15s ease, opacity 0.15s ease;
-        }
-
-        .auth-cancel:hover:not(:disabled) {
-          color: var(--foreground) !important;
-          opacity: 1;
-        }
-
-        .auth-cancel:active:not(:disabled) {
-          opacity: 0.7;
-        }
-
-        .auth-message {
-          animation: slideIn 0.2s ease-out;
-        }
-
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateY(-8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-
-      <div
+    <div
         className="auth-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4"
         style={{
           backgroundColor: 'rgba(var(--background-rgb), 0.8)',
@@ -706,7 +597,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 type="button"
                 onClick={handleClose}
                 disabled={loading || googleLoading}
-                className="auth-cancel text-sm font-mono"
+                className="auth-btn-cancel text-sm font-mono"
                 style={{
                   color: 'var(--foreground-muted)',
                   background: 'none',
@@ -722,7 +613,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           )}
         </div>
       </div>
-    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { Inter, Space_Mono, Playfair_Display } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { AuthProvider } from '../contexts/AuthContext'
+import CookieConsentWrapper from './components/CookieConsentWrapper'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -195,7 +196,7 @@ export default function RootLayout({
           <ThemeProvider
             attribute="data-theme"
             defaultTheme="moody"
-            themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival']}
+            themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival', 'hoefe']}
             enableSystem={false}
             enableColorScheme={false}
             disableTransitionOnChange={true}
@@ -204,6 +205,7 @@ export default function RootLayout({
           >
             <AuthProvider>
               {children}
+              <CookieConsentWrapper />
             </AuthProvider>
           </ThemeProvider>
         </I18nProvider>

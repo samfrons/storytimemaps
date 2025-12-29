@@ -129,6 +129,25 @@
     "copied": "Kopiert!",
     "linkPreview": "Link-Vorschau"
   },
+  "cookieConsent": {
+    "title": "Wir verwenden Cookies und andere Technologien.",
+    "description": "Diese Website verwendet Website-Tracking-Technologien von Drittanbietern, um ihre Dienste bereitzustellen und kontinuierlich zu verbessern sowie um Werbung entsprechend den Interessen der Nutzer anzuzeigen. Ich stimme dem zu und kann meine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen oder ändern.",
+    "settings": "EINSTELLUNGEN",
+    "decline": "ABLEHNEN",
+    "acceptAll": "ALLE AKZEPTIEREN",
+    "imprint": "IMPRESSUM",
+    "privacyPolicy": "DATENSCHUTZ",
+    "settingsTitle": "Cookie-Einstellungen",
+    "essential": "Essentielle Cookies",
+    "essentialDesc": "Erforderlich für die Funktion der Website. Kann nicht deaktiviert werden.",
+    "alwaysOn": "Immer An",
+    "analytics": "Analyse-Cookies",
+    "analyticsDesc": "Helfen uns zu verstehen, wie Besucher mit unserer Website interagieren.",
+    "marketing": "Marketing-Cookies",
+    "marketingDesc": "Werden verwendet, um Besucher über Websites hinweg zu verfolgen zu Werbezwecken.",
+    "back": "ZURÜCK",
+    "saveSettings": "EINSTELLUNGEN SPEICHERN"
+  },
   "barcharts": {
     "title": "Interaktive Datenvisualisierungen",
     "subtitle": "3D-Kartenerkundung mit Zeitlinienanalyse der Zerstörung jüdischer Geschäfte in Berlin",

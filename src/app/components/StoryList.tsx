@@ -3,17 +3,19 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TimeSlider from './TimeSlider';
-import { StoryMap } from '../../types';
+import YearMarkerCard from './YearMarkerCard';
+import { StoryMap, YearMarker } from '../../types';
 import BusinessDetailModal from './BusinessDetailModal';
 import { throttle } from '../../utils/performance';
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes';
 import { useTranslation } from '../../i18n/useTranslation';
 import { getTranslatedDescription, getTranslatedBusinessName } from '../../utils/businessTranslations';
 import { loadTimelineData, getTimelineContentForDate } from '../../utils/timelineLoader';
+import { loadYearMarkers, sortMarkers, getMarkerDate } from '../../utils/yearMarkerLoader';
 
 interface StoryListProps {
   visibleStories: StoryMap[];
@@ -53,6 +55,9 @@ const StoryList: React.FC<StoryListProps> = ({
   const listRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [timelineDescriptions, setTimelineDescriptions] = useState<{ [key: string]: string | null }>({});
+  const [yearMarkers, setYearMarkers] = useState<YearMarker[]>([]);
+  const [expandedMarkers, setExpandedMarkers] = useState<Set<string>>(new Set());
+  const [showYearMarkers, setShowYearMarkers] = useState(true);
 
   const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
     const rect = element.getBoundingClientRect();
@@ -186,7 +191,7 @@ const StoryList: React.FC<StoryListProps> = ({
   useEffect(() => {
     const loadTimelineDescriptions = async () => {
       const descriptions: { [key: string]: string | null } = {};
-      
+
       for (const story of visibleStories) {
         if (story.hasTimelineData) {
           try {
@@ -200,12 +205,38 @@ const StoryList: React.FC<StoryListProps> = ({
           }
         }
       }
-      
+
       setTimelineDescriptions(descriptions);
     };
 
     loadTimelineDescriptions();
   }, [visibleStories, currentDate]);
+
+  // Load year markers on mount
+  useEffect(() => {
+    const fetchYearMarkers = async () => {
+      try {
+        const markers = await loadYearMarkers();
+        setYearMarkers(sortMarkers(markers));
+      } catch (error) {
+        console.warn('Failed to load year markers:', error);
+      }
+    };
+    fetchYearMarkers();
+  }, []);
+
+  // Handler for toggling marker expansion
+  const handleToggleMarkerExpand = useCallback((markerId: string) => {
+    setExpandedMarkers(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(markerId)) {
+        newSet.delete(markerId);
+      } else {
+        newSet.add(markerId);
+      }
+      return newSet;
+    });
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -241,34 +272,76 @@ const StoryList: React.FC<StoryListProps> = ({
     const matchesCategory = selectedCategory === 'all' || storyCategory === selectedCategory;
     return matchesSearch && matchesCategory;
   });
+
+  // Create combined list of stories and year markers, sorted by date
+  type ListItem =
+    | { type: 'story'; data: StoryMap; sortDate: Date }
+    | { type: 'marker'; data: YearMarker; sortDate: Date };
+
+  const combinedListItems = useMemo((): ListItem[] => {
+    if (!showYearMarkers || yearMarkers.length === 0) {
+      return allFilteredStories.map(story => ({
+        type: 'story' as const,
+        data: story,
+        sortDate: story.startDate ? new Date(story.startDate) : new Date(1920, 0, 1),
+      }));
+    }
+
+    const storyItems: ListItem[] = allFilteredStories.map(story => ({
+      type: 'story' as const,
+      data: story,
+      sortDate: story.startDate ? new Date(story.startDate) : new Date(1920, 0, 1),
+    }));
+
+    const markerItems: ListItem[] = yearMarkers.map(marker => ({
+      type: 'marker' as const,
+      data: marker,
+      sortDate: getMarkerDate(marker),
+    }));
+
+    // Combine and sort by date
+    const combined = [...storyItems, ...markerItems];
+    combined.sort((a, b) => {
+      const timeDiff = a.sortDate.getTime() - b.sortDate.getTime();
+      if (timeDiff !== 0) return timeDiff;
+      // If same date, markers come before stories
+      if (a.type === 'marker' && b.type === 'story') return -1;
+      if (a.type === 'story' && b.type === 'marker') return 1;
+      return 0;
+    });
+
+    return combined;
+  }, [allFilteredStories, yearMarkers, showYearMarkers]);
   
-  // Limit displayed stories for performance
+  // Limit displayed items for performance
   const [displayCount, setDisplayCount] = useState(50);
-  const filteredStories = allFilteredStories.slice(0, displayCount);
-  
+  const displayedItems = combinedListItems.slice(0, displayCount);
+
   // Progressive background loading
   useEffect(() => {
-    if (displayCount < allFilteredStories.length) {
+    if (displayCount < combinedListItems.length) {
       const timer = setTimeout(() => {
         setDisplayCount(prev => {
-          const nextCount = Math.min(prev + 100, allFilteredStories.length);
+          const nextCount = Math.min(prev + 100, combinedListItems.length);
           return nextCount;
         });
       }, 500); // Load 100 more after 500ms
       return () => clearTimeout(timer);
     }
-  }, [displayCount, allFilteredStories.length]);
-  
+  }, [displayCount, combinedListItems.length]);
+
   // Handle marker click - ensure story is loaded
   useEffect(() => {
     if (activeStoryId) {
-      const index = allFilteredStories.findIndex(s => s.id === activeStoryId);
+      const index = combinedListItems.findIndex(
+        item => item.type === 'story' && item.data.id === activeStoryId
+      );
       if (index >= displayCount && index !== -1) {
         // Load up to the clicked item plus some buffer
-        setDisplayCount(Math.min(index + 20, allFilteredStories.length));
+        setDisplayCount(Math.min(index + 20, combinedListItems.length));
       }
     }
-  }, [activeStoryId, allFilteredStories, displayCount]);
+  }, [activeStoryId, combinedListItems, displayCount]);
   
 
   const getStatusColor = (story: StoryMap) => {
@@ -505,22 +578,51 @@ const StoryList: React.FC<StoryListProps> = ({
       </div>
       
       <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3">
-        <div className="text-xs font-mono mb-3 uppercase tracking-wide font-semibold" style={{color: 'var(--accent-orange)'}}>
-          {allFilteredStories.length} locations found {displayCount < allFilteredStories.length && `(showing ${displayCount})`}
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-xs font-mono uppercase tracking-wide font-semibold" style={{color: 'var(--accent-orange)'}}>
+            {allFilteredStories.length} locations found {displayCount < combinedListItems.length && `(showing ${displayCount})`}
+          </div>
+          {yearMarkers.length > 0 && (
+            <button
+              onClick={() => setShowYearMarkers(!showYearMarkers)}
+              className="flex items-center gap-1.5 px-2 py-1 text-[10px] font-mono uppercase tracking-wide transition-all border"
+              style={{
+                backgroundColor: showYearMarkers ? 'var(--primary)' : 'transparent',
+                color: showYearMarkers ? 'var(--background)' : 'var(--foreground-muted)',
+                borderColor: showYearMarkers ? 'var(--primary)' : 'var(--border)',
+              }}
+              title={showYearMarkers ? 'Hide historical events' : 'Show historical events'}
+            >
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              {showYearMarkers ? 'Events On' : 'Events Off'}
+            </button>
+          )}
         </div>
-        
+
         {/* Background loading indicator */}
-        {displayCount < allFilteredStories.length && (
+        {displayCount < combinedListItems.length && (
           <div className="mb-3 px-2">
             <div className="relative h-1 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-              <div 
+              <div
                 className="absolute left-0 top-0 h-full transition-all duration-500"
                 style={{
-                  width: `${(displayCount / allFilteredStories.length) * 100}%`,
+                  width: `${(displayCount / combinedListItems.length) * 100}%`,
                   backgroundColor: 'var(--primary)'
                 }}
               />
-              <div 
+              <div
                 className="absolute left-0 top-0 h-full animate-pulse"
                 style={{
                   width: '100%',
@@ -533,218 +635,234 @@ const StoryList: React.FC<StoryListProps> = ({
           </div>
         )}
         
-        {filteredStories.map((story) => (
-          <div 
-            key={story.id}
-            ref={(el) => { storyRefs.current[story.id] = el; }}
-            data-story-id={story.id}
-            className={`group backdrop-blur border border-l-4 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
-              story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : ''
-            } ${getStatusColor(story)}`}
-            style={{
-              backgroundColor: story.id === activeStoryId ? undefined : 'var(--card-bg)',
-              borderTopColor: 'var(--border)',
-              borderRightColor: 'var(--border)',
-              borderBottomColor: 'var(--border)',
-              borderLeftColor: 'var(--border)',
-              opacity: 1,
-              ...getActiveStoryStyle(story, story.id === activeStoryId)
-            }}
-            onClick={() => handleStoryClick(story.id)}
-          >
-            <div className="p-4">
-              <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-mono font-semibold text-sm transition-colors"
-                  style={{
-                    color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
-                  }}>
-                    {getTranslatedBusinessName(story.title, language)}
-                  </h3>
-                  {/* Timeline Data Availability Indicator */}
-                  {story.hasTimelineData && (
-                    <div 
-                      className="flex items-center justify-center w-4 h-4 transition-opacity"
-                      style={{
-                        opacity: 0.6
-                      }}
-                      title="Timeline data available - view details for historical progression"
-                    >
-                      <svg 
-                        className="w-3 h-3" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
+        {displayedItems.map((item) => {
+          if (item.type === 'marker') {
+            const marker = item.data;
+            return (
+              <YearMarkerCard
+                key={`marker-${marker.id}`}
+                marker={marker}
+                currentDate={currentDate}
+                isExpanded={expandedMarkers.has(marker.id)}
+                onToggleExpand={() => handleToggleMarkerExpand(marker.id)}
+              />
+            );
+          }
+
+          const story = item.data;
+          return (
+            <div
+              key={story.id}
+              ref={(el) => { storyRefs.current[story.id] = el; }}
+              data-story-id={story.id}
+              className={`group backdrop-blur border border-l-4 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-lg ${
+                story.id === activeStoryId ? 'shadow-xl scale-[1.02]' : ''
+              } ${getStatusColor(story)}`}
+              style={{
+                backgroundColor: story.id === activeStoryId ? undefined : 'var(--card-bg)',
+                borderTopColor: 'var(--border)',
+                borderRightColor: 'var(--border)',
+                borderBottomColor: 'var(--border)',
+                borderLeftColor: 'var(--border)',
+                opacity: 1,
+                ...getActiveStoryStyle(story, story.id === activeStoryId)
+              }}
+              onClick={() => handleStoryClick(story.id)}
+            >
+              <div className="p-4">
+                <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-mono font-semibold text-sm transition-colors"
+                    style={{
+                      color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
+                    }}>
+                      {getTranslatedBusinessName(story.title, language)}
+                    </h3>
+                    {/* Timeline Data Availability Indicator */}
+                    {story.hasTimelineData && (
+                      <div
+                        className="flex items-center justify-center w-4 h-4 transition-opacity"
                         style={{
-                          color: story.id === activeStoryId ? 'var(--story-text-color, var(--primary))' : 'var(--primary)'
+                          opacity: 0.6
                         }}
+                        title="Timeline data available - view details for historical progression"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-                {story.address && (
-                  <div className="flex items-center gap-1.5 text-xs font-mono mt-1"
-                  style={{
-                    color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
-                  }}>
-                    <svg 
-                      className="w-3 h-3 flex-shrink-0" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" 
-                      />
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" 
-                      />
-                    </svg>
-                    <span>
-                      {(() => {
-                        const zipcode = getZipcodeFromAddress(story.address, story.lat, story.lng);
-                        const streetPart = story.address.replace(', Berlin', '').replace(', Germany', '');
-                        return `${streetPart}, ${zipcode} Berlin`;
-                      })()}
-                    </span>
+                        <svg
+                          className="w-3 h-3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          style={{
+                            color: story.id === activeStoryId ? 'var(--story-text-color, var(--primary))' : 'var(--primary)'
+                          }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                    )}
                   </div>
-                )}
-                {(() => {
-                  if (!story.description) return null;
-                  
-                  // Check if description is just a generic business type description
-                  const desc = story.description.toLowerCase();
-                  const businessType = (story.businessType || story.category || '').toLowerCase();
-                  
-                  // Skip if description is just "[business type] business" or similar generic patterns
-                  const isGeneric = 
-                    desc.endsWith(' business') ||
-                    desc.endsWith(' establishment') ||
-                    desc === businessType ||
-                    (desc.includes(businessType) && desc.split(' ').length <= 4) ||
-                    desc === `${businessType} business` ||
-                    desc === `a ${businessType} establishment`;
-                  
-                  if (isGeneric) return null;
-                  
-                  // Use timeline description if available, otherwise fall back to static description
-                  const description = story.hasTimelineData && timelineDescriptions[story.id] 
-                    ? timelineDescriptions[story.id] 
-                    : getTranslatedDescription(story, language);
-                  
-                  return (
-                    <p className="text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed"
+                  {story.address && (
+                    <div className="flex items-center gap-1.5 text-xs font-mono mt-1"
                     style={{
                       color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
-                    }}>{description}</p>
-                  );
-                })()}
-                
-                <div className="flex items-center gap-4 mt-3 text-xs font-mono">
-                  <span
-                  style={{
-                    color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
-                  }}>
-                    {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
-                  </span>
-                  {(() => {
-                    // First try to extract business type from title (e.g., "Name - Business Type")
-                    const titleParts = story.title?.split(' - ') || [];
-                    const extractedType = titleParts.length > 1 ? titleParts[titleParts.length - 1].trim() : null;
-                    
-                    // Use extracted type, or fall back to businessType/category fields
-                    const type = extractedType || story.businessType || story.category || '';
-                    
-                    // Don't show label if it's just generic "business" or empty
-                    if (!type || type.toLowerCase() === 'business') {
-                      return null;
-                    }
-                    
-                    // Try to translate the type
-                    const translationKey = `mainPage.businessTypes.${type.toUpperCase().replace(/ /g, '_')}`;
-                    const translated = t(translationKey);
-                    const displayType = translated !== translationKey ? translated : type;
-                    
-                    return (
-                      <span className="px-2 py-1 text-xs font-mono uppercase tracking-wide"
-                      style={{
-                        backgroundColor: story.id === activeStoryId ? 'rgba(0, 0, 0, 0.2)' : 'var(--card-bg)',
-                        color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)',
-                        opacity: 1
-                      }}>
-                        {displayType}
+                    }}>
+                      <svg
+                        className="w-3 h-3 flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                      <span>
+                        {(() => {
+                          const zipcode = getZipcodeFromAddress(story.address, story.lat, story.lng);
+                          const streetPart = story.address.replace(', Berlin', '').replace(', Germany', '');
+                          return `${streetPart}, ${zipcode} Berlin`;
+                        })()}
                       </span>
+                    </div>
+                  )}
+                  {(() => {
+                    if (!story.description) return null;
+
+                    // Check if description is just a generic business type description
+                    const desc = story.description.toLowerCase();
+                    const businessType = (story.businessType || story.category || '').toLowerCase();
+
+                    // Skip if description is just "[business type] business" or similar generic patterns
+                    const isGeneric =
+                      desc.endsWith(' business') ||
+                      desc.endsWith(' establishment') ||
+                      desc === businessType ||
+                      (desc.includes(businessType) && desc.split(' ').length <= 4) ||
+                      desc === `${businessType} business` ||
+                      desc === `a ${businessType} establishment`;
+
+                    if (isGeneric) return null;
+
+                    // Use timeline description if available, otherwise fall back to static description
+                    const description = story.hasTimelineData && timelineDescriptions[story.id]
+                      ? timelineDescriptions[story.id]
+                      : getTranslatedDescription(story, language);
+
+                    return (
+                      <p className="text-xs font-mono mt-1.5 line-clamp-2 leading-relaxed"
+                      style={{
+                        color: story.id === activeStoryId ? 'var(--story-text-secondary, currentColor)' : 'var(--foreground-muted)'
+                      }}>{description}</p>
                     );
                   })()}
+
+                  <div className="flex items-center gap-4 mt-3 text-xs font-mono">
+                    <span
+                    style={{
+                      color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)'
+                    }}>
+                      {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} - {story.endDate === 'Unknown' ? 'Unknown' : (story.endDate ? new Date(story.endDate).getFullYear() : 'Unknown')}
+                    </span>
+                    {(() => {
+                      // First try to extract business type from title (e.g., "Name - Business Type")
+                      const titleParts = story.title?.split(' - ') || [];
+                      const extractedType = titleParts.length > 1 ? titleParts[titleParts.length - 1].trim() : null;
+
+                      // Use extracted type, or fall back to businessType/category fields
+                      const type = extractedType || story.businessType || story.category || '';
+
+                      // Don't show label if it's just generic "business" or empty
+                      if (!type || type.toLowerCase() === 'business') {
+                        return null;
+                      }
+
+                      // Try to translate the type
+                      const translationKey = `mainPage.businessTypes.${type.toUpperCase().replace(/ /g, '_')}`;
+                      const translated = t(translationKey);
+                      const displayType = translated !== translationKey ? translated : type;
+
+                      return (
+                        <span className="px-2 py-1 text-xs font-mono uppercase tracking-wide"
+                        style={{
+                          backgroundColor: story.id === activeStoryId ? 'rgba(0, 0, 0, 0.2)' : 'var(--card-bg)',
+                          color: story.id === activeStoryId ? 'var(--story-text-color, currentColor)' : 'var(--foreground)',
+                          opacity: 1
+                        }}>
+                          {displayType}
+                        </span>
+                      );
+                    })()}
+                  </div>
+
+                  {/* View Details button for businesses with actual details */}
+                  {(story.longDescription || (story.description && story.description.length > 100) || story.media || (story.imageUrls && story.imageUrls.length > 0)) && (
+                    <button
+                    className={`view-details-button mt-3 px-3 py-1.5 text-xs font-mono bg-transparent border transition-all uppercase tracking-wider font-semibold inline-block ${
+                      story.id === activeStoryId
+                        ? 'hover:opacity-80'
+                        : ''
+                    }`}
+                    style={{
+                      color: story.id === activeStoryId
+                        ? 'var(--story-text-color, currentColor)'
+                        : 'var(--foreground)',
+                      borderColor: story.id === activeStoryId
+                        ? 'currentColor'
+                        : 'var(--muted)',
+                      borderWidth: theme === 'bauhaus' ? '2px' : '1px',
+                      backgroundColor: story.id === activeStoryId ? 'transparent' : 'transparent',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (story.id !== activeStoryId) {
+                        e.currentTarget.style.backgroundColor = 'var(--muted)';
+                        e.currentTarget.style.color = 'var(--background)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (story.id !== activeStoryId) {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = 'var(--foreground)';
+                      }
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const element = storyRefs.current[story.id];
+                      if (element) {
+                        handleViewDetails(story, element);
+                      }
+                    }}
+                  >
+                    {t('mainPage.storyDetails.viewDetails')}
+                  </button>
+                  )}
                 </div>
-                
-                {/* View Details button for businesses with actual details */}
-                {(story.longDescription || (story.description && story.description.length > 100) || story.media || (story.imageUrls && story.imageUrls.length > 0)) && (
-                  <button
-                  className={`view-details-button mt-3 px-3 py-1.5 text-xs font-mono bg-transparent border transition-all uppercase tracking-wider font-semibold inline-block ${
-                    story.id === activeStoryId 
-                      ? 'hover:opacity-80'
-                      : ''
-                  }`}
-                  style={{
-                    color: story.id === activeStoryId 
-                      ? 'var(--story-text-color, currentColor)'
-                      : 'var(--foreground)',
-                    borderColor: story.id === activeStoryId 
-                      ? 'currentColor'
-                      : 'var(--muted)',
-                    borderWidth: theme === 'bauhaus' ? '2px' : '1px',
-                    backgroundColor: story.id === activeStoryId ? 'transparent' : 'transparent',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (story.id !== activeStoryId) {
-                      e.currentTarget.style.backgroundColor = 'var(--muted)';
-                      e.currentTarget.style.color = 'var(--background)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (story.id !== activeStoryId) {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.color = 'var(--foreground)';
-                    }
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const element = storyRefs.current[story.id];
-                    if (element) {
-                      handleViewDetails(story, element);
-                    }
-                  }}
-                >
-                  {t('mainPage.storyDetails.viewDetails')}
-                </button>
+
+                {story.imageUrls && story.imageUrls.length > 0 && (
+                  <div className="relative w-16 h-16 ml-4 overflow-hidden flex-shrink-0 border border-border">
+                    <Image
+                      src={story.imageUrls[0]}
+                      alt={story.title}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  </div>
                 )}
               </div>
-              
-              {story.imageUrls && story.imageUrls.length > 0 && (
-                <div className="relative w-16 h-16 ml-4 overflow-hidden flex-shrink-0 border border-border">
-                  <Image
-                    src={story.imageUrls[0]}
-                    alt={story.title}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
-                </div>
-              )}
+              </div>
             </div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       
       {/* Business Detail Modal */}

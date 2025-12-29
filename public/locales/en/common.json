@@ -114,6 +114,68 @@
     "switchTo": "Deutsch",
     "current": "English"
   },
+  "plaques": {
+    "hero": {
+      "badge": "Remembrance Initiative",
+      "title": "Memorial Plaques Initiative",
+      "subtitle": "Bringing digital memory into the physical streets of Berlin",
+      "compactDescription": "Help us install memorial plaques at the original locations of Jewish businesses throughout Berlin - connecting digital documentation with physical remembrance.",
+      "learnMore": "Learn more about this initiative",
+      "visionTitle": "Our Vision",
+      "visionDescription": "We envision a Berlin where the memory of Jewish commercial life is preserved not just digitally, but in the very streets where these businesses once thrived. Each plaque will tell the story of a family enterprise, connecting passersby to the rich history that was violently erased.",
+      "stolpersteineTitle": "Inspired by Stolpersteine",
+      "stolpersteineDescription": "Like Gunter Demnig's powerful Stolpersteine project which commemorates individuals, our memorial plaques would honor the commercial spaces where Jewish families built their livelihoods and served their communities.",
+      "stolpersteineFocus": "Stolpersteine Focus",
+      "businessPlaquesFocus": "Business Plaques Focus",
+      "individualVictims": "Individual victims",
+      "residentialAddresses": "Residential addresses",
+      "personalStories": "Personal stories",
+      "commercialEnterprises": "Commercial enterprises",
+      "businessLocations": "Business locations",
+      "economicPersecution": "Economic persecution",
+      "berlinStyle": "Berlin Style",
+      "brassStyle": "Brass Style",
+      "ctaTitle": "Help Bring These Memorials to Life",
+      "ctaDescription": "We are seeking partnerships with cultural institutions, educational organizations, and community groups to make memorial plaques a reality throughout Berlin.",
+      "supportInitiative": "Support This Initiative",
+      "learnStolpersteine": "Learn About Stolpersteine"
+    },
+    "nav": {
+      "backToMap": "Back to Map"
+    },
+    "gallery": {
+      "title": "Featured Memorial Plaques",
+      "subtitle": "15 plaques designed for documented Jewish businesses - click any plaque to explore the full story"
+    },
+    "howItWorks": {
+      "title": "How Memorial Plaques Work",
+      "subtitle": "Connecting physical memorials with digital storytelling",
+      "step1Title": "Research & Documentation",
+      "step1Description": "Each plaque is based on verified historical research from the Leo Baeck Institute database, documenting the business name, owner, location, and operational dates.",
+      "step2Title": "Physical Installation",
+      "step2Description": "Plaques would be installed at or near the original business locations, serving as permanent street-level memorials visible to all passersby.",
+      "step3Title": "Digital Connection",
+      "step3Description": "QR codes on each plaque link to our interactive map, providing visitors with photographs, detailed histories, and the full story of each business."
+    },
+    "partners": {
+      "title": "Seeking Partners",
+      "description": "This initiative requires collaboration across multiple sectors. We are actively seeking partners to help bring memorial plaques to Berlin's streets.",
+      "culturalInstitutions": "Cultural Institutions",
+      "educationalOrganizations": "Educational Organizations",
+      "jewishCommunity": "Jewish Community Organizations",
+      "cityPlanning": "City Planning & Preservation",
+      "becomePartner": "Become a Partner",
+      "supportProject": "Support the Project"
+    },
+    "footer": {
+      "exploreTitle": "Explore the Full Archive",
+      "exploreDescription": "Visit our interactive map to explore over 10,000 documented Jewish businesses in Berlin from 1900-1945.",
+      "exploreMap": "Explore Interactive Map",
+      "rights": "All rights reserved.",
+      "map": "Interactive Map",
+      "about": "About the Project"
+    }
+  },
   "barcharts": {
     "title": "Interactive Data Visualizations",
     "subtitle": "3D map exploration with timeline analysis of Jewish business destruction in Berlin",

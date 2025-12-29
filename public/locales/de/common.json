@@ -114,6 +114,68 @@
     "switchTo": "English",
     "current": "Deutsch"
   },
+  "plaques": {
+    "hero": {
+      "badge": "Erinnerungsinitiative",
+      "title": "Memorial-Plakett-Initiative",
+      "subtitle": "Digitale Erinnerung in die physischen Straßen Berlins bringen",
+      "compactDescription": "Helfen Sie uns, Gedenkplaketten an den ursprünglichen Standorten jüdischer Geschäfte in ganz Berlin zu installieren - digitale Dokumentation mit physischem Gedenken verbinden.",
+      "learnMore": "Mehr über diese Initiative erfahren",
+      "visionTitle": "Unsere Vision",
+      "visionDescription": "Wir stellen uns ein Berlin vor, in dem die Erinnerung an das jüdische Handelsleben nicht nur digital, sondern in den Straßen selbst bewahrt wird, wo diese Geschäfte einst blühten. Jede Plakette wird die Geschichte eines Familienunternehmens erzählen.",
+      "stolpersteineTitle": "Inspiriert von Stolpersteinen",
+      "stolpersteineDescription": "Wie Gunter Demnigs kraftvolles Stolpersteine-Projekt, das Einzelpersonen gedenkt, würden unsere Gedenkplaketten die Geschäftsräume ehren, in denen jüdische Familien ihren Lebensunterhalt aufbauten.",
+      "stolpersteineFocus": "Stolpersteine-Fokus",
+      "businessPlaquesFocus": "Geschäftsplaketten-Fokus",
+      "individualVictims": "Einzelne Opfer",
+      "residentialAddresses": "Wohnadressen",
+      "personalStories": "Persönliche Geschichten",
+      "commercialEnterprises": "Gewerbliche Unternehmen",
+      "businessLocations": "Geschäftsstandorte",
+      "economicPersecution": "Wirtschaftliche Verfolgung",
+      "berlinStyle": "Berliner Stil",
+      "brassStyle": "Messing-Stil",
+      "ctaTitle": "Helfen Sie, diese Gedenktafeln zum Leben zu erwecken",
+      "ctaDescription": "Wir suchen Partnerschaften mit kulturellen Einrichtungen, Bildungsorganisationen und Gemeindegruppen, um Gedenkplaketten in ganz Berlin zu verwirklichen.",
+      "supportInitiative": "Diese Initiative unterstützen",
+      "learnStolpersteine": "Über Stolpersteine erfahren"
+    },
+    "nav": {
+      "backToMap": "Zurück zur Karte"
+    },
+    "gallery": {
+      "title": "Ausgewählte Gedenkplaketten",
+      "subtitle": "15 Plaketten für dokumentierte jüdische Geschäfte - klicken Sie auf eine Plakette, um die vollständige Geschichte zu erkunden"
+    },
+    "howItWorks": {
+      "title": "Wie Gedenkplaketten funktionieren",
+      "subtitle": "Physische Denkmäler mit digitalem Geschichtenerzählen verbinden",
+      "step1Title": "Forschung & Dokumentation",
+      "step1Description": "Jede Plakette basiert auf verifizierter historischer Forschung aus der Leo Baeck Institut-Datenbank, die Geschäftsname, Eigentümer, Standort und Betriebsdaten dokumentiert.",
+      "step2Title": "Physische Installation",
+      "step2Description": "Plaketten würden an oder in der Nähe der ursprünglichen Geschäftsstandorte installiert und dienen als permanente Straßendenkmäler für alle Passanten.",
+      "step3Title": "Digitale Verbindung",
+      "step3Description": "QR-Codes auf jeder Plakette verlinken zu unserer interaktiven Karte und bieten Besuchern Fotos, detaillierte Geschichten und die vollständige Geschichte jedes Geschäfts."
+    },
+    "partners": {
+      "title": "Partner gesucht",
+      "description": "Diese Initiative erfordert Zusammenarbeit über mehrere Sektoren hinweg. Wir suchen aktiv Partner, um Gedenkplaketten in Berlins Straßen zu bringen.",
+      "culturalInstitutions": "Kulturelle Einrichtungen",
+      "educationalOrganizations": "Bildungsorganisationen",
+      "jewishCommunity": "Jüdische Gemeindeorganisationen",
+      "cityPlanning": "Stadtplanung & Denkmalschutz",
+      "becomePartner": "Partner werden",
+      "supportProject": "Projekt unterstützen"
+    },
+    "footer": {
+      "exploreTitle": "Das vollständige Archiv erkunden",
+      "exploreDescription": "Besuchen Sie unsere interaktive Karte, um über 10.000 dokumentierte jüdische Geschäfte in Berlin von 1900-1945 zu erkunden.",
+      "exploreMap": "Interaktive Karte erkunden",
+      "rights": "Alle Rechte vorbehalten.",
+      "map": "Interaktive Karte",
+      "about": "Über das Projekt"
+    }
+  },
   "barcharts": {
     "title": "Interaktive Datenvisualisierungen",
     "subtitle": "3D-Kartenerkundung mit Zeitlinienanalyse der Zerstörung jüdischer Geschäfte in Berlin",

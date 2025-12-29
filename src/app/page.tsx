@@ -9,6 +9,7 @@ import LoadingSkeleton from './components/LoadingSkeleton';
 import ModeToggle from './components/ModeToggle';
 import ContentPreview from './components/ContentPreview';
 import LanguageToggle from './components/LanguageToggle';
+import PlaquesHero from './components/PlaquesHero';
 import { useStoryMapLogicTest as useStoryMapLogic, berlinCoordinates, defaultZoom } from '../hooks/useStoryMapLogicTest';
 import { useIsMounted } from '../hooks/useIsMounted';
 // TranslationProvider now in root layout
@@ -856,6 +857,11 @@ function MapPageContent() {
                   storiesCount={storiesWithDetailCount}
                   totalCount={totalItems}
                 />
+              </div>
+
+              {/* Memorial Plaques Initiative Teaser */}
+              <div className="pt-8 max-w-2xl mx-auto">
+                <PlaquesHero compact={true} showFullContent={false} />
               </div>
 
               <div className="pt-12 text-sm font-mono" style={{ color: 'var(--muted)' }}>

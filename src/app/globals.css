@@ -393,9 +393,11 @@
 }
 
 /* Hoefe theme - Typography overrides */
+/* Headings use Playfair Display for elegant serif look */
 [data-theme='hoefe'] h1,
 [data-theme='hoefe'] h2,
 [data-theme='hoefe'] h3,
+[data-theme='hoefe'] h4,
 [data-theme='hoefe'] .font-kame,
 [data-theme='hoefe'] .font-kame-regular,
 [data-theme='hoefe'] .font-kame-black,
@@ -405,7 +407,11 @@
   letter-spacing: -0.01em !important;
 }
 
-/* Hoefe theme - Larger text should be serif */
+/* Hoefe theme - ALL larger text sizes use Playfair */
+[data-theme='hoefe'] .text-lg,
+[data-theme='hoefe'] .text-xl,
+[data-theme='hoefe'] .text-2xl,
+[data-theme='hoefe'] .text-3xl,
 [data-theme='hoefe'] .text-4xl,
 [data-theme='hoefe'] .text-5xl,
 [data-theme='hoefe'] .text-6xl,
@@ -413,10 +419,11 @@
 [data-theme='hoefe'] .text-8xl,
 [data-theme='hoefe'] .text-9xl {
   font-family: var(--font-playfair), 'Playfair Display', Georgia, serif !important;
-  font-weight: 400 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
 }
 
-/* Hoefe theme - Year displays */
+/* Hoefe theme - Year displays and stats */
 [data-theme='hoefe'] [class*='year'],
 [data-theme='hoefe'] .stat-value,
 [data-theme='hoefe'] .business-count {
@@ -437,18 +444,28 @@
   text-transform: uppercase !important;
 }
 
-/* Hoefe theme - Body text stays Inter */
+/* Hoefe theme - Body text uses Inter (clean sans-serif) */
+/* Note: .font-mono in body text overridden, but NOT for headings */
 [data-theme='hoefe'] p,
-[data-theme='hoefe'] .text-sm,
+[data-theme='hoefe'] .text-sm:not(.text-lg):not(.text-xl),
 [data-theme='hoefe'] .text-xs:not(.uppercase),
 [data-theme='hoefe'] label,
 [data-theme='hoefe'] input,
-[data-theme='hoefe'] button {
+[data-theme='hoefe'] button:not(.text-lg):not(.text-xl) {
   font-family:
     var(--font-inter),
     'Inter',
     -apple-system,
-    sans-serif;
+    sans-serif !important;
+}
+
+/* Hoefe theme - Override font-mono for body text only, not headings */
+[data-theme='hoefe'] .font-mono:not(.text-lg):not(.text-xl):not(.text-2xl):not(h1):not(h2):not(h3) {
+  font-family:
+    var(--font-inter),
+    'Inter',
+    -apple-system,
+    sans-serif !important;
 }
 
 /* Hoefe theme - Refined panel/card styling */
@@ -1078,4 +1095,115 @@ textarea:-ms-input-placeholder {
 
 .mapbox-cluster-marker:hover {
   @apply scale-110;
+}
+
+/* ==========================================
+   MOBILE MODAL & TOUCH UTILITIES
+   ========================================== */
+
+/* Mobile-specific modal utilities */
+@media (max-width: 767px) {
+  /* Full-screen modal on mobile */
+  .modal-mobile-fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+  }
+
+  /* Large touch targets (44px minimum per Apple HIG) */
+  .touch-target-lg {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Extra large touch targets (48px) */
+  .touch-target-xl {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  /* Mobile bottom navigation bar */
+  .mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    background: var(--background);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  /* Mobile header with blur */
+  .mobile-header-blur {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(var(--background-rgb), 0.85);
+    z-index: 50;
+  }
+
+  /* Mobile text size adjustments */
+  .mobile-text-sm {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.5;
+  }
+
+  .mobile-text-base {
+    font-size: 1rem; /* 16px */
+    line-height: 1.5;
+  }
+
+  /* Safe area padding */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Full-bleed images (no side padding) */
+  .mobile-full-bleed {
+    margin-left: -16px;
+    margin-right: -16px;
+    width: calc(100% + 32px);
+  }
+
+  /* Swipe indicator for modals */
+  .swipe-indicator {
+    width: 36px;
+    height: 4px;
+    background: var(--muted);
+    margin: 0 auto 12px;
+  }
+
+  /* Mobile scrollable content */
+  .mobile-scroll-content {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Swipe gesture support - works across all screen sizes */
+.swipe-container {
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Momentum scrolling for all overflow containers */
+.momentum-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }

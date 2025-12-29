@@ -16,9 +16,10 @@ import { useDebounce } from '../../hooks/useDebounce'
 interface StoryDetailProps {
   story: StoryMap
   currentDate: Date
+  isMobile?: boolean
 }
 
-const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
+const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate, isMobile = false }) => {
   const { t } = useTranslation()
   const [selectedMediaIndex, setSelectedMediaIndex] = React.useState(0)
   const [showFullDescription, setShowFullDescription] = React.useState(false)
@@ -32,6 +33,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
   const [previousTimelineContent, setPreviousTimelineContent] =
     React.useState<TimelineContent | null>(null)
   const [isLoadingDetailed, setIsLoadingDetailed] = React.useState(false)
+  const [imageSwipeStart, setImageSwipeStart] = React.useState<number | null>(null)
 
   // Debounce rapid timeline changes to prevent flicker
   // Use shorter debounce for better responsiveness during auto-play
@@ -196,16 +198,44 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
 
   const currentMedia = allMedia[selectedMediaIndex]
 
+  // Touch handlers for image gallery swiping on mobile
+  const handleImageTouchStart = React.useCallback(
+    (e: React.TouchEvent) => {
+      if (isMobile && allMedia.length > 1) {
+        setImageSwipeStart(e.touches[0].clientX)
+      }
+    },
+    [isMobile, allMedia.length]
+  )
+
+  const handleImageTouchEnd = React.useCallback(
+    (e: React.TouchEvent) => {
+      if (imageSwipeStart !== null && allMedia.length > 1) {
+        const delta = e.changedTouches[0].clientX - imageSwipeStart
+        // Swipe left to go to next image
+        if (delta < -50 && selectedMediaIndex < allMedia.length - 1) {
+          setSelectedMediaIndex((prev) => prev + 1)
+        }
+        // Swipe right to go to previous image
+        else if (delta > 50 && selectedMediaIndex > 0) {
+          setSelectedMediaIndex((prev) => prev - 1)
+        }
+        setImageSwipeStart(null)
+      }
+    },
+    [imageSwipeStart, allMedia.length, selectedMediaIndex]
+  )
+
   return (
-    <div className="space-y-4">
+    <div className={isMobile ? 'space-y-3' : 'space-y-4'}>
       {allMedia.length > 0 && (
-        <div className="space-y-2">
+        <div className={isMobile ? 'space-y-3' : 'space-y-2'}>
           <div
-            className={`relative w-full min-h-[12rem] max-h-[24rem] transition-all duration-400 ease-[cubic-bezier(0.4,0.0,0.2,1)] ${
+            className={`relative w-full transition-all duration-400 ease-[cubic-bezier(0.4,0.0,0.2,1)] ${
               isTransitioning && contentStage === 'media'
                 ? 'transform scale-[0.97]'
                 : 'opacity-100 transform scale-100 brightness-100'
-            }`}
+            } ${isMobile ? 'min-h-[14rem] max-h-[28rem] mobile-full-bleed' : 'min-h-[12rem] max-h-[32rem]'}`}
             style={{
               backgroundColor: 'var(--background)',
               // Subtle vignette effect during transition to focus attention
@@ -214,12 +244,14 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
                   ? `radial-gradient(ellipse at center, transparent 20%, rgba(var(--background-rgb), 0.3) 100%), var(--background)`
                   : 'var(--background)',
             }}
+            onTouchStart={handleImageTouchStart}
+            onTouchEnd={handleImageTouchEnd}
           >
             {currentMedia?.type === 'video' ? (
               <video
                 src={currentMedia.url}
                 controls
-                className="w-full h-auto max-h-[24rem] object-contain"
+                className={`w-full h-auto object-contain ${isMobile ? 'max-h-[28rem]' : 'max-h-[32rem]'}`}
                 poster={currentMedia.url.replace(/\.(mp4|webm)$/, '.jpg')}
                 preload="metadata"
               >
@@ -229,14 +261,36 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
               <Image
                 src={currentMedia?.url || ''}
                 alt={currentMedia?.caption || `${story.title} - Media ${selectedMediaIndex + 1}`}
-                width={800}
-                height={400}
-                className="w-full h-auto max-h-[24rem] object-contain"
+                width={1100}
+                height={600}
+                className={`w-full h-auto object-contain ${isMobile ? 'max-h-[28rem]' : 'max-h-[32rem]'}`}
                 priority={selectedMediaIndex === 0}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading={selectedMediaIndex === 0 ? 'eager' : 'lazy'}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
               />
+            )}
+
+            {/* Mobile swipe indicator for image gallery */}
+            {isMobile && allMedia.length > 1 && (
+              <div
+                className="absolute bottom-12 left-0 right-0 flex justify-center gap-1.5 py-2"
+                style={{ backgroundColor: 'transparent' }}
+              >
+                {allMedia.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className="w-2 h-2 transition-all duration-200"
+                    style={{
+                      backgroundColor:
+                        idx === selectedMediaIndex
+                          ? 'var(--primary)'
+                          : 'rgba(var(--muted-rgb), 0.6)',
+                    }}
+                  />
+                ))}
+              </div>
             )}
 
             {currentMedia?.caption && (
@@ -254,13 +308,15 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             )}
           </div>
 
-          {allMedia.length > 1 && (
+          {allMedia.length > 1 && !isMobile && (
             <div className="flex gap-2 overflow-x-auto pb-2">
               {allMedia.map((mediaItem, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedMediaIndex(index)}
-                  className="relative w-16 h-16 flex-shrink-0 overflow-hidden border-2 transition-all"
+                  className={`relative flex-shrink-0 overflow-hidden border-2 transition-all ${
+                    isMobile ? 'w-20 h-20 touch-target-xl' : 'w-20 h-20'
+                  }`}
                   style={{
                     borderColor: selectedMediaIndex === index ? 'var(--primary)' : 'transparent',
                     opacity: selectedMediaIndex === index ? 1 : 0.7,
@@ -314,16 +370,16 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
       )}
 
       <div
-        className={`grid grid-cols-1 gap-4 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`grid grid-cols-1 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isTransitioning &&
           (contentStage === 'details' || contentStage === 'description' || contentStage === 'media')
             ? 'transform translateY(6px) scale-[0.99]'
             : 'opacity-100 transform translateY(0) scale-100'
-        }`}
+        } ${isMobile ? 'gap-3' : 'gap-4'}`}
       >
-        <div className="flex items-start gap-3">
+        <div className={`flex items-start ${isMobile ? 'gap-4' : 'gap-3'}`}>
           <svg
-            className="w-4 h-4 mt-0.5 flex-shrink-0"
+            className={`flex-shrink-0 ${isMobile ? 'w-5 h-5 mt-0.5' : 'w-4 h-4 mt-0.5'}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -343,7 +399,10 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             />
           </svg>
           <div className="flex-1">
-            <p className="font-mono text-xs font-semibold" style={{ color: 'var(--foreground)' }}>
+            <p
+              className={`font-mono font-semibold ${isMobile ? 'text-sm' : 'text-xs'}`}
+              style={{ color: 'var(--foreground)' }}
+            >
               {(() => {
                 if (!story.address) return ''
                 const zipcode = getZipcodeFromAddress(story.address, story.lat, story.lng)
@@ -351,16 +410,19 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
                 return `${streetPart}, ${zipcode} Berlin`
               })()}
             </p>
-            <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--foreground-muted)' }}>
+            <p
+              className={`font-mono mt-0.5 ${isMobile ? 'text-sm' : 'text-xs'}`}
+              style={{ color: 'var(--foreground-muted)' }}
+            >
               {story.lat.toFixed(6)}, {story.lng.toFixed(6)}
             </p>
           </div>
         </div>
 
         {story.category && (
-          <div className="flex items-start gap-3">
+          <div className={`flex items-start ${isMobile ? 'gap-4' : 'gap-3'}`}>
             <svg
-              className="w-4 h-4 mt-0.5 flex-shrink-0"
+              className={`flex-shrink-0 ${isMobile ? 'w-5 h-5 mt-0.5' : 'w-4 h-4 mt-0.5'}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -375,21 +437,24 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             </svg>
             <div className="flex-1">
               <p
-                className="font-mono text-xs font-semibold uppercase"
+                className={`font-mono font-semibold uppercase ${isMobile ? 'text-sm' : 'text-xs'}`}
                 style={{ color: 'var(--foreground)' }}
               >
                 {story.category}
               </p>
-              <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--foreground-muted)' }}>
+              <p
+                className={`font-mono mt-0.5 ${isMobile ? 'text-sm' : 'text-xs'}`}
+                style={{ color: 'var(--foreground-muted)' }}
+              >
                 Category
               </p>
             </div>
           </div>
         )}
 
-        <div className="flex items-start gap-3">
+        <div className={`flex items-start ${isMobile ? 'gap-4' : 'gap-3'}`}>
           <svg
-            className="w-4 h-4 mt-0.5 flex-shrink-0"
+            className={`flex-shrink-0 ${isMobile ? 'w-5 h-5 mt-0.5' : 'w-4 h-4 mt-0.5'}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -403,7 +468,10 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             />
           </svg>
           <div className="flex-1">
-            <p className="font-mono text-xs font-semibold" style={{ color: 'var(--foreground)' }}>
+            <p
+              className={`font-mono font-semibold ${isMobile ? 'text-sm' : 'text-xs'}`}
+              style={{ color: 'var(--foreground)' }}
+            >
               {story.startDate ? new Date(story.startDate).getFullYear() : 'Unknown'} -{' '}
               {story.endDate === 'Unknown'
                 ? 'Unknown'
@@ -411,7 +479,10 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
                   ? new Date(story.endDate).getFullYear()
                   : 'Unknown'}
             </p>
-            <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--foreground-muted)' }}>
+            <p
+              className={`font-mono mt-0.5 ${isMobile ? 'text-sm' : 'text-xs'}`}
+              style={{ color: 'var(--foreground-muted)' }}
+            >
               {t('mainPage.storyDetails.activePeriod')}
             </p>
           </div>
@@ -420,15 +491,15 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
 
       {(currentContent.description || currentContent.longDescription) && (
         <div
-          className={`pt-4 border-t transition-all duration-300 ease-out ${
+          className={`border-t transition-all duration-300 ease-out ${
             isTransitioning && contentStage !== 'complete'
               ? 'opacity-60 transform translateY(8px)'
               : 'opacity-100 transform translateY(0)'
-          }`}
+          } ${isMobile ? 'pt-3' : 'pt-4'}`}
           style={{ borderTopColor: 'var(--border)' }}
         >
           <h5
-            className="font-mono text-xs font-bold uppercase tracking-wider mb-3"
+            className={`font-mono font-bold uppercase tracking-wider ${isMobile ? 'text-sm mb-2' : 'text-xs mb-3'}`}
             style={{ color: 'var(--foreground-muted)' }}
           >
             {currentContent.hasTimelineContent ? 'Timeline Context' : 'Historical Context'}
@@ -518,7 +589,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
           >
             {currentContent.description && (
               <p
-                className="font-mono text-xs leading-relaxed mb-3"
+                className={`font-mono leading-relaxed ${isMobile ? 'text-sm mb-2' : 'text-xs mb-3'}`}
                 style={{ color: 'var(--foreground)' }}
               >
                 {currentContent.description}
@@ -526,9 +597,9 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             )}
 
             {currentContent.longDescription && (
-              <div className="space-y-3">
+              <div className={isMobile ? 'space-y-2' : 'space-y-3'}>
                 <div
-                  className={`font-mono text-xs leading-relaxed ${!showFullDescription ? 'line-clamp-4' : ''}`}
+                  className={`font-mono leading-relaxed ${isMobile ? 'text-sm' : 'text-xs'} ${!showFullDescription ? 'line-clamp-4' : ''}`}
                   style={{ color: 'var(--foreground)' }}
                 >
                   {currentContent.longDescription}
@@ -536,7 +607,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
 
                 <button
                   onClick={() => setShowFullDescription(!showFullDescription)}
-                  className="text-xs font-mono font-semibold transition-colors cursor-pointer"
+                  className={`font-mono font-semibold transition-colors cursor-pointer ${isMobile ? 'text-sm py-2' : 'text-xs'}`}
                   style={{ color: 'var(--primary)' }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.color = 'var(--accent-yellow)'
@@ -588,9 +659,11 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
         </div>
       )}
 
-      <div className="flex gap-3 pt-4">
+      <div className={`flex gap-3 ${isMobile ? 'pt-3' : 'pt-4'}`}>
         <button
-          className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 border transition-all shadow-sm hover:shadow uppercase tracking-wide"
+          className={`flex-1 font-mono font-semibold border transition-all shadow-sm hover:shadow uppercase tracking-wide ${
+            isMobile ? 'text-sm py-3.5 px-4 touch-target-xl' : 'text-xs py-2.5 px-4'
+          }`}
           style={{
             backgroundColor: 'var(--background)',
             color: 'var(--foreground)',
@@ -606,7 +679,9 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
           View Sources
         </button>
         <button
-          className="flex-1 font-mono text-xs font-semibold py-2.5 px-4 border transition-all shadow-sm hover:shadow uppercase tracking-wide"
+          className={`flex-1 font-mono font-semibold border transition-all shadow-sm hover:shadow uppercase tracking-wide ${
+            isMobile ? 'text-sm py-3.5 px-4 touch-target-xl' : 'text-xs py-2.5 px-4'
+          }`}
           style={{
             backgroundColor: 'var(--primary)',
             color: 'var(--background)',

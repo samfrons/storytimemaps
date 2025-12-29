@@ -14,8 +14,7 @@ import InsightsSection from './InsightsSection';
 import NavigationGuide from './NavigationGuide';
 import ResearchSection from './ResearchSection';
 import FutureInitiatives from './FutureInitiatives';
-import LoginModal from '@/components/auth/LoginModal';
-import SignupModal from '@/components/auth/SignupModal';
+import AuthModal from '@/components/auth/AuthModal';
 
 interface BusinessFeature {
   properties: {
@@ -49,18 +48,7 @@ interface HomepageProps {
 const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignupModal, setShowSignupModal] = useState(false);
-
-  const handleOpenLogin = () => {
-    setShowSignupModal(false);
-    setShowLoginModal(true);
-  };
-
-  const handleOpenSignup = () => {
-    setShowLoginModal(false);
-    setShowSignupModal(true);
-  };
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Process business data for carousel - use storymap data with images
   const carouselBusinesses = useMemo(() => {
@@ -159,30 +147,17 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
         <div className="absolute top-6 right-6 z-10 flex items-center gap-4">
           <LanguageToggle />
           {!user ? (
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleOpenLogin}
-                className="px-4 py-2 font-mono text-sm transition-opacity hover:opacity-80"
-                style={{
-                  backgroundColor: 'transparent',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                }}
-              >
-                Log In
-              </button>
-              <button
-                onClick={handleOpenSignup}
-                className="px-4 py-2 font-mono text-sm font-bold transition-opacity hover:opacity-80"
-                style={{
-                  backgroundColor: 'var(--primary)',
-                  color: 'var(--background)',
-                  border: 'none',
-                }}
-              >
-                Sign Up
-              </button>
-            </div>
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="px-4 py-2 font-mono text-sm font-bold transition-opacity hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--primary)',
+                color: 'var(--background)',
+                border: 'none',
+              }}
+            >
+              Sign In / Sign Up
+            </button>
           ) : (
             <Link
               href="/dashboard"
@@ -436,7 +411,7 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
 
                 <div className="space-y-3">
                   <button
-                    onClick={handleOpenSignup}
+                    onClick={() => setShowAuthModal(true)}
                     className="w-full px-6 py-4 font-mono text-sm font-bold transition-opacity hover:opacity-80"
                     style={{
                       backgroundColor: 'var(--primary)',
@@ -444,19 +419,7 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
                       border: 'none',
                     }}
                   >
-                    Create Free Account
-                  </button>
-
-                  <button
-                    onClick={handleOpenLogin}
-                    className="w-full px-6 py-4 font-mono text-sm transition-opacity hover:opacity-80"
-                    style={{
-                      backgroundColor: 'transparent',
-                      color: 'var(--foreground)',
-                      border: '1px solid var(--border)',
-                    }}
-                  >
-                    Already have an account? Sign In
+                    Get Started
                   </button>
                 </div>
 
@@ -557,16 +520,10 @@ const Homepage: React.FC<HomepageProps> = ({ businessData, storyMapData }) => {
         }
       `}</style>
 
-      {/* Auth Modals */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSwitchToSignup={handleOpenSignup}
-      />
-      <SignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSwitchToLogin={handleOpenLogin}
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
       />
     </div>
   );

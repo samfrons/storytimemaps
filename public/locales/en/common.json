@@ -114,6 +114,25 @@
     "switchTo": "Deutsch",
     "current": "English"
   },
+  "cookieConsent": {
+    "title": "We use cookies and other technologies.",
+    "description": "This site uses third-party website tracking technologies to provide and continuously improve its services and to display advertisements according to users' interests. I agree to this and can revoke or change my consent at any time with effect for the future.",
+    "settings": "SETTINGS",
+    "decline": "DECLINE",
+    "acceptAll": "ACCEPT ALL",
+    "imprint": "IMPRINT",
+    "privacyPolicy": "PRIVACY POLICY",
+    "settingsTitle": "Cookie Settings",
+    "essential": "Essential Cookies",
+    "essentialDesc": "Required for the website to function. Cannot be disabled.",
+    "alwaysOn": "Always On",
+    "analytics": "Analytics Cookies",
+    "analyticsDesc": "Help us understand how visitors interact with our website.",
+    "marketing": "Marketing Cookies",
+    "marketingDesc": "Used to track visitors across websites for advertising purposes.",
+    "back": "BACK",
+    "saveSettings": "SAVE SETTINGS"
+  },
   "barcharts": {
     "title": "Interactive Data Visualizations",
     "subtitle": "3D map exploration with timeline analysis of Jewish business destruction in Berlin",

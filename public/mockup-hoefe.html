@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hackesche Hoefe Theme Mockup - StoryMaps</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Hackesche Hoefe Color Palette */
+      --cream: #f5f0e1;
+      --steel-blue: #4a90a4;
+      --amber: #e8a830;
+      --mint-teal: #7db5a4;
+      --powder-blue: #c5d5e5;
+      --light-teal: #b5d5d5;
+      --burgundy: #8b4049;
+
+      /* Theme Variables */
+      --background: var(--cream);
+      --foreground: #1a1a1a;
+      --foreground-muted: #5a5a5a;
+      --primary: var(--steel-blue);
+      --active: var(--mint-teal);
+      --declining: var(--amber);
+      --closed: var(--burgundy);
+      --card-bg: #ffffff;
+      --border: #d4d0c8;
+
+      /* Fonts */
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--background);
+      color: var(--foreground);
+      line-height: 1.6;
+    }
+
+    /* Timeline Navigation */
+    .timeline-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      overflow-x: auto;
+    }
+
+    .timeline-nav a {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--foreground-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .timeline-nav a:hover,
+    .timeline-nav a.active {
+      color: var(--foreground);
+      font-weight: 600;
+    }
+
+    .timeline-nav a.active {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Main Content */
+    main {
+      margin-top: 60px;
+    }
+
+    /* Section with color background */
+    .section {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .section-content {
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .section-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* Category Label */
+    .category {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    /* Headlines */
+    h1 {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Large Year Display */
+    .year-display {
+      font-family: var(--font-display);
+      font-size: clamp(8rem, 15vw, 14rem);
+      font-weight: 400;
+      line-height: 0.9;
+      color: var(--foreground);
+    }
+
+    /* Body Text */
+    .body-text {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--foreground);
+      max-width: 480px;
+    }
+
+    /* Color Sections */
+    .bg-cream { background: var(--cream); }
+    .bg-steel { background: var(--steel-blue); color: #fff; }
+    .bg-amber { background: var(--amber); }
+    .bg-mint { background: var(--mint-teal); }
+    .bg-powder { background: var(--powder-blue); }
+    .bg-teal { background: var(--light-teal); }
+
+    .bg-steel .year-display { color: #fff; }
+    .bg-steel .category,
+    .bg-steel .body-text { color: rgba(255,255,255,0.9); }
+
+    /* Color Palette Display */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding: 2rem;
+      background: var(--card-bg);
+      max-width: 600px;
+    }
+
+    .color-swatch {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0.75rem;
+    }
+
+    .color-swatch span {
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .color-swatch.dark-text span { color: var(--foreground); }
+    .color-swatch.light-text span { color: #fff; }
+
+    /* Business Card Component */
+    .business-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      max-width: 400px;
+    }
+
+    .business-card .status {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .business-card .status.active { background: var(--active); color: #1a1a1a; }
+    .business-card .status.declining { background: var(--declining); color: #1a1a1a; }
+    .business-card .status.closed { background: var(--closed); color: #fff; }
+
+    .business-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .business-card .meta {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--foreground-muted);
+      margin-bottom: 1rem;
+    }
+
+    .business-card .description {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    /* Sidebar Component */
+    .sidebar-mockup {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      width: 320px;
+      padding: 1.5rem;
+    }
+
+    .sidebar-mockup h4 {
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--foreground-muted);
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-mockup .stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-mockup .stat:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-mockup .stat-label {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+    }
+
+    .sidebar-mockup .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    /* Timeline Slider */
+    .timeline-slider {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .timeline-slider .track {
+      height: 4px;
+      background: var(--border);
+      position: relative;
+      margin: 1rem 0;
+    }
+
+    .timeline-slider .track-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 45%;
+    }
+
+    .timeline-slider .handle {
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+    }
+
+    .timeline-slider .labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--foreground-muted);
+    }
+
+    .timeline-slider .current-year {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Typography Showcase */
+    .type-showcase {
+      background: var(--card-bg);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .type-sample {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    .type-sample:last-child {
+      border-bottom: none;
+    }
+
+    .type-label {
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--foreground-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .type-display {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 400;
+    }
+
+    .type-headline {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-style: italic;
+    }
+
+    .type-category {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .type-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      max-width: 480px;
+    }
+
+    /* Component Grid */
+    .component-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 2rem;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Map Overlay Panel */
+    .map-overlay {
+      background: rgba(245, 240, 225, 0.95);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      width: 280px;
+    }
+
+    .map-overlay h5 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .map-overlay p {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--foreground-muted);
+    }
+
+    /* Marker Styles */
+    .marker-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .marker {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      font-weight: 700;
+    }
+
+    .marker.active { background: var(--active); color: #1a1a1a; }
+    .marker.declining { background: var(--declining); color: #1a1a1a; }
+    .marker.closed { background: var(--closed); color: #fff; }
+
+    /* Footer */
+    footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: var(--foreground);
+      color: var(--cream);
+    }
+
+    footer h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+
+    footer p {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Timeline Navigation -->
+  <nav class="timeline-nav">
+    <a href="#">1858</a>
+    <a href="#">1906</a>
+    <a href="#" class="active">1924</a>
+    <a href="#">1933</a>
+    <a href="#">1938</a>
+    <a href="#">1940</a>
+    <a href="#">1945</a>
+    <a href="#">Today</a>
+  </nav>
+
+  <main>
+    <!-- Hero Section - Cream -->
+    <section class="section bg-cream">
+      <div class="section-content">
+        <span class="category">Theme Preview</span>
+        <h1>Hackesche Hoefe<br>Design Language</h1>
+        <p class="body-text">
+          A historical documentation theme inspired by the elegant design of the
+          Hackesche Hoefe website. Era-based colors, refined typography, and
+          clean layouts that honor the past.
+        </p>
+      </div>
+      <div class="section-visual">
+        <span class="year-display">1924</span>
+      </div>
+    </section>
+
+    <!-- Steel Blue Section -->
+    <section class="section bg-steel">
+      <div class="section-content">
+        <span class="category">Design</span>
+        <h1>Building new<br>commercial yards</h1>
+        <p class="body-text">
+          The steel blue represents the construction and design periods.
+          A confident, professional color that speaks to architectural
+          heritage and urban development.
+        </p>
+      </div>
+      <div class="section-visual">
+        <span class="year-display">1906</span>
+      </div>
+    </section>
+
+    <!-- Amber Section -->
+    <section class="section bg-amber">
+      <div class="section-content">
+        <span class="category">Redevelopment</span>
+        <h1>The ensemble<br>is modernized</h1>
+        <p class="body-text">
+          Golden amber for periods of change and transformation.
+          This warm tone indicates businesses in transition or
+          facing challenges during difficult times.
+        </p>
+      </div>
+      <div class="section-visual">
+        <span class="year-display">1995</span>
+      </div>
+    </section>
+
+    <!-- Mint/Teal Section -->
+    <section class="section bg-mint">
+      <div class="section-content">
+        <span class="category">Reunification</span>
+        <h1>Artists discover<br>the neighborhood</h1>
+        <p class="body-text">
+          Mint teal represents flourishing periods - active businesses,
+          thriving communities, and cultural renaissance.
+        </p>
+      </div>
+      <div class="section-visual">
+        <span class="year-display">1990</span>
+      </div>
+    </section>
+
+    <!-- Color Palette -->
+    <section class="section bg-cream" style="display: block; padding: 4rem;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <span class="category">Color System</span>
+        <h1 style="margin-bottom: 2rem;">Era-Based Palette</h1>
+
+        <div class="color-grid">
+          <div class="color-swatch dark-text" style="background: #f5f0e1;">
+            <span>Cream<br>#f5f0e1</span>
+          </div>
+          <div class="color-swatch light-text" style="background: #4a90a4;">
+            <span>Steel Blue<br>#4a90a4</span>
+          </div>
+          <div class="color-swatch dark-text" style="background: #e8a830;">
+            <span>Amber<br>#e8a830</span>
+          </div>
+          <div class="color-swatch dark-text" style="background: #7db5a4;">
+            <span>Mint Teal<br>#7db5a4</span>
+          </div>
+          <div class="color-swatch dark-text" style="background: #c5d5e5;">
+            <span>Powder Blue<br>#c5d5e5</span>
+          </div>
+          <div class="color-swatch dark-text" style="background: #b5d5d5;">
+            <span>Light Teal<br>#b5d5d5</span>
+          </div>
+          <div class="color-swatch light-text" style="background: #8b4049;">
+            <span>Burgundy<br>#8b4049</span>
+          </div>
+          <div class="color-swatch light-text" style="background: #1a1a1a;">
+            <span>Black<br>#1a1a1a</span>
+          </div>
+          <div class="color-swatch dark-text" style="background: #d4d0c8;">
+            <span>Border<br>#d4d0c8</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Showcase -->
+    <section class="section bg-cream" style="display: block; padding: 4rem;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <span class="category">Typography</span>
+        <h1 style="margin-bottom: 2rem;">Font System</h1>
+
+        <div class="type-showcase">
+          <div class="type-sample">
+            <p class="type-label">Display / Playfair Display 400</p>
+            <p class="type-display">1933</p>
+          </div>
+          <div class="type-sample">
+            <p class="type-label">Headline / Playfair Display Italic</p>
+            <p class="type-headline">The story of Jewish businesses in Berlin</p>
+          </div>
+          <div class="type-sample">
+            <p class="type-label">Category / Inter 600 Small Caps</p>
+            <p class="type-category">Historical Documentation</p>
+          </div>
+          <div class="type-sample">
+            <p class="type-label">Body / Inter 400</p>
+            <p class="type-body">The Hackesche Hoefe are pulsing with life and full of distinctive traces from a century and more of German and Berlin history. This design language honors that heritage through careful typography and considered color choices.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components -->
+    <section class="section bg-powder" style="display: block; padding: 4rem;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <span class="category">Components</span>
+        <h1 style="margin-bottom: 2rem;">UI Elements</h1>
+
+        <div class="component-grid">
+          <!-- Business Cards -->
+          <div class="business-card">
+            <span class="status active">Active</span>
+            <h3>Wertheim Department Store</h3>
+            <p class="meta">Rosenthaler Str. 40-41 | Est. 1906</p>
+            <p class="description">One of the largest department stores in Berlin, serving the Jewish community and broader public.</p>
+          </div>
+
+          <div class="business-card">
+            <span class="status declining">Declining</span>
+            <h3>Goldstein Textiles</h3>
+            <p class="meta">Oranienburger Str. 23 | Est. 1898</p>
+            <p class="description">Family textile business facing increasing restrictions and boycotts.</p>
+          </div>
+
+          <div class="business-card">
+            <span class="status closed">Closed</span>
+            <h3>Hirsch & Sons Bank</h3>
+            <p class="meta">Friedrichstr. 112 | Est. 1871</p>
+            <p class="description">Forced to close during the Aryanization policies of 1938.</p>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="sidebar-mockup">
+            <h4>Business Statistics</h4>
+            <div class="stat">
+              <span class="stat-label">Active Businesses</span>
+              <span class="stat-value" style="color: var(--active);">847</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Declining</span>
+              <span class="stat-value" style="color: var(--declining);">234</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Closed</span>
+              <span class="stat-value" style="color: var(--closed);">1,203</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Total Documented</span>
+              <span class="stat-value">2,284</span>
+            </div>
+          </div>
+
+          <!-- Map Overlay -->
+          <div class="map-overlay">
+            <h5>Scheunenviertel District</h5>
+            <p>Historic Jewish quarter with highest concentration of businesses. Click markers for details.</p>
+            <div class="marker-row">
+              <div class="marker active">12</div>
+              <span style="font-size: 0.75rem;">Active</span>
+              <div class="marker declining">8</div>
+              <span style="font-size: 0.75rem;">Declining</span>
+              <div class="marker closed">23</div>
+              <span style="font-size: 0.75rem;">Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline Slider -->
+    <section class="section bg-cream" style="display: block; padding: 4rem;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <span class="category">Timeline</span>
+        <h1 style="margin-bottom: 2rem;">Date Navigation</h1>
+
+        <div class="timeline-slider">
+          <p class="current-year">1933</p>
+          <div class="track">
+            <div class="track-fill"></div>
+            <div class="handle"></div>
+          </div>
+          <div class="labels">
+            <span>1900</span>
+            <span>1910</span>
+            <span>1920</span>
+            <span>1930</span>
+            <span>1940</span>
+            <span>1945</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <h2>Ready to implement?</h2>
+    <p>If you like this design direction, we can add it as a new theme to StoryMaps.</p>
+  </footer>
+</body>
+</html>

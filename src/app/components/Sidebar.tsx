@@ -136,40 +136,47 @@ function Sidebar({
               zIndex: 10000,
             }}
           >
-            {['moody', 'hot', 'cold', 'warm', 'cool', 'bauhaus', 'art-nouveau', 'archival'].map(
-              (themeName) => (
-                <button
-                  key={themeName}
-                  onClick={() => handleThemeSwitch(themeName)}
-                  className={`w-full px-3 py-2 text-left text-xs font-mono transition-all capitalize ${mounted && theme === themeName ? 'dropdown-active' : ''}`}
-                  style={{
-                    backgroundColor:
-                      mounted && theme === themeName ? 'var(--primary)' : 'transparent',
-                    color:
-                      mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
-                    borderLeft:
-                      mounted && theme === themeName
-                        ? '2px solid var(--primary)'
-                        : '2px solid transparent',
-                    cursor: 'pointer',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!mounted || theme !== themeName) {
-                      e.currentTarget.style.backgroundColor = 'var(--muted)'
-                      e.currentTarget.style.color = 'var(--primary)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!mounted || theme !== themeName) {
-                      e.currentTarget.style.backgroundColor = 'transparent'
-                      e.currentTarget.style.color = 'var(--foreground)'
-                    }
-                  }}
-                >
-                  {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
-                </button>
-              )
-            )}
+            {[
+              'moody',
+              'hot',
+              'cold',
+              'warm',
+              'cool',
+              'bauhaus',
+              'art-nouveau',
+              'archival',
+              'hoefe',
+            ].map((themeName) => (
+              <button
+                key={themeName}
+                onClick={() => handleThemeSwitch(themeName)}
+                className={`w-full px-3 py-2 text-left text-xs font-mono transition-all capitalize ${mounted && theme === themeName ? 'dropdown-active' : ''}`}
+                style={{
+                  backgroundColor:
+                    mounted && theme === themeName ? 'var(--primary)' : 'transparent',
+                  color: mounted && theme === themeName ? 'var(--background)' : 'var(--foreground)',
+                  borderLeft:
+                    mounted && theme === themeName
+                      ? '2px solid var(--primary)'
+                      : '2px solid transparent',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  if (!mounted || theme !== themeName) {
+                    e.currentTarget.style.backgroundColor = 'var(--muted)'
+                    e.currentTarget.style.color = 'var(--primary)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!mounted || theme !== themeName) {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                    e.currentTarget.style.color = 'var(--foreground)'
+                  }
+                }}
+              >
+                {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
+              </button>
+            ))}
           </div>
         )}
       </div>

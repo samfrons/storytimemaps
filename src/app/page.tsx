@@ -57,9 +57,17 @@ function MapPageContent() {
     const themeParam = searchParams.get('theme')
     if (
       themeParam &&
-      ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(
-        themeParam
-      )
+      [
+        'moody',
+        'bauhaus',
+        'cool',
+        'warm',
+        'hot',
+        'cold',
+        'art-nouveau',
+        'archival',
+        'hoefe',
+      ].includes(themeParam)
     ) {
       // Only set theme if it's different from current theme
       if (theme !== themeParam) {

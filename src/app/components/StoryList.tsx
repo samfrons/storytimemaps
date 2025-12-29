@@ -339,6 +339,15 @@ const StoryList: React.FC<StoryListProps> = ({
             '--story-text-color': 'var(--active-text)',
             '--story-text-secondary': 'var(--active-text-secondary)',
           }
+        } else if (theme === 'hoefe') {
+          // Hoefe uses success color (mint teal) for consistency with map popups
+          return {
+            backgroundColor: 'var(--success)',
+            borderLeftColor: 'var(--success)',
+            color: 'var(--active-text)',
+            '--story-text-color': 'var(--active-text)',
+            '--story-text-secondary': 'var(--active-text-secondary)',
+          }
         } else {
           return {
             backgroundColor: 'rgba(var(--primary-rgb), 0.85)',

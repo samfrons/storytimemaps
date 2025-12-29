@@ -1,7 +1,7 @@
 import './globals.css'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
+import { Inter, Space_Mono, Playfair_Display } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { AuthProvider } from '../contexts/AuthContext'
@@ -21,6 +21,15 @@ const spaceMono = Space_Mono({
   variable: '--font-space-mono',
   preload: true,
   weight: ['400', '700'],
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair',
+  preload: true,
+  weight: ['400', '700', '900'],
+  style: ['normal', 'italic'],
 })
 
 export const metadata: Metadata = {
@@ -49,7 +58,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${spaceMono.variable} ${playfair.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//api.mapbox.com" />
@@ -144,7 +157,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider
             attribute="data-theme"
             defaultTheme="moody"
-            themes={['moody', 'cool', 'warm', 'hot', 'cold', 'bauhaus', 'art-nouveau', 'archival']}
+            themes={[
+              'moody',
+              'cool',
+              'warm',
+              'hot',
+              'cold',
+              'bauhaus',
+              'art-nouveau',
+              'archival',
+              'hoefe',
+            ]}
             enableSystem={false}
             enableColorScheme={false}
             disableTransitionOnChange={true}

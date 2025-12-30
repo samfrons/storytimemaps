@@ -6,8 +6,8 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useTranslation } from '../../i18n/useTranslation'
 import { useAuth } from '../../contexts/AuthContext'
-import LoginModal from '../../components/auth/LoginModal'
-import SignupModal from '../../components/auth/SignupModal'
+import AuthModal from '../../components/auth/AuthModal'
+import ShareModal from './ShareModal'
 
 interface SidebarProps {
   viewMode?: 'stories' | 'database'
@@ -19,7 +19,7 @@ interface SidebarProps {
   setShowInfo?: (show: boolean) => void
 }
 
-function Sidebar({
+export default function Sidebar({
   viewMode,
   setViewMode,
   showIntro,
@@ -35,8 +35,8 @@ function Sidebar({
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const [showThemeMenu, setShowThemeMenu] = useState(false)
-  const [showLoginModal, setShowLoginModal] = useState(false)
-  const [showSignupModal, setShowSignupModal] = useState(false)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [showShareModal, setShowShareModal] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -354,6 +354,37 @@ function Sidebar({
         </svg>
       </Link>
 
+      {/* Share Button */}
+      <button
+        onClick={() => setShowShareModal(true)}
+        className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+        style={{
+          backgroundColor: 'var(--input-bg)',
+          borderColor: 'var(--border)',
+          color: 'var(--foreground)',
+          cursor: 'pointer',
+          transform: 'scale(1)',
+          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'scale(1.1)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'scale(1)'
+        }}
+        aria-label="Share"
+        title="Share this project"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+          />
+        </svg>
+      </button>
+
       {/* Language Toggle Buttons */}
       <div className="flex flex-col gap-1">
         <button
@@ -389,7 +420,7 @@ function Sidebar({
       {/* Auth Button - Only show if not logged in */}
       {mounted && !user && (
         <button
-          onClick={() => setShowLoginModal(true)}
+          onClick={() => setShowAuthModal(true)}
           className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
           style={{
             backgroundColor: 'var(--input-bg)',
@@ -405,8 +436,8 @@ function Sidebar({
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)'
           }}
-          aria-label="Login / Sign Up"
-          title="Login to propose changes"
+          aria-label="Sign In / Sign Up"
+          title="Sign in to contribute"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -448,26 +479,11 @@ function Sidebar({
         </button>
       )}
 
-      {/* Auth Modals */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSwitchToSignup={() => {
-          setShowLoginModal(false)
-          setShowSignupModal(true)
-        }}
-      />
-      <SignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSwitchToLogin={() => {
-          setShowSignupModal(false)
-          setShowLoginModal(true)
-        }}
-      />
+      {/* Auth Modal */}
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+
+      {/* Share Modal */}
+      <ShareModal isOpen={showShareModal} onClose={() => setShowShareModal(false)} />
     </div>
   )
 }
-
-// Memoize to prevent unnecessary re-renders when parent state changes
-export default React.memo(Sidebar)

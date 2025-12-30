@@ -437,7 +437,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                 : 'calc(100% - 88px)',
           }}
         >
-          <StoryDetail story={story} currentDate={currentDate} isMobile={isMobile} />
+          <StoryDetail story={story} currentDate={currentDate} />
 
           {/* Suggest Edit Button - Only show if user is logged in */}
           {user && (

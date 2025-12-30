@@ -393,7 +393,6 @@
 }
 
 /* Hoefe theme - Typography overrides */
-/* Headings use Playfair Display for elegant serif look */
 [data-theme='hoefe'] h1,
 [data-theme='hoefe'] h2,
 [data-theme='hoefe'] h3,
@@ -444,8 +443,7 @@
   text-transform: uppercase !important;
 }
 
-/* Hoefe theme - Body text uses Inter (clean sans-serif) */
-/* Note: .font-mono in body text overridden, but NOT for headings */
+/* Hoefe theme - Body text uses Inter */
 [data-theme='hoefe'] p,
 [data-theme='hoefe'] .text-sm:not(.text-lg):not(.text-xl),
 [data-theme='hoefe'] .text-xs:not(.uppercase),
@@ -459,7 +457,7 @@
     sans-serif !important;
 }
 
-/* Hoefe theme - Override font-mono for body text only, not headings */
+/* Hoefe theme - Override font-mono for body text only */
 [data-theme='hoefe'] .font-mono:not(.text-lg):not(.text-xl):not(.text-2xl):not(h1):not(h2):not(h3) {
   font-family:
     var(--font-inter),
@@ -691,28 +689,6 @@ textarea:-ms-input-placeholder {
   letter-spacing: 0.01em;
   line-height: 1.1;
   font-display: swap;
-}
-
-/* Playfair Display font for elegant serif headlines (Hoefe theme) */
-.font-playfair {
-  font-family: var(--font-playfair), 'Playfair Display', Georgia, 'Times New Roman', serif;
-  font-weight: 400;
-}
-
-.font-playfair-bold {
-  font-family: var(--font-playfair), 'Playfair Display', Georgia, 'Times New Roman', serif;
-  font-weight: 700;
-}
-
-.font-playfair-black {
-  font-family: var(--font-playfair), 'Playfair Display', Georgia, 'Times New Roman', serif;
-  font-weight: 900;
-}
-
-.font-playfair-italic {
-  font-family: var(--font-playfair), 'Playfair Display', Georgia, 'Times New Roman', serif;
-  font-style: italic;
-  font-weight: 400;
 }
 
 @layer utilities {
@@ -1097,113 +1073,132 @@ textarea:-ms-input-placeholder {
   @apply scale-110;
 }
 
-/* ==========================================
-   MOBILE MODAL & TOUCH UTILITIES
-   ========================================== */
+/* ===================================
+   Auth Modal & Form Styles
+   =================================== */
 
-/* Mobile-specific modal utilities */
-@media (max-width: 767px) {
-  /* Full-screen modal on mobile */
-  .modal-mobile-fullscreen {
-    width: 100vw !important;
-    height: 100vh !important;
-    max-width: none !important;
-    max-height: none !important;
-    left: 0 !important;
-    top: 0 !important;
-    transform: none !important;
+/* Auth input fields */
+.auth-input {
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.auth-input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+}
+
+/* Primary action button (Continue, Sign In, Create Account) */
+.auth-btn-primary {
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
+}
+
+.auth-btn-primary:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
+}
+
+.auth-btn-primary:active:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Secondary button (Google sign-in) */
+.auth-btn-secondary {
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.auth-btn-secondary:hover:not(:disabled) {
+  background-color: var(--input-bg) !important;
+  border-color: var(--primary) !important;
+  transform: translateY(-1px);
+}
+
+.auth-btn-secondary:active:not(:disabled) {
+  transform: translateY(0);
+  background-color: var(--muted) !important;
+}
+
+/* Text link buttons (Change, Create account, Sign in) */
+.auth-link {
+  transition: opacity 0.15s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.auth-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.15s ease;
+}
+
+.auth-link:hover {
+  opacity: 0.8;
+}
+
+.auth-link:hover::after {
+  transform: scaleX(0.8);
+}
+
+.auth-link:active {
+  opacity: 0.6;
+}
+
+/* Cancel/dismiss button */
+.auth-btn-cancel {
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.auth-btn-cancel:hover:not(:disabled) {
+  color: var(--foreground) !important;
+  opacity: 1;
+}
+
+.auth-btn-cancel:active:not(:disabled) {
+  opacity: 0.7;
+}
+
+/* Modal backdrop and panel animations */
+.auth-modal-backdrop {
+  transition: opacity 0.2s ease-out;
+}
+
+.auth-modal-panel {
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.2s ease-out;
+}
+
+/* Slide-in animation for messages */
+@keyframes auth-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
   }
-
-  /* Large touch targets (44px minimum per Apple HIG) */
-  .touch-target-lg {
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  /* Extra large touch targets (48px) */
-  .touch-target-xl {
-    min-width: 48px;
-    min-height: 48px;
-  }
-
-  /* Mobile bottom navigation bar */
-  .mobile-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 12px 16px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    background: var(--background);
-    border-top: 1px solid var(--border);
-    z-index: 100;
-  }
-
-  /* Mobile header with blur */
-  .mobile-header-blur {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(var(--background-rgb), 0.85);
-    z-index: 50;
-  }
-
-  /* Mobile text size adjustments */
-  .mobile-text-sm {
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.5;
-  }
-
-  .mobile-text-base {
-    font-size: 1rem; /* 16px */
-    line-height: 1.5;
-  }
-
-  /* Safe area padding */
-  .safe-area-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .safe-area-top {
-    padding-top: env(safe-area-inset-top);
-  }
-
-  /* Full-bleed images (no side padding) */
-  .mobile-full-bleed {
-    margin-left: -16px;
-    margin-right: -16px;
-    width: calc(100% + 32px);
-  }
-
-  /* Swipe indicator for modals */
-  .swipe-indicator {
-    width: 36px;
-    height: 4px;
-    background: var(--muted);
-    margin: 0 auto 12px;
-  }
-
-  /* Mobile scrollable content */
-  .mobile-scroll-content {
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    scroll-behavior: smooth;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Swipe gesture support - works across all screen sizes */
-.swipe-container {
-  touch-action: pan-y;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-/* Momentum scrolling for all overflow containers */
-.momentum-scroll {
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
+.auth-message {
+  animation: auth-slide-in 0.2s ease-out;
 }

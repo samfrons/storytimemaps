@@ -114,6 +114,21 @@
     "switchTo": "Deutsch",
     "current": "English"
   },
+  "share": {
+    "shareStory": "Share Story",
+    "shareWebsite": "Share",
+    "copyLink": "Copy Link",
+    "copyLinkDesc": "Copy the link to clipboard",
+    "email": "Email",
+    "emailDesc": "Send via email",
+    "facebookDesc": "Share on Facebook",
+    "twitterDesc": "Share on X",
+    "instagramDesc": "Copy text for Instagram",
+    "shareVia": "Share via...",
+    "shareViaDesc": "Use system share options",
+    "copied": "Copied!",
+    "linkPreview": "Link Preview"
+  },
   "cookieConsent": {
     "title": "We use cookies and other technologies.",
     "description": "This site uses third-party website tracking technologies to provide and continuously improve its services and to display advertisements according to users' interests. I agree to this and can revoke or change my consent at any time with effect for the future.",

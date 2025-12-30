@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#4a4a57"/>
+
+  <!-- Subtle grid pattern overlay -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#5a5a67" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Map pin decorative elements -->
+  <g opacity="0.15">
+    <circle cx="150" cy="150" r="8" fill="#97d8c0"/>
+    <circle cx="300" cy="400" r="6" fill="#ffcb51"/>
+    <circle cx="950" cy="180" r="7" fill="#ee5760"/>
+    <circle cx="1050" cy="450" r="5" fill="#97d8c0"/>
+    <circle cx="200" cy="500" r="4" fill="#eca27d"/>
+    <circle cx="1000" cy="100" r="6" fill="#97d8c0"/>
+    <circle cx="400" cy="200" r="5" fill="#ffcb51"/>
+    <circle cx="800" cy="500" r="4" fill="#ee5760"/>
+  </g>
+
+  <!-- Connection lines between pins -->
+  <g stroke="#6b6275" stroke-width="1" opacity="0.2">
+    <line x1="150" y1="150" x2="300" y2="400"/>
+    <line x1="300" y1="400" x2="200" y2="500"/>
+    <line x1="950" y1="180" x2="1050" y2="450"/>
+    <line x1="400" y1="200" x2="800" y2="500"/>
+  </g>
+
+  <!-- Main content area -->
+  <rect x="100" y="165" width="1000" height="300" fill="#4a4a57" stroke="#6b6275" stroke-width="2"/>
+
+  <!-- Accent line top -->
+  <rect x="100" y="165" width="1000" height="4" fill="#97d8c0"/>
+
+  <!-- Title -->
+  <text x="600" y="260" font-family="Space Mono, monospace" font-size="42" font-weight="700" fill="#f5cdb4" text-anchor="middle" letter-spacing="2">
+    JEWISH BUSINESSES
+  </text>
+  <text x="600" y="315" font-family="Space Mono, monospace" font-size="42" font-weight="700" fill="#f5cdb4" text-anchor="middle" letter-spacing="2">
+    IN BERLIN
+  </text>
+
+  <!-- Date range -->
+  <text x="600" y="380" font-family="Space Mono, monospace" font-size="28" fill="#97d8c0" text-anchor="middle" letter-spacing="4">
+    1900 - 1945
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="430" font-family="Inter, sans-serif" font-size="16" fill="#8b7d8e" text-anchor="middle">
+    Interactive Historical Map &amp; Data Visualization
+  </text>
+
+  <!-- Decorative elements at bottom -->
+  <g transform="translate(550, 490)">
+    <!-- Status legend -->
+    <circle cx="0" cy="0" r="6" fill="#97d8c0"/>
+    <text x="15" y="4" font-family="Space Mono, monospace" font-size="12" fill="#8b7d8e">Active</text>
+    <circle cx="80" cy="0" r="6" fill="#ffcb51"/>
+    <text x="95" y="4" font-family="Space Mono, monospace" font-size="12" fill="#8b7d8e">Declining</text>
+    <circle cx="180" cy="0" r="6" fill="#ee5760"/>
+    <text x="195" y="4" font-family="Space Mono, monospace" font-size="12" fill="#8b7d8e">Closed</text>
+  </g>
+
+  <!-- Corner accents -->
+  <path d="M 100 165 L 100 185 L 120 165 Z" fill="#eca27d"/>
+  <path d="M 1100 165 L 1080 165 L 1100 185 Z" fill="#eca27d"/>
+  <path d="M 100 465 L 100 445 L 120 465 Z" fill="#eca27d"/>
+  <path d="M 1100 465 L 1080 465 L 1100 445 Z" fill="#eca27d"/>
+</svg>

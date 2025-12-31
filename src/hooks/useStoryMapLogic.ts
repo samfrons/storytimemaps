@@ -1,47 +1,46 @@
-'use client';
+'use client'
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import { StoryMap } from '../types';
-import { useTranslation } from '../i18n/useTranslation';
+import { useState, useEffect, useMemo, useCallback } from 'react'
+import { StoryMap } from '../types'
+import { useTranslation } from '../i18n/useTranslation'
 
 interface JewishBusiness {
-  name: string;
-  business_type: string;
-  category: string;
-  address: string;
-  registration_date: string;
-  liquidation_date: string;
-  takeover_date: string;
-  description?: string;
+  name: string
+  business_type: string
+  category: string
+  address: string
+  registration_date: string
+  liquidation_date: string
+  takeover_date: string
+  description?: string
 }
 
 interface BusinessFeature {
-  type: 'Feature';
+  type: 'Feature'
   geometry: {
-    type: 'Point';
-    coordinates: [number, number];
-  };
-  properties: JewishBusiness;
+    type: 'Point'
+    coordinates: [number, number]
+  }
+  properties: JewishBusiness
 }
-
 
 // Marker interface moved inline as needed
 
 export const useStoryMapLogic = () => {
-  const { language } = useTranslation();
-  const [jewishBusinesses, setJewishBusinesses] = useState<BusinessFeature[]>([]);
-  const [enrichedStories, setEnrichedStories] = useState<StoryMap[]>([]);
-  const [visibleStories, setVisibleStories] = useState<StoryMap[]>([]);
-  const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
-  const [currentDate, setCurrentDate] = useState<Date>(new Date('1920-01-01'));
-  const [minDate] = useState<Date>(new Date('1920-01-01'));
-  const [maxDate] = useState<Date>(new Date('1945-12-31'));
-  const [isLoading, setIsLoading] = useState(true);
-  const [totalItems, setTotalItems] = useState(10847); // Start with known total count for immediate display
-  const [detailedStoriesData, setDetailedStoriesData] = useState<StoryMap[]>([]);
-  const [fullDatabaseData, setFullDatabaseData] = useState<StoryMap[]>([]);
-  const [mode, setMode] = useState<'stories' | 'database'>('stories');
-  const [viewMode, setViewMode] = useState<'stories' | 'database'>('stories');
+  const { language } = useTranslation()
+  const [jewishBusinesses, setJewishBusinesses] = useState<BusinessFeature[]>([])
+  const [enrichedStories, setEnrichedStories] = useState<StoryMap[]>([])
+  const [visibleStories, setVisibleStories] = useState<StoryMap[]>([])
+  const [activeStoryId, setActiveStoryId] = useState<string | null>(null)
+  const [currentDate, setCurrentDate] = useState<Date>(new Date('1920-01-01'))
+  const [minDate] = useState<Date>(new Date('1920-01-01'))
+  const [maxDate] = useState<Date>(new Date('1945-12-31'))
+  const [isLoading, setIsLoading] = useState(true)
+  const [totalItems, setTotalItems] = useState(10847) // Start with known total count for immediate display
+  const [detailedStoriesData, setDetailedStoriesData] = useState<StoryMap[]>([])
+  const [fullDatabaseData, setFullDatabaseData] = useState<StoryMap[]>([])
+  const [mode, setMode] = useState<'stories' | 'database'>('stories')
+  const [viewMode, setViewMode] = useState<'stories' | 'database'>('stories')
 
   // Note: Removed loadEnglishDataFromGeoJSON - now using API for all languages to ensure all 10,021 businesses are available
 
@@ -49,43 +48,43 @@ export const useStoryMapLogic = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        setIsLoading(true);
-        
+        setIsLoading(true)
+
         // Load stories data (always from main stories file - has English)
-        const storiesResponse = await fetch('/api/storymaps-test?stories=true');
+        const storiesResponse = await fetch('/api/storymaps-test?stories=true')
         if (!storiesResponse.ok) {
-          throw new Error(`HTTP error! status: ${storiesResponse.status}`);
+          throw new Error(`HTTP error! status: ${storiesResponse.status}`)
         }
-        const storiesData = await storiesResponse.json();
-        const storiesDataArray = Array.isArray(storiesData) ? storiesData : storiesData.data || [];
-        
+        const storiesData = await storiesResponse.json()
+        const storiesDataArray = Array.isArray(storiesData) ? storiesData : storiesData.data || []
+
         // Load initial dataset from API for all languages (first page only for stories mode)
-        console.log(`Loading initial business data from API for language: ${language}`);
-        const initialResponse = await fetch('/api/storymaps-test?page=1&pageSize=200');
+        console.log(`Loading initial business data from API for language: ${language}`)
+        const initialResponse = await fetch('/api/storymaps-test?page=1&pageSize=200')
         if (!initialResponse.ok) {
-          throw new Error(`HTTP error! status: ${initialResponse.status}`);
+          throw new Error(`HTTP error! status: ${initialResponse.status}`)
         }
-        const initialData = await initialResponse.json();
-        const initialDataArray = Array.isArray(initialData) ? initialData : initialData.data || [];
-        
-        console.log(`Loaded ${initialDataArray.length} businesses from initial dataset`);
-        console.log(`Loaded ${storiesDataArray.length} detailed stories`);
-        
+        const initialData = await initialResponse.json()
+        const initialDataArray = Array.isArray(initialData) ? initialData : initialData.data || []
+
+        console.log(`Loaded ${initialDataArray.length} businesses from initial dataset`)
+        console.log(`Loaded ${storiesDataArray.length} detailed stories`)
+
         // Store both datasets
-        setFullDatabaseData(initialDataArray); // Start with initial data
-        setDetailedStoriesData(storiesDataArray);
-        setEnrichedStories(initialDataArray); // Set initial enriched stories
-        setTotalItems(initialDataArray.length);
-        
+        setFullDatabaseData(initialDataArray) // Start with initial data
+        setDetailedStoriesData(storiesDataArray)
+        setEnrichedStories(initialDataArray) // Set initial enriched stories
+        setTotalItems(initialDataArray.length)
+
         // Convert initial dataset to GeoJSON format (memoized to prevent recalculation)
-        setJewishBusinesses(prevFeatures => {
+        setJewishBusinesses((prevFeatures) => {
           // Only update if the data has actually changed
           if (prevFeatures.length !== initialDataArray.length) {
             return initialDataArray.map((story: StoryMap) => ({
               type: 'Feature' as const,
               geometry: {
                 type: 'Point' as const,
-                coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number]
+                coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number],
               },
               properties: {
                 name: story.title,
@@ -94,41 +93,44 @@ export const useStoryMapLogic = () => {
                 address: story.address || '',
                 registration_date: story.startDate || '',
                 liquidation_date: story.endDate || '',
-                takeover_date: story.midDate || ''
-              }
-            }));
+                takeover_date: story.midDate || '',
+              },
+            }))
           }
-          return prevFeatures;
-        });
+          return prevFeatures
+        })
       } catch (error) {
-        console.error('Error fetching initial data:', error);
-        setEnrichedStories([]);
-        setFullDatabaseData([]);
-        setDetailedStoriesData([]);
-        setJewishBusinesses([]);
+        console.error('Error fetching initial data:', error)
+        setEnrichedStories([])
+        setFullDatabaseData([])
+        setDetailedStoriesData([])
+        setJewishBusinesses([])
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    
-    fetchInitialData();
-  }, [language]); // Reload when language changes
-  
-  // Progressive loading function for additional data from API for all languages
-  const loadMoreBusinesses = useCallback(async (page: number, pageSize: number = 200) => {
-    try {
-      console.log(`Loading more businesses from API - page ${page}, language: ${language}`);
-      const response = await fetch(`/api/storymaps-test?page=${page}&pageSize=${pageSize}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return Array.isArray(data) ? data : data.data || [];
-    } catch (error) {
-      console.error('Error loading more businesses:', error);
-      return [];
     }
-  }, [language]);
+
+    fetchInitialData()
+  }, [language]) // Reload when language changes
+
+  // Progressive loading function for additional data from API for all languages
+  const loadMoreBusinesses = useCallback(
+    async (page: number, pageSize: number = 200) => {
+      try {
+        console.log(`Loading more businesses from API - page ${page}, language: ${language}`)
+        const response = await fetch(`/api/storymaps-test?page=${page}&pageSize=${pageSize}`)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        return Array.isArray(data) ? data : data.data || []
+      } catch (error) {
+        console.error('Error loading more businesses:', error)
+        return []
+      }
+    },
+    [language]
+  )
 
   // Function to extract business type from story title
   const extractBusinessTypeFromTitle = (title: string): string | undefined => {
@@ -149,126 +151,181 @@ export const useStoryMapLogic = () => {
       { pattern: /lawyer/i, type: 'Law Office' },
       { pattern: /dentist/i, type: 'Dental Practice' },
       { pattern: /doctor/i, type: 'Medical Practice' },
-      { pattern: /pharmacy/i, type: 'Pharmacy' }
-    ];
+      { pattern: /pharmacy/i, type: 'Pharmacy' },
+    ]
 
     for (const { pattern, type } of businessTypePatterns) {
       if (pattern.test(title)) {
-        return type;
+        return type
       }
     }
-    return undefined;
-  };
+    return undefined
+  }
+
+  // Build lookup maps for O(1) business matching instead of O(n) search
+  // This dramatically improves performance from O(n*m) to O(n+m)
+  const businessLookupMaps = useMemo(() => {
+    // Create maps for exact match and word-based matching
+    const exactNameMap = new Map<string, BusinessFeature>()
+    const wordIndexMap = new Map<string, BusinessFeature[]>()
+
+    jewishBusinesses.forEach((business) => {
+      const name = business.properties.name.toLowerCase()
+      exactNameMap.set(name, business)
+
+      // Index by significant words (3+ chars) for partial matching
+      const words = name.split(/\s+/).filter((w) => w.length >= 3)
+      words.forEach((word) => {
+        const existing = wordIndexMap.get(word) || []
+        existing.push(business)
+        wordIndexMap.set(word, existing)
+      })
+    })
+
+    return { exactNameMap, wordIndexMap }
+  }, [jewishBusinesses])
+
+  // Fast business matching using lookup maps
+  const findMatchingBusiness = useCallback(
+    (storyTitle: string): BusinessFeature | undefined => {
+      const titleLower = storyTitle.toLowerCase()
+      const { exactNameMap, wordIndexMap } = businessLookupMaps
+
+      // Try exact match first
+      if (exactNameMap.has(titleLower)) {
+        return exactNameMap.get(titleLower)
+      }
+
+      // Try to find business name contained in title or vice versa
+      // Use word-based index for faster matching
+      const titleWords = titleLower.split(/\s+/).filter((w) => w.length >= 3)
+
+      // Check each significant word from the title
+      for (const word of titleWords) {
+        const candidates = wordIndexMap.get(word)
+        if (candidates) {
+          for (const business of candidates) {
+            const businessName = business.properties.name.toLowerCase()
+            if (titleLower.includes(businessName) || businessName.includes(titleLower)) {
+              return business
+            }
+          }
+        }
+      }
+
+      return undefined
+    },
+    [businessLookupMaps]
+  )
 
   // Memoized enhanced stories to prevent recalculation
+  // Now uses O(n) matching instead of O(n*m)
   const enhancedStoriesWithBusinessTypes = useMemo(() => {
-    return enrichedStories.map(story => {
-      // First try to find matching business in Jewish businesses dataset
-      const matchingBusiness = jewishBusinesses.find(business =>
-        story.title.toLowerCase().includes(business.properties.name.toLowerCase()) ||
-        business.properties.name.toLowerCase().includes(story.title.toLowerCase())
-      );
-      
+    return enrichedStories.map((story) => {
+      // First try to find matching business using fast lookup
+      const matchingBusiness = findMatchingBusiness(story.title)
+
       // If found in dataset, use that business type
       if (matchingBusiness?.properties.business_type) {
         return {
           ...story,
-          businessType: matchingBusiness.properties.business_type
-        };
+          businessType: matchingBusiness.properties.business_type,
+        }
       }
-      
+
       // Otherwise, extract business type from the story title
-      const extractedType = extractBusinessTypeFromTitle(story.title);
+      const extractedType = extractBusinessTypeFromTitle(story.title)
       if (extractedType) {
         return {
           ...story,
-          businessType: extractedType
-        };
+          businessType: extractedType,
+        }
       }
-      
+
       // Fall back to existing businessType or undefined
-      return story;
-    });
-  }, [enrichedStories, jewishBusinesses]);
+      return story
+    })
+  }, [enrichedStories, findMatchingBusiness])
 
   // Update visible stories when enhanced stories or current date change
   useEffect(() => {
-    setVisibleStories(enhancedStoriesWithBusinessTypes);
-  }, [enhancedStoriesWithBusinessTypes, currentDate]);
+    setVisibleStories(enhancedStoriesWithBusinessTypes)
+  }, [enhancedStoriesWithBusinessTypes, currentDate])
 
   // Load all data when switching to database mode
   const loadAllDataForDatabaseMode = useCallback(async () => {
     if (viewMode === 'database' && fullDatabaseData.length < 10000) {
       try {
-        setIsLoading(true);
-        
+        setIsLoading(true)
+
         // Load all data from API for all languages (en/de/yi)
-        console.log(`Loading all business data from API for language: ${language}`);
-        const response = await fetch('/api/storymaps-test?all=true');
+        console.log(`Loading all business data from API for language: ${language}`)
+        const response = await fetch('/api/storymaps-test?all=true')
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`)
         }
-        const data = await response.json();
-        const allData = Array.isArray(data) ? data : data.data || [];
-        
-        console.log(`Loaded ${allData.length} businesses for database mode`);
-        setFullDatabaseData(allData);
-        setTotalItems(allData.length);
-        
+        const data = await response.json()
+        const allData = Array.isArray(data) ? data : data.data || []
+
+        console.log(`Loaded ${allData.length} businesses for database mode`)
+        setFullDatabaseData(allData)
+        setTotalItems(allData.length)
+
         // Update GeoJSON features with all data
-        setJewishBusinesses(allData.map((story: StoryMap) => ({
-          type: 'Feature' as const,
-          geometry: {
-            type: 'Point' as const,
-            coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number]
-          },
-          properties: {
-            name: story.title,
-            business_type: story.businessType || '',
-            category: story.category || '',
-            address: story.address || '',
-            registration_date: story.startDate || '',
-            liquidation_date: story.endDate || '',
-            takeover_date: story.midDate || ''
-          }
-        })));
-        
+        setJewishBusinesses(
+          allData.map((story: StoryMap) => ({
+            type: 'Feature' as const,
+            geometry: {
+              type: 'Point' as const,
+              coordinates: [story.lng || 13.405, story.lat || 52.52] as [number, number],
+            },
+            properties: {
+              name: story.title,
+              business_type: story.businessType || '',
+              category: story.category || '',
+              address: story.address || '',
+              registration_date: story.startDate || '',
+              liquidation_date: story.endDate || '',
+              takeover_date: story.midDate || '',
+            },
+          }))
+        )
       } catch (error) {
-        console.error('Error loading all data for database mode:', error);
+        console.error('Error loading all data for database mode:', error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
-  }, [viewMode, fullDatabaseData.length, language]);
+  }, [viewMode, fullDatabaseData.length, language])
 
   // Load all data when switching to database mode
   useEffect(() => {
-    loadAllDataForDatabaseMode();
-  }, [loadAllDataForDatabaseMode]);
+    loadAllDataForDatabaseMode()
+  }, [loadAllDataForDatabaseMode])
 
   const handleMarkerClick = useCallback((storyId: string) => {
-    setActiveStoryId(storyId);
-  }, []);
+    setActiveStoryId(storyId)
+  }, [])
 
   // Pre-compute base marker data that doesn't change with date
   const baseMarkers = useMemo(() => {
     const markers: Array<{
-      id: string;
-      position: [number, number];
-      popup: string;
-      startYear: number;
-      endYear: number;
-      midYear: number | null;
-      hasEnrichedData?: boolean;
-      businessType?: string;
-      type: string;
-    }> = [];
-    
+      id: string
+      position: [number, number]
+      popup: string
+      startYear: number
+      endYear: number
+      midYear: number | null
+      hasEnrichedData?: boolean
+      businessType?: string
+      type: string
+    }> = []
+
     // Use the appropriate dataset based on mode
-    const dataToUse = mode === 'stories' ? detailedStoriesData : fullDatabaseData;
-    
+    const dataToUse = mode === 'stories' ? detailedStoriesData : fullDatabaseData
+
     // Add markers from the selected dataset
-    dataToUse.forEach(story => {
+    dataToUse.forEach((story) => {
       if (story.lat && story.lng) {
         markers.push({
           id: story.id,
@@ -278,82 +335,92 @@ export const useStoryMapLogic = () => {
           endYear: story.endDate ? new Date(story.endDate).getFullYear() : 1945,
           midYear: story.midDate ? new Date(story.midDate).getFullYear() : null,
           hasEnrichedData: true,
-          type: 'story'
-        });
+          type: 'story',
+        })
       }
-    });
-    
+    })
+
     // Then add Jewish businesses that don't have enriched data
     jewishBusinesses.forEach((business, index) => {
-      const enrichedStory = dataToUse.find(story => 
-        story.title.toLowerCase().includes(business.properties.name.toLowerCase()) ||
-        business.properties.name.toLowerCase().includes(story.title.toLowerCase())
-      );
-      
+      const enrichedStory = dataToUse.find(
+        (story) =>
+          story.title.toLowerCase().includes(business.properties.name.toLowerCase()) ||
+          business.properties.name.toLowerCase().includes(story.title.toLowerCase())
+      )
+
       // Only add if not already added from enriched stories
       if (!enrichedStory) {
         markers.push({
           id: `business-${business.properties.name}-${index}`,
-          position: [business.geometry.coordinates[1], business.geometry.coordinates[0]] as [number, number],
+          position: [business.geometry.coordinates[1], business.geometry.coordinates[0]] as [
+            number,
+            number,
+          ],
           popup: business.properties.name,
-          startYear: business.properties.registration_date ? parseInt(business.properties.registration_date) : 1900,
-          endYear: business.properties.liquidation_date ? parseInt(business.properties.liquidation_date) : 1945,
-          midYear: business.properties.takeover_date ? parseInt(business.properties.takeover_date) : null,
+          startYear: business.properties.registration_date
+            ? parseInt(business.properties.registration_date)
+            : 1900,
+          endYear: business.properties.liquidation_date
+            ? parseInt(business.properties.liquidation_date)
+            : 1945,
+          midYear: business.properties.takeover_date
+            ? parseInt(business.properties.takeover_date)
+            : null,
           businessType: business.properties.business_type,
           hasEnrichedData: false,
-          type: 'business'
-        });
+          type: 'business',
+        })
       }
-    });
-    
-    return markers;
-  }, [jewishBusinesses, detailedStoriesData, fullDatabaseData, mode]);
+    })
+
+    return markers
+  }, [jewishBusinesses, detailedStoriesData, fullDatabaseData, mode])
 
   // Calculate marker states based on current date
   const testMarkers = useMemo(() => {
-    const year = currentDate.getFullYear();
-    
-    return baseMarkers.map(marker => {
-      let state = 'active';
-      
+    const year = currentDate.getFullYear()
+
+    return baseMarkers.map((marker) => {
+      let state = 'active'
+
       if (year < marker.startYear) {
-        state = 'future';
+        state = 'future'
       } else if (year > marker.endYear) {
-        state = 'closed';
+        state = 'closed'
       } else if (marker.midYear && year >= marker.midYear) {
-        state = 'declining';
+        state = 'declining'
       }
-      
+
       // Clean up the marker object for output
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { startYear, endYear, midYear, type, ...cleanMarker } = marker;
+      const { startYear, endYear, midYear, type, ...cleanMarker } = marker
       return {
         ...cleanMarker,
-        state
-      };
-    });
-  }, [baseMarkers, currentDate]);
+        state,
+      }
+    })
+  }, [baseMarkers, currentDate])
 
   // Update visible stories and enriched stories based on mode
   useEffect(() => {
     if (viewMode === 'stories') {
-      setVisibleStories(detailedStoriesData);
-      setEnrichedStories(detailedStoriesData);
-      setTotalItems(detailedStoriesData.length || 15); // Fallback to prevent jump
+      setVisibleStories(detailedStoriesData)
+      setEnrichedStories(detailedStoriesData)
+      setTotalItems(detailedStoriesData.length || 15) // Fallback to prevent jump
     } else {
-      setVisibleStories(fullDatabaseData);
-      setEnrichedStories(fullDatabaseData);
+      setVisibleStories(fullDatabaseData)
+      setEnrichedStories(fullDatabaseData)
       // In database mode, show actual loaded count or known total if loading all data
-      setTotalItems(fullDatabaseData.length >= 10000 ? fullDatabaseData.length : 10021); 
+      setTotalItems(fullDatabaseData.length >= 10000 ? fullDatabaseData.length : 10021)
     }
     // Keep mode in sync with viewMode
-    setMode(viewMode);
-  }, [fullDatabaseData, detailedStoriesData, viewMode]);
+    setMode(viewMode)
+  }, [fullDatabaseData, detailedStoriesData, viewMode])
 
   // Calculate stories with detail count - start with known value for immediate display
   const storiesWithDetailCount = useMemo(() => {
-    return detailedStoriesData.length > 0 ? detailedStoriesData.length : 15; // Default to known count (15) for immediate display
-  }, [detailedStoriesData]);
+    return detailedStoriesData.length > 0 ? detailedStoriesData.length : 15 // Default to known count (15) for immediate display
+  }, [detailedStoriesData])
 
   return {
     jewishBusinesses,
@@ -374,9 +441,9 @@ export const useStoryMapLogic = () => {
     storiesWithDetailCount,
     mode,
     setMode,
-    loadMoreBusinesses
-  };
-};
+    loadMoreBusinesses,
+  }
+}
 
-export const berlinCoordinates: [number, number] = [52.52, 13.405];
-export const defaultZoom = 12;
+export const berlinCoordinates: [number, number] = [52.52, 13.405]
+export const defaultZoom = 12

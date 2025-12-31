@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryMaps Landing Page Mockups</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Default theme (moody) */
+      --background: #4a4a57;
+      --foreground: #f5cdb4;
+      --primary: #97d8c0;
+      --secondary: #eca27d;
+      --border: #6b6275;
+      --muted: #8b7d8e;
+      --card-bg: rgba(74, 74, 87, 0.95);
+      --warning: #ffcb51;
+      --danger: #ee5760;
+
+      /* Hoefe theme colors for cards */
+      --hoefe-bg: #f5f0e1;
+      --hoefe-primary: #4a90a4;
+      --hoefe-success: #7db5a4;
+      --hoefe-warning: #e8a830;
+      --hoefe-danger: #8b4049;
+      --hoefe-text: #1a1a1a;
+      --hoefe-muted: #5a5a5a;
+      --hoefe-border: #d4d0c8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--primary);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Theme Section Headers */
+    .theme-section {
+      margin-bottom: 60px;
+    }
+
+    .theme-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 30px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .theme-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 6px 12px;
+      text-transform: uppercase;
+    }
+
+    .theme-badge.moody {
+      background: var(--secondary);
+      color: var(--background);
+    }
+
+    .theme-badge.hoefe {
+      background: var(--hoefe-primary);
+      color: white;
+    }
+
+    .theme-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      color: var(--foreground);
+    }
+
+    .theme-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* Mockup Grid */
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    /* Mockup Card */
+    .mockup-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .mockup-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+
+    .mockup-card.hoefe-card {
+      background: var(--hoefe-bg);
+      border-color: var(--hoefe-border);
+    }
+
+    .mockup-card.hoefe-card:hover {
+      border-color: var(--hoefe-primary);
+    }
+
+    .mockup-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--secondary);
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .hoefe-card .mockup-number {
+      color: var(--hoefe-primary);
+    }
+
+    .mockup-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      color: var(--foreground);
+      margin-bottom: 12px;
+    }
+
+    .hoefe-card .mockup-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px;
+      color: var(--hoefe-text);
+    }
+
+    .mockup-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .hoefe-card .mockup-desc {
+      color: var(--hoefe-muted);
+    }
+
+    /* Feature tags */
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      background: rgba(151, 216, 192, 0.15);
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .hoefe-card .tag {
+      background: rgba(74, 144, 164, 0.15);
+      color: var(--hoefe-primary);
+    }
+
+    /* View button */
+    .view-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .view-btn:hover {
+      background: var(--primary);
+      color: var(--background);
+    }
+
+    .hoefe-card .view-btn {
+      border-color: var(--hoefe-primary);
+      color: var(--hoefe-primary);
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+
+    .hoefe-card .view-btn:hover {
+      background: var(--hoefe-primary);
+      color: white;
+    }
+
+    /* Color Palette Preview */
+    .palette-preview {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .palette-swatch {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Navigation back */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 30px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--primary);
+    }
+
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Comparison note */
+    .comparison-note {
+      margin-top: 60px;
+      padding: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+    }
+
+    .comparison-note h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .comparison-note p {
+      font-size: 14px;
+      color: var(--foreground);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      .mockup-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .theme-header {
+        flex-wrap: wrap;
+      }
+
+      .theme-desc {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/mockups/mobile-ui/" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      View Mobile UI Mockups
+    </a>
+
+    <header>
+      <h1>LANDING PAGE MOCKUPS</h1>
+      <p class="subtitle">
+        Multiple design approaches for the StoryMaps landing page, available in both the
+        original moody theme and the elegant Hackesche Hoefe theme. Compare styles and
+        choose the best fit for your audience.
+      </p>
+    </header>
+
+    <!-- Original Moody Theme Section -->
+    <section class="theme-section">
+      <div class="theme-header">
+        <span class="theme-badge moody">Original Theme</span>
+        <h2 class="theme-title">Moody Dark Theme</h2>
+        <span class="theme-desc">Space Mono typography, dark background, warm accents</span>
+      </div>
+
+      <div class="mockup-grid">
+        <!-- V1 Editorial -->
+        <div class="mockup-card">
+          <div class="mockup-number">VERSION 01</div>
+          <h2 class="mockup-title">Editorial Layout</h2>
+          <div class="palette-preview">
+            <div class="palette-swatch" style="background: #4a4a57;"></div>
+            <div class="palette-swatch" style="background: #f5cdb4;"></div>
+            <div class="palette-swatch" style="background: #97d8c0;"></div>
+            <div class="palette-swatch" style="background: #eca27d;"></div>
+            <div class="palette-swatch" style="background: #ffcb51;"></div>
+            <div class="palette-swatch" style="background: #ee5760;"></div>
+          </div>
+          <p class="mockup-desc">
+            Magazine-style editorial layout with full-width hero, image blocks with
+            color overlays, and immersive scrolling experience.
+          </p>
+          <div class="feature-tags">
+            <span class="tag">Full-width Hero</span>
+            <span class="tag">Color Blocks</span>
+            <span class="tag">Scroll-focused</span>
+          </div>
+          <a href="landing-v1-editorial.html" class="view-btn">View Mockup</a>
+        </div>
+
+        <!-- V2 Museum -->
+        <div class="mockup-card">
+          <div class="mockup-number">VERSION 02</div>
+          <h2 class="mockup-title">Museum Style</h2>
+          <div class="palette-preview">
+            <div class="palette-swatch" style="background: #4a4a57;"></div>
+            <div class="palette-swatch" style="background: #f5cdb4;"></div>
+            <div class="palette-swatch" style="background: #97d8c0;"></div>
+            <div class="palette-swatch" style="background: #eca27d;"></div>
+            <div class="palette-swatch" style="background: #ffcb51;"></div>
+            <div class="palette-swatch" style="background: #ee5760;"></div>
+          </div>
+          <p class="mockup-desc">
+            Institutional museum aesthetic with split hero, feature cards grid,
+            and alternating split-panel content sections.
+          </p>
+          <div class="feature-tags">
+            <span class="tag">Split Hero</span>
+            <span class="tag">Feature Cards</span>
+            <span class="tag">Split Panels</span>
+          </div>
+          <a href="landing-v2-museum.html" class="view-btn">View Mockup</a>
+        </div>
+
+        <!-- V3 Minimal -->
+        <div class="mockup-card">
+          <div class="mockup-number">VERSION 03</div>
+          <h2 class="mockup-title">Minimal Layout</h2>
+          <div class="palette-preview">
+            <div class="palette-swatch" style="background: #4a4a57;"></div>
+            <div class="palette-swatch" style="background: #f5cdb4;"></div>
+            <div class="palette-swatch" style="background: #97d8c0;"></div>
+            <div class="palette-swatch" style="background: #eca27d;"></div>
+            <div class="palette-swatch" style="background: #ffcb51;"></div>
+            <div class="palette-swatch" style="background: #ee5760;"></div>
+          </div>
+          <p class="mockup-desc">
+            Clean minimal design with floating images, prominent statistics bar,
+            and generous whitespace for a modern feel.
+          </p>
+          <div class="feature-tags">
+            <span class="tag">Floating Images</span>
+            <span class="tag">Stats Bar</span>
+            <span class="tag">Minimal UI</span>
+          </div>
+          <a href="landing-v3-minimal.html" class="view-btn">View Mockup</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hackesche Hoefe Theme Section -->
+    <section class="theme-section">
+      <div class="theme-header">
+        <span class="theme-badge hoefe">Hoefe Theme</span>
+        <h2 class="theme-title">Hackesche Hoefe Theme</h2>
+        <span class="theme-desc">Playfair Display + Inter typography, cream background, steel blue accents</span>
+      </div>
+
+      <div class="mockup-grid">
+        <!-- V1 Editorial Hoefe -->
+        <div class="mockup-card hoefe-card">
+          <div class="mockup-number">VERSION 01 HOEFE</div>
+          <h2 class="mockup-title">Editorial Layout</h2>
+          <div class="palette-preview">
+            <div class="palette-swatch" style="background: #f5f0e1;"></div>
+            <div class="palette-swatch" style="background: #1a1a1a;"></div>
+            <div class="palette-swatch" style="background: #4a90a4;"></div>
+            <div class="palette-swatch" style="background: #7db5a4;"></div>
+            <div class="palette-swatch" style="background: #e8a830;"></div>
+            <div class="palette-swatch" style="background: #8b4049;"></div>
+          </div>
+          <p class="mockup-desc">
+            Magazine-style editorial with the elegant Hoefe aesthetic. Cream backgrounds,
+            refined serif typography, and sophisticated color palette.
+          </p>
+          <div class="feature-tags">
+            <span class="tag">Full-width Hero</span>
+            <span class="tag">Color Blocks</span>
+            <span class="tag">Scroll-focused</span>
+          </div>
+          <a href="landing-v1-editorial-hoefe.html" class="view-btn">View Mockup</a>
+        </div>
+
+        <!-- V2 Museum Hoefe -->
+        <div class="mockup-card hoefe-card">
+          <div class="mockup-number">VERSION 02 HOEFE</div>
+          <h2 class="mockup-title">Museum Style</h2>
+          <div class="palette-preview">
+            <div class="palette-swatch" style="background: #f5f0e1;"></div>
+            <div class="palette-swatch" style="background: #1a1a1a;"></div>
+            <div class="palette-swatch" style="background: #4a90a4;"></div>
+            <div class="palette-swatch" style="background: #7db5a4;"></div>
+            <div class="palette-swatch" style="background: #e8a830;"></div>
+            <div class="palette-swatch" style="background: #8b4049;"></div>
+          </div>
+          <p class="mockup-desc">
+            Museum aesthetic with Hoefe styling. Professional, institutional feel
+            with warm cream tones and classic typography.
+          </p>
+          <div class="feature-tags">
+            <span class="tag">Split Hero</span>
+            <span class="tag">Feature Cards</span>
+            <span class="tag">Split Panels</span>
+          </div>
+          <a href="landing-v2-museum-hoefe.html" class="view-btn">View Mockup</a>
+        </div>
+
+        <!-- V3 Minimal Hoefe -->
+        <div class="mockup-card hoefe-card">
+          <div class="mockup-number">VERSION 03 HOEFE</div>
+          <h2 class="mockup-title">Minimal Layout</h2>
+          <div class="palette-preview">
+            <div class="palette-swatch" style="background: #f5f0e1;"></div>
+            <div class="palette-swatch" style="background: #1a1a1a;"></div>
+            <div class="palette-swatch" style="background: #4a90a4;"></div>
+            <div class="palette-swatch" style="background: #7db5a4;"></div>
+            <div class="palette-swatch" style="background: #e8a830;"></div>
+            <div class="palette-swatch" style="background: #8b4049;"></div>
+          </div>
+          <p class="mockup-desc">
+            Clean minimal design with Hoefe refinement. Elegant simplicity with
+            floating images and generous negative space.
+          </p>
+          <div class="feature-tags">
+            <span class="tag">Floating Images</span>
+            <span class="tag">Stats Bar</span>
+            <span class="tag">Minimal UI</span>
+          </div>
+          <a href="landing-v3-minimal-hoefe.html" class="view-btn">View Mockup</a>
+        </div>
+
+        <!-- V4 Full Hoefe -->
+        <div class="mockup-card hoefe-card">
+          <div class="mockup-number">VERSION 04 HOEFE</div>
+          <h2 class="mockup-title">Full Hoefe Experience</h2>
+          <div class="palette-preview">
+            <div class="palette-swatch" style="background: #f5f0e1;"></div>
+            <div class="palette-swatch" style="background: #1a1a1a;"></div>
+            <div class="palette-swatch" style="background: #4a90a4;"></div>
+            <div class="palette-swatch" style="background: #7db5a4;"></div>
+            <div class="palette-swatch" style="background: #e8a830;"></div>
+            <div class="palette-swatch" style="background: #8b4049;"></div>
+          </div>
+          <p class="mockup-desc">
+            The definitive Hoefe-inspired landing page. Era-based color sections,
+            large year displays, and authentic Hackesche Hoefe styling.
+          </p>
+          <div class="feature-tags">
+            <span class="tag">Era Sections</span>
+            <span class="tag">Large Years</span>
+            <span class="tag">Full-width Color</span>
+          </div>
+          <a href="landing-v4-hoefe.html" class="view-btn">View Mockup</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Note -->
+    <div class="comparison-note">
+      <h3>Theme Comparison</h3>
+      <p>
+        The <strong>Moody Dark Theme</strong> uses Space Mono typography with warm peach/coral
+        accents on a dark purple-gray background. It creates a modern, editorial feel suited
+        for tech-savvy audiences.
+        <br><br>
+        The <strong>Hackesche Hoefe Theme</strong> uses Playfair Display (serif) + Inter (sans-serif)
+        with a cream background and steel blue/mint/amber accents. Inspired by the historic
+        Hackesche Hoefe website, it creates an elegant, archival aesthetic appropriate for
+        historical documentation and museum contexts.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

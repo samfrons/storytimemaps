@@ -15,7 +15,7 @@ import {
   isModificationTheme,
 } from '../../utils/mapStyles'
 import { getMaxLabelsForZoom } from '../../config/performance'
-import { spatialSample } from '../../utils/mapHelpers'
+import { spatialSample, type ClusterFeature } from '../../utils/mapHelpers'
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
@@ -280,7 +280,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         const individuals = processedMarkers.filter((m) => !m.properties?.cluster)
 
         // Spatial sampling: spread markers evenly across viewport
-        const sampledIndividuals = spatialSample(individuals, maxIndividualMarkers, bbox)
+        const sampledIndividuals = spatialSample(
+          individuals as ClusterFeature[],
+          maxIndividualMarkers,
+          bbox
+        )
 
         return [...clusters, ...sampledIndividuals]
       }

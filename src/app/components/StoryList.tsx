@@ -50,6 +50,7 @@ const StoryList: React.FC<StoryListProps> = ({
   const [originRect, setOriginRect] = useState<DOMRect | null>(null)
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
   const [searchQuery, setSearchQuery] = useState('')
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false)
   const [showSearchFilter, setShowSearchFilter] = useState(false)
@@ -63,6 +64,14 @@ const StoryList: React.FC<StoryListProps> = ({
   const [yearMarkers, setYearMarkers] = useState<YearMarker[]>([])
   const [expandedMarkers, setExpandedMarkers] = useState<Set<string>>(new Set())
   const [showYearMarkers, setShowYearMarkers] = useState(true)
+
+  // Debounce search query for performance (300ms delay)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchQuery])
 
   const handleViewDetails = (story: StoryMap, element: HTMLDivElement) => {
     const rect = element.getBoundingClientRect()
@@ -192,23 +201,49 @@ const StoryList: React.FC<StoryListProps> = ({
     }
   }, [isHeaderCollapsed])
 
-  // Load timeline descriptions for businesses with timeline data
+  // Load timeline descriptions for businesses with timeline data using batched loading
   useEffect(() => {
-    const loadTimelineDescriptions = async () => {
-      const descriptions: { [key: string]: string | null } = {}
+    const MAX_CONCURRENT = 5 // Limit concurrent fetches for performance
 
-      for (const story of visibleStories) {
-        if (story.hasTimelineData) {
-          try {
-            const timelineData = await loadTimelineData(story.id)
-            if (timelineData) {
-              const timelineContent = getTimelineContentForDate(timelineData, currentDate)
-              descriptions[story.id] = timelineContent?.description || null
+    const loadTimelineDescriptions = async () => {
+      // Filter to only stories that need timeline data
+      const storiesWithTimeline = visibleStories.filter((s) => s.hasTimelineData)
+      if (storiesWithTimeline.length === 0) {
+        setTimelineDescriptions({})
+        return
+      }
+
+      // Process in batches to avoid overwhelming the network
+      const descriptions: { [key: string]: string | null } = {}
+      const batches: (typeof storiesWithTimeline)[] = []
+
+      for (let i = 0; i < storiesWithTimeline.length; i += MAX_CONCURRENT) {
+        batches.push(storiesWithTimeline.slice(i, i + MAX_CONCURRENT))
+      }
+
+      // Process batches with Promise.allSettled for concurrent loading
+      for (const batch of batches) {
+        const results = await Promise.allSettled(
+          batch.map(async (story) => {
+            try {
+              const timelineData = await loadTimelineData(story.id)
+              if (timelineData) {
+                const timelineContent = getTimelineContentForDate(timelineData, currentDate)
+                return { id: story.id, description: timelineContent?.description || null }
+              }
+              return { id: story.id, description: null }
+            } catch {
+              return { id: story.id, description: null }
             }
-          } catch (error) {
-            console.warn(`Failed to load timeline data for ${story.id}:`, error)
+          })
+        )
+
+        // Collect successful results
+        results.forEach((result) => {
+          if (result.status === 'fulfilled' && result.value) {
+            descriptions[result.value.id] = result.value.description
           }
-        }
+        })
       }
 
       setTimelineDescriptions(descriptions)
@@ -270,14 +305,19 @@ const StoryList: React.FC<StoryListProps> = ({
     return Array.from(categories).sort()
   }, [visibleStories])
 
-  const allFilteredStories = visibleStories.filter((story) => {
-    const matchesSearch =
-      story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (story.description?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false)
-    const storyCategory = story.businessType || story.category || ''
-    const matchesCategory = selectedCategory === 'all' || storyCategory === selectedCategory
-    return matchesSearch && matchesCategory
-  })
+  // Memoize filtered stories using debounced search query for performance
+  const allFilteredStories = useMemo(() => {
+    const searchLower = debouncedSearchQuery.toLowerCase()
+    return visibleStories.filter((story) => {
+      const matchesSearch =
+        !searchLower ||
+        story.title.toLowerCase().includes(searchLower) ||
+        (story.description?.toLowerCase().includes(searchLower) ?? false)
+      const storyCategory = story.businessType || story.category || ''
+      const matchesCategory = selectedCategory === 'all' || storyCategory === selectedCategory
+      return matchesSearch && matchesCategory
+    })
+  }, [visibleStories, debouncedSearchQuery, selectedCategory])
 
   // Create combined list of stories and year markers, sorted by date
   type ListItem =

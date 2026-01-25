@@ -1,28 +1,28 @@
-'use client';
+'use client'
 
-import React, { useState, useRef, useEffect } from 'react';
-import { useTheme } from 'next-themes';
-import { useIsMounted } from '../../hooks/useIsMounted';
+import React, { useState, useRef, useEffect } from 'react'
+import { useTheme } from 'next-themes'
+import { useIsMounted } from '../../hooks/useIsMounted'
 
 const ThemeSwitcher: React.FC = () => {
-  const { theme, setTheme, themes } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const mounted = useIsMounted();
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { theme, setTheme, themes } = useTheme()
+  const [isOpen, setIsOpen] = useState(false)
+  const mounted = useIsMounted()
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        setIsOpen(false)
       }
-    };
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   // Prevent hydration mismatch by not rendering until mounted
-  if (!mounted) return null;
+  if (!mounted) return null
 
   const themeDisplayNames: Record<string, string> = {
     moody: 'Moody',
@@ -31,17 +31,15 @@ const ThemeSwitcher: React.FC = () => {
     warm: 'Warm',
     hot: 'Hot',
     cold: 'Cold',
-    'art-nouveau': 'Art Nouveau'
-  };
+    'art-nouveau': 'Art Nouveau',
+  }
 
   // Define custom theme order with Bauhaus right after Moody
-  const themeOrder = ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau'];
-  
-  const orderedThemes = themeOrder.filter(themeName => 
-    themes?.includes(themeName)
-  );
+  const themeOrder = ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau']
 
-  const currentThemeName = themeDisplayNames[theme || 'moody'] || 'Moody';
+  const orderedThemes = themeOrder.filter((themeName) => themes?.includes(themeName))
+
+  const currentThemeName = themeDisplayNames[theme || 'moody'] || 'Moody'
 
   return (
     <div ref={dropdownRef} className="relative z-50">
@@ -51,18 +49,23 @@ const ThemeSwitcher: React.FC = () => {
         style={{
           backgroundColor: 'var(--input-bg)',
           borderColor: 'var(--border)',
-          color: 'var(--foreground)'
+          color: 'var(--foreground)',
         }}
         aria-label="Switch theme"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"
+          />
         </svg>
         <span>{currentThemeName}</span>
-        <svg 
-          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -70,17 +73,19 @@ const ThemeSwitcher: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 border backdrop-blur-sm shadow-lg min-w-full hot-dropdown" 
-             style={{
-               backgroundColor: 'var(--dropdown-bg)',
-               borderColor: 'var(--border)'
-             }}>
+        <div
+          className="absolute top-full left-0 mt-1 border backdrop-blur-sm shadow-lg min-w-full hot-dropdown"
+          style={{
+            backgroundColor: 'var(--dropdown-bg)',
+            borderColor: 'var(--border)',
+          }}
+        >
           {orderedThemes.map((themeName) => (
             <button
               key={themeName}
               onClick={() => {
-                setTheme(themeName);
-                setIsOpen(false);
+                setTheme(themeName)
+                setIsOpen(false)
               }}
               className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors hover:opacity-80 uppercase tracking-wide ${
                 theme === themeName ? 'border-l-2' : ''
@@ -88,7 +93,7 @@ const ThemeSwitcher: React.FC = () => {
               style={{
                 backgroundColor: theme === themeName ? 'var(--border)' : 'transparent',
                 color: theme === themeName ? 'var(--primary)' : 'var(--foreground)',
-                borderLeftColor: theme === themeName ? 'var(--primary)' : 'transparent'
+                borderLeftColor: theme === themeName ? 'var(--primary)' : 'transparent',
               }}
             >
               {themeDisplayNames[themeName] || themeName}
@@ -97,7 +102,7 @@ const ThemeSwitcher: React.FC = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ThemeSwitcher;
+export default React.memo(ThemeSwitcher)

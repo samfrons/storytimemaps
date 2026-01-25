@@ -654,4 +654,4 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
   )
 }
 
-export default BusinessDetailModal
+export default React.memo(BusinessDetailModal)

@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react'
+import Image from 'next/image'
 
 interface OptimizedImageProps {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-  className?: string;
-  priority?: boolean;
-  fill?: boolean;
-  sizes?: string;
-  quality?: number;
+  src: string
+  alt: string
+  width?: number
+  height?: number
+  className?: string
+  priority?: boolean
+  fill?: boolean
+  sizes?: string
+  quality?: number
 }
 
 // Create a shimmer effect for loading placeholder
@@ -28,14 +28,12 @@ const shimmer = (w: number, h: number) => `
   <rect width="${w}" height="${h}" fill="#6b6275" />
   <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`;
+</svg>`
 
 const toBase64 = (str: string) =>
-  typeof window === 'undefined'
-    ? Buffer.from(str).toString('base64')
-    : window.btoa(str);
+  typeof window === 'undefined' ? Buffer.from(str).toString('base64') : window.btoa(str)
 
-export default function OptimizedImage({
+const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
   alt,
   width,
@@ -45,13 +43,14 @@ export default function OptimizedImage({
   fill = false,
   sizes,
   quality = 85,
-}: OptimizedImageProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  
+}) => {
+  const [isLoading, setIsLoading] = useState(true)
+
   // Generate dynamic blur placeholder
-  const blurDataURL = width && height 
-    ? `data:image/svg+xml;base64,${toBase64(shimmer(width, height))}`
-    : "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k=";
+  const blurDataURL =
+    width && height
+      ? `data:image/svg+xml;base64,${toBase64(shimmer(width, height))}`
+      : 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k='
 
   return (
     <div className={`relative ${fill ? 'w-full h-full' : ''} ${className}`}>
@@ -61,7 +60,9 @@ export default function OptimizedImage({
         width={fill ? undefined : width}
         height={fill ? undefined : height}
         fill={fill}
-        sizes={sizes || (fill ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' : undefined)}
+        sizes={
+          sizes || (fill ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' : undefined)
+        }
         quality={quality}
         priority={priority}
         loading={priority ? 'eager' : 'lazy'}
@@ -75,5 +76,7 @@ export default function OptimizedImage({
         blurDataURL={blurDataURL}
       />
     </div>
-  );
+  )
 }
+
+export default React.memo(OptimizedImage)

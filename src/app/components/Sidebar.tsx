@@ -19,7 +19,7 @@ interface SidebarProps {
   setShowInfo?: (show: boolean) => void
 }
 
-export default function Sidebar({
+const Sidebar: React.FC<SidebarProps> = ({
   viewMode,
   setViewMode,
   showIntro,
@@ -27,7 +27,7 @@ export default function Sidebar({
   setIntroExplicitlyClosed,
   showInfo,
   setShowInfo,
-}: SidebarProps) {
+}) => {
   const { theme, setTheme } = useTheme()
   const { language, switchToLanguage } = useTranslation()
   const { user } = useAuth()
@@ -487,3 +487,5 @@ export default function Sidebar({
     </div>
   )
 }
+
+export default React.memo(Sidebar)

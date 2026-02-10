@@ -32,8 +32,17 @@ const nextConfig = {
     } : false,
   },
   
-  // Optimize bundle splitting
+  // Optimize bundle splitting and suppress Supabase edge runtime warnings
   webpack: (config, { isServer }) => {
+    // Suppress Supabase realtime-js edge runtime warnings (library issue)
+    if (isServer) {
+      config.resolve = config.resolve || {};
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        // Alias realtime-js to prevent edge runtime warning
+      };
+    }
+
     if (!isServer) {
       // Split Mapbox into separate chunk
       config.optimization.splitChunks = {

@@ -69,6 +69,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   onBusinessSelect,
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
+  const markerCache = useRef<globalThis.Map<string, React.ReactElement[]>>(new globalThis.Map())
   const { theme } = useTheme()
   const { t } = useTranslation()
 
@@ -105,6 +106,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   // Get theme-specific marker colors from centralized config
   const colors = useMemo(() => getThemeMarkerColors(theme), [theme])
+
+  // Clear marker cache when theme or colors change
+  useEffect(() => {
+    markerCache.current.clear()
+  }, [theme, colors])
 
   // getMaxLabels is now imported from config as getMaxLabelsForZoom
   const getMaxLabels = getMaxLabelsForZoom
@@ -1434,15 +1440,36 @@ export default React.memo(MapboxMap, (prevProps, nextProps) => {
     return false
   }
 
-  // Only do expensive comparison if lengths are the same and small
-  if (prevProps.markers && nextProps.markers && prevProps.markers.length < 100) {
-    // Shallow comparison for small arrays
-    for (let i = 0; i < prevProps.markers.length; i++) {
-      if (
-        prevProps.markers[i]?.id !== nextProps.markers[i]?.id ||
-        prevProps.markers[i]?.state !== nextProps.markers[i]?.state
-      ) {
-        return false
+  // For large arrays (100+), compare a sample of marker IDs and states
+  // This catches most content changes without O(n) comparison
+  if (prevProps.markers && nextProps.markers) {
+    const len = prevProps.markers.length
+    if (len > 100) {
+      // Sample comparison for large arrays: first, last, and a few middle elements
+      const sampleIndices = [
+        0,
+        Math.floor(len / 4),
+        Math.floor(len / 2),
+        Math.floor((3 * len) / 4),
+        len - 1,
+      ]
+      for (const i of sampleIndices) {
+        if (
+          prevProps.markers[i]?.id !== nextProps.markers[i]?.id ||
+          prevProps.markers[i]?.state !== nextProps.markers[i]?.state
+        ) {
+          return false
+        }
+      }
+    } else {
+      // Full comparison for small arrays
+      for (let i = 0; i < len; i++) {
+        if (
+          prevProps.markers[i]?.id !== nextProps.markers[i]?.id ||
+          prevProps.markers[i]?.state !== nextProps.markers[i]?.state
+        ) {
+          return false
+        }
       }
     }
   }

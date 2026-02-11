@@ -404,6 +404,170 @@ export const ARCHIVAL_STYLE: StyleSpecification = {
 }
 
 /**
+ * Hoefe Theme - Warm cream with elegant accents (Hackesche Höfe inspired)
+ */
+export const HOEFE_STYLE: StyleSpecification = {
+  version: 8,
+  name: 'Hackesche Hoefe Theme',
+  sources: {
+    mapbox: MAPBOX_VECTOR_SOURCE,
+  },
+  glyphs: MAPBOX_GLYPHS,
+  layers: [
+    {
+      id: 'background',
+      type: 'background',
+      paint: {
+        'background-color': '#f5f0e1', // Cream
+      },
+    },
+    {
+      id: 'water',
+      type: 'fill',
+      source: 'mapbox',
+      'source-layer': 'water',
+      paint: {
+        'fill-color': '#b5d5d5', // Light teal
+        'fill-opacity': 0.8,
+      },
+    },
+    {
+      id: 'landuse-park',
+      type: 'fill',
+      source: 'mapbox',
+      'source-layer': 'landuse',
+      filter: ['==', 'class', 'park'],
+      paint: {
+        'fill-color': '#7db5a4', // Mint teal
+        'fill-opacity': 0.3,
+      },
+    },
+    {
+      id: 'landuse-other',
+      type: 'fill',
+      source: 'mapbox',
+      'source-layer': 'landuse',
+      filter: ['!=', 'class', 'park'],
+      paint: {
+        'fill-color': '#f5f0e1',
+        'fill-opacity': 0.1,
+      },
+    },
+    {
+      id: 'building',
+      type: 'fill',
+      source: 'mapbox',
+      'source-layer': 'building',
+      paint: {
+        'fill-color': '#e8e3d4', // Light beige
+        'fill-opacity': 0.6,
+        'fill-outline-color': '#d4d0c8',
+      },
+    },
+    {
+      id: 'road-highway',
+      type: 'line',
+      source: 'mapbox',
+      'source-layer': 'road',
+      filter: ['in', 'class', 'motorway', 'trunk'],
+      paint: {
+        'line-color': '#4a90a4', // Steel blue
+        'line-width': {
+          base: 1.5,
+          stops: [
+            [8, 0.5],
+            [10, 1],
+            [12, 3],
+            [16, 8],
+            [20, 18],
+          ],
+        },
+        'line-opacity': 1,
+      },
+    },
+    {
+      id: 'road-primary',
+      type: 'line',
+      source: 'mapbox',
+      'source-layer': 'road',
+      filter: ['in', 'class', 'primary', 'secondary'],
+      paint: {
+        'line-color': '#c5d5e5', // Powder blue
+        'line-width': {
+          base: 1.5,
+          stops: [
+            [12, 0.5],
+            [14, 1],
+            [16, 3],
+            [20, 8],
+          ],
+        },
+        'line-opacity': 1,
+      },
+    },
+    {
+      id: 'road-local',
+      type: 'line',
+      source: 'mapbox',
+      'source-layer': 'road',
+      filter: ['in', 'class', 'street', 'street_limited', 'service', 'track', 'pedestrian'],
+      paint: {
+        'line-color': '#d4d0c8', // Warm gray
+        'line-width': {
+          base: 1.5,
+          stops: [
+            [12, 0.5],
+            [14, 0.8],
+            [16, 2],
+            [20, 6],
+          ],
+        },
+        'line-opacity': 0.6,
+      },
+    },
+    {
+      id: 'place-label',
+      type: 'symbol',
+      source: 'mapbox',
+      'source-layer': 'place_label',
+      layout: {
+        'text-field': ['get', 'name'],
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'text-size': {
+          stops: [
+            [6, 10],
+            [12, 14],
+          ],
+        },
+      },
+      paint: {
+        'text-color': '#1a1a1a', // Black
+        'text-halo-color': '#f5f0e1', // Cream halo
+        'text-halo-width': 1.5,
+      },
+    },
+    {
+      id: 'road-label',
+      type: 'symbol',
+      source: 'mapbox',
+      'source-layer': 'road',
+      layout: {
+        'text-field': ['get', 'name'],
+        'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+        'text-size': 11,
+        'symbol-placement': 'line',
+        'text-rotation-alignment': 'map',
+      },
+      paint: {
+        'text-color': '#5a5a5a', // Dark gray
+        'text-halo-color': '#f5f0e1', // Cream halo
+        'text-halo-width': 1,
+      },
+    },
+  ],
+}
+
+/**
  * Mapbox hosted style URLs for themes that use modification approach
  */
 export const MAPBOX_HOSTED_STYLES = {
@@ -426,6 +590,8 @@ export function getThemeMapStyle(theme: string | undefined): StyleSpecification 
       return HOT_STYLE
     case 'archival':
       return ARCHIVAL_STYLE
+    case 'hoefe':
+      return HOEFE_STYLE
     case 'cold':
     case 'cool':
       return MAPBOX_HOSTED_STYLES.cold
@@ -474,6 +640,13 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         closed: 'rgba(139, 156, 174, 0.85)',
         future: 'rgba(44, 74, 124, 0.85)',
       }
+    case 'hoefe':
+      return {
+        active: '#7db5a4', // Mint teal
+        declining: '#e8a830', // Amber gold
+        closed: '#8b4049', // Burgundy
+        future: '#c5d5e5', // Powder blue
+      }
     case 'moody':
     default:
       return {
@@ -489,7 +662,13 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
  * Check if a theme uses a complete custom style (vs modification approach)
  */
 export function isCustomStyleTheme(theme: string | undefined): boolean {
-  return theme === 'moody' || theme === 'hot' || theme === 'bauhaus' || theme === 'archival'
+  return (
+    theme === 'moody' ||
+    theme === 'hot' ||
+    theme === 'bauhaus' ||
+    theme === 'archival' ||
+    theme === 'hoefe'
+  )
 }
 
 /**

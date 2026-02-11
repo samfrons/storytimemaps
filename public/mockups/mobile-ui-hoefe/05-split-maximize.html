@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile UI Mockup - Split Maximize (Hoefe Theme)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #f5f0e1;
+      --foreground: #1a1a1a;
+      --primary: #4a90a4;
+      --secondary: #7db5a4;
+      --border: #d4d0c8;
+      --muted: #6b6b6b;
+      --card-bg: #ffffff;
+      --warning: #e8a830;
+      --danger: #8b4049;
+      --success: #7db5a4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .mockup-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      margin: 20px auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    /* Split Layout */
+    .split-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    /* Map Panel */
+    .map-panel {
+      flex: 1;
+      position: relative;
+      background: linear-gradient(135deg, #e8e4d8 0%, #ddd9cd 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: flex 0.3s ease;
+      min-height: 0;
+    }
+
+    .map-panel.maximized {
+      flex: 10;
+    }
+
+    .map-panel.minimized {
+      flex: 0.3;
+    }
+
+    .map-placeholder {
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .map-placeholder svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    .map-placeholder.hidden {
+      display: none;
+    }
+
+    /* Panel Controls */
+    .panel-controls {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .control-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--foreground);
+    }
+
+    .control-btn:active {
+      background: var(--primary);
+      color: var(--card-bg);
+    }
+
+    /* Date Badge */
+    .date-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+    }
+
+    .date-label {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .date-value {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14px;
+      color: var(--primary);
+    }
+
+    /* Divider */
+    .divider {
+      height: 40px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    .divider-btn {
+      padding: 6px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .divider-btn.active {
+      background: var(--primary);
+      color: var(--card-bg);
+      border-color: var(--primary);
+    }
+
+    /* List Panel */
+    .list-panel {
+      flex: 1;
+      background: var(--card-bg);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      transition: flex 0.3s ease;
+      min-height: 0;
+    }
+
+    .list-panel.maximized {
+      flex: 10;
+    }
+
+    .list-panel.minimized {
+      flex: 0.3;
+    }
+
+    .list-header {
+      position: sticky;
+      top: 0;
+      background: var(--card-bg);
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .list-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14px;
+      color: var(--foreground);
+    }
+
+    .list-count {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 8px 12px;
+      margin-right: 24px;
+      background: var(--background);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      font-size: 13px;
+    }
+
+    .search-box::placeholder {
+      color: var(--muted);
+    }
+
+    /* Business Cards */
+    .business-list {
+      padding: 8px 12px;
+    }
+
+    .business-card {
+      background: var(--background);
+      border: 1px solid var(--border);
+      padding: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14px;
+      color: var(--foreground);
+      margin-bottom: 2px;
+    }
+
+    .business-address {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .business-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .business-category {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .business-status {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+    }
+
+    .status-active { background: var(--success); }
+    .status-declining { background: var(--warning); }
+    .status-closed { background: var(--danger); }
+
+    /* Minimized Panel Indicator */
+    .minimized-indicator {
+      display: none;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .map-panel.minimized .minimized-indicator,
+    .list-panel.minimized .minimized-indicator {
+      display: block;
+    }
+
+    .map-panel.minimized .map-placeholder,
+    .list-panel.minimized .list-header,
+    .list-panel.minimized .search-box,
+    .list-panel.minimized .business-list {
+      display: none;
+    }
+
+    .list-panel.minimized {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Benefits annotation */
+    .mockup-info {
+      max-width: 390px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(74, 144, 164, 0.08);
+      border: 1px solid var(--primary);
+    }
+
+    .mockup-info h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .mockup-info ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .mockup-info li::before {
+      content: "+";
+      color: var(--success);
+      margin-right: 8px;
+      font-weight: 600;
+    }
+
+    .mockup-info .con::before {
+      content: "-";
+      color: var(--danger);
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      margin: 20px auto;
+      max-width: 390px;
+      display: block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle;">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Hoefe Mockups
+  </a>
+
+  <div class="mockup-container">
+    <div class="split-container">
+      <!-- Map Panel -->
+      <div class="map-panel" id="mapPanel">
+        <div class="map-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p>Interactive Map</p>
+        </div>
+        <div class="minimized-indicator">Tap to expand map</div>
+
+        <div class="date-badge">
+          <div class="date-label">Current Date</div>
+          <div class="date-value">March 1933</div>
+        </div>
+
+        <div class="panel-controls">
+          <button class="control-btn" onclick="maximizeMap()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 3 21 3 21 9"/>
+              <polyline points="9 21 3 21 3 15"/>
+              <line x1="21" y1="3" x2="14" y2="10"/>
+              <line x1="3" y1="21" x2="10" y2="14"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Divider with Quick Toggle -->
+      <div class="divider">
+        <button class="divider-btn" id="mapBtn" onclick="setView('split')">50/50</button>
+        <button class="divider-btn active" id="splitBtn" onclick="setView('split')">Split</button>
+        <button class="divider-btn" id="listBtn" onclick="maximizeList()">List</button>
+      </div>
+
+      <!-- List Panel -->
+      <div class="list-panel" id="listPanel">
+        <div class="minimized-indicator">Tap to expand list</div>
+
+        <div class="list-header">
+          <span class="list-title">Businesses</span>
+          <span class="list-count">127 visible</span>
+        </div>
+
+        <input type="text" class="search-box" placeholder="Search businesses...">
+
+        <div class="business-list">
+          <div class="business-card">
+            <div class="business-name">Kaufhaus Wertheim</div>
+            <div class="business-address">Leipziger Platz 12-13</div>
+            <div class="business-meta">
+              <span class="business-category">Department Store</span>
+              <div class="business-status">
+                <div class="status-dot status-active"></div>
+                <span style="color: var(--success)">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Hermann Tietz</div>
+            <div class="business-address">Alexanderplatz 2</div>
+            <div class="business-meta">
+              <span class="business-category">Department Store</span>
+              <div class="business-status">
+                <div class="status-dot status-declining"></div>
+                <span style="color: var(--warning)">Declining</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Pelzhaus Grunfeld</div>
+            <div class="business-address">Kurfurstendamm 234</div>
+            <div class="business-meta">
+              <span class="business-category">Retail</span>
+              <div class="business-status">
+                <div class="status-dot status-active"></div>
+                <span style="color: var(--success)">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Bank M. M. Warburg</div>
+            <div class="business-address">Unter den Linden 15</div>
+            <div class="business-meta">
+              <span class="business-category">Banking</span>
+              <div class="business-status">
+                <div class="status-dot status-closed"></div>
+                <span style="color: var(--danger)">Closed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Weinhandlung Mendelsohn</div>
+            <div class="business-address">Oranienburger Str. 28</div>
+            <div class="business-meta">
+              <span class="business-category">Wine Trade</span>
+              <div class="business-status">
+                <div class="status-dot status-active"></div>
+                <span style="color: var(--success)">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Schuhhaus Leiser</div>
+            <div class="business-address">Tauentzienstr. 8</div>
+            <div class="business-meta">
+              <span class="business-category">Retail</span>
+              <div class="business-status">
+                <div class="status-dot status-declining"></div>
+                <span style="color: var(--warning)">Declining</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup-info">
+    <h2>Mockup 5: Split View with Maximize (Hoefe Theme)</h2>
+    <ul>
+      <li>Both map and list visible simultaneously</li>
+      <li>Quick toggle between split and maximized</li>
+      <li>Preserves context while allowing focus</li>
+      <li>Flexible view ratios via divider buttons</li>
+      <li>Elegant cream and steel blue palette</li>
+      <li class="con">Less space for each view in split mode</li>
+      <li class="con">More unique pattern, less familiar</li>
+    </ul>
+  </div>
+
+  <script>
+    const mapPanel = document.getElementById('mapPanel');
+    const listPanel = document.getElementById('listPanel');
+    const buttons = document.querySelectorAll('.divider-btn');
+
+    function setView(view) {
+      mapPanel.classList.remove('maximized', 'minimized');
+      listPanel.classList.remove('maximized', 'minimized');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      if (view === 'split') {
+        document.getElementById('splitBtn').classList.add('active');
+      }
+    }
+
+    function maximizeMap() {
+      mapPanel.classList.add('maximized');
+      mapPanel.classList.remove('minimized');
+      listPanel.classList.add('minimized');
+      listPanel.classList.remove('maximized');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      document.getElementById('mapBtn').classList.add('active');
+    }
+
+    function maximizeList() {
+      listPanel.classList.add('maximized');
+      listPanel.classList.remove('minimized');
+      mapPanel.classList.add('minimized');
+      mapPanel.classList.remove('maximized');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      document.getElementById('listBtn').classList.add('active');
+    }
+
+    // Click on minimized panels to restore
+    mapPanel.addEventListener('click', function(e) {
+      if (this.classList.contains('minimized')) {
+        setView('split');
+      }
+    });
+
+    listPanel.addEventListener('click', function(e) {
+      if (this.classList.contains('minimized') && e.target === this) {
+        setView('split');
+      }
+    });
+  </script>
+</body>
+</html>

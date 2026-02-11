@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile UI Mockup - Bottom Tab Navigation (Hoefe Theme)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #f5f0e1;
+      --foreground: #1a1a1a;
+      --primary: #4a90a4;
+      --secondary: #7db5a4;
+      --border: #d4d0c8;
+      --muted: #6b6b6b;
+      --card-bg: #ffffff;
+      --warning: #e8a830;
+      --danger: #8b4049;
+      --success: #7db5a4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .mockup-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      margin: 20px auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    /* Header */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 100;
+    }
+
+    .header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .icon-btn:active {
+      background: rgba(74, 144, 164, 0.15);
+    }
+
+    /* View Container */
+    .view-container {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 70px;
+      overflow: hidden;
+    }
+
+    .view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .view.hidden {
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Map View */
+    .map-view {
+      background: linear-gradient(135deg, #e8e4d8 0%, #ddd9cd 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-placeholder {
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .map-placeholder svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Floating marker count */
+    .marker-count {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--card-bg);
+      padding: 8px 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    /* Date indicator on map */
+    .date-indicator {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      background: var(--card-bg);
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+    }
+
+    .date-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .date-value {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      color: var(--primary);
+    }
+
+    /* Time Slider */
+    .time-slider {
+      position: absolute;
+      bottom: 80px;
+      left: 16px;
+      right: 16px;
+      height: 4px;
+      background: var(--border);
+    }
+
+    .time-slider-fill {
+      width: 45%;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .time-slider-thumb {
+      position: absolute;
+      top: -8px;
+      left: 45%;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border: 2px solid var(--card-bg);
+      transform: translateX(-50%);
+    }
+
+    /* List View */
+    .list-view {
+      background: var(--background);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .list-header {
+      position: sticky;
+      top: 0;
+      background: var(--card-bg);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--background);
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .search-box::placeholder {
+      color: var(--muted);
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .filter-chip {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-chip.active {
+      background: var(--primary);
+      color: var(--card-bg);
+      border-color: var(--primary);
+    }
+
+    /* Business Cards */
+    .business-list {
+      padding: 8px;
+    }
+
+    .business-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .business-card:active {
+      border-color: var(--primary);
+    }
+
+    .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 15px;
+      color: var(--foreground);
+      margin-bottom: 4px;
+    }
+
+    .business-address {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .business-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .business-category {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .business-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    .status-active { background: var(--success); }
+    .status-declining { background: var(--warning); }
+    .status-closed { background: var(--danger); }
+
+    /* Bottom Tab Navigation */
+    .bottom-tabs {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      display: flex;
+      z-index: 100;
+    }
+
+    .tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 8px;
+    }
+
+    .tab.active {
+      color: var(--primary);
+    }
+
+    .tab svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .tab span {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Benefits annotation */
+    .mockup-info {
+      max-width: 390px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(74, 144, 164, 0.08);
+      border: 1px solid var(--primary);
+    }
+
+    .mockup-info h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .mockup-info ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .mockup-info li::before {
+      content: "+";
+      color: var(--success);
+      margin-right: 8px;
+      font-weight: 600;
+    }
+
+    .mockup-info .con::before {
+      content: "-";
+      color: var(--danger);
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      margin: 20px auto;
+      max-width: 390px;
+      display: block;
+      padding-left: 0;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle;">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Hoefe Mockups
+  </a>
+
+  <div class="mockup-container">
+    <!-- Header -->
+    <div class="header">
+      <h1>StoryMaps</h1>
+      <div class="header-actions">
+        <button class="icon-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Views -->
+    <div class="view-container">
+      <!-- Map View -->
+      <div class="view map-view" id="mapView">
+        <div class="map-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p>Interactive Map</p>
+        </div>
+
+        <div class="marker-count">
+          <span style="color: var(--primary)">127</span> businesses visible
+        </div>
+
+        <div class="date-indicator">
+          <div class="date-label">Current Date</div>
+          <div class="date-value">March 1933</div>
+        </div>
+
+        <div class="time-slider">
+          <div class="time-slider-fill"></div>
+          <div class="time-slider-thumb"></div>
+        </div>
+      </div>
+
+      <!-- List View -->
+      <div class="view list-view hidden" id="listView">
+        <div class="list-header">
+          <input type="text" class="search-box" placeholder="Search businesses...">
+          <div class="filter-row">
+            <button class="filter-chip active">All</button>
+            <button class="filter-chip">Active</button>
+            <button class="filter-chip">Declining</button>
+            <button class="filter-chip">Closed</button>
+            <button class="filter-chip">Retail</button>
+            <button class="filter-chip">Services</button>
+          </div>
+        </div>
+
+        <div class="business-list">
+          <div class="business-card">
+            <div class="business-name">Kaufhaus Wertheim</div>
+            <div class="business-address">Leipziger Platz 12-13</div>
+            <div class="business-meta">
+              <span class="business-category">Department Store</span>
+              <div class="business-status">
+                <div class="status-dot status-active"></div>
+                <span style="color: var(--success)">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Hermann Tietz</div>
+            <div class="business-address">Alexanderplatz 2</div>
+            <div class="business-meta">
+              <span class="business-category">Department Store</span>
+              <div class="business-status">
+                <div class="status-dot status-declining"></div>
+                <span style="color: var(--warning)">Declining</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Pelzhaus Grunfeld</div>
+            <div class="business-address">Kurfurstendamm 234</div>
+            <div class="business-meta">
+              <span class="business-category">Retail</span>
+              <div class="business-status">
+                <div class="status-dot status-active"></div>
+                <span style="color: var(--success)">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Bank M. M. Warburg</div>
+            <div class="business-address">Unter den Linden 15</div>
+            <div class="business-meta">
+              <span class="business-category">Banking</span>
+              <div class="business-status">
+                <div class="status-dot status-closed"></div>
+                <span style="color: var(--danger)">Closed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Weinhandlung Mendelsohn</div>
+            <div class="business-address">Oranienburger Str. 28</div>
+            <div class="business-meta">
+              <span class="business-category">Wine Trade</span>
+              <div class="business-status">
+                <div class="status-dot status-active"></div>
+                <span style="color: var(--success)">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-name">Schuhhaus Leiser</div>
+            <div class="business-address">Tauentzienstr. 8</div>
+            <div class="business-meta">
+              <span class="business-category">Retail</span>
+              <div class="business-status">
+                <div class="status-dot status-declining"></div>
+                <span style="color: var(--warning)">Declining</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Tabs -->
+    <div class="bottom-tabs">
+      <button class="tab active" onclick="showView('map')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <span>Map</span>
+      </button>
+      <button class="tab" onclick="showView('list')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="8" y1="6" x2="21" y2="6"/>
+          <line x1="8" y1="12" x2="21" y2="12"/>
+          <line x1="8" y1="18" x2="21" y2="18"/>
+          <line x1="3" y1="6" x2="3.01" y2="6"/>
+          <line x1="3" y1="12" x2="3.01" y2="12"/>
+          <line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+        <span>List</span>
+      </button>
+      <button class="tab" onclick="showView('timeline')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>Timeline</span>
+      </button>
+      <button class="tab" onclick="showView('stats')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        <span>Stats</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mockup-info">
+    <h2>Mockup 1: Bottom Tab Navigation (Hoefe Theme)</h2>
+    <ul>
+      <li>Full-screen views maximize content visibility</li>
+      <li>Familiar iOS/Android navigation pattern</li>
+      <li>Quick access to all major sections</li>
+      <li>Time slider integrated into map view</li>
+      <li>Elegant cream and steel blue color palette</li>
+      <li class="con">Requires tapping to switch views (no split)</li>
+      <li class="con">Map and list cannot be seen simultaneously</li>
+    </ul>
+  </div>
+
+  <script>
+    function showView(view) {
+      const mapView = document.getElementById('mapView');
+      const listView = document.getElementById('listView');
+      const tabs = document.querySelectorAll('.tab');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      if (view === 'map') {
+        mapView.classList.remove('hidden');
+        listView.classList.add('hidden');
+        tabs[0].classList.add('active');
+      } else if (view === 'list') {
+        mapView.classList.add('hidden');
+        listView.classList.remove('hidden');
+        tabs[1].classList.add('active');
+      } else if (view === 'timeline') {
+        tabs[2].classList.add('active');
+      } else if (view === 'stats') {
+        tabs[3].classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

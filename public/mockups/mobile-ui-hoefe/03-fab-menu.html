@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mobile UI Mockup - FAB Menu (Hoefe Theme)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #f5f0e1;
+      --foreground: #1a1a1a;
+      --primary: #4a90a4;
+      --secondary: #7db5a4;
+      --border: #d4d0c8;
+      --muted: #6b6b6b;
+      --card-bg: #ffffff;
+      --warning: #e8a830;
+      --danger: #8b4049;
+      --success: #7db5a4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .mockup-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      margin: 20px auto;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    /* Map Full Screen */
+    .map-fullscreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #e8e4d8 0%, #ddd9cd 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-placeholder {
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .map-placeholder svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Minimal Header */
+    .mini-header {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 100;
+    }
+
+    .logo-badge {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+    }
+
+    .logo-badge h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--foreground);
+      cursor: pointer;
+    }
+
+    /* Date Indicator */
+    .date-indicator {
+      position: absolute;
+      bottom: 120px;
+      left: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      z-index: 50;
+    }
+
+    .date-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .date-value {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px;
+      color: var(--primary);
+    }
+
+    /* FAB Container */
+    .fab-container {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+    }
+
+    .fab-main {
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--card-bg);
+      transition: transform 0.3s ease;
+    }
+
+    .fab-main.active {
+      transform: rotate(45deg);
+    }
+
+    .fab-menu {
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .fab-menu.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .fab-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .fab-item-btn {
+      width: 48px;
+      height: 48px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--foreground);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .fab-item-btn:hover {
+      background: var(--primary);
+      color: var(--card-bg);
+      border-color: var(--primary);
+    }
+
+    .fab-item-label {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 26, 26, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 150;
+    }
+
+    .overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Side Panel */
+    .side-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 85%;
+      height: 100%;
+      background: var(--card-bg);
+      border-left: 1px solid var(--border);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 300;
+      overflow-y: auto;
+    }
+
+    .side-panel.open {
+      transform: translateX(0);
+    }
+
+    .panel-header {
+      padding: 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px;
+      color: var(--foreground);
+    }
+
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--foreground);
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--background);
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--foreground);
+      font-size: 14px;
+    }
+
+    .search-box::placeholder {
+      color: var(--muted);
+    }
+
+    /* Business Cards */
+    .business-list {
+      padding: 8px 16px;
+    }
+
+    .business-card {
+      background: var(--background);
+      border: 1px solid var(--border);
+      padding: 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .business-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 15px;
+      color: var(--foreground);
+      margin-bottom: 4px;
+    }
+
+    .business-address {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .business-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .business-category {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .business-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    .status-active { background: var(--success); }
+    .status-declining { background: var(--warning); }
+    .status-closed { background: var(--danger); }
+
+    /* Benefits annotation */
+    .mockup-info {
+      max-width: 390px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(74, 144, 164, 0.08);
+      border: 1px solid var(--primary);
+    }
+
+    .mockup-info h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .mockup-info ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .mockup-info li::before {
+      content: "+";
+      color: var(--success);
+      margin-right: 8px;
+      font-weight: 600;
+    }
+
+    .mockup-info .con::before {
+      content: "-";
+      color: var(--danger);
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      margin: 20px auto;
+      max-width: 390px;
+      display: block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle;">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Hoefe Mockups
+  </a>
+
+  <div class="mockup-container">
+    <!-- Full Screen Map -->
+    <div class="map-fullscreen">
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <p>Interactive Map</p>
+      </div>
+    </div>
+
+    <!-- Minimal Header -->
+    <div class="mini-header">
+      <div class="logo-badge">
+        <h1>StoryMaps</h1>
+      </div>
+      <div class="header-icons">
+        <button class="icon-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Date Indicator -->
+    <div class="date-indicator">
+      <div class="date-label">Current Date</div>
+      <div class="date-value">March 1933</div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeFab()"></div>
+
+    <!-- FAB Container -->
+    <div class="fab-container">
+      <div class="fab-menu" id="fabMenu">
+        <div class="fab-item">
+          <button class="fab-item-btn" onclick="openPanel()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"/>
+              <line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/>
+              <line x1="3" y1="12" x2="3.01" y2="12"/>
+              <line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+          </button>
+          <span class="fab-item-label">Business List</span>
+        </div>
+        <div class="fab-item">
+          <button class="fab-item-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </button>
+          <span class="fab-item-label">Timeline</span>
+        </div>
+        <div class="fab-item">
+          <button class="fab-item-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </button>
+          <span class="fab-item-label">Statistics</span>
+        </div>
+        <div class="fab-item">
+          <button class="fab-item-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </button>
+          <span class="fab-item-label">Map View</span>
+        </div>
+      </div>
+      <button class="fab-main" id="fabMain" onclick="toggleFab()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Side Panel -->
+    <div class="side-panel" id="sidePanel">
+      <div class="panel-header">
+        <span class="panel-title">Businesses</span>
+        <button class="close-btn" onclick="closePanel()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <input type="text" class="search-box" placeholder="Search businesses...">
+
+      <div class="business-list">
+        <div class="business-card">
+          <div class="business-name">Kaufhaus Wertheim</div>
+          <div class="business-address">Leipziger Platz 12-13</div>
+          <div class="business-meta">
+            <span class="business-category">Department Store</span>
+            <div class="business-status">
+              <div class="status-dot status-active"></div>
+              <span style="color: var(--success)">Active</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="business-card">
+          <div class="business-name">Hermann Tietz</div>
+          <div class="business-address">Alexanderplatz 2</div>
+          <div class="business-meta">
+            <span class="business-category">Department Store</span>
+            <div class="business-status">
+              <div class="status-dot status-declining"></div>
+              <span style="color: var(--warning)">Declining</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="business-card">
+          <div class="business-name">Pelzhaus Grunfeld</div>
+          <div class="business-address">Kurfurstendamm 234</div>
+          <div class="business-meta">
+            <span class="business-category">Retail</span>
+            <div class="business-status">
+              <div class="status-dot status-active"></div>
+              <span style="color: var(--success)">Active</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="business-card">
+          <div class="business-name">Bank M. M. Warburg</div>
+          <div class="business-address">Unter den Linden 15</div>
+          <div class="business-meta">
+            <span class="business-category">Banking</span>
+            <div class="business-status">
+              <div class="status-dot status-closed"></div>
+              <span style="color: var(--danger)">Closed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="business-card">
+          <div class="business-name">Weinhandlung Mendelsohn</div>
+          <div class="business-address">Oranienburger Str. 28</div>
+          <div class="business-meta">
+            <span class="business-category">Wine Trade</span>
+            <div class="business-status">
+              <div class="status-dot status-active"></div>
+              <span style="color: var(--success)">Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup-info">
+    <h2>Mockup 3: Floating Action Button (Hoefe Theme)</h2>
+    <ul>
+      <li>Maximum map visibility at all times</li>
+      <li>Single button access to all features</li>
+      <li>Clean, minimal interface</li>
+      <li>List slides in smoothly from side</li>
+      <li>Elegant cream and steel blue styling</li>
+      <li class="con">Requires two taps to access list</li>
+      <li class="con">FAB may conflict with map gestures</li>
+    </ul>
+  </div>
+
+  <script>
+    let fabOpen = false;
+
+    function toggleFab() {
+      fabOpen = !fabOpen;
+      document.getElementById('fabMain').classList.toggle('active', fabOpen);
+      document.getElementById('fabMenu').classList.toggle('open', fabOpen);
+      document.getElementById('overlay').classList.toggle('visible', fabOpen);
+    }
+
+    function closeFab() {
+      fabOpen = false;
+      document.getElementById('fabMain').classList.remove('active');
+      document.getElementById('fabMenu').classList.remove('open');
+      document.getElementById('overlay').classList.remove('visible');
+    }
+
+    function openPanel() {
+      closeFab();
+      document.getElementById('sidePanel').classList.add('open');
+      document.getElementById('overlay').classList.add('visible');
+    }
+
+    function closePanel() {
+      document.getElementById('sidePanel').classList.remove('open');
+      document.getElementById('overlay').classList.remove('visible');
+    }
+  </script>
+</body>
+</html>

@@ -139,33 +139,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }, [data, markers])
 
   // Initialize Supercluster for clustering with optimized settings for large datasets
+  // PERF: Removed viewState.zoom from dependencies - Supercluster handles zoom internally via getClusters()
+  // This prevents expensive index rebuilding on every zoom change (was causing jank)
   const supercluster = useMemo(() => {
-    // Adjust clustering based on test mode and zoom level
-    let radius = isMobile ? 40 : 20
-    let maxZoom = isMobile ? 16 : 18
-    let minPoints = isMobile ? 4 : 2
-
-    if (isTestMode) {
-      // More aggressive clustering for 10,000+ markers
-      const currentZoom = viewState.zoom
-      if (currentZoom < 10) {
-        radius = 100
-        minPoints = 3
-      } else if (currentZoom < 12) {
-        radius = 60
-        minPoints = 2
-      } else if (currentZoom < 14) {
-        radius = 40
-        minPoints = 2
-      } else if (currentZoom < 16) {
-        radius = 25
-        minPoints = 2
-      } else {
-        radius = 15
-        minPoints = 2
-      }
-      maxZoom = 18
-    }
+    // Use fixed radius settings - Supercluster adjusts clustering based on zoom passed to getClusters()
+    // Higher radius = more aggressive clustering at all zoom levels
+    const radius = isTestMode ? 60 : isMobile ? 40 : 20
+    const maxZoom = 18
+    const minPoints = isTestMode ? 2 : isMobile ? 4 : 2
 
     const index = new Supercluster({
       radius,
@@ -194,7 +175,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [processedMarkers, isMobile, isTestMode, viewState.zoom])
+  }, [processedMarkers, isMobile, isTestMode])
 
   // Pre-compute initial markers for fallback with spatial distribution
   const initialMarkers = useMemo(() => {

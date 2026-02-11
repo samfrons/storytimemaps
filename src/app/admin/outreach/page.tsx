@@ -29,8 +29,8 @@ function AdminAuth({ children }: { children: React.ReactNode }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Simple password check - in production use environment variable
-    // Default password is 'stolpersteine' - can be changed via ADMIN_PASSWORD env var
-    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'stolpersteine'
+    // Default password is 'storytimemaps' - can be changed via ADMIN_PASSWORD env var
+    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'storytimemaps'
 
     if (password === correctPassword) {
       setAuthenticated(true)

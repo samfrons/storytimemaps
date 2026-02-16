@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { join } from 'path'
+import { exec } from 'child_process'
+import { promisify } from 'util'
 import type { OutreachRecord } from '@/lib/types/outreach'
+
+const execAsync = promisify(exec)
 
 export const dynamic = 'force-dynamic'
 
 const DATA_PATH = join(process.cwd(), 'public', 'data', 'outreach', 'businesses.json')
+const DATA_FILE_REL = 'public/data/outreach/businesses.json'
 
 function loadData(): OutreachRecord[] {
   if (!existsSync(DATA_PATH)) {
@@ -17,6 +22,18 @@ function loadData(): OutreachRecord[] {
 
 function saveData(data: OutreachRecord[]): void {
   writeFileSync(DATA_PATH, JSON.stringify(data, null, 2))
+}
+
+async function autoCommit(message: string): Promise<void> {
+  try {
+    const cwd = process.cwd()
+    await execAsync(`git add "${DATA_FILE_REL}"`, { cwd })
+    await execAsync(`git commit -m "${message}" --no-verify`, { cwd })
+    console.log('Auto-committed outreach data changes')
+  } catch (error) {
+    // Commit may fail if no changes or git not available - that's ok
+    console.log('Auto-commit skipped:', (error as Error).message)
+  }
 }
 
 export async function GET() {
@@ -52,6 +69,10 @@ export async function PATCH(request: NextRequest) {
     }
 
     saveData(data)
+
+    // Auto-commit changes to git
+    const recordTitle = data[recordIndex].title || `ID ${id}`
+    await autoCommit(`chore: update outreach record - ${recordTitle}`)
 
     return NextResponse.json({
       success: true,

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { StoryMap } from '../types'
+import { preloadTimelineData } from '../utils/timelineLoader'
 
 // Keeping for future use when integrating Jewish business data
 // interface JewishBusiness {
@@ -95,6 +96,20 @@ export const useStoryMapLogicTest = () => {
 
     fetchData()
   }, [])
+
+  // Prefetch timeline JSONs for the first detailed stories that have
+  // timeline data, so the BusinessDetailModal opens instantly when a
+  // user clicks a marker. Runs once after the dataset arrives. The
+  // request is fire-and-forget; failures are absorbed by the loader.
+  useEffect(() => {
+    if (detailedStoriesData.length === 0) return
+    const ids = detailedStoriesData
+      .filter((s) => s.hasTimelineData)
+      .slice(0, 10)
+      .map((s) => s.id)
+    if (ids.length === 0) return
+    void preloadTimelineData(ids)
+  }, [detailedStoriesData])
 
   // Helper function to check if a business has detailed story content
   const hasDetailedStory = useCallback((story: StoryMap) => {

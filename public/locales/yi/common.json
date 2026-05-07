@@ -92,6 +92,29 @@
       "description": "Inspirirt durkh di Stolpersteine proyekt, mir shteln zikh for instalirn denkmal plaketen bay di originele erter fun dokumentirte yidishe gesheftn iber Berlin.",
       "vision": "Di plaketen voltn gedint vi shtendike dermonung fun dem lebedikn yidishn handls-lebn vos hot amol gebliet in di gegnt, farbindndik digitale dokumentatsye mit fizishe dermonung."
     },
+    "stolpersteine": {
+      "title": "Inspirirt fun Stolpersteine",
+      "description": "Vi Gunter Demnigs shtarke Stolpersteine proyekt vos gedenkt ayntsike mentshn, voltn unzere denkmal plaketen mekhabed zayn di gesheft-erter vu yidishe mishpokhes hobn geboyt zeyer parnose un gedint zeyer kehiles.",
+      "stolpersteineFocus": "Stolpersteine Fokus",
+      "individualVictims": "Ayntsike korbones",
+      "residentialAddresses": "Voyn adreses",
+      "personalStories": "Perzenlekhe geshikhtes",
+      "familyDeportations": "Mishpokhe deportatsyes",
+      "businessFocus": "Gesheft Plaketen Fokus",
+      "commercialEnterprises": "Handl unternemungen",
+      "businessLocations": "Gesheft erter",
+      "economicPersecution": "Ekonomishe rdife",
+      "communityImpact": "Kehile virkung"
+    },
+    "plaqueMockup": {
+      "hereStood": "DO IZ GESHTANEN",
+      "owner": "Aygntimer: Mishpokhe Pelz",
+      "forcedClosure": "Tsvang-farshlisung",
+      "aryanized": "Arizirt"
+    },
+    "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
+    "ctaDescription": "Mir zukhn shutfes mit Berlins kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet. Di initsyativ farlאngt tsuזamenארbet mit shtot plאnung, historisher bahaltung, un yidishe kehile organizatsyes.",
+    "learnStolpersteine": "Lernt vegn Stolpersteine",
     "community": {
       "title": "Kehile Bashteyung",
       "description": "Mir arbetn mit lokale kehiles, shuln, un Berliner yidishe organizatsyes tsu antviklen khinukh programen vos farbindn di historishe datn mit hayntike diskusyes vegn zikorn, handl, un kehile."
@@ -118,6 +141,70 @@
     "active": "Aktiv",
     "declining": "Aropgeeyendik",
     "closed": "Farshlosn"
+  },
+  "plaques": {
+    "loading": "Plaketen lodn...",
+    "plaqueAltText": "Denkmal plakete far {{name}}",
+    "hero": {
+      "badge": "Zikorn Initsyativ",
+      "title": "Denkmal-Plaketen Initsyativ",
+      "subtitle": "Brengen digitale zikorn in di fizishe gasn fun Berlin",
+      "compactDescription": "Helft undz instalirn denkmal plaketen bay di originele erter fun yidishe gesheftn iber Berlin - farbindndik digitale dokumentatsye mit fizisher dermonung.",
+      "learnMore": "Lernt mer vegn di initsyativ",
+      "visionTitle": "Unzer Vizye",
+      "visionDescription": "Mir shteln zikh for a Berlin vu di zikorn fun yidishn handls-lebn iz bahitn nisht nor digital, ober in di gasn aleyn vu di gesheftn hobn amol gebliet. Yede plakete vet dertseyln di geshikhte fun a mishpokhe unternemung.",
+      "stolpersteineTitle": "Inspirirt fun Stolpersteine",
+      "stolpersteineDescription": "Vi Gunter Demnigs shtarke Stolpersteine proyekt vos gedenkt ayntsike mentshn, voltn unzere denkmal plaketen mekhabed zayn di gesheft-erter vu yidishe mishpokhes hobn geboyt zeyer parnose.",
+      "stolpersteineFocus": "Stolpersteine Fokus",
+      "businessPlaquesFocus": "Gesheft Plaketen Fokus",
+      "individualVictims": "Ayntsike korbones",
+      "residentialAddresses": "Voyn adreses",
+      "personalStories": "Perzenlekhe geshikhtes",
+      "commercialEnterprises": "Handl unternemungen",
+      "businessLocations": "Gesheft erter",
+      "economicPersecution": "Ekonomishe rdife",
+      "berlinStyle": "Berliner Shtil",
+      "brassStyle": "Messing Shtil",
+      "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
+      "ctaDescription": "Mir zukhn shutfes mit kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet iber Berlin.",
+      "supportInitiative": "Shtitst di Initsyativ",
+      "learnStolpersteine": "Lernt vegn Stolpersteine"
+    },
+    "nav": {
+      "backToMap": "Tsurik tsu der mape"
+    },
+    "gallery": {
+      "title": "Oysgeklibene Denkmal Plaketen",
+      "subtitle": "15 plaketen far dokumentirte yidishe gesheftn - klik oyf a plakete tsu oysforshn di gantse geshikhte"
+    },
+    "howItWorks": {
+      "title": "Vi Denkmal Plaketen Arbetn",
+      "subtitle": "Farbindndik fizishe denkmeler mit digitale geshikhte-dertseylung",
+      "step1Title": "Forshung & Dokumentatsye",
+      "step1Description": "Yede plakete bazirt zikh oyf verifitsirte historishe forshung fun der Leo Baeck Institut datenbaze, dokumentirndik gesheft nomen, aygntimer, ort, un operatsyonele datn.",
+      "step2Title": "Fizishe Instalatsye",
+      "step2Description": "Plaketen voltn instalirt gevorn bay oder noent tsu di originele gesheft erter, dienendik vi shtendike gas-medayer denkmeler far ale farbaygeyer.",
+      "step3Title": "Digitale Farbindung",
+      "step3Description": "QR kodes oyf yeder plakete farbindn tsu unzer interaktive mape, gebndik bazukher fotografyes, detaylirte geshikhtes, un di gantse geshikhte fun yedn gesheft."
+    },
+    "partners": {
+      "title": "Zukhn Shutfes",
+      "description": "Di initsyativ farlangt tsuzamenarbeit iber fil sektorn. Mir zukhn aktiv shutfes tsu helfn brengen denkmal plaketen in Berlins gasn.",
+      "culturalInstitutions": "Kulturele Institutsyes",
+      "educationalOrganizations": "Bildungs Organizatsyes",
+      "jewishCommunity": "Yidishe Kehile Organizatsyes",
+      "cityPlanning": "Shtot Planung & Bahitung",
+      "becomePartner": "Ver a Shutef",
+      "supportProject": "Shtitst dos Proyekt"
+    },
+    "footer": {
+      "exploreTitle": "Oysforshn dos Gantse Arkhiv",
+      "exploreDescription": "Bazukht unzer interaktive mape tsu oysforshn iber 10,000 dokumentirte yidishe gesheftn in Berlin fun 1900-1945.",
+      "exploreMap": "Oysforshn Interaktive Mape",
+      "rights": "Ale rekhtn bahitn.",
+      "map": "Interaktive Mape",
+      "about": "Vegn dem Proyekt"
+    }
   },
   "share": {
     "shareStory": "טיילן געשיכטע",

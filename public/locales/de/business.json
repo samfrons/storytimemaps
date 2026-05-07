@@ -105,7 +105,19 @@
       "genealogy": "Genealogie"
     }
   },
+  "business": {
+    "address": "Adresse",
+    "category": "Kategorie",
+    "district": "Bezirk",
+    "owner": "Eigentümer",
+    "subcategory": "Unterkategorie"
+  },
+  "businesses": {
+    "total": "Geschäfte gesamt"
+  },
   "timeline": {
+    "snapshot": "Momentaufnahme",
+    "year": "Jahr",
     "eliasBraun": {
       "period1": {
         "description": "Ein florierendes Schneidergeschäft im Herzen der belebten Rosenthaler Straße in Berlin. Elias Braun und seine Familie haben sich einen respektierten Ruf für feine Herrenkleidung erarbeitet und bedienen sowohl jüdische als auch nichtjüdische Kunden aus der ganzen Stadt.",

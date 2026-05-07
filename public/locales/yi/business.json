@@ -13,7 +13,7 @@
       "historicalContext": "Historisher Kontekst",
       "historicalContextDesc": "Tsvishn 1900 un 1945, yidishe unternemers hobn operirt toyzeter fun gesheftn in Berlin, fun kleyne kromen tsu groyse varenhayzer. Di mape dokumentirt zeyer erter, tipn, un goroles beeys der Nazi ere.",
       "theData": "Di Datn",
-      "theDataDesc": "Unzer datenbaze antהalt iber 10,000 verifitsirte gesheft rekords, tsuzamengeshtelt fun historishe direktoryes, registratsye dokumentn, un iberleber tsaygnshaftn. Yeder ayntrag shtelt for nisht nor a gesheft, ober a mishpokhes parnose un baytrag tsu Berlins ekonomye.",
+      "theDataDesc": "Unzer datenbaze antalt iber 10,000 verifitsirte gesheft rekords, tsuzamengeshtelt fun historishe direktoryes, registratsye dokumentn, un iberleber tsaygnshaftn. Yeder ayntrag shtelt for nisht nor a gesheft, ober a mishpokhes parnose un baytrag tsu Berlins ekonomye.",
       "timelineNavigation": "Tsaytlinie Navigatsye",
       "timelineNavigationDesc": "Nutst di tsaytlinie kontroln tsu zen vi di gesheft landshaft hot zikh geendert iber 45 yor. Zet vi gesheftn blien in di 1920er, un zayt eydes fun di khurbndike virkungen fun Nazi politik fun 1933 vayter.",
       "colorCoding": "Farb Kodirung",
@@ -25,7 +25,7 @@
       "researchTeamDesc2": "Humboldt Universitet Berlin",
       "researchTeamDesc3": "Interaktive Vizualizatsye & Veb Antviklung",
       "researchTeamDesc4": "Makhndik geshikhte tsugeynglekh durkh tekhnologye",
-      "academicCitation": "Far akademishe tsitaten, bitע nutst: Kreutzmüller, C. (2024). \"Yidishe Gesheftn in Berlin 1900-1945: A Digitale Arkhiv\""
+      "academicCitation": "Far akademishe tsitaten, bitye nutst: Kreutzmüller, C. (2024). \"Yidishe Gesheftn in Berlin 1900-1945: A Digitale Arkhiv\""
     },
     "storyList": {
       "searchPlaceholder": "Zukhn gesheftn...",
@@ -76,23 +76,23 @@
     },
     "businessDescriptions": {
       "tailor_shop": "A kleyn shnayder gesheft in aygntum fun {owner}. Dos gesheft iz geven bakant far kvalitet handverk.",
-      "department_store": "Eyns fun Berlins prominente yidish-aygntimlekhe varenhayzer. Dos {name} hot ongegebn a brayte produktn-gamе.",
+      "department_store": "Eyns fun Berlins prominente yidish-aygntimlekhe varenhayzer. Dos {name} hot ongegebn a brayte produktn-game.",
       "theater_cafe": "A populer kafe bazukht fun kinstler un intelektualn leben dem Daytshn Teater."
     },
     "overlay": {
       "featuredStories": "Oysgeklibene Geshikhtes",
       "detailedNarratives": "detaylirte dertseylungen",
-      "personalAccounts": "Perzenלekhe barikhtn mit raykhn historishn kontekst, fotografyes, un detaylirte geshikhtes",
+      "personalAccounts": "Perzenlikhe barikhtn mit raykhn historishn kontekst, fotografyes, un detaylirte geshikhtes",
       "historicalDatabase": "Historishe Datenbaze",
       "businessRecords": "gesheft rekords",
       "completeRegistry": "Fulshtendiker registir far genealogishe forshung un umfasndike historishe analize",
       "featuredStoriesModeActive": "Oysgeklibene Geshikhtes Modus Aktiv",
-      "viewingBusinesses": "Kukt oyf {count} gesheftn mit detaylirte perzenלekhe dertseylungen, fotografyes, un raykhn historishn kontekst.",
+      "viewingBusinesses": "Kukt oyf {count} gesheftn mit detaylirte perzenlikhe dertseylungen, fotografyes, un raykhn historishn kontekst.",
       "intimateGlimpses": "Di geshikhtes gibn intime blikn in di lebn fun gesheft aygntimer un zeyer mishpokhes beeys der period.",
       "historicalDatabaseModeActive": "Historishe Datenbaze Modus Aktiv",
       "viewingAllRecords": "Kukt oyf ale {count} gesheft rekords fun dem fulshtendikn historishn registir.",
-      "comprehensiveDataset": "Der umfasndiker datensats antהalt gruntlekhe informatsye far genealogishe forshung un akademishe shtudye.",
-      "personalStories": "Perzenлekhe Geshikhtes",
+      "comprehensiveDataset": "Der umfasndiker datensats antalt gruntlekhe informatsye far genealogishe forshung un akademishe shtudye.",
+      "personalStories": "Perzenlikhe Geshikhtes",
       "historicalPhotos": "Historishe Fotografyes",
       "detailedContext": "Detaylirter Kontekst",
       "completeRegistryTag": "Fulshtendiker Registir",
@@ -100,70 +100,50 @@
       "genealogy": "Yikhes-forshung"
     }
   },
-  "businessTypes": {
-    "TAILORING": "SHNAYDЕRAY",
-    "TAILOR_SHOP": "SHNAYDER KROM",
-    "DEPARTMENT STORE": "VARENHAYZ",
-    "DEPARTMENT_STORE": "VARENHAYZ",
-    "THEATER": "TEATER",
-    "THEATER_CAFÉ": "TEATER KAFE",
-    "CAFE": "KAFE",
-    "CAFÉ": "KAFE",
-    "RESTAURANT": "RESTORAN",
-    "BAKERY": "BEKERAY",
-    "GROCERY": "SHPAYZKROM",
-    "PHARMACY": "APTEYK",
-    "CLOTHING": "KLEYDUNG",
-    "JEWELRY": "TSIRUNG",
-    "FURNITURE": "MEBL",
-    "BOOKSTORE": "BIKHER-KROM",
-    "PHOTOGRAPHY": "FOTOGRAFYE",
-    "BANK": "BANK",
-    "HOTEL": "HOTEL",
-    "BUTCHER": "FLAYSH-KROM",
-    "INDUSTRY": "INDUSTRIYE",
-    "SERVICES": "DINST",
-    "TRADE": "HANDL",
-    "RETAIL": "KHOYZEK-HANDL",
-    "FINANCE": "FINANTS"
-  },
-  "businessDescriptions": {
-    "tailor_shop": "A kleyn shnayder gesheft in aygntum fun {owner}. Dos gesheft iz geven bakant far kvalitet handverk.",
-    "department_store": "Eyns fun Berlins prominente yidish-aygntimlekhe varenhayzer. Dos {name} hot ongegebn a brayte produktn-gamе.",
-    "theater_cafe": "A populer kafe bazukht fun kinstler un intelektualn leben dem Daytshn Teater."
-  },
   "businessStates": {
     "active": "Aktiv",
     "declining": "Aropgeyendik",
     "closed": "Farshlosn"
   },
+  "business": {
+    "address": "Adres",
+    "category": "Kategorye",
+    "district": "Distrikt",
+    "owner": "Aygntimer",
+    "subcategory": "Unter-kategorye"
+  },
+  "businesses": {
+    "total": "Ale gesheftn"
+  },
   "timeline": {
+    "snapshot": "Momen-bild",
+    "year": "Yor",
     "eliasBraun": {
       "period1": {
-        "description": "א בליענדיק שנײַדערײַ געשעפט אין הארצן פון בערלינס לעבעדיקן ראָזענטאַלער שטראָס. עליאס בראַון און זײַן משפּחה האָבן אויפגעבויט אַ רעספּעקטירטן רוף פֿאַר פֿײַנע מענער קליידונג, באַדינענדיק סײַ ייִדישע סײַ ניט־ייִדישע קונדן פון איבער דער גאַנצער שטאָט.",
-        "longDescription": "געגרינדט אין 1925, עליאס בראַונס שנײַדערײַ געשעפט איז שנעל געוואָרן אַ קאָרנערשטיין פון ראָזענטאַלער שטראָס געשעפט דיסטריקט. דער געשעפט האָט זיך ספּעציאַליזירט אין באַשטעלטע מענער אַנצוגן, ציענדיק קונדן פון בערלינס וואַקסנדיקער מיטל קלאַס. עליאס, אויסגעלערנט אין טראַדיציאָנעלע שנײַדערײַ טעכניקן, האָט באַשעפטיקט דרײַ באַוווסטע נייערינס און געהאַט אַ שטענדיקן שטראָם פון באַשטעלונגען. די משפּחה האָט געוווינט איבערן געשעפט, מיט דער ווערקשטאַט אויפן ערד שטאָק און ווײַז פֿענצטער ווײַזנדיק די לעצטע מאָדעס. אין דער תקופה האָט דער געשעפט געבליט ווען בערלינס עקאָנאָמיע האָט זיך דערהוילט פון דער נאָך־מלחמה רעצעסיע.",
+        "description": "A bliendiк shnaydеray gesheft in hartsn fun Berlins lebedikn Rozentaler Shtrос. Elias Braun un zayn mishpokhe hobn oyfgeboyt a respektirtn ruf far fayne mener kleydung, badienendik say yidishe say nit-yidishe kundn fun iber der ganster shtot.",
+        "longDescription": "Gegrindt in 1925, Elias Brauns shnaydеray gesheft iz shnеl gevorn a kornershtеyn fun Rozentaler Shtrоs gesheft distrikt. Der gesheft hot zikh spetsializirt in bashteltn mener antsugn, tsienendik kundn fun Berlins vaksndiker mitl klas. Elias, oysgelernt in traditsyonele shnaydеray tekhniken, hot basheftikt dray baveрste neyerins un gehat a shtendikn shtrom fun bashtelungen. Di mishpokhe hot gevoynt ibern gesheft, mit der verkshtаt oyfn erd shtok un vayz fenster vayzndik di letste modes. In der tkufe hot der gesheft geblit ven Berlins ekonomye hot zikh derhoylt fun der nokh-milkhome retsesye.",
         "media1": {
-          "caption": "דער בליענדיקער שנײַדערײַ געשעפט אין זײַן בליצײַט, 1920ער יאָרן"
+          "caption": "Der bliendiкer shnaydеray gesheft in zayn blitsayt, 1920er yorn"
         },
         "media2": {
-          "caption": "עליאס בראַון מיט זײַן משפּחה און אָנגעשטעלטע, אַרום 1930"
+          "caption": "Elias Braun mit zayn mishpokhe un ongeshtelte, arum 1930"
         }
       },
       "period2": {
-        "description": "ווען די נאַצי רדיפות ווערן שטאַרקער, רײַסט זיך דער שנײַדערײַ געשעפט אונטער אַלץ מער באַגרענעצונגען און באַיקאָטן. ניט־ייִדישע קונדן בלײַבן אַוועק, און נײַע רעגולאַציעס מאַכן געשעפט אָפּעראַציעס אַלץ שווערער פֿאַר דער בראַון משפּחה.",
-        "longDescription": "נאָך היטלערס קומען צו מאַכט אין יאַנואַר 1933, האָט עליאס בראַונס געשעפט באַגעגנט גלײַך שוועריקײטן. דער נאַצי באַיקאָט פון ייִדישע געשעפטן אין אַפּריל 1933 האָט באַצייכנט דעם אָנהייב פון סיסטעמאַטישער עקאָנאָמישער רדיפה. שטאַם קונדן האָבן אויפגעהערט צו קומען, מורא האָבנדיק פון פֿאַרבינדונג מיט ייִדיש־אייגנטימלעכע אינסטיטוציעס. נײַע רעגולאַציעס האָבן געפאָדערט ספּעציעלע דערלויבענישן פֿאַר ייִדישע געשעפטן, און עליאס איז געצוואונגען געוואָרן אָפּצולאָזן זײַנע ניט־ייִדישע אָנגעשטעלטע. די משפּחה האָט זיך געראַנגלט צו האַלטן דעם געשעפט ווען זייער קונדן באַזע האָט זיך געמינערט צו הויפּטזעכלעך ייִדישע פּאַטראָנען. פֿענצטער זענען צומאָל געוואָרן באַצייכנט מיט אַנטיסעמיטישע גראַפיטי, און דער אַמאָל בליענדיקער געשעפט איז געוואָרן אַ שאָטן פון זיך אַליין.",
+        "description": "Ven di Nazi rdifes vern shtarker, rayst zikh der shnaydеray gesheft unter alts mer bagrentsungen un boykоtn. Nit-yidishe kundn blaybn avek, un naye regulatsyes makhn gesheft operatsyes alts shverer far der Braun mishpokhe.",
+        "longDescription": "Nokh Hitlers kumen tsu makht in yanuar 1933, hot Elias Brauns gesheft bagegnt glaykh shverikaytes. Der Nazi boykot fun yidishe gesheftn in april 1933 hot batseyknt dem onheyb fun sistematisher ekonomisher rdife. Shtam kundn hobn oyfgehert tsu kumen, moire hobndik fun farbindung mit yidish-aygntimlekhe insitutsyes. Naye regulatsyes hobn gefordert spetsyele derloybeshaftn far yidishe gesheftn, un Elias iz getsvungen gevorn optsulоzn zayne nit-yidishe ongeshtelte. Di mishpokhe hot zikh gerangt tsu haltn dem gesheft ven zeyer kundn baze hot zikh gemindert tsu hoyptzekhlekh yidishe patronen. Fenster zenen tsumol gevorn batseyknt mit antisemitishe grafiti, un der amol bliendiкer gesheft iz gevorn a shotn fun zikh aleyn.",
         "media1": {
-          "caption": "דער געשעפט בעתן באַיקאָט צײַט - ליידיקע גאַסן און באַצייכנטע פֿענצטער"
+          "caption": "Der gesheft betn boykot tsayt - leydike gasn un batseyknte fenster"
         }
       },
       "period3": {
-        "description": "דער שנײַדערײַ געשעפט ווערט חרוב געמאַכט בעת קריסטאַלנאַכט. פֿענצטער ווערן צעבראָכן, סחורה געגנבעט, און די משפּחה ווערט געצוואונגען צו אַנטלויפן. דער געשעפט וואָס האָט געדינט בערלינס געמיינדע פֿאַר איבער אַ יאָרצענדליק איז אויף אייביק פֿאַרלוירן.",
-        "longDescription": "אין דער נאַכט פון 9־10טן נאָוועמבער 1938, בעת די קאָאָרדינירטע אַטאַקעס באַקאַנט אַלס קריסטאַלנאַכט, איז עליאס בראַונס שנײַדערײַ געשעפט געוואָרן אַטאַקירט דורך ס.אַ. שטורם טרופּן און אָרטיקע ציווילע. די געשעפט פֿענצטער זענען צעבראָכן געוואָרן, שטאָף באַלן זענען חרוב געמאַכט אָדער געגנבעט געוואָרן, און ניי מאַשינען זענען באַשעדיקט געוואָרן איבער רעפּאַראַטור. די משפּחה, מורא האָבנדיק פֿאַר זייער זיכערקייט, איז אַנטלאָפן פון זייער היים איבערן געשעפט יענער זעלבער נאַכט. עליאס האָט געפּרוּווט צוריקקומען טעג שפּעטער צו ראַטעווען וואָס איז געבליבן, אָבער האָט געפֿונען די לאָקאַלן גאָר אויסגעראַבעוועט. דער בנין איז שפּעטער געוואָרן באַשלאָגנט דורך די נאַצי אויטאָריטעטן, און דער פּלאַץ איז לסוף געוואָרן איבערגעמאַכט צו אַ ניט־ייִדיש געשעפט. דער בראַון משפּחעס יאָרצענדליק פון שווערער אַרבעט און געמיינדע אָנוועזנהייט איז אויסגעמעקט געוואָרן אין איין איינציקער נאַכט פון געוואַלד.",
+        "description": "Der shnaydеray gesheft vert khorев gemakht beeys Kristalnakht. Fenster vern tsebrokhn, skhoyre gegnevет, un di mishpokhe vert getsvungen tsu antloyfrn. Der gesheft vos hot gedint Berlins kehile far iber a yortsentlk iz oyf eybik farloyrn.",
+        "longDescription": "In der nakht fun 9-10tn november 1938, beeys di koordinirte ataкes bakant als Kristalnakht, iz Elias Brauns shnaydеray gesheft gevorn ataкirt durkh s.a. shturm trupen un ortike tsivile. Di gesheft fenster zenen tsebrokhn gevorn, shtof baln zenen khorев gemakht oder gegnevет gevorn, un ney mashinen zenen bashediкt gevorn iber reparatur. Di mishpokhe, moire hobndik far zeyer ziкerkаyt, iz antlofn fun zeyer heym ibern gesheft yener zelber nakht. Elias hot gepruft tsuriкkumen teg shpeter tsu raтevеn vos iz geblibn, ober hot gefunen di loкaln gor oysgerabeveт. Der binyen iz shpeter gevorn bashlоgnt durkh di Nazi oyтoritetn, un der plats iz lsof gevorn ibergemakht tsu a nit-yidish gesheft. Der Braun mishpokhes yortsentlk fun shverer arbet un kehile onvezнhаyt iz oysgemеkt gevorn in eyn eyntsiкer nakht fun gevald.",
         "media1": {
-          "caption": "נאָכווירקונגען פון קריסטאַלנאַכט - דער חרוב געמאַכטער שנײַדערײַ געשעפט, נאָוועמבער 1938"
+          "caption": "Nokhvirkungen fun Kristalnakht - der khorев gemakhter shnaydеray gesheft, november 1938"
         }
       }
     },
-    "changeIndicator": "אינהאַלט ענדערט זיך אום {date}"
+    "changeIndicator": "Inhalt endert zikh um {date}"
   }
 }

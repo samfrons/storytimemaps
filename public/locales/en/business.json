@@ -105,7 +105,19 @@
       "genealogy": "Genealogy"
     }
   },
+  "business": {
+    "address": "Address",
+    "category": "Category",
+    "district": "District",
+    "owner": "Owner",
+    "subcategory": "Subcategory"
+  },
+  "businesses": {
+    "total": "Total businesses"
+  },
   "timeline": {
+    "snapshot": "Snapshot",
+    "year": "Year",
     "eliasBraun": {
       "period1": {
         "description": "A thriving tailoring business in the heart of Berlin's bustling Rosenthaler Straße. Elias Braun and his family have built a respected reputation for fine men's clothing, serving both Jewish and non-Jewish customers from across the city.",

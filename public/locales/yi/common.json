@@ -9,7 +9,7 @@
     "mapTitle": "Interaktive Vizualizatsye",
     "paragraph1": "Dos proyekt boyt zikh oyf Dr. Christoph Kreutzmüller's bahnbrekhndike forshung dokumentirt in 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' (2015). Zayn tsen-yorike arbet mitn Leo Baeck Institut hot geshafn an umgeheyer arkhiv fun yidishe gesheftn iber gants Daytshland.",
     "paragraph2": "Unzer interaktive mape farvandlt di visnshaftlekhe datenbaze in a tsugeynglekhe digitale derfarung, dokumentirndik yidish-aygntimlekhe gesheftn in Berlin fun 1900 biz 1945. Yeder marker shtelt for a mishpokhe unternemung - fun ek-kromen tsu groyse gesheftn - vos hobn geformt di ekonomishe shtof fun der shtot.",
-    "paragraph3": "Navigirt durkh tsayt tsu oysforshn vi di gesheftn hobn gebliet, gekemft, un letsns zikh getrofn mit tsvang-farshlisung. Durkh kombinirnדik historishe forshung mit moderner vizualizatsye, viln mir makhn di vikhtige geshikhte tsugeynglekh far naye doyres."
+    "paragraph3": "Navigirt durkh tsayt tsu oysforshn vi di gesheftn hobn gebliet, gekemft, un letsns zikh getrofn mit tsvang-farshlisung. Durkh kombinirndik historishe forshung mit moderner vizualizatsye, viln mir makhn di vikhtige geshikhte tsugeynglekh far naye doyres."
   },
   "preview": {
     "title": "Oysgeklibene Gesheftn",
@@ -76,8 +76,8 @@
     },
     "database": {
       "title": "Di Leo Baeck Institut Datenbaze",
-      "description": "Di umfasenדike datenbaze baym Leo Baeck Institut antהalt detaylirte rekords fun toyzeter yidishe gesheftn, arayngerkhnt registratsye dokumentn, 'Arizirung' rekords, tsvang-farkoyf dokumentatsye, un perzenלekhe tsaygnshaftn fun gesheft aygntimer un zeyer mishpokhes.",
-      "scope": "Di unbatsalbare visnshaftlekhe resurs dokumentirt nisht nor di gesheftn aleyn, ober di mentshלekhe geshikhtes hinter zey - fartribene mishpokhes, tseshterteפarnoses, un oyf eybik geenderte kehiles."
+      "description": "Di umfasndike datenbaze baym Leo Baeck Institut antalt detaylirte rekords fun toyzeter yidishe gesheftn, arayngerkhnt registratsye dokumentn, 'Arizirung' rekords, tsvang-farkoyf dokumentatsye, un perzenlikhe tsaygnshaftn fun gesheft aygntimer un zeyer mishpokhes.",
+      "scope": "Di unbatsalbare visnshaftlekhe resurs dokumentirt nisht nor di gesheftn aleyn, ober di mentshlikhe geshikhtes hinter zey - fartribene mishpokhes, tsesherte parnoses, un oyf eybik geenderte kehiles."
     },
     "transformation": {
       "title": "Fun Arkhiv Tsu Tsugeynglekheyt",
@@ -113,7 +113,7 @@
       "aryanized": "Arizirt"
     },
     "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
-    "ctaDescription": "Mir zukhn shutfes mit Berlins kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet. Di initsyativ farlאngt tsuזamenארbet mit shtot plאnung, historisher bahaltung, un yidishe kehile organizatsyes.",
+    "ctaDescription": "Mir zukhn shutfes mit Berlins kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet. Di initsyativ farlangt tsuzamenarbeit mit shtot planung, historisher bahaltung, un yidishe kehile organizatsyes.",
     "learnStolpersteine": "Lernt vegn Stolpersteine",
     "community": {
       "title": "Kehile Bashteyung",
@@ -135,7 +135,7 @@
   },
   "language": {
     "switchTo": "English",
-    "current": "ייִדיש"
+    "current": "Yidish"
   },
   "businessStates": {
     "active": "Aktiv",
@@ -207,85 +207,85 @@
     }
   },
   "share": {
-    "shareStory": "טיילן געשיכטע",
-    "shareWebsite": "טיילן",
-    "copyLink": "קאָפּירן לינק",
-    "copyLinkDesc": "קאָפּירן לינק צו קליפּבאָרד",
-    "email": "בליצפּאָסט",
-    "emailDesc": "שיקן דורך בליצפּאָסט",
-    "facebookDesc": "טיילן אויף Facebook",
-    "twitterDesc": "טיילן אויף X",
-    "instagramDesc": "קאָפּירן טעקסט פֿאַר Instagram",
-    "shareVia": "טיילן דורך...",
-    "shareViaDesc": "ניצן סיסטעם טייל אָפּציעס",
-    "copied": "קאָפּירט!",
-    "linkPreview": "לינק פאָרויסזעען"
+    "shareStory": "Teyln Geshikhte",
+    "shareWebsite": "Teyln",
+    "copyLink": "Kopirn Link",
+    "copyLinkDesc": "Kopirn link tsu kliboard",
+    "email": "Blitspost",
+    "emailDesc": "Shikn durkh blitspost",
+    "facebookDesc": "Teyln oyf Facebook",
+    "twitterDesc": "Teyln oyf X",
+    "instagramDesc": "Kopirn tekst far Instagram",
+    "shareVia": "Teyln durkh...",
+    "shareViaDesc": "Nutsn sistem teyl-opsyes",
+    "copied": "Kopirt!",
+    "linkPreview": "Link Foroysze"
   },
   "cookieConsent": {
-    "title": "מיר נוצן קוקיס און אַנדערע טעכנאָלאָגיעס.",
-    "description": "די וועבזייטל נוצט דריט-פּאַרטיי וועבזייטל טראַקינג טעכנאָלאָגיעס צו צושטעלן און פאָרלויפיק פֿאַרבעסערן אירע באַדינונגען און צו ווייזן רעקלאַמעס לויט די אינטערעסן פון באַניצערס. איך שטים צו דעם און קען אָפּרופן אָדער ענדערן מיין הסכמה בכל עת מיט ווירקונג פֿאַר דער צוקונפט.",
-    "settings": "אײַנשטעלונגען",
-    "decline": "אָפּזאָגן",
-    "acceptAll": "אַלעס אָננעמען",
-    "imprint": "אימפּרינט",
-    "privacyPolicy": "פּריוואַטקייט פּאָליטיק",
-    "settingsTitle": "קוקי אײַנשטעלונגען",
-    "essential": "וויכטיקע קוקיס",
-    "essentialDesc": "נויטיק פֿאַר דער וועבזייטל צו פונקציאָנירן. קען נישט אָפּגעשטעלט ווערן.",
-    "alwaysOn": "שטענדיק אָן",
-    "analytics": "אַנאַליטיק קוקיס",
-    "analyticsDesc": "העלפן אונדז פֿאַרשטיין ווי באַזוכער אינטעראַגירן מיט אונדזער וועבזייטל.",
-    "marketing": "מאַרקעטינג קוקיס",
-    "marketingDesc": "גענוצט צו טראַקן באַזוכער איבער וועבזייטלעך פֿאַר רעקלאַמע צוועקן.",
-    "back": "צוריק",
-    "saveSettings": "אײַנשטעלונגען שפּאָרן"
+    "title": "Mir nutsn kukis un andere tekhnologyes.",
+    "description": "Di vebzaytl nutst drit-partey vebzaytl-trakhing tekhnologyes tsu tsushteln un forloyfik farbesern ire badienungen un tsu vayzen reklames loyt di interesn fun banutser. Ikh shtim tsu dem un ken oprofn oder endern mayn haskome tsu yeder tsayt mit virkung far der tsukunft.",
+    "settings": "AYNSHTELUNGEN",
+    "decline": "OPZOGN",
+    "acceptAll": "ALES ONEMEN",
+    "imprint": "IMPRINT",
+    "privacyPolicy": "PRIVATKAYT POLITK",
+    "settingsTitle": "Kuki Aynshtelungen",
+    "essential": "Vikhtike Kukis",
+    "essentialDesc": "Noytik far der vebzaytl tsu funktsionirn. Ken nisht opgeshelt vern.",
+    "alwaysOn": "Shtendik On",
+    "analytics": "Analytik Kukis",
+    "analyticsDesc": "Helfn undz farshteyn vi bazukher interagirn mit undzer vebzaytl.",
+    "marketing": "Marketing Kukis",
+    "marketingDesc": "Genutsn tsu trakhn bazukher iber vebzaytlekh far reklame tsveknz.",
+    "back": "TSURIK",
+    "saveSettings": "AYNSHTELUNGEN SHPORN"
   },
   "barcharts": {
-    "title": "אינטעראַקטיווע דאַטן וויזואַליזאַציעס",
-    "subtitle": "3D מאַפּע מיט צייט אַנאַליז פון חורבן פון ייִדישע געשעפטן אין בערלין",
+    "title": "Interaktive Datn Vizualizatsyes",
+    "subtitle": "3D mape mit tsayt-analiz fun khurbn fun yidishe gesheftn in Berlin",
     "3dMap": {
-      "title": "3D אינטעראַקטיווע בערלין מאַפּע",
-      "statistics": "סטאַטיסטיק",
-      "totalBusinesses": "סך הכל געשעפטן",
-      "districts": "דיסטריקטן",
-      "topDistrict": "העכסטע דיסטריקט",
+      "title": "3D Interaktive Berlin Mape",
+      "statistics": "Statistik",
+      "totalBusinesses": "Ale Gesheftn",
+      "districts": "Distriktn",
+      "topDistrict": "Hekhster Distrikt",
       "viewModes": {
-        "hexagonal": "העקסאַגאָנאַל",
-        "towers": "טורעמס",
-        "particles": "פּאַרטיקאַלז"
+        "hexagonal": "Heksagonal",
+        "towers": "Turems",
+        "particles": "Partikln"
       },
-      "instructions": "קליק און שלעפּ צו דרייען • סקראָל צו זום • קליק העקסאַגאָנז פֿאַר דעטאַלן",
-      "visualization": "3D קלאַסטער וויזואַליזאַציע"
+      "instructions": "Klik un shlep tsu dreyen - Skrol tsu zum - Klik heksagonn far detayln",
+      "visualization": "3D Kluster Vizualizatsye"
     },
     "timeline": {
-      "title": "צייט אַנאַליז",
-      "yearlyOverview": "יערלעך חורבן איבערבליק",
-      "yearlySubtitle": "גאַנצע צייט-ליניע פון סיסטעמאַטיש חורבן פון ייִדיש האַנדל טעטיקייט",
-      "monthlyOverview": "חודשלעך חורבן מוסטער",
-      "monthlySubtitle": "נאָוועמבער 1938 - קריסטאַלנאַכט און איר נאָכפאָלג",
+      "title": "Tsayt Analiz",
+      "yearlyOverview": "Yorlekher Khurbn Iberblik",
+      "yearlySubtitle": "Gantse tsayt-linye fun sistematishn khurbn fun yidisher handls-tetikayt",
+      "monthlyOverview": "Khodeshldiker Khurbn Muster",
+      "monthlySubtitle": "November 1938 - Kristalnakht un ir nokhfolg",
       "filters": {
-        "allYears": "אַלע יאָרן",
-        "peak": "שפּיץ (1938-39)",
-        "warYears": "מלחמה יאָרן (1940+)"
+        "allYears": "Ale Yorn",
+        "peak": "Shpits (1938-39)",
+        "warYears": "Milkhome Yorn (1940+)"
       }
     },
     "legend": {
-      "title": "לעגענדע",
-      "liquidations": "ליקווידאַציעס (געשעפט פאַרמאַכן)",
-      "possessionTransfers": "פאַרמעגן טראַנספערס (געצווונגען פאַרקויפן)"
+      "title": "Legende",
+      "liquidations": "Likvidatsyes (Gesheft farmakhn)",
+      "possessionTransfers": "Farmegn transfern (Getsvaungen farkoyf)"
     },
     "historicalPeriods": {
-      "title": "היסטאָרישע פּעריאָדן",
-      "earlyPersecution": "פרי רדיפה",
-      "intensification": "אינטענסיפיקאַציע",
-      "warPeriod": "מלחמה צייט",
-      "finalPhase": "ענד פאַזע"
+      "title": "Historishe Periodn",
+      "earlyPersecution": "Fri Rdife",
+      "intensification": "Intensifitsirung",
+      "warPeriod": "Milkhome Tsayt",
+      "finalPhase": "End Faze"
     },
     "statistics": {
-      "peakYear": "שפּיץ חורבן יאָר",
-      "totalDestructions": "סך הכל חורבנות",
-      "peakMonth": "שפּיץ חורבן חודש",
-      "dailyAverage": "טעגלעך דורכשניט (נאָוו 1938)"
+      "peakYear": "Shpits khurbn yor",
+      "totalDestructions": "Ale khurbnot",
+      "peakMonth": "Shpits khurbn khoydesh",
+      "dailyAverage": "Teglekher durkhnit (Nov 1938)"
     }
   }
 }

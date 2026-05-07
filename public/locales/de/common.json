@@ -199,6 +199,36 @@
       "rights": "Alle Rechte vorbehalten.",
       "map": "Interaktive Karte",
       "about": "Über das Projekt"
+    },
+    "mockup": {
+      "altText": "Gedenktafel-Entwurf für {{name}}",
+      "caption": "Stellen Sie sich hier eine solche Tafel vor",
+      "watermark": "ENTWURF",
+      "memorial": "Im Gedenken an Berlins jüdische Geschäftswelt"
+    },
+    "cta": {
+      "title": "Sind Sie Eigentümer dieses Gebäudes?",
+      "body": "Helfen Sie uns, an dieser Adresse eine Gedenktafel zur Erinnerung an {{businessName}} anzubringen. Erzählen Sie uns kurz von sich, und wir melden uns bei Ihnen."
+    },
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon (optional)",
+      "role": "Ihre Beziehung zum Gebäude",
+      "message": "Nachricht (optional)",
+      "submit": "Kontakt aufnehmen",
+      "submitting": "Wird gesendet…",
+      "thanksTitle": "Vielen Dank",
+      "thanksBody": "Wir haben Ihre Anfrage erhalten und melden uns bald bei Ihnen wegen einer Gedenktafel an dieser Adresse.",
+      "errorName": "Bitte geben Sie Ihren Namen ein.",
+      "errorEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "errorGeneric": "Übermittlung fehlgeschlagen. Bitte versuchen Sie es erneut."
+    },
+    "role": {
+      "owner": "Gebäudeeigentümer",
+      "tenant": "Mieter",
+      "manager": "Hausverwaltung",
+      "other": "Andere"
     }
   },
   "share": {

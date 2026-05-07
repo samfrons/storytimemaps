@@ -199,6 +199,36 @@
       "rights": "All rights reserved.",
       "map": "Interactive Map",
       "about": "About the Project"
+    },
+    "mockup": {
+      "altText": "Memorial plaque mockup for {{name}}",
+      "caption": "Imagine a plaque like this here",
+      "watermark": "MOCKUP",
+      "memorial": "In memory of Berlin's Jewish business community"
+    },
+    "cta": {
+      "title": "Are you the owner of this building?",
+      "body": "Help us install a memorial plaque commemorating {{businessName}} at this address. Tell us a bit about yourself and we will reach out."
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "role": "Your relationship to the building",
+      "message": "Message (optional)",
+      "submit": "Get in touch",
+      "submitting": "Sending…",
+      "thanksTitle": "Thank you",
+      "thanksBody": "We received your inquiry and will be in touch soon about a memorial plaque for this address.",
+      "errorName": "Please enter your name.",
+      "errorEmail": "Please enter a valid email address.",
+      "errorGeneric": "Submission failed. Please try again."
+    },
+    "role": {
+      "owner": "Building owner",
+      "tenant": "Tenant",
+      "manager": "Property manager",
+      "other": "Other"
     }
   },
   "share": {

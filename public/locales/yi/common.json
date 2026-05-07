@@ -204,6 +204,36 @@
       "rights": "Ale rekhtn bahitn.",
       "map": "Interaktive Mape",
       "about": "Vegn dem Proyekt"
+    },
+    "mockup": {
+      "altText": "Gedenk-tovele muster far {{name}}",
+      "caption": "Forshtelt aza tovele do",
+      "watermark": "MUSTER",
+      "memorial": "Lzeykher der yidisher gesheft-kehile fun Berlin"
+    },
+    "cta": {
+      "title": "Zayt ir der balebos fun dem dozikn binyen?",
+      "body": "Helft undz tsu hengen a gedenk-tovele lekoved {{businessName}} oyf dem dozikn adres. Dertseylt undz a bisl vegn aykh, un mir veln zikh meldn."
+    },
+    "form": {
+      "name": "Nomen",
+      "email": "Imeyl",
+      "phone": "Telefon (freyvilik)",
+      "role": "Ayer batsiung tsum binyen",
+      "message": "Botshaft (freyvilik)",
+      "submit": "Nemt kontakt",
+      "submitting": "Shikt…",
+      "thanksTitle": "A dank",
+      "thanksBody": "Mir hobn bakumen ayer onfreg un veln zikh bald meldn vegn a gedenk-tovele oyf dem dozikn adres.",
+      "errorName": "Git arayn ayer nomen, biteshn.",
+      "errorEmail": "Git arayn an emesn imeyl-adres.",
+      "errorGeneric": "Iberzendung iz nit gelungen. Probirt nokh amol."
+    },
+    "role": {
+      "owner": "Balebos",
+      "tenant": "Miter",
+      "manager": "Farvalter",
+      "other": "Andersh"
     }
   },
   "share": {

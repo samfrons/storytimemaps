@@ -312,5 +312,59 @@
       "peakMonth": "Peak destruction month",
       "dailyAverage": "Daily average (Nov 1938)"
     }
+  },
+  "exhibitVision": {
+    "nav": {
+      "backToMap": "Back to Map"
+    },
+    "landingLink": "Explore the Museum Exhibit Vision",
+    "hero": {
+      "badge": "Exhibit Vision",
+      "title": "A Museum Exhibit for Berlin's Lost Businesses",
+      "subtitle": "From a digital archive of 10,021 enterprises to a public space of memory",
+      "visionTitle": "Our Vision",
+      "visionDescription": "We envision a museum exhibit that brings the documented history of Berlin's Jewish businesses out of the database and into a shared physical space — where visitors stand before a living map of the city, follow a single family enterprise through the years, and witness how a vibrant commercial world was systematically dismantled between 1900 and 1945.",
+      "seeLiveExhibit": "See the live interactive exhibit",
+      "ctaTitle": "Help Us Build It",
+      "ctaDescription": "We are seeking museum, cultural, and educational partners — and the funding — to turn this vision into a permanent and travelling exhibit.",
+      "supportInitiative": "Partner With Us"
+    },
+    "experience": {
+      "title": "What Visitors Experience",
+      "subtitle": "An interactive journey through a vanished commercial world",
+      "card1Title": "An Interactive Map Table",
+      "card1Description": "A large touch-screen map of Berlin where every marker is a real documented business. Visitors explore neighbourhoods, zoom into streets, and surface the stories beneath their feet.",
+      "card2Title": "A Journey Through Time",
+      "card2Description": "A timeline from 1900 to 1945 lets visitors watch businesses open, thrive, decline, and face forced closure — making the scale and pace of persecution visible at a glance.",
+      "card3Title": "Individual Family Stories",
+      "card3Description": "Behind each marker is a family enterprise — a tailor, a bookseller, a department store. Detailed stories restore names, faces, and livelihoods to the historical record.",
+      "card4Title": "Accessible in Many Languages",
+      "card4Description": "Built multilingual from the start (English, German, and Yiddish), the exhibit welcomes Berliners, descendants, students, and international visitors alike."
+    },
+    "builds": {
+      "title": "Building on a Decade of Research",
+      "subtitle": "Three layers of remembrance",
+      "digitalTitle": "Digital Archive",
+      "digitalDescription": "An interactive map already documents 10,021 Jewish-owned businesses in Berlin, drawn from rigorous historical scholarship.",
+      "plaquesTitle": "Memorial Plaques",
+      "plaquesDescription": "Inspired by the Stolpersteine, we are working to install plaques at the original business locations — memory in the streets themselves.",
+      "exhibitTitle": "Museum Exhibit",
+      "exhibitDescription": "The exhibit gathers this work into one immersive space, connecting data, place, and personal story for a broad public audience.",
+      "provenance": "The project builds on Dr. Christoph Kreutzmüller's landmark study “Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany” and the archives of the Leo Baeck Institute."
+    },
+    "partners": {
+      "title": "Partners & Support",
+      "description": "Realising this exhibit requires collaboration and funding. We are seeking partners across Berlin's museum, cultural, educational, and Jewish community institutions.",
+      "ask1": "Host venues and museum partners for a permanent or travelling installation",
+      "ask2": "Funding for hardware, fabrication, and multilingual content production",
+      "ask3": "Educational partners to develop programmes for schools and community groups"
+    },
+    "footer": {
+      "exploreTitle": "Explore the Living Archive",
+      "exploreDescription": "See the interactive map that this exhibit is built upon.",
+      "exploreMap": "Open the Map",
+      "viewPlaques": "Memorial Plaques Initiative",
+      "rights": "All rights reserved."
+    }
   }
 }

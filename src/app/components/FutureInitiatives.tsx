@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { useTranslation } from '../../i18n/useTranslation'
 
 const FutureInitiatives: React.FC = () => {
@@ -145,6 +146,12 @@ const FutureInitiatives: React.FC = () => {
             >
               {t('future.learnStolpersteine')}
             </a>
+            <Link
+              href="/exhibit-vision"
+              className="inline-block px-8 py-4 bg-transparent border-2 border-[#eca27d] text-[#eca27d] font-['Inter'] font-semibold text-lg hover:bg-[#eca27d] hover:text-[#1a1a1a] transition-all duration-300"
+            >
+              {t('exhibitVision.landingLink')}
+            </Link>
           </div>
         </div>
       </div>

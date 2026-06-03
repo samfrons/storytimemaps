@@ -312,5 +312,59 @@
       "peakMonth": "Höhepunkt-Monat",
       "dailyAverage": "Tagesdurchschnitt (Nov 1938)"
     }
+  },
+  "exhibitVision": {
+    "nav": {
+      "backToMap": "Zurück zur Karte"
+    },
+    "landingLink": "Die Vision der Museumsausstellung entdecken",
+    "hero": {
+      "badge": "Ausstellungsvision",
+      "title": "Eine Museumsausstellung für Berlins verlorene Geschäfte",
+      "subtitle": "Von einem digitalen Archiv mit 10.021 Unternehmen zu einem öffentlichen Ort der Erinnerung",
+      "visionTitle": "Unsere Vision",
+      "visionDescription": "Wir stellen uns eine Museumsausstellung vor, die die dokumentierte Geschichte der jüdischen Geschäfte Berlins aus der Datenbank in einen gemeinsamen physischen Raum holt — wo Besucherinnen und Besucher vor einer lebendigen Karte der Stadt stehen, einem einzelnen Familienunternehmen durch die Jahre folgen und miterleben, wie eine lebendige Geschäftswelt zwischen 1900 und 1945 systematisch zerstört wurde.",
+      "seeLiveExhibit": "Zur interaktiven Ausstellung",
+      "ctaTitle": "Helfen Sie uns beim Aufbau",
+      "ctaDescription": "Wir suchen Partner aus Museen, Kultur und Bildung — sowie Fördermittel —, um diese Vision in eine dauerhafte und reisende Ausstellung zu verwandeln.",
+      "supportInitiative": "Partner werden"
+    },
+    "experience": {
+      "title": "Was Besucher erleben",
+      "subtitle": "Eine interaktive Reise durch eine verschwundene Geschäftswelt",
+      "card1Title": "Ein interaktiver Kartentisch",
+      "card1Description": "Ein großer Touchscreen mit einer Karte Berlins, auf der jeder Marker ein real dokumentiertes Geschäft ist. Besucher erkunden Viertel, zoomen in Straßen und entdecken die Geschichten unter ihren Füßen.",
+      "card2Title": "Eine Reise durch die Zeit",
+      "card2Description": "Eine Zeitleiste von 1900 bis 1945 lässt Besucher beobachten, wie Geschäfte eröffnen, florieren, niedergehen und zwangsweise geschlossen werden — das Ausmaß und das Tempo der Verfolgung werden auf einen Blick sichtbar.",
+      "card3Title": "Einzelne Familiengeschichten",
+      "card3Description": "Hinter jedem Marker steht ein Familienunternehmen — ein Schneider, ein Buchhändler, ein Kaufhaus. Ausführliche Geschichten geben dem historischen Bestand Namen, Gesichter und Lebensgrundlagen zurück.",
+      "card4Title": "Zugänglich in mehreren Sprachen",
+      "card4Description": "Von Anfang an mehrsprachig konzipiert (Englisch, Deutsch und Jiddisch), heißt die Ausstellung Berlinerinnen und Berliner, Nachkommen, Schülerinnen und Schüler sowie internationale Gäste gleichermaßen willkommen."
+    },
+    "builds": {
+      "title": "Aufbauend auf einem Jahrzehnt Forschung",
+      "subtitle": "Drei Ebenen des Erinnerns",
+      "digitalTitle": "Digitales Archiv",
+      "digitalDescription": "Eine interaktive Karte dokumentiert bereits 10.021 jüdische Geschäfte in Berlin, basierend auf gründlicher historischer Forschung.",
+      "plaquesTitle": "Gedenktafeln",
+      "plaquesDescription": "Inspiriert von den Stolpersteinen arbeiten wir daran, Tafeln an den ursprünglichen Geschäftsorten anzubringen — Erinnerung in den Straßen selbst.",
+      "exhibitTitle": "Museumsausstellung",
+      "exhibitDescription": "Die Ausstellung führt diese Arbeit in einem immersiven Raum zusammen und verbindet Daten, Ort und persönliche Geschichte für ein breites Publikum.",
+      "provenance": "Das Projekt baut auf der wegweisenden Studie von Dr. Christoph Kreutzmüller „Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany“ und den Archiven des Leo Baeck Instituts auf."
+    },
+    "partners": {
+      "title": "Partner & Unterstützung",
+      "description": "Die Verwirklichung dieser Ausstellung erfordert Zusammenarbeit und Förderung. Wir suchen Partner aus den Museen, der Kultur, der Bildung und den jüdischen Gemeindeinstitutionen Berlins.",
+      "ask1": "Veranstaltungsorte und Museumspartner für eine dauerhafte oder reisende Installation",
+      "ask2": "Fördermittel für Hardware, Fertigung und mehrsprachige Inhalte",
+      "ask3": "Bildungspartner zur Entwicklung von Programmen für Schulen und Gemeindegruppen"
+    },
+    "footer": {
+      "exploreTitle": "Entdecken Sie das lebendige Archiv",
+      "exploreDescription": "Sehen Sie die interaktive Karte, auf der diese Ausstellung aufbaut.",
+      "exploreMap": "Karte öffnen",
+      "viewPlaques": "Initiative Gedenktafeln",
+      "rights": "Alle Rechte vorbehalten."
+    }
   }
 }

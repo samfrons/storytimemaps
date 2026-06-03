@@ -319,10 +319,9 @@ Before any commit, verify:
 
 ## Mapbox Specific
 
-### Current Token (move to .env)
-```
-pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ
-```
+### Token
+- Stored in `.env.local` as `NEXT_PUBLIC_MAPBOX_TOKEN`
+- NEVER commit the token value to any file
 
 ### Style Application
 - Apply custom styles after map loads

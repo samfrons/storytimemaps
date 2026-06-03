@@ -39,3 +39,9 @@ next-env.d.ts
 __pycache__/
 *.pyc
 *.pyo
+
+# Swarm coordination
+.swarm/
+
+# Hive-mind
+.hive-mind/

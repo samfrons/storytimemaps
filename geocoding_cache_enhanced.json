@@ -5996,5 +5996,2707 @@
   "exact:a078b7e600e7cfdcf7c0118fa3ed5ce4": null,
   "without_number:a078b7e600e7cfdcf7c0118fa3ed5ce4": null,
   "fuzzy:a078b7e600e7cfdcf7c0118fa3ed5ce4": null,
-  "district:a078b7e600e7cfdcf7c0118fa3ed5ce4": null
+  "district:a078b7e600e7cfdcf7c0118fa3ed5ce4": null,
+  "4967f626a6589f5e9a53b020ede7ddcc": {
+    "lat": 52.5375133,
+    "lng": 13.3946755,
+    "display_name": "Gedenkstätte Berliner Mauer",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "6231938b61b986df655ca7746395d260": {
+    "lat": 52.466372,
+    "lng": 13.7323646,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "87be81a50c6032e1c45b216f754ad2b2": {
+    "lat": 52.495275,
+    "lng": 13.4152078,
+    "display_name": "Admiralstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "511bd6f1de08752277d9bb0a30fe7d6f": {
+    "lat": 52.5208279,
+    "lng": 13.4094214,
+    "display_name": "Berliner Fernsehturm",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3be902bb928e7be6043bfa02b931a56d": {
+    "lat": 52.4474211,
+    "lng": 13.341056,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e74fca542be134843463530179ee40a4": {
+    "lat": 52.5240565,
+    "lng": 13.4138401,
+    "display_name": "DGB Bezirk Berlin-Brandburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "f079728eb2fd47807a6c9a5a096da1c2": {
+    "lat": 52.5240565,
+    "lng": 13.4138401,
+    "display_name": "DGB Bezirk Berlin-Brandburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "f7b8984283ba697d2dd2584a1c804c73": {
+    "lat": 52.5240565,
+    "lng": 13.4138401,
+    "display_name": "DGB Bezirk Berlin-Brandburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "ed04b87c84b9b3181cac94c0dc69be03": {
+    "lat": 52.5240565,
+    "lng": 13.4138401,
+    "display_name": "DGB Bezirk Berlin-Brandburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "a84176538280c4758da5e333b19cd19a": {
+    "lat": 52.5240565,
+    "lng": 13.4138401,
+    "display_name": "DGB Bezirk Berlin-Brandburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "7ed7ba3a65695dcb8d95ab7a38eca429": {
+    "lat": 52.5240565,
+    "lng": 13.4138401,
+    "display_name": "DGB Bezirk Berlin-Brandburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "b8aa5f760545c50285a86f948a2a292c": {
+    "lat": 52.5060106,
+    "lng": 13.4073274,
+    "display_name": "Alexandrinenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "55a6c91de9617361cd0b380e83436b71": {
+    "lat": 52.5039063,
+    "lng": 13.3982331,
+    "display_name": "Berlinische Galerie",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "43d4372b0915f0a1762037caed1dd814": {
+    "lat": 52.4872649,
+    "lng": 13.3321047,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "b4712cd687e09aa64919471ebb235ff2": {
+    "lat": 52.486668,
+    "lng": 13.3206331,
+    "display_name": "Sparkasse",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "065fc20bf6f3563717f2d417057d3bb6": {
+    "lat": 52.5039063,
+    "lng": 13.3982331,
+    "display_name": "Berlinische Galerie",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "543be0faff4eb848063559aa65d0fdc1": {
+    "lat": 52.5010545,
+    "lng": 13.3978618,
+    "display_name": "Kita Alte Jakobstr. 173",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "5329b780e48eba00692830d15fed48a5": {
+    "lat": 52.5032926,
+    "lng": 13.3983537,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "6272c24d9b360b450a2e624c2e1ff8b5": {
+    "lat": 52.5028195,
+    "lng": 13.3981859,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e29174d068d553455714f3c45f411c05": {
+    "lat": 52.4872649,
+    "lng": 13.3321047,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "0a142de77e6277c9bd0592bf8c9cd47c": {
+    "lat": 52.5010545,
+    "lng": 13.3978618,
+    "display_name": "Kita Alte Jakobstr. 173",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e8e7e64a9f3510cb56f869a7ccfb1c4d": {
+    "lat": 52.5052112,
+    "lng": 13.4011443,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "1a92c992e89454ea7ebf3fcbf5dd03eb": {
+    "lat": 52.5054836,
+    "lng": 13.4012001,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "2914eba51caec82d1f9eb2b43c27888a": {
+    "lat": 52.525875,
+    "lng": 13.4069224,
+    "display_name": "Hundt Hammer Stein",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "0ccb45b211a55c1ce4de0be911b17ccc": {
+    "lat": 52.5010545,
+    "lng": 13.3978618,
+    "display_name": "Kita Alte Jakobstr. 173",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "587318ca83d57911f18b19764d1aea6e": {
+    "lat": 52.5080302,
+    "lng": 13.4050598,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "8a929965725b67eb9eb6ed89ac08f374": {
+    "lat": 52.5083202,
+    "lng": 13.4055088,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "5e963a972b2806cb39dd7f76158ec1a8": {
+    "lat": 52.4673433,
+    "lng": 13.3863705,
+    "display_name": "Evangelisch-Freikirchliche Gemeinde Berlin-Tempelhof",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "89879317f40cf5a89847544fa5c3cbc5": {
+    "lat": 52.5010545,
+    "lng": 13.3978618,
+    "display_name": "Kita Alte Jakobstr. 173",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "aaad54b6f336e67d7650baffb9377fa2": {
+    "lat": 52.5106314,
+    "lng": 13.4091858,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "bd35e5bd3234ee02b0a12f81731f6877": {
+    "lat": 52.510398,
+    "lng": 13.4084958,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "be324791279884172413e6a2e5204c2a": {
+    "lat": 52.5106944,
+    "lng": 13.4081298,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e127bcd363090850abef1a367d835a75": {
+    "lat": 52.5103663,
+    "lng": 13.4081815,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "0e939054419068b47844cb81fb2ef28a": {
+    "lat": 52.5101084,
+    "lng": 13.4077872,
+    "display_name": "Techniker Krankenkasse (TK)",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "7f4679b5f8e637301df2dd5b517166a7": {
+    "lat": 52.5098556,
+    "lng": 13.4074068,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "a9a545395b93485640c17668899e92c9": {
+    "lat": 52.5093778,
+    "lng": 13.4066761,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "a22c3ce51728bb7da8211d1a4454e60d": {
+    "lat": 52.5010545,
+    "lng": 13.3978618,
+    "display_name": "Kita Alte Jakobstr. 173",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "e166c2a9b1877a2f4654786e6999e5b8": {
+    "lat": 52.5088463,
+    "lng": 13.4058713,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "1a36aee12cd7a9dcfa6f3f0f791f57a8": {
+    "lat": 52.5164723,
+    "lng": 13.3930752,
+    "display_name": "Alte Bibliothek",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "73358e2d7c5008f7d009b4afedc77476": {
+    "lat": 52.5075656,
+    "lng": 13.222793,
+    "display_name": "Berlin 1939-1945 War Cemetery (Britischer Friedhof an der Heerrstraße)",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "41f545af54f9c2808943bc4a1da374e8": {
+    "lat": 52.4924199,
+    "lng": 13.3362159,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "2cd7a5c7d761c234802103f84cede059": {
+    "lat": 52.5157577,
+    "lng": 13.390957,
+    "display_name": "Behrenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "84e2b91a34e3e3dcb4d3a16e2fee82ea": {
+    "lat": 52.4989049,
+    "lng": 13.3917766,
+    "display_name": "Mehringplatz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5cf8e6810ab65c6b3c4126d2df250b52": {
+    "lat": 52.4989049,
+    "lng": 13.3917766,
+    "display_name": "Mehringplatz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "59530b0deaf8ceb2c00d895909a5c8ff": {
+    "lat": 52.4989049,
+    "lng": 13.3917766,
+    "display_name": "Mehringplatz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "47234011d94d2bbdf9bf1137a6b4e64b": {
+    "lat": 52.4989049,
+    "lng": 13.3917766,
+    "display_name": "Mehringplatz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "9fc38a40b1a870f84a2a139f9c268db1": {
+    "lat": 52.4989049,
+    "lng": 13.3917766,
+    "display_name": "Mehringplatz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "ed78387a49537d937cb4feff1a0818e7": {
+    "lat": 52.4989049,
+    "lng": 13.3917766,
+    "display_name": "Mehringplatz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "7157402994028e913cf7e69036b588d6": {
+    "lat": 52.510199,
+    "lng": 13.3746747,
+    "display_name": "Bellevuestraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "9199b7b4e71dda032976d7936b150d5a": {
+    "lat": 52.510199,
+    "lng": 13.3746747,
+    "display_name": "Bellevuestraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "b8083f67d368f16ee9a10af374582cca": {
+    "lat": 52.4907792,
+    "lng": 13.3438752,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c8b20cf1aab4d0f305a0a13ad1b2e693": {
+    "lat": 52.5125575,
+    "lng": 13.3164612,
+    "display_name": "intcube GmbH",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "72fa7e36d8136494c590e1fac73759fd": {
+    "lat": 52.517226,
+    "lng": 13.4323284,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "74d3924087de132d439b0217cead6c39": {
+    "lat": 52.4906777,
+    "lng": 13.449582,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "87f328e2436f9aef90f7913c71af5328": {
+    "lat": 52.5129366,
+    "lng": 13.4172546,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "2c559cec8ecccd97dc91899be65f9f8b": {
+    "lat": 52.5118904,
+    "lng": 13.4167965,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "2a84f5b86098a61ec530fc94934f6954": {
+    "lat": 52.6701184,
+    "lng": 13.3204109,
+    "display_name": "Bergfelde (b Berlin)",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "3f098427bd6d18145978507b024869d6": {
+    "lat": 52.5135064,
+    "lng": 13.3908638,
+    "display_name": "Hochschule für Musik Hanns Eisler Berlin",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "5a2d3b75ad2111692616bc8aae2ddc88": {
+    "lat": 52.5135064,
+    "lng": 13.3908638,
+    "display_name": "Hochschule für Musik Hanns Eisler Berlin",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "1e02cb1a0559103d44cf67576d5e8d82": {
+    "lat": 52.5111883,
+    "lng": 13.3914567,
+    "display_name": "audalis",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "99759cb11bc9e2bdc5fbf1e421093b25": {
+    "lat": 52.5135064,
+    "lng": 13.3908638,
+    "display_name": "Hochschule für Musik Hanns Eisler Berlin",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "cfd1cc52318ab174c9992991df47ac94": {
+    "lat": 52.6129993,
+    "lng": 13.315668,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "a73b5e59737f533867a2bbb926e9e75e": {
+    "lat": 52.4571438,
+    "lng": 13.3230248,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "54256541409e3e4be94517afd29479b7": {
+    "lat": 52.5987999,
+    "lng": 13.4347204,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "6d378c004c211c74da2b8c1420e3cd61": {
+    "lat": 52.5539779,
+    "lng": 13.3718,
+    "display_name": "Exerzierstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "64dbbfba0686869260e45c93604827bd": {
+    "lat": 52.5188496,
+    "lng": 13.3327745,
+    "display_name": "Eyke-von-Repkow-Platz",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "49ce73f127578d0ad0889b9465aede66": {
+    "lat": 52.5188496,
+    "lng": 13.3327745,
+    "display_name": "Eyke-von-Repkow-Platz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5f65c7acd8d1841b91f76e9e7a120ed6": {
+    "lat": 52.5379618,
+    "lng": 13.3548401,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "6d4917ca6d819f85125ce745d0417f74": {
+    "lat": 52.5147666,
+    "lng": 13.3964589,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "3fbe9ef8d6a27943d58a026e35d3ce8f": {
+    "lat": 52.5154256,
+    "lng": 13.3774578,
+    "display_name": "Ebertstraße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5c93c0e5640a3ccd41b11f8754b48781": {
+    "lat": 52.4843534,
+    "lng": 13.3434614,
+    "display_name": "Heinrich Friedrich Karl vom und zum Stein",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "ee53647d2d8bf4a3507eff3cba847134": {
+    "lat": 52.5213429,
+    "lng": 13.388468,
+    "display_name": "Meliá Berlin",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "f319df3dc2f0a5b85273f384ac7c6735": {
+    "lat": 52.51394,
+    "lng": 13.3894946,
+    "display_name": "Jägerstr./ Friedrichstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "e00b0a049bf5e354fa0b689a202eeebc": {
+    "lat": 52.51394,
+    "lng": 13.3894946,
+    "display_name": "Jägerstr./ Friedrichstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "f0d67b73cfb5a520302ae5c6bc032800": {
+    "lat": 52.51394,
+    "lng": 13.3894946,
+    "display_name": "Jägerstr./ Friedrichstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "d2977819b098c0daa54ef34e443c3b75": {
+    "lat": 52.51782,
+    "lng": 13.3884339,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c533f976d36ff55faff0ee61fbde5873": {
+    "lat": 52.51394,
+    "lng": 13.3894946,
+    "display_name": "Jägerstr./ Friedrichstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "75b71406425ba861249f0c885969dfcf": {
+    "lat": 52.51394,
+    "lng": 13.3894946,
+    "display_name": "Jägerstr./ Friedrichstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "498637982f0130722c121bbef6ba8f84": {
+    "lat": 52.51394,
+    "lng": 13.3894946,
+    "display_name": "Jägerstr./ Friedrichstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "2ad10ad853b06286dd4d702ffeec8b43": {
+    "lat": 52.51394,
+    "lng": 13.3894946,
+    "display_name": "Jägerstr./ Friedrichstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "1642a63e510189a021e1c3b8423d3d7f": {
+    "lat": 52.5208279,
+    "lng": 13.4094214,
+    "display_name": "Berliner Fernsehturm",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "4f79e169acf976ff0433412cc5da0c90": {
+    "lat": 52.5030768,
+    "lng": 13.453332,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "8dc78c10db2e9c0a31dff5c111b59aba": {
+    "lat": 52.5030768,
+    "lng": 13.453332,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "25a68e60b21e8c153e981cf999788c7c": {
+    "lat": 52.5043157,
+    "lng": 13.3026447,
+    "display_name": "Berlin-Charlottenburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "5fff33ad9d81ae44f253f2b988f8be08": {
+    "lat": 52.5026583,
+    "lng": 13.2988214,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "f3a908db47b01caaabb4811588e9c99e": {
+    "lat": 52.5516294,
+    "lng": 13.4355377,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "9f4caf060bf9f703d6cb79c8a1ac022d": {
+    "lat": 52.5711266,
+    "lng": 13.314317,
+    "display_name": "Quartiersmanagment Auguste-Viktoria-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5ab76de1a0821a2397de92b6a40f5644": {
+    "lat": 52.4495466,
+    "lng": 13.5110659,
+    "display_name": "Groß-Berliner Damm",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "8d987b31388a3c3732fe6cb63c1d7d2a": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "c8827f091e44f15bc25ef70ef37bbc38": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "30cd0c726e14fc25b49065463b4950c3": {
+    "lat": 52.519043,
+    "lng": 13.4265598,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "f65fc4ffda80b79d336a9f5496adb3d3": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "fe80e5d330c64b4c9fba2a904306d6a6": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "2a0ab0640a0fda3d4308a67d4a19580d": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "9e0b8244781f54ac3e80543e0fd63588": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "26293bcf4a3e60c313b7626db3334728": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "fbd6f741ee859d36923130dc6c017210": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3f202cb25b45999b071d62af7062e209": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "01cbd9ec960d727f31424139f127d065": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "dde9e110cdb4ee7a7c230a049bd3e4e7": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "dedc2cc1f1e29f8ec581b19b0632f372": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "87f5222de6969605bef2efd849a2e8bb": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "e86b63223944e221ca6d2f1026a1700a": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "f2272c13aa8fdacb984d55978d78318a": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "86233f5b3de500bec0f7e24d15837608": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "05d35b32a6f150f46f310b17e7780663": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "638d260f6fb2a81f58d62ee77df2add2": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "654c1918f6be11ca05806fdcc6ef818b": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "9074961f210e4b53bb178f86bde63576": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "83cd8716e1500e436bf4a8a87e949b20": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "f1effaba5eb6e8b1876a179f349ddb74": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "6a2559be858100ef593f4e8712f85fc2": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "484e746ed3b35dce47d5f8d0411519a6": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "f359edb053b804400c4b827aa9fdf8b0": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "8fa53fcc83d25259eaa9a172ac9aeab4": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "99a1a68371ac7275db6498444e4d8417": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "0349d849e5e1654863103cebc508f5bd": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "605974d464bd5b96538ce2c97332efaa": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3ea60be1a16d7188502ed5c522e2580f": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "47e46c0f39ef6083d8fe96fabda873b7": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "f692861d5db4b96c2c1efd6bcd97729b": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "8b8b1391e3bb1b93e194d4c7c7bde218": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "c05e4e892ae53b528f62db0f6f7e0e8b": {
+    "lat": 52.5220104,
+    "lng": 13.4168241,
+    "display_name": "Karl-Marx-Allee",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "12a6b18233de45a8391bd3c33a43bdeb": {
+    "lat": 52.5247784,
+    "lng": 13.399017,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e192f948914ec54c9a464497e5e11705": {
+    "lat": 52.5242823,
+    "lng": 13.3993722,
+    "display_name": "Große Hamburger Straße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "5b5667c89ff429d40bf07022bcdb9cfb": {
+    "lat": 52.5247784,
+    "lng": 13.399017,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "31f99e92db2c7927d141f082c053ab20": {
+    "lat": 52.5243311,
+    "lng": 13.3992507,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "672f3a96e2869d0ae8ac3916b3123d05": {
+    "lat": 52.525498,
+    "lng": 13.399064,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "7fa4dc9b22f721149703a5f5f0e5ff16": {
+    "lat": 52.5256387,
+    "lng": 13.3986213,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "2c4e22cacbdce56c6d7868a45369c173": {
+    "lat": 52.5258937,
+    "lng": 13.3987903,
+    "display_name": "Große Hamburger Medienhaus Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "e626ef491f609454979a0e1583f921c2": {
+    "lat": 52.523246,
+    "lng": 13.4009041,
+    "display_name": "Große Präsidentenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "9d8bb1366a28739ffdd83b1e898e14ac": {
+    "lat": 52.523247,
+    "lng": 13.401224,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "80b877bf1dafce0c28e81b573eb6796e": {
+    "lat": 52.52333,
+    "lng": 13.4015005,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "dbe848b98bb07cf01e12842869261c61": {
+    "lat": 52.4582126,
+    "lng": 13.3176787,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "f564a7ee54f4e1c50b32db9a54d6ecfe": {
+    "lat": 52.5778369,
+    "lng": 13.2931557,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "c2d4f265e03586a6da752c454f0b8719": {
+    "lat": 52.5323452,
+    "lng": 13.4832795,
+    "display_name": "Verein Stiffeler e.V",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5998fabbb3f091be3aa638b6c87d9e30": {
+    "lat": 52.5060987,
+    "lng": 13.3342509,
+    "display_name": "Zoo Palast",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "4dcd1afa1b2eaa24103ba0f2ac5eef17": {
+    "lat": 52.51271,
+    "lng": 13.397045,
+    "display_name": "Goodtime",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "4687799646670e542ad3af0796ea7b01": {
+    "lat": 52.4681578,
+    "lng": 13.4311743,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "73e21d184b305dc9961808e86d522ba7": {
+    "lat": 52.4560003,
+    "lng": 13.3235396,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "1ae3407f70298ddb9ee783229e9b6c9c": {
+    "lat": 52.5136603,
+    "lng": 13.4222159,
+    "display_name": "Jelbi-Station S+U Jannowitzbrücke/Holzmarktstr.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "f34d7a0d293716c8160e4df74c6eec04": {
+    "lat": 52.4917704,
+    "lng": 13.3890245,
+    "display_name": "Attac Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "7da4db53edb3f702bbc0a78bc4503ed4": {
+    "lat": 52.5120744,
+    "lng": 13.4128002,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c4d19433cfb7591ab1a3ef3ab586c162": {
+    "lat": 52.5226611,
+    "lng": 13.3339405,
+    "display_name": "Jagowstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "dce49c4e620e2afb2edd601542397990": {
+    "lat": 52.554941,
+    "lng": 13.3893614,
+    "display_name": "Berlin Comics Schule",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "448789b7e62c1f15a06239c1f36174a2": {
+    "lat": 52.5146745,
+    "lng": 13.3982382,
+    "display_name": "Jägerstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "205ab3bc6efbb5d49e9621ac98426bfd": {
+    "lat": 52.5393643,
+    "lng": 13.203803,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "3be5bb7ba67ac70005d75fe39e5f13f5": {
+    "lat": 52.5256207,
+    "lng": 13.3216064,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "76d584b3d68ceec103c98eb71254b693": {
+    "lat": 52.525986,
+    "lng": 13.3143654,
+    "display_name": "Fraunhofer-Institut für Offene Kommunikationssysteme",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "31fada6e0060bc7b11a28a1c1fc3d248": {
+    "lat": 52.5249735,
+    "lng": 13.3261999,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "987bb2f887e9e23782493d891ffbd2c2": {
+    "lat": 52.5244384,
+    "lng": 13.3272132,
+    "display_name": "Kaiserin-Augusta-Allee",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "2d08cd9fd4f8bb2dc8c41d119f5c1bc1": {
+    "lat": 52.4578513,
+    "lng": 13.5194765,
+    "display_name": "Kaisersteg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "236d40cefcc211e047adb0a284efa873": {
+    "lat": 52.4578513,
+    "lng": 13.5194765,
+    "display_name": "Kaisersteg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "0792378236cbde4f2b945a23ff098b23": {
+    "lat": 52.5061785,
+    "lng": 13.312993,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "9850c33b45ec70d8aab228046a912573": {
+    "lat": 52.5059764,
+    "lng": 13.3164894,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "9283894826e5bc39c19c523c40d7f7e2": {
+    "lat": 52.5059129,
+    "lng": 13.3216835,
+    "display_name": "Kantstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "27736d863e9433c7f794d2709ec9b3af": {
+    "lat": 52.5066033,
+    "lng": 13.589815,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "6ba730d6ec573b14d5712a71f409a303": {
+    "lat": 52.4085231,
+    "lng": 13.2652251,
+    "display_name": "Kampfkunstakademie Berlin",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "745593f035ba01d85d99f9de7f011831": {
+    "lat": 52.5247335,
+    "lng": 13.411609,
+    "display_name": "Kleine Alexanderstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "ed82809344e5abe7583fc69bb2e14c17": {
+    "lat": 52.5247335,
+    "lng": 13.411609,
+    "display_name": "Kleine Alexanderstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "bf9388f83cc54d8e32e2989196cf9dbb": {
+    "lat": 52.5130112,
+    "lng": 13.3989187,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "98318d9b10b052b62b322a6589e2067c": {
+    "lat": 52.512987,
+    "lng": 13.3988423,
+    "display_name": "",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "f1ce8db905fab07cadeffe1fb70bfa91": {
+    "lat": 52.5282684,
+    "lng": 13.3994198,
+    "display_name": "Kita Kleine Auguststraße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "1cb4529f825fc99600c0fa910b87a1ca": {
+    "lat": 52.5227272,
+    "lng": 13.400342,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "6f5e3cafa705b9f6edbd6bdaaaf66445": {
+    "lat": 52.5225271,
+    "lng": 13.4000208,
+    "display_name": "Le Jardin",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "afd3345272d5832fb896f91306fd4c86": {
+    "lat": 52.5226016,
+    "lng": 13.4001994,
+    "display_name": "Kleine Präsidentenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "83162c1e05f590a54efdad59e199be7b": {
+    "lat": 52.5177414,
+    "lng": 13.4122864,
+    "display_name": "Klosterstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "519c8c6dfd857975afb459d04af5b5c4": {
+    "lat": 52.4265354,
+    "lng": 13.160457,
+    "display_name": "Koblanckstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "22e743b219c4af0d372d6c4b8ef6abda": {
+    "lat": 52.4394269,
+    "lng": 13.2925345,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "48171e2739284939bf84956ae1d206be": {
+    "lat": 52.4981967,
+    "lng": 13.3834175,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "1e9e6361c78333931c70c7b46540fff1": {
+    "lat": 52.5001278,
+    "lng": 13.3121555,
+    "display_name": "Come Inn Berlin Kurfürstendamm Opera",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "985d6f68ca7e52ce92d6b167e48e3a3f": {
+    "lat": 52.4999599,
+    "lng": 13.3619411,
+    "display_name": "Kurfürstenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "ef76e89eacaeedb258553b2a44d99b07": {
+    "lat": 52.4999599,
+    "lng": 13.3619411,
+    "display_name": "Kurfürstenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "c226d2bb2760c5bf6cb7997f374f395c": {
+    "lat": 52.4463236,
+    "lng": 13.3738934,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "28fb24480fd3b98dc661c84b1c897efd": {
+    "lat": 52.41959,
+    "lng": 13.1632328,
+    "display_name": "Diakonie Hospiz Wannsee",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c50614ac23a65552bc1f94935e8fe572": {
+    "lat": 52.5208279,
+    "lng": 13.4094214,
+    "display_name": "Berliner Fernsehturm",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "9efe1da4b277624ddc45fdea1272f807": {
+    "lat": 52.5041108,
+    "lng": 13.3481192,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "fa37acb87888f9735b1f8a93a1dad1ea": {
+    "lat": 52.5242707,
+    "lng": 13.6411407,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "d8d662b8e250d6103e9794cab27eca8c": {
+    "lat": 52.4687633,
+    "lng": 13.3229269,
+    "display_name": "Lefèvrestraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "2a21004e33470165e627eec24cddf62b": {
+    "lat": 52.5171026,
+    "lng": 13.3218723,
+    "display_name": "Universitätsarchiv – Universität der Künste Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "8dddf7ce2504bd3bba1cd75219892ca1": {
+    "lat": 52.5117803,
+    "lng": 13.3757083,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "2cc9b952470aa129ddd17a5fb746efbc": {
+    "lat": 52.5084494,
+    "lng": 13.3392306,
+    "display_name": "Zoo Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3e74479b65e074e96515bb243f9979a8": {
+    "lat": 52.5218981,
+    "lng": 13.3325206,
+    "display_name": "Levetzowstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "0df80601245eee14053105ca586eb4d6": {
+    "lat": 52.5211463,
+    "lng": 13.3348647,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "b329a9fb53d3d9ee6836b755aeb9ce20": {
+    "lat": 52.5221175,
+    "lng": 13.3328704,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "6810738c2e4d52e5c395caa5727a715f": {
+    "lat": 52.5059265,
+    "lng": 13.3961163,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "0b0160ee4054f8aa7dfa46c28eea5dbe": {
+    "lat": 52.5174707,
+    "lng": 13.4152062,
+    "display_name": "B&B Hotel Berlin-Alexanderplatz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3addcd530d299758647de983806ca302": {
+    "lat": 52.497796,
+    "lng": 13.3247925,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "45bf0464c76def6c231071d04f773d43": {
+    "lat": 52.5202141,
+    "lng": 13.3802366,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "8aae471391f086384db1d44aacaaa56b": {
+    "lat": 52.5842154,
+    "lng": 13.3893892,
+    "display_name": "Lutherstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "72f9c803e36b91b81aad866c505fbf2e": {
+    "lat": 52.5487171,
+    "lng": 13.2073767,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "0e7b74fcd720263fd3b0d6432bbf311e": {
+    "lat": 52.5035133,
+    "lng": 13.3624857,
+    "display_name": "Lützow-Stübchen",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "7f7878e5056f7f9bfd9899efaef0552b": {
+    "lat": 52.4642431,
+    "lng": 13.3789841,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "8bf6ab7aad8326426b258c8261eac84d": {
+    "lat": 52.5149957,
+    "lng": 13.3930283,
+    "display_name": "Markgrafenstraße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "630d784224fd16f5c8632ddc76c1b950": {
+    "lat": 52.6377635,
+    "lng": 13.2908197,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "2167bfb847dd42be63945520bf649488": {
+    "lat": 52.619894,
+    "lng": 13.3140756,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "81d2707018ea2ce03cf97f729f1c009d": {
+    "lat": 52.619894,
+    "lng": 13.3140756,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5549b5c0110a74ea68a4fb4521fad57a": {
+    "lat": 52.5231439,
+    "lng": 13.399525,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "1265c700d5850180b72fb8ed2b40545e": {
+    "lat": 52.36593,
+    "lng": 13.488641,
+    "display_name": "Flughafen Berlin Brandenburg",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "926b061aa50c4aa18190faabf10d1d49": {
+    "lat": 52.5429819,
+    "lng": 13.3656416,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "1b95b4c070dfb61aa9ceb44b3c9299fe": {
+    "lat": 52.5516071,
+    "lng": 13.349465,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "ff15624a656533c9e0d5397a89d8a779": {
+    "lat": 52.5484635,
+    "lng": 13.3549812,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "97035d887b8e652c22a41e46f7d390e8": {
+    "lat": 52.5453062,
+    "lng": 13.3609376,
+    "display_name": "Müllerstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "2f75a72e97925c49c4459b28d336ff37": {
+    "lat": 52.36593,
+    "lng": 13.488641,
+    "display_name": "Flughafen Berlin Brandenburg",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "35173721c397912e36f61df242fec5d0": {
+    "lat": 52.5396003,
+    "lng": 13.3714858,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "da58fed8870fc0dfa4b3917537636548": {
+    "lat": 52.5499831,
+    "lng": 13.3532136,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "7e19cf93ebac191631e74ea53fee587b": {
+    "lat": 52.4915852,
+    "lng": 13.6252592,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "f6e0b5b00b2aa56d2ca350a63f90a57f": {
+    "lat": 52.5571457,
+    "lng": 13.3406343,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "bcdbf9d310e90af6baf15541f0663d24": {
+    "lat": 52.5239923,
+    "lng": 13.4092243,
+    "display_name": "Berliner Marcus Bräu",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "9f02b04a191bbc57d73df942875e37a5": {
+    "lat": 52.399752,
+    "lng": 13.3917391,
+    "display_name": "Neanderstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "72aa30d89809c2fa783a99e954f2cfa0": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "ad00542c650294a66ddb0009ef710690": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "2af222fe6719486dd6929a1067767769": {
+    "lat": 52.5249837,
+    "lng": 13.3943204,
+    "display_name": "Neue Synagoge",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "09ea1f39a5b19c22529623998f8aa8d2": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "85293b9341e54c1d2c94e1aa59707836": {
+    "lat": 52.5175592,
+    "lng": 13.4242216,
+    "display_name": "Kinderhaus Berlin-Mitte",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "e233ba56b11a8b6c2cef77f8f3934518": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "4fa894cb2f3802cd5a9b21019a67956e": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "517acfd2854e823debba6a9b39fd5d62": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "635bcc7d0474321a9384281d84130f5c": {
+    "lat": 52.5135418,
+    "lng": 13.3918617,
+    "display_name": "Konzerthaus Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "ed704a5e3f71d7886ee231f3336f17aa": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "229988c9aa5a1f5c3c6544d3ce9a9de0": {
+    "lat": 52.5156997,
+    "lng": 13.4045784,
+    "display_name": "Berliner Stadtbibliothek",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "06600697d22f485c52684db45c8d7bad": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3df7e43334a1834c0eddc2d1b1487018": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "4c2ccbb11c9e533a870e6edeabd89413": {
+    "lat": 52.5179046,
+    "lng": 13.3955371,
+    "display_name": "Neue Wache",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "783eb9624203124c7c638801543201d3": {
+    "lat": 52.5074321,
+    "lng": 13.3903814,
+    "display_name": "Checkpoint Charlie",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5d89f975d9bde4be9a4c61b29e1a353a": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "c385d8a29ab181eb9bdc99ad744903c8": {
+    "lat": 52.5074321,
+    "lng": 13.3903814,
+    "display_name": "Checkpoint Charlie",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "698ea82826aa9339d65904e48dc38021": {
+    "lat": 52.5164448,
+    "lng": 13.4119035,
+    "display_name": "Landesdenkmalamt Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "fa5c774490eb63ca8a102e6bc9fb4073": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "119be2995df909b9bca2276d470c6502": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "7dc5883aaea95f13f1fa5f972d94d233": {
+    "lat": 52.5070408,
+    "lng": 13.3676212,
+    "display_name": "Neue Nationalgalerie",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "448434ea66626ca2c525814d6bc04fd8": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "71dc2dfd8263cdf134f4093915fcc594": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5047fedf3cd5a4a15b3e7d87491db153": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "f84e11fb27528f31f0911ba17bb247bf": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3778420b3291fbd45f90572e1447df74": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "9854278476ce9481c91e50ca884c246b": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "41c6410059d25a1435efcc4f2a39a97c": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "2af49a2fd0ce1f41994097623134888c": {
+    "lat": 52.5214194,
+    "lng": 13.4029807,
+    "display_name": "Anna-Louisa-Karsch-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "6c330807edb9cadecbd39ff014aac5f5": {
+    "lat": 52.4903321,
+    "lng": 13.4490329,
+    "display_name": "Neue Republik Reger",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "baf0bdddc1f5eb9f3390fcfe08a965cd": {
+    "lat": 52.5070161,
+    "lng": 13.4720347,
+    "display_name": "Verwaltungsgebäude Knorr-Bremse",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "13930cf3de187a72761f520a5e6f347c": {
+    "lat": 52.5070161,
+    "lng": 13.4720347,
+    "display_name": "Verwaltungsgebäude Knorr-Bremse",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "cd7f0bc8f7452641354292de581c01d2": {
+    "lat": 52.5101382,
+    "lng": 13.4060708,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "06cdcc1c1524c58691534c37e0f22a57": {
+    "lat": 52.5101706,
+    "lng": 13.4060582,
+    "display_name": "",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "0c04e025dbbd03d94d43fef2e5121b55": {
+    "lat": 52.5105861,
+    "lng": 13.4060305,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "75d69b100d18557922b485ae11766e47": {
+    "lat": 52.5105226,
+    "lng": 13.4057059,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "8f2da6df578bc6a65cdd41a4f8daf7f7": {
+    "lat": 52.5102622,
+    "lng": 13.4057189,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "301bdf0cd08db3f4f8f5d98e370ddd09": {
+    "lat": 52.5161335,
+    "lng": 13.6897156,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "ad0e144ef4cc80baf78765c1d3325925": {
+    "lat": 52.5163321,
+    "lng": 13.6887729,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "8b7ffe75fbd4ca80e4f854f29ad5a4b6": {
+    "lat": 52.5088409,
+    "lng": 13.4043178,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "06b899549ca96578ff6e9a23d02177e7": {
+    "lat": 52.5086662,
+    "lng": 13.4041084,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "7bd1dde0cf8fd92a11826c70285dbd71": {
+    "lat": 52.508544,
+    "lng": 13.4039836,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "ef9e5f7e9e588a1a5a39e4d7b9c1c95d": {
+    "lat": 52.541993,
+    "lng": 13.375754,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "56b9a6f0ce83b01e8f7c1c5453a96b95": {
+    "lat": 52.5381329,
+    "lng": 13.3757075,
+    "display_name": "Neue Hochstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "b4f4a6cbc2a8635d34af362bd95c7338": {
+    "lat": 52.542527,
+    "lng": 13.3764662,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c9d61bb7c519f8270f9358bb303e98f3": {
+    "lat": 52.511156,
+    "lng": 13.4131715,
+    "display_name": "Neue Jakobstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "b91a107f7fed5e69c9b21bd42a1f3a6e": {
+    "lat": 52.5104327,
+    "lng": 13.4115585,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "6cab647c158cc4b1ccc1ca38b18314a5": {
+    "lat": 52.5100698,
+    "lng": 13.4129031,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "6645a20818237ec8bc59801b61b81778": {
+    "lat": 52.5112607,
+    "lng": 13.4121334,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "539e43c1af714e0265069d097ec2a7c7": {
+    "lat": 52.5066228,
+    "lng": 13.2943033,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "f7f4d082777536b1ec0ad988272e77f0": {
+    "lat": 52.5071815,
+    "lng": 13.2912965,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "fc624c75be7a2622150ce37f8005d94f": {
+    "lat": 52.5221614,
+    "lng": 13.4168247,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "081663d12d1e3b339485b464a528eeac": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "db2986ca0c89957f19ea52e2f1c3b647": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "3f08fb4044d91fe3eb46c6b1f3338b79": {
+    "lat": 52.5221614,
+    "lng": 13.4168247,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "4d7809be0f7fe0e954c94abefed5b626": {
+    "lat": 52.5221614,
+    "lng": 13.4168247,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "71d5e50b42f773669c997f7e18786590": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "d4ab058145ca6733448c8f17e571ca7b": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "75d71250e8eeb8338f229bb77a654f2c": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "6b6f070597855f24033a0f71ec218e0c": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "13f93765014c4365ce1faefb38355c44": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "8eb37344c0eb646142f45511954f81d5": {
+    "lat": 52.5179046,
+    "lng": 13.3955371,
+    "display_name": "Neue Wache",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "20f3dcc7c21a33a802b836d989acbc3a": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "29150b808f39ead53b39296d78b1fa90": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "d2a0090c70899a9b2cc660e1ee49c8d5": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "147e052d8bc4853bfbc0a4cbb09b4d7d": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "d762b6a6ef8dd4df853b9943591e98fb": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "86aad76a4adebf22793e09cd1f052edd": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5842df397e6c6f079c5ba64c41232746": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "553dae43a02bedd124230b674b34ac4d": {
+    "lat": 52.5096334,
+    "lng": 13.6865116,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "24731cb743bf2f2fe7ca1a0384feda59": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "93b25a3a5d47d0da231b8ace0beef5c2": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5f0d0d575417d07bf09ef210f2493cd2": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "2bc9106f8d3b6d77088fd6e73f0b943d": {
+    "lat": 52.5429655,
+    "lng": 13.4209377,
+    "display_name": "Neue Schuhe",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "aca4fbea1b8b5925dda8415f3caff4bb": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "9f3131e96c1d805306fa56f8033e6735": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "b4ed035c8a42cc561f98ded6c47b686f": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "862bac0e07348054d1f3862dcd100086": {
+    "lat": 52.5224967,
+    "lng": 13.4172047,
+    "display_name": "Otto-Braun-Straße",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "a6e3810132c0d02279a2bd06bd1180dd": {
+    "lat": 52.5119219,
+    "lng": 13.4088471,
+    "display_name": "Neue Roßstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "e64cfedf9875a36b111454e5e1bc4640": {
+    "lat": 52.5118183,
+    "lng": 13.4087513,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "a713135a603c39031d99a5140306cfd5": {
+    "lat": 52.511214,
+    "lng": 13.4091196,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "5deb5b97ce14a64c395b9f0052fe3113": {
+    "lat": 52.5110765,
+    "lng": 13.4092465,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "ab9d9d54deccc58202653fcdd47a39a6": {
+    "lat": 52.5107772,
+    "lng": 13.4095134,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "a653807861bcd73d49bc236c154fbc48": {
+    "lat": 52.5179046,
+    "lng": 13.3955371,
+    "display_name": "Neue Wache",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5e20f064c2f666ca5c17de9d63257ff7": {
+    "lat": 52.5247869,
+    "lng": 13.4062226,
+    "display_name": "Goethe-Institut Berlin",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "abef4d06704deb61617dc37e4065c054": {
+    "lat": 52.4668389,
+    "lng": 13.3825126,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "5386c91a6feffe6b08a7172186bdaf7e": {
+    "lat": 52.5247869,
+    "lng": 13.4062226,
+    "display_name": "Goethe-Institut Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "64dc3f74e0d11714be32dcd3ec6a64cf": {
+    "lat": 52.4967312,
+    "lng": 13.3575341,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "6026692fba828096b67cf1f1851492c9": {
+    "lat": 52.4964636,
+    "lng": 13.3564675,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "42e88be20aa17306a998fb6c43099980": {
+    "lat": 52.4968665,
+    "lng": 13.3534864,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "927ba43ebad3e782023de6c347fcfc1d": {
+    "lat": 52.5249837,
+    "lng": 13.3943204,
+    "display_name": "Neue Synagoge",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "161cb186378f2ad388a16274ecb7b3a8": {
+    "lat": 52.5247869,
+    "lng": 13.4062226,
+    "display_name": "Goethe-Institut Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "2e7b6bfc546a388313c6802c2d67a32d": {
+    "lat": 52.5175592,
+    "lng": 13.4242216,
+    "display_name": "Kinderhaus Berlin-Mitte",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "00216f89e4813101ae912c2d408ccded": {
+    "lat": 52.5186944,
+    "lng": 13.3851107,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "213be3a4145b3e13a02e7c13cd9f084b": {
+    "lat": 52.5187881,
+    "lng": 13.3854323,
+    "display_name": "Neustädtische Kirchstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "84c778a74630f9305755be2b5c2f76a0": {
+    "lat": 52.5176664,
+    "lng": 13.3858179,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c70a86412c341ea141a7907b2b703692": {
+    "lat": 52.5187881,
+    "lng": 13.3854323,
+    "display_name": "Neustädtische Kirchstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "519bc5598d162344a8b00b9e4dbe517e": {
+    "lat": 52.4975371,
+    "lng": 13.3499451,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "36d758808c27414107c3d1943a7def29": {
+    "lat": 52.5368591,
+    "lng": 13.2696812,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "0d85f29e0641df5db1676efe28ee8427": {
+    "lat": 52.5110159,
+    "lng": 13.3269541,
+    "display_name": "Technische Universität Berlin",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "88bbfcc090f434725113d7bff4dd808b": {
+    "lat": 52.5167902,
+    "lng": 13.3964236,
+    "display_name": "Oberwallstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "2742bfe19ed5e4fb03c4b59293b42de7": {
+    "lat": 52.5167902,
+    "lng": 13.3964236,
+    "display_name": "Oberwallstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "8099450cfd1e1a5e9b5fb8cc769396c5": {
+    "lat": 52.5005464,
+    "lng": 13.4234541,
+    "display_name": "Zum Goldenen Hahn",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "721bb6b10f2cf791159031199643452f": {
+    "lat": 52.5038495,
+    "lng": 13.4113777,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c04c8e1d60ca60c077b82b9dce894d8e": {
+    "lat": 52.5260626,
+    "lng": 13.3878008,
+    "display_name": "Hämatologie Onkologie Berlin-Mitte, Dr. Christian Sperling",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "facc2b5202f7a2c4155a4c96c75466d4": {
+    "lat": 52.5188302,
+    "lng": 13.3556721,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "506ba3bce87d6e00673c136eb514046c": {
+    "lat": 52.507866,
+    "lng": 13.3170205,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "fdccdb49fcd7eb0a32706e2165cb5308": {
+    "lat": 52.5027272,
+    "lng": 13.365007,
+    "display_name": "B&B Hotel Berlin-Potsdamer Platz",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "113e7a4c3cc6f7a9827f1b5a263e9e1c": {
+    "lat": 52.4931433,
+    "lng": 13.3330191,
+    "display_name": "Prager Platz",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "9bc212c18036c49e1b61767dde097c84": {
+    "lat": 52.5026763,
+    "lng": 13.4101941,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "4742b5564bebc86a0a4be38aa2fb17a3": {
+    "lat": 52.543204,
+    "lng": 13.3722426,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "d0742cce8b4cb0fc261787f9c1fb43d2": {
+    "lat": 52.5170868,
+    "lng": 13.3061157,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "140fa511480ab3b0b51f090b9a0db9a7": {
+    "lat": 52.5037982,
+    "lng": 13.4022401,
+    "display_name": "Ritterstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "2eee64dc04385dd62bbb4562f84b6a9d": {
+    "lat": 52.5046141,
+    "lng": 13.3994993,
+    "display_name": "Ritterstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "05177b1ff42b89db307e8cf2b6549ee3": {
+    "lat": 52.5045394,
+    "lng": 13.4020051,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "a202ed0c16594b0ca8088a96a4c7511d": {
+    "lat": 52.4906801,
+    "lng": 13.3091506,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "10cf75137ac11fcfb3a3d5dc7c2d5cf3": {
+    "lat": 52.5122178,
+    "lng": 13.4203493,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "09993e0319dce3d90f1035ae41184e8b": {
+    "lat": 52.5166924,
+    "lng": 13.3839637,
+    "display_name": "Schadowstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "569aabf003e094db6f63f8db0029b459": {
+    "lat": 52.5141539,
+    "lng": 13.4049876,
+    "display_name": "Scharrenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "7789946556cdc62959ec28cf4a9d14c5": {
+    "lat": 52.5172152,
+    "lng": 13.4007352,
+    "display_name": "Berliner Schloss",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "0f196d8f6385345a14a42f9744b7fdec": {
+    "lat": 52.508577,
+    "lng": 13.4175929,
+    "display_name": "Schmidstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "8783d03627029be8b9d0bd87d45f37bd": {
+    "lat": 52.5243546,
+    "lng": 13.3819066,
+    "display_name": "Deutsches Theater",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "3b51e69af2a054ab772e868cc95b8197": {
+    "lat": 52.6129993,
+    "lng": 13.315668,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "0ac621548b33943dc1a8859d22bc6af2": {
+    "lat": 52.5469235,
+    "lng": 13.4136419,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "5d0875385b3c7acffb946d800603d6ee": {
+    "lat": 52.4823552,
+    "lng": 13.4361155,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "13bf8e7e7ff057c27ae8d58ba0987b00": {
+    "lat": 52.5111362,
+    "lng": 13.4018892,
+    "display_name": "Seydelstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "a34a9cf713b278c228b7598b0473f058": {
+    "lat": 52.5200654,
+    "lng": 13.4020165,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e5033c58fad4187269db92f19db7c3b4": {
+    "lat": 52.5067515,
+    "lng": 13.4071337,
+    "display_name": "Stallschreiberstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "90ba0230eb14f4cb8e54495fdd7accc4": {
+    "lat": 52.4962838,
+    "lng": 13.36327,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "b8e47cdeb441b199c08d6e9ac2466ca7": {
+    "lat": 52.5298392,
+    "lng": 13.4137697,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "db5a4bcb3aff7ad2de44dbcbd9095bc1": {
+    "lat": 52.5332896,
+    "lng": 13.2065431,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "9cb87ff1bded2bd12ae7751f1fe078ae": {
+    "lat": 52.4416069,
+    "lng": 13.3020138,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "7b707e024875e92f359435159a24e0f4": {
+    "lat": 52.4337878,
+    "lng": 13.3545698,
+    "display_name": "FSD Lwerk Berlin Brandenburg gGmbH",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "e48271bb0139f9420b472fcc61456945": {
+    "lat": 52.4572897,
+    "lng": 13.420246,
+    "display_name": "Pirate Studios Berlin Tempelhof",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "416be9bfc91d58341eca969ac2a976f0": {
+    "lat": 52.5059704,
+    "lng": 13.3061234,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e9deb142e7b7e41a21895b0f5ffb2d8b": {
+    "lat": 52.5132256,
+    "lng": 13.3948411,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "a07cec8bcdf05ba026c2dce3350489cd": {
+    "lat": 52.616971,
+    "lng": 13.3167674,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "26d4db2660b72d6cba096817de62daef": {
+    "lat": 52.5041118,
+    "lng": 13.3370915,
+    "display_name": "Tauentzienstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "f9e9912a0cacaf2f4f0e73f3f6f34b3e": {
+    "lat": 52.5041118,
+    "lng": 13.3370915,
+    "display_name": "Tauentzienstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "8b7f83a71c69927a127e5bcdf7fd8ae2": {
+    "lat": 52.5039159,
+    "lng": 13.3365256,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "028426a8898c02ce93210c2b478c773c": {
+    "lat": 52.5030306,
+    "lng": 13.3387696,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "c5ca0b17c6cc85ac237af8909558b300": {
+    "lat": 52.5041118,
+    "lng": 13.3370915,
+    "display_name": "Tauentzienstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "b2dd72887362cc7548306c5915c873d7": {
+    "lat": 52.5034967,
+    "lng": 13.3391377,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "d9b8ef8d000fb6430beef050d6de1058": {
+    "lat": 52.4973736,
+    "lng": 13.3896883,
+    "display_name": "Clever ums Rad",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "42d91c731052a22a9592b2a267cb2836": {
+    "lat": 52.4980721,
+    "lng": 13.3861421,
+    "display_name": "Meininger Hotel Berlin Tempelhofer Ufer",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "1fe15da243808a2353f1b031952a93ee": {
+    "lat": 52.5099148,
+    "lng": 13.3639136,
+    "display_name": "Tiergartenstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "72c958b852625dee311aa874dbd78c8f": {
+    "lat": 52.5267149,
+    "lng": 13.3373952,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "695f63025c79a07ca799bcc987588cea": {
+    "lat": 52.4934432,
+    "lng": 13.3237937,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "1847c1dcd0609fe64dc5f7b897737a63": {
+    "lat": 52.4901356,
+    "lng": 13.3227202,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "a65ff60d7627ffbccc294a7e16f0afac": {
+    "lat": 52.5197677,
+    "lng": 13.3922413,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "3df3ad0dfc064eb06fd60de9e14696ba": {
+    "lat": 52.5200139,
+    "lng": 13.3920098,
+    "display_name": "Universitätsstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "41b8edf3fee095aa710b6b778247482d": {
+    "lat": 52.5198015,
+    "lng": 13.3919212,
+    "display_name": "",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "c5983e5b3f3c32cc03f84c8de0d60051": {
+    "lat": 52.5198015,
+    "lng": 13.3919212,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "d64fcc27246677a1d7686b7c890770f9": {
+    "lat": 52.468276,
+    "lng": 13.5674834,
+    "display_name": "",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "dadd9069f860ebfb0ab1d731fc48c474": {
+    "lat": 52.4967169,
+    "lng": 13.3404458,
+    "display_name": "Lette-Verein",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "f0784f9079b98528b8541e0ab4b7dd65": {
+    "lat": 52.4957468,
+    "lng": 13.3418677,
+    "display_name": "Viktoria-Luise-Platz",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "da1a5634424649d274967e71a857c1f6": {
+    "lat": 52.4958975,
+    "lng": 13.3430958,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "13dc98c7bbbd713c2d9bda0e613a544e": {
+    "lat": 52.4952196,
+    "lng": 13.3413708,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "e25cefd458e0b7b31c07b8e45caf772a": {
+    "lat": 52.4962113,
+    "lng": 13.3427545,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "cdbef618e7766b21dafb5375bb69bf46": {
+    "lat": 52.4546658,
+    "lng": 13.3838047,
+    "display_name": "Viktoriastraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "6a4542ecaf544ada8bb3c1e16291b809": {
+    "lat": 52.4546658,
+    "lng": 13.3838047,
+    "display_name": "Viktoriastraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "9dbacf09c8f2f6e0b72583cf9278dfd5": {
+    "lat": 52.5111675,
+    "lng": 13.4062404,
+    "display_name": "",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "4a45cf4250a816eb14f7badd7cecf196": {
+    "lat": 52.5116529,
+    "lng": 13.406833,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "ddc83711aed375bbca991ff21b019c53": {
+    "lat": 52.4757679,
+    "lng": 13.3380896,
+    "display_name": "Kita Berliner Spatzen",
+    "source": "photon:area",
+    "geocoded_for": "verify_2026"
+  },
+  "4131a2d724da4d9fff6c320629820832": {
+    "lat": 52.5225069,
+    "lng": 13.1954192,
+    "display_name": "St. Wilhelm",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "e3725c558b91d460184a0d7747637381": {
+    "lat": 52.5226902,
+    "lng": 13.1970712,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "9599428fe6350c2cdb1b084a26d6dc5a": {
+    "lat": 52.523129,
+    "lng": 13.1980782,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "ddb1b324d1b0aa1559fd71af46599635": {
+    "lat": 52.5229141,
+    "lng": 13.1950156,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "4812b15c6cd9d8a686c3edf599cc0bec": {
+    "lat": 52.5229829,
+    "lng": 13.1978869,
+    "display_name": "Weißenburger Straße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "e5210286cca5004e4f6fa9c33c500a21": {
+    "lat": 52.5229829,
+    "lng": 13.1978869,
+    "display_name": "Weißenburger Straße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "f2a779b2a867ce6c13ddcaa8bfd35daa": {
+    "lat": 52.5229829,
+    "lng": 13.1978869,
+    "display_name": "Weißenburger Straße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "5cf5004e2a867783e0983a3b6e243a6f": {
+    "lat": 52.4785601,
+    "lng": 13.3301256,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "7060d4e91fb0c9940833878a2b94b035": {
+    "lat": 52.4610376,
+    "lng": 13.5195093,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "4cc60bf07f75ee838f6f0c5c109214f9": {
+    "lat": 52.5041056,
+    "lng": 13.386031,
+    "display_name": "Simplesmente Capoeira Berlin e.V.",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  },
+  "518cca73dd7306a75910a9b243c0ceb1": {
+    "lat": 52.4945158,
+    "lng": 13.3133444,
+    "display_name": "",
+    "source": "photon:house",
+    "geocoded_for": "verify_2026"
+  },
+  "bd7779b985e786a65b8dcf6a465e0077": {
+    "lat": 52.5081071,
+    "lng": 13.397251,
+    "display_name": "Zimmerstraße",
+    "source": "photon:street",
+    "geocoded_for": "verify_2026"
+  }
 }

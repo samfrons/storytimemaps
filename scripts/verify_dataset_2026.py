@@ -62,11 +62,37 @@ from bs4 import BeautifulSoup
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-ROOT = "/home/user/storymaps"
+# Derive ROOT from this script's location (scripts/ -> repo root) so the
+# harness runs unchanged on any machine. Override with VERIFY_ROOT if needed.
+ROOT = os.environ.get(
+    "VERIFY_ROOT", os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)
+
+# Optional smoke-test guards (default: full, real run).
+#   VERIFY_LIMIT=N    -> only compare the first N dataset records
+#   VERIFY_DRY_RUN=1  -> do everything EXCEPT writing the dataset back in place
+LIMIT = int(os.environ.get("VERIFY_LIMIT", "0") or "0")
+DRY_RUN = os.environ.get("VERIFY_DRY_RUN", "") == "1"
+# APPLY_SAFE_FIXES=1 -> also adopt the high-confidence corrections from source:
+#   (a) restore truncated street names where our value is a fragment of the
+#       fuller source value AND the house number is identical, and
+#   (b) correct startDate/endDate years that disagree with the source.
+# Ambiguous cases (multi-address, parenthetical variants, different numbers)
+# are still only flagged for manual review. Default off = conservative.
+APPLY_SAFE_FIXES = os.environ.get("APPLY_SAFE_FIXES", "") == "1"
+
 CACHE_DB = f"{ROOT}/scrape_cache/cache.db"
 CACHE_DIR = f"{ROOT}/scrape_cache"
-DATASET_PATH = f"{ROOT}/public/data/storymaps_test_full.json"
-BACKUP_PATH = f"{ROOT}/public/data/storymaps_test_full.backup-2026-05.json"
+# The dataset path is overridable because this repo keeps two served copies:
+#   public/data/...  (HTTP-served, used by the museum-exhibit kiosk)
+#   data/...         (read by the /api/storymaps-test route -> the main map)
+# Both must be verified. Override VERIFY_DATASET to target each in turn.
+DATASET_PATH = os.environ.get(
+    "VERIFY_DATASET", f"{ROOT}/public/data/storymaps_test_full.json"
+)
+BACKUP_PATH = os.environ.get(
+    "VERIFY_BACKUP", DATASET_PATH.replace(".json", ".backup-2026-05.json")
+)
 CSV_PATH = f"{ROOT}/data/verification_2026.csv"
 REPORT_JSON_PATH = f"{ROOT}/data/verification_2026_report.json"
 GEOCODE_CACHE_1 = f"{ROOT}/geocoding_cache.json"
@@ -451,6 +477,61 @@ def maybe_autofix_address(ds_value: str, src_value: str) -> Optional[str]:
     return new_value
 
 
+def _addr_core(s: str) -> str:
+    """Lowercase, drop a trailing ', Berlin', collapse whitespace."""
+    s = re.sub(r"\s+", " ", s).strip()
+    s = re.sub(r",\s*berlin\s*$", "", s, flags=re.IGNORECASE).strip()
+    return s.lower()
+
+
+def _is_multi_address(core_src: str) -> bool:
+    """Source value that concatenates two addresses - never auto-adopt."""
+    if " und " in core_src:
+        return True
+    streetish = r"(?:str\.|straße|strasse|ufer|allee|platz|damm|weg|chaussee)"
+    # two street tokens with a 'berlin' between them => concatenation
+    return bool(re.search(streetish + r".*\bberlin\b.*" + streetish, core_src))
+
+
+def safe_restore_address(ds_value: str, src_value: str) -> Optional[str]:
+    """High-confidence restore: our value is a truncated *fragment* of the fuller
+    source value, the house number is identical, and the source is neither a
+    multi-address concatenation nor a parenthetical historical variant.
+    Returns the source value (whitespace-normalized, ', Berlin' preserved) or None.
+    """
+    new_value = re.sub(r"\s+", " ", src_value).strip()
+    core_ds = _addr_core(ds_value)
+    core_src = _addr_core(new_value)
+    if not core_ds or not core_src or core_ds == core_src:
+        return None
+    # Ambiguous source shapes are left for manual review.
+    if "(" in new_value or _is_multi_address(core_src):
+        return None
+    # Our value must be a strict fragment of the fuller source value.
+    if core_ds not in core_src:
+        return None
+    # House-number identity is the hard safety net.
+    if re.findall(r"\d+", core_ds) != re.findall(r"\d+", core_src):
+        return None
+    # Preserve the dataset's ", Berlin" suffix style.
+    if "berlin" not in new_value.lower() and "berlin" in ds_value.lower():
+        new_value = new_value + ", Berlin"
+    return new_value
+
+
+def safe_fix_year(existing_iso: str, src_year: str) -> Optional[str]:
+    """Swap only the 4-digit year in an ISO date, preserving month/day.
+    Guarded to a plausible historical range. Returns new ISO string or None."""
+    if not existing_iso or not src_year or not re.fullmatch(r"\d{4}", src_year):
+        return None
+    if not (1850 <= int(src_year) <= 1945):
+        return None
+    if not re.match(r"\d{4}", existing_iso):
+        return None
+    new_iso = re.sub(r"^\d{4}", src_year, existing_iso)
+    return new_iso if new_iso != existing_iso else None
+
+
 # ---------------------------------------------------------------------------
 # Main pipeline
 # ---------------------------------------------------------------------------
@@ -521,6 +602,9 @@ def main():
     last_verified_iso = None  # set after run completes
 
     for i, rec in enumerate(records):
+        if LIMIT and i >= LIMIT:
+            print(f"  VERIFY_LIMIT={LIMIT} reached; stopping compare early.", flush=True)
+            break
         if (i + 1) % 500 == 0:
             print(f"  ... {i + 1}/{len(records)} records compared", flush=True)
 
@@ -618,16 +702,69 @@ def main():
                     else:
                         auto_fixes_applied[-1]["regeocoded"] = False
 
-            # Track manual-review candidates
+            # Apply high-confidence fixes when enabled; otherwise queue for review.
             if issue["verdict"] == V_FIELD:
-                manual_review.append({
-                    "id": rec_id,
-                    "title": rec.get("title", ""),
-                    "field": issue["field"],
-                    "dataset_value": issue["dataset_value"],
-                    "source_value": issue["source_value"],
-                    "match_quality": mq,
-                })
+                applied = False
+
+                if APPLY_SAFE_FIXES and issue["field"] in ("original_address", "cleaned_address"):
+                    fix = safe_restore_address(issue["dataset_value"], issue["source_value"])
+                    if fix:
+                        target = issue["field"]
+                        old_val = rec.get(target, "")
+                        rec[target] = fix
+                        if rec.get("address") == old_val:
+                            rec["address"] = fix
+                        if target != "cleaned_address" and rec.get("cleaned_address") == old_val:
+                            rec["cleaned_address"] = fix
+                        entry = {
+                            "id": rec_id,
+                            "title": rec.get("title", ""),
+                            "field": target,
+                            "old": old_val,
+                            "new": fix,
+                            "reason": "safe_restore_truncated_street",
+                        }
+                        lat, lng = lookup_geocode(fix)
+                        if lat is not None and lng is not None:
+                            rec["lat"] = lat
+                            rec["lng"] = lng
+                            entry["regeocoded"] = True
+                        else:
+                            entry["regeocoded"] = False
+                        auto_fixes_applied.append(entry)
+                        applied = True
+
+                elif APPLY_SAFE_FIXES and issue["field"] in ("startDate", "endDate"):
+                    target = issue["field"]
+                    new_iso = safe_fix_year(rec.get(target, ""), issue["source_value"])
+                    if new_iso:
+                        cand_s = new_iso if target == "startDate" else rec.get("startDate", "")
+                        cand_e = new_iso if target == "endDate" else rec.get("endDate", "")
+                        ys = re.match(r"(\d{4})", cand_s or "")
+                        ye = re.match(r"(\d{4})", cand_e or "")
+                        if not (ys and ye) or int(ys.group(1)) <= int(ye.group(1)):
+                            old_val = rec.get(target, "")
+                            rec[target] = new_iso
+                            auto_fixes_applied.append({
+                                "id": rec_id,
+                                "title": rec.get("title", ""),
+                                "field": target,
+                                "old": old_val,
+                                "new": new_iso,
+                                "reason": issue["notes"],
+                                "regeocoded": False,
+                            })
+                            applied = True
+
+                if not applied:
+                    manual_review.append({
+                        "id": rec_id,
+                        "title": rec.get("title", ""),
+                        "field": issue["field"],
+                        "dataset_value": issue["dataset_value"],
+                        "source_value": issue["source_value"],
+                        "match_quality": mq,
+                    })
 
         # Schema augmentation
         rec["source_url"] = source["source_url"]
@@ -656,10 +793,13 @@ def main():
                 row["confidence"], row["notes"],
             ])
 
-    # Write back JSON
-    print(f"Writing updated dataset to {DATASET_PATH} ...", flush=True)
-    with open(DATASET_PATH, "w", encoding="utf-8") as f:
-        json.dump(records, f, ensure_ascii=False, indent=2)
+    # Write back JSON (skipped on dry runs so the source dataset is untouched)
+    if DRY_RUN:
+        print("DRY_RUN=1: NOT writing the dataset back (source left untouched).", flush=True)
+    else:
+        print(f"Writing updated dataset to {DATASET_PATH} ...", flush=True)
+        with open(DATASET_PATH, "w", encoding="utf-8") as f:
+            json.dump(records, f, ensure_ascii=False, indent=2)
 
     # Write JSON report
     report = {

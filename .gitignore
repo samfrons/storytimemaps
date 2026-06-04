@@ -45,3 +45,10 @@ __pycache__/
 
 # Hive-mind
 .hive-mind/
+
+# python venv
+.venv/
+
+# dataset backup snapshots (git history is the real backup)
+*.backup-2026-05.json
+*.pre-regeocode-*.json

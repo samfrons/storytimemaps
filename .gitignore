@@ -46,6 +46,9 @@ __pycache__/
 # Hive-mind
 .hive-mind/
 
+# claude-flow runtime state
+.claude-flow/
+
 # python venv
 .venv/
 

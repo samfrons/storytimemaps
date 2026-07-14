@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import Map, { Marker, Popup } from 'react-map-gl/mapbox';
 import type { MapRef } from 'react-map-gl/mapbox';
 
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ';
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 interface BusinessStatistics {
   total: number;

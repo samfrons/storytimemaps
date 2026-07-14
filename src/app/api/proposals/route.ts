@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { requireAdmin } from '@/lib/supabase/admin';
 import type { CreateProposalInput } from '@/lib/types/proposal';
 
 /**
@@ -12,6 +13,14 @@ import type { CreateProposalInput } from '@/lib/types/proposal';
  */
 export async function GET(request: NextRequest) {
   try {
+    // Listing ALL proposals exposes every user's submissions plus plaque-inquiry
+    // contact PII — admins only. Regular users read their own via
+    // GET /api/proposals/user.
+    const auth = await requireAdmin();
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
+    }
+
     const supabase = await createClient();
 
     // Return error if Supabase is not configured
@@ -20,15 +29,6 @@ export async function GET(request: NextRequest) {
         { error: 'Authentication service is not configured' },
         { status: 503 }
       );
-    }
-
-    // Check if user is authenticated
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Get query parameters

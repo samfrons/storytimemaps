@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { join } from 'path'
-import { exec } from 'child_process'
+import { execFile } from 'child_process'
 import { promisify } from 'util'
 import type { OutreachRecord } from '@/lib/types/outreach'
+import { requireAdmin } from '@/lib/supabase/admin'
 
-const execAsync = promisify(exec)
+// execFile (not exec) so arguments are passed as an argv array and never
+// interpreted by a shell — this prevents command injection via record data.
+const execFileAsync = promisify(execFile)
 
 export const dynamic = 'force-dynamic'
 
@@ -27,8 +30,9 @@ function saveData(data: OutreachRecord[]): void {
 async function autoCommit(message: string): Promise<void> {
   try {
     const cwd = process.cwd()
-    await execAsync(`git add "${DATA_FILE_REL}"`, { cwd })
-    await execAsync(`git commit -m "${message}" --no-verify`, { cwd })
+    // Pass args as an argv array: `message` is data, never shell-interpreted.
+    await execFileAsync('git', ['add', DATA_FILE_REL], { cwd })
+    await execFileAsync('git', ['commit', '-m', message, '--no-verify'], { cwd })
     console.log('Auto-committed outreach data changes')
   } catch (error) {
     // Commit may fail if no changes or git not available - that's ok
@@ -38,6 +42,12 @@ async function autoCommit(message: string): Promise<void> {
 
 export async function GET() {
   try {
+    // Outreach records contain third-party contact PII — admins only.
+    const auth = await requireAdmin()
+    if (!auth.ok) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     const data = loadData()
     return NextResponse.json({ success: true, data })
   } catch (error) {
@@ -48,6 +58,12 @@ export async function GET() {
 
 export async function PATCH(request: NextRequest) {
   try {
+    // Mutating the outreach dataset (and triggering a git commit) is admin-only.
+    const auth = await requireAdmin()
+    if (!auth.ok) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     const body = await request.json()
     const { id, ...updates } = body
 

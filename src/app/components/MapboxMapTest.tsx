@@ -90,7 +90,7 @@ const getThemeColors = (theme: string | undefined) => {
 }
 
 // Mapbox access token
-mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 interface Marker {
   id: string

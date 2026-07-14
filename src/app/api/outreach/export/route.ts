@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 import type { OutreachRecord } from '@/lib/types/outreach'
+import { requireAdmin } from '@/lib/supabase/admin'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,6 +19,12 @@ function escapeCSV(value: string | number | undefined): string {
 
 export async function GET() {
   try {
+    // The CSV export contains contact PII — admins only.
+    const auth = await requireAdmin()
+    if (!auth.ok) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     if (!existsSync(DATA_PATH)) {
       return NextResponse.json({ success: false, error: 'Data file not found' }, { status: 404 })
     }

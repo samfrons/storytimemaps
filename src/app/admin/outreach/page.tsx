@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo, Suspense } from 'react'
 import Link from 'next/link'
+import { useAuth } from '@/contexts/AuthContext'
 import type { OutreachRecord, OutreachFilters as FiltersType } from '@/lib/types/outreach'
 import OutreachStats from '@/app/components/outreach/OutreachStats'
 import OutreachFilters from '@/app/components/outreach/OutreachFilters'
@@ -9,40 +10,18 @@ import OutreachTable from '@/app/components/outreach/OutreachTable'
 import OutreachForm from '@/app/components/outreach/OutreachForm'
 import ResearchHelper from '@/app/components/outreach/ResearchHelper'
 
-const AUTH_STORAGE_KEY = 'outreach_admin_auth'
-
+/**
+ * Gate the outreach admin UI behind real Supabase admin auth.
+ *
+ * This is a UX convenience only — the authoritative check lives server-side in
+ * every /api/outreach* handler (see requireAdmin). Do NOT reintroduce a
+ * client-side password: NEXT_PUBLIC_ values ship in the browser bundle and any
+ * client gate is trivially bypassed.
+ */
 function AdminAuth({ children }: { children: React.ReactNode }) {
-  const [authenticated, setAuthenticated] = useState(false)
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [checking, setChecking] = useState(true)
+  const { user, profile, loading } = useAuth()
 
-  useEffect(() => {
-    // Check if already authenticated in session
-    const stored = sessionStorage.getItem(AUTH_STORAGE_KEY)
-    if (stored === 'true') {
-      setAuthenticated(true)
-    }
-    setChecking(false)
-  }, [])
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Simple password check - in production use environment variable
-    // Default password is 'storytimemaps' - can be changed via ADMIN_PASSWORD env var
-    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'storytimemaps'
-
-    if (password === correctPassword) {
-      setAuthenticated(true)
-      sessionStorage.setItem(AUTH_STORAGE_KEY, 'true')
-      setError('')
-    } else {
-      setError('Invalid password')
-      setPassword('')
-    }
-  }
-
-  if (checking) {
+  if (loading) {
     return (
       <div
         className="min-h-screen flex items-center justify-center"
@@ -55,63 +34,35 @@ function AdminAuth({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (!authenticated) {
+  if (!user || !profile?.is_admin) {
     return (
       <div
         className="min-h-screen flex items-center justify-center p-4"
         style={{ backgroundColor: 'var(--background)' }}
       >
         <div
-          className="w-full max-w-md p-6 border"
+          className="w-full max-w-md p-6 border text-center"
           style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border)' }}
         >
-          <h1 className="text-xl font-mono mb-6 text-center" style={{ color: 'var(--foreground)' }}>
+          <h1 className="text-xl font-mono mb-4" style={{ color: 'var(--foreground)' }}>
             Outreach Admin
           </h1>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                className="block text-xs font-mono uppercase mb-2"
-                style={{ color: 'var(--foreground-muted)' }}
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 text-sm font-mono border"
-                style={{
-                  backgroundColor: 'var(--input-bg)',
-                  borderColor: 'var(--border)',
-                  color: 'var(--foreground)',
-                }}
-                autoFocus
-              />
-            </div>
-            {error && (
-              <div
-                className="text-sm font-mono px-3 py-2"
-                style={{ backgroundColor: 'var(--danger)', color: 'var(--closed-text)' }}
-              >
-                {error}
-              </div>
-            )}
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-sm font-mono border transition-all hover:opacity-80"
-              style={{
-                backgroundColor: 'var(--primary)',
-                borderColor: 'var(--primary)',
-                color: 'var(--background)',
-              }}
-            >
-              Access Admin
-            </button>
-          </form>
-          <p className="mt-4 text-xs text-center" style={{ color: 'var(--foreground-muted)' }}>
-            Protected area for outreach tracking management.
+          <p className="text-sm font-mono mb-6" style={{ color: 'var(--foreground-muted)' }}>
+            {user
+              ? 'Your account does not have admin access.'
+              : 'You must sign in with an admin account to view this page.'}
           </p>
+          <Link
+            href="/"
+            className="inline-block px-4 py-2 text-sm font-mono border transition-all hover:opacity-80"
+            style={{
+              backgroundColor: 'var(--primary)',
+              borderColor: 'var(--primary)',
+              color: 'var(--background)',
+            }}
+          >
+            Return home
+          </Link>
         </div>
       </div>
     )
@@ -121,6 +72,7 @@ function AdminAuth({ children }: { children: React.ReactNode }) {
 }
 
 function OutreachPageContent() {
+  const { signOut } = useAuth()
   const [data, setData] = useState<OutreachRecord[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -200,10 +152,10 @@ function OutreachPageContent() {
   }, [])
 
   // Logout function
-  const handleLogout = useCallback(() => {
-    sessionStorage.removeItem(AUTH_STORAGE_KEY)
-    window.location.reload()
-  }, [])
+  const handleLogout = useCallback(async () => {
+    await signOut()
+    window.location.href = '/'
+  }, [signOut])
 
   if (loading) {
     return (

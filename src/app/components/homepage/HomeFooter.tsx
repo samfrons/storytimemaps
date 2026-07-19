@@ -34,7 +34,7 @@ const HomeFooter: React.FC = () => {
             aria-label={t('homepage.footer.navLabel', { defaultValue: 'Footer' })}
           >
             <Link
-              href="/"
+              href="/map"
               className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
               style={{ color: 'var(--foreground-muted)' }}
             >

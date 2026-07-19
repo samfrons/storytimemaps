@@ -283,7 +283,7 @@ function ExhibitVisionContent() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/"
+                href="/map"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 font-mono font-semibold text-lg transition-colors"
                 style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}
               >
@@ -316,7 +316,7 @@ function ExhibitVisionContent() {
           </div>
           <div className="flex items-center gap-6">
             <Link
-              href="/"
+              href="/map"
               className="font-mono text-sm transition-colors"
               style={{ color: 'var(--foreground-muted)' }}
             >

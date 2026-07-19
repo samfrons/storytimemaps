@@ -444,6 +444,38 @@
       "about": "Ein digitales Denkmal für die jüdischen Geschäfte Berlins, 1900–1945. Geschaffen, um Erinnerung zu bewahren und zu bilden – jeder Eintrag beruht auf dokumentierten Archivquellen.",
       "navLabel": "Fußzeile",
       "citation": "Basierend auf der Forschung von Dr. Christoph Kreutzmüller und der Datenbank jüdischer Gewerbetätigkeit in Berlin. Für akademische Zwecke zitieren Sie bitte die Originalforschung."
+    },
+    "stories": {
+      "eyebrow": "Die menschliche Dimension",
+      "title": "Hinter jedem Punkt eine Geschichte",
+      "intro": "Fünfzehn Geschäfte wurden bislang vertieft erforscht – mit Archivfotografien, Dokumenten und den Geschichten der Familien, die sie aufgebaut haben. Sie sind die ersten von vielen.",
+      "cta": "Alle Geschichten auf der Karte lesen",
+      "imageAlt": "Archivfotografie: {{name}}",
+      "credit": "Fotografien und Dokumente aus dem Projektarchiv."
+    },
+    "about": {
+      "eyebrow": "Über das Projekt",
+      "title": "Ein digitales Denkmal mit physischer Zukunft",
+      "mission": "StoryTimeMaps hat sich vorgenommen, die ehemals jüdischen Geschäfte Berlins anhand verifizierter historischer Quellen und Archivbilder zu kartieren – und diese Erinnerung dann zurück in die physische Stadt zu tragen: durch Gedenktafeln an den ursprünglichen Adressen und eine öffentliche Museumsausstellung.",
+      "sourceTitle": "Belegt und verifiziert",
+      "sourceText": "Jeder Eintrag stammt aus der Datenbank jüdischer Gewerbebetriebe in Berlin der Humboldt-Universität zu Berlin – der wissenschaftlichen Datenbank auf Grundlage der Forschung von Dr. Christoph Kreutzmüller –, ergänzt um Archivmaterial des Leo Baeck Instituts.",
+      "fact1": "Alle 10.021 Einträge 2026 erneut gegen die Originalquelle geprüft",
+      "fact2": "Jeder Eintrag trägt seinen Quellenlink und ein Verifizierungsdatum",
+      "fact3": "Rund neun von zehn Geschäften an ihrer exakten Straßenadresse verortet",
+      "fact4": "Von Grund auf mehrsprachig: Englisch, Deutsch und Jiddisch",
+      "statusLive": "Live",
+      "statusProgress": "In Arbeit",
+      "statusPrototype": "Prototyp",
+      "statusPilot": "Pilot",
+      "phaseMapTitle": "Die digitale Karte",
+      "phaseMapText": "Das interaktive Denkmal, das Sie gerade betrachten: jedes dokumentierte Geschäft, durchsuchbar und erkundbar in drei Sprachen.",
+      "phasePlaquesTitle": "Gedenktafeln",
+      "phasePlaquesText": "Fünfzehn Tafeln sind vollständig gestaltet – jede mit einem QR-Code, der die Straße mit der Geschichte des Geschäfts verbindet. Die Ansprache der Hauseigentümer läuft.",
+      "phaseExhibitTitle": "Museumsausstellung",
+      "phaseExhibitText": "Eine Touchscreen-Version der Karte ist gebaut und läuft, konzipiert für Kiosk-Displays. Wir suchen Museums- und Kulturpartner als Gastgeber.",
+      "exhibitLink": "Ausstellungsvision",
+      "phaseBeyondTitle": "Über Berlin hinaus",
+      "phaseBeyondText": "Ein Frankfurter Pilot mit 57 Geschäften zeigt, dass sich das Modell auf andere deutsche Städte übertragen lässt."
     }
   }
 }

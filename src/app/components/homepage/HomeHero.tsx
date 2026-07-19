@@ -280,7 +280,7 @@ const HomeHero: React.FC<HomeHeroProps> = ({ data }) => {
 
           <div className="flex flex-wrap gap-3 mb-8">
             <Link
-              href="/"
+              href="/map"
               className="inline-flex items-center gap-2 px-6 py-3 font-mono text-sm font-bold uppercase tracking-wider transition-opacity hover:opacity-80"
               style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}
             >

@@ -444,6 +444,38 @@
       "about": "A digital memorial to the Jewish businesses of Berlin, 1900–1945. Built to preserve memory and educate — every record is drawn from documented archival sources.",
       "navLabel": "Footer",
       "citation": "Based on the research of Dr. Christoph Kreutzmüller and the database of Jewish commercial activity in Berlin. For academic use, please cite the original research."
+    },
+    "stories": {
+      "eyebrow": "The human dimension",
+      "title": "Behind every dot, a story",
+      "intro": "Fifteen businesses have been researched in depth — with archival photographs, documents and the histories of the families who built them. They are the first of many.",
+      "cta": "Read them all in the map",
+      "imageAlt": "Archival photograph: {{name}}",
+      "credit": "Photographs and documents from the project archive."
+    },
+    "about": {
+      "eyebrow": "About the project",
+      "title": "A digital memorial with a physical future",
+      "mission": "StoryTimeMaps set out to map the formerly Jewish-owned businesses of Berlin from verified historical records and archival imagery — and then to carry that memory back into the physical city: through memorial plaques at the original addresses, and a public museum exhibit.",
+      "sourceTitle": "Sourced and verified",
+      "sourceText": "Every record comes from the Datenbank jüdischer Gewerbebetriebe in Berlin at Humboldt-Universität zu Berlin — the scholarly database grounded in Dr. Christoph Kreutzmüller’s research — with archival material informed by the Leo Baeck Institute.",
+      "fact1": "All 10,021 records re-verified against the original source in 2026",
+      "fact2": "Every record carries its source link and a verification date",
+      "fact3": "Roughly nine in ten businesses plotted at their exact street address",
+      "fact4": "Multilingual from the ground up: English, German and Yiddish",
+      "statusLive": "Live",
+      "statusProgress": "In progress",
+      "statusPrototype": "Prototype",
+      "statusPilot": "Pilot",
+      "phaseMapTitle": "The digital map",
+      "phaseMapText": "The interactive memorial you are looking at: every documented business, searchable and explorable in three languages.",
+      "phasePlaquesTitle": "Memorial plaques",
+      "phasePlaquesText": "Fifteen plaques are fully designed — each carrying a QR code that links the street back to the business’s story. Outreach to building owners is underway.",
+      "phaseExhibitTitle": "Museum exhibit",
+      "phaseExhibitText": "A touch-screen exhibit version of the map is built and running, designed for kiosk display. We are seeking museum and cultural partners to host it.",
+      "exhibitLink": "Exhibit vision",
+      "phaseBeyondTitle": "Beyond Berlin",
+      "phaseBeyondText": "A Frankfurt pilot of 57 businesses shows the model extends to other German cities."
     }
   }
 }

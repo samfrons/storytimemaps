@@ -22,7 +22,7 @@ const HomeHeader: React.FC = () => {
         <div className="flex items-center gap-4 sm:gap-6">
           <nav className="hidden md:flex items-center gap-6" aria-label="Primary">
             <Link
-              href="/"
+              href="/map"
               className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
               style={{ color: 'var(--foreground-muted)' }}
             >

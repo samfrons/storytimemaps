@@ -5,9 +5,11 @@ import { useHomepagePoints } from './homepage/homepageData'
 import HomeHeader from './homepage/HomeHeader'
 import HomeHero from './homepage/HomeHero'
 import ConceptSection from './homepage/ConceptSection'
+import FeaturedStories from './homepage/FeaturedStories'
 import MemorialBand from './homepage/MemorialBand'
 import HistorySection from './homepage/HistorySection'
 import DataSection from './homepage/DataSection'
+import AboutSection from './homepage/AboutSection'
 import ResearchFoundation from './homepage/ResearchFoundation'
 import ExploreSection from './homepage/ExploreSection'
 import HomeFooter from './homepage/HomeFooter'
@@ -27,9 +29,11 @@ const Homepage: React.FC = () => {
       <HomeHeader />
       <HomeHero data={points} />
       <ConceptSection />
+      <FeaturedStories />
       <MemorialBand />
       <HistorySection />
       <DataSection data={points} />
+      <AboutSection />
       <ResearchFoundation />
       <ExploreSection />
       <HomeFooter />

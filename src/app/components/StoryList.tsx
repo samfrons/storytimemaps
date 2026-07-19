@@ -5,7 +5,7 @@
 import Image from 'next/image'
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { useTheme } from 'next-themes'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import TimeSlider from './TimeSlider'
 import YearMarkerCard from './YearMarkerCard'
 import { StoryMap, YearMarker } from '../../types'
@@ -46,6 +46,7 @@ const StoryList: React.FC<StoryListProps> = ({
   const { theme } = useTheme()
   const { t, language } = useTranslation()
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const [originRect, setOriginRect] = useState<DOMRect | null>(null)
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
@@ -82,7 +83,7 @@ const StoryList: React.FC<StoryListProps> = ({
     // Update URL with business id for deep linking
     const params = new URLSearchParams(searchParams.toString())
     params.set('id', story.id)
-    router.replace(`/?${params.toString()}`, { scroll: false })
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false })
   }
 
   const closeModal = () => {
@@ -96,7 +97,7 @@ const StoryList: React.FC<StoryListProps> = ({
     const params = new URLSearchParams(searchParams.toString())
     params.delete('id')
     const queryString = params.toString()
-    router.replace(queryString ? `/?${queryString}` : '/', { scroll: false })
+    router.replace(queryString ? `${pathname}?${queryString}` : pathname, { scroll: false })
   }
 
   const handleDropdownToggle = () => {

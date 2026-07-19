@@ -13,7 +13,7 @@ const ExploreSection: React.FC = () => {
 
   const cards = [
     {
-      href: '/',
+      href: '/map',
       primary: true,
       title: t('cta.exploreMap', { defaultValue: 'Explore the Interactive Map' }),
       text: t('homepage.explore.mapText', {

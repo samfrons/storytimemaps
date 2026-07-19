@@ -505,7 +505,7 @@ function PlaquesPageContent() {
               {t('plaques.footer.exploreDescription')}
             </p>
             <Link
-              href="/"
+              href="/map"
               className="inline-flex items-center gap-2 px-8 py-4 font-mono font-semibold text-lg transition-colors"
               style={{
                 backgroundColor: 'var(--primary)',

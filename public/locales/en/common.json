@@ -366,5 +366,84 @@
       "viewPlaques": "Memorial Plaques Initiative",
       "rights": "All rights reserved."
     }
+  },
+  "homepage": {
+    "nav": {
+      "map": "Map",
+      "plaques": "Plaques",
+      "data": "Data",
+      "frankfurt": "Frankfurt"
+    },
+    "hero": {
+      "eyebrow": "A living map of Jewish commercial life · Berlin 1900–1945",
+      "titleLine1": "Every dot a business.",
+      "titleLine2": "Every color a fate.",
+      "description": "StoryTimeMaps charts more than ten thousand Jewish-owned businesses at their real Berlin addresses — and lets you move through time to watch a community’s economy flourish, come under attack, and be systematically erased.",
+      "ctaMap": "Explore the map",
+      "ctaHow": "How it works",
+      "pause": "Pause the timeline",
+      "play": "Play the timeline",
+      "sliderLabel": "Year",
+      "plotted": "{{total}} documented locations, drawn from the archive",
+      "loading": "Loading the archive…"
+    },
+    "states": {
+      "active": "Open",
+      "declining": "Under pressure",
+      "closed": "Closed"
+    },
+    "concept": {
+      "eyebrow": "The concept",
+      "title": "One map. Three dimensions.",
+      "intro": "The archive behind this site is a list of names, addresses and dates. The map turns that list back into a city — one you can stand in, move through, and watch change.",
+      "placeTag": "Place",
+      "placeTitle": "Every dot is a real address",
+      "placeText": "Each business is mapped to the street where it actually stood — tailors in Mitte, publishers in Kreuzberg, department stores on Kurfürstendamm. Zoom in and the dots become shops with names, owners and stories.",
+      "timeTag": "Time",
+      "timeTitle": "Drag the years, watch the city change",
+      "timeText": "A time slider runs beneath the map from 1900 to 1945. Slide it and businesses open, struggle and vanish around you — the boycott of 1933, the forced transfers of 1938, the end of the war.",
+      "fateTag": "Fate",
+      "fateTitle": "Color carries the story",
+      "fateText": "At any moment, each dot shows the state of that business: operating normally, under growing pressure in its final years, or closed — liquidated, seized, or destroyed."
+    },
+    "memorial": {
+      "quote": "Behind every dot: a family, a livelihood, a place where Berlin bought its bread, its books, its winter coats. This map exists so that they are not reduced to a number."
+    },
+    "history": {
+      "eyebrow": "What happened",
+      "note": "This was not a collapse but a campaign: boycott, legal exclusion, forced sale, destruction. Each step is visible on the map as a wave of color moving through the city."
+    },
+    "data": {
+      "eyebrow": "The record",
+      "title": "The numbers tell the story",
+      "intro": "Every figure below comes from the same archive the map draws from. The shape of the chart is the history: pressure building through the 1930s, then the catastrophe of 1938.",
+      "statDocumented": "Businesses documented",
+      "statMapped": "Mapped to street addresses",
+      "statClosed": "Closed between 1933 and 1945",
+      "statYears": "Years of history covered",
+      "chartTitle": "Documented business closings per year, 1930–1945",
+      "chartAlt": "Bar chart of business closings per year from 1930 to 1945, peaking at 2,195 in 1939 and 2,061 in 1945",
+      "note1933": "1933 — the April boycott begins",
+      "note1938": "1938–39 — “Aryanization” and Kristallnacht",
+      "note1945": "1945 — liquidations recorded by the war’s end"
+    },
+    "research": {
+      "eyebrow": "The foundation"
+    },
+    "explore": {
+      "eyebrow": "Ways in",
+      "title": "Begin exploring",
+      "mapTag": "Start here",
+      "mapText": "The full experience: ten thousand businesses, a time slider across 45 years, and in-depth stories of the people behind the storefronts.",
+      "plaquesTag": "Initiative",
+      "plaquesText": "Help bring the digital memorial into Berlin’s streets — physical plaques at the addresses where these businesses stood.",
+      "dataTag": "For researchers",
+      "dataText": "Browse the underlying records: names, addresses, trades and dates, with sources for every entry."
+    },
+    "footer": {
+      "about": "A digital memorial to the Jewish businesses of Berlin, 1900–1945. Built to preserve memory and educate — every record is drawn from documented archival sources.",
+      "navLabel": "Footer",
+      "citation": "Based on the research of Dr. Christoph Kreutzmüller and the database of Jewish commercial activity in Berlin. For academic use, please cite the original research."
+    }
   }
 }

@@ -317,5 +317,84 @@
       "peakMonth": "Shpits khurbn khoydesh",
       "dailyAverage": "Teglekher durkhnit (Nov 1938)"
     }
+  },
+  "homepage": {
+    "nav": {
+      "map": "Mape",
+      "plaques": "Tovlen",
+      "data": "Datn",
+      "frankfurt": "Frankfurt"
+    },
+    "hero": {
+      "eyebrow": "A lebedike mape fun yidishn gesheft-lebn · Berlin 1900–1945",
+      "titleLine1": "Yeder pintl a gesheft.",
+      "titleLine2": "Yeder kolir a goyrl.",
+      "description": "StoryTimeMaps farshraybt iber tsen toyznt yidishe gesheftn oyf zeyere emese Berliner adresn – un lozt aykh forn durkh der tsayt: zet vi dos virtshaftlekhe lebn fun a kehile hot geblit, iz gekumen unter druk, un iz sistematish oysgemekt gevorn.",
+      "ctaMap": "Forsht oys di mape",
+      "ctaHow": "Vi es arbet",
+      "pause": "Opshteln di tsaytlinye",
+      "play": "Shpiln di tsaytlinye",
+      "sliderLabel": "Yor",
+      "plotted": "{{total}} dokumentirte erter, getsikhnt funem arkhiv",
+      "loading": "Men lodt dem arkhiv…"
+    },
+    "states": {
+      "active": "Ofn",
+      "declining": "Unter druk",
+      "closed": "Farmakht"
+    },
+    "concept": {
+      "eyebrow": "Der kontsept",
+      "title": "Eyn mape. Dray dimensyes.",
+      "intro": "Der arkhiv hinter dem vebzaytl iz a reshime fun nemen, adresn un datn. Di mape farvandlt di reshime tsurik in a shtot – eyne in velkher men ken shteyn, zikh bavegn, un zen vi zi bayt zikh.",
+      "placeTag": "Ort",
+      "placeTitle": "Yeder pintl iz an emeser adres",
+      "placeText": "Yedes gesheft iz farbundn mit der gas vu es iz take geshtanen – shnayders in Mite, farlegers in Kroytsberg, kroym-hayzer oyfn Kurfirstndam. Zumt arayn un di pintlekh vern kromen mit nemen, balebatim un geshikhtes.",
+      "timeTag": "Tsayt",
+      "timeTitle": "Tsit durkh di yorn, zet vi di shtot bayt zikh",
+      "timeText": "Unter der mape loyft a tsayt-shiber fun 1900 biz 1945. Rukt im, un arum aykh efenen zikh gesheftn, matern zikh un farshvindn – der boykot fun 1933, di getsvungene ibergabes fun 1938, dos kriegs-ende.",
+      "fateTag": "Goyrl",
+      "fateTitle": "Der kolir trogt di geshikhte",
+      "fateText": "In yedn moment vayzt yeder pintl dem tsushtand funem gesheft: es arbet normal, es shteyt unter vaksndikn druk in zayne letste yorn, oder es iz farmakht – likvidirt, tsugenumen oder tseshtert."
+    },
+    "memorial": {
+      "quote": "Hinter yedn pintl: a mishpokhe, a parnose, an ort vu Berlin hot gekoyft zayn broyt, zayne bikher, zayne vinter-mantlen. Di mape ekzistirt kedey zey zoln nisht farvandlt vern in bloyz a tsol."
+    },
+    "history": {
+      "eyebrow": "Vos iz geshen",
+      "note": "Dos iz nisht geven keyn tsuzamenbrokh, nor a kampanye: boykot, rekhtlekhe oysshlisung, getsvungener farkoyf, tseshterung. Yeder trot iz zikhtbar oyf der mape – vi a khvalye fun kolir vos geyt durkh der shtot."
+    },
+    "data": {
+      "eyebrow": "Der kheshbn",
+      "title": "Di tsoln dertseyln di geshikhte",
+      "intro": "Yede tsifer untn kumt funem zelbn arkhiv fun velkhn di mape vert getsikhnt. Di form funem diagram iz di geshikhte aleyn: vaksndiker druk in di 1930er yorn, dernokh di katastrofe fun 1938.",
+      "statDocumented": "Dokumentirte gesheftn",
+      "statMapped": "Farbundn mit gas-adresn",
+      "statClosed": "Farmakht tsvishn 1933 un 1945",
+      "statYears": "Yor dokumentirte geshikhte",
+      "chartTitle": "Dokumentirte gesheft-farmakhungen a yor, 1930–1945",
+      "chartAlt": "Diagram fun gesheft-farmakhungen a yor fun 1930 biz 1945, mit shpitsn fun 2,195 in 1939 un 2,061 in 1945",
+      "note1933": "1933 – der April-boykot heybt zikh on",
+      "note1938": "1938–39 – „arisirung“ un Kristalnakht",
+      "note1945": "1945 – likvidatsyes farshribn bizn kriegs-ende"
+    },
+    "research": {
+      "eyebrow": "Der fundament"
+    },
+    "explore": {
+      "eyebrow": "Vegn arayn",
+      "title": "Heybt on oysforshn",
+      "mapTag": "Heybt on do",
+      "mapText": "Di fule iberlebung: tsen toyznt gesheftn, a tsayt-shiber iber 45 yor, un tife geshikhtes fun di mentshn hinter di shoyfenster.",
+      "plaquesTag": "Initsyativ",
+      "plaquesText": "Helft brengen dem digitaln denkmol oyf Berlins gasn – fizishe tovlen oyf di adresn vu di gesheftn zenen geshtanen.",
+      "dataTag": "Far forshers",
+      "dataText": "Blettert durkh di originele rekords: nemen, adresn, fakhn un datn, mit mekoyrim far yedn ayntrog."
+    },
+    "footer": {
+      "about": "A digitaler denkmol far di yidishe gesheftn fun Berlin, 1900–1945. Geboyt tsu ophitn zikorn un tsu lernen – yeder rekord shtamt fun dokumentirte arkhiv-mekoyrim.",
+      "navLabel": "Fus-teyl",
+      "citation": "Bazirt oyf der forshung fun Dr. Christoph Kreutzmüller un der datn-baze fun yidisher gesheft-tetikeyt in Berlin. Far akademishn banuts, tsitirt zeyer di originele forshung."
+    }
   }
 }

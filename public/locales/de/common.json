@@ -366,5 +366,84 @@
       "viewPlaques": "Initiative Gedenktafeln",
       "rights": "Alle Rechte vorbehalten."
     }
+  },
+  "homepage": {
+    "nav": {
+      "map": "Karte",
+      "plaques": "Gedenktafeln",
+      "data": "Daten",
+      "frankfurt": "Frankfurt"
+    },
+    "hero": {
+      "eyebrow": "Eine lebendige Karte jüdischen Geschäftslebens · Berlin 1900–1945",
+      "titleLine1": "Jeder Punkt ein Geschäft.",
+      "titleLine2": "Jede Farbe ein Schicksal.",
+      "description": "StoryTimeMaps verzeichnet über zehntausend jüdische Geschäfte an ihren realen Berliner Adressen – und lässt Sie durch die Zeit reisen: Sehen Sie, wie das Wirtschaftsleben einer Gemeinschaft aufblühte, unter Druck geriet und systematisch ausgelöscht wurde.",
+      "ctaMap": "Karte erkunden",
+      "ctaHow": "So funktioniert es",
+      "pause": "Zeitleiste anhalten",
+      "play": "Zeitleiste abspielen",
+      "sliderLabel": "Jahr",
+      "plotted": "{{total}} dokumentierte Standorte, direkt aus dem Archiv gezeichnet",
+      "loading": "Archiv wird geladen…"
+    },
+    "states": {
+      "active": "Geöffnet",
+      "declining": "Unter Druck",
+      "closed": "Geschlossen"
+    },
+    "concept": {
+      "eyebrow": "Das Konzept",
+      "title": "Eine Karte. Drei Dimensionen.",
+      "intro": "Das Archiv hinter dieser Website ist eine Liste von Namen, Adressen und Daten. Die Karte verwandelt diese Liste zurück in eine Stadt – eine, in der man stehen, durch die man sich bewegen und deren Wandel man beobachten kann.",
+      "placeTag": "Ort",
+      "placeTitle": "Jeder Punkt ist eine echte Adresse",
+      "placeText": "Jedes Geschäft ist der Straße zugeordnet, in der es tatsächlich stand – Schneider in Mitte, Verlage in Kreuzberg, Kaufhäuser am Kurfürstendamm. Beim Hineinzoomen werden aus Punkten Läden mit Namen, Inhabern und Geschichten.",
+      "timeTag": "Zeit",
+      "timeTitle": "Ziehen Sie durch die Jahre und sehen Sie die Stadt sich verändern",
+      "timeText": "Unter der Karte verläuft ein Zeitregler von 1900 bis 1945. Bewegen Sie ihn, und um Sie herum eröffnen Geschäfte, geraten in Not und verschwinden – der Boykott von 1933, die Zwangsübertragungen von 1938, das Kriegsende.",
+      "fateTag": "Schicksal",
+      "fateTitle": "Die Farbe erzählt die Geschichte",
+      "fateText": "Zu jedem Zeitpunkt zeigt jeder Punkt den Zustand des Geschäfts: in normalem Betrieb, in den letzten Jahren unter wachsendem Druck, oder geschlossen – liquidiert, enteignet oder zerstört."
+    },
+    "memorial": {
+      "quote": "Hinter jedem Punkt: eine Familie, eine Existenz, ein Ort, an dem Berlin sein Brot, seine Bücher, seine Wintermäntel kaufte. Diese Karte existiert, damit sie nicht auf eine Zahl reduziert werden."
+    },
+    "history": {
+      "eyebrow": "Was geschah",
+      "note": "Dies war kein Zusammenbruch, sondern eine Kampagne: Boykott, rechtliche Ausgrenzung, Zwangsverkauf, Zerstörung. Jeder Schritt ist auf der Karte sichtbar – als Welle aus Farbe, die durch die Stadt zieht."
+    },
+    "data": {
+      "eyebrow": "Die Bilanz",
+      "title": "Die Zahlen erzählen die Geschichte",
+      "intro": "Jede Zahl unten stammt aus demselben Archiv, aus dem die Karte gezeichnet wird. Die Form des Diagramms ist die Geschichte selbst: wachsender Druck in den 1930er-Jahren, dann die Katastrophe von 1938.",
+      "statDocumented": "Dokumentierte Geschäfte",
+      "statMapped": "Straßenadressen zugeordnet",
+      "statClosed": "Geschlossen zwischen 1933 und 1945",
+      "statYears": "Jahre dokumentierter Geschichte",
+      "chartTitle": "Dokumentierte Geschäftsschließungen pro Jahr, 1930–1945",
+      "chartAlt": "Balkendiagramm der Geschäftsschließungen pro Jahr von 1930 bis 1945, mit Höchstwerten von 2.195 im Jahr 1939 und 2.061 im Jahr 1945",
+      "note1933": "1933 – der Aprilboykott beginnt",
+      "note1938": "1938–39 – „Arisierung“ und Novemberpogrome",
+      "note1945": "1945 – bis Kriegsende erfasste Liquidationen"
+    },
+    "research": {
+      "eyebrow": "Das Fundament"
+    },
+    "explore": {
+      "eyebrow": "Zugänge",
+      "title": "Jetzt erkunden",
+      "mapTag": "Hier beginnen",
+      "mapText": "Das vollständige Erlebnis: zehntausend Geschäfte, ein Zeitregler über 45 Jahre und ausführliche Geschichten der Menschen hinter den Schaufenstern.",
+      "plaquesTag": "Initiative",
+      "plaquesText": "Helfen Sie, das digitale Denkmal auf Berlins Straßen zu bringen – physische Gedenktafeln an den Adressen, an denen diese Geschäfte standen.",
+      "dataTag": "Für Forschende",
+      "dataText": "Durchsuchen Sie die zugrunde liegenden Datensätze: Namen, Adressen, Gewerbe und Daten, mit Quellen zu jedem Eintrag."
+    },
+    "footer": {
+      "about": "Ein digitales Denkmal für die jüdischen Geschäfte Berlins, 1900–1945. Geschaffen, um Erinnerung zu bewahren und zu bilden – jeder Eintrag beruht auf dokumentierten Archivquellen.",
+      "navLabel": "Fußzeile",
+      "citation": "Basierend auf der Forschung von Dr. Christoph Kreutzmüller und der Datenbank jüdischer Gewerbetätigkeit in Berlin. Für akademische Zwecke zitieren Sie bitte die Originalforschung."
+    }
   }
 }

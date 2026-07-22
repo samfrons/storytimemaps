@@ -1,0 +1,693 @@
+/* Berlin history tour — period city-plan aesthetic.
+   All colors are scoped variables on .htour (page-local palette: the tour
+   deliberately renders as an aged 1930s city plan in every app theme). */
+
+.htour {
+  --ht-paper: #eadfc6;
+  --ht-paper-deep: #ddcfae;
+  --ht-cream: #f4ecd9;
+  --ht-ink: #2e2418;
+  --ht-ink-rgb: 46, 36, 24;
+  --ht-ink-soft: #5a4a35;
+  --ht-accent: #8a3b2e;
+  --ht-accent-rgb: 138, 59, 46;
+  --ht-hairline: rgba(46, 36, 24, 0.28);
+  --ht-shadow: rgba(31, 23, 12, 0.35);
+  --ht-font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --ht-font-mono: var(--font-space-mono), 'Space Mono', monospace;
+  --ht-font-body: var(--font-inter), 'Inter', sans-serif;
+
+  position: relative;
+  background: var(--ht-paper);
+  color: var(--ht-ink);
+  font-family: var(--ht-font-body);
+}
+
+.htour *:focus {
+  outline: none;
+  box-shadow: none;
+}
+.htour a:focus-visible,
+.htour button:focus-visible {
+  border-color: var(--ht-accent) !important;
+  background-color: rgba(var(--ht-accent-rgb), 0.12);
+}
+
+/* ---------- fixed map stage ---------- */
+
+.ht-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--ht-paper);
+}
+.ht-map {
+  position: absolute;
+  inset: 0;
+  /* gentle age grade over the recolored vector map */
+  filter: sepia(0.16) saturate(0.86) contrast(1.02);
+}
+.ht-map .mapboxgl-ctrl-logo,
+.ht-map .mapboxgl-ctrl-attrib {
+  opacity: 0.45;
+}
+/* keep the required Mapbox logo/attribution visible above the time axis */
+.ht-map .mapboxgl-ctrl-bottom-left,
+.ht-map .mapboxgl-ctrl-bottom-right {
+  bottom: 58px;
+}
+
+/* vignette + paper + grain overlays */
+.ht-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    rgba(31, 23, 12, 0) 48%,
+    rgba(31, 23, 12, 0.16) 78%,
+    rgba(31, 23, 12, 0.42) 100%
+  );
+}
+.ht-paper-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url('/images/paper.jpg') center / cover;
+  mix-blend-mode: multiply;
+  opacity: 0.16;
+}
+.ht-grain {
+  position: absolute;
+  inset: -60px;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: ht-grain-shift 1.4s steps(4) infinite;
+}
+@keyframes ht-grain-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-18px, 12px);
+  }
+  50% {
+    transform: translate(10px, -16px);
+  }
+  75% {
+    transform: translate(-8px, -10px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* loading veil */
+.ht-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ht-paper);
+  transition: opacity 0.9s ease;
+}
+.ht-veil.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.ht-veil span {
+  font-family: var(--ht-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+}
+
+/* ---------- markers (vintage plan numbers) ---------- */
+
+.ht-marker {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ht-cream);
+  border: 1px solid var(--ht-ink);
+  box-shadow: 2px 2px 0 var(--ht-shadow);
+  font-family: var(--ht-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ht-ink);
+  cursor: pointer;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+}
+.ht-marker.is-active {
+  background: var(--ht-accent);
+  border-color: var(--ht-accent);
+  color: var(--ht-cream);
+  transform: scale(1.45);
+  z-index: 3;
+}
+.htour.ht-far .ht-marker {
+  transform: scale(0.55);
+  opacity: 0.85;
+}
+.htour.ht-far .ht-marker.is-active {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* ---------- HUD ---------- */
+
+.ht-hud {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+}
+.ht-hud--brand {
+  top: 18px;
+  left: 20px;
+  pointer-events: auto;
+}
+.ht-brand-kicker {
+  font-family: var(--ht-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+}
+.ht-brand-title {
+  font-family: var(--ht-font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ht-ink);
+  line-height: 1.2;
+}
+.ht-back-link {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 8px;
+  border: 1px solid var(--ht-hairline);
+  background: rgba(var(--ht-ink-rgb), 0.04);
+  font-family: var(--ht-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+.ht-back-link:hover {
+  transform: translateX(-2px);
+}
+
+.ht-hud--year {
+  top: 16px;
+  right: 22px;
+  text-align: right;
+}
+.ht-year {
+  font-family: var(--ht-font-mono);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  letter-spacing: 0.06em;
+  color: var(--ht-ink);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 0 var(--ht-cream);
+}
+.ht-district {
+  font-family: var(--ht-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ht-accent);
+  min-height: 1em;
+}
+.ht-compass {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ht-font-mono);
+  font-size: 0.6rem;
+  color: var(--ht-ink-soft);
+}
+.ht-compass-needle {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  will-change: transform;
+}
+.ht-compass-needle svg {
+  display: block;
+}
+
+/* ---------- left rail (stop index) ---------- */
+
+.ht-rail {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ht-rail button {
+  width: 26px;
+  height: 20px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: var(--ht-font-mono);
+  font-size: 0.58rem;
+  color: rgba(var(--ht-ink-rgb), 0.5);
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+.ht-rail button:hover {
+  transform: translateX(2px);
+  color: var(--ht-ink);
+}
+.ht-rail button.is-active {
+  background: var(--ht-ink);
+  border-color: var(--ht-ink);
+  color: var(--ht-cream);
+}
+
+/* ---------- time axis (bottom, x = years) ---------- */
+
+.ht-axis {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 10px 26px 12px;
+  background: linear-gradient(
+    to top,
+    rgba(234, 223, 198, 0.96),
+    rgba(234, 223, 198, 0.82) 70%,
+    rgba(234, 223, 198, 0)
+  );
+  pointer-events: none;
+}
+.ht-axis-track {
+  position: relative;
+  height: 34px;
+  border-bottom: 2px solid var(--ht-ink);
+}
+.ht-axis-tick {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  height: 7px;
+  background: rgba(var(--ht-ink-rgb), 0.45);
+  transform: translateX(-0.5px);
+}
+.ht-axis-tick.is-major {
+  height: 12px;
+  width: 2px;
+  background: var(--ht-ink);
+}
+.ht-axis-tick .ht-axis-tick-label {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  transform: translateX(-50%);
+  font-family: var(--ht-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--ht-ink-soft);
+  white-space: nowrap;
+}
+.ht-axis-tick.is-first .ht-axis-tick-label {
+  transform: translateX(0);
+}
+.ht-axis-tick.is-last .ht-axis-tick-label {
+  transform: translateX(-100%);
+}
+.ht-axis-event {
+  position: absolute;
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--ht-accent);
+  pointer-events: auto;
+}
+.ht-axis-stop {
+  position: absolute;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  transform: translateX(-50%);
+  background: rgba(var(--ht-ink-rgb), 0.55);
+  border: 1px solid var(--ht-paper);
+  pointer-events: auto;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+.ht-axis-stop.is-active {
+  background: var(--ht-accent);
+  transform: translateX(-50%) scale(1.9);
+}
+.ht-axis-needle {
+  position: absolute;
+  bottom: 0;
+  top: -4px;
+  width: 2px;
+  background: var(--ht-accent);
+  transform: translateX(-50%);
+  will-change: left;
+}
+.ht-axis-needle::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--ht-accent);
+}
+
+/* ---------- scroll content ---------- */
+
+.ht-scroll {
+  position: relative;
+  z-index: 10;
+}
+
+.ht-intro,
+.ht-outro {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 18vh 6vw 22vh;
+}
+.ht-intro-inner,
+.ht-outro-inner {
+  max-width: 620px;
+  background: rgba(244, 236, 217, 0.92);
+  border: 1px solid var(--ht-ink);
+  box-shadow: 4px 4px 0 var(--ht-shadow);
+  padding: 2.4rem 2.6rem 2.2rem;
+}
+.ht-kicker {
+  font-family: var(--ht-font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ht-accent);
+  margin-bottom: 0.9rem;
+}
+.ht-intro-inner h1 {
+  font-family: var(--ht-font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  line-height: 1.06;
+  margin-bottom: 1.1rem;
+}
+.ht-intro-inner p,
+.ht-outro-inner p {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--ht-ink-soft);
+  margin-bottom: 0.9rem;
+}
+.ht-intro-note {
+  border-top: 1px solid var(--ht-hairline);
+  padding-top: 0.9rem;
+  font-size: 0.74rem !important;
+  line-height: 1.55 !important;
+}
+.ht-scroll-cue {
+  margin-top: 1.4rem;
+  font-family: var(--ht-font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ht-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.ht-scroll-cue::after {
+  content: '';
+  width: 34px;
+  height: 1px;
+  background: var(--ht-ink);
+  animation: ht-cue 2.2s ease-in-out infinite;
+}
+@keyframes ht-cue {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(10px);
+    opacity: 0.4;
+  }
+}
+
+/* stop sections: tall scroll runway, card pinned on the right */
+.ht-stop {
+  min-height: 170vh;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 5vw;
+}
+.ht-card-holder {
+  position: sticky;
+  top: 12vh;
+  align-self: flex-start;
+  width: min(430px, 92vw);
+  margin-bottom: 22vh;
+}
+.ht-card {
+  background: rgba(244, 236, 217, 0.94);
+  border: 1px solid var(--ht-ink);
+  box-shadow: 5px 5px 0 var(--ht-shadow);
+  padding: 1.6rem 1.7rem 1.5rem;
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+.ht-card.is-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ht-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--ht-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+  margin-bottom: 0.7rem;
+}
+.ht-card-meta .ht-card-index {
+  color: var(--ht-accent);
+  font-weight: 700;
+}
+.ht-card h2 {
+  font-family: var(--ht-font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+  line-height: 1.12;
+  margin-bottom: 0.35rem;
+}
+.ht-card-address {
+  font-family: var(--ht-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+  margin-bottom: 1rem;
+}
+.ht-card-story {
+  font-size: 0.88rem;
+  line-height: 1.62;
+  margin-bottom: 1rem;
+}
+.ht-card-figure {
+  margin: 0 0 1rem;
+  border: 1px solid var(--ht-hairline);
+}
+.ht-card-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(0.25) contrast(0.98);
+}
+.ht-card-figure figcaption {
+  font-family: var(--ht-font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+  padding: 5px 8px;
+  border-top: 1px solid var(--ht-hairline);
+}
+.ht-card-building {
+  border-left: 2px solid var(--ht-accent);
+  padding: 0.15rem 0 0.15rem 0.9rem;
+  margin-bottom: 1.1rem;
+}
+.ht-card-building h3 {
+  font-family: var(--ht-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ht-accent);
+  margin-bottom: 0.4rem;
+}
+.ht-card-building p {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ht-ink-soft);
+}
+.ht-card-fate {
+  display: inline-block;
+  font-family: var(--ht-font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ht-cream);
+  background: var(--ht-accent);
+  padding: 6px 10px;
+}
+.ht-card-fate.is-destroyed {
+  background: var(--ht-ink);
+}
+
+/* outro */
+.ht-outro-inner h2 {
+  font-family: var(--ht-font-display);
+  font-weight: 900;
+  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.ht-outro-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 1.3rem;
+}
+.ht-outro-links a {
+  font-family: var(--ht-font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ht-cream);
+  background: var(--ht-ink);
+  border: 1px solid var(--ht-ink);
+  padding: 10px 14px;
+  transition: transform 0.2s ease;
+}
+.ht-outro-links a:hover {
+  transform: translateY(-2px);
+}
+.ht-outro-links a.ht-link-secondary {
+  color: var(--ht-ink);
+  background: transparent;
+}
+.ht-colophon {
+  border-top: 1px solid var(--ht-hairline);
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  font-size: 0.72rem !important;
+  line-height: 1.55 !important;
+}
+
+/* ---------- fallback (no token / no WebGL) ---------- */
+
+.ht-fallback {
+  position: relative;
+  z-index: 10;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12vh 6vw;
+}
+.ht-fallback .ht-card {
+  opacity: 1;
+  transform: none;
+  margin-bottom: 2rem;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 768px) {
+  .ht-rail {
+    display: none;
+  }
+  .ht-hud--year {
+    top: 12px;
+    right: 14px;
+  }
+  .ht-year {
+    font-size: 1.3rem;
+  }
+  .ht-district {
+    display: none;
+  }
+  .ht-compass {
+    display: none;
+  }
+  .ht-stop {
+    justify-content: center;
+    padding: 0 4vw;
+  }
+  .ht-card-holder {
+    top: auto;
+    align-self: flex-end;
+    position: sticky;
+    bottom: 9vh;
+    margin-bottom: 14vh;
+  }
+  .ht-card {
+    max-height: 52vh;
+    overflow-y: auto;
+  }
+  .ht-axis {
+    padding: 8px 14px 8px;
+  }
+  .ht-intro,
+  .ht-outro {
+    padding: 14vh 5vw 18vh;
+  }
+  .ht-intro-inner,
+  .ht-outro-inner {
+    padding: 1.6rem 1.4rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ht-grain {
+    animation: none;
+  }
+  .ht-scroll-cue::after {
+    animation: none;
+  }
+  .ht-card {
+    transition: opacity 0.4s ease;
+    transform: none;
+  }
+}

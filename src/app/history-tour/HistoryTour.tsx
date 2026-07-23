@@ -3,7 +3,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import mapboxgl from 'mapbox-gl'
+import * as maplibregl from 'maplibre-gl'
+import type { PaddingOptions, StyleSpecification } from 'maplibre-gl'
+import 'maplibre-gl/dist/maplibre-gl.css'
 import './history-tour.css'
 import {
   AXIS_END,
@@ -19,27 +21,175 @@ import {
   type TourStop,
 } from './tourData'
 
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
-
-// Period city-plan palette for the map itself. Mapbox layers require hex
-// values (CSS variables cannot reach into WebGL) — this is the documented
-// map-styling exception to the CSS-variable rule.
+// Map-internal palette. WebGL layers require literal color values (CSS
+// variables cannot reach into the map) — the documented map-styling
+// exception to the CSS-variable rule.
 const MAP_COLORS = {
   paper: '#eadfc6',
-  paperDeep: '#ddcfae',
-  water: '#a9bfba',
-  green: '#d6cfa9',
-  roadMinor: '#f2e7cb',
-  roadMajor: '#e6d5a8',
-  roadCasing: '#b7a075',
-  rail: '#a08a63',
-  ink: '#2e2418',
-  inkSoft: '#5a4a35',
-  halo: '#f4ecd9',
-  buildingLow: '#ddd0af',
-  buildingMid: '#cbbb96',
+  shadow: '#2a2216',
+  highlight: '#f6ecd6',
+  accentHs: '#4a4030',
+  buildingLow: '#e3d6b4',
+  buildingMid: '#cdbc95',
   buildingHigh: '#b09d78',
+  inkSoft: '#5a4a35',
   accent: '#8a3b2e',
+}
+
+// The K2-style relief stage: keyless sources — Esri World Imagery draped
+// over AWS terrarium elevation tiles with a sepia hillshade, plus extruded
+// OpenStreetMap building volumes (OpenFreeMap vector tiles) so each stop
+// reads as a modeled city block rather than a flat aerial.
+const TERRARIUM_TILES = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
+
+function buildTourStyle(): StyleSpecification {
+  return {
+    version: 8,
+    sources: {
+      sat: {
+        type: 'raster',
+        tiles: [
+          'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        ],
+        tileSize: 256,
+        maxzoom: 18,
+        attribution: 'Imagery © Esri, Maxar, Earthstar Geographics',
+      },
+      demhs: {
+        type: 'raster-dem',
+        tiles: [TERRARIUM_TILES],
+        tileSize: 256,
+        encoding: 'terrarium',
+        maxzoom: 14,
+      },
+      dem: {
+        type: 'raster-dem',
+        tiles: [TERRARIUM_TILES],
+        tileSize: 256,
+        encoding: 'terrarium',
+        maxzoom: 14,
+        attribution: 'Terrain: Mapzen/AWS Open Data',
+      },
+      ofm: {
+        type: 'vector',
+        url: 'https://tiles.openfreemap.org/planet',
+        attribution: 'Buildings © OpenStreetMap contributors · OpenFreeMap',
+      },
+      'ht-sites': {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: TOUR_STOPS.map((s, idx) => ({
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: [s.lng, s.lat] },
+            properties: { idx },
+          })),
+        },
+      },
+      'ht-active-building': {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: [] },
+      },
+    },
+    sky: {
+      'sky-color': '#cfd2c0',
+      'horizon-color': '#e8dab4',
+      'fog-color': '#e3d3a8',
+      'sky-horizon-blend': 0.7,
+      'horizon-fog-blend': 0.5,
+      'fog-ground-blend': 0.35,
+    },
+    layers: [
+      { id: 'bg', type: 'background', paint: { 'background-color': MAP_COLORS.paper } },
+      {
+        id: 'sat',
+        type: 'raster',
+        source: 'sat',
+        paint: {
+          'raster-saturation': -0.55,
+          'raster-contrast': 0.06,
+          'raster-brightness-max': 0.95,
+        },
+      },
+      {
+        id: 'hs',
+        type: 'hillshade',
+        source: 'demhs',
+        paint: {
+          'hillshade-exaggeration': 0.4,
+          'hillshade-shadow-color': MAP_COLORS.shadow,
+          'hillshade-highlight-color': MAP_COLORS.highlight,
+          'hillshade-accent-color': MAP_COLORS.accentHs,
+        },
+      },
+      {
+        id: 'ht-3d-buildings',
+        type: 'fill-extrusion',
+        source: 'ofm',
+        'source-layer': 'building',
+        minzoom: 14,
+        filter: ['!=', ['get', 'hide_3d'], true],
+        paint: {
+          'fill-extrusion-color': [
+            'interpolate',
+            ['linear'],
+            ['coalesce', ['get', 'render_height'], 14],
+            4,
+            MAP_COLORS.buildingLow,
+            22,
+            MAP_COLORS.buildingMid,
+            50,
+            MAP_COLORS.buildingHigh,
+          ],
+          'fill-extrusion-height': ['coalesce', ['get', 'render_height'], 14],
+          'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
+          'fill-extrusion-opacity': 0.78,
+          'fill-extrusion-vertical-gradient': true,
+        },
+      },
+      {
+        id: 'ht-active-building',
+        type: 'fill-extrusion',
+        source: 'ht-active-building',
+        paint: {
+          'fill-extrusion-color': MAP_COLORS.accent,
+          // Drawn 2 m above the base extrusion of the same footprint so the
+          // highlight wins the depth test instead of z-fighting it.
+          'fill-extrusion-height': ['+', ['coalesce', ['get', 'render_height'], 16], 2],
+          'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
+          'fill-extrusion-opacity': 0.96,
+          'fill-extrusion-vertical-gradient': true,
+        },
+      },
+      {
+        id: 'ht-site-rings',
+        type: 'circle',
+        source: 'ht-sites',
+        paint: {
+          'circle-color': 'rgba(0,0,0,0)',
+          'circle-stroke-color': MAP_COLORS.highlight,
+          'circle-stroke-width': 1,
+          'circle-opacity': 0,
+          'circle-stroke-opacity': 0.6,
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 12, 3, 17, 14],
+        },
+      },
+      {
+        id: 'ht-site-active',
+        type: 'circle',
+        source: 'ht-sites',
+        filter: ['==', ['get', 'idx'], -1],
+        paint: {
+          'circle-color': 'rgba(0,0,0,0)',
+          'circle-stroke-color': MAP_COLORS.accent,
+          'circle-stroke-width': 2.5,
+          'circle-opacity': 0,
+          'circle-stroke-opacity': 0.9,
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 12, 6, 17, 30],
+        },
+      },
+    ],
+  }
 }
 
 interface CamKey {
@@ -60,184 +210,50 @@ const lerpAngle = (a: number, b: number, t: number) => {
 }
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t)
 
-// Recolors the light-v11 style into an aged 1930s city plan.
-function applyVintageStyle(map: mapboxgl.Map) {
-  const style = map.getStyle()
-  if (!style || !style.layers) return
+type LngLat = [number, number]
 
-  for (const layer of style.layers) {
-    const id = layer.id
-    try {
-      if (layer.type === 'background') {
-        map.setPaintProperty(id, 'background-color', MAP_COLORS.paper)
-        continue
-      }
-      if (id === 'building' || id === 'building-outline' || id === 'building-underground') {
-        map.setLayoutProperty(id, 'visibility', 'none')
-        continue
-      }
-      if (layer.type === 'fill') {
-        if (/water/.test(id)) {
-          map.setPaintProperty(id, 'fill-color', MAP_COLORS.water)
-        } else if (/landuse|landcover|park|pitch|national|sand|aeroway/.test(id)) {
-          map.setPaintProperty(id, 'fill-color', MAP_COLORS.green)
-          map.setPaintProperty(id, 'fill-opacity', 0.5)
-        } else {
-          map.setPaintProperty(id, 'fill-color', MAP_COLORS.paperDeep)
-        }
-        continue
-      }
-      if (layer.type === 'line') {
-        if (/waterway/.test(id)) {
-          map.setPaintProperty(id, 'line-color', MAP_COLORS.water)
-        } else if (/rail|transit/.test(id)) {
-          map.setPaintProperty(id, 'line-color', MAP_COLORS.rail)
-        } else if (/admin/.test(id)) {
-          map.setPaintProperty(id, 'line-color', MAP_COLORS.roadCasing)
-          map.setPaintProperty(id, 'line-opacity', 0.5)
-        } else if (/case/.test(id)) {
-          map.setPaintProperty(id, 'line-color', MAP_COLORS.roadCasing)
-        } else if (/motorway|trunk|primary|major/.test(id)) {
-          map.setPaintProperty(id, 'line-color', MAP_COLORS.roadMajor)
-        } else {
-          map.setPaintProperty(id, 'line-color', MAP_COLORS.roadMinor)
-        }
-        continue
-      }
-      if (layer.type === 'symbol') {
-        if (/poi|transit|airport|golf|ferry|shield|junction|oneway/.test(id)) {
-          map.setLayoutProperty(id, 'visibility', 'none')
-        } else {
-          map.setPaintProperty(id, 'text-color', MAP_COLORS.ink)
-          map.setPaintProperty(id, 'text-halo-color', MAP_COLORS.halo)
-          map.setPaintProperty(id, 'text-halo-width', 1.1)
-        }
-        continue
-      }
-    } catch {
-      // Individual layers may not support a property — never fatal.
+function pointInRing(pt: LngLat, ring: LngLat[]): boolean {
+  let inside = false
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i]
+    const [xj, yj] = ring[j]
+    if (yi > pt[1] !== yj > pt[1] && pt[0] < ((xj - xi) * (pt[1] - yi)) / (yj - yi) + xi) {
+      inside = !inside
     }
   }
-
-  // Sepia atmospheric haze toward the horizon.
-  try {
-    map.setFog({
-      color: '#e8dab4',
-      'high-color': '#d9c493',
-      'horizon-blend': 0.08,
-      'space-color': '#cdbb92',
-      'star-intensity': 0,
-    })
-  } catch {
-    // Fog is unsupported on some styles/devices; the tour works without it.
-  }
+  return inside
 }
 
-// Adds the extruded building mass in aged-plaster tones, plus the site rings.
-function addTourLayers(map: mapboxgl.Map, activeStopIdx: number) {
-  const style = map.getStyle()
-  const firstSymbolId = style?.layers?.find((l) => l.type === 'symbol')?.id
-
-  try {
-    if (!map.getLayer('ht-3d-buildings')) {
-      map.addLayer(
-        {
-          id: 'ht-3d-buildings',
-          source: 'composite',
-          'source-layer': 'building',
-          filter: ['==', 'extrude', 'true'],
-          type: 'fill-extrusion',
-          minzoom: 13.5,
-          paint: {
-            'fill-extrusion-color': [
-              'case',
-              ['boolean', ['feature-state', 'active'], false],
-              MAP_COLORS.accent,
-              [
-                'interpolate',
-                ['linear'],
-                ['get', 'height'],
-                0,
-                MAP_COLORS.buildingLow,
-                18,
-                MAP_COLORS.buildingMid,
-                45,
-                MAP_COLORS.buildingHigh,
-              ],
-            ],
-            'fill-extrusion-height': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              13.5,
-              0,
-              15.2,
-              ['get', 'height'],
-            ],
-            'fill-extrusion-base': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              13.5,
-              0,
-              15.2,
-              ['get', 'min_height'],
-            ],
-            'fill-extrusion-opacity': 0.92,
-            'fill-extrusion-vertical-gradient': true,
-          },
-        },
-        firstSymbolId
-      )
+// Vector-tile building features arrive merged into multipart geometries at
+// these zooms — extract only the footprint that contains (or is nearest to)
+// the stop's coordinates, so the highlight marks one block, not a district.
+function pickFootprint(geometry: GeoJSON.Geometry, pt: LngLat): GeoJSON.Polygon | null {
+  const polys: LngLat[][][] =
+    geometry.type === 'Polygon'
+      ? [geometry.coordinates as LngLat[][]]
+      : geometry.type === 'MultiPolygon'
+        ? (geometry.coordinates as LngLat[][][])
+        : []
+  if (polys.length === 0) return null
+  const containing = polys.find((poly) => poly[0] && pointInRing(pt, poly[0]))
+  if (containing) return { type: 'Polygon', coordinates: containing }
+  let best: LngLat[][] | null = null
+  let bestDist = Infinity
+  for (const poly of polys) {
+    const ring = poly[0]
+    if (!ring) continue
+    for (const [x, y] of ring) {
+      const d = (x - pt[0]) * (x - pt[0]) + (y - pt[1]) * (y - pt[1])
+      if (d < bestDist) {
+        bestDist = d
+        best = poly
+      }
     }
-  } catch {
-    // Building extrusions unavailable (e.g. missing composite source).
   }
-
-  try {
-    if (!map.getSource('ht-sites')) {
-      map.addSource('ht-sites', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: TOUR_STOPS.map((s, idx) => ({
-            type: 'Feature',
-            geometry: { type: 'Point', coordinates: [s.lng, s.lat] },
-            properties: { idx },
-          })),
-        },
-      })
-      map.addLayer({
-        id: 'ht-site-rings',
-        type: 'circle',
-        source: 'ht-sites',
-        paint: {
-          'circle-color': 'rgba(0,0,0,0)',
-          'circle-stroke-color': MAP_COLORS.inkSoft,
-          'circle-stroke-width': 1,
-          'circle-opacity': 0,
-          'circle-stroke-opacity': 0.55,
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 12, 3, 17, 14],
-        },
-      })
-      map.addLayer({
-        id: 'ht-site-active',
-        type: 'circle',
-        source: 'ht-sites',
-        filter: ['==', ['get', 'idx'], activeStopIdx],
-        paint: {
-          'circle-color': 'rgba(0,0,0,0)',
-          'circle-stroke-color': MAP_COLORS.accent,
-          'circle-stroke-width': 2.5,
-          'circle-opacity': 0,
-          'circle-stroke-opacity': 0.9,
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 12, 6, 17, 30],
-        },
-      })
-    }
-  } catch {
-    // Ring layers are decorative only.
-  }
+  // Only accept a nearby footprint (~60 m) — otherwise show no highlight
+  // rather than tinting the wrong building.
+  if (best && bestDist < 0.0006 * 0.0006) return { type: 'Polygon', coordinates: best }
+  return null
 }
 
 interface StopCardProps {
@@ -285,7 +301,7 @@ const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => (
 const HistoryTour: React.FC = () => {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const mapContainerRef = useRef<HTMLDivElement | null>(null)
-  const mapRef = useRef<mapboxgl.Map | null>(null)
+  const mapRef = useRef<maplibregl.Map | null>(null)
   const introRef = useRef<HTMLElement | null>(null)
   const outroRef = useRef<HTMLElement | null>(null)
   const stopSectionRefs = useRef<(HTMLElement | null)[]>([])
@@ -293,8 +309,7 @@ const HistoryTour: React.FC = () => {
   const keysRef = useRef<CamKey[]>([])
   const rafRef = useRef<number>(0)
   const lastScrollRef = useRef<number>(-1)
-  const paddingRef = useRef<mapboxgl.PaddingOptions>({ top: 0, bottom: 0, left: 0, right: 0 })
-  const highlightedRef = useRef<{ id: string | number } | null>(null)
+  const paddingRef = useRef<PaddingOptions>({ top: 0, bottom: 0, left: 0, right: 0 })
   const pendingHighlightRef = useRef<number>(-1)
   const activeIdxRef = useRef<number>(-1)
   const reduceMotionRef = useRef<boolean>(false)
@@ -305,6 +320,7 @@ const HistoryTour: React.FC = () => {
   const compassElRef = useRef<HTMLSpanElement | null>(null)
 
   const [mapReady, setMapReady] = useState(false)
+  const [mapFailed, setMapFailed] = useState(false)
   const [activeIdx, setActiveIdx] = useState(-1)
 
   const stopYears = useMemo(() => TOUR_STOPS.map((s) => toDecimalYear(s.endDate)), [])
@@ -378,41 +394,65 @@ const HistoryTour: React.FC = () => {
         : { top: 60, bottom: h * 0.44, left: 0, right: 0 }
   }, [])
 
-  // Try to highlight the building footprint under the active stop.
+  // Copy the building footprint under the active stop into the highlight
+  // source (OpenFreeMap building features carry no stable ids, so a geojson
+  // clone is more reliable than feature-state here).
   const tryHighlight = useCallback((idx: number) => {
     const map = mapRef.current
-    if (!map || !map.isStyleLoaded() || !map.getLayer('ht-3d-buildings')) return
+    // No isStyleLoaded() gate: the ambient drift keeps tiles loading, so the
+    // style rarely reports "loaded" — the try/catch guards pre-load calls.
+    if (!map) return
     try {
-      if (highlightedRef.current !== null) {
-        map.setFeatureState(
-          { source: 'composite', sourceLayer: 'building', id: highlightedRef.current.id },
-          { active: false }
-        )
-        highlightedRef.current = null
-      }
+      const src = map.getSource('ht-active-building') as maplibregl.GeoJSONSource | undefined
+      if (!src) return
       if (idx < 0) {
+        src.setData({ type: 'FeatureCollection', features: [] })
         pendingHighlightRef.current = -1
         return
       }
       const stop = TOUR_STOPS[idx]
+      // Mid-flight the camera is still zoomed out and the query box covers
+      // whole blocks — wait until the camera has nearly arrived.
+      if (map.getZoom() < stop.cam.zoom - 0.6) {
+        pendingHighlightRef.current = idx
+        return
+      }
       const p = map.project([stop.lng, stop.lat])
       const features = map.queryRenderedFeatures(
         [
-          [p.x - 24, p.y - 24],
-          [p.x + 24, p.y + 24],
+          [p.x - 32, p.y - 32],
+          [p.x + 32, p.y + 32],
         ],
         { layers: ['ht-3d-buildings'] }
       )
-      const feature = features.find((f) => f.id !== undefined)
-      if (feature && feature.id !== undefined) {
-        map.setFeatureState(
-          { source: 'composite', sourceLayer: 'building', id: feature.id },
-          { active: true }
-        )
-        highlightedRef.current = { id: feature.id }
+      const pt: [number, number] = [stop.lng, stop.lat]
+      let footprint: GeoJSON.Polygon | null = null
+      let sourceFeature: (typeof features)[number] | null = null
+      for (const f of features) {
+        footprint = pickFootprint(f.geometry, pt)
+        if (footprint) {
+          sourceFeature = f
+          break
+        }
+      }
+      if (footprint && sourceFeature) {
+        src.setData({
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              geometry: footprint,
+              properties: {
+                render_height: (sourceFeature.properties?.render_height as number) ?? 16,
+                render_min_height: (sourceFeature.properties?.render_min_height as number) ?? 0,
+              },
+            },
+          ],
+        })
         pendingHighlightRef.current = -1
       } else {
         // Buildings may not be rendered yet at this camera — retry on idle.
+        src.setData({ type: 'FeatureCollection', features: [] })
         pendingHighlightRef.current = idx
       }
     } catch {
@@ -422,35 +462,37 @@ const HistoryTour: React.FC = () => {
 
   // Main camera loop: scroll-scrubbed keyframe interpolation + gentle drift.
   useEffect(() => {
-    if (!MAPBOX_TOKEN) return
-
     reduceMotionRef.current =
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 
-    mapboxgl.accessToken = MAPBOX_TOKEN
-    let map: mapboxgl.Map | null = null
-    const markers: mapboxgl.Marker[] = []
+    let map: maplibregl.Map | null = null
+    const markers: maplibregl.Marker[] = []
 
     try {
-      map = new mapboxgl.Map({
+      map = new maplibregl.Map({
         container: mapContainerRef.current as HTMLDivElement,
-        style: 'mapbox://styles/mapbox/light-v11',
+        style: buildTourStyle(),
         center: [INTRO_CAM.lng, INTRO_CAM.lat],
         zoom: INTRO_CAM.zoom,
         pitch: INTRO_CAM.pitch,
         bearing: INTRO_CAM.bearing,
+        maxPitch: 70,
         interactive: false,
-        antialias: true,
+        attributionControl: { compact: true },
+        canvasContextAttributes: { antialias: true },
       })
     } catch {
+      setMapFailed(true)
       return
     }
     mapRef.current = map
+    if (process.env.NODE_ENV === 'development') {
+      ;(window as unknown as Record<string, unknown>).__htMap = map
+    }
 
     map.on('error', (e) => {
-      // Never leave the loading veil up if the style cannot load; the tour
+      // Tile/source hiccups are non-fatal; never leave the veil up. The
       // narrative remains fully readable over the paper background.
-      setMapReady(true)
       if (process.env.NODE_ENV === 'development') {
         console.warn('History tour map error:', e?.error?.message)
       }
@@ -458,22 +500,30 @@ const HistoryTour: React.FC = () => {
 
     map.on('load', () => {
       if (!map) return
-      applyVintageStyle(map)
-      addTourLayers(map, activeIdxRef.current)
+      try {
+        map.setTerrain({ source: 'dem', exaggeration: 1.8 })
+      } catch {
+        // Terrain is an enhancement; the imagery stage still works flat.
+      }
 
-      // Numbered plan markers, one per stop.
+      // Numbered plan markers, one per stop. MapLibre writes inline opacity
+      // on the marker root for terrain occlusion, so give it a plain wrapper
+      // and keep our transitions on the chip inside (same trick as the K2
+      // engine).
       TOUR_STOPS.forEach((stop, i) => {
-        const el = document.createElement('div')
-        el.className = 'ht-marker'
-        el.textContent = String(i + 1)
-        el.setAttribute('role', 'button')
-        el.setAttribute('aria-label', `Go to stop ${i + 1}: ${stop.title}`)
-        el.addEventListener('click', () => scrollToStop(i))
-        markerElsRef.current[i] = el
+        const chip = document.createElement('div')
+        chip.className = 'ht-marker'
+        chip.textContent = String(i + 1)
+        chip.setAttribute('role', 'button')
+        chip.setAttribute('aria-label', `Go to stop ${i + 1}: ${stop.title}`)
+        chip.addEventListener('click', () => scrollToStop(i))
+        const wrap = document.createElement('div')
+        wrap.appendChild(chip)
+        markerElsRef.current[i] = chip
         markers.push(
-          new mapboxgl.Marker({ element: el, anchor: 'center' })
+          new maplibregl.Marker({ element: wrap, anchor: 'center' })
             .setLngLat([stop.lng, stop.lat])
-            .addTo(map as mapboxgl.Map)
+            .addTo(map as maplibregl.Map)
         )
       })
 
@@ -550,6 +600,16 @@ const HistoryTour: React.FC = () => {
         activeIdxRef.current = nextIdx
         setActiveIdx(nextIdx)
       }
+
+      // The ambient drift keeps the camera moving, so the map never reaches
+      // 'idle' — retry any pending building highlight here instead.
+      if (
+        frame % 30 === 0 &&
+        pendingHighlightRef.current >= 0 &&
+        pendingHighlightRef.current === activeIdxRef.current
+      ) {
+        tryHighlight(pendingHighlightRef.current)
+      }
     }
     rafRef.current = requestAnimationFrame(tick)
 
@@ -617,18 +677,16 @@ const HistoryTour: React.FC = () => {
     return () => io.disconnect()
   }, [])
 
-  const hasToken = MAPBOX_TOKEN.length > 0
-
   return (
     <div ref={rootRef} className="htour">
-      {hasToken && (
+      {!mapFailed && (
         <div className="ht-stage" aria-hidden="true">
           <div ref={mapContainerRef} className="ht-map" />
           <div className="ht-vignette" />
           <div className="ht-paper-overlay" />
           <div className="ht-grain" />
           <div className={`ht-veil${mapReady ? ' is-hidden' : ''}`}>
-            <span>Preparing the city plan …</span>
+            <span>Preparing the relief …</span>
           </div>
         </div>
       )}
@@ -660,7 +718,7 @@ const HistoryTour: React.FC = () => {
       </div>
 
       {/* Stop index rail */}
-      {hasToken && (
+      {!mapFailed && (
         <nav className="ht-rail" aria-label="Tour stops">
           {TOUR_STOPS.map((stop, i) => (
             <button
@@ -711,7 +769,7 @@ const HistoryTour: React.FC = () => {
       </div>
 
       {/* Scroll narrative */}
-      {hasToken ? (
+      {!mapFailed ? (
         <div className="ht-scroll">
           <section
             ref={(el) => {
@@ -731,13 +789,13 @@ const HistoryTour: React.FC = () => {
               </p>
               <p>
                 As you scroll, the timeline below advances through the years, and the camera moves
-                from address to address across a city plan drawn in the manner of the period.
+                from address to address across a sepia relief of the city.
               </p>
               <p className="ht-intro-note">
-                The three-dimensional blocks are present-day building footprints rendered in the
-                style of a 1930s city model; individual buildings may differ from their pre-war
-                state. Stories are drawn from the StoryMaps archive and shown at the street
-                addresses recorded there.
+                The relief is built from present-day satellite imagery, elevation data, and
+                OpenStreetMap building volumes, rendered in the manner of an aged aerial survey;
+                individual buildings may differ from their pre-war state. Stories are drawn from the
+                StoryMaps archive and shown at the street addresses recorded there.
               </p>
               <div className="ht-scroll-cue">Scroll to begin</div>
             </div>
@@ -786,8 +844,9 @@ const HistoryTour: React.FC = () => {
               </div>
               <p className="ht-colophon">
                 Sources: StoryMaps Berlin story archive; Humboldt-Universität zu Berlin, database of
-                Jewish businesses in Berlin 1930–1945. Base cartography © Mapbox © OpenStreetMap,
-                recolored as a period city plan.
+                Jewish businesses in Berlin 1930–1945. Relief: imagery © Esri, Maxar, Earthstar
+                Geographics; terrain Mapzen/AWS Open Data; buildings © OpenStreetMap contributors
+                via OpenFreeMap — rendered as an aged aerial survey.
               </p>
             </div>
           </section>
@@ -806,7 +865,7 @@ const HistoryTour: React.FC = () => {
             Fifteen Addresses
           </h1>
           <p style={{ marginBottom: '2rem', color: 'var(--ht-ink-soft)' }}>
-            The interactive map requires a Mapbox token (NEXT_PUBLIC_MAPBOX_TOKEN). The tour stops
+            The three-dimensional relief could not be initialized in this browser. The tour stops
             are listed below.
           </p>
           {TOUR_STOPS.map((stop, i) => (

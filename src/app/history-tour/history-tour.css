@@ -44,16 +44,15 @@
 .ht-map {
   position: absolute;
   inset: 0;
-  /* gentle age grade over the recolored vector map */
-  filter: sepia(0.16) saturate(0.86) contrast(1.02);
+  /* aged aerial-survey grade over the satellite relief */
+  filter: sepia(0.35) saturate(0.75) contrast(1.05) brightness(1.04);
 }
-.ht-map .mapboxgl-ctrl-logo,
-.ht-map .mapboxgl-ctrl-attrib {
-  opacity: 0.45;
+.ht-map .maplibregl-ctrl-attrib {
+  opacity: 0.55;
 }
-/* keep the required Mapbox logo/attribution visible above the time axis */
-.ht-map .mapboxgl-ctrl-bottom-left,
-.ht-map .mapboxgl-ctrl-bottom-right {
+/* keep attribution visible above the time axis */
+.ht-map .maplibregl-ctrl-bottom-left,
+.ht-map .maplibregl-ctrl-bottom-right {
   bottom: 58px;
 }
 
@@ -470,7 +469,7 @@
 }
 .ht-card-holder {
   position: sticky;
-  top: 12vh;
+  top: 8vh;
   align-self: flex-start;
   width: min(430px, 92vw);
   margin-bottom: 22vh;
@@ -480,6 +479,8 @@
   border: 1px solid var(--ht-ink);
   box-shadow: 5px 5px 0 var(--ht-shadow);
   padding: 1.6rem 1.7rem 1.5rem;
+  max-height: 84vh;
+  overflow-y: auto;
   opacity: 0;
   transform: translateY(34px);
   transition:

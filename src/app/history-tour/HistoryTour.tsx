@@ -29,11 +29,47 @@ const MAP_COLORS = {
   shadow: '#2a2216',
   highlight: '#f6ecd6',
   accentHs: '#4a4030',
-  buildingLow: '#e3d6b4',
-  buildingMid: '#cdbc95',
-  buildingHigh: '#b09d78',
+  // 1930 Berlin facade tonality (from the period photographic record):
+  // courtyard workshops in ochre plaster, the Mietskaserne stock in
+  // soot-dulled grey-sand stucco, and the monumental scale in grey sandstone.
+  buildingLow: '#d8c9a2',
+  buildingMid: '#cabb98',
+  buildingHigh: '#a89e85',
+  buildingMonument: '#948b74',
   inkSoft: '#5a4a35',
   accent: '#8a3b2e',
+}
+
+// Berlin's building code held the 1930 city to a uniform eaves line
+// (Traufhöhe) of ~22 m — five storeys. Buildings up to TRAUF_TRUE keep their
+// real height (the surviving Gründerzeit fabric IS the 1930 fabric); taller
+// structures are compressed hard so pre-war landmarks (church towers, domes,
+// the Rathaus) still rise over the roofscape at period-plausible scale while
+// post-war towers stop reading as skyline. Structures above MODERN_CUTOFF
+// (the 1969 TV tower, antenna masts) did not exist in 1930 and are omitted.
+const TRAUF_DEFAULT = 21 // five storeys — the safe assumption for the 1930 center
+const TRAUF_TRUE = 26
+const TALL_COMPRESS = 0.3
+const TALL_CAP = 55
+const MODERN_CUTOFF = 150
+
+// Style-expression form of the height normalization.
+const HEIGHT_1930_EXPR = [
+  'let',
+  'h',
+  ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT],
+  [
+    'case',
+    ['<=', ['var', 'h'], TRAUF_TRUE],
+    ['var', 'h'],
+    ['min', ['+', TRAUF_TRUE, ['*', ['-', ['var', 'h'], TRAUF_TRUE], TALL_COMPRESS]], TALL_CAP],
+  ],
+]
+
+// The same normalization for the JS side (highlight clone).
+function height1930(h: number): number {
+  if (h <= TRAUF_TRUE) return h
+  return Math.min(TRAUF_TRUE + (h - TRAUF_TRUE) * TALL_COMPRESS, TALL_CAP)
 }
 
 // The K2-style relief stage: keyless sources — Esri World Imagery draped
@@ -128,23 +164,43 @@ function buildTourStyle(): StyleSpecification {
         source: 'ofm',
         'source-layer': 'building',
         minzoom: 14,
-        filter: ['!=', ['get', 'hide_3d'], true],
+        filter: [
+          'all',
+          ['!=', ['get', 'hide_3d'], true],
+          ['<=', ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT], MODERN_CUTOFF],
+        ],
         paint: {
           'fill-extrusion-color': [
             'interpolate',
             ['linear'],
-            ['coalesce', ['get', 'render_height'], 14],
-            4,
+            ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT],
+            5,
             MAP_COLORS.buildingLow,
-            22,
+            16,
             MAP_COLORS.buildingMid,
-            50,
+            30,
             MAP_COLORS.buildingHigh,
+            60,
+            MAP_COLORS.buildingMonument,
           ],
-          'fill-extrusion-height': ['coalesce', ['get', 'render_height'], 14],
+          'fill-extrusion-height': HEIGHT_1930_EXPR as never,
           'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
-          'fill-extrusion-opacity': 0.78,
+          'fill-extrusion-opacity': 0.82,
           'fill-extrusion-vertical-gradient': true,
+        },
+      },
+      {
+        // Engraved parcel lines under the block model — the plan-drawing
+        // detail of a 1930 city model.
+        id: 'ht-building-lines',
+        type: 'line',
+        source: 'ofm',
+        'source-layer': 'building',
+        minzoom: 15,
+        paint: {
+          'line-color': MAP_COLORS.inkSoft,
+          'line-opacity': 0.28,
+          'line-width': 0.6,
         },
       },
       {
@@ -154,8 +210,9 @@ function buildTourStyle(): StyleSpecification {
         paint: {
           'fill-extrusion-color': MAP_COLORS.accent,
           // Drawn 2 m above the base extrusion of the same footprint so the
-          // highlight wins the depth test instead of z-fighting it.
-          'fill-extrusion-height': ['+', ['coalesce', ['get', 'render_height'], 16], 2],
+          // highlight wins the depth test instead of z-fighting it. The
+          // render_height set on the clone is already 1930-normalized.
+          'fill-extrusion-height': ['+', ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT], 2],
           'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
           'fill-extrusion-opacity': 0.96,
           'fill-extrusion-vertical-gradient': true,
@@ -311,6 +368,7 @@ const HistoryTour: React.FC = () => {
   const lastScrollRef = useRef<number>(-1)
   const paddingRef = useRef<PaddingOptions>({ top: 0, bottom: 0, left: 0, right: 0 })
   const pendingHighlightRef = useRef<number>(-1)
+  const lastHighlightTryRef = useRef<number>(0)
   const activeIdxRef = useRef<number>(-1)
   const reduceMotionRef = useRef<boolean>(false)
 
@@ -443,7 +501,13 @@ const HistoryTour: React.FC = () => {
               type: 'Feature',
               geometry: footprint,
               properties: {
-                render_height: (sourceFeature.properties?.render_height as number) ?? 16,
+                // Floor at 24 m so the marked building stands a storey proud
+                // of the uniform ~22 m roofline — low courtyard wings would
+                // otherwise vanish behind their Traufhöhe neighbors.
+                render_height: Math.max(
+                  height1930((sourceFeature.properties?.render_height as number) ?? TRAUF_DEFAULT),
+                  24
+                ),
                 render_min_height: (sourceFeature.properties?.render_min_height as number) ?? 0,
               },
             },
@@ -554,6 +618,20 @@ const HistoryTour: React.FC = () => {
       const keys = keysRef.current
       if (!m || keys.length < 2 || document.hidden) return
 
+      // Retry any pending building highlight even when the camera is at
+      // rest — the map may only finish loading the destination's building
+      // tiles after arrival, and under reduced motion neither drift nor
+      // scrolling would bring the loop past the early return below.
+      // Time-based cadence: frame counts are hardware-dependent.
+      if (
+        pendingHighlightRef.current >= 0 &&
+        pendingHighlightRef.current === activeIdxRef.current &&
+        now - lastHighlightTryRef.current > 600
+      ) {
+        lastHighlightTryRef.current = now
+        tryHighlight(pendingHighlightRef.current)
+      }
+
       const scrollTop = window.scrollY
       const drifting = !reduceMotionRef.current
       const scrolled = scrollTop !== lastScrollRef.current
@@ -599,16 +677,6 @@ const HistoryTour: React.FC = () => {
       if (nextIdx !== activeIdxRef.current) {
         activeIdxRef.current = nextIdx
         setActiveIdx(nextIdx)
-      }
-
-      // The ambient drift keeps the camera moving, so the map never reaches
-      // 'idle' — retry any pending building highlight here instead.
-      if (
-        frame % 30 === 0 &&
-        pendingHighlightRef.current >= 0 &&
-        pendingHighlightRef.current === activeIdxRef.current
-      ) {
-        tryHighlight(pendingHighlightRef.current)
       }
     }
     rafRef.current = requestAnimationFrame(tick)
@@ -793,9 +861,13 @@ const HistoryTour: React.FC = () => {
               </p>
               <p className="ht-intro-note">
                 The relief is built from present-day satellite imagery, elevation data, and
-                OpenStreetMap building volumes, rendered in the manner of an aged aerial survey;
-                individual buildings may differ from their pre-war state. Stories are drawn from the
-                StoryMaps archive and shown at the street addresses recorded there.
+                OpenStreetMap building volumes, rendered in the manner of an aged aerial survey.
+                Building heights are normalized to the uniform ~22&nbsp;m eaves line
+                (Traufh&ouml;he) that governed the 1930 skyline: the surviving Gr&uuml;nderzeit
+                fabric keeps its true height, taller pre-war landmarks are shown compressed, and
+                towers built after the war are omitted. Individual buildings may still differ from
+                their pre-war state. Stories are drawn from the StoryMaps archive and shown at the
+                street addresses recorded there.
               </p>
               <div className="ht-scroll-cue">Scroll to begin</div>
             </div>

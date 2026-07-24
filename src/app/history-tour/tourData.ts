@@ -2,11 +2,11 @@
 // the businesses of the curated story list (ids 1–15 in data/storymaps.json),
 // ordered chronologically by the date each business was forced to close.
 //
-// Coordinates are placed at the street addresses recorded in the archive
-// (refined where the archive's rough map coordinates drifted from the stated
-// address, so the camera lands on the right street). Story texts are taken
-// verbatim from the archive. Building notes describe the documented
-// architecture of each street and district in the period.
+// Coordinates are the centroids of each stop's 1930 building footprint
+// (see footprints1930.ts): the surviving buildings' cadastral outlines, or
+// parcels traced from the 1928 aerial survey where the building is gone.
+// Story texts are taken verbatim from the archive. Building notes describe
+// the documented architecture of each street and district in the period.
 
 export interface TourCamera {
   zoom: number
@@ -74,8 +74,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Deutsches Theater Café',
     address: 'Schumannstraße 13a',
     district: 'Friedrich-Wilhelm-Stadt, Mitte',
-    lat: 52.524,
-    lng: 13.3827,
+    lat: 52.524454,
+    lng: 13.382335,
     startDate: '1928-06-01',
     endDate: '1933-03-30',
     story:
@@ -93,8 +93,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Jonas & Co. Law Firm',
     address: 'Neue Friedrichstraße 60',
     district: 'Klosterviertel, Alt-Berlin',
-    lat: 52.517,
-    lng: 13.4152,
+    lat: 52.517062,
+    lng: 13.414785,
     startDate: '1908-01-01',
     endDate: '1933-04-01',
     story:
@@ -112,8 +112,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Breslauer Brothers Department Store',
     address: 'Unter den Linden 15',
     district: 'Dorotheenstadt, Mitte',
-    lat: 52.5173,
-    lng: 13.3872,
+    lat: 52.516617,
+    lng: 13.387243,
     startDate: '1920-03-15',
     endDate: '1935-04-01',
     story:
@@ -131,8 +131,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Eggs & Dairy Distributors',
     address: 'Hackescher Markt 12',
     district: 'Am Hackeschen Markt, Mitte',
-    lat: 52.5227,
-    lng: 13.4022,
+    lat: 52.523462,
+    lng: 13.402631,
     startDate: '1923-02-01',
     endDate: '1935-06-30',
     story:
@@ -150,8 +150,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Butter & Fine Foods',
     address: 'Gendarmenmarkt 8',
     district: 'Friedrichstadt, Mitte',
-    lat: 52.5137,
-    lng: 13.3925,
+    lat: 52.513703,
+    lng: 13.390891,
     startDate: '1927-03-01',
     endDate: '1936-10-15',
     story:
@@ -169,8 +169,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Product X Manufacturing',
     address: 'Warschauer Straße 45',
     district: 'Friedrichshain',
-    lat: 52.5065,
-    lng: 13.4494,
+    lat: 52.503767,
+    lng: 13.446978,
     startDate: '1926-04-01',
     endDate: '1936-12-01',
     story:
@@ -188,8 +188,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Pelz Furrier',
     address: 'Friedrichstraße 180',
     district: 'Friedrichstadt, Mitte',
-    lat: 52.5122,
-    lng: 13.3896,
+    lat: 52.512211,
+    lng: 13.389319,
     startDate: '1918-11-01',
     endDate: '1937-08-15',
     story:
@@ -207,8 +207,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'P. Kunst Gallery',
     address: 'Unter den Linden 35',
     district: 'Am Forum Fridericianum, Mitte',
-    lat: 52.5169,
-    lng: 13.3908,
+    lat: 52.516806,
+    lng: 13.391025,
     startDate: '1924-05-01',
     endDate: '1937-11-20',
     story:
@@ -226,8 +226,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Kutschera Photography Studio',
     address: 'Potsdamer Straße 125',
     district: 'Schöneberg',
-    lat: 52.4984,
-    lng: 13.3635,
+    lat: 52.49836,
+    lng: 13.36294,
     startDate: '1930-01-01',
     endDate: '1938-03-15',
     story:
@@ -245,8 +245,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Ruilos Import Export',
     address: 'Spandauer Straße 15',
     district: 'Alt-Berlin, am Nikolaiviertel',
-    lat: 52.5202,
-    lng: 13.4043,
+    lat: 52.520185,
+    lng: 13.404076,
     startDate: '1921-08-01',
     endDate: '1938-06-30',
     story:
@@ -264,8 +264,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Wassermann Medical Practice',
     address: 'Rosenstraße 22',
     district: 'Alt-Berlin, Mitte',
-    lat: 52.5214,
-    lng: 13.4025,
+    lat: 52.521591,
+    lng: 13.404991,
     startDate: '1915-01-01',
     endDate: '1938-09-30',
     story:
@@ -283,8 +283,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Elias Braun — Tailor Shop',
     address: 'Rosenthaler Straße 40',
     district: 'Spandauer Vorstadt, Mitte',
-    lat: 52.525,
-    lng: 13.402,
+    lat: 52.524723,
+    lng: 13.40125,
     startDate: '1925-01-01',
     endDate: '1938-11-09',
     story:
@@ -302,8 +302,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Hoxter & Sons Bookshop',
     address: 'Oranienburger Straße 28',
     district: 'Spandauer Vorstadt, Mitte',
-    lat: 52.5249,
-    lng: 13.3948,
+    lat: 52.524726,
+    lng: 13.394784,
     startDate: '1910-01-01',
     endDate: '1938-11-10',
     story:
@@ -321,8 +321,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'YVA Photography Agency',
     address: 'Kaiserdamm 118',
     district: 'Westend, Charlottenburg',
-    lat: 52.5093,
-    lng: 13.2762,
+    lat: 52.510524,
+    lng: 13.296587,
     startDate: '1925-07-01',
     endDate: '1938-12-01',
     story:
@@ -340,8 +340,8 @@ export const TOUR_STOPS: TourStop[] = [
     title: 'Ebro Textiles',
     address: 'Alexanderstraße 125',
     district: 'Am Alexanderplatz, Mitte',
-    lat: 52.5155,
-    lng: 13.419,
+    lat: 52.515648,
+    lng: 13.418512,
     startDate: '1922-09-01',
     endDate: '1939-01-15',
     story:

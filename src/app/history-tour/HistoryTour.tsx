@@ -20,6 +20,7 @@ import {
   toDecimalYear,
   type TourStop,
 } from './tourData'
+import { FOOTPRINTS_1930 } from './footprints1930'
 
 // Map-internal palette. WebGL layers require literal color values (CSS
 // variables cannot reach into the map) — the documented map-styling
@@ -469,8 +470,35 @@ const HistoryTour: React.FC = () => {
         return
       }
       const stop = TOUR_STOPS[idx]
-      // Mid-flight the camera is still zoomed out and the query box covers
-      // whole blocks — wait until the camera has nearly arrived.
+
+      // Documented 1930 footprint (traced from the 1928 aerial survey, or
+      // the surviving building's cadastral outline) — no querying needed.
+      const fp = FOOTPRINTS_1930[stop.id]
+      if (fp) {
+        src.setData({
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              geometry: { type: 'Polygon', coordinates: [fp.ring] },
+              properties: {
+                // Floor at 24 m so the marker volume stands proud of the
+                // uniform roofline (the footprint is the documented part;
+                // the height is the marker convention).
+                render_height: Math.max(fp.height, 24),
+                render_min_height: 0,
+              },
+            },
+          ],
+        })
+        pendingHighlightRef.current = -1
+        return
+      }
+
+      // Fallback for stops without a documented footprint: pick the modern
+      // footprint under the address. Mid-flight the camera is still zoomed
+      // out and the query box covers whole blocks — wait until the camera
+      // has nearly arrived.
       if (map.getZoom() < stop.cam.zoom - 0.6) {
         pendingHighlightRef.current = idx
         return
@@ -865,9 +893,11 @@ const HistoryTour: React.FC = () => {
                 Building heights are normalized to the uniform ~22&nbsp;m eaves line
                 (Traufh&ouml;he) that governed the 1930 skyline: the surviving Gr&uuml;nderzeit
                 fabric keeps its true height, taller pre-war landmarks are shown compressed, and
-                towers built after the war are omitted. Individual buildings may still differ from
-                their pre-war state. Stories are drawn from the StoryMaps archive and shown at the
-                street addresses recorded there.
+                towers built after the war are omitted. At each of the fifteen addresses, the marked
+                building is the documented 1930 footprint &mdash; the surviving building&apos;s
+                outline where it still stands, or the parcel traced from the 1928 aerial survey of
+                Berlin where the war and rebuilding erased it. Stories are drawn from the StoryMaps
+                archive and shown at the street addresses recorded there.
               </p>
               <div className="ht-scroll-cue">Scroll to begin</div>
             </div>

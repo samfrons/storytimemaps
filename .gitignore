@@ -52,3 +52,6 @@ __pycache__/
 # dataset backup snapshots (git history is the real backup)
 *.backup-2026-05.json
 *.pre-regeocode-*.json
+
+# claude-flow daemon runtime state
+.claude-flow/

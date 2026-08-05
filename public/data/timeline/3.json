@@ -1,63 +1,28 @@
 {
-  "business": {
-    "id": "3",
-    "name": "Elias Braun Tailor Shop",
-    "address": "Rosenthaler Straße 42, Berlin",
-    "category": "Tailoring",
-    "established": "1925-03-15",
-    "businessType": "Tailoring"
-  },
+  "businessId": "3",
   "timeline": [
     {
-      "startDate": "1925-03-15",
-      "endDate": "1932-12-31",
-      "title": "The Golden Years",
-      "description": "A thriving tailor shop in the heart of Berlin's bustling Rosenthaler Straße. Elias Braun and his family built a respected reputation for fine men's clothing, serving both Jewish and non-Jewish customers from across the city.",
-      "longDescription": "Founded in 1925, Elias Braun's tailor shop quickly became a cornerstone of the Rosenthaler Straße business district. The shop specialized in custom men's suits, attracting customers from Berlin's growing middle class. Elias, trained in traditional tailoring techniques, employed three skilled seamstresses and maintained a steady stream of orders. The family lived above the shop, with the workshop on the ground floor and large windows displaying the latest fashions. During this period, the business flourished as Berlin's economy recovered from the post-war recession.",
-      "media": [
-        {
-          "type": "image",
-          "path": "/images/businesses/tailoring/elias_braun_1920s.jpg",
-          "caption": "The thriving tailor shop in its heyday, 1920s",
-          "alt": "Elias Braun's tailor shop exterior showing storefront and family"
-        },
-        {
-          "type": "image", 
-          "path": "/images/businesses/tailoring/family_portrait_1930.jpg",
-          "caption": "Elias Braun with his family and employees, circa 1930",
-          "alt": "Group portrait of Elias Braun, family members, and shop employees"
-        }
-      ]
+      "startDate": "1906-01-01",
+      "description": "Max Reinhardt builds the Deutsche Theater into the largest theater corporation in the world – twelve theaters and over 10,000 seats by 1931.",
+      "longDescription": "In 1906, young actor and director Max Reinhardt bought the Deutsche Theater, founded in 1883, installed the Kammerspiele studio theater in the adjacent building and made the DT one of the most renowned theaters in Europe. He floated the business as Deutsche National Theater AG in 1917, opened the 3,200-seat Grosse Schauspielhaus in 1919 and converted the enterprise into the limited company Deutsche Theater in Berlin GmbH in 1920. By 1931 his corporation comprised twelve theaters and over 10,000 seats. But the world economic crisis hit the empire hard, and in 1932 the DT was targeted by militant anti-Semitism for the first time when Joseph Goebbels raged in Der Angriff against a production at the theater; the play was taken off the program and the lost ticket revenue almost ruined the DT.",
+      "endDate": "1932-12-31"
     },
     {
       "startDate": "1933-01-01",
-      "endDate": "1938-11-08",
-      "title": "Under Pressure",
-      "description": "As Nazi persecution intensifies, the tailor shop struggles under increasing restrictions and boycotts. Non-Jewish customers stay away, and new regulations make business operations increasingly difficult for the Braun family.",
-      "longDescription": "After Hitler's rise to power in January 1933, Elias Braun's shop immediately faced difficulties. The Nazi boycott of Jewish businesses in April 1933 marked the beginning of systematic economic persecution. Regular customers stopped coming, fearing association with Jewish-owned establishments. New regulations required special permits for Jewish businesses, and Elias was forced to dismiss his non-Jewish employees. The family struggled to maintain the business as their customer base dwindled to primarily Jewish patrons. Windows were occasionally marked with antisemitic graffiti, and the once-thriving shop became a shadow of its former self.",
-      "media": [
-        {
-          "type": "image",
-          "path": "/images/businesses/tailoring/boycott_period.jpg", 
-          "caption": "The shop during the boycott period - empty streets and marked windows",
-          "alt": "Tailor shop during boycott showing empty street and damaged storefront"
-        }
-      ]
+      "description": "Goebbels sets his sights on the world-famous theater. The Nazi authorities take possession of the Deutsche Theater in five stages.",
+      "longDescription": "In mid-January 1933 Max Reinhardt leased his theater to Carl Ludwig Duisberg-Achaz, who had access to considerable funds and prevented the DT from going bankrupt. But Joseph Goebbels also had designs on the theater. The Nazi authorities proceeded in five stages: the company was stripped of its public-benefit status and charged with millions of marks in taxes; Goebbels refused to extend Achaz's contract in April 1934; the Propaganda Ministry paid 'Reich subsidies' of 450,000 marks annually to Heinz Hilpert, who rented the theater from Reinhardt in June 1934 – with the entire rent going to the German Labor Bank, Reinhardt's chief creditor, now controlled by the German Labor Front. The bank forced the entire supervisory board to resign in April 1934, replaced by Nazi sympathizers. Old bearer shares had to be personally submitted in Berlin or were declared invalid – effectively expropriating stockholders who had fled abroad. Reinhardt sold his securities to the bank for 10 per cent of their value.",
+      "endDate": "1934-08-31"
     },
     {
-      "startDate": "1938-11-09",
-      "endDate": "1938-11-10",
-      "title": "Kristallnacht Destruction",
-      "description": "The tailor shop is destroyed during Kristallnacht. Windows are smashed, inventory stolen, and the family is forced to flee. The business that served Berlin's community for over a decade is lost forever.",
-      "longDescription": "On the night of November 9-10, 1938, during the coordinated attacks known as Kristallnacht, Elias Braun's tailor shop was targeted by SA storm troopers and local civilians. The shop windows were smashed, bolts of fabric were destroyed or stolen, and sewing machines were damaged beyond repair. The family, fearing for their safety, fled their home above the shop that same night. Elias attempted to return days later to salvage what remained, but found the premises had been completely ransacked. The building was later seized by the Nazi authorities, and the space was eventually converted to a non-Jewish business. The Braun family's decade of hard work and community presence was erased in a single night of violence.",
-      "media": [
-        {
-          "type": "image",
-          "path": "/images/businesses/tailoring/kristallnacht_aftermath.jpg",
-          "caption": "Aftermath of Kristallnacht - the destroyed tailor shop, November 1938",
-          "alt": "Destroyed tailor shop interior showing smashed windows and scattered fabric"
-        }
-      ]
+      "startDate": "1934-09-01",
+      "description": "The theater's property is sold at public auction to the Nazi-controlled company. The seizure is complete: the DT belongs to the German Labor Front.",
+      "longDescription": "Max Reinhardt still privately owned the property and land on which the DT and the studio theater stood, so the new owners broadened the object of the business to include real estate, and the German Labor Bank applied for the theater to be sold by public auction. In September 1934, the Deutsche National Theater AG purchased the property for 600,000 Reich marks. The DT and Kammerspiele were henceforth the property of the German Labor Front and controlled by Joseph Goebbels. While theater director Hilpert sought to maintain a certain artistic distance to the regime, he had incriminated himself by complying with the Propaganda Ministry's racialist staff policy. In 1944 all theaters in Germany were closed. Reinhardt had fled to Austria on March 8, 1933, emigrated to the United States in 1937, and died in New York in 1943 without ever seeing Europe again.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "The Deutsche Theater resumes performances in 1945, is nationalized in the GDR, and is returned to Reinhardt's heirs in 1995. Today it plays to full houses.",
+      "longDescription": "While the Kammerspiele studio theater was almost completely destroyed in the war, the Deutsche Theater was able to resume regular performances in September 1945. In 1949 the DT – now in Soviet-controlled East Berlin – was nationalized and became an important marker of prestige for the GDR: top-class directors and actors presented high quality drama, and from 1980 to 1983 the DT and the studio theater were thoroughly renovated and rebuilt. The restitution files were closed in October 1995 when the properties were returned to Reinhardt's heirs. Proceedings aimed at the restitution of shares in the Deutsche National Theater AG are still pending in court.\n\nThe site today\n\nIn Berlin-Mitte today, productions of the DT, Kammerspiele and Box regularly play to full houses. The specialist journal Theater heute voted the DT 'theater of the year 2008', and in 2011 the Deutsche Theater was awarded the directors prize of the 'Deutsche Theaterpreis'."
     }
   ]
 }

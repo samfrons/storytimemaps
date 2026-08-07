@@ -324,6 +324,37 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
             </svg>
           </Link>
 
+          {/* History Tour Button */}
+          <Link
+            href="/history-tour"
+            className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+            style={{
+              backgroundColor: 'var(--input-bg)',
+              borderColor: 'var(--border)',
+              color: 'var(--foreground)',
+              cursor: 'pointer',
+              transform: 'scale(1)',
+              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.1)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)'
+            }}
+            aria-label="History Tour"
+            title="History Tour — Fifteen Addresses"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+              />
+            </svg>
+          </Link>
+
           {/* Language Toggle Buttons */}
           <div className="flex flex-col gap-1">
             <button

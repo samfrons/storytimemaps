@@ -545,15 +545,6 @@ function PlaquesPageContent() {
             >
               {t('plaques.footer.about')}
             </Link>
-            <a
-              href="https://www.stolpersteine.eu/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-sm transition-colors"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              Stolpersteine
-            </a>
           </div>
         </div>
       </footer>

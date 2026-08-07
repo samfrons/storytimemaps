@@ -198,60 +198,6 @@ const PlaquesHero: React.FC<PlaquesHeroProps> = ({ showFullContent = true, compa
                     {t('plaques.hero.visionDescription')}
                   </p>
                 </div>
-
-                {/* Stolpersteine Connection */}
-                <div
-                  className="p-6 border"
-                  style={{
-                    backgroundColor: 'rgba(var(--danger-rgb), 0.1)',
-                    borderColor: 'var(--danger)',
-                  }}
-                >
-                  <h3
-                    className="font-semibold mb-3 flex items-center gap-2 font-mono"
-                    style={{ color: 'var(--danger)' }}
-                  >
-                    <span>🪨</span> {t('plaques.hero.stolpersteineTitle')}
-                  </h3>
-                  <p className="mb-4 font-mono text-sm" style={{ color: 'var(--foreground)' }}>
-                    {t('plaques.hero.stolpersteineDescription')}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <h4
-                        className="font-semibold mb-2 font-mono"
-                        style={{ color: 'var(--danger)' }}
-                      >
-                        {t('plaques.hero.stolpersteineFocus')}:
-                      </h4>
-                      <ul
-                        className="space-y-1 font-mono"
-                        style={{ color: 'var(--foreground-muted)' }}
-                      >
-                        <li>• {t('plaques.hero.individualVictims')}</li>
-                        <li>• {t('plaques.hero.residentialAddresses')}</li>
-                        <li>• {t('plaques.hero.personalStories')}</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4
-                        className="font-semibold mb-2 font-mono"
-                        style={{ color: 'var(--success)' }}
-                      >
-                        {t('plaques.hero.businessPlaquesFocus')}:
-                      </h4>
-                      <ul
-                        className="space-y-1 font-mono"
-                        style={{ color: 'var(--foreground-muted)' }}
-                      >
-                        <li>• {t('plaques.hero.commercialEnterprises')}</li>
-                        <li>• {t('plaques.hero.businessLocations')}</li>
-                        <li>• {t('plaques.hero.economicPersecution')}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               {/* Right: Plaque Preview */}
@@ -367,19 +313,6 @@ const PlaquesHero: React.FC<PlaquesHeroProps> = ({ showFullContent = true, compa
                   }}
                 >
                   {t('plaques.hero.supportInitiative')}
-                </a>
-                <a
-                  href="https://www.stolpersteine.eu/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-4 font-mono font-semibold text-lg border-2 transition-all"
-                  style={{
-                    backgroundColor: 'transparent',
-                    borderColor: 'var(--success)',
-                    color: 'var(--success)',
-                  }}
-                >
-                  {t('plaques.hero.learnStolpersteine')}
                 </a>
               </div>
             </div>

@@ -44,40 +44,6 @@ const FutureInitiatives: React.FC = () => {
               {t('future.plaques.vision')}
             </p>
 
-            {/* Stolpersteine connection */}
-            <div className="bg-[#ee5760]/10 p-6 border border-[#ee5760]/30 mb-6">
-              <h4 className="font-['Inter'] font-semibold text-[#ee5760] mb-3">
-                🪨 {t('future.stolpersteine.title')}
-              </h4>
-              <p className="text-[#f5cdb4] font-['Inter'] mb-4">
-                {t('future.stolpersteine.description')}
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h5 className="text-[#ee5760] font-semibold mb-2">
-                    {t('future.stolpersteine.stolpersteineFocus')}:
-                  </h5>
-                  <ul className="text-[#f5cdb4]/80 space-y-1">
-                    <li>• {t('future.stolpersteine.individualVictims')}</li>
-                    <li>• {t('future.stolpersteine.residentialAddresses')}</li>
-                    <li>• {t('future.stolpersteine.personalStories')}</li>
-                    <li>• {t('future.stolpersteine.familyDeportations')}</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-[#ee5760] font-semibold mb-2">
-                    {t('future.stolpersteine.businessFocus')}:
-                  </h5>
-                  <ul className="text-[#f5cdb4]/80 space-y-1">
-                    <li>• {t('future.stolpersteine.commercialEnterprises')}</li>
-                    <li>• {t('future.stolpersteine.businessLocations')}</li>
-                    <li>• {t('future.stolpersteine.economicPersecution')}</li>
-                    <li>• {t('future.stolpersteine.communityImpact')}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
             {/* Mockup of plaque */}
             <div className="bg-[#6b6275] p-6 border-2 border-[#8b7d8e] text-center">
               <div className="text-[#f5cdb4] font-mono text-sm leading-tight">
@@ -137,14 +103,6 @@ const FutureInitiatives: React.FC = () => {
               className="inline-block px-8 py-4 bg-[#ee5760] text-white font-['Inter'] font-semibold text-lg hover:bg-[#f06570] transition-colors duration-300 shadow-lg"
             >
               {t('cta.supportPlaques')}
-            </a>
-            <a
-              href="https://www.stolpersteine.eu/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-transparent border-2 border-[#97d8c0] text-[#97d8c0] font-['Inter'] font-semibold text-lg hover:bg-[#97d8c0] hover:text-[#1a1a1a] transition-all duration-300"
-            >
-              {t('future.learnStolpersteine')}
             </a>
             <Link
               href="/exhibit-vision"

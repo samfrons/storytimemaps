@@ -89,22 +89,8 @@
     "subtitle": "Digitale Erinnerung in den physischen Raum bringen",
     "plaques": {
       "title": "Memorial-Plakett-Initiative",
-      "description": "Inspiriert vom Stolpersteine-Projekt stellen wir uns vor, Gedenkplaketten an den ursprünglichen Standorten dokumentierter jüdischer Geschäfte in ganz Berlin zu installieren.",
+      "description": "Wir stellen uns vor, Gedenkplaketten an den ursprünglichen Standorten dokumentierter jüdischer Geschäfte in ganz Berlin zu installieren.",
       "vision": "Diese Plaketten würden als permanente Erinnerung an das lebendige jüdische Handelsleben dienen, das einst in diesen Nachbarschaften blühte, und digitale Dokumentation mit physischem Gedenken verbinden."
-    },
-    "stolpersteine": {
-      "title": "Inspiriert von Stolpersteinen",
-      "description": "Wie Gunter Demnigs kraftvolles Stolpersteine-Projekt, das Einzelpersonen gedenkt, würden unsere Gedenkplaketten die Geschäftsräume ehren, in denen jüdische Familien ihren Lebensunterhalt aufbauten und ihre Gemeinden bedienten.",
-      "stolpersteineFocus": "Stolpersteine-Fokus",
-      "individualVictims": "Einzelne Opfer",
-      "residentialAddresses": "Wohnadressen",
-      "personalStories": "Persönliche Geschichten",
-      "familyDeportations": "Familiendeportationen",
-      "businessFocus": "Geschäftsplaketten-Fokus",
-      "commercialEnterprises": "Gewerbliche Unternehmen",
-      "businessLocations": "Geschäftsstandorte",
-      "economicPersecution": "Wirtschaftliche Verfolgung",
-      "communityImpact": "Gemeinschaftliche Auswirkungen"
     },
     "plaqueMockup": {
       "hereStood": "HIER STAND",
@@ -114,7 +100,6 @@
     },
     "ctaTitle": "Helfen Sie, diese Gedenktafeln zum Leben zu erwecken",
     "ctaDescription": "Wir suchen Partnerschaften mit Berlins kulturellen Einrichtungen, Bildungsorganisationen und Gemeindegruppen, um Gedenkplaketten zu verwirklichen. Diese Initiative erfordert Zusammenarbeit mit Stadtplanung, Denkmalschutz und jüdischen Gemeindeorganisationen.",
-    "learnStolpersteine": "Über Stolpersteine erfahren",
     "community": {
       "title": "Gemeinschaftsengagement",
       "description": "Wir arbeiten mit lokalen Gemeinschaften, Schulen und Berliner jüdischen Organisationen zusammen, um Bildungsprogramme zu entwickeln, die diese historischen Daten mit zeitgenössischen Diskussionen über Erinnerung, Handel und Gemeinschaft verbinden."
@@ -148,22 +133,11 @@
       "learnMore": "Mehr über diese Initiative erfahren",
       "visionTitle": "Unsere Vision",
       "visionDescription": "Wir stellen uns ein Berlin vor, in dem die Erinnerung an das jüdische Handelsleben nicht nur digital, sondern in den Straßen selbst bewahrt wird, wo diese Geschäfte einst blühten. Jede Plakette wird die Geschichte eines Familienunternehmens erzählen.",
-      "stolpersteineTitle": "Inspiriert von Stolpersteinen",
-      "stolpersteineDescription": "Wie Gunter Demnigs kraftvolles Stolpersteine-Projekt, das Einzelpersonen gedenkt, würden unsere Gedenkplaketten die Geschäftsräume ehren, in denen jüdische Familien ihren Lebensunterhalt aufbauten.",
-      "stolpersteineFocus": "Stolpersteine-Fokus",
-      "businessPlaquesFocus": "Geschäftsplaketten-Fokus",
-      "individualVictims": "Einzelne Opfer",
-      "residentialAddresses": "Wohnadressen",
-      "personalStories": "Persönliche Geschichten",
-      "commercialEnterprises": "Gewerbliche Unternehmen",
-      "businessLocations": "Geschäftsstandorte",
-      "economicPersecution": "Wirtschaftliche Verfolgung",
       "berlinStyle": "Berliner Stil",
       "brassStyle": "Messing-Stil",
       "ctaTitle": "Helfen Sie, diese Gedenktafeln zum Leben zu erwecken",
       "ctaDescription": "Wir suchen Partnerschaften mit kulturellen Einrichtungen, Bildungsorganisationen und Gemeindegruppen, um Gedenkplaketten in ganz Berlin zu verwirklichen.",
-      "supportInitiative": "Diese Initiative unterstützen",
-      "learnStolpersteine": "Über Stolpersteine erfahren"
+      "supportInitiative": "Diese Initiative unterstützen"
     },
     "nav": {
       "backToMap": "Zurück zur Karte"
@@ -347,7 +321,7 @@
       "digitalTitle": "Digitales Archiv",
       "digitalDescription": "Eine interaktive Karte dokumentiert bereits 10.021 jüdische Geschäfte in Berlin, basierend auf gründlicher historischer Forschung.",
       "plaquesTitle": "Gedenktafeln",
-      "plaquesDescription": "Inspiriert von den Stolpersteinen arbeiten wir daran, Tafeln an den ursprünglichen Geschäftsorten anzubringen — Erinnerung in den Straßen selbst.",
+      "plaquesDescription": "Wir arbeiten daran, Tafeln an den ursprünglichen Geschäftsorten anzubringen — Erinnerung in den Straßen selbst.",
       "exhibitTitle": "Museumsausstellung",
       "exhibitDescription": "Die Ausstellung führt diese Arbeit in einem immersiven Raum zusammen und verbindet Daten, Ort und persönliche Geschichte für ein breites Publikum.",
       "provenance": "Das Projekt baut auf der wegweisenden Studie von Dr. Christoph Kreutzmüller „Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany“ und den Archiven des Leo Baeck Instituts auf."

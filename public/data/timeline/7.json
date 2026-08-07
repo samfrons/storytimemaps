@@ -1,0 +1,28 @@
+{
+  "businessId": "7",
+  "timeline": [
+    {
+      "startDate": "1907-01-01",
+      "description": "Under Hermann J. Kaufmann, Theaterkunst becomes one of the top décor and costume suppliers for theater and film in the world.",
+      "longDescription": "World War I was not yet over when Hermann J. Kaufmann (1877–1942) took over the company Theaterkunst, founded in 1907. The premises, where costumes were produced and rented, were at Schwedter Strasse 9 in Prenzlauer Berg. During the Weimar Republic, Theaterkunst became the best known Berlin costumiers for theater and film in the world: about 360 staff worked in 4,500 square meters of workshops including gentlemen's and ladies' tailors, a milliner's and shoemaker's, an embroidery studio, a saddler's and sword-maker's, and a store of historical and modern props and costumes. One of Kaufmann's biggest coups was the commission to supply costumes and props for the movie Ben Hur (USA, 1926) – a mark of 'recognition of the thorough German approach to historical research and craftsmanship', as the trade press noted.",
+      "endDate": "1932-12-31"
+    },
+    {
+      "startDate": "1933-01-01",
+      "description": "The culture chambers and Gestapo pressure Kaufmann to surrender his business; an SA man's rival 'purely Christian company' shares his workshops.",
+      "longDescription": "After 1933, the culture chambers and the Gestapo immediately put Kaufmann under pressure to surrender his business; the film industry had a vested interest in Theaterkunst as a 'productive and reliable company with well trained staff'. Backed by the Ufa film studios and the Propaganda Ministry, Hermann Stallberg – NSDAP member and SA stormtroop unit leader – founded Theaterkunst, Ausstattungs- und Uniformen GmbH on April 25, 1933, advertising the 'first purely Christian company in the branch under National Socialist direction'. The two companies appeared in the Berlin directory under the same address, sharing workshops, stores and staff: Stallberg took the domestic business, Kaufmann kept the foreign commissions. Stallberg's business foundered after one year; Kaufmann's non-Jewish wife Meta and his long-standing trade executive Walter Russ stepped in as partners.",
+      "endDate": "1936-04-21"
+    },
+    {
+      "startDate": "1936-04-22",
+      "description": "Kaufmann sells to Adolph Nau and the Swedish STAB corporation. Theaterkunst GmbH becomes a priority wartime business; Kaufmann dies in exile in 1942.",
+      "longDescription": "In 1936, businessman Adolph Nau and the Swedish matchstick corporation Svenska Tändsticks Aktiebolaget (STAB) took over the business for 150,000 Reich marks. Taking the name Theaterkunst GmbH, the company merged the two predecessor businesses; Nau and the committed Nazi Otto Wilhelm Lange were appointed managing directors. The senior staff were kept on and commissions steadily increased: classified a priority wartime business by the Propaganda Ministry, the company supplied costumes for entertainment movies, propaganda features – it is credited as costume supplier on the anti-Semitic propaganda film Jud Süss (1940) – and theater in Germany and the occupied territories. Hermann J. Kaufmann emigrated to Brussels, where he died in 1942, alone and robbed of his life's work.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "Theaterkunst GmbH still exists today, with its main office in Berlin-Wilmersdorf and branches in Hamburg, Cologne and Munich.",
+      "longDescription": "Theaterkunst GmbH survived the war and still exists today. Its main office is located at Eisenzahn Strasse 43-44 in Berlin-Wilmersdorf, with additional branches in Hamburg, Cologne and Munich. Of Otto Wilhelm Lange, managing director from 1936 to 1945, nothing is known of his life after 1945.\n\nThe site today\n\nAt Schwedter Strasse 9 in Berlin-Prenzlauer Berg, where Theaterkunst Hermann J. Kaufmann occupied business premises and workshops in the courtyard building, the buildings still stand."
+    }
+  ]
+}

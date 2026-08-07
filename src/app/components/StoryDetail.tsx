@@ -524,7 +524,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             {currentContent.description && (
               <p
                 className="font-mono text-xs leading-relaxed mb-3"
-                style={{ color: 'var(--foreground)' }}
+                style={{ color: 'var(--foreground)', whiteSpace: 'pre-line' }}
               >
                 {currentContent.description}
               </p>
@@ -534,7 +534,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
               <div className="space-y-3">
                 <div
                   className={`font-mono text-xs leading-relaxed ${!showFullDescription ? 'line-clamp-4' : ''}`}
-                  style={{ color: 'var(--foreground)' }}
+                  style={{ color: 'var(--foreground)', whiteSpace: 'pre-line' }}
                 >
                   {currentContent.longDescription}
                 </div>

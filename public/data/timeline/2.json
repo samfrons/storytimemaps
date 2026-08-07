@@ -1,57 +1,34 @@
 {
-  "businessId": "2", 
+  "businessId": "2",
   "timeline": [
     {
-      "startDate": "1920-03-15",
-      "endDate": "1933-01-30",
-      "description": "One of Berlin's most successful Jewish-owned department stores, the Breslauer Brothers establishment on Unter den Linden represents the height of German-Jewish commercial success in the Weimar era.",
-      "longDescription": "Founded in March 1920 by brothers Marcus and Samuel Breslauer, this department store quickly became a landmark on Berlin's most prestigious boulevard. The four-story building housed departments for clothing, household goods, furniture, and luxury items. The brothers employed over 150 staff members and pioneered innovative retail practices, including fixed pricing and seasonal sales. Their store attracted customers from across Berlin and neighboring cities, becoming a symbol of German-Jewish integration and commercial success. The elegant Art Deco facade and spacious interior made shopping an experience rather than merely a transaction.",
-      "media": [
-        {
-          "url": "/images/breslaur/breslaur1.webp",
-          "caption": "The grand opening of Breslauer Brothers Department Store, 1920",
-          "type": "image",
-          "startDate": "1920-03-15",
-          "endDate": "1933-01-30"
-        },
-        {
-          "url": "/images/breslaur/breslaur2.webp",
-          "caption": "The bustling main floor during peak shopping hours, circa 1928",
-          "type": "image",
-          "startDate": "1920-03-15", 
-          "endDate": "1933-01-30"
-        }
-      ]
+      "startDate": "1898-02-04",
+      "description": "Martin Breslauer builds an internationally renowned antiquarian bookstore and becomes the heart and soul of Berlin's Bibliophile Society.",
+      "longDescription": "On February 4, 1898, Martin Breslauer and his former school friend Edmund Meyer founded the antiquarian and retail bookstore Breslauer & Meyer at Potsdamer Strasse 27b. After the partners parted company in 1904, Breslauer took premises at Unter den Linden 16 and, on his return from the western front in 1918, moved the bookstore to Französische Strasse 46. He was co-founder and board member of the Bibliophile Society and founding member of the Maximilian Society; his bookstore became a hub for Berlin's bibliophiles. Appointed consultant to the Prussian State Library, in 1919 he appraised the private library of Frederick the Great at Sanssouci. In 1929 he discovered the library of Napoleon's second wife Marie Louise in Vienna, and in 1931 handled his largest transaction – the sale of the Prince of Stolberg-Wernigerode's library of 120,000 volumes.",
+      "endDate": "1933-01-29"
     },
     {
       "startDate": "1933-01-30",
-      "endDate": "1935-04-01",
-      "description": "Under mounting Nazi pressure and economic boycotts, the Breslauer Brothers face impossible choices. The once-thriving department store struggles as customers disappear and official harassment intensifies.",
-      "longDescription": "The Nazi rise to power in 1933 marked the beginning of the end for the Breslauer Brothers empire. The April 1933 boycott devastated their customer base, with SA guards stationed outside their doors to deter shoppers. New regulations prohibited Jewish businesses from participating in certain trade associations, and suppliers began refusing to work with them. The brothers were forced to lay off most of their staff and watched helplessly as their life's work crumbled. By 1934, they faced bankruptcy and mounting pressure from Nazi officials who demanded they sell at far below market value. The store that once employed 150 people was reduced to a skeleton staff of family members desperately trying to keep the doors open.",
-      "media": [
-        {
-          "url": "/images/breslaur/breslaur2.webp",
-          "caption": "Empty aisles during the boycott period - a stark contrast to earlier prosperity",
-          "type": "image",
-          "startDate": "1933-01-30",
-          "endDate": "1935-04-01"
-        }
-      ]
+      "description": "The family is forced from its home, his son is threatened at school, and the Reich Culture Chamber demands the business be handed to 'a suitable Aryan person'.",
+      "longDescription": "After 1933 Martin Breslauer very soon encountered difficulties in his private and professional life. In 1934 the family had to give up their elegant suburban house in Lichterfelde and move to an inner-city apartment at Meineke Strasse 16-17. In 1935 his son Bernd was exposed to such serious anti-Semitic threats in the school yard that he did not go back. Faced with expulsion from the Reich Culture Chamber – which would have cost him his license to trade books – Breslauer filed an objection on December 14, 1935. On June 29, 1936, he was told his expulsion could be postponed 'out of consideration for the significance of [his] work' on condition that he hand over his business 'without delay [...] to a suitable Aryan person'. His friend and business associate Martin Bodmer in Switzerland bought most of his famous 21,000-volume library – the largest private bibliographic collection in the world. A punitive tax audit reaching back to 1924 calculated a liability of exactly the amount he would have been able to transfer abroad; he was left with nothing from the sale.",
+      "endDate": "1936-12-31"
     },
     {
-      "startDate": "1935-04-01",
-      "endDate": "1945-12-31", 
-      "description": "The Breslauer Brothers are forced to sell their department store under duress for a fraction of its value. The family business that took fifteen years to build is lost through systematic economic persecution.",
-      "longDescription": "In April 1935, facing insurmountable pressure and threats of confiscation, Marcus and Samuel Breslauer were forced to sell their department store to a non-Jewish buyer for approximately 20% of its assessed value. The sale was labeled 'voluntary' by Nazi authorities, but the brothers had no choice - refusal would have meant arrest and complete confiscation without compensation. The new owners immediately renamed the store and removed all traces of the Breslauer legacy. The brothers used the meager proceeds to help family members emigrate, though they themselves remained in Berlin until 1938. The department store continued operating under new ownership throughout the war, serving the very population that had driven its original owners to ruin.",
-      "media": [
-        {
-          "url": "/images/breslaur/breslaur1.webp",
-          "caption": "The former Breslauer Brothers store under new ownership, name changed, 1936",
-          "type": "image",
-          "startDate": "1935-04-01",
-          "endDate": "1945-12-31"
-        }
-      ]
+      "startDate": "1937-01-01",
+      "description": "Breslauer closes the business and flees with his family by night train via Holland to England, making a modest new start in London.",
+      "longDescription": "Breslauer closed the business as demanded in early 1937 and traveled with his family by night train via Holland to England. To pay for the train tickets, they pawned some golden desert spoons – his son took them to the Berlin pawnshop Schaper to save his father the embarrassment. He was able to take the remaining 6,000 books to London thanks to colleagues who assessed them as worthless for the tax authorities. In December 1938 he obtained official permission to set up an antiquarian bookstore in London. Business, however, was slow.",
+      "endDate": "1940-10-15"
+    },
+    {
+      "startDate": "1940-10-16",
+      "description": "A German aerial bomb explodes behind the family's London home; Martin Breslauer dies of the shock. His son Bernard later revives the business.",
+      "longDescription": "On October 16, 1940, a German aerial bomb exploded in the backyard of Bedford Court Mansions in Bloomsbury where the family lived. Martin Breslauer died a few hours later, aged 69, of a heart attack caused by the shock. His son Bernd – now Bernard – volunteered for military service and spent the war working for British intelligence.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "Bernard Breslauer rebuilds the Antiquariat to international renown in London and New York. Today The Regent Berlin hotel stands at Französische Strasse 46.",
+      "longDescription": "When the war ended, Bernard Breslauer managed to build on his father's reputation to establish an antiquarian bookstore of international renown, retaining the name Antiquariat Martin Breslauer. Attempts to reopen the business in Berlin failed, and he stayed in London until moving the business to New York in 1977. He specialized in manuscripts, early prints, illumination and historical bibliography; in 1978 he bought a copy of the Gutenberg bible at auction for the library of the Land Württemberg for 2.2 million dollars – the highest price ever paid for a book at the time. In 1997 he was made an honorary doctor of the Free University Berlin. Bernard Breslauer died aged 86 in 2004, leaving his personal estate to the Berlin State Library; in 2005, Christie's auctioned his valuable library of about 2000 volumes.\n\nThe site today\n\nToday The Regent Berlin hotel is located at Französische Strasse 46, where Martin Breslauer's bookstore once stood."
     }
   ]
 }

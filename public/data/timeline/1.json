@@ -2,66 +2,33 @@
   "businessId": "1",
   "timeline": [
     {
-      "startDate": "1925-01-01",
-      "endDate": "1933-01-30",
-      "descriptionKey": "timeline.eliasBraun.period1.description",
-      "longDescriptionKey": "timeline.eliasBraun.period1.longDescription",
-      "description": "A thriving tailoring business in the heart of Berlin's bustling Rosenthaler Straße. Elias Braun and his family have built a respected reputation for fine men's clothing, serving both Jewish and non-Jewish customers from across the city.",
-      "longDescription": "Established in 1925, Elias Braun's tailor shop quickly became a cornerstone of Rosenthaler Straße's commercial district. The shop specialized in bespoke men's suits, drawing customers from Berlin's growing middle class. Elias, trained in traditional tailoring techniques, employed three skilled seamsters and maintained a steady stream of orders. The family lived above the shop, with the workshop occupying the ground floor and display windows showcasing the latest fashions. During this period, the business flourished as Berlin's economy recovered from the post-war recession.",
-      "media": [
-        {
-          "url": "/images/ebraun/ebraun1.webp",
-          "captionKey": "timeline.eliasBraun.period1.media1.caption",
-          "caption": "The prosperous tailor shop in its heyday, 1920s",
-          "type": "image",
-          "startDate": "1925-01-01",
-          "endDate": "1933-01-30"
-        },
-        {
-          "url": "/images/ebraun/ebraun2.webp", 
-          "captionKey": "timeline.eliasBraun.period1.media2.caption",
-          "caption": "Elias Braun with his family and employees, circa 1930",
-          "type": "image",
-          "startDate": "1925-01-01",
-          "endDate": "1933-01-30"
-        }
-      ]
+      "startDate": "1914-01-01",
+      "description": "E. Braun & Co.'s largest branch opens at Unter den Linden 75, next to Hotel Adlon, supplying Europe's high society with formal wear, table linen and accessories.",
+      "longDescription": "E. Braun & Co. began as a bridal wear and accessories store founded by brothers Emanuel and Josef Braun in Vienna, soon appointed suppliers to the Austrian imperial and royal court. In 1914 the company's largest branch opened in Berlin at Unter den Linden 75, next to Hotel Adlon, extending the range to men's wear, table linen and later furniture and home accessories. Between 1926 and 1928 the premises were renovated by Viennese architect Ferdinand Kratzky at a cost of 850,000 Reich marks, with a grand portal on the corner of Wilhelm Strasse and an elevator to the salesrooms. In December 1930, Emanuel Braun's sons-in-law Hans Friedrich Mayer-Braun and Siegfried Franz Oser-Braun took over the Berlin branch as partners. Prominent customers included the actors Käthe Dorsch, Helene Thimig, Emil Jannings, Heinz Rühmann and Theo Lingen, director Fritz Kortner and composer Paul Hindemith.",
+      "endDate": "1933-01-29"
     },
     {
       "startDate": "1933-01-30",
-      "endDate": "1938-11-08",
-      "descriptionKey": "timeline.eliasBraun.period2.description",
-      "longDescriptionKey": "timeline.eliasBraun.period2.longDescription",
-      "description": "As Nazi persecution intensifies, the tailor shop struggles under increasing restrictions and boycotts. Non-Jewish customers stay away, and new regulations make business operations increasingly difficult for the Braun family.",
-      "longDescription": "Following Hitler's rise to power in January 1933, Elias Braun's business faced immediate challenges. The Nazi boycott of Jewish businesses in April 1933 marked the beginning of systematic economic persecution. Regular customers stopped coming, fearful of association with Jewish-owned establishments. New regulations required special permits for Jewish businesses, and Elias was forced to dismiss his non-Jewish employees. The family struggled to maintain the shop as their customer base dwindled to primarily Jewish patrons. Windows were occasionally marked with anti-Semitic graffiti, and the once-thriving business became a shadow of its former self.",
-      "media": [
-        {
-          "url": "/images/ebraun/ebraun3.webp",
-          "captionKey": "timeline.eliasBraun.period2.media1.caption",
-          "caption": "The shop during the boycott period - empty streets and marked windows",
-          "type": "image", 
-          "startDate": "1933-01-30",
-          "endDate": "1938-11-08"
-        }
-      ]
+      "description": "As Austrian nationals, the company's Jewish owners are initially protected in Nazi Berlin, and the luxury store continues to trade.",
+      "longDescription": "After the Nazi seizure of power, E. Braun & Co.'s Jewish owners were initially protected by their Austrian nationality and the store continued to serve its wealthy international clientele next to Hotel Adlon. A Berlin tax office auditor noted in 1936 that the company's expenditure of over 850,000 Reich marks on its premises showed how convinced the tenant was that its ten-year lease would be renewed – there was no evidence they thought otherwise. This protection ended abruptly with Austria's annexation in March 1938.",
+      "endDate": "1938-03-12"
     },
     {
-      "startDate": "1938-11-09",
-      "endDate": "1945-12-31",
-      "descriptionKey": "timeline.eliasBraun.period3.description",
-      "longDescriptionKey": "timeline.eliasBraun.period3.longDescription",
-      "description": "The tailor shop is destroyed during Kristallnacht. Windows are smashed, inventory stolen, and the family is forced to flee. The business that served Berlin's community for over a decade is lost forever.",
-      "longDescription": "On the night of November 9-10, 1938, during the coordinated attacks known as Kristallnacht, Elias Braun's tailor shop was targeted by SA storm troopers and local civilians. The shop windows were smashed, bolts of fabric were destroyed or stolen, and sewing machines were damaged beyond repair. The family, fearing for their safety, fled their home above the shop that same night. Elias attempted to return days later to salvage what remained, but found the premises had been completely ransacked. The building was later seized by the Nazi authorities, and the space was eventually converted to a non-Jewish business. The Braun family's decade of hard work and community presence was erased in a single night of violence.",
-      "media": [
-        {
-          "url": "/images/ebraun/ebraun4.webp",
-          "captionKey": "timeline.eliasBraun.period3.media1.caption",
-          "caption": "Aftermath of Kristallnacht - the destroyed tailor shop, November 1938",
-          "type": "image",
-          "startDate": "1938-11-09",
-          "endDate": "1945-12-31"
-        }
-      ]
+      "startDate": "1938-03-13",
+      "description": "After Austria's annexation, Siegfried Franz Oser-Braun is arrested and forced to sell the company. The family escapes via London and Egypt to the USA.",
+      "longDescription": "In May 1938, Siegfried Franz Oser-Braun was arrested by the Gestapo while on a routine business trip because his Austrian passport was no longer valid. While still in detention in September 1938, the property transactions office in Vienna forced him to sell E. Braun & Co. to Georg Wiedersum in Bremen. On 28 September 1938, Siegfried Franz and Edith Oser-Braun emigrated with their children to London, then to Egypt in March 1939, and finally to the USA; the family was denationalized by the German Reich in 1941. With salvaged inventory boldly transported by truck from Prague and Karlovy Vary to New York, Oser-Braun opened a store on Madison Avenue in Manhattan and a branch in Palm Beach, Florida. Hans Friedrich Mayer-Braun emigrated via Egypt, became Henry Myer and opened a store on Long Island under the name H.E. Braun. In 1942 the Aryanized Berlin company still had a turnover of 1.6 million Reich marks.",
+      "endDate": "1943-02-19"
+    },
+    {
+      "startDate": "1943-02-20",
+      "description": "The store on Unter den Linden is closed as not relevant to the war effort, seized by the Nazi authorities and later destroyed by bombing.",
+      "longDescription": "On February 20, 1943, the store on Unter den Linden was closed as part of the campaign to close down businesses in Germany which were not relevant to the war effort. The premises with their contents were seized by the Nazi authorities and assigned to a senior SS official. The business continued as a 'war sales agency' in Leipziger Strasse 43-44. The former store premises were razed to the ground in a bomb attack in September 1943; the Leipziger Strasse premises were also destroyed by bombing in November 1943.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "The forced sale is declared null and void; the E. Braun & Co. name lives on in New York and Beverly Hills. The Hotel Adlon block now covers the former store site.",
+      "longDescription": "After the war, the Viennese company E. Braun & Co. was returned to the founders' heirs; Henry Myer became director in 1962. In 1954, the Oser-Braun and Myer-Braun families approached Georg Wiedersum in the hope of reaching an amicable agreement, and the forced sale of 1938 was declared to be null and void. Wiedersum's 'successor' store existed at Kurfürstendamm 43 until the year 2000. The Berlin branch on Unter den Linden was never rebuilt.\n\nThe site today\n\nOn August 23, 1997, the Hotel Adlon was reopened on the original site at Unter den Linden 1. The new building extends across the block to former street number 75, where the E. Braun & Co. store was located – once again, the first floor of the hotel houses stores offering luxury goods. A branch of the Swiss shoe store Bally stands at Kurfürstendamm 219; Bally also took over the company's main branch in Vienna in 1985. In 1988, Gustav Oser sold the rights to the name E. Braun & Co. to a US investor, who opened luxury goods stores in New York and Beverly Hills, following in the footsteps of the original company founders in Austria."
     }
   ]
 }

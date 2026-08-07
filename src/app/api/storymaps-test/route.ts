@@ -117,9 +117,9 @@ async function getDetailedStories() {
     })
 
     storiesCache = {
-      data: parsedData.slice(0, 15), // Only first 15 detailed stories
+      data: parsedData.slice(0, 16), // Only first 16 detailed stories
       timestamp: Date.now(),
-      etag: generateETag(parsedData.slice(0, 15)),
+      etag: generateETag(parsedData.slice(0, 16)),
     }
 
     return storiesCache

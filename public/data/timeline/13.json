@@ -1,0 +1,34 @@
+{
+  "businessId": "13",
+  "timeline": [
+    {
+      "startDate": "1923-01-01",
+      "description": "The Wassermann brothers prosper in Berlin's food trade – Eduard in poultry and meat, Max in wholesale eggs.",
+      "longDescription": "Eduard Wassermann, born 1883 in Tarnow in Poland, became a poultry trader in Berlin. Listed in the commercial register from 1923, he imported meat – mainly from Sweden and Yugoslavia – and sold it at the market in Wichert Strasse, at the central livestock market and in a shop at Rodenberg Strasse 40. The shop, run by his wife and daughter, moved in the early 1930s to Brunnen Strasse 71 and was increasingly used as an ice cream parlor in summer. His brother Max, born 1895, set up a grocery store with his wife Leonora in Kugler Strasse and sold eggs wholesale from the backrooms; the egg business went so well that he moved the wholesale branch to Wisbyer Strasse 63 in 1929, importing eggs from Denmark and Holland and selling them by the crate to bakeries and stores. Both brothers prospered – Max moved his family into a 4-room apartment in the newly built Wisbyer Strasse 65 and employed a maid.",
+      "endDate": "1932-12-31"
+    },
+    {
+      "startDate": "1933-01-01",
+      "description": "The brothers' licenses to import eggs and meat are withdrawn as the Nazi reorganization of the food sector squeezes out Jewish traders.",
+      "longDescription": "The situation rapidly worsened for the two brothers in the mid-1930s: their licenses to import eggs and meat were withdrawn. The brothers, who had built their livelihoods in branches now reorganized along the Nazis' 'blood and soil' ideology, faced a stark choice between selling up, closing down, or finding another way to stay in business.",
+      "endDate": "1936-11-30"
+    },
+    {
+      "startDate": "1936-12-01",
+      "description": "Eduard survives as a silent partner; Max changes branches to clothing manufacture until the November pogrom devastates his factory.",
+      "longDescription": "In December 1936, Eduard Wassermann sold his business to the non-Jew Edwin Hansen but remained a silent partner with a 48 per cent holding, which enabled him to get by. When Max was barred from trading eggs a short time later, he had to close down his business – despite his popularity, many customers refused to pay their outstanding bills. After a failed attempt at wholesale meat trading, he used an inheritance to set up a gentlemen's clothing factory, Wassermann & Adler, at Kaiser Wilhelm Strasse 38, later Münz Strasse 15, manufacturing coats and suits sold wholesale to clothes stores. The shop was devastated during the November pogrom in 1938, the sewing machines and band saws destroyed, but he still tried to keep the firm going. He considered fleeing for the first time, but his wife Leonora refused to leave Berlin; disagreement over emigration and extreme financial difficulties strained the marriage until Leonora divorced Max in 1939.",
+      "endDate": "1939-09-12"
+    },
+    {
+      "startDate": "1939-09-13",
+      "description": "Arrested among 534 Jewish holders of Polish passports, the brothers are taken to Sachsenhausen, where both die in 1940.",
+      "longDescription": "The two brothers were among the 534 Jewish men and youths holding Polish passports arrested in Berlin immediately after the outbreak of World War II and taken to Sachsenhausen concentration camp on September 13, 1939. They died there in 1940, allegedly of appendicitis. In fact, Eduard Wassermann was diabetic and had both legs amputated in Sachsenhausen – an operation from which he never recovered; Max Wassermann, crushed by the death of his brother, died just under a month later. Max's wife Leonora and daughter Toni were deported to the Lodz ghetto in 1941, then to the Kulmhof (Chelmno) extermination camp; their son Bernhard was the only one to survive, escaping illegally via the Netherlands to England.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "The brothers' gravestone stands in the Jewish cemetery in Berlin-Weissensee. No trace remains of Eduard's store on Brunnen Strasse.",
+      "longDescription": "The brothers' gravestone stands in the Jewish cemetery in Berlin-Weissensee. Their example shows that relative economic success offered no real protection: even the most diverse defense strategies ultimately led to the same conclusion – deportation and murder.\n\nThe site today\n\nNo traces are left of Eduard Wassermann's store on Brunnen Strasse 71 in Berlin-Mitte. The building at Wisbyer Strasse 63 in Prenzlauer Berg, where Max Wassermann once ran his wholesale egg business, still stands."
+    }
+  ]
+}

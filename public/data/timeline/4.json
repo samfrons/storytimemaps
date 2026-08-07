@@ -1,57 +1,34 @@
 {
-  "business": {
-    "id": "4", 
-    "name": "Goldstein Bakery",
-    "address": "Münzstraße 18, Berlin",
-    "category": "Food & Beverage",
-    "established": "1920-05-10",
-    "businessType": "Bakery"
-  },
+  "businessId": "4",
   "timeline": [
     {
-      "startDate": "1920-05-10",
-      "endDate": "1933-03-31", 
-      "title": "Community Cornerstone",
-      "description": "The Goldstein Bakery serves as a vital community hub, providing fresh bread, pastries, and kosher baked goods to Berlin's Jewish quarter. The family's traditional recipes draw customers from across the city.",
-      "longDescription": "Established in May 1920, the Goldstein Bakery became an essential part of daily life in Berlin's Jewish quarter. Aaron Goldstein and his wife Sarah brought traditional baking techniques from Eastern Europe, specializing in challah, rye breads, and holiday pastries. Their bakery opened before dawn each day, filling the street with the aroma of fresh bread. Beyond serving the local Jewish community, the bakery attracted customers citywide who appreciated the quality and authenticity of their products.",
-      "media": [
-        {
-          "type": "image",
-          "path": "/images/businesses/bakery/goldstein_bakery_1920s.jpg",
-          "caption": "Goldstein Bakery in the early morning hours, 1920s",
-          "alt": "Bakery storefront with fresh bread displays and early morning customers"
-        }
-      ]
+      "startDate": "1900-01-01",
+      "description": "Engineer Richard Friedmann builds Ebro into a leading manufacturer of patented horsehair upholstery and a key partner of the automobile industry.",
+      "longDescription": "Ebro – an acronym of Erste Berliner Dampf-Rosshaarspinnerei [First Steam Horsehair Spinning Mill, Berlin] – was established around 1900 by engineer Richard Friedmann as a wholesale company for upholstery materials. He soon began manufacturing his own supplies and in 1924 the factory became a stock corporation, with his youngest brother Ernst as partner and shareholder. The factory premises stood on opposite sides of Pistorius Strasse (66-69 and 95-96) in Berlin-Weissensee. Ebro manufactured upholstery units made with horsehair by a special patented technique used by only two other German factories, and became an important partner of the growing automobile industry – 1936 business records list Auto-Union, Daimler Benz, Adam Opel and Bayerische Motorenwerke among its major clients.",
+      "endDate": "1932-12-31"
     },
     {
-      "startDate": "1933-04-01",
-      "endDate": "1935-09-30",
-      "title": "Economic Strangulation", 
-      "description": "Nazi boycotts and regulations systematically destroy the bakery's customer base. Supply chains are disrupted, and the family faces increasing harassment from authorities and local antisemites.",
-      "longDescription": "The Nazi boycott of April 1, 1933 immediately impacted the Goldstein Bakery. Non-Jewish customers stopped coming, while suppliers became reluctant to deliver flour and other essential ingredients. New licensing requirements and health inspections specifically targeted Jewish businesses. The family was forced to reduce operating hours and lay off employees as revenue plummeted. By 1935, harassment from local Nazi supporters made daily operations nearly impossible.",
-      "media": [
-        {
-          "type": "image",
-          "path": "/images/businesses/bakery/empty_shelves_1934.jpg",
-          "caption": "Empty bakery shelves during the economic boycott, 1934",
-          "alt": "Interior of bakery showing mostly empty display cases and shelves"
-        }
-      ]
+      "startDate": "1933-01-01",
+      "description": "Classified a priority business 'for German interests', Ebro attracts the attention of Nazi economic advisor Heinrich Hunke, who pressures the owners to sell.",
+      "longDescription": "In the years after 1933, Ebro was classified as a priority business for the German Reich and deemed significant 'for German interests' in an assessment by the Reichskreditgesellschaft bank. From 1936 onwards, Heinrich Hunke – economic advisor to the Berlin Nazi Party since 1928 – increased the pressure on the company's Jewish shareholders to hand over their factory. They put up considerable resistance and 'sales' negotiations proceeded only very slowly. As late as 1937, Richard Friedmann tried to avert the hostile takeover by appointing a brother-in-law who was a Nazi Party member to the board of directors.",
+      "endDate": "1937-12-31"
     },
     {
-      "startDate": "1935-10-01",
-      "endDate": "1935-10-01",
-      "title": "Final Closure",
-      "description": "Unable to sustain operations under Nazi persecution, the Goldstein family is forced to permanently close their bakery. The building is later seized and converted to an 'Aryan' business.",
-      "longDescription": "By October 1935, the Goldstein Bakery could no longer sustain operations. With no customers, unreliable suppliers, and constant official harassment, Aaron and Sarah Goldstein made the difficult decision to close permanently. The family attempted to emigrate, selling their remaining equipment and inventory at a fraction of its value. The building was subsequently seized by Nazi authorities and converted to a German-owned bakery, erasing the Goldstein family's 15-year contribution to the community.",
-      "media": [
-        {
-          "type": "image",
-          "path": "/images/businesses/bakery/closed_sign_1935.jpg",
-          "caption": "The permanent closure notice, October 1935",
-          "alt": "Closed bakery with official closure notice posted on the door"
-        }
-      ]
+      "startDate": "1938-01-01",
+      "description": "Terrorised and intimidated, the Friedmanns are forced out. Hunke secures the factory for a give-away price of 375,000 Reich marks.",
+      "longDescription": "In 1938, Hunke pushed the takeover by increasingly drastic means. He effected the immediate transfer of Richard Friedmann's 75 per cent shareholding to his own non-Jewish wife Ella, the shares held on trust by lawyer Dr. Erich Naue. Ernst Friedmann was forced to leave the business, and an SS officer took his place on the board. Before being finally ousted in July 1938, Richard Friedmann had to train the new managers, who left Der Stürmer on his desk each morning with anti-Semitic articles underlined in red; one morning he found 'Clear out Jew' daubed in huge red letters on the factory wall. The 61-year-old managing director never set foot in his company again. Threatened with expropriation and the destruction of the factory, the owners caved in in late June 1938. Despite bidders offering up to 900,000 Reich marks, Hunke secured the factory for 375,000 – covered by the business' own surplus profit. The Friedmanns had no access to the money.",
+      "endDate": "1938-06-30"
+    },
+    {
+      "startDate": "1938-07-01",
+      "description": "The Friedmann brothers are deported or driven to death. After the war, Ebro is nationalized in the GDR and finally restored to Ella Friedmann in 1952.",
+      "longDescription": "The Friedmann brothers remained in Germany after the company's seizure. On November 1, 1941, 61-year-old Ernst Friedmann was deported to the Litzmannstadt (Lodz) ghetto together with his brother Kurt, who died there on March 15, 1942; on May 9, 1942, Ernst was deported to the Kulmhof (Chelmno) extermination camp. Anticipating his own imminent deportation after being summoned to the local police station, Richard Friedmann committed suicide at home on July 16, 1942, aged 65. In farewell letters he wrote: 'I am not willing to let myself be tortured for a long time in a concentration camp.'",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "Ebro is nationalized in the GDR and restored to Ella Friedmann in 1952. Today little remains of the former premises on Pistorius Strasse.",
+      "longDescription": "After the end of the Second World War in 1945, the main shareholders Naue and Hunke lost interest in the factory. Categorized as 'ownerless' by the Soviet military administration, Ebro was placed under trusteeship in 1945 and eventually nationalized by the GDR in 1949; on May 30, 1949, the company was deleted from Berlin's commercial register. However, Ebro continued to exist in West Berlin as a number of bank-held securities remained unaffected by expropriation in the GDR. In 1952, the company was officially restored to Ella Friedmann (née Kunze, 1882-1974), who registered for liquidation the same year. Once wealthy, after 1945 she received a pension of only 200 DM a month.\n\nThe site today\n\nToday, little remains of the former Ebro premises on one side of Pistorius Strasse in Weissensee. A supermarket has been built on the opposite side."
     }
   ]
 }

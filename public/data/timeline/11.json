@@ -1,0 +1,34 @@
+{
+  "businessId": "11",
+  "timeline": [
+    {
+      "startDate": "1902-01-01",
+      "description": "Albert and Clara Reimann's private art college becomes one of Germany's first workshop-based schools, famed for its design departments and spectacular balls.",
+      "longDescription": "In 1902, sculptor Albert Reimann opened a students' workshop for small-scale sculpture in his studio on Ritter Strasse, Kreuzberg, with 14 participants. In 1903 the rapidly expanding school moved to the corner of Landshuter Strasse 38 and Hohenstaufen Strasse 41 in Schöneberg. On gaining governmental recognition in 1905 it was named Schule Reimann, Private Kunst- und Kunstgewerbeschule – one of the first workshop-based colleges in Germany, publishing its own journal Farbe und Form. Between 500 and 750 students were enrolled in the years 1920-1935, taught by up to 56 tutors in 30 subjects including Commercial Art, Theater Design, Metalwork and Woodwork, with annual turnover of about 400,000 Reich marks. The school was famous for its spectacular themed balls, attended by celebrities such as Marlene Dietrich, and in 1931 built an urgently needed extension at a cost of about 250,000 Reich marks.",
+      "endDate": "1932-12-31"
+    },
+    {
+      "startDate": "1933-01-01",
+      "description": "The SA occupies the grounds of the 'un-German' college; the Reich Culture Chamber Law bars Reimann from working as an artist.",
+      "longDescription": "Looking back, Albert Reimann recalled that in mid-1933 he thought his college was too important an institution to be badly hit. In this spirit he went ahead with the planned exhibition of students' work from September 28 to October 5, 1933, positively received by 10,000 visitors and the press – 800 Reich marks of the proceeds going, as a matter of course, to the National Socialist People's Welfare Organization. With the enforcement of the Reich Culture Chamber Law of September 22, 1933, Reimann was no longer permitted to work as an artist, though he remained head of the college – now controlled by a Nazi staff committee. In early 1934 the SA repeatedly surrounded and occupied the grounds, preventing tutors and students from entering this 'un-German' college, as they called it.",
+      "endDate": "1935-08-13"
+    },
+    {
+      "startDate": "1935-08-14",
+      "description": "Reimann sells the college to architect Hugo Häring, who soon stops the installment payments. The November pogrom destroys the art supplies store.",
+      "longDescription": "The sales contract of August 14, 1935, conceded the college and the rights to the name with its 'high commercial value' to architect Hugo Häring; the purchase price of 250,000 Reich marks was to be paid in installments from the surplus profits. In 1936 Häring stopped payments, claiming he was not making enough profit. Reimann had only the proceeds from the art supplies store, which Häring had not taken over, to live on. During the pogrom in November 1938 the store's windows were completely smashed and the stock partly destroyed; Reimann sold the remainder at a knock-down bargain price. The college under Häring was renamed Kunst und Werk but advertised until at least 1938 as 'formerly Schule Reimann' – the old name obviously had enduring appeal and was good for business.",
+      "endDate": "1938-12-16"
+    },
+    {
+      "startDate": "1938-12-17",
+      "description": "The Reimanns leave for London and never return. Stripped of citizenship in 1941, Reimann loses his property to the Reich; bombs destroy the college in 1943.",
+      "longDescription": "On December 17, 1938, the Reimanns went to London to visit their son Heinz – who had opened the successful Reimann School and Studios there in January 1937 – and never returned. The Berlin college continued to employ former Bauhaus artists such as Georg Muche and Walter Peterhans, and Reimann remained owner of the land and building, so Häring came under severe criticism from Nazi authorities; correspondence on the 'influence of the Jew Reimann' was conducted right up until 1944. When Reimann was stripped of his citizenship in 1941, his property fell to the Reich. On November 23, 1943, allied bombs destroyed the college building; the London school was destroyed by bombing in 1944 and never rebuilt.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "The Reimanns receive a small compensation sum in 1946. Today nothing remains of Schule Reimann at Landshuter Strasse 38.",
+      "longDescription": "The Reimanns applied for compensation in 1946 and received a small sum. In the 1960s, Albert Reimann also received a monthly pension of 600 DM. He died in London in 1976.\n\nThe site today\n\nToday nothing remains of Schule Reimann at Landshuter Strasse 38 in Schöneberg – a residential and office building stands on the site of what was once one of Germany's first workshop-based art colleges."
+    }
+  ]
+}

@@ -3,10 +3,8 @@ const nextConfig = {
   // App Router doesn't use i18n config - we handle it client-side
   transpilePackages: ['mapbox-gl', 'react-map-gl'],
 
-  // Ignore ESLint warnings during production builds (they're set to warn, not error)
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // Next 16 removed the `eslint` option and `next build` no longer lints.
+  // Linting now runs via the ESLint CLI (`pnpm lint`), not during the build.
 
   // Ignore TypeScript errors during production builds if needed
   typescript: {
@@ -18,6 +16,10 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 365,
+    // Next 16 defaults images.qualities to [75] and coerces anything else to the
+    // nearest allowed value. OptimizedImage defaults to 85, so without this the
+    // historical photographs would silently drop to 75.
+    qualities: [75, 85],
   },
   
   compress: true,

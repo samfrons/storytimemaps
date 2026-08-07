@@ -32,7 +32,7 @@ By the end of this activity students will be able to:
 1. **Locate** historical evidence about their own immediate surroundings using a digital archive, and record it accurately with source attribution.
 2. **Describe** how the exclusion of Jewish Germans from economic life happened — as a sequence of laws, boycotts, forced sales and liquidations carried out by a state and its citizens, not as a business misfortune.
 3. **Compare** a documented historical use of a specific address with its present-day use, and articulate what is visible, what has been erased, and what has been deliberately marked.
-4. **Explain** why remembrance in public space matters, and evaluate different forms it takes (Stolpersteine, plaques, street names, absence).
+4. **Explain** why remembrance in public space matters, and evaluate different forms it takes (plaques, street names, absence).
 5. **Design** a plausible present-day version of a historical enterprise using named sustainability principles (local supply chains, repair and reuse, circular material flows, community ownership), and justify their choices.
 6. **Reflect** on their own relationship to the place they live, in writing, without being required to perform emotion.
 
@@ -113,9 +113,9 @@ Be honest with students about the shape of the evidence. This is good history te
 4. **If your area is thinly covered, choose one of these** rather than abandoning the activity:
    - **Nearest dense street.** Take the class to the closest well-documented street and treat the journey there as part of the lesson: why here and not there?
    - **Adopt a street.** Assign your class a Mitte or Kreuzberg street with many records, walk it once, and have students research it as "our street for this term".
-   - **Research the gap.** For 16–18s this is the strongest option: make the absence the subject. Students use local sources — district archives (*Bezirksmuseum*), the Berlin address books (*Berliner Adressbücher*, digitised and freely searchable), Stolpersteine listings for the district — to find businesses the map does not yet hold, and propose them as additions.
+   - **Research the gap.** For 16–18s this is the strongest option: make the absence the subject. Students use local sources — district archives (*Bezirksmuseum*), the Berlin address books (*Berliner Adressbücher*, digitised and freely searchable) — to find businesses the map does not yet hold, and propose them as additions.
 5. **Walk the route yourself first.** Check what is actually at each address today, that it is safe to stand there, and that a group of thirty will not block a shop door or a tram stop. Note toilets and a shelter point.
-6. **Check for Stolpersteine and plaques** on the route so you are not surprised, and so you can prepare the group for one if it is there.
+6. **Check for memorial plaques and markers** on the route so you are not surprised, and so you can prepare the group for one if it is there.
 7. **Sort out permissions**: parental consent for the walk, and your school's rules on students photographing in public.
 8. **Decide your assessment weighting** before you hand the workbook out, and tell students. See *Assessment*.
 
@@ -223,16 +223,15 @@ This is not a sightseeing tour and not a treasure hunt. You are visiting places 
 - If a shopkeeper or resident asks what you are doing, say it plainly: you are studying the history of this address with your school. Most people are interested. Some will tell you something you cannot find in any archive — write it down, with their permission, and note that it is oral testimony rather than a document.
 - Keep your voices at a normal level. Someone may be listening who has a reason to care.
 
-### If you find a Stolperstein
+### If you find a memorial marker
 
-Stolpersteine — "stumbling stones" — are small brass plates set into the pavement in front of a person's last freely chosen address, carrying their name, birth year and fate. You may find one, several, or none.
+Some addresses are marked — a plaque on a wall, an inscription, a memorial nearby. Many are not. You may find one, several, or none.
 
-- Read the whole inscription. Say the name.
+- Read the whole inscription. If it names a person, say the name.
 - Copy the inscription exactly into Worksheet 2, including the dates.
-- Do not stand on the stone. Do not scrub, polish or decorate it as part of this activity — cleaning stones is done by local groups who look after them, and you can ask your teacher how to join that separately.
-- Know that Stolpersteine are debated. Some Jewish community members and some cities — Munich is the best-known case — object to memorial plaques set into a pavement where they are walked over. You do not need to settle that argument. You should know it exists, and you will be asked what you think in Phase C.
+- Treat any marker with care: do not stand on it, lean on it, or decorate it as part of this activity.
 
-Some addresses will have a wall plaque, some a memorial with no connection to this history, and many will have nothing at all. Nothing is a finding. Record it as one.
+Some addresses will have a memorial with no connection to this history, and many will have nothing at all. Nothing is a finding. Record it as one.
 
 ---
 
@@ -258,7 +257,6 @@ Some addresses will have a wall plaque, some a memorial with no connection to th
 
 | Question | Your observation |
 |---|---|
-| Stolperstein(e) present? How many? | |
 | Full inscription, copied exactly | |
 | Any plaque, sign, memorial or street name referring to this history? | |
 | If there is nothing at all — write that here | |
@@ -443,11 +441,11 @@ Assess the research and the design. Do not assess feeling, and do not grade Work
 
 ## Adaptations
 
-**Outside Berlin.** The activity works remotely with one change of emphasis. Students use the StoryMaps map to research a Berlin street they have never stood on — reading it as an outsider, which is its own useful position — and complete Phases A and C in full. Phase B then becomes local: students research and walk **their own** town's parallel history. Almost every town in Germany, Austria and the occupied countries had Jewish-owned businesses that were boycotted, forcibly sold or liquidated, and many have local documentation. Useful starting points are the town or district archive, the Stolpersteine project's local listings, regional history workshops (*Geschichtswerkstätten*), and digitised local address books and newspapers. In other countries, the parallel may be different — expropriated, interned or expelled communities in your own national history — and the comparison should be made carefully and explicitly, not collapsed into sameness. In every case Phase C stays the same: take a real local enterprise that was ended by force, and carry it forward.
+**Outside Berlin.** The activity works remotely with one change of emphasis. Students use the StoryMaps map to research a Berlin street they have never stood on — reading it as an outsider, which is its own useful position — and complete Phases A and C in full. Phase B then becomes local: students research and walk **their own** town's parallel history. Almost every town in Germany, Austria and the occupied countries had Jewish-owned businesses that were boycotted, forcibly sold or liquidated, and many have local documentation. Useful starting points are the town or district archive, regional history workshops (*Geschichtswerkstätten*), and digitised local address books and newspapers. In other countries, the parallel may be different — expropriated, interned or expelled communities in your own national history — and the comparison should be made carefully and explicitly, not collapsed into sameness. In every case Phase C stays the same: take a real local enterprise that was ended by force, and carry it forward.
 
 **A shorter version (2 lessons + walk).** Phase A as homework, one business per pair, Phase C reduced to points 1, 3 and 6 of the brief, poster only, no formal presentation.
 
-**A longer version (a term project).** Add archive fieldwork: district museum, address books, and if your school can arrange it, a conversation with a local historian or a Stolperstein sponsor. Add an exhibition at the end.
+**A longer version (a term project).** Add archive fieldwork: district museum, address books, and if your school can arrange it, a conversation with a local historian. Add an exhibition at the end.
 
 **Accessibility.** Plan the route step-free and short, with somewhere to sit at two points. Every walk task has an alternative that can be done from a photograph: a partner can film a slow pan of the address, and a student can complete Worksheet 2 from it. Provide the address text large-print or digitally for students who need it. Do not build any part of the assessment on being able to stand outdoors for an hour.
 
@@ -460,7 +458,6 @@ Assess the research and the design. Do not assess feeling, and do not grade Work
 | **Forced sale / forced transfer** | The compelled sale of a Jewish-owned business or property, usually far below its value, to a non-Jewish buyer. |
 | **"Aryanisation" (*Arisierung*)** | The Nazi term for that process. Always mark it as a Nazi term, in quotation marks, and explain it. |
 | **Liquidation** | The compulsory winding-up and closure of a business by decree. |
-| **Stolperstein** (pl. *Stolpersteine*) | A brass plate set into the pavement outside a person's last freely chosen address, bearing their name, birth year and fate. |
 | **Boycott** | Organised pressure on customers not to buy from a business. The nationwide boycott of Jewish businesses on 1 April 1933 was state-organised. |
 | **Reich mark (RM)** | German currency of the period. Figures in the archive are in Reich marks and cannot be converted simply into euros; compare them to other figures from the same year instead. |
 | **Circular economy** | An economy designed so materials are reused, repaired, refilled or recycled rather than discarded after one use. |

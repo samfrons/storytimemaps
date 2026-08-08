@@ -8,7 +8,7 @@
 
 /* Default/Moody Theme */
 :root,
-[data-theme="moody"] {
+[data-theme='moody'] {
   --primary: #97d8c0;
   --primary-rgb: 151, 216, 192;
   --primary-light: #a9e2d0;
@@ -50,7 +50,7 @@
 }
 
 /* Cool Theme - Light blues and teals */
-[data-theme="cool"] {
+[data-theme='cool'] {
   --primary: #4a90e2;
   --primary-rgb: 74, 144, 226;
   --primary-light: #6ba3e7;
@@ -92,7 +92,7 @@
 }
 
 /* Warm Theme - Oranges, browns, earthy */
-[data-theme="warm"] {
+[data-theme='warm'] {
   --primary: #d67b5a;
   --primary-rgb: 214, 123, 90;
   --primary-light: #e8956f;
@@ -134,7 +134,7 @@
 }
 
 /* Hot Theme - Bloody Water inspired reds */
-[data-theme="hot"] {
+[data-theme='hot'] {
   --primary: #6b1f2a;
   --primary-rgb: 107, 31, 42;
   --primary-light: #ff6666;
@@ -176,7 +176,7 @@
 }
 
 /* Cold Theme - Icy blues, grays */
-[data-theme="cold"] {
+[data-theme='cold'] {
   --primary: #64b5f6;
   --primary-rgb: 100, 181, 246;
   --primary-light: #90caf9;
@@ -218,7 +218,7 @@
 }
 
 /* Bauhaus Theme - Primary colors, black/white with light backgrounds */
-[data-theme="bauhaus"] {
+[data-theme='bauhaus'] {
   --primary: #0066ff;
   --primary-rgb: 0, 102, 255;
   --primary-light: #3388ff;
@@ -260,7 +260,7 @@
 }
 
 /* Art Nouveau Theme - Muted greens, browns, golds */
-[data-theme="art-nouveau"] {
+[data-theme='art-nouveau'] {
   --primary: #8b7355;
   --primary-rgb: 139, 115, 85;
   --primary-light: #a0916b;
@@ -302,7 +302,7 @@
 }
 
 /* Archival Theme - Based on Arolsen Archives design */
-[data-theme="archival"] {
+[data-theme='archival'] {
   --primary: #2c4a7c; /* Navy-slate rich blue for UI elements */
   --primary-rgb: 44, 74, 124;
   --primary-light: #3d5a8c;
@@ -392,6 +392,60 @@
   --font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
 }
 
+/*
+ * Brutal Pop - the /museum-exhibit look brought into the theme system.
+ *
+ * Chrome is near-black and recedes; the map beneath it is charcoal with gold roads; the ONLY
+ * high-chroma things on screen are the business-state pins. That is the whole idea: the "pop"
+ * is the data, not the furniture. --success/--warning/--danger are set to the exact marker
+ * colours from getThemeMarkerColors('brutal-pop') so the legend swatches and the pins match.
+ * Brutalism here comes from weight, hard edges and heavy rules rather than from white mass -
+ * white panels are what buries the map on /museum-exhibit.
+ */
+[data-theme='brutal-pop'] {
+  --primary: #ecc368;
+  --primary-rgb: 236, 195, 104;
+  --primary-light: #f4d68f;
+  --secondary: #f2efe6;
+  --warning: #ff7a1a;
+  --warning-rgb: 255, 122, 26;
+  --danger: #ff2d55;
+  --danger-rgb: 255, 45, 85;
+  --success: #00e5c0;
+  --success-rgb: 0, 229, 192;
+  --background: #131318;
+  --background-rgb: 19, 19, 24;
+  --foreground: #f2efe6;
+  --foreground-muted: #9a9aa8;
+  --muted: #2a2a34;
+  --muted-rgb: 42, 42, 52;
+  --border: #55555f;
+  --shadow: rgba(0, 0, 0, 0.6);
+  --map-overlay: rgba(19, 19, 24, 0.85);
+  --accent-orange: #ff7a1a;
+  --accent-yellow: #ecc368;
+  --accent-purple: #a78bfa;
+  --accent-coral: #ff2d55;
+  --accent-navy: #2a2a44;
+  --accent-chartreuse: #00e5c0;
+  --dropdown-bg: #1c1c24;
+  --dropdown-bg-rgb: 28, 28, 36;
+  --card-bg: #1c1c24;
+  --card-bg-rgb: 28, 28, 36;
+  --input-bg: #1c1c24;
+  --input-bg-rgb: 28, 28, 36;
+  --placeholder-color: #7a7a88;
+  --active-text: #131318;
+  --active-text-secondary: #2a2a34;
+  --declining-text: #131318;
+  --declining-text-secondary: #2a2a34;
+  --closed-text: #f2efe6;
+  --closed-text-secondary: #e6e0d4;
+  /* globals.css defines a .font-display utility that reads this; only hoefe set it before,
+     so without this line the utility silently falls back to the browser default. */
+  --font-display: var(--font-space-mono), 'Space Mono', ui-monospace, monospace;
+}
+
 /* Hoefe theme - Typography overrides */
 [data-theme='hoefe'] h1,
 [data-theme='hoefe'] h2,
@@ -433,7 +487,11 @@
 /* Hoefe theme - Small caps labels */
 [data-theme='hoefe'] .text-xs.uppercase,
 [data-theme='hoefe'] .category-label {
-  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+  font-family:
+    var(--font-inter),
+    'Inter',
+    -apple-system,
+    sans-serif !important;
   font-weight: 600 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
@@ -446,12 +504,20 @@
 [data-theme='hoefe'] label,
 [data-theme='hoefe'] input,
 [data-theme='hoefe'] button:not(.text-lg):not(.text-xl) {
-  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+  font-family:
+    var(--font-inter),
+    'Inter',
+    -apple-system,
+    sans-serif !important;
 }
 
 /* Hoefe theme - Override font-mono for body text only */
 [data-theme='hoefe'] .font-mono:not(.text-lg):not(.text-xl):not(.text-2xl):not(h1):not(h2):not(h3) {
-  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+  font-family:
+    var(--font-inter),
+    'Inter',
+    -apple-system,
+    sans-serif !important;
 }
 
 /* Hoefe theme - Refined panel/card styling */
@@ -523,7 +589,12 @@ Additional fonts loaded dynamically only when needed to prevent render blocking
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   font-size: 14px;
   line-height: 1.5;
   letter-spacing: -0.01em;
@@ -542,35 +613,35 @@ body {
     -webkit-touch-callout: none;
     touch-action: manipulation; /* Faster touch response */
   }
-  
+
   /* Enable hardware acceleration for scrolling */
   .overflow-y-auto,
   .overflow-x-auto {
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
   }
-  
+
   /* Reduce animation complexity on mobile */
   .transition-all {
     transition-property: transform, opacity;
     transition-duration: 200ms;
   }
-  
+
   /* Optimize map container for mobile */
   .mapboxgl-canvas {
     will-change: transform;
   }
-  
+
   /* Reduce shadow complexity on mobile */
   .shadow-lg {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
-  
+
   /* Font optimizations for mobile */
   body {
     font-size: 13px; /* Slightly smaller on mobile */
   }
-  
+
   /* Disable animations for low-end devices */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -678,69 +749,66 @@ textarea:-ms-input-placeholder {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   /* Optimized Typography Classes - using system fonts for performance */
   .font-display {
     font-family: var(--font-inter), system-ui, sans-serif;
     font-weight: 600;
   }
-  
+
   .font-serif {
     font-family: Georgia, 'Times New Roman', Times, serif;
   }
-  
+
   .font-mono-modern {
-    font-family: var(--font-space-mono), 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-family:
+      var(--font-space-mono), 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
+      'Courier New', monospace;
   }
-  
+
   /* Text effects */
   .text-shadow-subtle {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
-  
+
   .text-shadow-strong {
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   }
-  
+
   /* Decorative textures */
   .texture-grain {
-    background-image: 
-      radial-gradient(circle at 1px 1px, rgba(245, 205, 180, 0.15) 1px, transparent 0);
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(245, 205, 180, 0.15) 1px,
+      transparent 0
+    );
     background-size: 20px 20px;
   }
-  
+
   .texture-diagonal {
-    background-image: 
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 2px,
-        rgba(245, 205, 180, 0.03) 2px,
-        rgba(245, 205, 180, 0.03) 4px
-      );
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(245, 205, 180, 0.03) 2px,
+      rgba(245, 205, 180, 0.03) 4px
+    );
   }
-  
+
   .texture-dots {
-    background-image: 
-      radial-gradient(circle, rgba(245, 205, 180, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(245, 205, 180, 0.1) 1px, transparent 1px);
     background-size: 15px 15px;
   }
-  
+
   /* Modern gradients */
   .bg-premium-gradient {
-    background: linear-gradient(135deg, 
-      #ffffff 0%, 
-      #fafafa 50%, 
-      #f5f5f5 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 50%, #f5f5f5 100%);
   }
-  
+
   .bg-accent-gradient {
-    background: linear-gradient(135deg, 
-      #3b82f6 0%, 
-      #8b5cf6 50%, 
-      #ec4899 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
   }
-  
+
   /* Modern animations */
   @keyframes fadeInUp {
     from {
@@ -752,7 +820,7 @@ textarea:-ms-input-placeholder {
       transform: translateY(0);
     }
   }
-  
+
   @keyframes scaleIn {
     from {
       opacity: 0;
@@ -763,7 +831,7 @@ textarea:-ms-input-placeholder {
       transform: scale(1);
     }
   }
-  
+
   @keyframes slideInLeft {
     from {
       opacity: 0;
@@ -774,24 +842,24 @@ textarea:-ms-input-placeholder {
       transform: translateX(0);
     }
   }
-  
+
   .animate-fadeInUp {
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
+
   .animate-scaleIn {
     animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
+
   .animate-slideInLeft {
     animation: slideInLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
+
   /* Hover effects */
   .hover-lift {
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .hover-lift:hover {
     transform: translateY(-4px);
   }
@@ -801,68 +869,68 @@ textarea:-ms-input-placeholder {
   .card {
     @apply bg-white dark:bg-slate-800/95 shadow-sm hover:shadow-md transition-shadow duration-200 border border-border;
   }
-  
+
   .btn-primary {
     @apply bg-primary text-white px-4 py-2 hover:bg-primary-light transition-all duration-200 font-medium text-sm shadow-sm hover:shadow;
   }
-  
+
   .btn-secondary {
     @apply bg-transparent border border-border text-foreground px-4 py-2 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-200 font-medium text-sm;
   }
-  
+
   .panel {
     @apply bg-white dark:bg-slate-900 border border-border shadow-sm;
   }
-  
+
   .marker-active {
     @apply bg-primary border-2 border-white shadow-lg;
   }
-  
+
   .marker-declining {
     @apply bg-warning border-2 border-white shadow-lg;
   }
-  
+
   .marker-closed {
     @apply bg-danger border-2 border-white shadow-lg;
   }
-  
+
   .smooth-transition {
     @apply transition-all duration-300 ease-in-out;
   }
-  
+
   .map-gradient {
     background: rgba(30, 30, 40, 0.15);
     pointer-events: none;
   }
-  
+
   .tooltip-label {
     @apply px-2 py-1 text-xs font-mono shadow-lg border;
     letter-spacing: 0.02em;
     z-index: 999999 !important;
     position: relative !important;
   }
-  
+
   .tooltip-label-active {
     background: rgba(var(--primary-rgb), 0.98);
     color: var(--foreground);
     border: 1px solid var(--primary);
     font-weight: 600;
   }
-  
+
   .tooltip-label-declining {
     background: rgba(255, 203, 81, 0.98);
     color: #2a2a2a;
     border: 1px solid #ffcb51;
     font-weight: 600;
   }
-  
+
   .tooltip-label-closed {
     background: rgba(238, 87, 96, 0.98);
     color: #ffffff;
     border: 1px solid #ee5760;
     font-weight: 600;
   }
-  
+
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -873,11 +941,11 @@ textarea:-ms-input-placeholder {
       transform: translateY(0);
     }
   }
-  
+
   .animate-fade-in {
     animation: fade-in 0.3s ease-out;
   }
-  
+
   @keyframes expand-modal {
     from {
       max-height: 0;
@@ -888,7 +956,7 @@ textarea:-ms-input-placeholder {
       opacity: 1;
     }
   }
-  
+
   .modal-expand {
     animation: expand-modal 0.5s ease-out forwards;
   }
@@ -921,7 +989,7 @@ textarea:-ms-input-placeholder {
 .mapbox-detail-popup .mapboxgl-popup-content {
   padding: 0 !important;
   border-radius: 0px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button {
@@ -934,7 +1002,7 @@ textarea:-ms-input-placeholder {
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button:focus {
@@ -973,52 +1041,52 @@ textarea:-ms-input-placeholder {
 }
 
 /* Hot theme specific styles */
-[data-theme="hot"] .hot-sidebar {
+[data-theme='hot'] .hot-sidebar {
   background-color: rgba(139, 0, 0, 0.9) !important;
 }
 
-[data-theme="hot"] .hot-button {
+[data-theme='hot'] .hot-button {
   background-color: rgba(139, 0, 0, 0.8) !important;
   color: #ffffff !important;
   border-color: #ff9999 !important;
 }
 
-[data-theme="hot"] .hot-button:hover {
+[data-theme='hot'] .hot-button:hover {
   background-color: #ff6666 !important;
 }
 
-[data-theme="hot"] .hot-button-active {
+[data-theme='hot'] .hot-button-active {
   background-color: #ff6666 !important;
   color: #ffffff !important;
   border-color: #ff9999 !important;
 }
 
-[data-theme="hot"] .hot-intro-button {
+[data-theme='hot'] .hot-intro-button {
   background-color: #8b0000 !important;
   border-color: #8b0000 !important;
   color: #ffffff !important;
 }
 
-[data-theme="hot"] .hot-close-button {
+[data-theme='hot'] .hot-close-button {
   background-color: rgba(139, 0, 0, 0.8) !important;
   color: #ffffff !important;
   border-color: var(--border) !important;
 }
 
-[data-theme="hot"] .hot-dropdown {
+[data-theme='hot'] .hot-dropdown {
   background-color: rgba(139, 0, 0, 0.95) !important;
   color: #ffffff !important;
 }
 
-[data-theme="hot"] .hot-dropdown button {
+[data-theme='hot'] .hot-dropdown button {
   color: #ffffff !important;
 }
 
-[data-theme="hot"] .hot-dropdown button:hover {
+[data-theme='hot'] .hot-dropdown button:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-[data-theme="hot"] .hot-dropdown .dropdown-active {
+[data-theme='hot'] .hot-dropdown .dropdown-active {
   background-color: rgba(255, 255, 255, 0.2) !important;
   color: #ffffff !important;
   border-left-color: #ffffff !important;
@@ -1040,13 +1108,13 @@ textarea:-ms-input-placeholder {
 }
 
 /* Hot theme zoom buttons */
-[data-theme="hot"] .zoom-button {
+[data-theme='hot'] .zoom-button {
   background-color: rgba(139, 38, 53, 0.9) !important;
   border-color: #d4596a !important;
   color: #5c1a23 !important;
 }
 
-[data-theme="hot"] .zoom-button:hover {
+[data-theme='hot'] .zoom-button:hover {
   background-color: rgba(125, 38, 51, 1) !important;
   color: #3d3d4e !important;
 }
@@ -1065,7 +1133,9 @@ textarea:-ms-input-placeholder {
 
 /* Auth input fields */
 .auth-input {
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .auth-input:focus {
@@ -1075,7 +1145,10 @@ textarea:-ms-input-placeholder {
 
 /* Primary action button (Continue, Sign In, Create Account) */
 .auth-btn-primary {
-  transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
 }
 
 .auth-btn-primary:hover:not(:disabled) {
@@ -1092,7 +1165,10 @@ textarea:-ms-input-placeholder {
 
 /* Secondary button (Google sign-in) */
 .auth-btn-secondary {
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
 }
 
 .auth-btn-secondary:hover:not(:disabled) {
@@ -1140,7 +1216,9 @@ textarea:-ms-input-placeholder {
 
 /* Cancel/dismiss button */
 .auth-btn-cancel {
-  transition: color 0.15s ease, opacity 0.15s ease;
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .auth-btn-cancel:hover:not(:disabled) {
@@ -1158,7 +1236,9 @@ textarea:-ms-input-placeholder {
 }
 
 .auth-modal-panel {
-  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.2s ease-out;
 }
 
 /* Slide-in animation for messages */

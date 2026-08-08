@@ -568,6 +568,110 @@ export const HOEFE_STYLE: StyleSpecification = {
 }
 
 /**
+ * Brutal Pop Theme - the /museum-exhibit map, transcribed declaratively.
+ *
+ * The exhibit applies this look imperatively via setPaintProperty loops in
+ * museum-exhibit/components/TouchMapSimple.tsx:227-328, which cannot be referenced from here.
+ * These values are transcribed verbatim from that file so the two surfaces stay identical:
+ * charcoal ground, cream water, and a four-weight gold road hierarchy.
+ *
+ * No label layers - the exhibit map carries none, and on a map whose job is showing thousands
+ * of state-coloured pins at once, place labels compete with the data.
+ */
+export const BRUTAL_POP_STYLE: StyleSpecification = {
+  version: 8,
+  name: 'Brutal Pop Theme',
+  sources: {
+    mapbox: MAPBOX_VECTOR_SOURCE,
+  },
+  glyphs: MAPBOX_GLYPHS,
+  layers: [
+    {
+      id: 'background',
+      type: 'background',
+      paint: {
+        'background-color': '#282833',
+      },
+    },
+    {
+      id: 'water',
+      type: 'fill',
+      source: 'mapbox',
+      'source-layer': 'water',
+      paint: {
+        'fill-color': '#ffecc0',
+      },
+    },
+    {
+      id: 'parks',
+      type: 'fill',
+      source: 'mapbox',
+      'source-layer': 'landuse',
+      filter: ['==', 'class', 'park'],
+      paint: {
+        'fill-color': '#21212d',
+        'fill-opacity': 0.8,
+      },
+    },
+    {
+      id: 'buildings',
+      type: 'fill',
+      source: 'mapbox',
+      'source-layer': 'building',
+      paint: {
+        'fill-color': '#323240',
+        'fill-opacity': 0.5,
+      },
+    },
+    {
+      id: 'road-local',
+      type: 'line',
+      source: 'mapbox',
+      'source-layer': 'road',
+      // Mirrors the class list the other styles in this file use (see road-local above),
+      // rather than the exhibit's looser matching, so the same streets light up per theme.
+      filter: ['in', 'class', 'street', 'street_limited', 'service', 'track', 'pedestrian'],
+      paint: {
+        'line-color': '#a1823a',
+        'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.5, 15, 2],
+      },
+    },
+    {
+      id: 'road-secondary',
+      type: 'line',
+      source: 'mapbox',
+      'source-layer': 'road',
+      filter: ['in', 'class', 'secondary', 'tertiary'],
+      paint: {
+        'line-color': '#cea74f',
+        'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 15, 4],
+      },
+    },
+    {
+      id: 'road-highway',
+      type: 'line',
+      source: 'mapbox',
+      'source-layer': 'road',
+      filter: ['in', 'class', 'motorway', 'trunk', 'primary'],
+      paint: {
+        'line-color': '#ecc368',
+        'line-width': ['interpolate', ['linear'], ['zoom'], 10, 2, 15, 6],
+      },
+    },
+    {
+      id: 'admin-boundaries',
+      type: 'line',
+      source: 'mapbox',
+      'source-layer': 'admin',
+      paint: {
+        'line-color': '#3a3a3a',
+        'line-opacity': 0.3,
+      },
+    },
+  ],
+}
+
+/**
  * Mapbox hosted style URLs for themes that use modification approach
  */
 export const MAPBOX_HOSTED_STYLES = {
@@ -592,6 +696,8 @@ export function getThemeMapStyle(theme: string | undefined): StyleSpecification 
       return ARCHIVAL_STYLE
     case 'hoefe':
       return HOEFE_STYLE
+    case 'brutal-pop':
+      return BRUTAL_POP_STYLE
     case 'cold':
     case 'cool':
       return MAPBOX_HOSTED_STYLES.cold
@@ -647,6 +753,19 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         closed: '#8b4049', // Burgundy
         future: '#c5d5e5', // Powder blue
       }
+    case 'brutal-pop':
+      // The basemap is charcoal with a four-weight GOLD road hierarchy (#ecc368 -> #7a6230),
+      // so 'declining' must not be gold or thousands of pins would vanish into the streets.
+      // These are pushed to high chroma deliberately: on this theme the basemap is silent and
+      // the pins are the only saturated thing on screen, so the mint -> orange -> red shift
+      // across the 1930s reads as a mass even at low zoom. 'future' is muted on purpose - it
+      // recedes into the charcoal so the eye tracks businesses that are alive or dying.
+      return {
+        active: '#00e5c0', // Electric mint
+        declining: '#ff7a1a', // Hot orange - deliberately not gold
+        closed: '#ff2d55', // Hot red
+        future: '#6b6b7d', // Muted violet-grey, recedes
+      }
     case 'moody':
     default:
       return {
@@ -667,7 +786,11 @@ export function isCustomStyleTheme(theme: string | undefined): boolean {
     theme === 'hot' ||
     theme === 'bauhaus' ||
     theme === 'archival' ||
-    theme === 'hoefe'
+    theme === 'hoefe' ||
+    // Must be here and NOT in isModificationTheme: MapboxMap.applyThemeStyles early-returns for
+    // custom-style themes, and routing brutal-pop through the modification path would run
+    // imperative setPaintProperty loops against a declarative style.
+    theme === 'brutal-pop'
   )
 }
 

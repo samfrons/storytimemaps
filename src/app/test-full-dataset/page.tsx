@@ -61,9 +61,18 @@ function TestFullDatasetPageContent() {
     const themeParam = searchParams.get('theme')
     if (
       themeParam &&
-      ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(
-        themeParam
-      )
+      [
+        'moody',
+        'bauhaus',
+        'cool',
+        'warm',
+        'hot',
+        'cold',
+        'art-nouveau',
+        'archival',
+        'hoefe',
+        'brutal-pop',
+      ].includes(themeParam)
     ) {
       if (theme !== themeParam) {
         setTheme(themeParam)

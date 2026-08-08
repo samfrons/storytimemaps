@@ -41,6 +41,31 @@ export default [
   },
 
   {
+    // Everything under scripts/ is a plain Node CommonJS tool run directly with
+    // `node` — data pipelines, plaque generators — never bundled into the app.
+    // The TS preset's ESM-only import rule does not apply, and leaving it on
+    // blocks every commit that touches one: the pre-commit hook runs
+    // `eslint --fix` over staged *.js, fails, and rolls the whole commit back.
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        require: 'readonly',
+        module: 'writable',
+        exports: 'writable',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+
+  {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
       // Hydration-specific guards — see CLAUDE.md on avoiding SSR/client drift.

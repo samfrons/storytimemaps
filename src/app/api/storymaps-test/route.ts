@@ -2,7 +2,6 @@ import { NextResponse, NextRequest } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
 import crypto from 'crypto'
-import { inferBusinessCategory } from '../../../utils/businessTranslations'
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps_test_full.json')
 const STORIES_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json')
@@ -44,6 +43,8 @@ function extractMinimalFields(stories: any[]): any[] {
     startDate: story.startDate,
     endDate: story.endDate,
     businessType: story.businessType,
+    sectorKey: story.sectorKey,
+    mainBranch: story.mainBranch,
   }))
 }
 
@@ -58,16 +59,14 @@ async function getStoryMaps(minimal = false) {
 
   try {
     const rawData = await fs.readFile(DATA_FILE_PATH, 'utf8')
+    // businessType/sectorKey/mainBranch come straight from the file — they are
+    // written by scripts/recover_branch_fields_2026.py from the HU Berlin
+    // source. There used to be a title/description-based inference pass here;
+    // it was dead code (it required a non-empty `description`, which no record
+    // in this dataset has) and it allocated a second 10,021-element array on
+    // every cache miss.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let parsedData: any[] = JSON.parse(rawData)
-
-    // Infer business types if missing
-    parsedData = parsedData.map((story) => {
-      if (!story.businessType && story.description) {
-        return { ...story, businessType: inferBusinessCategory(story) }
-      }
-      return story
-    })
+    const parsedData: any[] = JSON.parse(rawData)
 
     // Cache full data
     dataCache = {
@@ -106,15 +105,7 @@ async function getDetailedStories() {
   try {
     const rawData = await fs.readFile(STORIES_FILE_PATH, 'utf8')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let parsedData: any[] = JSON.parse(rawData)
-
-    // Infer business types if missing
-    parsedData = parsedData.map((story) => {
-      if (!story.businessType && story.description) {
-        return { ...story, businessType: inferBusinessCategory(story) }
-      }
-      return story
-    })
+    const parsedData: any[] = JSON.parse(rawData)
 
     storiesCache = {
       data: parsedData.slice(0, 16), // Only first 16 detailed stories

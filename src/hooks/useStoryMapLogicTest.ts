@@ -50,7 +50,7 @@ export const useStoryMapLogicTest = () => {
   const [minDate] = useState<Date>(new Date('1920-01-01'))
   const [maxDate] = useState<Date>(new Date('1945-12-31'))
   const [isLoading, setIsLoading] = useState(true)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [totalItems, setTotalItems] = useState(0)
   const [viewMode, setViewMode] = useState<'stories' | 'database'>('stories')
   const [detailedStoriesData, setDetailedStoriesData] = useState<StoryMap[]>([])
@@ -136,10 +136,26 @@ export const useStoryMapLogicTest = () => {
     }
   }, [enrichedStories, detailedStoriesData, viewMode, filterStoriesByMode])
 
+  // Records whose address could not be geocoded fall back to the Berlin centroid, so ~1,000 of
+  // them stack on one pixel and render as a permanent blob that no clustering radius can break
+  // apart. Drop them from the MAP only - they stay in the list, and the count is surfaced via
+  // unlocatedCount so the omission is visible rather than silent. Deliberately not jittered into
+  // invented positions: CLAUDE.md requires historical accuracy, and these addresses are unresolved.
+  const isUnlocated = useCallback(
+    (story: { lat: number; lng: number }) =>
+      story.lat === berlinCoordinates[0] && story.lng === berlinCoordinates[1],
+    []
+  )
+
+  const unlocatedCount = useMemo(
+    () => filterStoriesByMode(viewMode).filter(isUnlocated).length,
+    [viewMode, filterStoriesByMode, isUnlocated]
+  )
+
   // Create test markers based on view mode
   const testMarkers = useMemo(() => {
     const year = currentDate.getFullYear()
-    const modeFiltered = filterStoriesByMode(viewMode)
+    const modeFiltered = filterStoriesByMode(viewMode).filter((story) => !isUnlocated(story))
 
     return modeFiltered.map((story) => {
       // Calculate state based on current date
@@ -167,7 +183,7 @@ export const useStoryMapLogicTest = () => {
         endDate: story.endDate ?? undefined,
       }
     })
-  }, [currentDate, viewMode, filterStoriesByMode])
+  }, [currentDate, viewMode, filterStoriesByMode, isUnlocated])
 
   const handleMarkerClick = useCallback((markerId: string) => {
     setActiveStoryId(markerId)
@@ -195,6 +211,7 @@ export const useStoryMapLogicTest = () => {
     setViewMode,
     storiesWithDetailCount,
     hasDetailedStory,
+    unlocatedCount,
   }
 }
 

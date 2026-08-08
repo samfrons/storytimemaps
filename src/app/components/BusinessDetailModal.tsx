@@ -5,6 +5,7 @@ import { StoryMap, TimelineData } from '../../types'
 import StoryDetail from './StoryDetail'
 import TimeSlider from './TimeSlider'
 import { useTranslation } from '../../i18n/useTranslation'
+import { storyCategoryLabel } from '../../utils/businessSectors'
 import { loadTimelineData } from '../../utils/timelineLoader'
 import { useAuth } from '../../contexts/AuthContext'
 import ProposalForm from '../../components/proposals/ProposalForm'
@@ -197,7 +198,10 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                   })
                   .replace('/', '.')}
               </span>
-              {story.category && (
+              {/* The sector, not `category` — that field holds the literal
+                  "business" on every storymaps.json record, so this chip used
+                  to read "BUSINESS" on all 2,761 of them. */}
+              {storyCategoryLabel(t, story) && (
                 <span
                   className="px-2 py-1 uppercase tracking-wide"
                   style={{
@@ -205,7 +209,7 @@ const BusinessDetailModal: React.FC<BusinessDetailModalProps> = ({
                     color: 'var(--accent-orange)',
                   }}
                 >
-                  {story.category}
+                  {storyCategoryLabel(t, story)}
                 </span>
               )}
             </div>

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { StoryMap, TimelineData, TimelineContent, MediaItem } from '../../types'
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes'
 import { useTranslation } from '../../i18n/useTranslation'
+import { mainBranchLabel, sectorLabel } from '../../utils/businessSectors'
 import {
   loadTimelineData,
   getTimelineContentForDate,
@@ -12,6 +13,7 @@ import {
   subscribeToLoadingState,
 } from '../../utils/timelineLoader'
 import { useDebounce } from '../../hooks/useDebounce'
+import { loadPostwarSite, formatPostwarYears, type PostwarSite } from '../../utils/postwarLoader'
 import ShareModal from './ShareModal'
 import PlaqueMockup from './PlaqueMockup'
 import PlaqueInquiryForm from './PlaqueInquiryForm'
@@ -36,6 +38,7 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
     React.useState<TimelineContent | null>(null)
   const [isLoadingDetailed, setIsLoadingDetailed] = React.useState(false)
   const [showShareModal, setShowShareModal] = React.useState(false)
+  const [postwar, setPostwar] = React.useState<PostwarSite | null>(null)
 
   // Debounce rapid timeline changes to prevent flicker
   // Use shorter debounce for better responsiveness during auto-play
@@ -127,6 +130,22 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
     setSelectedMediaIndex(0)
   }, [timelineContent])
 
+  // What became of the address after 1945. Only 15 of the featured businesses have any, and the
+  // file is shared/cached across modals, so this is cheap.
+  React.useEffect(() => {
+    let cancelled = false
+    loadPostwarSite(story.id)
+      .then((site) => {
+        if (!cancelled) setPostwar(site)
+      })
+      .catch(() => {
+        if (!cancelled) setPostwar(null)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [story.id])
+
   // Determine content based on timeline data availability
   const currentContent = React.useMemo(() => {
     if (story.hasTimelineData && timelineContent && !timelineError) {
@@ -145,6 +164,12 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
       return {
         description: translatedDescription || story.description,
         longDescription: translatedLongDescription || story.longDescription,
+        // The timeline text above narrates a single era and swaps as the slider moves.
+        // story.longDescription is the full "Final Sale" catalog chapter, which used to be
+        // unreachable here: getTimelineContentForDate() never returns null once timeline data
+        // has loaded, so the `||` fallback on longDescription could never fire. Carry the
+        // chapter separately so both are readable — see the "Full chapter" block below.
+        chapterText: story.longDescription || null,
         hasTimelineContent: true,
       }
     }
@@ -153,6 +178,8 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
     return {
       description: story.description,
       longDescription: story.longDescription,
+      // Without timeline data, longDescription already IS the catalog chapter — don't repeat it.
+      chapterText: null,
       hasTimelineContent: false,
     }
   }, [story, timelineContent, timelineError, t])
@@ -423,7 +450,9 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
         </div>
       </div>
 
-      {(currentContent.description || currentContent.longDescription) && (
+      {(currentContent.description ||
+        currentContent.longDescription ||
+        currentContent.chapterText) && (
         <div
           className={`pt-4 border-t transition-all duration-300 ease-out ${
             isTransitioning && contentStage !== 'complete'
@@ -531,17 +560,40 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
             )}
 
             {currentContent.longDescription && (
-              <div className="space-y-3">
-                <div
-                  className={`font-mono text-xs leading-relaxed ${!showFullDescription ? 'line-clamp-4' : ''}`}
-                  style={{ color: 'var(--foreground)', whiteSpace: 'pre-line' }}
+              <div
+                className="font-mono text-xs leading-relaxed"
+                style={{ color: 'var(--foreground)', whiteSpace: 'pre-line' }}
+              >
+                {currentContent.longDescription}
+              </div>
+            )}
+
+            {/* The full catalog chapter. Collapsed height is an inline maxHeight rather than a
+                Tailwind line-clamp: the arbitrary-value clamp classes are not configured in
+                tailwind.config.ts, and a fixed px height is deterministic across themes. */}
+            {currentContent.chapterText && (
+              <div className="mt-4 pt-4 border-t" style={{ borderTopColor: 'var(--border)' }}>
+                <h5
+                  className="font-mono text-xs font-bold uppercase tracking-wider mb-3"
+                  style={{ color: 'var(--foreground-muted)' }}
                 >
-                  {currentContent.longDescription}
+                  Full chapter
+                </h5>
+
+                <div
+                  className="font-mono text-xs leading-relaxed overflow-hidden"
+                  style={{
+                    color: 'var(--foreground)',
+                    whiteSpace: 'pre-line',
+                    maxHeight: showFullDescription ? 'none' : '9rem',
+                  }}
+                >
+                  {currentContent.chapterText}
                 </div>
 
                 <button
                   onClick={() => setShowFullDescription(!showFullDescription)}
-                  className="text-xs font-mono font-semibold transition-colors cursor-pointer"
+                  className="mt-2 text-xs font-mono font-semibold transition-colors cursor-pointer"
                   style={{ color: 'var(--primary)' }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.color = 'var(--accent-yellow)'
@@ -550,8 +602,103 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
                     e.currentTarget.style.color = 'var(--primary)'
                   }}
                 >
-                  {showFullDescription ? 'Read less' : 'Read more'} →
+                  {showFullDescription ? 'Show less' : 'Read the full chapter'} →
                 </button>
+              </div>
+            )}
+
+            {/* What happened to the address after 1945.
+                The building / company / family split is the organising device because those are
+                genuinely different fates that read as one story if merged: a firm can survive
+                while its premises are bombed, and a family can be restituted decades after both.
+                Building comes first - it is what the address on the map actually refers to. */}
+            {postwar && postwar.periods.length > 0 && (
+              <div className="mt-4 pt-4 border-t" style={{ borderTopColor: 'var(--border)' }}>
+                <h5
+                  className="font-mono text-xs font-bold uppercase tracking-wider mb-3"
+                  style={{ color: 'var(--foreground-muted)' }}
+                >
+                  After 1945
+                </h5>
+
+                {(['building', 'company', 'family', 'other'] as const).map((kind) => {
+                  const periods = postwar.periods.filter((p) => p.kind === kind)
+                  if (periods.length === 0) return null
+                  const groupLabel = {
+                    building: 'The building',
+                    company: 'The business',
+                    family: 'The family',
+                    other: 'Also',
+                  }[kind]
+
+                  return (
+                    <div key={kind} className="mb-4 last:mb-0">
+                      <div
+                        className="font-mono text-[10px] uppercase tracking-widest mb-2"
+                        style={{ color: 'var(--accent-orange)' }}
+                      >
+                        {groupLabel}
+                      </div>
+
+                      <ul className="space-y-2">
+                        {periods.map((period, i) => {
+                          const years = formatPostwarYears(period)
+                          return (
+                            <li key={`${kind}-${i}`} className="flex gap-3">
+                              <span
+                                className="font-mono text-xs font-bold flex-shrink-0 pt-px"
+                                style={{
+                                  color: 'var(--foreground-muted)',
+                                  minWidth: '4.5rem',
+                                }}
+                                // The source frequently gives no year ("in the mid-1990s"), and
+                                // inventing one in a memorial record is not acceptable, so an
+                                // undated entry shows a rule instead of a fabricated date.
+                                title={period.yearNote || undefined}
+                              >
+                                {years || '—'}
+                              </span>
+                              <span className="min-w-0">
+                                <span
+                                  className="font-mono text-xs font-semibold block"
+                                  style={{ color: 'var(--foreground)' }}
+                                >
+                                  {period.label}
+                                </span>
+                                <span
+                                  className="font-mono text-xs leading-relaxed block mt-0.5"
+                                  style={{ color: 'var(--foreground-muted)' }}
+                                >
+                                  {period.summary}
+                                </span>
+                              </span>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </div>
+                  )
+                })}
+
+                {postwar.currentOccupant && (
+                  <div
+                    className="mt-3 pt-3 border-t font-mono text-xs"
+                    style={{ borderTopColor: 'var(--border)', color: 'var(--foreground)' }}
+                  >
+                    <span style={{ color: 'var(--foreground-muted)' }}>
+                      At this address today:{' '}
+                    </span>
+                    <span className="font-semibold">{postwar.currentOccupant.name}</span>
+                  </div>
+                )}
+
+                <p
+                  className="mt-3 font-mono text-[10px] leading-relaxed"
+                  style={{ color: 'var(--foreground-muted)' }}
+                >
+                  Drawn from the exhibition catalogue chapter above and, where noted, from
+                  building-occupancy records. Periods without a date are undated in the source.
+                </p>
               </div>
             )}
 
@@ -587,9 +734,17 @@ const StoryDetail: React.FC<StoryDetailProps> = ({ story, currentDate }) => {
           >
             {t('mainPage.storyDetails.businessType')}
           </h5>
-          <p className="font-mono text-xs capitalize" style={{ color: 'var(--foreground)' }}>
-            {story.businessType}
+          {/* No `capitalize` here: the translated labels carry their own
+              casing, and capitalize would render "Machines & Vehicles" as
+              "Machines & Vehicles" but "banks and insurance" inconsistently. */}
+          <p className="font-mono text-xs" style={{ color: 'var(--foreground)' }}>
+            {sectorLabel(t, story.sectorKey, story.businessType)}
           </p>
+          {story.mainBranch && (
+            <p className="font-mono text-xs mt-1" style={{ color: 'var(--foreground-muted)' }}>
+              {mainBranchLabel(t, story.mainBranch)}
+            </p>
+          )}
         </div>
       )}
 

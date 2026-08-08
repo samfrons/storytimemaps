@@ -369,6 +369,54 @@ Use conventional commits:
 - Provide alt text for historical images
 - Keep contrast ratios WCAG AA compliant
 
+## Memorial Plaques
+
+### 1. ALWAYS credit the grant — no exceptions
+**EVERY** plaque this project produces must carry the funding attribution
+**Stiftung Zurückgeben**. The plaques are grant-funded and must read as such in
+the field, not only in the paperwork. This applies to every format, every
+style, every tier, and to any new plaque generator added later.
+
+- Single source of truth: `ATTRIBUTION` in `scripts/generate-premium-plaques.js`
+  (exported). Never retype the string — import it.
+- Set as a thin/bold lock-up: "Stiftung" regular, "Zurückgeben" bold.
+- The `<text>` needs `xml:space="preserve"`, otherwise renderers and Inkscape
+  collapse the trailing space into "StiftungZurückgeben".
+
+### 2. A plaque must state four facts
+Business name, type of business, dates, and location. A record missing any of
+these is not eligible for a plaque — do not pad it with guesses. Eligibility is
+enforced by `isComplete()` in `scripts/lightburn-businesses.js`.
+
+### 3. ALWAYS say what the plaque is
+A name and a pair of dates mean nothing to a passer-by. Every plaque — however
+minimal — must carry:
+- the **GEDENKTAFEL** label and **HIER STAND**, and
+- a standing context line naming what happened.
+
+The line is `CONTEXT_DE` in `scripts/generate-lightburn-plaque.js`:
+*„Jüdisches Unternehmen, unter nationalsozialistischer Herrschaft enteignet und
+liquidiert."* Wording is deliberate — "enteignet und liquidiert" is what the
+records document (expropriation under "Arisierung", then wind-up, which is
+where the end dates come from). Do not swap in vaguer or more dramatic verbs;
+they either overstate or soften the coercion. Plaques with their own narrative
+copy (the 300 × 200 format) carry that context in the body text instead.
+
+### 4. Formats
+| Size | Use |
+|---|---|
+| 300 × 200 mm | featured stories — narrative copy plus storefront engraving |
+| 300 × 100 mm | compact, no illustration — records with only the four facts |
+
+Compact plaques draw on businesses that are NOT among the 16 featured stories
+(the first 16 records of `data/storymaps.json`).
+
+### 5. Physical output
+See the header of `scripts/generate-lightburn-plaque.js`. Two readings per
+plaque (`-lines` positive, `-field` negative) for two-tone ABS, minimum feature
+width 0.3 mm, and the QR always sits on an unengraved island in the negative so
+it stays scannable.
+
 ## Historical Sensitivity
 - Treat all business data with respect
 - Maintain historical accuracy
@@ -378,3 +426,13 @@ Use conventional commits:
 ## Remember
 This project visualizes a difficult period in history. The goal is to preserve memory and educate, not to entertain. Keep the interface professional and the data presentation respectful.
 - don't use hardcoded color values use variables except when you can't like for maps i think
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

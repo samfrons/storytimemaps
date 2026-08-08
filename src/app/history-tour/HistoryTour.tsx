@@ -320,41 +320,102 @@ interface StopCardProps {
   total: number
 }
 
-const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => (
-  <article className="ht-card" data-ht-card>
-    <div className="ht-card-meta">
-      <span className="ht-card-index">
-        {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => {
+  const [expanded, setExpanded] = useState(false)
+
+  // The catalogue text arrives as a single string with blank-line paragraph
+  // breaks; the first line is its own heading.
+  const paragraphs = useMemo(
+    () =>
+      stop.longStory
+        .split('\n')
+        .map((p) => p.trim())
+        .filter(Boolean),
+    [stop.longStory]
+  )
+
+  const toggle = useCallback(() => setExpanded((v) => !v), [])
+
+  return (
+    <article className="ht-card" data-ht-card>
+      <div className="ht-card-meta">
+        <span className="ht-card-index">
+          {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+        </span>
+        <span>
+          {formatDateLabel(stop.startDate)} — {formatDateLabel(stop.endDate)}
+        </span>
+      </div>
+      <h2>{stop.title}</h2>
+      <p className="ht-card-address">
+        {stop.address} · {stop.district}
+      </p>
+      {stop.images[0] && (
+        <figure className="ht-card-figure">
+          <Image
+            src={stop.images[0]}
+            alt={`Archival image — ${stop.title}`}
+            width={860}
+            height={560}
+            sizes="(max-width: 768px) 92vw, 430px"
+            style={{ width: '100%', height: 'auto' }}
+          />
+          <figcaption>{stop.imageCredit}</figcaption>
+        </figure>
+      )}
+      <p className="ht-card-story">{stop.story}</p>
+
+      <button
+        type="button"
+        className="ht-card-expand"
+        onClick={toggle}
+        aria-expanded={expanded}
+        aria-controls={`ht-long-${stop.id}`}
+      >
+        {expanded ? 'Close the full account' : 'Read the full account'}
+      </button>
+
+      <div
+        id={`ht-long-${stop.id}`}
+        className={`ht-card-long${expanded ? ' is-open' : ''}`}
+        hidden={!expanded}
+      >
+        {paragraphs.map((p, i) =>
+          i === 0 ? (
+            <h3 key={i} className="ht-card-long-title">
+              {p}
+            </h3>
+          ) : (
+            <p key={i}>{p}</p>
+          )
+        )}
+        {stop.images.length > 1 && (
+          <div className="ht-card-gallery">
+            {stop.images.slice(1).map((src) => (
+              <Image
+                key={src}
+                src={src}
+                alt={`Archival image — ${stop.title}`}
+                width={430}
+                height={280}
+                sizes="(max-width: 768px) 46vw, 210px"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="ht-card-building">
+        <h3>The building &amp; the street</h3>
+        <p>{stop.building}</p>
+      </div>
+      <span className={`ht-card-fate${stop.fateKind === 'destroyed' ? ' is-destroyed' : ''}`}>
+        {stop.fate}
       </span>
-      <span>
-        {formatDateLabel(stop.startDate)} — {formatDateLabel(stop.endDate)}
-      </span>
-    </div>
-    <h2>{stop.title}</h2>
-    <p className="ht-card-address">
-      {stop.address} · {stop.district}
-    </p>
-    <figure className="ht-card-figure">
-      <Image
-        src={stop.image}
-        alt={`Archival image — ${stop.title}`}
-        width={860}
-        height={560}
-        sizes="(max-width: 768px) 92vw, 430px"
-        style={{ width: '100%', height: 'auto' }}
-      />
-      <figcaption>{stop.imageCredit}</figcaption>
-    </figure>
-    <p className="ht-card-story">{stop.story}</p>
-    <div className="ht-card-building">
-      <h3>The building &amp; the street</h3>
-      <p>{stop.building}</p>
-    </div>
-    <span className={`ht-card-fate${stop.fateKind === 'destroyed' ? ' is-destroyed' : ''}`}>
-      {stop.fate}
-    </span>
-  </article>
-)
+    </article>
+  )
+}
 
 const HistoryTour: React.FC = () => {
   const rootRef = useRef<HTMLDivElement | null>(null)
@@ -382,7 +443,7 @@ const HistoryTour: React.FC = () => {
   const [mapFailed, setMapFailed] = useState(false)
   const [activeIdx, setActiveIdx] = useState(-1)
 
-  const stopYears = useMemo(() => TOUR_STOPS.map((s) => toDecimalYear(s.endDate)), [])
+  const stopYears = useMemo(() => TOUR_STOPS.map((s) => toDecimalYear(s.turningDate)), [])
 
   const axisTicks = useMemo(() => {
     const ticks: { year: number; major: boolean }[] = []
@@ -856,7 +917,7 @@ const HistoryTour: React.FC = () => {
               key={stop.id}
               className={`ht-axis-stop${i === activeIdx ? ' is-active' : ''}`}
               style={{ left: `${axisPercent(stopYears[i])}%` }}
-              title={`${stop.title} — ${formatDateLabel(stop.endDate)}`}
+              title={`${stop.title} — ${formatDateLabel(stop.turningDate)}`}
               onClick={() => scrollToStop(i)}
             />
           ))}
@@ -893,11 +954,13 @@ const HistoryTour: React.FC = () => {
                 Building heights are normalized to the uniform ~22&nbsp;m eaves line
                 (Traufh&ouml;he) that governed the 1930 skyline: the surviving Gr&uuml;nderzeit
                 fabric keeps its true height, taller pre-war landmarks are shown compressed, and
-                towers built after the war are omitted. At each of the fifteen addresses, the marked
-                building is the documented 1930 footprint &mdash; the surviving building&apos;s
-                outline where it still stands, or the parcel traced from the 1928 aerial survey of
-                Berlin where the war and rebuilding erased it. Stories are drawn from the StoryMaps
-                archive and shown at the street addresses recorded there.
+                towers built after the war are omitted. At each address the marked building is the
+                present-day outline from OpenStreetMap: where the pre-war building still stands it
+                is that building, and where it was destroyed the outline is the replacement now on
+                the site &mdash; not a 1930 footprint. Two addresses, Pariser Stra&szlig;e 32 and
+                Ritter Stra&szlig;e 86, are documented as gone and are marked with no building at
+                all. Every story, address and date is taken from the same archive records the map
+                listings use.
               </p>
               <div className="ht-scroll-cue">Scroll to begin</div>
             </div>
@@ -945,10 +1008,12 @@ const HistoryTour: React.FC = () => {
                 </Link>
               </div>
               <p className="ht-colophon">
-                Sources: StoryMaps Berlin story archive; Humboldt-Universität zu Berlin, database of
-                Jewish businesses in Berlin 1930–1945. Relief: imagery © Esri, Maxar, Earthstar
-                Geographics; terrain Mapzen/AWS Open Data; buildings © OpenStreetMap contributors
-                via OpenFreeMap — rendered as an aged aerial survey.
+                Sources: story texts and dates from the “Final Sale” catalogue via the StoryMaps
+                Berlin archive; Humboldt-Universität zu Berlin, database of Jewish businesses in
+                Berlin 1930–1945. Addresses geocoded to house-number precision via
+                Nominatim/OpenStreetMap. Relief: imagery © Esri, Maxar, Earthstar Geographics;
+                terrain Mapzen/AWS Open Data; buildings © OpenStreetMap contributors via OpenFreeMap
+                — rendered as an aged aerial survey.
               </p>
             </div>
           </section>

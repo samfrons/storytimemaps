@@ -209,6 +209,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               'art-nouveau',
               'archival',
               'hoefe',
+              'brutal-pop',
             ]}
             enableSystem={false}
             enableColorScheme={false}

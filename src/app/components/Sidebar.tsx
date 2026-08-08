@@ -106,7 +106,7 @@ function Sidebar({
             color: 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -198,7 +198,7 @@ function Sidebar({
             color: viewMode === 'stories' ? 'var(--background)' : 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -237,7 +237,7 @@ function Sidebar({
             color: viewMode === 'database' ? 'var(--background)' : 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -269,7 +269,7 @@ function Sidebar({
           color: isMainPage && showIntro ? 'var(--background)' : 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'scale(1.1)'
@@ -306,7 +306,7 @@ function Sidebar({
           color: isMainPage && showInfo ? 'var(--background)' : 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
           fontSize: '18px',
           fontFamily: 'serif',
           fontStyle: 'italic',
@@ -333,7 +333,7 @@ function Sidebar({
           color: isBarchartsPage ? 'var(--background)' : 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'scale(1.1)'
@@ -364,7 +364,7 @@ function Sidebar({
           color: 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'scale(1.1)'
@@ -428,7 +428,7 @@ function Sidebar({
             color: 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -461,7 +461,7 @@ function Sidebar({
             color: 'var(--background)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
             fontSize: '14px',
             fontWeight: 'bold',
             fontFamily: 'monospace',

@@ -7,6 +7,8 @@ import { useTheme } from 'next-themes'
 import mapboxgl from 'mapbox-gl'
 import { useMobileOptimizations } from '../../hooks/useMobileOptimizations'
 import { useTranslation } from '../../i18n/useTranslation'
+import { sectorLabel } from '../../utils/businessSectors'
+import MapLegend from './map/MapLegend'
 import { loadTimelineData, getTimelineContentForDate } from '../../utils/timelineLoader'
 import {
   getThemeMapStyle,
@@ -46,7 +48,13 @@ interface MapboxMapProps {
     endDate?: string | null
     description?: string | null
     hasTimelineData?: boolean
+    businessType?: string
+    sectorKey?: string
+    mainBranch?: 'trade' | 'industry' | 'services' | 'handicraft'
   }>
+  /** Category filter, shared with StoryList so the legend and dropdown agree. */
+  selectedCategory?: string
+  onSelectCategory?: (value: string) => void
   isTestMode?: boolean
   city?: 'berlin' | 'frankfurt'
   data?: any
@@ -67,8 +75,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   data,
   selectedDate,
   onBusinessSelect,
+  selectedCategory,
+  onSelectCategory,
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
+  const mapContainerRef = useRef<HTMLDivElement | null>(null)
   const markerCache = useRef<globalThis.Map<string, React.ReactElement[]>>(new globalThis.Map())
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -112,6 +123,34 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     markerCache.current.clear()
   }, [theme, colors])
 
+  // Keep the GL canvas in step with its container.
+  // mapbox-gl only listens for `window.resize`, so any layout change that resizes the container
+  // WITHOUT resizing the window (a collapsing side panel, the nav rail changing width, a
+  // devtools split) leaves the canvas frozen at its old size and paints a dead strip of
+  // background where the map should be. Verified: collapsing the list container grew the box to
+  // ~1348px while the canvas stayed at 916px until a resize was dispatched.
+  useEffect(() => {
+    const container = mapContainerRef.current
+    if (!container || !mapLoaded) return
+    if (typeof ResizeObserver === 'undefined') return
+
+    let frame = 0
+    const observer = new ResizeObserver(() => {
+      // Coalesce to one resize per frame; a CSS width transition fires this on every frame and
+      // map.resize() is not cheap with 10k markers mounted.
+      if (frame) cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        mapRef.current?.getMap()?.resize()
+      })
+    })
+    observer.observe(container)
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      observer.disconnect()
+    }
+  }, [mapLoaded])
+
   // getMaxLabels is now imported from config as getMaxLabelsForZoom
   const getMaxLabels = getMaxLabelsForZoom
 
@@ -144,9 +183,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   const supercluster = useMemo(() => {
     // Use fixed radius settings - Supercluster adjusts clustering based on zoom passed to getClusters()
     // Higher radius = more aggressive clustering at all zoom levels
-    const radius = isTestMode ? 60 : isMobile ? 40 : 20
+    //
+    // isTestMode is the MAIN storymap (page.tsx passes isTestMode), not a test fixture.
+    // It used to cluster hardest of all modes (radius 60 / minPoints 2), which collapsed ~9,500
+    // in-viewport points into ~91 bubbles at the default zoom 11 and left only ~7 loose pins.
+    // That defeats the point of the map: the time-based colour gradient across thousands of
+    // individual dots is the visualisation. radius 15 / minPoints 4 yields ~476 loose pins at
+    // z11 on the same data. minPoints is the higher-leverage knob - it lets small groups stay
+    // as separate dots instead of collapsing into a bubble.
+    // The non-isTestMode branch is deliberately left untouched: /jewish-businesses rides it with
+    // 2,760 features and retuning it there would roughly double its DOM marker count.
+    const radius = isTestMode ? (isMobile ? 20 : 15) : isMobile ? 40 : 20
     const maxZoom = 18
-    const minPoints = isTestMode ? 2 : isMobile ? 4 : 2
+    const minPoints = isTestMode ? (isMobile ? 6 : 4) : isMobile ? 4 : 2
 
     const index = new Supercluster({
       radius,
@@ -154,6 +203,21 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       minPoints,
       extent: 512, // Standard tile extent
       nodeSize: 64, // Standard node size
+      // Tally member states into each cluster so a bubble can be coloured by its dominant
+      // state instead of one flat theme colour. Computed once at index build, so reading it
+      // per render is O(1) - getLeaves() would be O(n) per bubble per frame.
+      map: (props) => ({
+        activeCount: props.state === 'active' ? 1 : 0,
+        decliningCount: props.state === 'declining' ? 1 : 0,
+        closedCount: props.state === 'closed' ? 1 : 0,
+        futureCount: props.state === 'future' ? 1 : 0,
+      }),
+      reduce: (accumulated, props) => {
+        accumulated.activeCount += props.activeCount
+        accumulated.decliningCount += props.decliningCount
+        accumulated.closedCount += props.closedCount
+        accumulated.futureCount += props.futureCount
+      },
     })
 
     const markersToUse = processedMarkers
@@ -309,8 +373,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       )
       for (let i = 0; i < nonClusteredMarkers.length && priorities.size < maxLabels; i += step) {
         const marker = nonClusteredMarkers[i]
-        if (marker?.properties?.id) {
-          priorities.add(marker.properties.id)
+        // nonClusteredMarkers holds only leaf features, but Supercluster's union type also
+        // covers cluster properties (which carry no id), so narrow before reading it.
+        const markerId = (marker?.properties as { id?: string } | undefined)?.id
+        if (markerId) {
+          priorities.add(markerId)
         }
       }
 
@@ -637,6 +704,32 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     [supercluster]
   )
 
+  // Pick the state that most members of a cluster are in, so the bubble carries the same
+  // active/declining/closed colour the loose dots do. Returns null when the cluster has no
+  // state tallies (e.g. a dataset loaded without state), so callers fall back to theme colour.
+  const getDominantClusterState = (properties: {
+    activeCount?: number
+    decliningCount?: number
+    closedCount?: number
+    futureCount?: number
+  }): keyof typeof colors | null => {
+    const tallies: [keyof typeof colors, number][] = [
+      ['active', properties.activeCount ?? 0],
+      ['declining', properties.decliningCount ?? 0],
+      ['closed', properties.closedCount ?? 0],
+      ['future', properties.futureCount ?? 0],
+    ]
+    let best: keyof typeof colors | null = null
+    let bestCount = 0
+    for (const [state, count] of tallies) {
+      if (count > bestCount) {
+        best = state
+        bestCount = count
+      }
+    }
+    return best
+  }
+
   // Get cluster style based on theme
   const getClusterStyle = () => {
     switch (theme) {
@@ -688,6 +781,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           border: '3px solid rgba(255, 255, 255, 0.85)',
           color: 'white',
         }
+      case 'hoefe':
+        // Was missing, so hoefe silently fell through to the moody peach default.
+        return {
+          backgroundColor: '#7db5a4',
+          border: '3px solid #f5f0e1',
+          color: '#2a2a2a',
+        }
+      case 'brutal-pop':
+        return {
+          backgroundColor: '#ecc368',
+          border: '3px solid #131318',
+          color: '#131318',
+        }
       default: // moody
         return {
           backgroundColor: '#f5cdb4',
@@ -707,6 +813,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         id?: string
         popup?: string
         state?: string
+        // Per-cluster state tallies produced by the Supercluster map/reduce above
+        activeCount?: number
+        decliningCount?: number
+        closedCount?: number
+        futureCount?: number
       }
     >
   ) => {
@@ -720,8 +831,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const shouldShowLabel = properties.id && labelPriorities.has(properties.id)
 
     if (properties.cluster) {
-      const size = 30 + (properties.point_count! / markers.length) * 30
-      const clusterStyle = getClusterStyle()
+      // Log scale, tightly bounded. The old formula produced 30-60px bubbles sitting next to
+      // 10px dots, so a single bubble visually outweighed the dozens of dots around it and the
+      // mass-colour effect was lost. Most bubbles now hold 4-50 points.
+      const size = Math.round(Math.min(28, 16 + Math.log2((properties.point_count ?? 2) + 1) * 2.2))
+      const themeClusterStyle = getClusterStyle()
+      // Colour the bubble by the state most of its members are in, so the time-based gradient
+      // survives clustering instead of flattening to one theme colour.
+      const dominantState = getDominantClusterState(properties)
+      const clusterStyle = dominantState
+        ? { ...themeClusterStyle, backgroundColor: colors[dominantState] }
+        : themeClusterStyle
+      const isHardEdgeTheme = theme === 'brutal-pop'
 
       // Special shapes for Bauhaus clusters
       if (theme === 'bauhaus') {
@@ -778,7 +899,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               color: clusterStyle.color,
               width: `${size}px`,
               height: `${size}px`,
-              borderRadius: '50%',
+              // brutal-pop is a hard-edged theme; CLAUDE.md forbids border-radius, and a round
+              // soft-shadowed bubble under black-bordered brutalist chrome reads as a bug.
+              borderRadius: isHardEdgeTheme ? '0' : '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -786,7 +909,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               fontWeight: 700,
               fontSize: '14px',
               border: clusterStyle.border,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              boxShadow: isHardEdgeTheme ? '2px 2px 0px #131318' : '0 2px 8px rgba(0,0,0,0.2)',
               cursor: 'pointer !important',
               transition: 'transform 0.2s',
             }}
@@ -975,9 +1098,21 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     ? 'none' // Square
                     : 'circle(50%)' // Circle
                 : undefined,
-            borderRadius: theme === 'bauhaus' ? '0' : '50%',
-            border: theme === 'bauhaus' ? '2px solid #000000' : '2px solid white',
-            boxShadow: theme === 'bauhaus' ? '2px 2px 0px #000000' : '0 2px 4px rgba(0,0,0,0.3)',
+            borderRadius: theme === 'bauhaus' || theme === 'brutal-pop' ? '0' : '50%',
+            border:
+              theme === 'bauhaus'
+                ? '2px solid #000000'
+                : theme === 'brutal-pop'
+                  ? '1px solid #131318'
+                  : '2px solid white',
+            boxShadow:
+              theme === 'bauhaus'
+                ? '2px 2px 0px #000000'
+                : theme === 'brutal-pop'
+                  ? // Flat, no blur: on a dark map a soft drop shadow just muddies the dot edge,
+                    // and thousands of blurred shadows are a real compositor cost.
+                    '1px 1px 0px #131318'
+                  : '0 2px 4px rgba(0,0,0,0.3)',
             cursor: 'pointer !important',
             transition: 'transform 0.2s',
             transform: isActive ? 'scale(1.5)' : 'scale(1)',
@@ -1005,7 +1140,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }
 
   return (
-    <div className="relative h-full w-full overflow-hidden border-l border-[#6b6275]">
+    <div
+      ref={mapContainerRef}
+      className="relative h-full w-full overflow-hidden border-l border-[#6b6275]"
+    >
       <Map
         ref={mapRef}
         {...viewState}
@@ -1219,6 +1357,25 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                       `${new Date(popupInfo.properties.startDate).getFullYear()} - 
                        ${new Date(popupInfo.properties.endDate).getFullYear()}`}
                   </div>
+                  {/* Sector recorded by HU Berlin. `color: inherit` is load-
+                      bearing: the popup background is state-dependent, so any
+                      fixed colour fails contrast on one of the states. */}
+                  {Boolean(popupInfo.properties.sectorKey || popupInfo.properties.businessType) && (
+                    <div
+                      className="text-xs uppercase tracking-wide mb-2 px-2 py-1 inline-block"
+                      style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        color: 'inherit',
+                      }}
+                    >
+                      {sectorLabel(
+                        t,
+                        popupInfo.properties.sectorKey as string | undefined,
+                        popupInfo.properties.businessType as string | undefined
+                      )}
+                    </div>
+                  )}
                   {(() => {
                     // Get timeline-aware description if available
                     const timelineData =
@@ -1327,6 +1484,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         />
       </Map>
 
+      {/* Legend. Only rendered when the parent owns the filter state — without
+          onSelectCategory its category rows would be inert. */}
+      {selectedCategory !== undefined && onSelectCategory && (
+        <div className="absolute bottom-4 left-4 z-[1000]">
+          <MapLegend
+            stories={enrichedStories}
+            theme={theme}
+            selectedCategory={selectedCategory}
+            onSelectCategory={onSelectCategory}
+          />
+        </div>
+      )}
+
       {/* Custom Zoom Controls */}
       <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
         <button
@@ -1401,7 +1571,11 @@ export default React.memo(MapboxMap, (prevProps, nextProps) => {
     getPrevCenter[0] !== getNextCenter[0] ||
     getPrevCenter[1] !== getNextCenter[1] ||
     prevProps.zoom !== nextProps.zoom ||
-    prevProps.activeMarkerId !== nextProps.activeMarkerId
+    prevProps.activeMarkerId !== nextProps.activeMarkerId ||
+    // Must be listed explicitly: this comparator falls through to "equal" for
+    // any prop it does not name, so an omitted selectedCategory would leave
+    // the legend frozen on its first render with no error anywhere.
+    prevProps.selectedCategory !== nextProps.selectedCategory
   ) {
     return false
   }

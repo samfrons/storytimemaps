@@ -37,7 +37,8 @@
       "allCategories": "All Categories",
       "activeBusinessLabel": "Active Business",
       "decliningBusinessLabel": "Declining",
-      "closedBusinessLabel": "Closed"
+      "closedBusinessLabel": "Closed",
+      "uncategorized": "Uncategorised"
     },
     "map": {
       "viewMore": "View more →"
@@ -78,6 +79,49 @@
       "TRADE": "TRADE",
       "RETAIL": "RETAIL",
       "FINANCE": "FINANCE"
+    },
+    "mainBranches": {
+      "TRADE": "Trade",
+      "INDUSTRY": "Industry",
+      "SERVICES": "Services",
+      "HANDICRAFT": "Handicraft"
+    },
+    "businessSectors": {
+      "ADVERTISING": "Advertising",
+      "BANKS_AND_INSURANCE": "Banks & Insurance",
+      "BOOKS_AND_ART": "Books & Art",
+      "CHEMICALS_AND_PHARMACEUTICALS": "Chemicals & Pharmaceuticals",
+      "CONSTRUCTION": "Construction",
+      "CONSTRUCTION_MATERIALS_AND_FUEL": "Construction Materials & Fuel",
+      "DEPARTMENT_STORES": "Retail & Department Stores",
+      "ELECTRICAL_GOODS": "Electrical Goods",
+      "FOOD_AND_BEVERAGES": "Food & Beverages",
+      "FURNITURE": "Furniture",
+      "HOUSEHOLD_GOODS": "Household Goods",
+      "JEWELRY_AND_PRECIOUS_METALS": "Jewelry & Precious Metals",
+      "LEATHER_AND_SHOES": "Leather & Shoes",
+      "MACHINES_AND_VEHICLES": "Machines & Vehicles",
+      "METALS_AND_METAL_GOODS": "Metals & Metal Goods",
+      "OTHER": "Other",
+      "PAPER_AND_PAPER_GOODS": "Paper & Paper Goods",
+      "PHARMACIES": "Pharmacies",
+      "PHOTOGRAPHY_AND_FILM": "Photography & Film",
+      "PUBLISHING_AND_PRINTING": "Publishing & Printing",
+      "REAL_ESTATE": "Real Estate",
+      "RESTAURANTS": "Restaurants",
+      "TEXTILES_AND_CLOTHING": "Textiles & Clothing",
+      "TRANSPORTATION": "Transportation",
+      "USED_GOODS": "Used Goods"
+    },
+    "mapLegend": {
+      "title": "Legend",
+      "markerStates": "Marker State",
+      "categories": "Category",
+      "showAllSectors": "Show all sectors",
+      "active": "Active",
+      "declining": "Declining",
+      "closed": "Closed",
+      "future": "Not yet open"
     },
     "businessDescriptions": {
       "tailor_shop": "A small tailoring business owned by {owner}. The shop was known for quality craftsmanship.",

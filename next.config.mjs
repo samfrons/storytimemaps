@@ -46,26 +46,42 @@ const nextConfig = {
     }
 
     if (!isServer) {
-      // Split Mapbox into separate chunk
+      // These cacheGroups previously used bare `test: /node_modules/` regexes. A regex test
+      // matches EVERY module in node_modules, including extracted CSS, so stylesheet modules
+      // were pulled into the JS cache groups. Webpack then emitted static/css/vendor.css under
+      // the same chunk name and the runtime fetched it through the script loader, producing
+      // "Uncaught SyntaxError: Invalid or unexpected token" on every page load - in production
+      // as well as dev.
+      //
+      // Matching on the module object instead lets us keep the exact same JS chunking while
+      // leaving CSS to Next's own stylesheet pipeline.
+      const nodeModulesMatcher = (pattern) => (module) => {
+        if (!module) return false;
+        // Extracted stylesheets report a css/* module type; never claim those.
+        if (typeof module.type === 'string' && module.type.startsWith('css')) return false;
+        const identifier = module.resource || module.context || '';
+        return pattern.test(identifier);
+      };
+
       config.optimization.splitChunks = {
         ...config.optimization.splitChunks,
         chunks: 'all',
         cacheGroups: {
           ...config.optimization.splitChunks?.cacheGroups,
           mapbox: {
-            test: /[\\/]node_modules[\\/](mapbox-gl|react-map-gl|@mapbox)[\\/]/,
+            test: nodeModulesMatcher(/[\\/]node_modules[\\/](mapbox-gl|react-map-gl|@mapbox)[\\/]/),
             name: 'mapbox',
             priority: 30,
             reuseExistingChunk: true,
           },
           supercluster: {
-            test: /[\\/]node_modules[\\/](supercluster)[\\/]/,
+            test: nodeModulesMatcher(/[\\/]node_modules[\\/](supercluster)[\\/]/),
             name: 'supercluster',
             priority: 25,
             reuseExistingChunk: true,
           },
           vendor: {
-            test: /[\\/]node_modules[\\/]/,
+            test: nodeModulesMatcher(/[\\/]node_modules[\\/]/),
             name: 'vendor',
             priority: 10,
             reuseExistingChunk: true,

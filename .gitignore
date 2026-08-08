@@ -51,4 +51,5 @@ __pycache__/
 
 # dataset backup snapshots (git history is the real backup)
 *.backup-2026-05.json
+*.backup-branch-*.json
 *.pre-regeocode-*.json

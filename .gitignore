@@ -53,3 +53,11 @@ __pycache__/
 *.backup-2026-05.json
 *.backup-branch-*.json
 *.pre-regeocode-*.json
+
+# Rendered plaques. Outputs of scripts/generate-*.js, not sources: each SVG is a
+# 240KB-635KB single unioned path (text already converted), so they are large,
+# binary-ish and re-render exactly from the scripts + scripts/fonts/. The older
+# berlin-style/brass-style set was tracked and it only ever produced noisy diffs.
+public/plaques/lightburn/
+public/plaques/premium/
+plaque-scratch/

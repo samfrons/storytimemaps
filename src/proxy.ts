@@ -1,12 +1,12 @@
-import { type NextRequest } from 'next/server';
-import { updateSession } from '@/lib/supabase/middleware';
+import { type NextRequest } from 'next/server'
+import { updateSession } from '@/lib/supabase/middleware'
 
 /**
- * Next.js middleware
- * Handles Supabase auth session refresh and protected route access
+ * Next.js proxy (the `middleware` file convention, renamed in Next 16).
+ * Handles Supabase auth session refresh and protected route access.
  */
-export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+export async function proxy(request: NextRequest) {
+  return await updateSession(request)
 }
 
 export const config = {
@@ -20,4 +20,4 @@ export const config = {
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
-};
+}

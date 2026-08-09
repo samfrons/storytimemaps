@@ -61,3 +61,13 @@ __pycache__/
 public/plaques/lightburn/
 public/plaques/premium/
 plaque-scratch/
+
+# claude-flow / ruvector local agent state (regenerated per session)
+.claude-flow/
+**/.claude-flow/
+ruvector.db
+**/ruvector.db
+
+# local design captures & page screenshots (large binaries, not sources)
+design-screenshots/
+screencapture-*.pdf

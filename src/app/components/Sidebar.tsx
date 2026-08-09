@@ -146,6 +146,7 @@ function Sidebar({
               'art-nouveau',
               'archival',
               'hoefe',
+              'brutal-pop',
             ].map((themeName) => (
               <button
                 key={themeName}
@@ -174,7 +175,11 @@ function Sidebar({
                   }
                 }}
               >
-                {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
+                {themeName === 'art-nouveau'
+                  ? 'Art Nouveau'
+                  : themeName === 'brutal-pop'
+                    ? 'Brutal Pop'
+                    : themeName}
               </button>
             ))}
           </div>

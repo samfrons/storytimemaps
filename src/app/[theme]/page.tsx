@@ -30,9 +30,9 @@ export default function ThemePage({ params }: ThemePageProps) {
 
     params.then((resolvedParams) => {
       if (validThemes.includes(resolvedParams.theme)) {
-        // Set the theme and redirect to main page for single-page performance
+        // Set the theme and redirect to the map for single-page performance
         setTheme(resolvedParams.theme)
-        router.replace('/')
+        router.replace('/map')
       } else {
         notFound()
       }

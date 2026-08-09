@@ -183,6 +183,8 @@ Requires WebGL support for map rendering.
 
 We welcome contributions that help preserve historical memory and improve the educational value of this project.
 
+**New collaborators: start with [`docs/ONBOARDING.md`](docs/ONBOARDING.md)** — it covers setup, ground rules, and all contribution tracks (code, research, outreach, translation). See also [`docs/OUTREACH_TRACKING.md`](docs/OUTREACH_TRACKING.md) for the memorial plaque outreach workflow, [`docs/TASK_TRACKING.md`](docs/TASK_TRACKING.md) for how tasks are organized, and the `/collaborate` page in the app for a quick overview.
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)

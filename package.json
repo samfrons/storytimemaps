@@ -9,7 +9,11 @@
     "lint": "eslint src",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prepare": "husky"
+    "prepare": "husky",
+    "plaques:web": "node scripts/generate-premium-plaques.js",
+    "plaques:cut": "node scripts/generate-lightburn-plaque.js",
+    "plaques:verify": "node scripts/verify-plaques.js",
+    "plaques": "pnpm run plaques:web && pnpm run plaques:cut && pnpm run plaques:verify"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -52,6 +56,7 @@
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
+    "jsqr": "^1.4.0",
     "lint-staged": "^16.2.7",
     "postcss": "^8",
     "prettier": "^3.7.4",

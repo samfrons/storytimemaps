@@ -299,9 +299,15 @@ function unionPathD(svgText) {
   return ds.join(' ')
 }
 
-function wrapSVG(d, W, H, comment) {
+/**
+ * The qr-box comment records where the code sits, in mm. verify-plaques.js
+ * crops to it to decode. Emitting it here rather than re-deriving the layout
+ * in the verifier means the two cannot drift apart.
+ */
+function wrapSVG(d, W, H, comment, qr) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!-- ${comment} -->
+<!-- qr-box mm: x=${qr.x} y=${qr.y} size=${qr.size} url=${qr.url} -->
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}mm" height="${H}mm" viewBox="0 0 ${W} ${H}">
   <path fill="#000000" fill-rule="evenodd" d="${d}"/>
 </svg>`
@@ -319,7 +325,8 @@ function emit(layout, basename) {
     `${d} ${modules}`,
     W,
     H,
-    `POSITIVE — engrave the artwork. Set all geometry to Fill. ${size}.`
+    `POSITIVE — engrave the artwork. Set all geometry to Fill. ${size}.`,
+    qr
   )
   // negative: plate, minus artwork (evenodd), plus an unengraved island under
   // the QR so its modules stay dark-on-light and remain scannable
@@ -328,7 +335,8 @@ function emit(layout, basename) {
     `${plate} ${d} ${card} ${modules}`,
     W,
     H,
-    `NEGATIVE — engrave the field, artwork stays cap colour. Set all geometry to Fill. ${size}.`
+    `NEGATIVE — engrave the field, artwork stays cap colour. Set all geometry to Fill. ${size}.`,
+    qr
   )
 
   for (const [suffix, svg] of [

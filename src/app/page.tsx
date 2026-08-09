@@ -153,6 +153,7 @@ function MapPageContent() {
     setCurrentDate,
     handleMarkerClick,
     testMarkers,
+    timeMarkers,
     setActiveStoryId,
     isLoading,
     totalItems,
@@ -388,6 +389,7 @@ function MapPageContent() {
               center={berlinCoordinates}
               zoom={defaultZoom}
               markers={testMarkers}
+              timeMarkers={timeMarkers}
               onMarkerClick={handleStoryClick}
               activeMarkerId={activeStoryId}
               currentDate={currentDate}

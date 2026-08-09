@@ -185,6 +185,28 @@ export const useStoryMapLogicTest = () => {
     })
   }, [currentDate, viewMode, filterStoriesByMode, isUnlocated])
 
+  // Same points as testMarkers but with the raw year boundaries instead of a resolved `state`,
+  // so this array keeps its identity as the slider moves. MapboxMap turns it into a single
+  // GeoJSON source and recolours on the GPU; deriving state there is what makes a date change
+  // an expression swap rather than a 10k-point re-cluster and full marker re-render.
+  // `declineYear` must stay in lockstep with the 70%-of-lifespan rule used in testMarkers above.
+  const timeMarkers = useMemo(() => {
+    const modeFiltered = filterStoriesByMode(viewMode).filter((story) => !isUnlocated(story))
+
+    return modeFiltered.map((story) => {
+      const startYear = story.startDate ? new Date(story.startDate).getFullYear() : 1900
+      const endYear = story.endDate ? new Date(story.endDate).getFullYear() : 1945
+      return {
+        id: story.id,
+        position: [story.lat, story.lng] as [number, number],
+        popup: story.title,
+        startYear,
+        endYear,
+        midYear: Math.ceil(startYear + (endYear - startYear) * 0.7),
+      }
+    })
+  }, [viewMode, filterStoriesByMode, isUnlocated])
+
   const handleMarkerClick = useCallback((markerId: string) => {
     setActiveStoryId(markerId)
   }, [])
@@ -204,6 +226,7 @@ export const useStoryMapLogicTest = () => {
     setCurrentDate,
     handleMarkerClick,
     testMarkers,
+    timeMarkers,
     setActiveStoryId,
     isLoading,
     totalItems,

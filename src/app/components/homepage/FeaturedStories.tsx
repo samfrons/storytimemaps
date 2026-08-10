@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from '../../../i18n/useTranslation'
+import { TOUR_STOPS } from '../../history-tour/tourData'
 
 /**
  * The human dimension behind the dots: a selection of the archive's
@@ -11,60 +12,29 @@ import { useTranslation } from '../../../i18n/useTranslation'
  * into the map's detail view (/map?id=N).
  */
 
-interface FeaturedStory {
-  id: string
-  title: string
-  address: string
-  years: string
-  image: string
-}
-
-// Drawn from the 15 curated narratives in data/storymaps.json;
-// ids match the map's ?id= deep links and images are checked into /public.
-const STORIES: FeaturedStory[] = [
-  {
-    id: '1',
-    title: 'Elias Braun – Tailor Shop',
-    address: 'Rosenthaler Straße 40',
-    years: '1925–1938',
-    image: '/images/ebraun/ebraun1.webp',
-  },
-  {
-    id: '2',
-    title: 'Breslauer Brothers Department Store',
-    address: 'Unter den Linden 15',
-    years: '1920–1935',
-    image: '/images/breslaur/breslaur1.webp',
-  },
-  {
-    id: '5',
-    title: 'Hoxter & Sons Bookshop',
-    address: 'Oranienburger Straße 28',
-    years: '1910–1938',
-    image: '/images/hoxter/hoxter.webp',
-  },
-  {
-    id: '10',
-    title: 'Kutschera Photography Studio',
-    address: 'Potsdamer Straße 125',
-    years: '1930–1938',
-    image: '/images/kutschera/kutschera.webp',
-  },
-  {
-    id: '11',
-    title: 'P. Kunst Gallery',
-    address: 'Unter den Linden 35',
-    years: '1924–1937',
-    image: '/images/pkunst/pkunst.webp',
-  },
-  {
-    id: '15',
-    title: 'YVA Photography Agency',
-    address: 'Kaiserdamm 118',
-    years: '1925–1938',
-    image: '/images/yva/yva.webp',
-  },
-]
+/**
+ * The six stories shown here are derived from TOUR_STOPS, not typed out.
+ *
+ * The previous hand-written list was wrong in every field but the id: it
+ * described record 1 as "Elias Braun – Tailor Shop, Rosenthaler Straße 40,
+ * 1925–1938" when the archive record is "E. Braun & Co., Unter den Linden 2,
+ * 1914–1943". tourData.ts is transcribed verbatim from data/storymaps.json and
+ * carries the same titles, addresses, dates and imagery the map renders, so
+ * sourcing from it means the homepage and the map can no longer disagree.
+ *
+ * Six of fifteen, chosen as the stops that have a checked-in photograph — a
+ * card with no image is a hole in the grid.
+ */
+const STORIES = TOUR_STOPS.filter((stop) => stop.images.length > 0)
+  .slice(0, 6)
+  .map((stop) => ({
+    id: stop.id,
+    title: stop.title,
+    // "Schumannstrasse 13a, Berlin-Mitte, Germany" -> "Schumannstrasse 13a"
+    address: stop.address.split(',')[0].trim(),
+    years: `${stop.startDate.slice(0, 4)}–${stop.endDate.slice(0, 4)}`,
+    image: stop.images[0],
+  }))
 
 const FeaturedStories: React.FC = () => {
   const { t } = useTranslation()

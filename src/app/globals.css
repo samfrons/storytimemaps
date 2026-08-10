@@ -446,6 +446,43 @@
   --font-display: var(--font-space-mono), 'Space Mono', ui-monospace, monospace;
 }
 
+/*
+ * Post-1945 "standing" marker colour.
+ *
+ * Mirrors getThemeMarkerColors(theme).standing in src/utils/mapStyles.ts, which is the source of
+ * truth because Mapbox needs literal hex. This variable exists so the time-slider legend swatch
+ * matches the pins without hardcoding colours in the component. Keep the two in sync.
+ *
+ * Grouped by background luminance, not by theme family: light-ground themes need a dark pin and
+ * dark-ground themes need a light one, which is exactly why mapStyles.ts had to stop sharing one
+ * block between moody and the four light themes.
+ */
+:root,
+[data-theme='moody'] {
+  --marker-standing: #e8e8f0;
+}
+[data-theme='cool'],
+[data-theme='warm'],
+[data-theme='cold'],
+[data-theme='art-nouveau'] {
+  --marker-standing: #2c3e50;
+}
+[data-theme='bauhaus'] {
+  --marker-standing: #000000;
+}
+[data-theme='hot'] {
+  --marker-standing: #ffffff;
+}
+[data-theme='archival'] {
+  --marker-standing: rgba(18, 28, 46, 0.92);
+}
+[data-theme='hoefe'] {
+  --marker-standing: #2f4858;
+}
+[data-theme='brutal-pop'] {
+  --marker-standing: #ffffff;
+}
+
 /* Hoefe theme - Typography overrides */
 [data-theme='hoefe'] h1,
 [data-theme='hoefe'] h2,

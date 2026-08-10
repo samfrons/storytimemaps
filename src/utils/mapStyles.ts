@@ -718,6 +718,13 @@ export interface ThemeMarkerColors {
   declining: string
   closed: string
   future: string
+  /**
+   * Post-1945: the address is documented as being in some known use.
+   * Deliberately outside the wartime active/declining/closed gradient - that ramp describes a
+   * business dying, and what stands on the site afterwards is a different kind of fact, so it
+   * should not read as another step along the same scale.
+   */
+  standing: string
 }
 
 /**
@@ -731,6 +738,7 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         declining: '#ffcc00',
         closed: '#ff0000',
         future: '#333333',
+        standing: '#000000', // Black on the light Bauhaus ground
       }
     case 'hot':
       return {
@@ -738,6 +746,7 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         declining: '#ffaa00',
         closed: '#ff0000',
         future: '#666666',
+        standing: '#ffffff',
       }
     case 'archival':
       return {
@@ -745,6 +754,7 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         declining: 'rgba(90, 115, 151, 0.85)',
         closed: 'rgba(139, 156, 174, 0.85)',
         future: 'rgba(44, 74, 124, 0.85)',
+        standing: 'rgba(18, 28, 46, 0.92)', // Deep ink on the pale archival ground
       }
     case 'hoefe':
       return {
@@ -752,6 +762,7 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         declining: '#e8a830', // Amber gold
         closed: '#8b4049', // Burgundy
         future: '#c5d5e5', // Powder blue
+        standing: '#2f4858', // Deep slate
       }
     case 'brutal-pop':
       // The basemap is charcoal with a four-weight GOLD road hierarchy (#ecc368 -> #7a6230),
@@ -765,14 +776,26 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         declining: '#ff7a1a', // Hot orange - deliberately not gold
         closed: '#ff2d55', // Hot red
         future: '#6b6b7d', // Muted violet-grey, recedes
+        standing: '#ffffff', // Plain white - the only unsaturated pin, reads as "now"
       }
     case 'moody':
-    default:
       return {
         active: '#97d8c0',
         declining: '#ffcb51',
         closed: '#ee5760',
         future: '#f5cdb4',
+        standing: '#e8e8f0', // Cool near-white against the slate ground
+      }
+    default:
+      // cool / warm / cold / art-nouveau all land here and all have LIGHT backgrounds, which is
+      // why this can no longer share moody's block: a near-white 'standing' pin would be
+      // invisible on them. Everything else stays byte-identical to the previous shared values.
+      return {
+        active: '#97d8c0',
+        declining: '#ffcb51',
+        closed: '#ee5760',
+        future: '#f5cdb4',
+        standing: '#2c3e50', // Dark slate, legible on a pale ground
       }
   }
 }

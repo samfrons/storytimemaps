@@ -4,6 +4,7 @@
 
 import React, { useMemo, useState } from 'react'
 import type { StoryMap } from '../../../types'
+import { POSTWAR_ERA_START } from '../../../hooks/useStoryMapLogicTest'
 import { useTranslation } from '../../../i18n/useTranslation'
 import { getThemeMarkerColors } from '../../../utils/mapStyles'
 import {
@@ -17,6 +18,11 @@ import {
 } from '../../../utils/businessSectors'
 
 interface MapLegendProps {
+  /**
+   * Current year on the time slider. The postwar "standing today" state only exists from 1945,
+   * so its swatch is hidden before then rather than listing a state that cannot occur.
+   */
+  currentYear?: number
   /** Stories currently on the map — the counts are computed over these. */
   stories: Partial<StoryMap>[]
   theme?: string
@@ -38,6 +44,7 @@ const MapLegend: React.FC<MapLegendProps> = ({
   theme,
   selectedCategory,
   onSelectCategory,
+  currentYear,
 }) => {
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(true)
@@ -72,11 +79,14 @@ const MapLegend: React.FC<MapLegendProps> = ({
     [tally, t]
   )
 
-  const states: Array<{ key: 'active' | 'declining' | 'closed' | 'future' }> = [
+  const states: Array<{ key: 'active' | 'declining' | 'closed' | 'future' | 'standing' }> = [
     { key: 'active' },
     { key: 'declining' },
     { key: 'closed' },
     { key: 'future' },
+    ...(currentYear != null && currentYear >= POSTWAR_ERA_START
+      ? [{ key: 'standing' as const }]
+      : []),
   ]
 
   const heading = (label: string) => (

@@ -5,6 +5,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from '../../i18n/useTranslation'
 import { useDebounce } from '../../hooks/useDebounce'
+import { POSTWAR_ERA_START } from '../../hooks/useStoryMapLogicTest'
 
 interface TimeSliderProps {
   minDate: Date
@@ -126,7 +127,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 
       <div className="relative flex items-center gap-4">
         <span className="text-xs font-mono font-semibold" style={{ color: 'var(--warning)' }}>
-          1920
+          {minDate.getFullYear()}
         </span>
 
         <div className="relative flex-1">
@@ -206,8 +207,10 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
           />
         </div>
 
+        {/* Derived, not hardcoded: the axis used to read a literal 1945 and silently disagreed
+            with the slider once the range was extended into the postwar decades. */}
         <span className="text-xs font-mono font-semibold" style={{ color: 'var(--warning)' }}>
-          1945
+          {maxDate.getFullYear()}
         </span>
       </div>
 
@@ -228,6 +231,21 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
             <span className="w-2 h-2" style={{ backgroundColor: 'var(--danger)' }}></span>
             <span style={{ color: 'var(--foreground)' }}>{t('businessStates.closed')}</span>
           </span>
+          {/* Only meaningful once the slider is past 1945 - before then no address has a
+              postwar state, and a permanently visible swatch for something that cannot appear
+              would just be noise. */}
+          {currentDate.getFullYear() >= POSTWAR_ERA_START && (
+            <span className="flex items-center gap-1">
+              <span
+                className="w-2 h-2"
+                style={{
+                  backgroundColor: 'var(--marker-standing)',
+                  outline: '1px solid var(--border)',
+                }}
+              ></span>
+              <span style={{ color: 'var(--foreground)' }}>{t('businessStates.standing')}</span>
+            </span>
+          )}
         </div>
       </div>
     </div>

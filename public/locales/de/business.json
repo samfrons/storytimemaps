@@ -2,7 +2,8 @@
   "businessStates": {
     "active": "Aktiv",
     "declining": "Rückläufig",
-    "closed": "Geschlossen"
+    "closed": "Geschlossen",
+    "standing": "Heute vorhanden"
   },
   "mainPage": {
     "intro": {
@@ -121,7 +122,8 @@
       "active": "Aktiv",
       "declining": "Rückläufig",
       "closed": "Geschlossen",
-      "future": "Noch nicht eröffnet"
+      "future": "Noch nicht eröffnet",
+      "standing": "Heute vorhanden"
     },
     "businessDescriptions": {
       "tailor_shop": "Ein kleines Schneidergeschäft im Besitz von {owner}. Das Geschäft war bekannt für hochwertige Handwerkskunst.",

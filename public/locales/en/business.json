@@ -2,7 +2,8 @@
   "businessStates": {
     "active": "Active",
     "declining": "Declining",
-    "closed": "Closed"
+    "closed": "Closed",
+    "standing": "Standing today"
   },
   "mainPage": {
     "intro": {
@@ -121,7 +122,8 @@
       "active": "Active",
       "declining": "Declining",
       "closed": "Closed",
-      "future": "Not yet open"
+      "future": "Not yet open",
+      "standing": "Standing today"
     },
     "businessDescriptions": {
       "tailor_shop": "A small tailoring business owned by {owner}. The shop was known for quality craftsmanship.",

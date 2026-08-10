@@ -9,7 +9,8 @@
       "kind": "'building' = the premises/site, 'company' = the firm or a successor firm, 'family' = owners and heirs, 'other' = neither. These are deliberately kept distinct.",
       "years": "startYear/endYear are only filled where the source states a year or an unambiguous decade start ('After 1945' -> 1945, 'In the 1960s' -> 1960). Vague phrases such as 'in the mid-1990s' are left null and explained in yearNote.",
       "currentOccupant": "Taken only from public/data/outreach/businesses.json where the record's address matches the story address and the value is a real value rather than 'Unknown ...' or empty. Null otherwise.",
-      "hasPostwarData": "True when the story has at least one extracted period OR a current-occupant record."
+      "hasPostwarData": "True when the story has at least one extracted period OR a current-occupant record.",
+      "siteInUse": "Editorial classification layered on the extraction: for building-kind periods, whether the quoted statement describes the site being occupied/in use (true) or destroyed, demolished, not rebuilt, or at a different address (false). Only true periods colour a pin as standing on the map. The sourceQuote remains the evidence; this field is the reading of it."
     }
   },
   "sites": {
@@ -27,7 +28,8 @@
           "summary": "The Berlin branch on Unter den Linden was not rebuilt after the war. Georg Wiedersum's 'successor' business carried on at other Berlin addresses.",
           "sourceQuote": "The Berlin branch on Unter den Linden was not rebuilt but Georg Wiedersum continued to run his 'successor' business in Berlin at Kurfürstendamm 43 and 219.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "No year given for the decision not to rebuild."
+          "yearNote": "No year given for the decision not to rebuild.",
+          "siteInUse": false
         },
         {
           "label": "Viennese parent company returned to heirs",
@@ -67,7 +69,8 @@
           "summary": "The chapter states that a branch of the Swiss shoe store Bally is today at Kurfuerstendamm 219, and that Bally took over the Vienna main branch in 1985.",
           "sourceQuote": "Today there is a branch of the Swiss shoe store Bally at Kurfürstendamm 219. Bally also took over the main branch of the company in Vienna in 1985.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "Kurfuerstendamm 219, NOT the Unter den Linden 2 site of this story."
+          "yearNote": "Kurfuerstendamm 219, NOT the Unter den Linden 2 site of this story.",
+          "siteInUse": false
         }
       ],
       "currentOccupant": null,
@@ -119,7 +122,8 @@
           "summary": "In 1949 the Deutsche Theater, then in Soviet-controlled East Berlin, was nationalized.",
           "sourceQuote": "In 1949 the DT – now in Soviet-controlled East Berlin – was nationalized.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": null
+          "yearNote": null,
+          "siteInUse": true
         },
         {
           "label": "Properties returned to Max Reinhardt's heirs",
@@ -129,7 +133,8 @@
           "summary": "The restitution files were closed in October 1995 when the properties were returned to Reinhardt's heirs.",
           "sourceQuote": "The restitution files were closed in October 1995 when the properties were returned to Reinhardt's heirs.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": null
+          "yearNote": null,
+          "siteInUse": true
         },
         {
           "label": "Share restitution still pending",
@@ -165,7 +170,8 @@
           "summary": "After 1945 Naue and Hunke lost interest in the factory; classed as 'ownerless' by the Soviet military administration, Ebro was placed under trusteeship in 1945 and nationalized by the GDR in 1949.",
           "sourceQuote": "After the end of the Second World War in 1945, the main shareholders Naue and Hunke lost interest in the factory. Categorized as 'ownerless' by the Soviet military administration, Ebro was placed under trusteeship in 1945 and eventually nationalized by the GDR in 1949.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": null
+          "yearNote": null,
+          "siteInUse": true
         },
         {
           "label": "Company deleted from Berlin's commercial register",
@@ -320,7 +326,8 @@
           "summary": "After 1945 the former department store was owned by the SED and housed the Central Committee, the party archive and the Institute for Marxism-Leninism.",
           "sourceQuote": "After 1945, the former department store was owned by East Germany's ruling SED party and became the seat of the Zentral Komitee, party archive and Institute for Marxism-Leninism in the ZK of the SED.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "No end year is stated. The source only says the property was restored 'In the mid-1990s'; no closing year was inferred."
+          "yearNote": "No end year is stated. The source only says the property was restored 'In the mid-1990s'; no closing year was inferred.",
+          "siteInUse": true
         },
         {
           "label": "Property restored to Hermann Golluber's heirs",
@@ -330,7 +337,8 @@
           "summary": "In the mid-1990s the property was restored to Golluber's heirs.",
           "sourceQuote": "In the mid-1990s, the property was restored to Golluber's heirs.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "Source says 'In the mid-1990s' only; no year stated, so startYear left null."
+          "yearNote": "Source says 'In the mid-1990s' only; no year stated, so startYear left null.",
+          "siteInUse": true
         },
         {
           "label": "Sold to Soho House Club",
@@ -340,7 +348,8 @@
           "summary": "In 2007 the heirs sold the building to the British Soho House Club.",
           "sourceQuote": "In 2007 they sold the building to the exclusive British Soho House Club.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": null
+          "yearNote": null,
+          "siteInUse": true
         },
         {
           "label": "Present use: baths, gyms and apartments",
@@ -350,7 +359,8 @@
           "summary": "The former discount department store today houses Turkish baths, gyms and luxury apartments.",
           "sourceQuote": "Today the former discount department store, which built up a clientele in the late 1920s with the offer of price reductions and layaway purchase plans, houses Turkish baths, gyms and luxury apartments.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "No year given for 'today'."
+          "yearNote": "No year given for 'today'.",
+          "siteInUse": true
         }
       ],
       "currentOccupant": null,
@@ -381,7 +391,8 @@
           "summary": "After the death of Josef Stueber shortly after the war, the Kutscheras resumed work in Cafe Wien in 1946; the Zigeunerkeller remained flooded.",
           "sourceQuote": "Following the death of Josef Stüber shortly after the end of the war, they were able to resume work in Café Wien – the Zigeunerkeller remained flooded – in 1946.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": null
+          "yearNote": null,
+          "siteInUse": true
         },
         {
           "label": "Business continued by Josephine Kutschera",
@@ -412,7 +423,8 @@
           "summary": "Allied bombs destroyed the college building on November 23, 1943.",
           "sourceQuote": "On November 23, 1943, allied bombs destroyed the college building.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "Pre-1945 event, included because it is the last statement the chapter makes about the physical building."
+          "yearNote": "Pre-1945 event, included because it is the last statement the chapter makes about the physical building.",
+          "siteInUse": false
         },
         {
           "label": "Compensation claim",
@@ -468,7 +480,8 @@
           "summary": "In summer 1950 the municipal council of East Berlin closed down the production site.",
           "sourceQuote": "In summer 1950, the municipal council of East Berlin closed down the production site.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": null
+          "yearNote": null,
+          "siteInUse": false
         },
         {
           "label": "Company liquidation",
@@ -488,7 +501,8 @@
           "summary": "In 1971 the factory and family residence were demolished to make way for new development.",
           "sourceQuote": "In 1971 the factory and family residence was demolished in order to make way for new development.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "The chapter does not say what the new development was."
+          "yearNote": "The chapter does not say what the new development was.",
+          "siteInUse": false
         },
         {
           "label": "East Berlin trial of Koepenick SA men",
@@ -590,7 +604,8 @@
           "summary": "The Galeries Lafayette department store today stands on the site of Jaeger Strasse 61 and the adjacent land in Berlin-Mitte.",
           "sourceQuote": "Today the department store Galeries Lafayette stands on the site of Jäger Strasse 61 and the adjacent land in Berlin-Mitte.",
           "sourceField": "storymaps.longDescription",
-          "yearNote": "No year given for 'today'."
+          "yearNote": "No year given for 'today'.",
+          "siteInUse": true
         }
       ],
       "currentOccupant": {

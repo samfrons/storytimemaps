@@ -25,6 +25,52 @@ const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 const GL_DOT_SOURCE_ID = 'business-dots-source'
 const GL_DOT_LAYER_ID = 'business-dots'
 
+/**
+ * Pick readable text for a label chip from its background.
+ *
+ * The chip text used to be hardcoded dark except for 'closed'. That held while every state
+ * colour was light, but the postwar 'standing' colour is black on bauhaus and dark slate on the
+ * light themes, which would have printed dark-on-dark. Deriving it keeps every current and
+ * future state legible without another per-state ternary.
+ */
+/**
+ * Apply an alpha to a colour that may be hex OR rgb()/rgba().
+ *
+ * The label chip used to do `${chip}e8` to get ~91% alpha. That works for #rrggbb but produces
+ * "rgba(44, 74, 124, 0.85)e8" for the archival theme, whose marker colours are all rgba - an
+ * invalid value, so every archival label chip rendered fully transparent.
+ */
+const withAlpha = (color: string, alpha: number): string => {
+  const hex = color.trim().match(/^#([0-9a-f]{6})$/i)
+  if (hex) {
+    const n = parseInt(hex[1], 16)
+    return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`
+  }
+  const rgb = color.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/)
+  if (rgb) return `rgba(${rgb[1]}, ${rgb[2]}, ${rgb[3]}, ${alpha})`
+  return color
+}
+
+const readableTextOn = (background: string): string => {
+  const hex = background.trim().match(/^#?([0-9a-f]{6})$/i)
+  let r: number, g: number, b: number
+  if (hex) {
+    const n = parseInt(hex[1], 16)
+    r = (n >> 16) & 255
+    g = (n >> 8) & 255
+    b = n & 255
+  } else {
+    const rgb = background.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/)
+    if (!rgb) return '#2a2a2a'
+    r = +rgb[1]
+    g = +rgb[2]
+    b = +rgb[3]
+  }
+  // Rec. 601 luma is enough to separate "light chip" from "dark chip" here.
+  const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  return luma > 0.6 ? '#2a2a2a' : '#ffffff'
+}
+
 if (!MAPBOX_TOKEN) {
   console.error(
     'Mapbox token is not configured. Please set NEXT_PUBLIC_MAPBOX_TOKEN in your .env.local file'
@@ -59,6 +105,9 @@ interface MapboxMapProps {
     startYear: number
     endYear: number
     midYear: number | null
+    /** Documented post-1945 occupancy window; 9999 means "never" (see postwarLoader). */
+    postwarFrom?: number
+    postwarTo?: number
     businessType?: string
     hasEnrichedData?: boolean
   }>
@@ -240,6 +289,10 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             // Expressions cannot test for null, so absent midYear becomes a sentinel that can
             // never satisfy `year >= midYear` for this dataset's 1900-1945 range.
             midYear: m.midYear ?? 9999,
+            // Documented-occupancy window for this address after 1945. 9999 is the
+            // never-matches sentinel, same convention as midYear above.
+            postwarFrom: m.postwarFrom ?? 9999,
+            postwarTo: m.postwarTo ?? 9999,
           },
           geometry: { type: 'Point', coordinates: [lng, lat] },
         })
@@ -255,6 +308,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     () =>
       [
         'case',
+        // Postwar occupancy wins over the wartime ladder: once the business is gone, what the
+        // pin reports is the address, not the firm. Only addresses with a documented, in-use
+        // period reach this branch - destroyed and demolished sites deliberately do not.
+        [
+          'all',
+          ['>=', currentYear, ['get', 'postwarFrom']],
+          ['<=', currentYear, ['get', 'postwarTo']],
+        ],
+        colors.standing,
         ['<', currentYear, ['get', 'startYear']],
         colors.future || colors.active,
         ['>', currentYear, ['get', 'endYear']],
@@ -356,12 +418,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         decliningCount: props.state === 'declining' ? 1 : 0,
         closedCount: props.state === 'closed' ? 1 : 0,
         futureCount: props.state === 'future' ? 1 : 0,
+        standingCount: props.state === 'standing' ? 1 : 0,
       }),
       reduce: (accumulated, props) => {
         accumulated.activeCount += props.activeCount
         accumulated.decliningCount += props.decliningCount
         accumulated.closedCount += props.closedCount
         accumulated.futureCount += props.futureCount
+        accumulated.standingCount += props.standingCount
       },
     })
 
@@ -876,9 +940,28 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     return () => clearTimeout(timer)
   }, [popupInfo, colors.active, colors.declining, colors.closed])
 
-  /** Resolve a point's state the same way useStoryMapLogic does, for popups and label chips. */
+  /**
+   * Resolve a point's state the same way the GL colour expression does, for popups and label
+   * chips. The postwar branch has to be first and has to be here as well as in the expression:
+   * label chips are DOM, the dots are GL, and if only one of them knew about postwar occupancy
+   * a site would render as a white dot wearing a red "closed" label.
+   */
   const stateForYears = useCallback(
-    (startYear: number, endYear: number, midYear: number | null | undefined) => {
+    (
+      startYear: number,
+      endYear: number,
+      midYear: number | null | undefined,
+      postwarFrom?: number,
+      postwarTo?: number
+    ) => {
+      if (
+        postwarFrom != null &&
+        postwarTo != null &&
+        currentYear >= postwarFrom &&
+        currentYear <= postwarTo
+      ) {
+        return 'standing'
+      }
       if (currentYear < startYear) return 'future'
       if (currentYear > endYear) return 'closed'
       if (midYear != null && midYear !== 9999 && currentYear >= midYear) return 'declining'
@@ -976,6 +1059,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         startYear: number
         endYear: number
         midYear: number
+        postwarFrom?: number
+        postwarTo?: number
       }
       const [lng, lat] = feature.geometry.coordinates as [number, number]
       void openBusinessPopup(
@@ -983,7 +1068,13 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         props.name,
         lng,
         lat,
-        stateForYears(props.startYear, props.endYear, props.midYear)
+        stateForYears(
+          props.startYear,
+          props.endYear,
+          props.midYear,
+          props.postwarFrom,
+          props.postwarTo
+        )
       )
       return true
     },
@@ -1010,12 +1101,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     decliningCount?: number
     closedCount?: number
     futureCount?: number
+    standingCount?: number
   }): keyof typeof colors | null => {
     const tallies: [keyof typeof colors, number][] = [
       ['active', properties.activeCount ?? 0],
       ['declining', properties.decliningCount ?? 0],
       ['closed', properties.closedCount ?? 0],
       ['future', properties.futureCount ?? 0],
+      ['standing', properties.standingCount ?? 0],
     ]
     let best: keyof typeof colors | null = null
     let bestCount = 0
@@ -1116,6 +1209,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         decliningCount?: number
         closedCount?: number
         futureCount?: number
+        standingCount?: number
       }
     >
   ) => {
@@ -1601,18 +1695,28 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               startYear: number
               endYear: number
               midYear: number
+              postwarFrom?: number
+              postwarTo?: number
             }
             const [lng, lat] = feature.geometry.coordinates
-            const state = stateForYears(props.startYear, props.endYear, props.midYear)
+            const state = stateForYears(
+              props.startYear,
+              props.endYear,
+              props.midYear,
+              props.postwarFrom,
+              props.postwarTo
+            )
             const isHovered = hoveredMarkerId === props.id
             const chip =
-              state === 'declining'
-                ? colors.declining
-                : state === 'closed'
-                  ? colors.closed
-                  : state === 'future'
-                    ? colors.future || colors.active
-                    : colors.active
+              state === 'standing'
+                ? colors.standing
+                : state === 'declining'
+                  ? colors.declining
+                  : state === 'closed'
+                    ? colors.closed
+                    : state === 'future'
+                      ? colors.future || colors.active
+                      : colors.active
             return (
               <Marker
                 key={`gl-label-${props.id}`}
@@ -1624,8 +1728,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                 <div
                   className="px-2 py-1 text-xs font-mono font-bold whitespace-nowrap cursor-pointer"
                   style={{
-                    background: `${chip}e8`,
-                    color: state === 'closed' ? '#ffffff' : '#2a2a2a',
+                    background: withAlpha(chip, 0.91),
+                    color: readableTextOn(chip),
                     border: `1px solid ${chip}`,
                     boxShadow: isHardEdgeTheme
                       ? '2px 2px 0px #131318'
@@ -1865,6 +1969,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             theme={theme}
             selectedCategory={selectedCategory}
             onSelectCategory={onSelectCategory}
+            currentYear={currentYear}
           />
         </div>
       )}

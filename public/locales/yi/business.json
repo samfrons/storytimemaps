@@ -116,7 +116,8 @@
       "active": "Aktiv",
       "declining": "Aropgeyendik",
       "closed": "Farshlosn",
-      "future": "Nokh Nit Geefnt"
+      "future": "Nokh Nit Geefnt",
+      "standing": "Shteyt haynt"
     },
     "businessDescriptions": {
       "tailor_shop": "A kleyn shnayder gesheft in aygntum fun {owner}. Dos gesheft iz geven bakant far kvalitet handverk.",
@@ -147,7 +148,8 @@
   "businessStates": {
     "active": "Aktiv",
     "declining": "Aropgeyendik",
-    "closed": "Farshlosn"
+    "closed": "Farshlosn",
+    "standing": "Shteyt haynt"
   },
   "business": {
     "address": "Adres",

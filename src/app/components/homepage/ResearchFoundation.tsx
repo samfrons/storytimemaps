@@ -47,11 +47,11 @@ const ResearchFoundation: React.FC = () => {
 
   return (
     <section
-      className="py-20 sm:py-28 px-5 sm:px-8 border-t"
+      className="py-12 sm:py-16 px-5 sm:px-8 border-t"
       style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border)' }}
     >
       <div className="max-w-6xl mx-auto">
-        <div className="max-w-3xl mb-14">
+        <div className="max-w-3xl mb-8">
           <p
             className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] mb-4"
             style={{ color: 'var(--primary)' }}

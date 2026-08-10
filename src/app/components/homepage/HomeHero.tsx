@@ -120,7 +120,10 @@ const HomeHero: React.FC<HomeHeroProps> = ({ data }) => {
       const fx = drawWidth / GRID_SIZE
       const fy = drawHeight / GRID_SIZE
 
-      const size = Math.max(1.5, Math.min(width, height) / 380)
+      // 380 put roughly 2px dots on a laptop, which disappeared entirely once the scrim was
+      // over them. The field has to read as a city from across the room, so the dots are now
+      // ~2x the area and the floor is 2.5px on small viewports.
+      const size = Math.max(2.5, Math.min(width, height) / 240)
       const half = size / 2
 
       // One pass per state keeps fillStyle changes to four per frame
@@ -227,8 +230,16 @@ const HomeHero: React.FC<HomeHeroProps> = ({ data }) => {
   return (
     <section
       ref={containerRef}
-      className="relative w-full overflow-hidden"
-      style={{ backgroundColor: 'var(--background)', height: '100svh', minHeight: '660px' }}
+      /*
+        A MINIMUM height, not a fixed one. The copy is bottom-aligned, so a
+        fixed full-viewport hero left a band of empty ground above it that grew
+        with the window — worst on a short, wide window, where a 660px floor
+        exceeded the viewport and pushed the headline below the fold of
+        attention. Sized from content instead, the section only exceeds the copy
+        when there is genuinely room for the dot field to show.
+      */
+      className="relative w-full overflow-hidden min-h-[68svh] sm:min-h-[76svh]"
+      style={{ backgroundColor: 'var(--background)' }}
     >
       <canvas
         ref={canvasRef}
@@ -238,17 +249,31 @@ const HomeHero: React.FC<HomeHeroProps> = ({ data }) => {
         }`}
       />
 
-      {/* Legibility gradient over the dot field */}
+      {/*
+        Legibility gradient over the dot field.
+
+        Two layers, not one. The old single bottom-up wash sat at 0.96 across the whole width,
+        which meant the dot field was only ever visible as a faint haze - the hero read as an
+        empty coloured panel with a headline on it. The copy only occupies the lower-left, so
+        the scrim is now directional: heavy behind the text, and clearing to almost nothing on
+        the right and top where the map is the only thing on screen. The second layer is a
+        short bottom fade that keeps the year slider and legend readable.
+      */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            'linear-gradient(to top, rgba(var(--background-rgb), 0.96) 0%, rgba(var(--background-rgb), 0.55) 38%, rgba(var(--background-rgb), 0.25) 60%, rgba(var(--background-rgb), 0.45) 100%)',
+          background: [
+            'linear-gradient(100deg, rgba(var(--background-rgb), 0.93) 0%, rgba(var(--background-rgb), 0.82) 30%, rgba(var(--background-rgb), 0.34) 58%, rgba(var(--background-rgb), 0.08) 100%)',
+            'linear-gradient(to top, rgba(var(--background-rgb), 0.9) 0%, rgba(var(--background-rgb), 0.35) 16%, rgba(var(--background-rgb), 0) 34%)',
+          ].join(', '),
         }}
       />
 
-      <div className="relative z-10 h-full flex flex-col justify-end px-5 sm:px-8 lg:px-14 pb-6 sm:pb-10">
+      {/* pt-24 is the header guard: this column is bottom-aligned, so on a short
+          viewport the block grows upward and would otherwise slide under the
+          fixed header. */}
+      <div className="relative z-10 flex flex-col justify-end px-5 sm:px-8 lg:px-14 pt-24 sm:pt-28 pb-6 sm:pb-10 overflow-hidden">
         <div className="max-w-5xl">
           <p
             className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] mb-4"
@@ -259,13 +284,18 @@ const HomeHero: React.FC<HomeHeroProps> = ({ data }) => {
             })}
           </p>
 
+          {/* Sized for THIS headline, which runs to three lines at large sizes.
+              The previous scale (up to text-8xl) was set for a much shorter
+              line and pushed the third line up behind the fixed header. */}
           <h1
-            className="font-kame leading-[0.95] text-4xl sm:text-6xl lg:text-7xl xl:text-8xl mb-5"
+            className="font-kame leading-[1.02] text-[1.75rem] sm:text-4xl lg:text-5xl xl:text-6xl mb-5 max-w-4xl text-balance"
             style={{ color: 'var(--foreground)' }}
           >
-            {t('homepage.hero.titleLine1', { defaultValue: 'Every dot a business.' })}
+            {t('homepage.hero.titleLine1', { defaultValue: '10,021 Jewish-owned businesses.' })}
             <br />
-            {t('homepage.hero.titleLine2', { defaultValue: 'Every color a fate.' })}
+            {t('homepage.hero.titleLine2', {
+              defaultValue: 'Mapped to the streets where they stood.',
+            })}
           </h1>
 
           <p

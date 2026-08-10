@@ -6,129 +6,28 @@ import Link from 'next/link'
 import { useTranslation } from '../../i18n/useTranslation'
 import PlaquesHero from '../components/PlaquesHero'
 import LanguageToggle from '../components/LanguageToggle'
+import PREMIUM from '../../../public/plaques/premium/index.json'
 
-// All 15 featured businesses with plaques
-const ALL_PLAQUES = [
-  {
-    id: 1,
-    name: 'Elias Braun - Tailor Shop',
-    type: 'Tailoring',
-    location: 'Rosenthaler Straße 40',
-    years: '1925-1938',
-  },
-  {
-    id: 2,
-    name: 'Breslauer Brothers Department Store',
-    type: 'Department Store',
-    location: 'Unter den Linden 15',
-    years: '1920-1935',
-  },
-  {
-    id: 3,
-    name: 'Deutsches Theater Café',
-    type: 'Café',
-    location: 'Schumannstraße 13a',
-    years: '1928-1933',
-  },
-  {
-    id: 4,
-    name: 'Ebro Textiles',
-    type: 'Textiles',
-    location: 'Alexanderstraße 125',
-    years: '1922-1939',
-  },
-  {
-    id: 5,
-    name: 'Hoxter & Sons Bookshop',
-    type: 'Bookshop',
-    location: 'Oranienburger Straße 28',
-    years: '1910-1938',
-  },
-  {
-    id: 6,
-    name: 'Pelz Furrier',
-    type: 'Furrier',
-    location: 'Friedrichstraße 180',
-    years: '1918-1937',
-  },
-  {
-    id: 7,
-    name: 'Product X Manufacturing',
-    type: 'Manufacturing',
-    location: 'Warschauer Straße 45',
-    years: '1926-1936',
-  },
-  {
-    id: 8,
-    name: 'Eggs & Dairy Distributors',
-    type: 'Food Distribution',
-    location: 'Hackescher Markt 12',
-    years: '1923-1935',
-  },
-  {
-    id: 9,
-    name: 'Jonas & Co. Law Firm',
-    type: 'Law Practice',
-    location: 'Neue Friedrichstraße 60',
-    years: '1908-1933',
-  },
-  {
-    id: 10,
-    name: 'Kutschera Photography Studio',
-    type: 'Photography',
-    location: 'Potsdamer Straße 125',
-    years: '1930-1938',
-  },
-  {
-    id: 11,
-    name: 'P. Kunst Gallery',
-    type: 'Art Gallery',
-    location: 'Unter den Linden 35',
-    years: '1924-1937',
-  },
-  {
-    id: 12,
-    name: 'Ruilos Import Export',
-    type: 'Import/Export',
-    location: 'Spandauer Straße 15',
-    years: '1921-1938',
-  },
-  {
-    id: 13,
-    name: 'Wassermann Medical Practice',
-    type: 'Medical Practice',
-    location: 'Rosenstraße 22',
-    years: '1915-1938',
-  },
-  {
-    id: 14,
-    name: 'Butter & Fine Foods',
-    type: 'Import/Export',
-    location: 'Gendarmenmarkt 8',
-    years: '1927-1936',
-  },
-  {
-    id: 15,
-    name: 'YVA Photography Agency',
-    type: 'Photography',
-    location: 'Kaiserdamm 118',
-    years: '1925-1938',
-  },
-]
+/**
+ * The plaque set, read from the generator's manifest.
+ *
+ * This replaces a hand-typed ALL_PLAQUES array whose names, trades, addresses
+ * and dates did not match the archive (it listed, for example, "Elias Braun -
+ * Tailor Shop, Rosenthaler Straße 40, 1925-1938" where record id=1 is
+ * "E. Braun & Co., Unter den Linden 2, 1914-1943"). It also pointed at
+ * /plaques/berlin-style/ and /plaques/brass-style/, directories that have never
+ * existed, so every image on this page 404'd.
+ *
+ * public/plaques/premium/index.json is written by
+ * scripts/generate-premium-plaques.js alongside the SVGs, so filenames and
+ * captions can no longer drift apart. Run `pnpm run plaques:web` to refresh.
+ */
+const FEATURED = PREMIUM.featured
+const PLAQUES = PREMIUM.plaques
 
 function PlaquesPageContent() {
   const { t } = useTranslation()
-  const [selectedStyle, setSelectedStyle] = useState<'berlin' | 'brass'>('berlin')
-  const [hoveredPlaque, setHoveredPlaque] = useState<number | null>(null)
-
-  const getPlaqueFileName = (id: number, name: string) => {
-    const slugName = name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .substring(0, 30)
-    return `plaque-${String(id).padStart(3, '0')}-${slugName}.svg`
-  }
+  const [hoveredPlaque, setHoveredPlaque] = useState<string | null>(null)
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
@@ -198,37 +97,54 @@ function PlaquesPageContent() {
               >
                 {t('plaques.gallery.subtitle')}
               </p>
-
-              {/* Style Toggle */}
-              <div className="flex justify-center gap-4 mt-8">
-                <button
-                  onClick={() => setSelectedStyle('berlin')}
-                  className={`px-6 py-3 font-mono font-semibold transition-all border`}
-                  style={{
-                    backgroundColor: selectedStyle === 'berlin' ? 'var(--primary)' : 'transparent',
-                    color: selectedStyle === 'berlin' ? 'var(--background)' : 'var(--foreground)',
-                    borderColor: 'var(--border)',
-                  }}
-                >
-                  🇩🇪 {t('plaques.hero.berlinStyle')}
-                </button>
-                <button
-                  onClick={() => setSelectedStyle('brass')}
-                  className={`px-6 py-3 font-mono font-semibold transition-all border`}
-                  style={{
-                    backgroundColor: selectedStyle === 'brass' ? 'var(--warning)' : 'transparent',
-                    color: selectedStyle === 'brass' ? 'var(--background)' : 'var(--foreground)',
-                    borderColor: 'var(--border)',
-                  }}
-                >
-                  🥇 {t('plaques.hero.brassStyle')}
-                </button>
-              </div>
             </div>
+
+            {/* The one fully-researched plaque: E. Braun & Co. is the only record
+                with a traced storefront engraving and its own narrative copy, so it
+                is the only one that exists in the detailed tier. It leads the gallery
+                at full width; the trade set below is the typographic tier. */}
+            <Link href={`/?id=${FEATURED.id}`} className="group block mb-10">
+              <div
+                className="border overflow-hidden transition-all duration-300"
+                style={{
+                  borderColor: hoveredPlaque === FEATURED.id ? 'var(--primary)' : 'var(--border)',
+                }}
+                onMouseEnter={() => setHoveredPlaque(FEATURED.id)}
+                onMouseLeave={() => setHoveredPlaque(null)}
+              >
+                <Image
+                  src={`/plaques/premium/${FEATURED.slug}-detailed.svg`}
+                  alt={
+                    t('plaques.plaqueAltText', { name: FEATURED.name }) ||
+                    `Memorial plaque for ${FEATURED.name}`
+                  }
+                  width={800}
+                  height={680}
+                  priority
+                  className="w-full h-auto"
+                />
+                <div className="p-5" style={{ backgroundColor: 'var(--card-bg)' }}>
+                  <h3
+                    className="font-mono font-semibold mb-1"
+                    style={{ color: 'var(--foreground)' }}
+                  >
+                    {FEATURED.name}
+                  </h3>
+                  <div
+                    className="flex flex-wrap items-center gap-x-4 text-sm font-mono"
+                    style={{ color: 'var(--foreground-muted)' }}
+                  >
+                    <span>{FEATURED.type}</span>
+                    <span>{FEATURED.years}</span>
+                    <span>{FEATURED.address}</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
 
             {/* Plaques Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {ALL_PLAQUES.map((plaque) => (
+              {PLAQUES.map((plaque) => (
                 <Link
                   key={plaque.id}
                   href={`/?id=${plaque.id}`}
@@ -245,22 +161,18 @@ function PlaquesPageContent() {
                         hoveredPlaque === plaque.id ? '0 10px 30px rgba(0,0,0,0.2)' : 'none',
                     }}
                   >
-                    {/* Plaque Image */}
-                    <div
-                      className="aspect-[4/3] flex items-center justify-center p-4"
-                      style={{
-                        backgroundColor: selectedStyle === 'berlin' ? '#ffffff' : '#d4af37',
-                      }}
-                    >
+                    {/* Plaque artwork. The SVG carries its own navy field, so the
+                        container stays transparent rather than painting a backdrop. */}
+                    <div className="aspect-[16/9] flex items-center justify-center">
                       <Image
-                        src={`/plaques/${selectedStyle}-style/${getPlaqueFileName(plaque.id, plaque.name)}`}
+                        src={`/plaques/premium/${plaque.file}`}
                         alt={
-                          t('plaques.plaqueAltText', { name: plaque.name.split(' - ')[0] }) ||
+                          t('plaques.plaqueAltText', { name: plaque.name }) ||
                           `Memorial plaque for ${plaque.name}`
                         }
-                        width={300}
-                        height={200}
-                        className="max-w-full max-h-full object-contain"
+                        width={800}
+                        height={450}
+                        className="w-full h-full object-contain"
                       />
                     </div>
 
@@ -270,7 +182,7 @@ function PlaquesPageContent() {
                         className="font-mono font-semibold mb-1 truncate"
                         style={{ color: 'var(--foreground)' }}
                       >
-                        {plaque.name.split(' - ')[0]}
+                        {plaque.name}
                       </h3>
                       <div
                         className="flex items-center justify-between text-sm font-mono"
@@ -283,7 +195,7 @@ function PlaquesPageContent() {
                         className="text-xs font-mono mt-2 truncate"
                         style={{ color: 'var(--muted)' }}
                       >
-                        📍 {plaque.location}
+                        📍 {plaque.address}
                       </p>
                     </div>
                   </div>

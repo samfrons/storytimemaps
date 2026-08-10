@@ -28,6 +28,10 @@
   --border: #6b6275;
   --shadow: rgba(0, 0, 0, 0.3);
   --map-overlay: rgba(59, 51, 64, 0.1);
+  /* Surface for the floating map legend. Declared once here: the rgba() resolves --muted-rgb
+     from whichever [data-theme] is on the element, so every theme keeps its old mid-tone panel
+     without restating this. Themes whose chrome is NOT mid-tone override it (see brutal-pop). */
+  --legend-bg: rgba(var(--muted-rgb), 0.9);
   --accent-orange: #eca27d;
   --accent-yellow: #ffcb51;
   --accent-purple: #9dc8fc;
@@ -397,50 +401,62 @@
  *
  * Chrome is near-black and recedes; the map beneath it is charcoal with gold roads; the ONLY
  * high-chroma things on screen are the business-state pins. That is the whole idea: the "pop"
- * is the data, not the furniture. --success/--warning/--danger are set to the exact marker
- * colours from getThemeMarkerColors('brutal-pop') so the legend swatches and the pins match.
- * Brutalism here comes from weight, hard edges and heavy rules rather than from white mass -
- * white panels are what buries the map on /museum-exhibit.
+ * is the data, not the furniture. The accents are the kiosk's own four - teal #00D9D9,
+ * yellow #FFD93D, orange #FF6B35, purple #C589E8 - so /museum-exhibit and this theme read as
+ * one design. --success/--warning/--danger are set to the exact marker colours from
+ * getThemeMarkerColors('brutal-pop') so the legend swatches and the pins match.
+ * Brutalism here comes from weight and hard edges: cream panels sitting on the charcoal map,
+ * ruled with near-black borders. The panel mass IS the look on the kiosk - the map is framed
+ * by it rather than washed over by a tinted scrim - so the chrome is light and the ground
+ * behind it stays dark. --background is cream because it is the page ground the panels sit on;
+ * the map itself is a Mapbox style and is not driven by these variables.
  */
 [data-theme='brutal-pop'] {
-  --primary: #ecc368;
-  --primary-rgb: 236, 195, 104;
-  --primary-light: #f4d68f;
-  --secondary: #f2efe6;
-  --warning: #ff7a1a;
-  --warning-rgb: 255, 122, 26;
-  --danger: #ff2d55;
-  --danger-rgb: 255, 45, 85;
-  --success: #00e5c0;
-  --success-rgb: 0, 229, 192;
-  --background: #131318;
-  --background-rgb: 19, 19, 24;
-  --foreground: #f2efe6;
-  --foreground-muted: #9a9aa8;
-  --muted: #2a2a34;
-  --muted-rgb: 42, 42, 52;
-  --border: #55555f;
-  --shadow: rgba(0, 0, 0, 0.6);
-  --map-overlay: rgba(19, 19, 24, 0.85);
-  --accent-orange: #ff7a1a;
-  --accent-yellow: #ecc368;
-  --accent-purple: #a78bfa;
-  --accent-coral: #ff2d55;
+  --primary: #00d9d9;
+  --primary-rgb: 0, 217, 217;
+  --primary-light: #6df0f0;
+  --secondary: #ff6b35;
+  --warning: #ffd93d;
+  --warning-rgb: 255, 217, 61;
+  --danger: #ff6b35;
+  --danger-rgb: 255, 107, 53;
+  --success: #00d9d9;
+  --success-rgb: 0, 217, 217;
+  --background: #f2efe6;
+  --background-rgb: 242, 239, 230;
+  --foreground: #131318;
+  --foreground-muted: #4a4a55;
+  /* --muted is a TEXT colour in this codebase as often as it is a surface (section eyebrows,
+     the hero's caption, ConceptSection's card tags all set `color: var(--muted)`), so it has
+     to be a mid-tone. A cream value here reads as "invisible" on the cream ground. */
+  --muted: #6f6b7d;
+  --muted-rgb: 111, 107, 125;
+  --border: #131318;
+  --shadow: rgba(19, 19, 24, 0.35);
+  --map-overlay: rgba(242, 239, 230, 0.94);
+  /* Every other theme's chrome is mid-tone or darker, so the legend's default mid-tone panel
+     blends in. Here the chrome is cream, and the default left the legend as the one dark box
+     on the screen - and its "not yet opened" swatch invisible against it. */
+  --legend-bg: rgba(255, 253, 247, 0.94);
+  --accent-orange: #ff6b35;
+  --accent-yellow: #ffd93d;
+  --accent-purple: #c589e8;
+  --accent-coral: #ff6b35;
   --accent-navy: #2a2a44;
-  --accent-chartreuse: #00e5c0;
-  --dropdown-bg: #1c1c24;
-  --dropdown-bg-rgb: 28, 28, 36;
-  --card-bg: #1c1c24;
-  --card-bg-rgb: 28, 28, 36;
-  --input-bg: #1c1c24;
-  --input-bg-rgb: 28, 28, 36;
-  --placeholder-color: #7a7a88;
+  --accent-chartreuse: #00d9d9;
+  --dropdown-bg: #fffdf7;
+  --dropdown-bg-rgb: 255, 253, 247;
+  --card-bg: #fffdf7;
+  --card-bg-rgb: 255, 253, 247;
+  --input-bg: #fffdf7;
+  --input-bg-rgb: 255, 253, 247;
+  --placeholder-color: #6b6b7d;
   --active-text: #131318;
   --active-text-secondary: #2a2a34;
   --declining-text: #131318;
   --declining-text-secondary: #2a2a34;
-  --closed-text: #f2efe6;
-  --closed-text-secondary: #e6e0d4;
+  --closed-text: #131318;
+  --closed-text-secondary: #2a2a34;
   /* globals.css defines a .font-display utility that reads this; only hoefe set it before,
      so without this line the utility silently falls back to the browser default. */
   --font-display: var(--font-space-mono), 'Space Mono', ui-monospace, monospace;
@@ -480,7 +496,7 @@
   --marker-standing: #2f4858;
 }
 [data-theme='brutal-pop'] {
-  --marker-standing: #ffffff;
+  --marker-standing: #c589e8;
 }
 
 /* Hoefe theme - Typography overrides */
@@ -1292,4 +1308,165 @@ textarea:-ms-input-placeholder {
 
 .auth-message {
   animation: auth-slide-in 0.2s ease-out;
+}
+
+/*
+ * Workbook prose (/education).
+ *
+ * react-markdown emits bare HTML, and this project has no Tailwind typography
+ * plugin, so the workbook needs its own type scale. Everything is expressed in
+ * theme variables so the document inherits whichever theme is active - the
+ * point of putting it on the site rather than shipping a PDF.
+ *
+ * No border-radius anywhere here, per the project rule.
+ */
+.workbook-prose {
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.workbook-prose h1 {
+  font-family: var(--font-display, var(--font-space-mono)), 'Space Mono', monospace;
+  font-size: 2rem;
+  line-height: 1.15;
+  margin: 3.5rem 0 1rem;
+  padding-top: 2.5rem;
+  border-top: 3px solid var(--border);
+  color: var(--foreground);
+}
+.workbook-prose h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.workbook-prose h2 {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 2.75rem 0 0.9rem;
+  color: var(--foreground);
+}
+.workbook-prose h3 {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 2rem 0 0.75rem;
+  color: var(--foreground);
+}
+.workbook-prose h4 {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 1.75rem 0 0.6rem;
+  color: var(--primary);
+}
+.workbook-prose p {
+  margin: 0 0 1.1rem;
+  color: var(--foreground-muted);
+}
+.workbook-prose strong {
+  color: var(--foreground);
+  font-weight: 700;
+}
+.workbook-prose em {
+  color: var(--foreground);
+}
+.workbook-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.workbook-prose ul,
+.workbook-prose ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.4rem;
+  color: var(--foreground-muted);
+}
+.workbook-prose ul {
+  list-style: square;
+}
+.workbook-prose ol {
+  list-style: decimal;
+}
+.workbook-prose li {
+  margin-bottom: 0.5rem;
+}
+.workbook-prose li::marker {
+  color: var(--primary);
+}
+.workbook-prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+.workbook-prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 4px solid var(--primary);
+  color: var(--foreground);
+  font-style: italic;
+}
+.workbook-prose code {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.875em;
+  background: rgba(var(--muted-rgb), 0.25);
+  padding: 0.1em 0.35em;
+}
+/* Tables carry the worksheet grids, so they must scroll rather than overflow. */
+.workbook-prose .workbook-table-scroll {
+  overflow-x: auto;
+  margin: 0 0 1.5rem;
+}
+.workbook-prose table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 28rem;
+  font-size: 0.875rem;
+}
+.workbook-prose th,
+.workbook-prose td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  color: var(--foreground-muted);
+}
+.workbook-prose th {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--foreground);
+  background: rgba(var(--muted-rgb), 0.18);
+}
+
+/* Print: drop the site chrome so a teacher gets the worksheets, not the page. */
+@media print {
+  .education-print-btn,
+  .education-no-print {
+    display: none !important;
+  }
+  .workbook-prose {
+    color: #000;
+    font-size: 11pt;
+  }
+  .workbook-prose p,
+  .workbook-prose li,
+  .workbook-prose td,
+  .workbook-prose th {
+    color: #000;
+  }
+  .workbook-prose h1 {
+    page-break-before: always;
+  }
+  .workbook-prose h1:first-child {
+    page-break-before: avoid;
+  }
+  .workbook-prose h2,
+  .workbook-prose h3 {
+    page-break-after: avoid;
+  }
 }

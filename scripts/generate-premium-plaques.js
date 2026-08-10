@@ -2,8 +2,13 @@
 /**
  * Premium memorial plaque generator — "Gedenktafel" series
  *
- * Three tiers (simple / medium / detailed) × two type themes for
- * E. Braun & Co. (story id=1).
+ * Three tiers (simple / medium / detailed) × two type themes.
+ *
+ * The `simple` tier is pure typography and is generated for EVERY featured
+ * story that carries the four facts a plaque must state. `medium` and
+ * `detailed` embed a hand-traced line engraving of the storefront, so they are
+ * only produced for businesses that have one (see ENGRAVINGS below) — an
+ * engraving cannot be derived from data, it has to be drawn from the photo.
  *
  * Design language: deep navy enamel field + gold engraving (old Jewish
  * shop-sign palette), storefront line-engraving based on the historical photo
@@ -17,7 +22,8 @@
  * Fonts are embedded as base64 woff2 so the SVGs render identically everywhere.
  *
  * Usage: node scripts/generate-premium-plaques.js
- * Output: public/plaques/premium/e-braun-{tier}[-cinzel].svg
+ * Output: public/plaques/premium/{slug}-{tier}[-cinzel].svg
+ *         public/plaques/premium/index.json  (manifest for the /plaques page)
  */
 
 const fs = require('fs')
@@ -39,7 +45,16 @@ const C = {
   creamDim: '#cfc0a0',
 }
 
-const QR_URL = 'https://b3rlin.storytimemaps.com/?id=1'
+const SITE = 'https://b3rlin.storytimemaps.com'
+
+/**
+ * Context line for businesses that have no researched fate sentence of their
+ * own. Kept identical to CONTEXT_DE in generate-lightburn-plaque.js — the
+ * wording is deliberate ("enteignet und liquidiert" is what the records
+ * document) and the two generators must not drift apart. See CLAUDE.md.
+ */
+const CONTEXT_DE =
+  'Jüdisches Unternehmen, unter nationalsozialistischer Herrschaft enteignet und liquidiert.'
 
 // ---------------------------------------------------------------- type themes
 // bScale compensates for x-height differences so body copy reads the same size.
@@ -68,6 +83,46 @@ const THEMES = [
 
 let T = THEMES[0] // active theme (set in main loop)
 const bs = (px) => Math.round(px * T.bScale * 10) / 10 // body size helper
+
+/**
+ * Trade line. `cities` is only set for a firm that genuinely traded in more
+ * than one city; without this guard a single-city business gets a dangling
+ * "TRADE · " on the plaque.
+ */
+const tradeLine = (d) => (d.cities ? `${esc(d.type)} · ${esc(d.cities)}` : esc(d.type))
+
+/**
+ * Display size for the business name, shrunk to fit the plate.
+ *
+ * The name is set in caps at a fixed optical size, and the archive is full of
+ * long firm names ("A. B. C. Apotheken-Bedarfs-Contor"). Without this they ran
+ * straight off both edges of the plate. Caps in the display faces average
+ * ~0.62em wide, so the widest name that still fits `maxWidth` sets the size,
+ * clamped so a short name never balloons past the design size.
+ */
+function fitDisplay(text, maxWidth, designSize, minSize) {
+  const est = text.length * designSize * 0.62
+  if (est <= maxWidth) return designSize
+  return Math.max(minSize, Math.floor((maxWidth / (text.length * 0.62)) * 10) / 10)
+}
+
+/**
+ * Split a name that cannot be set on one line without dropping below the
+ * legible floor. Shrinking indefinitely is not an option on a memorial — the
+ * longest firm names in the archive run to 80+ characters and would end up
+ * under 12px — and clipping a name is worse than either. Break on the last
+ * comma or space in the first half so the split falls at a real boundary.
+ */
+function fitDisplayLines(text, maxWidth, designSize, minSize) {
+  const chars = Math.floor(maxWidth / (minSize * 0.62))
+  if (text.length <= chars) return [text]
+  const cut = Math.max(
+    text.lastIndexOf(',', Math.ceil(text.length / 2)),
+    text.lastIndexOf(' ', Math.ceil(text.length / 2))
+  )
+  if (cut <= 0) return [text]
+  return [text.slice(0, cut).replace(/,$/, ''), text.slice(cut + 1).trim()]
+}
 
 // ---------------------------------------------------------------- helpers
 function esc(s) {
@@ -112,8 +167,8 @@ function fontFaceCSS() {
 }
 
 // ---------------------------------------------------------------- QR — gold modules straight on the navy field
-async function qrGroup(size) {
-  const qr = QRCode.create(QR_URL, { errorCorrectionLevel: 'M' })
+async function qrGroup(size, url) {
+  const qr = QRCode.create(url, { errorCorrectionLevel: 'M' })
   const n = qr.modules.size
   const data = qr.modules.data
   const m = size / n
@@ -217,7 +272,7 @@ function attribution(x, y, size, anchor) {
 // ---------------------------------------------------------------- storefront engraving
 // Line-engraving of Unter den Linden 2 based on the historical photograph.
 // Natural size 420 × 244, stroke in gold on navy.
-function storefrontEngraving() {
+function storefrontEngraving(sign = EBRAUN.sign) {
   const g = C.gold
   let s = `<g fill="none" stroke="${g}" stroke-width="1.2" stroke-linecap="square">`
 
@@ -246,11 +301,11 @@ function storefrontEngraving() {
   s += `<line x1="128" y1="36" x2="128" y2="72" stroke-width="0.8"/>`
   s += `<line x1="292" y1="36" x2="292" y2="72" stroke-width="0.8"/>`
   s += `<text x="70" y="58.5" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="11"
-        letter-spacing="1.5" fill="${g}" stroke="none">WÄSCHEHAUS</text>`
+        letter-spacing="1.5" fill="${g}" stroke="none">${esc(sign.left)}</text>`
   s += `<text x="210" y="60" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="15"
-        letter-spacing="1.2" fill="${g}" stroke="none">E. BRAUN &amp; Cº</text>`
+        letter-spacing="1.2" fill="${g}" stroke="none">${esc(sign.centre)}</text>`
   s += `<text x="350" y="58.5" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="9.5"
-        letter-spacing="1" fill="${g}" stroke="none">WIEN · BERLIN · PARIS</text>`
+        letter-spacing="1" fill="${g}" stroke="none">${esc(sign.right)}</text>`
 
   // pilasters
   for (const px of [12, 400]) {
@@ -310,11 +365,11 @@ function storefrontEngraving() {
 }
 
 /** engraving scaled to a target width, with optional caption */
-function engravingPanel(x, y, w, caption) {
+function engravingPanel(x, y, w, caption, sign) {
   const scale = w / 420
   const h = 244 * scale
   let s = `<g transform="translate(${x},${y})">`
-  s += `<g transform="scale(${scale})">${storefrontEngraving()}</g>`
+  s += `<g transform="scale(${scale})">${storefrontEngraving(sign)}</g>`
   if (caption) {
     s += `<text x="${w / 2}" y="${h + 18}" text-anchor="middle" font-family="${T.body}" font-weight="400"
       font-size="${bs(10.5)}" letter-spacing="1.2" fill="${C.creamDim}">${esc(caption)}</text>`
@@ -331,8 +386,18 @@ function qrBlock(qr, x, y, size, label) {
   </g>`
 }
 
-// ---------------------------------------------------------------- data (real, from data/storymaps.json id=1)
-const D = {
+// ---------------------------------------------------------------- data
+/**
+ * E. Braun & Co. (story id=1) — the fully researched record. It is the only
+ * business with a traced storefront engraving and its own narrative copy, so
+ * it is the only one that can carry the medium and detailed tiers.
+ *
+ * Still exported as `D` at the bottom of this file because
+ * generate-lightburn-plaque.js builds its 300 × 200 format from it.
+ */
+const EBRAUN = {
+  id: '1',
+  slug: 'e-braun',
   name: 'E. BRAUN & CO.',
   type: 'Wäsche- und Modewarenhaus',
   cities: 'Wien · Berlin · Paris',
@@ -345,32 +410,45 @@ const D = {
   p2: 'Im Mai 1938, nach dem „Anschluss“ Österreichs, wurde Mitinhaber Siegfried Franz Oser-Braun von der Gestapo verhaftet und in der Haft gezwungen, das Unternehmen weit unter Wert zu verkaufen. 1943 wurde die Firma liquidiert. Diese Tafel erinnert an die Menschen, die dieses Haus aufgebaut haben.',
   facts: ['GEGRÜNDET 1914', 'UMBAU 1926–28', 'ZWANGSVERKAUF 1938', 'LIQUIDATION 1943'],
   caption: 'Unter den Linden 2 · Aufnahme um 1930',
+  sign: { left: 'WÄSCHEHAUS', centre: 'E. BRAUN & Cº', right: 'WIEN · BERLIN · PARIS' },
 }
 
 // ---------------------------------------------------------------- tier 1: SIMPLE (800×450)
-async function simple() {
+async function simple(d) {
   const W = 800,
     H = 450,
     cx = W / 2
   const qrSize = 56
-  const qr = await qrGroup(qrSize)
+  const qr = await qrGroup(qrSize, d.url)
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${defs()}
   ${chrome(W, H)}
   ${gedenktafelTab(cx, 74, 250)}
   <text x="${cx}" y="122" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(15)}"
         letter-spacing="7" fill="${C.cream}">HIER STAND</text>
-  <text x="${cx}" y="185" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="50"
-        letter-spacing="2" fill="${C.goldBright}">${esc(D.name)}</text>
+  ${(() => {
+    const lines = fitDisplayLines(d.name, 640, 50, 21)
+    const size = Math.min(...lines.map((l) => fitDisplay(l, 640, 50, 21)))
+    // Two lines have to grow upward from the same baseline so the divider,
+    // address and years below them do not move.
+    const y0 = lines.length > 1 ? 185 - (size + 4) : 185
+    return lines
+      .map(
+        (l, i) =>
+          `<text x="${cx}" y="${y0 + i * (size + 4)}" text-anchor="middle" font-family="${T.display}"
+        font-weight="700" font-size="${size}" letter-spacing="2" fill="${C.goldBright}">${esc(l)}</text>`
+      )
+      .join('\n  ')
+  })()}
   <text x="${cx}" y="218" text-anchor="middle" font-family="${T.display}" font-weight="${T.dispMed}" font-size="19"
-        letter-spacing="1" fill="${C.cream}">${esc(D.type)} · ${esc(D.cities)}</text>
+        letter-spacing="1" fill="${C.cream}">${tradeLine(d)}</text>
   ${divider(cx, 248, 180)}
   <text x="${cx}" y="284" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(15)}"
-        letter-spacing="2.5" fill="${C.cream}">${esc(D.address)}</text>
+        letter-spacing="2.5" fill="${C.cream}">${esc(d.address)}</text>
   <text x="${cx}" y="325" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="30"
-        letter-spacing="3" fill="${C.gold}">${esc(D.years)}</text>
+        letter-spacing="3" fill="${C.gold}">${esc(d.years)}</text>
   <text x="${cx}" y="356" text-anchor="middle" font-family="${T.body}" font-weight="400" font-size="${bs(13)}"
-        fill="${C.creamDim}">${esc(D.fate)}</text>
+        fill="${C.creamDim}">${esc(d.fate)}</text>
   ${attribution(118, 398, 13, 'start')}
   <text x="${cx}" y="398" text-anchor="middle" font-family="${T.body}" font-weight="400" font-size="${bs(10.5)}"
         letter-spacing="1.5" fill="${C.creamDim}" opacity="0.8">b3rlin.storytimemaps.com</text>
@@ -379,14 +457,14 @@ async function simple() {
 }
 
 // ---------------------------------------------------------------- tier 2: MEDIUM (800×450, two-column w/ engraving)
-async function medium() {
+async function medium(d) {
   const W = 800,
     H = 450
   const qrSize = 52
-  const qr = await qrGroup(qrSize)
+  const qr = await qrGroup(qrSize, d.url)
   const lx = 62
-  const shortLines = wrap(D.short, 52)
-  const eng = engravingPanel(452, 108, 288, D.caption)
+  const shortLines = wrap(d.short, 52)
+  const eng = engravingPanel(452, 108, 288, d.caption, d.sign)
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${defs()}
   ${chrome(W, H)}
@@ -397,13 +475,13 @@ async function medium() {
     <text x="${lx}" y="110" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(13)}" letter-spacing="6"
           fill="${C.cream}">HIER STAND</text>
     <text x="${lx}" y="152" font-family="${T.display}" font-weight="700" font-size="35" letter-spacing="1"
-          fill="${C.goldBright}">${esc(D.name)}</text>
+          fill="${C.goldBright}">${esc(d.name)}</text>
     <text x="${lx}" y="178" font-family="${T.display}" font-weight="${T.dispMed}" font-size="${T.medSub}"
-          fill="${C.cream}">${esc(D.type)} · ${esc(D.cities)}</text>
+          fill="${C.cream}">${tradeLine(d)}</text>
     <text x="${lx}" y="206" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(12.5)}" letter-spacing="1.8"
-          fill="${C.cream}">${esc(D.address)}</text>
+          fill="${C.cream}">${esc(d.address)}</text>
     <text x="${lx}" y="240" font-family="${T.display}" font-weight="700" font-size="24" letter-spacing="2"
-          fill="${C.gold}">${esc(D.years)}</text>
+          fill="${C.gold}">${esc(d.years)}</text>
     <line x1="${lx}" y1="258" x2="392" y2="258" stroke="${C.gold}" stroke-width="0.8" opacity="0.7"/>
     ${textBlock(shortLines, lx, 282, 18, `font-family="${T.body}" font-weight="400" font-size="${bs(12.5)}" fill="${C.cream}"`)}
   </g>
@@ -414,23 +492,23 @@ async function medium() {
 }
 
 // ---------------------------------------------------------------- tier 3: DETAILED (800×680)
-async function detailed() {
+async function detailed(d) {
   const W = 800,
     H = 680,
     cx = W / 2
   const qrSize = 52
-  const qr = await qrGroup(qrSize)
-  const col1 = wrap(D.p1, 60)
-  const col2 = wrap(D.p2, 60)
+  const qr = await qrGroup(qrSize, d.url)
+  const col1 = wrap(d.p1, 60)
+  const col2 = wrap(d.p2, 60)
   const engW = 340
-  const eng = engravingPanel((W - engW) / 2, 172, engW, null)
+  const eng = engravingPanel((W - engW) / 2, 172, engW, null, d.sign)
   const engBottom = 172 + eng.h
   const colsY = engBottom + 92
   const factsY = H - 86
   const factX = [124, 258, 420, 578]
   const diamondX = [193, 323, 507]
   const factCells =
-    D.facts
+    d.facts
       .map(
         (f, i) =>
           `<text x="${factX[i]}" y="0" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}"
@@ -450,12 +528,12 @@ async function detailed() {
   <text x="${cx}" y="102" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(13)}"
         letter-spacing="6" fill="${C.cream}">HIER STAND</text>
   <text x="${cx}" y="150" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="40"
-        letter-spacing="1.5" fill="${C.goldBright}">${esc(D.name)}</text>
+        letter-spacing="1.5" fill="${C.goldBright}">${esc(d.name)}</text>
   ${eng.svg}
   <text x="${cx}" y="${engBottom + 20}" text-anchor="middle" font-family="${T.body}" font-weight="400"
-        font-size="${bs(10.5)}" letter-spacing="1.2" fill="${C.creamDim}">${esc(D.caption)}</text>
+        font-size="${bs(10.5)}" letter-spacing="1.2" fill="${C.creamDim}">${esc(d.caption)}</text>
   <text x="${cx}" y="${engBottom + 48}" text-anchor="middle" font-family="${T.display}" font-weight="${T.dispMed}" font-size="16"
-        fill="${C.cream}">${esc(D.type)} · ${esc(D.address.replace(' · ', ', '))} · ${esc(D.years)}</text>
+        fill="${C.cream}">${esc(d.type)} · ${esc(d.address.replace(' · ', ', '))} · ${esc(d.years)}</text>
   <line x1="62" y1="${engBottom + 66}" x2="${W - 62}" y2="${engBottom + 66}" stroke="${C.gold}" stroke-width="0.8" opacity="0.7"/>
   <g transform="translate(0,${colsY})">
     ${textBlock(col1, 62, 0, 16, `font-family="${T.body}" font-weight="400" font-size="${bs(11)}" fill="${C.cream}"`)}
@@ -478,7 +556,7 @@ async function detailed() {
 module.exports = {
   storefrontEngraving,
   qrGroup,
-  D,
+  D: EBRAUN,
   C,
   THEMES,
   esc,
@@ -489,19 +567,112 @@ module.exports = {
   },
 }
 
+// ---------------------------------------------------------------- business set
+const { usable } = require('./lightburn-businesses.js')
+
+/**
+ * Which businesses get a premium plaque.
+ *
+ * NOT the 16 featured stories. Those records carry no `businessType` — see
+ * isComplete() in lightburn-businesses.js — and a plaque must state the type of
+ * business (CLAUDE.md). The trade cannot be recovered from the archive either:
+ * matching the featured titles against the typed records finds exactly one true
+ * hit (E. Braun) and at least one false one, so deriving it would put a wrong
+ * trade on a memorial. They become eligible the day someone adds a sourced
+ * businessType to those records, and this generator will pick them up
+ * automatically.
+ *
+ * So the set is drawn from the 2,464 records that ARE complete, one per trade.
+ * That rule is deterministic (usable() is already sorted), it is honest about
+ * why these and not others, and it puts the full range of Jewish commercial
+ * life on the page rather than fifteen shops of the same kind.
+ *
+ * One per trade also keeps the asset set small: each SVG embeds its fonts as
+ * base64 and weighs ~150 KB, so generating all 2,464 in two type themes would
+ * be about 740 MB of repository.
+ */
+function oneBusinessPerTrade() {
+  const seenTrade = new Set()
+  const seenSlug = new Set()
+  const out = []
+  for (const b of usable()) {
+    if (seenTrade.has(b.trade) || seenSlug.has(b.slug)) continue
+    seenTrade.add(b.trade)
+    seenSlug.add(b.slug)
+    out.push({
+      id: String(b.id),
+      slug: b.slug,
+      name: b.name.toUpperCase(),
+      type: b.trade,
+      cities: '',
+      address: b.address,
+      years: b.years,
+      fate: CONTEXT_DE,
+      url: `${SITE}/?id=${b.id}`,
+    })
+  }
+  return out
+}
+
+/** E. Braun's own record, in the same shape, keeping its researched copy. */
+const EBRAUN_TIERS = { ...EBRAUN, url: `${SITE}/?id=${EBRAUN.id}` }
+
 // ---------------------------------------------------------------- main
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true })
-  const tiers = { simple, medium, detailed }
+
+  const others = oneBusinessPerTrade()
+  const entries = []
+
   for (const theme of THEMES) {
     T = theme
-    for (const [name, fn] of Object.entries(tiers)) {
-      const svg = await fn()
-      const file = path.join(OUT_DIR, `e-braun-${name}${theme.suffix}.svg`)
-      fs.writeFileSync(file, svg)
-      console.log(`✓ ${file} (${(svg.length / 1024).toFixed(0)} KB)`)
+
+    // E. Braun: every tier, every type theme — the one record with a traced
+    // storefront engraving and researched narrative copy.
+    for (const [tier, fn] of Object.entries({ simple, medium, detailed })) {
+      const file = `${EBRAUN.slug}-${tier}${theme.suffix}.svg`
+      fs.writeFileSync(path.join(OUT_DIR, file), await fn(EBRAUN_TIERS))
+    }
+
+    // Everyone else: the typographic tier only (no engraving exists for them),
+    // and only in the classic type theme — a second theme would double an
+    // already font-heavy asset set for a variant the page never shows.
+    if (theme.suffix !== '') continue
+    for (const b of others) {
+      const file = `${b.slug}-simple.svg`
+      fs.writeFileSync(path.join(OUT_DIR, file), await simple(b))
+      entries.push({
+        id: b.id,
+        slug: b.slug,
+        name: b.name,
+        type: b.type,
+        address: b.address,
+        years: b.years,
+        file,
+      })
     }
   }
+
+  // The /plaques page reads this instead of rebuilding filenames from business
+  // names. Slugging in two places is exactly how the old asset paths drifted
+  // until every image on that page 404'd.
+  const index = {
+    note: 'Generated by scripts/generate-premium-plaques.js — do not edit by hand.',
+    featured: {
+      id: EBRAUN.id,
+      slug: EBRAUN.slug,
+      name: EBRAUN.name,
+      type: EBRAUN.type,
+      address: EBRAUN.address,
+      years: EBRAUN.years,
+      tiers: ['simple', 'medium', 'detailed'],
+      themes: THEMES.map((t) => t.suffix),
+    },
+    plaques: entries,
+  }
+  fs.writeFileSync(path.join(OUT_DIR, 'index.json'), JSON.stringify(index, null, 2) + '\n')
+
+  console.log(`\u2713 E. Braun (3 tiers x 2 themes) + ${entries.length} trades \u2192 ${OUT_DIR}`)
 }
 
 if (require.main === module) main()

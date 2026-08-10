@@ -1,15 +1,38 @@
 /* Museum exhibit specific styles - isolated from main app */
 .museum-exhibit-container {
   /* Reset any inherited theme variables to prevent interference */
-  --primary: #00D9D9 !important;
-  --secondary: #FFD93D !important;
-  --success: #00D9D9 !important;
-  --warning: #FFD93D !important;
-  --danger: #FF6B35 !important;
-  --background: #FFFFFF !important;
+  --primary: #00d9d9 !important;
+  --secondary: #ffd93d !important;
+  --success: #00d9d9 !important;
+  --warning: #ffd93d !important;
+  --danger: #ff6b35 !important;
+  --background: #ffffff !important;
   --foreground: #000000 !important;
-  --muted: #C589E8 !important;
+  --muted: #c589e8 !important;
   --border: #000000 !important;
+
+  /* Timeline control-panel chrome (bg / text / borders only — the accent
+     palette below stays fixed in both modes). Light values match the
+     original hardcoded #FFFFFF/#000000 exactly, so light mode is unchanged. */
+  --exhibit-panel-bg: #ffffff;
+  --exhibit-panel-fg: #000000;
+  --exhibit-panel-border: #000000;
+}
+
+/* Dark mode: flips panel chrome only. Cyan #00D9D9, yellow #FFD93D,
+   orange #FF6B35 and purple #C589E8 accents are untouched in both modes. */
+@media (prefers-color-scheme: dark) {
+  .museum-exhibit-container:not([data-theme='light']) {
+    --exhibit-panel-bg: #1a1a1a;
+    --exhibit-panel-fg: #ffffff;
+    --exhibit-panel-border: #ffffff;
+  }
+}
+
+.museum-exhibit-container[data-theme='dark'] {
+  --exhibit-panel-bg: #1a1a1a;
+  --exhibit-panel-fg: #ffffff;
+  --exhibit-panel-border: #ffffff;
 }
 
 /* Prevent theme styles from affecting museum exhibit */
@@ -25,7 +48,7 @@
 
 /* Scoped brutalist popup styles */
 .museum-exhibit-container .brutalist-popup .mapboxgl-popup-content {
-  background: #FFFFFF !important;
+  background: #ffffff !important;
   color: #000000 !important;
   border: 6px solid #000000 !important;
   font-family: 'Inter', sans-serif !important;
@@ -37,13 +60,13 @@
   font-size: 24px !important;
   font-weight: 900 !important;
   padding: 8px 12px !important;
-  background: #FF6B35 !important;
+  background: #ff6b35 !important;
   border: 4px solid #000000 !important;
   border-radius: 0 !important;
 }
 
 .museum-exhibit-container .brutalist-popup .mapboxgl-popup-close-button:hover {
-  background: #FFD93D !important;
+  background: #ffd93d !important;
 }
 
 .museum-exhibit-container .brutalist-popup .mapboxgl-popup-close-button:focus {
@@ -55,7 +78,7 @@
 .museum-exhibit-container .touch-ripple {
   width: 100px;
   height: 100px;
-  background: #00D9D9;
+  background: #00d9d9;
   border: 4px solid #000000;
   animation: ripple 1s ease-out forwards;
 }

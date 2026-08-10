@@ -4,51 +4,34 @@ import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from '../../i18n/useTranslation'
+import PREMIUM from '../../../public/plaques/premium/index.json'
 
-// Plaque data for the featured businesses
+/**
+ * Preview set, read from the plaque generator's manifest.
+ *
+ * Replaces a hand-typed list whose names, trades, addresses and dates did not
+ * match the archive, and which pointed at /plaques/{berlin,brass}-style/ —
+ * directories that have never existed, so the preview was always blank.
+ * public/plaques/premium/index.json is written next to the SVGs by
+ * scripts/generate-premium-plaques.js.
+ */
 const FEATURED_PLAQUES = [
   {
-    id: 1,
-    name: 'Elias Braun - Tailor Shop',
-    type: 'Tailoring',
-    location: 'Rosenthaler Straße 40',
-    years: '1925-1938',
+    id: PREMIUM.featured.id,
+    name: PREMIUM.featured.name,
+    type: PREMIUM.featured.type,
+    location: PREMIUM.featured.address,
+    years: PREMIUM.featured.years,
+    file: `${PREMIUM.featured.slug}-simple.svg`,
   },
-  {
-    id: 2,
-    name: 'Breslauer Brothers',
-    type: 'Department Store',
-    location: 'Unter den Linden 15',
-    years: '1920-1935',
-  },
-  {
-    id: 3,
-    name: 'Deutsches Theater Café',
-    type: 'Café',
-    location: 'Schumannstraße 13a',
-    years: '1928-1933',
-  },
-  {
-    id: 4,
-    name: 'Ebro Textiles',
-    type: 'Textiles',
-    location: 'Alexanderstraße 125',
-    years: '1922-1939',
-  },
-  {
-    id: 5,
-    name: 'Hoxter & Sons Bookshop',
-    type: 'Bookshop',
-    location: 'Oranienburger Straße 28',
-    years: '1910-1938',
-  },
-  {
-    id: 6,
-    name: 'Pelz Furrier',
-    type: 'Furrier',
-    location: 'Friedrichstraße 180',
-    years: '1918-1937',
-  },
+  ...PREMIUM.plaques.slice(0, 5).map((p) => ({
+    id: p.id,
+    name: p.name,
+    type: p.type,
+    location: p.address,
+    years: p.years,
+    file: p.file,
+  })),
 ]
 
 interface PlaquesHeroProps {
@@ -58,19 +41,9 @@ interface PlaquesHeroProps {
 
 const PlaquesHero: React.FC<PlaquesHeroProps> = ({ showFullContent = true, compact = false }) => {
   const { t } = useTranslation()
-  const [selectedStyle, setSelectedStyle] = useState<'berlin' | 'brass'>('berlin')
   const [selectedPlaque, setSelectedPlaque] = useState(0)
 
   const currentPlaque = useMemo(() => FEATURED_PLAQUES[selectedPlaque], [selectedPlaque])
-
-  const getPlaqueFileName = (id: number, name: string) => {
-    const slugName = name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .substring(0, 30)
-    return `plaque-${String(id).padStart(3, '0')}-${slugName}.svg`
-  }
 
   if (compact) {
     // Compact version for use in intro overlay
@@ -202,55 +175,20 @@ const PlaquesHero: React.FC<PlaquesHeroProps> = ({ showFullContent = true, compa
 
               {/* Right: Plaque Preview */}
               <div className="space-y-4">
-                {/* Style Selector */}
-                <div className="flex gap-2 mb-4">
-                  <button
-                    onClick={() => setSelectedStyle('berlin')}
-                    className={`flex-1 px-4 py-3 font-mono text-sm font-semibold transition-all border`}
-                    style={{
-                      backgroundColor:
-                        selectedStyle === 'berlin' ? 'var(--primary)' : 'transparent',
-                      color: selectedStyle === 'berlin' ? 'var(--background)' : 'var(--foreground)',
-                      borderColor: 'var(--border)',
-                    }}
-                  >
-                    {t('plaques.hero.berlinStyle')}
-                  </button>
-                  <button
-                    onClick={() => setSelectedStyle('brass')}
-                    className={`flex-1 px-4 py-3 font-mono text-sm font-semibold transition-all border`}
-                    style={{
-                      backgroundColor: selectedStyle === 'brass' ? 'var(--warning)' : 'transparent',
-                      color: selectedStyle === 'brass' ? 'var(--background)' : 'var(--foreground)',
-                      borderColor: 'var(--border)',
-                    }}
-                  >
-                    {t('plaques.hero.brassStyle')}
-                  </button>
-                </div>
-
                 {/* Plaque Display */}
                 <div
-                  className="relative aspect-[4/3] border shadow-lg flex items-center justify-center p-4"
-                  style={{
-                    backgroundColor: selectedStyle === 'berlin' ? '#ffffff' : '#d4af37',
-                    borderColor: 'var(--border)',
-                  }}
+                  className="relative aspect-[16/9] border shadow-lg flex items-center justify-center"
+                  style={{ borderColor: 'var(--border)' }}
                 >
                   <Image
-                    src={`/plaques/${selectedStyle}-style/${getPlaqueFileName(currentPlaque.id, currentPlaque.name)}`}
+                    src={`/plaques/premium/${currentPlaque.file}`}
                     alt={
-                      t('plaques.plaqueAltText', { name: currentPlaque.name.split(' - ')[0] }) ||
+                      t('plaques.plaqueAltText', { name: currentPlaque.name }) ||
                       `Memorial plaque for ${currentPlaque.name}`
                     }
-                    width={400}
-                    height={300}
-                    className="max-w-full max-h-full object-contain"
-                    onError={(e) => {
-                      // Fallback to text display if image fails
-                      const target = e.target as HTMLImageElement
-                      target.style.display = 'none'
-                    }}
+                    width={800}
+                    height={450}
+                    className="w-full h-full object-contain"
                   />
                 </div>
 
@@ -271,7 +209,7 @@ const PlaquesHero: React.FC<PlaquesHeroProps> = ({ showFullContent = true, compa
                         borderColor: selectedPlaque === index ? 'var(--primary)' : 'var(--border)',
                       }}
                     >
-                      <div className="font-semibold truncate">{plaque.name.split(' - ')[0]}</div>
+                      <div className="font-semibold truncate">{plaque.name}</div>
                       <div className="opacity-75">{plaque.years}</div>
                     </button>
                   ))}

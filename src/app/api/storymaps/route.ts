@@ -3,6 +3,12 @@ import fs from 'fs/promises'
 import path from 'path'
 import { StoryMap } from '../../../types'
 
+// Required by the project deployment rules: without this Next can statically optimise
+// the route at build time and serve a stale snapshot. That is wrong for every route
+// here - they read mutable data, and the auth-scoped ones would leak one user's view
+// to everyone.
+export const dynamic = 'force-dynamic'
+
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json')
 const DEFAULT_PAGE_SIZE = 3000 // Load all businesses by default
 const MAX_PAGE_SIZE = 3000 // Allow loading all at once

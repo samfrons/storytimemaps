@@ -1,6 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import type { CreateProposalInput } from '@/lib/types/proposal';
+import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import type { CreateProposalInput } from '@/lib/types/proposal'
+
+// Required by the project deployment rules: without this Next can statically optimise
+// the route at build time and serve a stale snapshot. That is wrong for every route
+// here - they read mutable data, and the auth-scoped ones would leak one user's view
+// to everyone.
+export const dynamic = 'force-dynamic'
 
 /**
  * GET /api/proposals
@@ -12,59 +18,56 @@ import type { CreateProposalInput } from '@/lib/types/proposal';
  */
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = await createClient()
 
     // Return error if Supabase is not configured
     if (!supabase) {
       return NextResponse.json(
         { error: 'Authentication service is not configured' },
         { status: 503 }
-      );
+      )
     }
 
     // Check if user is authenticated
     const {
       data: { user },
-    } = await supabase.auth.getUser();
+    } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     // Get query parameters
-    const searchParams = request.nextUrl.searchParams;
-    const status = searchParams.get('status');
-    const userId = searchParams.get('user_id');
-    const proposalType = searchParams.get('proposal_type');
+    const searchParams = request.nextUrl.searchParams
+    const status = searchParams.get('status')
+    const userId = searchParams.get('user_id')
+    const proposalType = searchParams.get('proposal_type')
 
     // Build query
-    let query = supabase
-      .from('proposals')
-      .select('*')
-      .order('created_at', { ascending: false });
+    let query = supabase.from('proposals').select('*').order('created_at', { ascending: false })
 
     // Apply filters
     if (status) {
-      query = query.eq('status', status);
+      query = query.eq('status', status)
     }
     if (userId) {
-      query = query.eq('user_id', userId);
+      query = query.eq('user_id', userId)
     }
     if (proposalType) {
-      query = query.eq('proposal_type', proposalType);
+      query = query.eq('proposal_type', proposalType)
     }
 
-    const { data, error } = await query;
+    const { data, error } = await query
 
     if (error) {
-      console.error('Error fetching proposals:', error);
-      return NextResponse.json({ error: 'Failed to fetch proposals' }, { status: 500 });
+      console.error('Error fetching proposals:', error)
+      return NextResponse.json({ error: 'Failed to fetch proposals' }, { status: 500 })
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data)
   } catch (error) {
-    console.error('Error in GET /api/proposals:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Error in GET /api/proposals:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 
@@ -74,34 +77,34 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = await createClient()
 
     // Return error if Supabase is not configured
     if (!supabase) {
       return NextResponse.json(
         { error: 'Authentication service is not configured' },
         { status: 503 }
-      );
+      )
     }
 
     // Check if user is authenticated
     const {
       data: { user },
-    } = await supabase.auth.getUser();
+    } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     // Parse request body
-    const body: CreateProposalInput = await request.json();
+    const body: CreateProposalInput = await request.json()
 
     // Validate required fields
     if (!body.title || !body.address || !body.lat || !body.lng || !body.proposal_type) {
       return NextResponse.json(
         { error: 'Missing required fields: title, address, lat, lng, proposal_type' },
         { status: 400 }
-      );
+      )
     }
 
     // Create proposal
@@ -127,16 +130,16 @@ export async function POST(request: NextRequest) {
         status: 'pending',
       })
       .select()
-      .single();
+      .single()
 
     if (error) {
-      console.error('Error creating proposal:', error);
-      return NextResponse.json({ error: 'Failed to create proposal' }, { status: 500 });
+      console.error('Error creating proposal:', error)
+      return NextResponse.json({ error: 'Failed to create proposal' }, { status: 500 })
     }
 
-    return NextResponse.json(data, { status: 201 });
+    return NextResponse.json(data, { status: 201 })
   } catch (error) {
-    console.error('Error in POST /api/proposals:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Error in POST /api/proposals:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

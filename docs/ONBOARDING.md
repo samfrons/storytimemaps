@@ -18,13 +18,16 @@ contributing, whether you're here to write code, research history, or run outrea
 | Business directory | Searchable, filterable listings synced with the map | `src/app/components/StoryList.tsx` |
 | Memorial plaques | Physical plaque program for former business locations | `/plaques`, `src/app/plaques/` |
 | Outreach tracker | Admin tool for tracking contact with current property occupants about plaques | `/admin/outreach` |
+| Museum exhibit | Touch-screen kiosk version of the map | `/museum-exhibit`, `/exhibit-vision` |
+| Classroom workbook | Free education materials for ages 13–18 | `/education` |
+| Frankfurt pilot | Extension of the model beyond Berlin | `/frankfurt` |
 | Collaborate page | Public entry point for new collaborators | `/collaborate` |
 
 ## 2. Choose Your Track
 
 You don't need to be a developer to contribute.
 
-- **🔧 Code** — Next.js/React/TypeScript work on the map, UI, themes, performance. Start at [§3](#3-development-setup).
+- **🔧 Code** — Next.js 16 / React 19 / TypeScript work on the map, UI, themes, performance. Start at [§3](#3-development-setup).
 - **📚 Research** — Verify business histories, dates, addresses; process archival sources (OCR pipeline in the repo root Python scripts). Start with `DATASET_CLEANING_REPORT.md` and `GEOCODING_GUIDE.md`.
 - **✉️ Outreach** — Contact current occupants of former business addresses about memorial plaques. Start with [`docs/OUTREACH_TRACKING.md`](./OUTREACH_TRACKING.md).
 - **🌍 Translation** — English / German / Yiddish / Hebrew localization. See `src/i18n/`.
@@ -34,7 +37,7 @@ Whatever your track, skim [§6 Ground Rules](#6-ground-rules) — they apply to 
 ## 3. Development Setup
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 20+ (the project runs Next.js 16 and React 19)
 - pnpm (preferred; npm/yarn also work)
 - A [Mapbox account](https://mapbox.com) for a free API token
 - Python 3.10+ (only if working on data/scraping scripts)
@@ -57,7 +60,7 @@ pnpm dev        # http://localhost:3000
 ### Verify your setup
 1. Map loads at `/` without console errors
 2. Time slider changes business marker states
-3. Theme switching works instantly (try `?theme=cool` in the URL)
+3. Theme switching works instantly (the default theme is `brutal-pop`; try `?theme=cool` in the URL)
 4. `pnpm run build` completes without errors
 
 ## 4. Codebase Map
@@ -97,7 +100,7 @@ Key docs, in reading order:
    - `pnpm run build` passes with no errors
    - No TypeScript errors (`npx tsc --noEmit`)
    - No border-radius anywhere; all colors via CSS variables
-   - All themes tested (moody, hot, cold, warm, cool, bauhaus, art-nouveau)
+   - All themes tested (brutal-pop — the default — plus moody, hot, cold, warm, cool, bauhaus, art-nouveau, archival, hoefe)
    - Components memoized; pages using `useSearchParams()` wrapped in `<Suspense>`
 5. **Commit** — conventional commits: `feat:`, `fix:`, `perf:`, `style:`, `refactor:`, `docs:`
 6. **Open a PR** — describe what changed and which themes/pages you tested.
@@ -109,6 +112,7 @@ The short version of `CLAUDE.md` — the full file always wins:
 1. **No rounded corners.** Sharp rectangular edges everywhere.
 2. **No hardcoded colors.** Always `var(--variable)`. The only exception is Mapbox layer
    styling, which requires hex values from the theme functions.
+   (Ten themes exist; `brutal-pop` is the default and doubles as the museum-exhibit kiosk palette.)
 3. **No blue focus outlines.** Custom focus states via border/background instead.
 4. **Don't touch the theme system** without reading the theme rules in `CLAUDE.md` first.
 5. **Typography:** Space Mono for data/labels/technical text, Inter for body copy.

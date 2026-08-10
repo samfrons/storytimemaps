@@ -2,7 +2,8 @@
 
 How we track contact with the current occupants of former Jewish business addresses in
 Berlin, as part of the memorial plaque program. The tracker lives at **`/admin/outreach`**
-(password-protected; ask the maintainer for access).
+(password-protected; ask the maintainer for access — both the page and the underlying
+`/api/outreach` endpoints are password-gated server-side).
 
 - **UI:** `src/app/admin/outreach/page.tsx` + `src/app/components/outreach/`
 - **API:** `src/app/api/outreach/` (data + CSV export)

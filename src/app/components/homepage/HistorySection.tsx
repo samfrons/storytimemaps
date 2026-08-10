@@ -68,11 +68,11 @@ const HistorySection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-20 sm:py-28 px-5 sm:px-8"
+      className="py-12 sm:py-16 px-5 sm:px-8"
       style={{ backgroundColor: 'var(--background)' }}
     >
-      <div className="max-w-4xl mx-auto">
-        <div className="max-w-3xl mb-14">
+      <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mb-8">
           <p
             className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] mb-4"
             style={{ color: 'var(--primary)' }}
@@ -95,38 +95,49 @@ const HistorySection: React.FC = () => {
           </p>
         </div>
 
-        <div className="relative">
-          <div
-            aria-hidden="true"
-            className="absolute left-[7px] top-2 bottom-2 w-0.5"
-            style={{ backgroundColor: 'var(--border)' }}
-          />
-          <ol className="space-y-6">
+        {/*
+          Horizontal rail, not a vertical timeline.
+
+          Five stacked cards ran to well over a screen of height for what is
+          really one line of chronology, pushing the sections after it off the
+          page. Read sideways the same five beats occupy a single band, and the
+          left-to-right reading direction carries the sequence better than a
+          top-to-bottom list did.
+
+          The rail keeps its own scrollbar (overflow-x on this container only),
+          so the page body never scrolls sideways. Cards are a fixed width so
+          they always break mid-card, which is what signals there is more to
+          the right without needing an affordance.
+        */}
+        <div className="relative -mx-5 sm:-mx-8">
+          <ol className="flex gap-4 overflow-x-auto px-5 sm:px-8 pb-4 history-rail snap-x snap-mandatory">
             {EVENTS.map((event, index) => (
               <li
                 key={`${event.year}-${event.textKey}`}
-                className={`relative flex items-start transition-all duration-700 ${
-                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'
+                className={`flex-shrink-0 w-[260px] sm:w-[290px] snap-start transition-all duration-700 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                style={{ transitionDelay: `${index * 120}ms` }}
               >
+                {/* The colour bar replaces the old timeline dot: it is the same
+                    warning -> danger shift the map's markers make. */}
                 <span
                   aria-hidden="true"
-                  className="relative z-10 w-4 h-4 flex-shrink-0 mt-1.5"
+                  className="block h-1.5 w-full"
                   style={{ backgroundColor: event.color }}
                 />
                 <div
-                  className="ml-6 flex-1 border p-5 sm:p-6"
+                  className="border border-t-0 p-5 h-full"
                   style={{ borderColor: 'var(--border)', backgroundColor: 'var(--card-bg)' }}
                 >
                   <span
-                    className="font-mono text-xl font-bold block mb-1"
+                    className="font-mono text-xl font-bold block mb-2"
                     style={{ color: event.color }}
                   >
                     {event.year}
                   </span>
                   <p
-                    className="font-['Inter'] text-sm sm:text-base leading-relaxed"
+                    className="font-['Inter'] text-sm leading-relaxed"
                     style={{ color: 'var(--foreground)' }}
                   >
                     {t(event.textKey, { defaultValue: event.fallback })}
@@ -138,7 +149,7 @@ const HistorySection: React.FC = () => {
         </div>
 
         <p
-          className="font-['Inter'] text-sm leading-relaxed mt-12 max-w-3xl"
+          className="font-['Inter'] text-sm leading-relaxed mt-8 max-w-3xl"
           style={{ color: 'var(--foreground-muted)' }}
         >
           {t('homepage.history.note', {
@@ -147,6 +158,24 @@ const HistorySection: React.FC = () => {
           })}
         </p>
       </div>
+
+      <style jsx global>{`
+        /* A thin rail-coloured scrollbar; the default chrome one is heavy
+           enough to read as a page element rather than part of the band. */
+        .history-rail {
+          scrollbar-width: thin;
+          scrollbar-color: var(--border) transparent;
+        }
+        .history-rail::-webkit-scrollbar {
+          height: 6px;
+        }
+        .history-rail::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .history-rail::-webkit-scrollbar-thumb {
+          background: var(--border);
+        }
+      `}</style>
     </section>
   )
 }

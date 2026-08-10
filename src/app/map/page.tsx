@@ -9,6 +9,7 @@ import LoadingSkeleton from '../components/LoadingSkeleton'
 import ModeToggle from '../components/ModeToggle'
 import ContentPreview from '../components/ContentPreview'
 import NavigationSidebar from '../components/NavigationSidebar'
+import TimeSlider from '../components/TimeSlider'
 import PlaquesHero from '../components/PlaquesHero'
 import {
   useStoryMapLogicTest as useStoryMapLogic,
@@ -16,6 +17,7 @@ import {
   defaultZoom,
 } from '../../hooks/useStoryMapLogicTest'
 import { useIsMounted } from '../../hooks/useIsMounted'
+import { ALL_CATEGORIES } from '../../utils/businessSectors'
 // TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation'
 
@@ -47,6 +49,15 @@ function MapPageContent() {
   const [showInfo, setShowInfo] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showThemeMenu, setShowThemeMenu] = useState(false)
+
+  // Two layouts for the same map:
+  //   'split'  - the original: list column on the left, time slider inside its header.
+  //   'drawer' - list collapses to an edge tab and the slider floats over the map, so the
+  //              canvas gets the full width. Needs MapboxMap's ResizeObserver to actually
+  //              deliver pixels; mapbox-gl only watches window.resize on its own.
+  // Default stays 'split' so existing links and habits are unchanged.
+  const [layoutMode, setLayoutMode] = useState<'split' | 'drawer'>('split')
+  const [isListOpen, setIsListOpen] = useState(true)
   // const [isThemeSwitching, setIsThemeSwitching] = useState(false); // Removed - no longer needed
 
   // CRITICAL: Set theme from URL on initial mount ONLY - DO NOT add URL/theme to deps
@@ -67,6 +78,7 @@ function MapPageContent() {
         'art-nouveau',
         'archival',
         'hoefe',
+        'brutal-pop',
       ].includes(themeParam)
     ) {
       // Only set theme if it's different from current theme
@@ -76,6 +88,28 @@ function MapPageContent() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted]) // WARNING: Only run on mount - adding deps will cause theme flashing!
+
+  // Resolve the layout preference on mount only. Kept deliberately separate from the theme
+  // effect above: that one must never gain dependencies, and mixing concerns into it is how
+  // theme flashing gets reintroduced. URL wins over the stored preference so a shared link
+  // shows what the sender saw.
+  useEffect(() => {
+    if (!mounted) return
+
+    const layoutParam = searchParams.get('layout')
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('storymap-layout') : null
+    const resolved = layoutParam === 'drawer' || layoutParam === 'split' ? layoutParam : stored
+
+    if (resolved === 'drawer' || resolved === 'split') {
+      setLayoutMode(resolved)
+      // In drawer mode the list starts collapsed - that is the point of the layout. `?list=1`
+      // reopens it so a link can share the expanded state.
+      if (resolved === 'drawer') {
+        setIsListOpen(searchParams.get('list') === '1')
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted])
 
   // Handle non-theme URL parameters
   useEffect(() => {
@@ -89,9 +123,12 @@ function MapPageContent() {
     }
 
     // Show intro only on root page without significant params AND if not explicitly closed
-    // Don't consider language/theme params as "significant" for intro display
+    // Don't consider language/theme params as "significant" for intro display.
+    // 'layout' and 'list' are presentation-only too: they describe how the page is arranged,
+    // not what the visitor asked to see. Leaving them out of this filter would mean the first
+    // drawer toggle permanently suppresses the intro, including for anyone given that URL.
     const significantParams = Array.from(searchParams.keys()).filter(
-      (key) => key !== 'lang' && key !== 'theme'
+      (key) => key !== 'lang' && key !== 'theme' && key !== 'layout' && key !== 'list'
     )
     const hasSignificantParams = significantParams.length > 0
 
@@ -103,6 +140,10 @@ function MapPageContent() {
     }
   }, [searchParams, mounted, introExplicitlyClosed])
 
+  // Owned here rather than inside StoryList so the map legend and the sidebar
+  // dropdown drive the same filter.
+  const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORIES)
+
   const {
     visibleStories,
     activeStoryId,
@@ -112,12 +153,14 @@ function MapPageContent() {
     setCurrentDate,
     handleMarkerClick,
     testMarkers,
+    timeMarkers,
     setActiveStoryId,
     isLoading,
     totalItems,
     viewMode,
     setViewMode,
     storiesWithDetailCount,
+    unlocatedCount,
   } = useStoryMapLogic()
 
   // State for deep link auto-open
@@ -137,6 +180,9 @@ function MapPageContent() {
       setIntroExplicitlyClosed(true)
       // Set deep link ID to auto-open the detail modal
       setDeepLinkId(idParam)
+      // A deep link points at one record, so the list has to be on screen for it to land in -
+      // otherwise the drawer stays shut and the linked business appears to do nothing.
+      setIsListOpen(true)
     }
   }, [mounted, isLoading, searchParams, setViewMode, setActiveStoryId, handleMarkerClick])
 
@@ -165,6 +211,44 @@ function MapPageContent() {
     },
     [mounted, theme, setTheme, searchParams, router]
   )
+
+  // Mirrors handleThemeSwitch exactly: set state first, then router.replace (never push) so
+  // the layout is shareable without spamming history.
+  const handleLayoutSwitch = useCallback(
+    (nextLayout: 'split' | 'drawer') => {
+      if (!mounted || layoutMode === nextLayout) return
+
+      setLayoutMode(nextLayout)
+      // Entering drawer mode collapses the list - that is what buys the map its width.
+      // Leaving it restores the list so 'split' always looks like the original layout.
+      setIsListOpen(nextLayout === 'split')
+
+      try {
+        localStorage.setItem('storymap-layout', nextLayout)
+      } catch {
+        // Private mode / storage disabled - the URL param still carries the choice.
+      }
+
+      const params = new URLSearchParams(searchParams.toString())
+      params.set('layout', nextLayout)
+      params.delete('list')
+      const queryString = params.toString()
+      router.replace(queryString ? `/map?${queryString}` : '/map', { scroll: false })
+    },
+    [mounted, layoutMode, searchParams, router]
+  )
+
+  const handleToggleList = useCallback(() => {
+    setIsListOpen((open) => {
+      const next = !open
+      const params = new URLSearchParams(searchParams.toString())
+      if (next) params.set('list', '1')
+      else params.delete('list')
+      const queryString = params.toString()
+      router.replace(queryString ? `/map?${queryString}` : '/map', { scroll: false })
+      return next
+    })
+  }, [searchParams, router])
 
   const handleLetsGo = useCallback(() => {
     setShowIntro(false)
@@ -234,6 +318,8 @@ function MapPageContent() {
         theme={theme}
         mounted={mounted}
         onThemeSwitch={handleThemeSwitch}
+        layoutMode={layoutMode}
+        onLayoutSwitch={handleLayoutSwitch}
         showIntro={showIntro}
         onCloseIntro={handleCloseIntro}
         goHome={goHome}
@@ -252,9 +338,29 @@ function MapPageContent() {
           <LoadingSkeleton />
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row h-screen md:pl-16">
-          {/* StoryList Panel - Visible on both mobile and desktop */}
-          <div className="w-full md:w-1/3 h-1/2 md:h-screen order-2 md:order-1 flex-shrink-0">
+        // `relative` is required: in drawer mode the list panel, the tab and the scrubber are
+        // absolutely positioned and must resolve against this box, not the viewport.
+        <div className="relative flex flex-col md:flex-row h-screen md:pl-12">
+          {/* StoryList Panel.
+              In 'split' it is a real column beside the map. In 'drawer' it becomes an overlay
+              that slides off-canvas, and the map below takes the full width.
+
+              It stays MOUNTED when collapsed, deliberately. MapboxMap opens a business by
+              finding that story's card in the DOM and clicking its button, so unmounting the
+              list here would silently break every map pin. Translating it off-canvas keeps the
+              nodes addressable and keeps the progressive loader running. */}
+          <div
+            className={
+              layoutMode === 'drawer'
+                ? `absolute top-0 bottom-0 left-0 md:left-12 w-full md:w-[360px] transition-transform duration-300 ease-out will-change-transform ${
+                    isListOpen ? 'translate-x-0' : '-translate-x-full'
+                  }`
+                : 'w-full md:w-1/3 h-1/2 md:h-screen order-2 md:order-1 flex-shrink-0'
+            }
+            style={layoutMode === 'drawer' ? { zIndex: 800 } : undefined}
+            id="storymap-list-panel"
+            aria-hidden={layoutMode === 'drawer' && !isListOpen}
+          >
             <StoryList
               visibleStories={visibleStories}
               activeStoryId={activeStoryId}
@@ -264,28 +370,156 @@ function MapPageContent() {
               setCurrentDate={setCurrentDate}
               onStoryClick={handleStoryClick}
               autoOpenDetailId={deepLinkId}
+              unlocatedCount={unlocatedCount}
+              hideTimeSlider={layoutMode === 'drawer'}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
             />
           </div>
 
-          {/* Map Layer - Remaining space */}
-          <div className="w-full md:flex-1 h-1/2 md:h-screen order-1 md:order-2 relative">
+          {/* Map Layer - full width in drawer mode, remaining space in split mode */}
+          <div
+            className={
+              layoutMode === 'drawer'
+                ? 'w-full flex-1 h-screen relative'
+                : 'w-full md:flex-1 h-1/2 md:h-screen order-1 md:order-2 relative'
+            }
+          >
             <MapboxMap
               center={berlinCoordinates}
               zoom={defaultZoom}
               markers={testMarkers}
+              timeMarkers={timeMarkers}
               onMarkerClick={handleStoryClick}
               activeMarkerId={activeStoryId}
               currentDate={currentDate}
               enrichedStories={visibleStories}
               isTestMode={true}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
             />
           </div>
+
+          {/* Drawer tab. Placed after the map in the DOM so tab order runs
+              rail -> map -> tab -> scrubber rather than jumping backwards. */}
+          {layoutMode === 'drawer' && (
+            <button
+              type="button"
+              onClick={handleToggleList}
+              aria-expanded={isListOpen}
+              aria-controls="storymap-list-panel"
+              className="hidden md:flex absolute top-0 bottom-0 w-11 items-center justify-center border-r transition-transform duration-300 ease-out will-change-transform"
+              style={{
+                left: isListOpen ? 'calc(3rem + 360px)' : '3rem',
+                zIndex: 801,
+                // NOT var(--input-bg): several themes define that as a translucent tint meant to
+                // sit on a solid --background (moody is rgba(...,0.5)). Floating over the map it
+                // would be see-through. rgba(var(--background-rgb), …) is the project's existing
+                // idiom for map overlays and every theme defines --background-rgb.
+                backgroundColor: 'rgba(var(--background-rgb), 0.95)',
+                borderRightColor: 'var(--border)',
+                color: 'var(--foreground)',
+                outline: 'none',
+                boxShadow: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              <span className="flex flex-col items-center gap-3">
+                {/* Chevron points the way the panel will move, so the strip reads as a control
+                    rather than a label. */}
+                <svg
+                  className="w-4 h-4 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d={isListOpen ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'}
+                  />
+                </svg>
+                <span
+                  className="font-mono text-xs uppercase tracking-widest whitespace-nowrap"
+                  style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                >
+                  {isListOpen ? 'Hide list' : `${visibleStories.length.toLocaleString()} locations`}
+                </span>
+              </span>
+            </button>
+          )}
+
+          {/* Mobile drawer tab - a bottom bar, since a vertical edge tab is unusable at 390px */}
+          {layoutMode === 'drawer' && (
+            <button
+              type="button"
+              onClick={handleToggleList}
+              aria-expanded={isListOpen}
+              aria-controls="storymap-list-panel"
+              className="md:hidden fixed left-0 right-0 h-11 flex items-center justify-center border-t font-mono text-xs uppercase tracking-widest"
+              style={{
+                bottom: 'calc(56px + env(safe-area-inset-bottom, 0px))',
+                zIndex: 801,
+                backgroundColor: 'rgba(var(--background-rgb), 0.95)',
+                borderTopColor: 'var(--border)',
+                color: 'var(--foreground)',
+                outline: 'none',
+                boxShadow: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              {isListOpen ? 'Hide list' : `${visibleStories.length.toLocaleString()} locations`}
+            </button>
+          )}
+
+          {/* Floating scrubber. Only in drawer mode - in split mode the slider stays in the
+              list header where it has always been. Centred on the MAP box, not the viewport,
+              so it does not drift under the panel when the drawer is open.
+              Uses dvh-safe bottom insets: with a fixed bottom offset, iOS Safari's dynamic
+              toolbar would otherwise crop it. */}
+          {layoutMode === 'drawer' && (
+            <div
+              className="fixed md:absolute"
+              style={{
+                zIndex: 900,
+                bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
+                left: 0,
+                right: 0,
+                paddingLeft: '0.5rem',
+                paddingRight: '0.5rem',
+                pointerEvents: 'none',
+              }}
+            >
+              <div
+                className="mx-auto border px-4 py-2"
+                style={{
+                  maxWidth: 'min(640px, 92vw)',
+                  // Same reason as the tab: --card-bg is a translucent tint in several themes
+                  // (moody is rgba(...,0.4)) and the map would read straight through the
+                  // scrubber, making the track and labels illegible.
+                  backgroundColor: 'rgba(var(--background-rgb), 0.95)',
+                  borderColor: 'var(--border)',
+                  boxShadow: '0 2px 12px var(--shadow)',
+                  pointerEvents: 'auto',
+                }}
+              >
+                <TimeSlider
+                  minDate={minDate}
+                  maxDate={maxDate}
+                  currentDate={currentDate}
+                  onChange={setCurrentDate}
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       {/* Intro Overlay - Slides to the left, but leaves sidebar visible */}
       <div
-        className={`fixed md:absolute top-0 left-0 md:left-16 right-0 bottom-0 backdrop-blur-sm transition-transform duration-700 ease-in-out overflow-hidden ${
+        className={`fixed md:absolute top-0 left-0 md:left-12 right-0 bottom-0 backdrop-blur-sm transition-transform duration-700 ease-in-out overflow-hidden ${
           showIntro ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{

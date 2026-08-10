@@ -1,12 +1,14 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
-import Map, { Marker, NavigationControl, Popup } from 'react-map-gl/mapbox'
+import Map, { Marker, NavigationControl, Popup, Source, Layer } from 'react-map-gl/mapbox'
 import Supercluster from 'supercluster'
 import { useTheme } from 'next-themes'
 import mapboxgl from 'mapbox-gl'
 import { useMobileOptimizations } from '../../hooks/useMobileOptimizations'
 import { useTranslation } from '../../i18n/useTranslation'
+import { sectorLabel } from '../../utils/businessSectors'
+import MapLegend from './map/MapLegend'
 import { loadTimelineData, getTimelineContentForDate } from '../../utils/timelineLoader'
 import {
   getThemeMapStyle,
@@ -16,8 +18,74 @@ import {
 } from '../../utils/mapStyles'
 import { getMaxLabelsForZoom } from '../../config/performance'
 import { spatialSample, type ClusterFeature } from '../../utils/mapHelpers'
+import { TOUR_STOPS } from '../history-tour/tourData'
+
+/**
+ * Researched detail for the fifteen curated stories, keyed by record id.
+ *
+ * The popup already carries the catalogue description; what it never showed is
+ * the two facts a reader actually wants standing at the address — how the
+ * business was taken, and what occupies the site now. Both are transcribed
+ * verbatim in tourData.ts (see its header) and were until now only reachable by
+ * scrolling the whole history tour.
+ */
+// A plain record, not a Map: `Map` in this module is the react-map-gl
+// component imported at the top, which shadows the global constructor.
+const TOUR_BY_ID: Record<string, (typeof TOUR_STOPS)[number]> = Object.fromEntries(
+  TOUR_STOPS.map((stop) => [stop.id, stop])
+)
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
+
+/** Ids for the GPU dot path (see GL_DOT_LAYER in the component). */
+const GL_DOT_SOURCE_ID = 'business-dots-source'
+const GL_DOT_LAYER_ID = 'business-dots'
+
+/**
+ * Pick readable text for a label chip from its background.
+ *
+ * The chip text used to be hardcoded dark except for 'closed'. That held while every state
+ * colour was light, but the postwar 'standing' colour is black on bauhaus and dark slate on the
+ * light themes, which would have printed dark-on-dark. Deriving it keeps every current and
+ * future state legible without another per-state ternary.
+ */
+/**
+ * Apply an alpha to a colour that may be hex OR rgb()/rgba().
+ *
+ * The label chip used to do `${chip}e8` to get ~91% alpha. That works for #rrggbb but produces
+ * "rgba(44, 74, 124, 0.85)e8" for the archival theme, whose marker colours are all rgba - an
+ * invalid value, so every archival label chip rendered fully transparent.
+ */
+const withAlpha = (color: string, alpha: number): string => {
+  const hex = color.trim().match(/^#([0-9a-f]{6})$/i)
+  if (hex) {
+    const n = parseInt(hex[1], 16)
+    return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`
+  }
+  const rgb = color.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/)
+  if (rgb) return `rgba(${rgb[1]}, ${rgb[2]}, ${rgb[3]}, ${alpha})`
+  return color
+}
+
+const readableTextOn = (background: string): string => {
+  const hex = background.trim().match(/^#?([0-9a-f]{6})$/i)
+  let r: number, g: number, b: number
+  if (hex) {
+    const n = parseInt(hex[1], 16)
+    r = (n >> 16) & 255
+    g = (n >> 8) & 255
+    b = n & 255
+  } else {
+    const rgb = background.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/)
+    if (!rgb) return '#2a2a2a'
+    r = +rgb[1]
+    g = +rgb[2]
+    b = +rgb[3]
+  }
+  // Rec. 601 luma is enough to separate "light chip" from "dark chip" here.
+  const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  return luma > 0.6 ? '#2a2a2a' : '#ffffff'
+}
 
 if (!MAPBOX_TOKEN) {
   console.error(
@@ -40,13 +108,38 @@ interface MapboxMapProps {
   onMarkerClick?: (id: string) => void
   activeMarkerId?: string | null
   currentDate?: Date
+  /**
+   * Date-INDEPENDENT points, used by the GPU dot layer (see GL_DOT_LAYER below).
+   * Unlike `markers` these carry raw year fields instead of a resolved `state`, so the array
+   * keeps its identity while the time slider moves. Supplying this alongside `isTestMode`
+   * switches the map off DOM markers + Supercluster and onto a single GL circle layer.
+   */
+  timeMarkers?: Array<{
+    id: string
+    position: [number, number]
+    popup: string
+    startYear: number
+    endYear: number
+    midYear: number | null
+    /** Documented post-1945 occupancy window; 9999 means "never" (see postwarLoader). */
+    postwarFrom?: number
+    postwarTo?: number
+    businessType?: string
+    hasEnrichedData?: boolean
+  }>
   enrichedStories?: Array<{
     id: string
     startDate?: string | null
     endDate?: string | null
     description?: string | null
     hasTimelineData?: boolean
+    businessType?: string
+    sectorKey?: string
+    mainBranch?: 'trade' | 'industry' | 'services' | 'handicraft'
   }>
+  /** Category filter, shared with StoryList so the legend and dropdown agree. */
+  selectedCategory?: string
+  onSelectCategory?: (value: string) => void
   isTestMode?: boolean
   city?: 'berlin' | 'frankfurt'
   data?: any
@@ -60,15 +153,19 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   markers = [],
   onMarkerClick,
   activeMarkerId,
-  currentDate, // eslint-disable-line @typescript-eslint/no-unused-vars
+  currentDate,
+  timeMarkers,
   enrichedStories = [],
   isTestMode = false,
   city = 'berlin',
   data,
   selectedDate,
   onBusinessSelect,
+  selectedCategory,
+  onSelectCategory,
 }) => {
   const mapRef = useRef<React.ComponentRef<typeof Map> | null>(null)
+  const mapContainerRef = useRef<HTMLDivElement | null>(null)
   const markerCache = useRef<globalThis.Map<string, React.ReactElement[]>>(new globalThis.Map())
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -112,6 +209,34 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     markerCache.current.clear()
   }, [theme, colors])
 
+  // Keep the GL canvas in step with its container.
+  // mapbox-gl only listens for `window.resize`, so any layout change that resizes the container
+  // WITHOUT resizing the window (a collapsing side panel, the nav rail changing width, a
+  // devtools split) leaves the canvas frozen at its old size and paints a dead strip of
+  // background where the map should be. Verified: collapsing the list container grew the box to
+  // ~1348px while the canvas stayed at 916px until a resize was dispatched.
+  useEffect(() => {
+    const container = mapContainerRef.current
+    if (!container || !mapLoaded) return
+    if (typeof ResizeObserver === 'undefined') return
+
+    let frame = 0
+    const observer = new ResizeObserver(() => {
+      // Coalesce to one resize per frame; a CSS width transition fires this on every frame and
+      // map.resize() is not cheap with 10k markers mounted.
+      if (frame) cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        mapRef.current?.getMap()?.resize()
+      })
+    })
+    observer.observe(container)
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      observer.disconnect()
+    }
+  }, [mapLoaded])
+
   // getMaxLabels is now imported from config as getMaxLabelsForZoom
   const getMaxLabels = getMaxLabelsForZoom
 
@@ -138,15 +263,162 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     return markers
   }, [data, markers])
 
+  /* ------------------------------------------------------------------ *
+   * GL_DOT_LAYER - the GPU path for the main storymap
+   *
+   * The DOM-marker + Supercluster path below cannot serve this map. Every slider step rebuilt
+   * all 10k marker objects, which invalidated the Supercluster index and re-rendered every
+   * <Marker>; measured 2.6-3.0 s of blocked main thread per drag, and it was insensitive to
+   * marker count (839 markers stalled as long as 2,589), so clustering harder never helped.
+   *
+   * Here the 10,021 points become ONE GeoJSON source built once, and `state` is derived on the
+   * GPU by a data-driven paint expression over the raw year fields. A date change therefore
+   * only swaps a colour expression - no re-cluster, no React reconciliation, no DOM churn.
+   * That is also why the points are no longer clustered at all: at 10k GL circles there is
+   * nothing to save, and the uninterrupted field of coloured dots IS the visualisation.
+   * ------------------------------------------------------------------ */
+  const useGlDots = Boolean(isTestMode && timeMarkers && timeMarkers.length > 0)
+
+  const currentYear = useMemo(
+    () => (currentDate ? currentDate.getFullYear() : selectedDate?.getFullYear()) ?? 1920,
+    [currentDate, selectedDate]
+  )
+
+  // Built from `timeMarkers`, which is memoised upstream on the dataset (not the date), so this
+  // GeoJSON is re-serialised only when businesses are actually added - not on every slider tick.
+  const dotsGeoJSON = useMemo<GeoJSON.FeatureCollection<GeoJSON.Point>>(() => {
+    const features: GeoJSON.Feature<GeoJSON.Point>[] = []
+    if (timeMarkers) {
+      for (const m of timeMarkers) {
+        const [lat, lng] = m.position
+        if (typeof lat !== 'number' || typeof lng !== 'number') continue
+        features.push({
+          type: 'Feature',
+          // No top-level `id` here on purpose: mapbox-gl only accepts numeric feature ids at
+          // that position, and these are strings. The Source below sets promoteId="id" so the
+          // `id` PROPERTY becomes the feature id, which is what setFeatureState addresses.
+          properties: {
+            id: m.id,
+            name: m.popup,
+            startYear: m.startYear,
+            endYear: m.endYear,
+            // Expressions cannot test for null, so absent midYear becomes a sentinel that can
+            // never satisfy `year >= midYear` for this dataset's 1900-1945 range.
+            midYear: m.midYear ?? 9999,
+            // Documented-occupancy window for this address after 1945. 9999 is the
+            // never-matches sentinel, same convention as midYear above.
+            postwarFrom: m.postwarFrom ?? 9999,
+            postwarTo: m.postwarTo ?? 9999,
+          },
+          geometry: { type: 'Point', coordinates: [lng, lat] },
+        })
+      }
+    }
+    return { type: 'FeatureCollection', features }
+  }, [timeMarkers])
+
+  // The whole point of the rewrite: `currentYear` enters as a literal inside a Mapbox
+  // expression, so moving the slider is a setPaintProperty, not a data reload.
+  // Order matters and mirrors useStoryMapLogic's state ladder: future -> closed -> declining.
+  const dotColorExpression = useMemo(
+    () =>
+      [
+        'case',
+        // Postwar occupancy wins over the wartime ladder: once the business is gone, what the
+        // pin reports is the address, not the firm. Only addresses with a documented, in-use
+        // period reach this branch - destroyed and demolished sites deliberately do not.
+        [
+          'all',
+          ['>=', currentYear, ['get', 'postwarFrom']],
+          ['<=', currentYear, ['get', 'postwarTo']],
+        ],
+        colors.standing,
+        ['<', currentYear, ['get', 'startYear']],
+        colors.future || colors.active,
+        ['>', currentYear, ['get', 'endYear']],
+        colors.closed,
+        ['>=', currentYear, ['get', 'midYear']],
+        colors.declining,
+        colors.active,
+      ] as unknown as mapboxgl.ExpressionSpecification,
+    [currentYear, colors]
+  )
+
+  const isHardEdgeTheme = theme === 'bauhaus' || theme === 'brutal-pop'
+
+  const dotLayer = useMemo(
+    () => ({
+      id: GL_DOT_LAYER_ID,
+      type: 'circle' as const,
+      paint: {
+        'circle-color': dotColorExpression,
+        // Small enough at Berlin-wide zoom that 10k dots read as density rather than mush,
+        // large enough by z16 to stay a comfortable click target.
+        'circle-radius': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          9,
+          1.6,
+          11,
+          2.6,
+          13,
+          4,
+          15,
+          5.5,
+          17,
+          7,
+        ] as unknown as mapboxgl.DataDrivenPropertyValueSpecification<number>,
+        // Hover/active get a heavier ring instead of a size jump, so nothing reflows.
+        'circle-stroke-width': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          2.5,
+          ['boolean', ['feature-state', 'active'], false],
+          3,
+          isHardEdgeTheme ? 0.75 : 1,
+        ] as unknown as mapboxgl.DataDrivenPropertyValueSpecification<number>,
+        'circle-stroke-color': isHardEdgeTheme ? '#131318' : '#ffffff',
+        'circle-opacity': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          9,
+          0.75,
+          13,
+          0.95,
+        ] as unknown as mapboxgl.DataDrivenPropertyValueSpecification<number>,
+      },
+    }),
+    [dotColorExpression, isHardEdgeTheme]
+  )
+
   // Initialize Supercluster for clustering with optimized settings for large datasets
   // PERF: Removed viewState.zoom from dependencies - Supercluster handles zoom internally via getClusters()
   // This prevents expensive index rebuilding on every zoom change (was causing jank)
   const supercluster = useMemo(() => {
     // Use fixed radius settings - Supercluster adjusts clustering based on zoom passed to getClusters()
     // Higher radius = more aggressive clustering at all zoom levels
-    const radius = isTestMode ? 60 : isMobile ? 40 : 20
+    //
+    // isTestMode is the MAIN storymap (page.tsx passes isTestMode), not a test fixture.
+    // It used to cluster hardest of all modes (radius 60 / minPoints 2), which collapsed ~9,500
+    // in-viewport points into ~91 bubbles and left only a handful of loose pins. That defeats
+    // the point of the map: the time-based colour gradient across thousands of individual dots
+    // IS the visualisation - the time slider only reads if enough dots are individually
+    // coloured at the zoom people actually sit at (the default is z12, Berlin-wide).
+    //
+    // Measured against the live 10,021-point dataset at z12 in a 950x900 map pane:
+    //   radius 15 / minPoints 4  ->   652 loose pins / 346 bubbles   (previous)
+    //   radius  8 / minPoints 8  -> 2,617 loose pins / 186 bubbles   (current)
+    // minPoints is the higher-leverage knob: it is the floor on how many points must fall
+    // within `radius` before they collapse, so raising it keeps small groups as separate dots.
+    // Mobile stays deliberately coarser - same trade, smaller pane, weaker GPU.
+    //
+    // The non-isTestMode branch is deliberately left untouched: /jewish-businesses rides it with
+    // 2,760 features and retuning it there would roughly double its DOM marker count.
+    const radius = isTestMode ? (isMobile ? 12 : 8) : isMobile ? 40 : 20
     const maxZoom = 18
-    const minPoints = isTestMode ? 2 : isMobile ? 4 : 2
+    const minPoints = isTestMode ? (isMobile ? 8 : 8) : isMobile ? 4 : 2
 
     const index = new Supercluster({
       radius,
@@ -154,9 +426,30 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       minPoints,
       extent: 512, // Standard tile extent
       nodeSize: 64, // Standard node size
+      // Tally member states into each cluster so a bubble can be coloured by its dominant
+      // state instead of one flat theme colour. Computed once at index build, so reading it
+      // per render is O(1) - getLeaves() would be O(n) per bubble per frame.
+      map: (props) => ({
+        activeCount: props.state === 'active' ? 1 : 0,
+        decliningCount: props.state === 'declining' ? 1 : 0,
+        closedCount: props.state === 'closed' ? 1 : 0,
+        futureCount: props.state === 'future' ? 1 : 0,
+        standingCount: props.state === 'standing' ? 1 : 0,
+      }),
+      reduce: (accumulated, props) => {
+        accumulated.activeCount += props.activeCount
+        accumulated.decliningCount += props.decliningCount
+        accumulated.closedCount += props.closedCount
+        accumulated.futureCount += props.futureCount
+        accumulated.standingCount += props.standingCount
+      },
     })
 
-    const markersToUse = processedMarkers
+    // Loading the index is the single most expensive thing this component did per date change
+    // (10k points, and `processedMarkers` changed identity on every slider tick). The GL dot
+    // path does not consume clusters at all, so skip the load entirely and hand back an empty
+    // index - handleClusterClick still needs a valid instance to call into.
+    const markersToUse = useGlDots ? [] : processedMarkers
     if (markersToUse.length > 0) {
       const points: GeoJSON.Feature<GeoJSON.Point, { id: string; popup: string; state: string }>[] =
         markersToUse.map((marker: any) => ({
@@ -175,7 +468,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     return index
-  }, [processedMarkers, isMobile, isTestMode])
+  }, [processedMarkers, isMobile, isTestMode, useGlDots])
 
   // Pre-compute initial markers for fallback with spatial distribution
   const initialMarkers = useMemo(() => {
@@ -221,8 +514,46 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     return () => clearTimeout(throttleTimer)
   }, [viewState.zoom, mapLoaded])
 
+  // Labels for the GL dot path. The old system mounted a DOM <Marker> per label and derived
+  // priorities from the cluster output; with the dots on the GPU there is no cluster output, so
+  // candidates come straight off the stable source, sampled across the viewport and capped by
+  // the same per-zoom budget as before. These labels are the only DOM this path still mounts.
+  const glLabels = useMemo(() => {
+    if (!useGlDots || !mapLoaded) return []
+    const bounds = throttledViewport.bounds
+    if (!bounds) return []
+
+    const maxLabels = getMaxLabels(throttledViewport.zoom)
+    if (maxLabels <= 0) return []
+
+    const west = bounds.getWest()
+    const east = bounds.getEast()
+    const south = bounds.getSouth()
+    const north = bounds.getNorth()
+
+    const inView: GeoJSON.Feature<GeoJSON.Point>[] = []
+    for (const f of dotsGeoJSON.features) {
+      const [lng, lat] = f.geometry.coordinates
+      if (lng >= west && lng <= east && lat >= south && lat <= north) inView.push(f)
+    }
+    if (inView.length === 0) return []
+
+    // Even stride rather than the first N, so labels spread across the viewport instead of
+    // piling up wherever the dataset happens to start.
+    const step = Math.max(1, Math.floor(inView.length / maxLabels))
+    const picked: GeoJSON.Feature<GeoJSON.Point>[] = []
+    for (let i = 0; i < inView.length && picked.length < maxLabels; i += step) {
+      picked.push(inView[i])
+    }
+    return picked
+  }, [useGlDots, mapLoaded, throttledViewport, dotsGeoJSON, getMaxLabels])
+
   // Get clusters for current viewport with optimized recalculation and viewport culling
   const clusters = useMemo(() => {
+    // The GL dot path renders every point itself; running the DOM/cluster path alongside it
+    // would double-draw the map and re-introduce the per-date stall this rewrite removed.
+    if (useGlDots) return []
+
     // Always return initial markers if map is not ready
     if (!mapLoaded || !throttledViewport.bounds) {
       return initialMarkers
@@ -254,15 +585,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         return marker
       })
 
-      // At very high zoom levels, limit individual markers spatially
+      // At very high zoom levels, limit individual markers spatially.
+      // The isTestMode ceiling must sit ABOVE what z14 already renders under the current
+      // cluster tuning (~1,500 loose pins), otherwise crossing z15 while zooming IN visibly
+      // thins the map out - pins disappear as you get closer, which reads as a bug.
       if (throttledViewport.zoom > 15) {
-        const maxIndividualMarkers = isTestMode
-          ? isMobile
-            ? 200
-            : 800 // Much higher limits for test mode
-          : isMobile
-            ? 50
-            : 150
+        const maxIndividualMarkers = isTestMode ? (isMobile ? 400 : 1800) : isMobile ? 50 : 150
         const clusters = processedMarkers.filter((m) => m.properties?.cluster)
         const individuals = processedMarkers.filter((m) => !m.properties?.cluster)
 
@@ -281,7 +609,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       console.warn('Error getting clusters:', error)
       return initialMarkers.slice(0, 20)
     }
-  }, [supercluster, throttledViewport, mapLoaded, initialMarkers, isMobile, isTestMode])
+  }, [supercluster, throttledViewport, mapLoaded, initialMarkers, isMobile, isTestMode, useGlDots])
 
   // Update label priorities when viewport changes - throttled for performance
   useEffect(() => {
@@ -309,8 +637,11 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       )
       for (let i = 0; i < nonClusteredMarkers.length && priorities.size < maxLabels; i += step) {
         const marker = nonClusteredMarkers[i]
-        if (marker?.properties?.id) {
-          priorities.add(marker.properties.id)
+        // nonClusteredMarkers holds only leaf features, but Supercluster's union type also
+        // covers cluster properties (which carry no id), so narrow before reading it.
+        const markerId = (marker?.properties as { id?: string } | undefined)?.id
+        if (markerId) {
+          priorities.add(markerId)
         }
       }
 
@@ -625,6 +956,147 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     return () => clearTimeout(timer)
   }, [popupInfo, colors.active, colors.declining, colors.closed])
 
+  /**
+   * Resolve a point's state the same way the GL colour expression does, for popups and label
+   * chips. The postwar branch has to be first and has to be here as well as in the expression:
+   * label chips are DOM, the dots are GL, and if only one of them knew about postwar occupancy
+   * a site would render as a white dot wearing a red "closed" label.
+   */
+  const stateForYears = useCallback(
+    (
+      startYear: number,
+      endYear: number,
+      midYear: number | null | undefined,
+      postwarFrom?: number,
+      postwarTo?: number
+    ) => {
+      if (
+        postwarFrom != null &&
+        postwarTo != null &&
+        currentYear >= postwarFrom &&
+        currentYear <= postwarTo
+      ) {
+        return 'standing'
+      }
+      if (currentYear < startYear) return 'future'
+      if (currentYear > endYear) return 'closed'
+      if (midYear != null && midYear !== 9999 && currentYear >= midYear) return 'declining'
+      return 'active'
+    },
+    [currentYear]
+  )
+
+  // Shared by the GL dot layer and its labels so both open the identical popup.
+  const openBusinessPopup = useCallback(
+    async (
+      id: string,
+      name: string,
+      lng: number,
+      lat: number,
+      state: string,
+      sourceEvent?: { originalEvent?: MouseEvent }
+    ) => {
+      sourceEvent?.originalEvent?.stopPropagation()
+      if (onMarkerClick) onMarkerClick(id)
+
+      const enrichedStory = enrichedStories.find((s) => s.id === id)
+      if (enrichedStory?.hasTimelineData) {
+        const timelineData = await loadTimelineData(id)
+        if (timelineData) {
+          setPopupTimelineData((prev) => ({ ...prev, [id]: timelineData }))
+        }
+      }
+
+      setPopupInfo({
+        longitude: lng,
+        latitude: lat,
+        properties: { id, popup: name, state, ...enrichedStory },
+      })
+    },
+    [onMarkerClick, enrichedStories]
+  )
+
+  // feature-state drives the hover/active ring in the dot layer's paint expression, which keeps
+  // emphasis on the GPU - setting React state per mousemove over 10k points would defeat the
+  // whole rewrite.
+  const hoveredFeatureId = useRef<string | null>(null)
+
+  const setDotFeatureState = useCallback(
+    (id: string | null, key: 'hover' | 'active', value: boolean) => {
+      const map = mapRef.current?.getMap()
+      if (!map || !id) return
+      if (!map.getSource(GL_DOT_SOURCE_ID)) return
+      try {
+        map.setFeatureState({ source: GL_DOT_SOURCE_ID, id }, { [key]: value })
+      } catch {
+        // Source can be mid-reload while the dataset grows; the next hover re-applies it.
+      }
+    },
+    []
+  )
+
+  // Keep the active pin's ring in sync when the list selection changes.
+  const prevActiveDotId = useRef<string | null>(null)
+  useEffect(() => {
+    if (!useGlDots || !mapLoaded) return
+    if (prevActiveDotId.current && prevActiveDotId.current !== activeMarkerId) {
+      setDotFeatureState(prevActiveDotId.current, 'active', false)
+    }
+    if (activeMarkerId) setDotFeatureState(activeMarkerId, 'active', true)
+    prevActiveDotId.current = activeMarkerId ?? null
+  }, [activeMarkerId, useGlDots, mapLoaded, setDotFeatureState])
+
+  const handleDotHover = useCallback(
+    (evt: mapboxgl.MapMouseEvent & { features?: mapboxgl.GeoJSONFeature[] }) => {
+      if (!useGlDots) return
+      const map = mapRef.current?.getMap()
+      const feature = evt.features?.[0]
+      const nextId = (feature?.properties?.id as string | undefined) ?? null
+
+      if (nextId === hoveredFeatureId.current) return
+      if (hoveredFeatureId.current) setDotFeatureState(hoveredFeatureId.current, 'hover', false)
+      hoveredFeatureId.current = nextId
+      if (nextId) setDotFeatureState(nextId, 'hover', true)
+
+      if (map) map.getCanvas().style.cursor = nextId ? 'pointer' : ''
+      // React state is updated only on enter/leave of a dot, not per mousemove.
+      setHoveredMarkerId(nextId)
+    },
+    [useGlDots, setDotFeatureState]
+  )
+
+  const handleDotClick = useCallback(
+    (evt: mapboxgl.MapMouseEvent & { features?: mapboxgl.GeoJSONFeature[] }) => {
+      const feature = evt.features?.find((f) => f.layer?.id === GL_DOT_LAYER_ID)
+      if (!feature || feature.geometry.type !== 'Point') return false
+      const props = feature.properties as {
+        id: string
+        name: string
+        startYear: number
+        endYear: number
+        midYear: number
+        postwarFrom?: number
+        postwarTo?: number
+      }
+      const [lng, lat] = feature.geometry.coordinates as [number, number]
+      void openBusinessPopup(
+        props.id,
+        props.name,
+        lng,
+        lat,
+        stateForYears(
+          props.startYear,
+          props.endYear,
+          props.midYear,
+          props.postwarFrom,
+          props.postwarTo
+        )
+      )
+      return true
+    },
+    [openBusinessPopup, stateForYears]
+  )
+
   const handleClusterClick = useCallback(
     (cluster: { properties: { cluster_id: number } }, lng: number, lat: number) => {
       const expansionZoom = supercluster.getClusterExpansionZoom(cluster.properties.cluster_id)
@@ -636,6 +1108,34 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     },
     [supercluster]
   )
+
+  // Pick the state that most members of a cluster are in, so the bubble carries the same
+  // active/declining/closed colour the loose dots do. Returns null when the cluster has no
+  // state tallies (e.g. a dataset loaded without state), so callers fall back to theme colour.
+  const getDominantClusterState = (properties: {
+    activeCount?: number
+    decliningCount?: number
+    closedCount?: number
+    futureCount?: number
+    standingCount?: number
+  }): keyof typeof colors | null => {
+    const tallies: [keyof typeof colors, number][] = [
+      ['active', properties.activeCount ?? 0],
+      ['declining', properties.decliningCount ?? 0],
+      ['closed', properties.closedCount ?? 0],
+      ['future', properties.futureCount ?? 0],
+      ['standing', properties.standingCount ?? 0],
+    ]
+    let best: keyof typeof colors | null = null
+    let bestCount = 0
+    for (const [state, count] of tallies) {
+      if (count > bestCount) {
+        best = state
+        bestCount = count
+      }
+    }
+    return best
+  }
 
   // Get cluster style based on theme
   const getClusterStyle = () => {
@@ -688,6 +1188,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           border: '3px solid rgba(255, 255, 255, 0.85)',
           color: 'white',
         }
+      case 'hoefe':
+        // Was missing, so hoefe silently fell through to the moody peach default.
+        return {
+          backgroundColor: '#7db5a4',
+          border: '3px solid #f5f0e1',
+          color: '#2a2a2a',
+        }
+      case 'brutal-pop':
+        return {
+          // Kiosk teal, matching getThemeMarkerColors('brutal-pop').active
+          backgroundColor: '#00D9D9',
+          border: '3px solid #131318',
+          color: '#131318',
+        }
       default: // moody
         return {
           backgroundColor: '#f5cdb4',
@@ -707,6 +1221,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         id?: string
         popup?: string
         state?: string
+        // Per-cluster state tallies produced by the Supercluster map/reduce above
+        activeCount?: number
+        decliningCount?: number
+        closedCount?: number
+        futureCount?: number
+        standingCount?: number
       }
     >
   ) => {
@@ -720,8 +1240,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     const shouldShowLabel = properties.id && labelPriorities.has(properties.id)
 
     if (properties.cluster) {
-      const size = 30 + (properties.point_count! / markers.length) * 30
-      const clusterStyle = getClusterStyle()
+      // Log scale, tightly bounded. The old formula produced 30-60px bubbles sitting next to
+      // 10px dots, so a single bubble visually outweighed the dozens of dots around it and the
+      // mass-colour effect was lost. Most bubbles now hold 4-50 points.
+      const size = Math.round(Math.min(28, 16 + Math.log2((properties.point_count ?? 2) + 1) * 2.2))
+      const themeClusterStyle = getClusterStyle()
+      // Colour the bubble by the state most of its members are in, so the time-based gradient
+      // survives clustering instead of flattening to one theme colour.
+      const dominantState = getDominantClusterState(properties)
+      const clusterStyle = dominantState
+        ? { ...themeClusterStyle, backgroundColor: colors[dominantState] }
+        : themeClusterStyle
+      const isHardEdgeTheme = theme === 'brutal-pop'
 
       // Special shapes for Bauhaus clusters
       if (theme === 'bauhaus') {
@@ -778,7 +1308,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               color: clusterStyle.color,
               width: `${size}px`,
               height: `${size}px`,
-              borderRadius: '50%',
+              // brutal-pop is a hard-edged theme; CLAUDE.md forbids border-radius, and a round
+              // soft-shadowed bubble under black-bordered brutalist chrome reads as a bug.
+              borderRadius: isHardEdgeTheme ? '0' : '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -786,7 +1318,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
               fontWeight: 700,
               fontSize: '14px',
               border: clusterStyle.border,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              boxShadow: isHardEdgeTheme ? '2px 2px 0px #131318' : '0 2px 8px rgba(0,0,0,0.2)',
               cursor: 'pointer !important',
               transition: 'transform 0.2s',
             }}
@@ -975,9 +1507,21 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                     ? 'none' // Square
                     : 'circle(50%)' // Circle
                 : undefined,
-            borderRadius: theme === 'bauhaus' ? '0' : '50%',
-            border: theme === 'bauhaus' ? '2px solid #000000' : '2px solid white',
-            boxShadow: theme === 'bauhaus' ? '2px 2px 0px #000000' : '0 2px 4px rgba(0,0,0,0.3)',
+            borderRadius: theme === 'bauhaus' || theme === 'brutal-pop' ? '0' : '50%',
+            border:
+              theme === 'bauhaus'
+                ? '2px solid #000000'
+                : theme === 'brutal-pop'
+                  ? '1px solid #131318'
+                  : '2px solid white',
+            boxShadow:
+              theme === 'bauhaus'
+                ? '2px 2px 0px #000000'
+                : theme === 'brutal-pop'
+                  ? // Flat, no blur: on a dark map a soft drop shadow just muddies the dot edge,
+                    // and thousands of blurred shadows are a real compositor cost.
+                    '1px 1px 0px #131318'
+                  : '0 2px 4px rgba(0,0,0,0.3)',
             cursor: 'pointer !important',
             transition: 'transform 0.2s',
             transform: isActive ? 'scale(1.5)' : 'scale(1)',
@@ -1005,13 +1549,30 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   }
 
   return (
-    <div className="relative h-full w-full overflow-hidden border-l border-[#6b6275]">
+    <div
+      ref={mapContainerRef}
+      className="relative h-full w-full overflow-hidden border-l border-[#6b6275]"
+    >
       <Map
         ref={mapRef}
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
+        interactiveLayerIds={useGlDots ? [GL_DOT_LAYER_ID] : undefined}
+        onMouseMove={useGlDots ? handleDotHover : undefined}
+        onMouseOut={
+          useGlDots
+            ? () => {
+                if (hoveredFeatureId.current) {
+                  setDotFeatureState(hoveredFeatureId.current, 'hover', false)
+                  hoveredFeatureId.current = null
+                  setHoveredMarkerId(null)
+                }
+              }
+            : undefined
+        }
         onClick={(evt) => {
-          // Only close popup if clicking on empty map area (not on markers)
+          // A dot hit takes precedence; only a click on bare map closes the popup.
+          if (useGlDots && handleDotClick(evt)) return
           if (!evt.features || evt.features.length === 0) {
             // Don't do anything that would cause re-render and lose labels
             // Just optionally close the popup
@@ -1134,7 +1695,77 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         maxZoom={20}
         minZoom={3}
       >
-        {/* Render all markers and clusters */}
+        {/* GPU dot layer - the main storymap's 10k points. One source, recoloured by
+            expression as the slider moves. See GL_DOT_LAYER above. */}
+        {useGlDots && (
+          <Source id={GL_DOT_SOURCE_ID} type="geojson" data={dotsGeoJSON} promoteId="id">
+            <Layer {...dotLayer} />
+          </Source>
+        )}
+
+        {/* Labels for the dot layer. Capped per zoom, so this stays tens of nodes, not thousands. */}
+        {useGlDots &&
+          glLabels.map((feature) => {
+            const props = feature.properties as {
+              id: string
+              name: string
+              startYear: number
+              endYear: number
+              midYear: number
+              postwarFrom?: number
+              postwarTo?: number
+            }
+            const [lng, lat] = feature.geometry.coordinates
+            const state = stateForYears(
+              props.startYear,
+              props.endYear,
+              props.midYear,
+              props.postwarFrom,
+              props.postwarTo
+            )
+            const isHovered = hoveredMarkerId === props.id
+            const chip =
+              state === 'standing'
+                ? colors.standing
+                : state === 'declining'
+                  ? colors.declining
+                  : state === 'closed'
+                    ? colors.closed
+                    : state === 'future'
+                      ? colors.future || colors.active
+                      : colors.active
+            return (
+              <Marker
+                key={`gl-label-${props.id}`}
+                longitude={lng}
+                latitude={lat}
+                anchor="bottom"
+                offset={[0, -10]}
+              >
+                <div
+                  className="px-2 py-1 text-xs font-mono font-bold whitespace-nowrap cursor-pointer"
+                  style={{
+                    background: withAlpha(chip, 0.91),
+                    color: readableTextOn(chip),
+                    border: `1px solid ${chip}`,
+                    boxShadow: isHardEdgeTheme
+                      ? '2px 2px 0px #131318'
+                      : '0 2px 6px rgba(0,0,0,0.2)',
+                    opacity: isHovered ? 1 : 0.9,
+                    pointerEvents: 'auto',
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    void openBusinessPopup(props.id, props.name, lng, lat, state)
+                  }}
+                >
+                  {props.name}
+                </div>
+              </Marker>
+            )
+          })}
+
+        {/* Render all markers and clusters (DOM path: Frankfurt + /jewish-businesses) */}
         {mapLoaded &&
           clusters &&
           clusters.length > 0 &&
@@ -1219,6 +1850,25 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                       `${new Date(popupInfo.properties.startDate).getFullYear()} - 
                        ${new Date(popupInfo.properties.endDate).getFullYear()}`}
                   </div>
+                  {/* Sector recorded by HU Berlin. `color: inherit` is load-
+                      bearing: the popup background is state-dependent, so any
+                      fixed colour fails contrast on one of the states. */}
+                  {Boolean(popupInfo.properties.sectorKey || popupInfo.properties.businessType) && (
+                    <div
+                      className="text-xs uppercase tracking-wide mb-2 px-2 py-1 inline-block"
+                      style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        color: 'inherit',
+                      }}
+                    >
+                      {sectorLabel(
+                        t,
+                        popupInfo.properties.sectorKey as string | undefined,
+                        popupInfo.properties.businessType as string | undefined
+                      )}
+                    </div>
+                  )}
                   {(() => {
                     // Get timeline-aware description if available
                     const timelineData =
@@ -1241,6 +1891,35 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                         {description}
                       </p>
                     ) : null
+                  })()}
+                  {/* Researched fate and present-day building, for the curated
+                      stories. Rendered under a hairline rule so it reads as a
+                      second register rather than more description. */}
+                  {(() => {
+                    const stop = TOUR_BY_ID[String(popupInfo.properties.id)]
+                    if (!stop) return null
+                    return (
+                      <div
+                        className="mt-3 pt-2 text-xs"
+                        style={{
+                          borderTop: '1px solid rgba(255, 255, 255, 0.25)',
+                          color: 'inherit',
+                        }}
+                      >
+                        <div className="mb-1">
+                          <span className="uppercase tracking-wide" style={{ opacity: 0.7 }}>
+                            {t('mainPage.popup.fate', { defaultValue: 'What happened' })}:
+                          </span>{' '}
+                          <span style={{ opacity: 0.95 }}>{stop.fate}</span>
+                        </div>
+                        <div className="line-clamp-3">
+                          <span className="uppercase tracking-wide" style={{ opacity: 0.7 }}>
+                            {t('mainPage.popup.building', { defaultValue: 'The site today' })}:
+                          </span>{' '}
+                          <span style={{ opacity: 0.95 }}>{stop.building}</span>
+                        </div>
+                      </div>
+                    )
                   })()}
                   {/* Timeline Data Availability Indicator */}
                   {Boolean(popupInfo.properties.hasTimelineData) && (
@@ -1327,6 +2006,20 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         />
       </Map>
 
+      {/* Legend. Only rendered when the parent owns the filter state — without
+          onSelectCategory its category rows would be inert. */}
+      {selectedCategory !== undefined && onSelectCategory && (
+        <div className="absolute bottom-4 left-4 z-[1000]">
+          <MapLegend
+            stories={enrichedStories}
+            theme={theme}
+            selectedCategory={selectedCategory}
+            onSelectCategory={onSelectCategory}
+            currentYear={currentYear}
+          />
+        </div>
+      )}
+
       {/* Custom Zoom Controls */}
       <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
         <button
@@ -1401,7 +2094,11 @@ export default React.memo(MapboxMap, (prevProps, nextProps) => {
     getPrevCenter[0] !== getNextCenter[0] ||
     getPrevCenter[1] !== getNextCenter[1] ||
     prevProps.zoom !== nextProps.zoom ||
-    prevProps.activeMarkerId !== nextProps.activeMarkerId
+    prevProps.activeMarkerId !== nextProps.activeMarkerId ||
+    // Must be listed explicitly: this comparator falls through to "equal" for
+    // any prop it does not name, so an omitted selectedCategory would leave
+    // the legend frozen on its first render with no error anywhere.
+    prevProps.selectedCategory !== nextProps.selectedCategory
   ) {
     return false
   }
@@ -1413,9 +2110,13 @@ export default React.memo(MapboxMap, (prevProps, nextProps) => {
     return false
   }
 
-  // Array length checks before deep comparison
+  // Array length checks before deep comparison.
+  // timeMarkers must be listed: it feeds the GL dot source, and this comparator treats any
+  // prop it does not name as unchanged - omitting it would freeze the dot layer at whatever
+  // the first progressive-load batch contained, with no error anywhere.
   if (
     prevProps.markers?.length !== nextProps.markers?.length ||
+    prevProps.timeMarkers?.length !== nextProps.timeMarkers?.length ||
     prevProps.enrichedStories?.length !== nextProps.enrichedStories?.length
   ) {
     return false

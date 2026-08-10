@@ -41,7 +41,13 @@
   z-index: 0;
   background: var(--ht-paper);
 }
-.ht-map {
+/* Two classes, not one: the map element also carries .maplibregl-map, whose
+   own `position: relative` has equal specificity. Which one wins then comes
+   down to stylesheet order, and Next's CSS chunking does not guarantee that
+   — when maplibre's sheet lands last, `inset: 0` on a relative element
+   collapses the stage to 0 height and the map renders blank. Scoping to
+   .htour makes this rule win regardless of order. */
+.htour .ht-map {
   position: absolute;
   inset: 0;
   /* aged aerial-survey grade over the satellite relief */
@@ -563,6 +569,65 @@
   line-height: 1.6;
   color: var(--ht-ink-soft);
 }
+/* expandable full catalogue account */
+.ht-card-expand {
+  display: block;
+  width: 100%;
+  margin: 0 0 0.9rem;
+  padding: 8px 10px;
+  font-family: var(--ht-font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--ht-ink);
+  background: transparent;
+  border: 1px solid var(--ht-hairline);
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+.ht-card-expand:hover {
+  background: var(--ht-paper-deep);
+  border-color: var(--ht-ink-soft);
+}
+.ht-card-expand:focus,
+.ht-card-expand:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border-color: var(--ht-accent);
+}
+.ht-card-long {
+  max-height: 46vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin-bottom: 1rem;
+  padding: 0 12px 2px 0;
+  border-left: 2px solid var(--ht-accent);
+  padding-left: 12px;
+}
+.ht-card-long-title {
+  font-family: var(--ht-font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  margin-bottom: 0.6rem;
+  color: var(--ht-ink);
+}
+.ht-card-long p {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--ht-ink-soft);
+  margin-bottom: 0.7rem;
+}
+.ht-card-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
 .ht-card-fate {
   display: inline-block;
   font-family: var(--ht-font-mono);

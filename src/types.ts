@@ -33,8 +33,16 @@ export interface StoryMap {
   lat: number
   lng: number
   address?: string
+  // Vestigial. Holds 'business' in storymaps.json but a main-branch value
+  // ('trade', 'industry', …) in storymaps_test_full.json, so it is no longer
+  // read for filtering or labelling — use mainBranch/sectorKey below.
   category?: 'business' | 'institution' | 'residence'
-  businessType?: string
+
+  // HU Berlin taxonomy, recovered by scripts/recover_branch_fields_2026.py.
+  businessType?: string // raw Branche label from the source (EN or DE as emitted)
+  sectorKey?: string // stable slug for i18n, e.g. 'TEXTILES_AND_CLOTHING'
+  mainBranch?: 'trade' | 'industry' | 'services' | 'handicraft' // Hauptbranche
+  branchSource?: string // provenance of the two fields above
   startDate: string | null
   midDate: string | null
   endDate: string | null
@@ -64,6 +72,8 @@ export interface GeoJSONFeature {
     name: string
     category?: string
     businessType?: string
+    sectorKey?: string
+    mainBranch?: string
     description?: string
     startDate?: string
     endDate?: string

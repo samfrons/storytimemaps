@@ -1,0 +1,95 @@
+{
+  "totals": {
+    "records": 2761,
+    "sector": 2491,
+    "mainBranch": 2216,
+    "neither": 161,
+    "not_found": 109,
+    "duplicate_reused": 0,
+    "distinct_sectors": 25,
+    "ambiguous": 8,
+    "category_conflicts": 0
+  },
+  "unmapped_labels": [],
+  "main_branch_counts": {
+    "trade": 1597,
+    "industry": 497,
+    "services": 90,
+    "handicraft": 32
+  },
+  "sector_counts": {
+    "TEXTILES_AND_CLOTHING": 842,
+    "FOOD_AND_BEVERAGES": 260,
+    "BANKS_AND_INSURANCE": 214,
+    "CHEMICALS_AND_PHARMACEUTICALS": 133,
+    "FURNITURE": 94,
+    "OTHER": 87,
+    "MACHINES_AND_VEHICLES": 87,
+    "LEATHER_AND_SHOES": 86,
+    "REAL_ESTATE": 85,
+    "METALS_AND_METAL_GOODS": 83,
+    "CONSTRUCTION_MATERIALS_AND_FUEL": 68,
+    "PUBLISHING_AND_PRINTING": 62,
+    "PAPER_AND_PAPER_GOODS": 49,
+    "PHARMACIES": 48,
+    "JEWELRY_AND_PRECIOUS_METALS": 45,
+    "HOUSEHOLD_GOODS": 41,
+    "ELECTRICAL_GOODS": 38,
+    "CONSTRUCTION": 36,
+    "BOOKS_AND_ART": 35,
+    "RESTAURANTS": 30,
+    "PHOTOGRAPHY_AND_FILM": 18,
+    "TRANSPORTATION": 17,
+    "DEPARTMENT_STORES": 16,
+    "ADVERTISING": 14,
+    "USED_GOODS": 3
+  },
+  "ambiguous_titles": [
+    {
+      "id": "528",
+      "title": "Alfred Hartbrodt",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "529",
+      "title": "Alfred Hartbrodt",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "1140",
+      "title": "Berlin-Suhler Waffen- und Fahrzeugwerke Simson & Co",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "1151",
+      "title": "Berlin-Suhler Waffen- und Fahrzeugwerke Simson & Co",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "2347",
+      "title": "Eisladen der Senta Reibach-Ruß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "3655",
+      "title": "Groß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "3656",
+      "title": "Groß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "3749",
+      "title": "Gustav Levy",
+      "quality": "exact_ambiguous_2"
+    }
+  ],
+  "category_conflicts": [],
+  "cache": {
+    "pages_seen": 1003,
+    "total_entries": 10021,
+    "extraction_failures": 0
+  }
+}

@@ -8,7 +8,7 @@
 
 /* Default/Moody Theme */
 :root,
-[data-theme="moody"] {
+[data-theme='moody'] {
   --primary: #97d8c0;
   --primary-rgb: 151, 216, 192;
   --primary-light: #a9e2d0;
@@ -28,6 +28,10 @@
   --border: #6b6275;
   --shadow: rgba(0, 0, 0, 0.3);
   --map-overlay: rgba(59, 51, 64, 0.1);
+  /* Surface for the floating map legend. Declared once here: the rgba() resolves --muted-rgb
+     from whichever [data-theme] is on the element, so every theme keeps its old mid-tone panel
+     without restating this. Themes whose chrome is NOT mid-tone override it (see brutal-pop). */
+  --legend-bg: rgba(var(--muted-rgb), 0.9);
   --accent-orange: #eca27d;
   --accent-yellow: #ffcb51;
   --accent-purple: #9dc8fc;
@@ -50,7 +54,7 @@
 }
 
 /* Cool Theme - Light blues and teals */
-[data-theme="cool"] {
+[data-theme='cool'] {
   --primary: #4a90e2;
   --primary-rgb: 74, 144, 226;
   --primary-light: #6ba3e7;
@@ -92,7 +96,7 @@
 }
 
 /* Warm Theme - Oranges, browns, earthy */
-[data-theme="warm"] {
+[data-theme='warm'] {
   --primary: #d67b5a;
   --primary-rgb: 214, 123, 90;
   --primary-light: #e8956f;
@@ -134,7 +138,7 @@
 }
 
 /* Hot Theme - Bloody Water inspired reds */
-[data-theme="hot"] {
+[data-theme='hot'] {
   --primary: #6b1f2a;
   --primary-rgb: 107, 31, 42;
   --primary-light: #ff6666;
@@ -176,7 +180,7 @@
 }
 
 /* Cold Theme - Icy blues, grays */
-[data-theme="cold"] {
+[data-theme='cold'] {
   --primary: #64b5f6;
   --primary-rgb: 100, 181, 246;
   --primary-light: #90caf9;
@@ -218,7 +222,7 @@
 }
 
 /* Bauhaus Theme - Primary colors, black/white with light backgrounds */
-[data-theme="bauhaus"] {
+[data-theme='bauhaus'] {
   --primary: #0066ff;
   --primary-rgb: 0, 102, 255;
   --primary-light: #3388ff;
@@ -260,7 +264,7 @@
 }
 
 /* Art Nouveau Theme - Muted greens, browns, golds */
-[data-theme="art-nouveau"] {
+[data-theme='art-nouveau'] {
   --primary: #8b7355;
   --primary-rgb: 139, 115, 85;
   --primary-light: #a0916b;
@@ -302,7 +306,7 @@
 }
 
 /* Archival Theme - Based on Arolsen Archives design */
-[data-theme="archival"] {
+[data-theme='archival'] {
   --primary: #2c4a7c; /* Navy-slate rich blue for UI elements */
   --primary-rgb: 44, 74, 124;
   --primary-light: #3d5a8c;
@@ -392,6 +396,109 @@
   --font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
 }
 
+/*
+ * Brutal Pop - the /museum-exhibit look brought into the theme system.
+ *
+ * Chrome is near-black and recedes; the map beneath it is charcoal with gold roads; the ONLY
+ * high-chroma things on screen are the business-state pins. That is the whole idea: the "pop"
+ * is the data, not the furniture. The accents are the kiosk's own four - teal #00D9D9,
+ * yellow #FFD93D, orange #FF6B35, purple #C589E8 - so /museum-exhibit and this theme read as
+ * one design. --success/--warning/--danger are set to the exact marker colours from
+ * getThemeMarkerColors('brutal-pop') so the legend swatches and the pins match.
+ * Brutalism here comes from weight and hard edges: cream panels sitting on the charcoal map,
+ * ruled with near-black borders. The panel mass IS the look on the kiosk - the map is framed
+ * by it rather than washed over by a tinted scrim - so the chrome is light and the ground
+ * behind it stays dark. --background is cream because it is the page ground the panels sit on;
+ * the map itself is a Mapbox style and is not driven by these variables.
+ */
+[data-theme='brutal-pop'] {
+  --primary: #00d9d9;
+  --primary-rgb: 0, 217, 217;
+  --primary-light: #6df0f0;
+  --secondary: #ff6b35;
+  --warning: #ffd93d;
+  --warning-rgb: 255, 217, 61;
+  --danger: #ff6b35;
+  --danger-rgb: 255, 107, 53;
+  --success: #00d9d9;
+  --success-rgb: 0, 217, 217;
+  --background: #f2efe6;
+  --background-rgb: 242, 239, 230;
+  --foreground: #131318;
+  --foreground-muted: #4a4a55;
+  /* --muted is a TEXT colour in this codebase as often as it is a surface (section eyebrows,
+     the hero's caption, ConceptSection's card tags all set `color: var(--muted)`), so it has
+     to be a mid-tone. A cream value here reads as "invisible" on the cream ground. */
+  --muted: #6f6b7d;
+  --muted-rgb: 111, 107, 125;
+  --border: #131318;
+  --shadow: rgba(19, 19, 24, 0.35);
+  --map-overlay: rgba(242, 239, 230, 0.94);
+  /* Every other theme's chrome is mid-tone or darker, so the legend's default mid-tone panel
+     blends in. Here the chrome is cream, and the default left the legend as the one dark box
+     on the screen - and its "not yet opened" swatch invisible against it. */
+  --legend-bg: rgba(255, 253, 247, 0.94);
+  --accent-orange: #ff6b35;
+  --accent-yellow: #ffd93d;
+  --accent-purple: #c589e8;
+  --accent-coral: #ff6b35;
+  --accent-navy: #2a2a44;
+  --accent-chartreuse: #00d9d9;
+  --dropdown-bg: #fffdf7;
+  --dropdown-bg-rgb: 255, 253, 247;
+  --card-bg: #fffdf7;
+  --card-bg-rgb: 255, 253, 247;
+  --input-bg: #fffdf7;
+  --input-bg-rgb: 255, 253, 247;
+  --placeholder-color: #6b6b7d;
+  --active-text: #131318;
+  --active-text-secondary: #2a2a34;
+  --declining-text: #131318;
+  --declining-text-secondary: #2a2a34;
+  --closed-text: #131318;
+  --closed-text-secondary: #2a2a34;
+  /* globals.css defines a .font-display utility that reads this; only hoefe set it before,
+     so without this line the utility silently falls back to the browser default. */
+  --font-display: var(--font-space-mono), 'Space Mono', ui-monospace, monospace;
+}
+
+/*
+ * Post-1945 "standing" marker colour.
+ *
+ * Mirrors getThemeMarkerColors(theme).standing in src/utils/mapStyles.ts, which is the source of
+ * truth because Mapbox needs literal hex. This variable exists so the time-slider legend swatch
+ * matches the pins without hardcoding colours in the component. Keep the two in sync.
+ *
+ * Grouped by background luminance, not by theme family: light-ground themes need a dark pin and
+ * dark-ground themes need a light one, which is exactly why mapStyles.ts had to stop sharing one
+ * block between moody and the four light themes.
+ */
+:root,
+[data-theme='moody'] {
+  --marker-standing: #e8e8f0;
+}
+[data-theme='cool'],
+[data-theme='warm'],
+[data-theme='cold'],
+[data-theme='art-nouveau'] {
+  --marker-standing: #2c3e50;
+}
+[data-theme='bauhaus'] {
+  --marker-standing: #000000;
+}
+[data-theme='hot'] {
+  --marker-standing: #ffffff;
+}
+[data-theme='archival'] {
+  --marker-standing: rgba(18, 28, 46, 0.92);
+}
+[data-theme='hoefe'] {
+  --marker-standing: #2f4858;
+}
+[data-theme='brutal-pop'] {
+  --marker-standing: #c589e8;
+}
+
 /* Hoefe theme - Typography overrides */
 [data-theme='hoefe'] h1,
 [data-theme='hoefe'] h2,
@@ -433,7 +540,11 @@
 /* Hoefe theme - Small caps labels */
 [data-theme='hoefe'] .text-xs.uppercase,
 [data-theme='hoefe'] .category-label {
-  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+  font-family:
+    var(--font-inter),
+    'Inter',
+    -apple-system,
+    sans-serif !important;
   font-weight: 600 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
@@ -446,12 +557,20 @@
 [data-theme='hoefe'] label,
 [data-theme='hoefe'] input,
 [data-theme='hoefe'] button:not(.text-lg):not(.text-xl) {
-  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+  font-family:
+    var(--font-inter),
+    'Inter',
+    -apple-system,
+    sans-serif !important;
 }
 
 /* Hoefe theme - Override font-mono for body text only */
 [data-theme='hoefe'] .font-mono:not(.text-lg):not(.text-xl):not(.text-2xl):not(h1):not(h2):not(h3) {
-  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif !important;
+  font-family:
+    var(--font-inter),
+    'Inter',
+    -apple-system,
+    sans-serif !important;
 }
 
 /* Hoefe theme - Refined panel/card styling */
@@ -523,7 +642,12 @@ Additional fonts loaded dynamically only when needed to prevent render blocking
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   font-size: 14px;
   line-height: 1.5;
   letter-spacing: -0.01em;
@@ -542,35 +666,35 @@ body {
     -webkit-touch-callout: none;
     touch-action: manipulation; /* Faster touch response */
   }
-  
+
   /* Enable hardware acceleration for scrolling */
   .overflow-y-auto,
   .overflow-x-auto {
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
   }
-  
+
   /* Reduce animation complexity on mobile */
   .transition-all {
     transition-property: transform, opacity;
     transition-duration: 200ms;
   }
-  
+
   /* Optimize map container for mobile */
   .mapboxgl-canvas {
     will-change: transform;
   }
-  
+
   /* Reduce shadow complexity on mobile */
   .shadow-lg {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
-  
+
   /* Font optimizations for mobile */
   body {
     font-size: 13px; /* Slightly smaller on mobile */
   }
-  
+
   /* Disable animations for low-end devices */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -678,69 +802,66 @@ textarea:-ms-input-placeholder {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   /* Optimized Typography Classes - using system fonts for performance */
   .font-display {
     font-family: var(--font-inter), system-ui, sans-serif;
     font-weight: 600;
   }
-  
+
   .font-serif {
     font-family: Georgia, 'Times New Roman', Times, serif;
   }
-  
+
   .font-mono-modern {
-    font-family: var(--font-space-mono), 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-family:
+      var(--font-space-mono), 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
+      'Courier New', monospace;
   }
-  
+
   /* Text effects */
   .text-shadow-subtle {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
-  
+
   .text-shadow-strong {
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   }
-  
+
   /* Decorative textures */
   .texture-grain {
-    background-image: 
-      radial-gradient(circle at 1px 1px, rgba(245, 205, 180, 0.15) 1px, transparent 0);
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(245, 205, 180, 0.15) 1px,
+      transparent 0
+    );
     background-size: 20px 20px;
   }
-  
+
   .texture-diagonal {
-    background-image: 
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 2px,
-        rgba(245, 205, 180, 0.03) 2px,
-        rgba(245, 205, 180, 0.03) 4px
-      );
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(245, 205, 180, 0.03) 2px,
+      rgba(245, 205, 180, 0.03) 4px
+    );
   }
-  
+
   .texture-dots {
-    background-image: 
-      radial-gradient(circle, rgba(245, 205, 180, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(245, 205, 180, 0.1) 1px, transparent 1px);
     background-size: 15px 15px;
   }
-  
+
   /* Modern gradients */
   .bg-premium-gradient {
-    background: linear-gradient(135deg, 
-      #ffffff 0%, 
-      #fafafa 50%, 
-      #f5f5f5 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 50%, #f5f5f5 100%);
   }
-  
+
   .bg-accent-gradient {
-    background: linear-gradient(135deg, 
-      #3b82f6 0%, 
-      #8b5cf6 50%, 
-      #ec4899 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
   }
-  
+
   /* Modern animations */
   @keyframes fadeInUp {
     from {
@@ -752,7 +873,7 @@ textarea:-ms-input-placeholder {
       transform: translateY(0);
     }
   }
-  
+
   @keyframes scaleIn {
     from {
       opacity: 0;
@@ -763,7 +884,7 @@ textarea:-ms-input-placeholder {
       transform: scale(1);
     }
   }
-  
+
   @keyframes slideInLeft {
     from {
       opacity: 0;
@@ -774,24 +895,24 @@ textarea:-ms-input-placeholder {
       transform: translateX(0);
     }
   }
-  
+
   .animate-fadeInUp {
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
+
   .animate-scaleIn {
     animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
+
   .animate-slideInLeft {
     animation: slideInLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
+
   /* Hover effects */
   .hover-lift {
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .hover-lift:hover {
     transform: translateY(-4px);
   }
@@ -801,68 +922,68 @@ textarea:-ms-input-placeholder {
   .card {
     @apply bg-white dark:bg-slate-800/95 shadow-sm hover:shadow-md transition-shadow duration-200 border border-border;
   }
-  
+
   .btn-primary {
     @apply bg-primary text-white px-4 py-2 hover:bg-primary-light transition-all duration-200 font-medium text-sm shadow-sm hover:shadow;
   }
-  
+
   .btn-secondary {
     @apply bg-transparent border border-border text-foreground px-4 py-2 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-200 font-medium text-sm;
   }
-  
+
   .panel {
     @apply bg-white dark:bg-slate-900 border border-border shadow-sm;
   }
-  
+
   .marker-active {
     @apply bg-primary border-2 border-white shadow-lg;
   }
-  
+
   .marker-declining {
     @apply bg-warning border-2 border-white shadow-lg;
   }
-  
+
   .marker-closed {
     @apply bg-danger border-2 border-white shadow-lg;
   }
-  
+
   .smooth-transition {
     @apply transition-all duration-300 ease-in-out;
   }
-  
+
   .map-gradient {
     background: rgba(30, 30, 40, 0.15);
     pointer-events: none;
   }
-  
+
   .tooltip-label {
     @apply px-2 py-1 text-xs font-mono shadow-lg border;
     letter-spacing: 0.02em;
     z-index: 999999 !important;
     position: relative !important;
   }
-  
+
   .tooltip-label-active {
     background: rgba(var(--primary-rgb), 0.98);
     color: var(--foreground);
     border: 1px solid var(--primary);
     font-weight: 600;
   }
-  
+
   .tooltip-label-declining {
     background: rgba(255, 203, 81, 0.98);
     color: #2a2a2a;
     border: 1px solid #ffcb51;
     font-weight: 600;
   }
-  
+
   .tooltip-label-closed {
     background: rgba(238, 87, 96, 0.98);
     color: #ffffff;
     border: 1px solid #ee5760;
     font-weight: 600;
   }
-  
+
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -873,11 +994,11 @@ textarea:-ms-input-placeholder {
       transform: translateY(0);
     }
   }
-  
+
   .animate-fade-in {
     animation: fade-in 0.3s ease-out;
   }
-  
+
   @keyframes expand-modal {
     from {
       max-height: 0;
@@ -888,7 +1009,7 @@ textarea:-ms-input-placeholder {
       opacity: 1;
     }
   }
-  
+
   .modal-expand {
     animation: expand-modal 0.5s ease-out forwards;
   }
@@ -921,7 +1042,7 @@ textarea:-ms-input-placeholder {
 .mapbox-detail-popup .mapboxgl-popup-content {
   padding: 0 !important;
   border-radius: 0px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button {
@@ -934,7 +1055,7 @@ textarea:-ms-input-placeholder {
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .mapbox-detail-popup .mapboxgl-popup-close-button:focus {
@@ -973,52 +1094,52 @@ textarea:-ms-input-placeholder {
 }
 
 /* Hot theme specific styles */
-[data-theme="hot"] .hot-sidebar {
+[data-theme='hot'] .hot-sidebar {
   background-color: rgba(139, 0, 0, 0.9) !important;
 }
 
-[data-theme="hot"] .hot-button {
+[data-theme='hot'] .hot-button {
   background-color: rgba(139, 0, 0, 0.8) !important;
   color: #ffffff !important;
   border-color: #ff9999 !important;
 }
 
-[data-theme="hot"] .hot-button:hover {
+[data-theme='hot'] .hot-button:hover {
   background-color: #ff6666 !important;
 }
 
-[data-theme="hot"] .hot-button-active {
+[data-theme='hot'] .hot-button-active {
   background-color: #ff6666 !important;
   color: #ffffff !important;
   border-color: #ff9999 !important;
 }
 
-[data-theme="hot"] .hot-intro-button {
+[data-theme='hot'] .hot-intro-button {
   background-color: #8b0000 !important;
   border-color: #8b0000 !important;
   color: #ffffff !important;
 }
 
-[data-theme="hot"] .hot-close-button {
+[data-theme='hot'] .hot-close-button {
   background-color: rgba(139, 0, 0, 0.8) !important;
   color: #ffffff !important;
   border-color: var(--border) !important;
 }
 
-[data-theme="hot"] .hot-dropdown {
+[data-theme='hot'] .hot-dropdown {
   background-color: rgba(139, 0, 0, 0.95) !important;
   color: #ffffff !important;
 }
 
-[data-theme="hot"] .hot-dropdown button {
+[data-theme='hot'] .hot-dropdown button {
   color: #ffffff !important;
 }
 
-[data-theme="hot"] .hot-dropdown button:hover {
+[data-theme='hot'] .hot-dropdown button:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-[data-theme="hot"] .hot-dropdown .dropdown-active {
+[data-theme='hot'] .hot-dropdown .dropdown-active {
   background-color: rgba(255, 255, 255, 0.2) !important;
   color: #ffffff !important;
   border-left-color: #ffffff !important;
@@ -1040,13 +1161,13 @@ textarea:-ms-input-placeholder {
 }
 
 /* Hot theme zoom buttons */
-[data-theme="hot"] .zoom-button {
+[data-theme='hot'] .zoom-button {
   background-color: rgba(139, 38, 53, 0.9) !important;
   border-color: #d4596a !important;
   color: #5c1a23 !important;
 }
 
-[data-theme="hot"] .zoom-button:hover {
+[data-theme='hot'] .zoom-button:hover {
   background-color: rgba(125, 38, 51, 1) !important;
   color: #3d3d4e !important;
 }
@@ -1065,7 +1186,9 @@ textarea:-ms-input-placeholder {
 
 /* Auth input fields */
 .auth-input {
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .auth-input:focus {
@@ -1075,7 +1198,10 @@ textarea:-ms-input-placeholder {
 
 /* Primary action button (Continue, Sign In, Create Account) */
 .auth-btn-primary {
-  transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
 }
 
 .auth-btn-primary:hover:not(:disabled) {
@@ -1092,7 +1218,10 @@ textarea:-ms-input-placeholder {
 
 /* Secondary button (Google sign-in) */
 .auth-btn-secondary {
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
 }
 
 .auth-btn-secondary:hover:not(:disabled) {
@@ -1140,7 +1269,9 @@ textarea:-ms-input-placeholder {
 
 /* Cancel/dismiss button */
 .auth-btn-cancel {
-  transition: color 0.15s ease, opacity 0.15s ease;
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .auth-btn-cancel:hover:not(:disabled) {
@@ -1158,7 +1289,9 @@ textarea:-ms-input-placeholder {
 }
 
 .auth-modal-panel {
-  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.2s ease-out;
 }
 
 /* Slide-in animation for messages */
@@ -1175,4 +1308,165 @@ textarea:-ms-input-placeholder {
 
 .auth-message {
   animation: auth-slide-in 0.2s ease-out;
+}
+
+/*
+ * Workbook prose (/education).
+ *
+ * react-markdown emits bare HTML, and this project has no Tailwind typography
+ * plugin, so the workbook needs its own type scale. Everything is expressed in
+ * theme variables so the document inherits whichever theme is active - the
+ * point of putting it on the site rather than shipping a PDF.
+ *
+ * No border-radius anywhere here, per the project rule.
+ */
+.workbook-prose {
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.workbook-prose h1 {
+  font-family: var(--font-display, var(--font-space-mono)), 'Space Mono', monospace;
+  font-size: 2rem;
+  line-height: 1.15;
+  margin: 3.5rem 0 1rem;
+  padding-top: 2.5rem;
+  border-top: 3px solid var(--border);
+  color: var(--foreground);
+}
+.workbook-prose h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.workbook-prose h2 {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 2.75rem 0 0.9rem;
+  color: var(--foreground);
+}
+.workbook-prose h3 {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 2rem 0 0.75rem;
+  color: var(--foreground);
+}
+.workbook-prose h4 {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 1.75rem 0 0.6rem;
+  color: var(--primary);
+}
+.workbook-prose p {
+  margin: 0 0 1.1rem;
+  color: var(--foreground-muted);
+}
+.workbook-prose strong {
+  color: var(--foreground);
+  font-weight: 700;
+}
+.workbook-prose em {
+  color: var(--foreground);
+}
+.workbook-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.workbook-prose ul,
+.workbook-prose ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.4rem;
+  color: var(--foreground-muted);
+}
+.workbook-prose ul {
+  list-style: square;
+}
+.workbook-prose ol {
+  list-style: decimal;
+}
+.workbook-prose li {
+  margin-bottom: 0.5rem;
+}
+.workbook-prose li::marker {
+  color: var(--primary);
+}
+.workbook-prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+.workbook-prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 4px solid var(--primary);
+  color: var(--foreground);
+  font-style: italic;
+}
+.workbook-prose code {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.875em;
+  background: rgba(var(--muted-rgb), 0.25);
+  padding: 0.1em 0.35em;
+}
+/* Tables carry the worksheet grids, so they must scroll rather than overflow. */
+.workbook-prose .workbook-table-scroll {
+  overflow-x: auto;
+  margin: 0 0 1.5rem;
+}
+.workbook-prose table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 28rem;
+  font-size: 0.875rem;
+}
+.workbook-prose th,
+.workbook-prose td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  color: var(--foreground-muted);
+}
+.workbook-prose th {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--foreground);
+  background: rgba(var(--muted-rgb), 0.18);
+}
+
+/* Print: drop the site chrome so a teacher gets the worksheets, not the page. */
+@media print {
+  .education-print-btn,
+  .education-no-print {
+    display: none !important;
+  }
+  .workbook-prose {
+    color: #000;
+    font-size: 11pt;
+  }
+  .workbook-prose p,
+  .workbook-prose li,
+  .workbook-prose td,
+  .workbook-prose th {
+    color: #000;
+  }
+  .workbook-prose h1 {
+    page-break-before: always;
+  }
+  .workbook-prose h1:first-child {
+    page-break-before: avoid;
+  }
+  .workbook-prose h2,
+  .workbook-prose h3 {
+    page-break-after: avoid;
+  }
 }

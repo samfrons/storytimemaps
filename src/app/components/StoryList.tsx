@@ -17,6 +17,17 @@ import {
   getTranslatedDescription,
   getTranslatedBusinessName,
 } from '../../utils/businessTranslations'
+import {
+  ALL_CATEGORIES,
+  UNCATEGORISED,
+  mainBranchLabel,
+  mainFilterValue,
+  matchesFilter,
+  parseFilter,
+  sectorFilterValue,
+  sectorLabel,
+  tallyCategories,
+} from '../../utils/businessSectors'
 import { loadTimelineData, getTimelineContentForDate } from '../../utils/timelineLoader'
 import { loadYearMarkers, sortMarkers, getMarkerDate } from '../../utils/yearMarkerLoader'
 
@@ -29,6 +40,17 @@ interface StoryListProps {
   setCurrentDate: (date: Date) => void
   onStoryClick: (storyId: string) => void
   autoOpenDetailId?: string | null
+  /** Records still in this list but withheld from the map because their address is ungeocoded. */
+  unlocatedCount?: number
+  /** Drawer layout renders the time slider over the map instead of inside this header. */
+  hideTimeSlider?: boolean
+  /**
+   * Category filter. Optional so this component still works standalone, but
+   * page.tsx passes both so the map legend and this dropdown drive the same
+   * selection.
+   */
+  selectedCategory?: string
+  onSelectCategory?: (value: string) => void
 }
 
 const StoryList: React.FC<StoryListProps> = ({
@@ -40,6 +62,10 @@ const StoryList: React.FC<StoryListProps> = ({
   setCurrentDate,
   onStoryClick,
   autoOpenDetailId,
+  unlocatedCount = 0,
+  hideTimeSlider = false,
+  selectedCategory: controlledCategory,
+  onSelectCategory,
 }) => {
   const [selectedStory, setSelectedStory] = useState<StoryMap | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
@@ -52,7 +78,11 @@ const StoryList: React.FC<StoryListProps> = ({
   const storyRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
   const [searchQuery, setSearchQuery] = useState('')
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  // Controlled when page.tsx supplies both props (so the map legend stays in
+  // sync), uncontrolled otherwise.
+  const [internalCategory, setInternalCategory] = useState(ALL_CATEGORIES)
+  const selectedCategory = controlledCategory ?? internalCategory
+  const setSelectedCategory = onSelectCategory ?? setInternalCategory
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false)
   const [showSearchFilter, setShowSearchFilter] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -110,6 +140,38 @@ const StoryList: React.FC<StoryListProps> = ({
       })
     }
     setIsDropdownOpen(!isDropdownOpen)
+  }
+
+  /**
+   * One row of the category dropdown. Sectors are rendered indented under
+   * their branch; the active row keeps the existing border-left treatment so
+   * selection stays visible without a focus ring (project rule: no blue
+   * outlines) and without a rounded corner.
+   */
+  const renderCategoryOption = (value: string, label: string, count?: number, indented = false) => {
+    const isActive = selectedCategory === value
+    return (
+      <button
+        key={value}
+        onClick={() => {
+          setSelectedCategory(value)
+          setIsDropdownOpen(false)
+        }}
+        className={`w-full py-2.5 text-left text-xs font-mono transition-colors focus:outline-none flex items-center justify-between gap-2 ${
+          indented ? 'pl-6 pr-3' : 'px-3'
+        } ${isActive ? 'border-l-2 dropdown-active' : ''}`}
+        style={{
+          backgroundColor: isActive ? 'var(--border)' : 'transparent',
+          color: isActive ? 'var(--primary)' : 'var(--foreground)',
+          borderLeftColor: isActive ? 'var(--primary)' : 'transparent',
+        }}
+      >
+        <span className={indented ? '' : 'uppercase tracking-wide'}>{label}</span>
+        {typeof count === 'number' && (
+          <span style={{ color: 'var(--foreground-muted)' }}>{count.toLocaleString()}</span>
+        )}
+      </button>
+    )
   }
 
   // Update dropdown position on window resize
@@ -293,18 +355,58 @@ const StoryList: React.FC<StoryListProps> = ({
     }
   }, [])
 
-  // Get unique business types from stories for dynamic categories
-  const availableCategories = useMemo(() => {
-    const categories = new Set<string>()
-    visibleStories.forEach((story) => {
-      if (story.businessType) {
-        categories.add(story.businessType)
-      } else if (story.category) {
-        categories.add(story.category)
+  // The HU Berlin taxonomy is two-level, so the dropdown is too: four broad
+  // branches, then the 25 detailed sectors grouped under whichever branch they
+  // most often belong to, then an explicit bucket for the records the source
+  // never classified. That last bucket is the point — under the old flat
+  // `businessType || category` set they were simply unreachable.
+  const categoryTally = useMemo(() => tallyCategories(visibleStories), [visibleStories])
+
+  const dropdownGroups = useMemo(() => {
+    const sectorsByBranch = new Map<string, { key: string; label: string; count: number }[]>()
+    const ungrouped: { key: string; label: string; count: number }[] = []
+
+    for (const [key, tally] of categoryTally.sectors) {
+      const entry = { key, label: sectorLabel(t, key, tally.rawLabel), count: tally.count }
+      if (tally.mainBranch) {
+        const bucket = sectorsByBranch.get(tally.mainBranch) ?? []
+        bucket.push(entry)
+        sectorsByBranch.set(tally.mainBranch, bucket)
+      } else {
+        ungrouped.push(entry)
       }
-    })
-    return Array.from(categories).sort()
-  }, [visibleStories])
+    }
+    for (const bucket of sectorsByBranch.values()) {
+      bucket.sort((a, b) => a.label.localeCompare(b.label))
+    }
+    ungrouped.sort((a, b) => a.label.localeCompare(b.label))
+
+    const branches = Array.from(categoryTally.mains.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([branch, count]) => ({
+        branch,
+        count,
+        label: mainBranchLabel(t, branch),
+        sectors: sectorsByBranch.get(branch) ?? [],
+      }))
+
+    return { branches, ungrouped, uncategorised: categoryTally.uncategorised }
+  }, [categoryTally, t])
+
+  // Label for the collapsed dropdown button.
+  const selectedCategoryLabel = useMemo(() => {
+    const parsed = parseFilter(selectedCategory)
+    switch (parsed.kind) {
+      case 'all':
+        return t('mainPage.storyList.allCategories')
+      case 'none':
+        return t('mainPage.storyList.uncategorized')
+      case 'main':
+        return mainBranchLabel(t, parsed.value)
+      case 'sector':
+        return sectorLabel(t, parsed.value, categoryTally.sectors.get(parsed.value)?.rawLabel)
+    }
+  }, [selectedCategory, categoryTally, t])
 
   // Memoize filtered stories using debounced search query for performance
   const allFilteredStories = useMemo(() => {
@@ -314,9 +416,7 @@ const StoryList: React.FC<StoryListProps> = ({
         !searchLower ||
         story.title.toLowerCase().includes(searchLower) ||
         (story.description?.toLowerCase().includes(searchLower) ?? false)
-      const storyCategory = story.businessType || story.category || ''
-      const matchesCategory = selectedCategory === 'all' || storyCategory === selectedCategory
-      return matchesSearch && matchesCategory
+      return matchesSearch && matchesFilter(story, selectedCategory)
     })
   }, [visibleStories, debouncedSearchQuery, selectedCategory])
 
@@ -589,15 +689,7 @@ const StoryList: React.FC<StoryListProps> = ({
                   color: 'var(--foreground)',
                 }}
               >
-                <span>
-                  {selectedCategory === 'all'
-                    ? t('mainPage.storyList.allCategories')
-                    : (() => {
-                        const translationKey = `mainPage.businessTypes.${selectedCategory.toUpperCase()}`
-                        const translated = t(translationKey)
-                        return translated !== translationKey ? translated : selectedCategory
-                      })()}
-                </span>
+                <span>{selectedCategoryLabel}</span>
                 <svg
                   className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
                   fill="none"
@@ -625,64 +717,58 @@ const StoryList: React.FC<StoryListProps> = ({
                     width: window.innerWidth >= 768 ? `${dropdownPosition.width}px` : undefined,
                   }}
                 >
-                  <button
-                    onClick={() => {
-                      setSelectedCategory('all')
-                      setIsDropdownOpen(false)
-                    }}
-                    className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors ${
-                      selectedCategory === 'all' ? 'border-l-2 dropdown-active' : ''
-                    }`}
-                    style={{
-                      backgroundColor: selectedCategory === 'all' ? 'var(--border)' : 'transparent',
-                      color: selectedCategory === 'all' ? 'var(--primary)' : 'var(--foreground)',
-                      borderLeftColor:
-                        selectedCategory === 'all' ? 'var(--primary)' : 'transparent',
-                    }}
-                  >
-                    {t('mainPage.storyList.allCategories')}
-                  </button>
-                  {availableCategories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => {
-                        setSelectedCategory(category)
-                        setIsDropdownOpen(false)
-                      }}
-                      className={`w-full px-3 py-2.5 text-left text-xs font-mono transition-colors ${
-                        selectedCategory === category ? 'border-l-2 dropdown-active' : ''
-                      }`}
-                      style={{
-                        backgroundColor:
-                          selectedCategory === category ? 'var(--border)' : 'transparent',
-                        color:
-                          selectedCategory === category ? 'var(--primary)' : 'var(--foreground)',
-                        borderLeftColor:
-                          selectedCategory === category ? 'var(--primary)' : 'transparent',
-                      }}
-                    >
-                      {(() => {
-                        const translationKey = `mainPage.businessTypes.${category.toUpperCase()}`
-                        const translated = t(translationKey)
-                        return translated !== translationKey ? translated : category
-                      })()}
-                    </button>
+                  {renderCategoryOption(ALL_CATEGORIES, t('mainPage.storyList.allCategories'))}
+                  {dropdownGroups.branches.map((branch) => (
+                    <React.Fragment key={branch.branch}>
+                      {renderCategoryOption(
+                        mainFilterValue(branch.branch),
+                        branch.label,
+                        branch.count
+                      )}
+                      {branch.sectors.map((sector) =>
+                        renderCategoryOption(
+                          sectorFilterValue(sector.key),
+                          sector.label,
+                          sector.count,
+                          true
+                        )
+                      )}
+                    </React.Fragment>
                   ))}
+                  {dropdownGroups.ungrouped.map((sector) =>
+                    renderCategoryOption(
+                      sectorFilterValue(sector.key),
+                      sector.label,
+                      sector.count,
+                      true
+                    )
+                  )}
+                  {dropdownGroups.uncategorised > 0 &&
+                    renderCategoryOption(
+                      UNCATEGORISED,
+                      t('mainPage.storyList.uncategorized'),
+                      dropdownGroups.uncategorised
+                    )}
                 </div>
               )}
             </div>
           </div>
 
-          <div
-            className={`transition-all duration-300 ${isHeaderCollapsed && !showSearchFilter ? 'mt-0' : 'mt-4'}`}
-          >
-            <TimeSlider
-              minDate={minDate}
-              maxDate={maxDate}
-              currentDate={currentDate}
-              onChange={setCurrentDate}
-            />
-          </div>
+          {/* In drawer layout the scrubber is rendered over the map instead, so it stays
+              reachable while the list is collapsed. Skip the wrapper entirely rather than
+              hiding it, or it leaves a dead 16px gap in the header. */}
+          {!hideTimeSlider && (
+            <div
+              className={`transition-all duration-300 ${isHeaderCollapsed && !showSearchFilter ? 'mt-0' : 'mt-4'}`}
+            >
+              <TimeSlider
+                minDate={minDate}
+                maxDate={maxDate}
+                currentDate={currentDate}
+                onChange={setCurrentDate}
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -694,6 +780,15 @@ const StoryList: React.FC<StoryListProps> = ({
           >
             {allFilteredStories.length} locations found{' '}
             {displayCount < combinedListItems.length && `(showing ${displayCount})`}
+            {unlocatedCount > 0 && (
+              <span
+                className="block normal-case font-normal tracking-normal mt-0.5"
+                style={{ color: 'var(--foreground-muted)' }}
+                title="These records have no geocoded address yet, so they are listed but not placed on the map."
+              >
+                {unlocatedCount.toLocaleString()} not yet located — listed, not mapped
+              </span>
+            )}
           </div>
           {yearMarkers.length > 0 && (
             <button
@@ -874,11 +969,10 @@ const StoryList: React.FC<StoryListProps> = ({
 
                       // Check if description is just a generic business type description
                       const desc = story.description.toLowerCase()
-                      const businessType = (
-                        story.businessType ||
-                        story.category ||
-                        ''
-                      ).toLowerCase()
+                      // Only the real sector label — `category` holds the
+                      // literal "business" on every storymaps.json record,
+                      // which would match far too much.
+                      const businessType = (story.businessType || '').toLowerCase()
 
                       // Skip if description is just "[business type] business" or similar generic patterns
                       const isGeneric =
@@ -929,23 +1023,15 @@ const StoryList: React.FC<StoryListProps> = ({
                             : 'Unknown'}
                       </span>
                       {(() => {
-                        // First try to extract business type from title (e.g., "Name - Business Type")
-                        const titleParts = story.title?.split(' - ') || []
-                        const extractedType =
-                          titleParts.length > 1 ? titleParts[titleParts.length - 1].trim() : null
+                        // The sector recorded by HU Berlin, else the broad
+                        // branch. This used to guess from the title by
+                        // splitting on " - ", which turned any historical name
+                        // containing a dash into a bogus type label.
+                        const displayType =
+                          sectorLabel(t, story.sectorKey, story.businessType) ||
+                          mainBranchLabel(t, story.mainBranch)
 
-                        // Use extracted type, or fall back to businessType/category fields
-                        const type = extractedType || story.businessType || story.category || ''
-
-                        // Don't show label if it's just generic "business" or empty
-                        if (!type || type.toLowerCase() === 'business') {
-                          return null
-                        }
-
-                        // Try to translate the type
-                        const translationKey = `mainPage.businessTypes.${type.toUpperCase().replace(/ /g, '_')}`
-                        const translated = t(translationKey)
-                        const displayType = translated !== translationKey ? translated : type
+                        if (!displayType) return null
 
                         return (
                           <span
@@ -1058,6 +1144,10 @@ export default React.memo(StoryList, (prevProps, nextProps) => {
   return (
     prevProps.activeStoryId === nextProps.activeStoryId &&
     prevProps.autoOpenDetailId === nextProps.autoOpenDetailId &&
+    // Must be named explicitly. This comparator reports "equal" for every prop
+    // it does not list, so omitting the filter leaves the list frozen while
+    // the map legend visibly updates — with no error anywhere.
+    prevProps.selectedCategory === nextProps.selectedCategory &&
     prevProps.currentDate.getTime() === nextProps.currentDate.getTime() &&
     prevProps.minDate.getTime() === nextProps.minDate.getTime() &&
     prevProps.maxDate.getTime() === nextProps.maxDate.getTime() &&

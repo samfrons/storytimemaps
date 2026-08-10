@@ -24,6 +24,8 @@ export default function ThemePage({ params }: ThemePageProps) {
       'bauhaus',
       'art-nouveau',
       'archival',
+      'hoefe',
+      'brutal-pop',
     ]
 
     params.then((resolvedParams) => {

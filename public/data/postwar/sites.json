@@ -1,0 +1,621 @@
+{
+  "_meta": {
+    "description": "Post-1945 fate of the featured business sites, extracted verbatim from the Final Sale catalog chapters in data/storymaps.json and the current-occupant fields in public/data/outreach/businesses.json. No external sources, no inference.",
+    "generated": "extracted-not-authored",
+    "storyCount": 16,
+    "storiesWithPostwarData": 15,
+    "fieldNotes": {
+      "periods": "Each period carries a sourceQuote that is a literal substring of that story's longDescription in data/storymaps.json.",
+      "kind": "'building' = the premises/site, 'company' = the firm or a successor firm, 'family' = owners and heirs, 'other' = neither. These are deliberately kept distinct.",
+      "years": "startYear/endYear are only filled where the source states a year or an unambiguous decade start ('After 1945' -> 1945, 'In the 1960s' -> 1960). Vague phrases such as 'in the mid-1990s' are left null and explained in yearNote.",
+      "currentOccupant": "Taken only from public/data/outreach/businesses.json where the record's address matches the story address and the value is a real value rather than 'Unknown ...' or empty. Null otherwise.",
+      "hasPostwarData": "True when the story has at least one extracted period OR a current-occupant record.",
+      "siteInUse": "Editorial classification layered on the extraction: for building-kind periods, whether the quoted statement describes the site being occupied/in use (true) or destroyed, demolished, not rebuilt, or at a different address (false). Only true periods colour a pin as standing on the map. The sourceQuote remains the evidence; this field is the reading of it."
+    }
+  },
+  "sites": {
+    "1": {
+      "storyId": "1",
+      "title": "E. Braun & Co. Berlin",
+      "address": "Unter den Linden 2, Berlin-Mitte, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Berlin store premises not rebuilt",
+          "kind": "building",
+          "startYear": null,
+          "endYear": null,
+          "summary": "The Berlin branch on Unter den Linden was not rebuilt after the war. Georg Wiedersum's 'successor' business carried on at other Berlin addresses.",
+          "sourceQuote": "The Berlin branch on Unter den Linden was not rebuilt but Georg Wiedersum continued to run his 'successor' business in Berlin at Kurfürstendamm 43 and 219.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "No year given for the decision not to rebuild.",
+          "siteInUse": false
+        },
+        {
+          "label": "Viennese parent company returned to heirs",
+          "kind": "company",
+          "startYear": 1945,
+          "endYear": null,
+          "summary": "After the war the Viennese company E. Braun & Co. was returned to the heirs of its founders; Henry Myer became director in 1962.",
+          "sourceQuote": "After the war, the Viennese company E. Braun & Co. was returned to the founders' heirs. Henry Myer became director in 1962.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "startYear 1945 taken from the source phrase 'After the war' (Second World War); no explicit year is given."
+        },
+        {
+          "label": "1938 forced sale declared null and void",
+          "kind": "family",
+          "startYear": 1954,
+          "endYear": null,
+          "summary": "In 1954 the Oser-Braun and Myer-Braun families reached a settlement with Georg Wiedersum; the 1938 forced sale was declared null and void and Wiedersum obtained a licence for the company name.",
+          "sourceQuote": "In 1954, the Oser-Braun and Myer-Braun families approached Georg Wiedersum in the hope of reaching an amicable agreement. The forced sale in 1938 was declared to be null and void. Georg Wiedersum and his son now obtained a license to use the company name.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        },
+        {
+          "label": "Successor store at Kurfuerstendamm 43 (different address)",
+          "kind": "company",
+          "startYear": null,
+          "endYear": 2000,
+          "summary": "A store named E. Braun & Co. Nachf. Georg Wiedersum existed at Kurfuerstendamm 43 until the year 2000.",
+          "sourceQuote": "A store named E. Braun & Co. Nachf. Georg Wiedersum existed at Kurfürstendamm 43 until the year 2000, listed in the commercial register as a limited company with Brigitte Hilversum as director.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "Kurfuerstendamm 43, NOT the Unter den Linden 2 site of this story."
+        },
+        {
+          "label": "Bally at Kurfuerstendamm 219 (different address)",
+          "kind": "building",
+          "startYear": null,
+          "endYear": null,
+          "summary": "The chapter states that a branch of the Swiss shoe store Bally is today at Kurfuerstendamm 219, and that Bally took over the Vienna main branch in 1985.",
+          "sourceQuote": "Today there is a branch of the Swiss shoe store Bally at Kurfürstendamm 219. Bally also took over the main branch of the company in Vienna in 1985.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "Kurfuerstendamm 219, NOT the Unter den Linden 2 site of this story.",
+          "siteInUse": false
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Chapter covers the family, the Viennese parent company and the 'successor' firm. On the BUILDING at Unter den Linden 2 it says only that the store premises were 'razed to the ground in a bomb attack in September 1943' and that the Berlin branch 'was not rebuilt'; it does not say what stands at Unter den Linden 2 today. The Bally and Kurfuerstendamm entries below are OTHER addresses, not this site. Outreach record for Unter den Linden 2 gives no occupant name ('Unknown - Prime Commercial Location'), treated as no data."
+    },
+    "2": {
+      "storyId": "2",
+      "title": "Antiquariat Martin Breslauer",
+      "address": "Französische Strasse 46, Berlin-Mitte, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Firm re-established in London, then New York",
+          "kind": "company",
+          "startYear": 1945,
+          "endYear": null,
+          "summary": "Bernard Breslauer rebuilt the antiquarian bookstore on his father's reputation. Attempts to reopen in Berlin failed; he remained in London until moving the business to New York in 1977.",
+          "sourceQuote": "When the war ended, Bernard Breslauer managed to build on his father's reputation to establish an antiquarian bookstore of international renown. Attempts to reopen the business in Berlin failed, however, and he stayed in London until moving the business to New York in 1977.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "startYear 1945 taken from the source phrase 'When the war ended'; no explicit year is given."
+        },
+        {
+          "label": "Bernard Breslauer's estate to the Berlin State Library",
+          "kind": "family",
+          "startYear": 2004,
+          "endYear": null,
+          "summary": "Bernard Breslauer died in 2004 and left his personal estate to the Berlin State Library.",
+          "sourceQuote": "Bernard Breslauer died in 2004, leaving his personal estate to the Berlin State Library.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Postwar prose concerns the FAMILY and the FIRM only. The chapter explicitly says attempts to reopen in Berlin failed; it says nothing about the premises at Franzoesische Strasse 46 after 1945. Outreach record gives no occupant name ('Unknown - Near Borchardt Restaurant'), treated as no data."
+    },
+    "3": {
+      "storyId": "3",
+      "title": "The Deutsche Theater",
+      "address": "Schumannstrasse 13a, Berlin-Mitte, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Nationalized in East Berlin",
+          "kind": "building",
+          "startYear": 1949,
+          "endYear": null,
+          "summary": "In 1949 the Deutsche Theater, then in Soviet-controlled East Berlin, was nationalized.",
+          "sourceQuote": "In 1949 the DT – now in Soviet-controlled East Berlin – was nationalized.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null,
+          "siteInUse": true
+        },
+        {
+          "label": "Properties returned to Max Reinhardt's heirs",
+          "kind": "building",
+          "startYear": 1995,
+          "endYear": null,
+          "summary": "The restitution files were closed in October 1995 when the properties were returned to Reinhardt's heirs.",
+          "sourceQuote": "The restitution files were closed in October 1995 when the properties were returned to Reinhardt's heirs.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null,
+          "siteInUse": true
+        },
+        {
+          "label": "Share restitution still pending",
+          "kind": "company",
+          "startYear": null,
+          "endYear": null,
+          "summary": "Proceedings for restitution of shares in the Deutsche National Theater AG were still pending in court at the time the chapter was written.",
+          "sourceQuote": "Proceedings aimed at the restitution of shares in the Deutsche National Theater AG are still pending in court.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "No date given; \"still pending\" is as of the catalog text."
+        }
+      ],
+      "currentOccupant": {
+        "name": "Deutsches Theater Berlin",
+        "type": "business",
+        "propertyType": "cultural",
+        "sourceField": "outreach.current_occupant_name"
+      },
+      "confidence": "high",
+      "notes": "Chapter gives the fate of the INSTITUTION and its PROPERTY directly. Outreach record independently records the Deutsches Theater as the current occupant of Schumannstrasse 13a."
+    },
+    "4": {
+      "storyId": "4",
+      "title": "Ebro Upholstery",
+      "address": "Pistoriusstrasse 66-69 & 95-96, Berlin-Weissensee, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Factory under Soviet trusteeship, then nationalized by the GDR",
+          "kind": "building",
+          "startYear": 1945,
+          "endYear": 1949,
+          "summary": "After 1945 Naue and Hunke lost interest in the factory; classed as 'ownerless' by the Soviet military administration, Ebro was placed under trusteeship in 1945 and nationalized by the GDR in 1949.",
+          "sourceQuote": "After the end of the Second World War in 1945, the main shareholders Naue and Hunke lost interest in the factory. Categorized as 'ownerless' by the Soviet military administration, Ebro was placed under trusteeship in 1945 and eventually nationalized by the GDR in 1949.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null,
+          "siteInUse": true
+        },
+        {
+          "label": "Company deleted from Berlin's commercial register",
+          "kind": "company",
+          "startYear": 1949,
+          "endYear": null,
+          "summary": "The company was struck from the Berlin commercial register on May 30, 1949.",
+          "sourceQuote": "On May 30, 1949, the company was deleted from Berlin's commercial register.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        },
+        {
+          "label": "West Berlin remnant restored to Ella Friedmann, then liquidated",
+          "kind": "company",
+          "startYear": 1952,
+          "endYear": 1952,
+          "summary": "Bank-held securities meant Ebro continued to exist in West Berlin; in 1952 the company was restored to Ella Friedmann, who registered it for liquidation the same year.",
+          "sourceQuote": "However, Ebro continued to exist in West Berlin after 1945 as a number of bank-held securities remained unaffected by expropriation in the GDR. In 1952, the company was officially restored to Ella Friedmann, who registered for liquidation the same year.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Chapter follows the FACTORY/company through Soviet trusteeship, GDR nationalization and the liquidation of the West Berlin remnant. It does not say what stands on the Pistoriusstrasse sites today. Outreach record for Pistoriusstrasse 96 has an empty occupant field."
+    },
+    "5": {
+      "storyId": "5",
+      "title": "Grain Wholesalers Alfred Höxter",
+      "address": "Pariser Strasse 32, Berlin-Wilmersdorf, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Family's gift store in Sao Paulo exile",
+          "kind": "family",
+          "startYear": 1945,
+          "endYear": null,
+          "summary": "In Alfred Hoexter's own words, his wife opened a gift store in 1945 from which the couple earned a modest living in Brazil.",
+          "sourceQuote": "In 1945, my wife opened a gift store with which we earn a modest living.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "Quoted from Alfred Hoexter's own retrospective statement reproduced in the chapter."
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "The only post-1945 sentence concerns the FAMILY in Brazilian exile. Nothing is said about the premises at Pariser Strasse 32 after the war. The outreach record carrying the Hoexter story is filed under a different address (Wielandstrasse 36) and has an empty occupant field, so no current-occupant data is attributed here."
+    },
+    "6": {
+      "storyId": "6",
+      "title": "Fröhlich & Pelz Glass – Crystal – Porcelain",
+      "address": "Ritter Strasse 86, Berlin-Kreuzberg, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Moritz Froehlich died in US exile",
+          "kind": "family",
+          "startYear": 1955,
+          "endYear": null,
+          "summary": "Moritz Froehlich died in 1955 at the age of 62.",
+          "sourceQuote": "Moritz Fröhlich died in 1955, aged 62.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        },
+        {
+          "label": "Son Peter Gay's later career",
+          "kind": "family",
+          "startYear": null,
+          "endYear": null,
+          "summary": "Froehlich's son Peter, who took the surname Gay in American exile, became a historian and wrote about his father's fate in his autobiography.",
+          "sourceQuote": "This is how Peter, a renowned historian, who took on the surname Gay in American exile like all his family, describes his father's fate in his autobiographical book, My German Question. Growing Up in Berlin 1933–1939. Among the best known of his many works (also published in Germany) are two books on love and sexuality in the bourgeois age and an in-depth biography of Sigmund Freud.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "No years given in the source for the son's publications."
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Postwar prose is entirely about the FAMILY in American exile. The chapter says nothing about the business or the premises at Ritter Strasse 86 after 1938. The outreach file's Froehlich & Pelz record is filed under a different address (Konstanzer Str. 1) and its occupant value therefore cannot be attributed to Ritter Strasse 86; currentOccupant left null."
+    },
+    "7": {
+      "storyId": "7",
+      "title": "Theaterkunst Theatrical Supplies",
+      "address": "Schwedter Strasse 9, Berlin-Prenzlauer Berg, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Successor firm Theaterkunst GmbH still trading (different address)",
+          "kind": "company",
+          "startYear": null,
+          "endYear": null,
+          "summary": "Theaterkunst GmbH still exists, with its main office at Eisenzahn Strasse 43-44 in Berlin-Wilmersdorf and branches in Hamburg, Cologne and Munich.",
+          "sourceQuote": "Theaterkunst GmbH still exists today. Its main office is located at Eisenzahn Strasse 43-44 in Berlin-Wilmersdorf with additional branches in Hamburg, Cologne and Munich.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "Eisenzahn Strasse 43-44, NOT the Schwedter Strasse 9 site of this story. No year given for 'today'."
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Chapter states the successor COMPANY survives, at Eisenzahn Strasse 43-44 in Wilmersdorf - a different address from the story's Schwedter Strasse 9 premises. It does not say what stands at Schwedter Strasse 9 today. The outreach record for Schwedter Str. 9 reads 'Unknown (Former Theaterkunst HQ)', treated as no data."
+    },
+    "8": {
+      "storyId": "8",
+      "title": "Egg Wholesale and Retail Traders Jacobowitz & Co.",
+      "address": "Bergmannstrasse 16, Berlin-Kreuzberg, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Postwar valuation of the firm for compensation",
+          "kind": "company",
+          "startYear": 1950,
+          "endYear": null,
+          "summary": "In the 1950s Schlesinger's daughter and former business associates estimated the company's value at 75,000 Reich marks with an annual turnover of 40,000 Reich marks.",
+          "sourceQuote": "In the 1950s, Schlesinger's daughter, aided by former business associates, estimated the value of the company at 75,000 Reich marks with an annual turnover of 40,000 Reich marks.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "startYear 1950 derived from the source phrase 'In the 1950s'; no exact year is given."
+        },
+        {
+          "label": "Heir's statement on the firm's destruction",
+          "kind": "company",
+          "startYear": 1950,
+          "endYear": null,
+          "summary": "In the 1950s Klara Erika Werber stated that the business, of good reputation for over fifty years, was destroyed overnight by arbitrary legislation.",
+          "sourceQuote": "In the 1950s, Klara Erika Werber (née Jacobowitz) made the following statement: \"In over 50 years of the company's existence, Jacobowitz & Co. maintained a good reputation in the branch [but] the business was destroyed overnight by arbitrary legislation.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "startYear 1950 derived from the source phrase 'In the 1950s'; no exact year is given."
+        },
+        {
+          "label": "Compensation paid to sole heir",
+          "kind": "family",
+          "startYear": 1963,
+          "endYear": null,
+          "summary": "As sole heir, Klara Erika Werber received 15,350 German marks in 1963 in compensation for damages to her parents' occupational advancement.",
+          "sourceQuote": "As the sole heir, Klara Erika Werber (née Jacobowitz) received compensation for damages to her parents' occupational advancement of 15,350 German marks in 1963.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Postwar prose is confined to compensation proceedings and a statement by the heir. The chapter says nothing about the premises at Bergmannstrasse 16 after the war. Outreach record for Bergmannstrasse 16 has an empty occupant field."
+    },
+    "9": {
+      "storyId": "9",
+      "title": "Jonass & Co. Discount Department Store",
+      "address": "Lothringer Strasse 1 (today Torstrasse 1), Berlin-Mitte, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "SED party property; seat of the Central Committee",
+          "kind": "building",
+          "startYear": 1945,
+          "endYear": null,
+          "summary": "After 1945 the former department store was owned by the SED and housed the Central Committee, the party archive and the Institute for Marxism-Leninism.",
+          "sourceQuote": "After 1945, the former department store was owned by East Germany's ruling SED party and became the seat of the Zentral Komitee, party archive and Institute for Marxism-Leninism in the ZK of the SED.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "No end year is stated. The source only says the property was restored 'In the mid-1990s'; no closing year was inferred.",
+          "siteInUse": true
+        },
+        {
+          "label": "Property restored to Hermann Golluber's heirs",
+          "kind": "building",
+          "startYear": null,
+          "endYear": null,
+          "summary": "In the mid-1990s the property was restored to Golluber's heirs.",
+          "sourceQuote": "In the mid-1990s, the property was restored to Golluber's heirs.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "Source says 'In the mid-1990s' only; no year stated, so startYear left null.",
+          "siteInUse": true
+        },
+        {
+          "label": "Sold to Soho House Club",
+          "kind": "building",
+          "startYear": 2007,
+          "endYear": null,
+          "summary": "In 2007 the heirs sold the building to the British Soho House Club.",
+          "sourceQuote": "In 2007 they sold the building to the exclusive British Soho House Club.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null,
+          "siteInUse": true
+        },
+        {
+          "label": "Present use: baths, gyms and apartments",
+          "kind": "building",
+          "startYear": null,
+          "endYear": null,
+          "summary": "The former discount department store today houses Turkish baths, gyms and luxury apartments.",
+          "sourceQuote": "Today the former discount department store, which built up a clientele in the late 1920s with the offer of price reductions and layaway purchase plans, houses Turkish baths, gyms and luxury apartments.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "No year given for 'today'.",
+          "siteInUse": true
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "high",
+      "notes": "Chapter gives a continuous BUILDING history from 1945 to the present. Outreach record for Lothringer Strasse 1 has an empty occupant field, so currentOccupant is null even though the chapter names the present use; see the final two periods."
+    },
+    "10": {
+      "storyId": "10",
+      "title": "Karl Kutschera's Café Wien and Zigeunerkeller",
+      "address": "Kurfürstendamm 26, Berlin-Charlottenburg, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Owners return to Berlin",
+          "kind": "family",
+          "startYear": 1945,
+          "endYear": null,
+          "summary": "Karl and Josephine Kutschera, who survived Theresienstadt, returned to Berlin after 1945.",
+          "sourceQuote": "Mr. and Mrs. Kutschera returned to Berlin after 1945.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        },
+        {
+          "label": "Cafe Wien resumes; Zigeunerkeller remains flooded",
+          "kind": "building",
+          "startYear": 1946,
+          "endYear": null,
+          "summary": "After the death of Josef Stueber shortly after the war, the Kutscheras resumed work in Cafe Wien in 1946; the Zigeunerkeller remained flooded.",
+          "sourceQuote": "Following the death of Josef Stüber shortly after the end of the war, they were able to resume work in Café Wien – the Zigeunerkeller remained flooded – in 1946.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null,
+          "siteInUse": true
+        },
+        {
+          "label": "Business continued by Josephine Kutschera",
+          "kind": "company",
+          "startYear": 1950,
+          "endYear": 1970,
+          "summary": "Karl Kutschera died on May 19, 1950; his wife Josephine ran the business until the early 1970s.",
+          "sourceQuote": "Karl Kutschera died on May 19, 1950. After his death, his wife Josephine ran the business until the early 1970s.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "endYear 1970 derived from the source phrase 'until the early 1970s'; no exact year is given."
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Chapter follows the OWNERS' return and the resumption of the business. The reopened Cafe Wien is not re-stated by address in the postwar passage, though the chapter places Cafe Wien at Kurfuerstendamm 26 throughout. Nothing is said about the site after the early 1970s. Outreach record for Kurfuerstendamm 26 has an empty occupant field."
+    },
+    "11": {
+      "storyId": "11",
+      "title": "Schule Reimann, College of Applied Art",
+      "address": "Landshuter Strasse 38, Berlin-Schöneberg, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "College building destroyed by bombing (wartime)",
+          "kind": "building",
+          "startYear": 1943,
+          "endYear": null,
+          "summary": "Allied bombs destroyed the college building on November 23, 1943.",
+          "sourceQuote": "On November 23, 1943, allied bombs destroyed the college building.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "Pre-1945 event, included because it is the last statement the chapter makes about the physical building.",
+          "siteInUse": false
+        },
+        {
+          "label": "Compensation claim",
+          "kind": "family",
+          "startYear": 1946,
+          "endYear": null,
+          "summary": "The Reimanns applied for compensation in 1946 and received a small sum.",
+          "sourceQuote": "The Reimanns applied for compensation in 1946 and received a small sum.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        },
+        {
+          "label": "Pension from the 1960s; Albert Reimann died in London",
+          "kind": "family",
+          "startYear": 1960,
+          "endYear": null,
+          "summary": "In the 1960s Albert Reimann received a monthly pension of 600 DM. He died in London in 1976.",
+          "sourceQuote": "In the 1960s, Albert Reimann also received a monthly pension of 600 DM. He died in London in 1976.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "startYear 1960 derived from the source phrase 'In the 1960s'; no exact year is given."
+        }
+      ],
+      "currentOccupant": {
+        "name": "Residential/Office Building",
+        "type": "residential",
+        "propertyType": "mixed_use",
+        "sourceField": "outreach.current_occupant_name"
+      },
+      "confidence": "partial",
+      "notes": "The BUILDING was destroyed by bombing in November 1943 (a wartime event, recorded here because it determines the postwar state of the site). Everything after 1945 in the chapter concerns the FAMILY's compensation. The chapter does not say what was built on the site afterwards. The outreach record for Landshuter Str. 38 gives 'Residential/Office Building' - a generic property description, not a named occupant - and no source links it to the destroyed college building."
+    },
+    "12": {
+      "storyId": "12",
+      "title": "Garlic Product Specialists Ruilos G.m.b.H.",
+      "address": "Achenbachstrasse 33-35 (today Salvador-Allende-Strasse), Berlin-Köpenick, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Plant in the Soviet sector, offices in West Berlin",
+          "kind": "company",
+          "startYear": 1945,
+          "endYear": null,
+          "summary": "After the war the company's production plant lay in the Soviet zone while its offices were in the western part of the city, making coordinated operation impossible.",
+          "sourceQuote": "After the end of World War II, the Eppensteins once again found themselves caught in the machinery of political systems. The company's production plant was in East Berlin – the Soviet zone of occupation – but the offices were in the west of the city. It was not possible to coordinate the two locations to run the business.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "startYear 1945 taken from the source phrase 'After the end of World War II'; no explicit year is given."
+        },
+        {
+          "label": "Production site closed by East Berlin municipal council",
+          "kind": "building",
+          "startYear": 1950,
+          "endYear": null,
+          "summary": "In summer 1950 the municipal council of East Berlin closed down the production site.",
+          "sourceQuote": "In summer 1950, the municipal council of East Berlin closed down the production site.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null,
+          "siteInUse": false
+        },
+        {
+          "label": "Company liquidation",
+          "kind": "company",
+          "startYear": 1951,
+          "endYear": null,
+          "summary": "The company went into liquidation from December 31, 1951 after the deadline for declaring capital assets in German marks passed.",
+          "sourceQuote": "The deadline for declaring capital assets in German marks passed and the company went into liquidation from December 31, 1951.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        },
+        {
+          "label": "Factory and family residence demolished",
+          "kind": "building",
+          "startYear": 1971,
+          "endYear": null,
+          "summary": "In 1971 the factory and family residence were demolished to make way for new development.",
+          "sourceQuote": "In 1971 the factory and family residence was demolished in order to make way for new development.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "The chapter does not say what the new development was.",
+          "siteInUse": false
+        },
+        {
+          "label": "East Berlin trial of Koepenick SA men",
+          "kind": "other",
+          "startYear": 1950,
+          "endYear": 1950,
+          "summary": "The East Berlin district court heard the cases of 32 defendants present and 24 absent from June 5 to July 19, 1950, and passed 15 death sentences, 13 life sentences and further prison terms.",
+          "sourceQuote": "The East Berlin district court heard the cases of 32 persons present and 24 absent from June 5 to July 19, 1950. Marta Eppenstein made a statement before the trial began. The court sentenced 15 of the accused to death, 13 to life imprisonment and the remaining men to jail sentences of between five and 25 years.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "Judicial proceedings against the perpetrators; not a fact about the building."
+        }
+      ],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "Chapter has a dedicated postwar section covering the divided city, the closure of the production site, liquidation, the demolition of the factory and family residence in 1971, and the East Berlin trial of the Koepenick SA men. It does not say what was built on the site after 1971. Outreach record for Achenbachstrasse 33 has an empty occupant field."
+    },
+    "13": {
+      "storyId": "13",
+      "title": "Eduard and Max Moses Wassermann",
+      "address": "Brunnenstrasse 71, Berlin-Mitte, Germany",
+      "hasPostwarData": false,
+      "periods": [],
+      "currentOccupant": null,
+      "confidence": "partial",
+      "notes": "The chapter ends with the deaths of Eduard and Max Wassermann in Sachsenhausen in 1940. It contains no post-1945 content of any kind - no family, company or building information. The outreach record for Brunnenstrasse 71 has an empty occupant field. Nothing was supplied from outside the sources."
+    },
+    "14": {
+      "storyId": "14",
+      "title": "Butter Merchants Weinberger Brothers",
+      "address": "Brunnenstrasse 188-190, Berlin-Mitte, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Former subsidiary Otto Thuermann GmbH still exists",
+          "kind": "company",
+          "startYear": null,
+          "endYear": null,
+          "summary": "Otto Thuermann GmbH, the subsidiary sold on the verge of bankruptcy in 1935, still exists.",
+          "sourceQuote": "Only the subsidiary Otto Thürmann GmbH, sold on the verge of bankruptcy in 1935, still exists today.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "No year given for 'today'. This is a company that was sold away from the Weinbergers in 1935, not the Weinberger firm itself and not the building."
+        }
+      ],
+      "currentOccupant": {
+        "name": "BLNR Publishing GmbH + Others",
+        "type": "office",
+        "propertyType": "commercial",
+        "sourceField": "outreach.current_occupant_name"
+      },
+      "confidence": "partial",
+      "notes": "The only postwar sentence concerns a former SUBSIDIARY, Otto Thuermann GmbH, which had been sold in 1935 and still exists. The chapter says nothing about the building at Brunnenstrasse 188-190 after the war; the current occupant below comes solely from the outreach file."
+    },
+    "15": {
+      "storyId": "15",
+      "title": "Yva Photographic Studio",
+      "address": "Schlüterstrasse 45, Berlin-Charlottenburg, Germany",
+      "hasPostwarData": true,
+      "periods": [],
+      "currentOccupant": {
+        "name": "Vacant (Former Hotel Bogota)",
+        "type": "vacant",
+        "propertyType": "residential",
+        "sourceField": "outreach.current_occupant_name"
+      },
+      "confidence": "partial",
+      "notes": "The chapter ends in 1943 with the auction and bomb destruction of the Simons' stored possessions. It contains no post-1945 content. The current-occupant entry comes solely from the outreach file and records a vacancy status rather than a named occupant."
+    },
+    "16": {
+      "storyId": "16",
+      "title": "Nissim Zacouto's Wholesale Carpets",
+      "address": "Jägerstrasse 61, Berlin-Mitte, Germany",
+      "hasPostwarData": true,
+      "periods": [
+        {
+          "label": "Compensation appeals fail; business rebuilt in Paris",
+          "kind": "family",
+          "startYear": 1950,
+          "endYear": null,
+          "summary": "In the 1950s Nissim Zacouto considered reviving his Berlin business, but after several costly compensation appeals failed he stayed in Paris and rebuilt a successful carpet trade there.",
+          "sourceQuote": "In the 1950s Nissim Zacouto considered reviving his business in Berlin. But when several costly and time-consuming compensation appeals failed, he stayed in Paris where he again built up a successful carpet trading business.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "startYear 1950 derived from the source phrase 'In the 1950s'; no exact year is given."
+        },
+        {
+          "label": "Restitution of Berlin business assets unresolved",
+          "kind": "company",
+          "startYear": null,
+          "endYear": null,
+          "summary": "The restitution of the Berlin business assets had not been concluded at the time the chapter was written.",
+          "sourceQuote": "The restitution of the Berlin business assets has not yet been concluded.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": null
+        },
+        {
+          "label": "Galeries Lafayette stands on the site",
+          "kind": "building",
+          "startYear": null,
+          "endYear": null,
+          "summary": "The Galeries Lafayette department store today stands on the site of Jaeger Strasse 61 and the adjacent land in Berlin-Mitte.",
+          "sourceQuote": "Today the department store Galeries Lafayette stands on the site of Jäger Strasse 61 and the adjacent land in Berlin-Mitte.",
+          "sourceField": "storymaps.longDescription",
+          "yearNote": "No year given for 'today'.",
+          "siteInUse": true
+        }
+      ],
+      "currentOccupant": {
+        "name": "Galeries Lafayette Berlin (department store on the site of Jägerstraße 61 and adjacent land)",
+        "type": "commercial",
+        "propertyType": "commercial",
+        "sourceField": "outreach.current_occupant_name"
+      },
+      "confidence": "high",
+      "notes": "Chapter states directly what stands on the site today, and the outreach file records the same occupant independently. Restitution of the business assets is recorded as unconcluded."
+    }
+  }
+}

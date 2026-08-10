@@ -8,68 +8,68 @@ import { useTheme } from 'next-themes'
 
 // Theme-specific color functions
 const getMapColors = (theme: string | undefined) => {
-  switch(theme) {
+  switch (theme) {
     case 'moody':
       return {
         water: '#6b6275',
         buildings: '#8b7d8e',
         roads: '#4a4a57',
-        parks: '#5a5a67'
+        parks: '#5a5a67',
       }
     case 'hot':
       return {
         water: '#ff6b6b',
         buildings: '#ff8787',
         roads: '#ff5252',
-        parks: '#ffaaaa'
+        parks: '#ffaaaa',
       }
     case 'cold':
       return {
         water: '#4fc3f7',
         buildings: '#81d4fa',
         roads: '#29b6f6',
-        parks: '#b3e5fc'
+        parks: '#b3e5fc',
       }
     case 'warm':
       return {
         water: '#ffb74d',
         buildings: '#ffcc80',
         roads: '#ffa726',
-        parks: '#ffe0b2'
+        parks: '#ffe0b2',
       }
     case 'cool':
       return {
         water: '#4db6ac',
         buildings: '#80cbc4',
         roads: '#26a69a',
-        parks: '#b2dfdb'
+        parks: '#b2dfdb',
       }
     case 'bauhaus':
       return {
         water: '#0066cc',
         buildings: '#000000',
         roads: '#cc0000',
-        parks: '#ffcc00'
+        parks: '#ffcc00',
       }
     case 'art-nouveau':
       return {
         water: '#7b68ee',
         buildings: '#9370db',
         roads: '#8a2be2',
-        parks: '#dda0dd'
+        parks: '#dda0dd',
       }
     default:
       return {
         water: '#6b6275',
         buildings: '#8b7d8e',
         roads: '#4a4a57',
-        parks: '#5a5a67'
+        parks: '#5a5a67',
       }
   }
 }
 
 const getThemeColors = (theme: string | undefined) => {
-  switch(theme) {
+  switch (theme) {
     case 'moody':
       return { background: '#4a4a57' }
     case 'hot':
@@ -90,7 +90,7 @@ const getThemeColors = (theme: string | undefined) => {
 }
 
 // Mapbox access token
-mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 interface Marker {
   id: string
@@ -109,7 +109,13 @@ interface MapboxMapTestProps {
   onMarkerClick?: (markerId: string) => void
   activeMarkerId?: string | null
   currentDate?: Date
-  enrichedStories?: Array<{ id: string; lat: number; lng: number; title: string; businessType?: string; }>
+  enrichedStories?: Array<{
+    id: string
+    lat: number
+    lng: number
+    title: string
+    businessType?: string
+  }>
 }
 
 const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
@@ -121,7 +127,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   currentDate,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  enrichedStories = []
+  enrichedStories = [],
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<mapboxgl.Map | null>(null)
@@ -160,18 +166,18 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
       zoom,
       pitch: 0,
       bearing: 0,
-      antialias: true
+      antialias: true,
     })
 
     map.current = mapInstance
 
     mapInstance.on('load', () => {
       setMapLoaded(true)
-      
+
       // Apply theme-specific styling
       const colors = getMapColors(theme)
       const themeColors = getThemeColors(theme)
-      
+
       // Customize map style
       if (mapInstance.getLayer('water')) {
         mapInstance.setPaintProperty('water', 'fill-color', colors.water)
@@ -180,10 +186,10 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
         mapInstance.setPaintProperty('building', 'fill-color', colors.buildings)
         mapInstance.setPaintProperty('building', 'fill-opacity', 0.2)
       }
-      
+
       // Set background
       const layers = mapInstance.getStyle().layers
-      const backgroundLayer = layers?.find(layer => layer.type === 'background')
+      const backgroundLayer = layers?.find((layer) => layer.type === 'background')
       if (backgroundLayer && backgroundLayer.id) {
         mapInstance.setPaintProperty(backgroundLayer.id, 'background-color', themeColors.background)
       }
@@ -193,7 +199,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
       mapInstance.remove()
       map.current = null
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Update markers with smart clustering
@@ -201,7 +207,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
     if (!map.current || !mapLoaded || markers.length === 0) return
 
     // Clear existing markers
-    Object.values(markersRef.current).forEach(marker => marker.remove())
+    Object.values(markersRef.current).forEach((marker) => marker.remove())
     markersRef.current = {}
 
     const currentZoom = map.current.getZoom()
@@ -213,21 +219,21 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
       maxZoom: 18,
       minPoints,
       extent: 512,
-      nodeSize: 64
+      nodeSize: 64,
     })
 
     // Convert markers to GeoJSON features
-    const points = markers.map(marker => ({
+    const points = markers.map((marker) => ({
       type: 'Feature' as const,
       properties: {
         id: marker.id,
         popup: marker.popup,
-        state: marker.state || 'active'
+        state: marker.state || 'active',
       },
       geometry: {
         type: 'Point' as const,
-        coordinates: [marker.position[1], marker.position[0]]
-      }
+        coordinates: [marker.position[1], marker.position[0]],
+      },
     }))
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -236,12 +242,12 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
     // Get viewport bounds
     const bounds = map.current.getBounds()
     if (!bounds) return
-    
+
     const bbox: [number, number, number, number] = [
       bounds.getWest(),
       bounds.getSouth(),
       bounds.getEast(),
-      bounds.getNorth()
+      bounds.getNorth(),
     ]
 
     // Get clusters for current viewport
@@ -251,7 +257,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
     const visibleClusters = clusters.slice(0, maxMarkersVisible)
 
     // Add markers for clusters and individual points
-    visibleClusters.forEach(cluster => {
+    visibleClusters.forEach((cluster) => {
       const [lng, lat] = cluster.geometry.coordinates
       const properties = cluster.properties
 
@@ -259,11 +265,11 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
         // Create cluster marker
         const el = document.createElement('div')
         el.className = 'cluster-marker'
-        
+
         // Calculate size based on point count
         const pointCount = properties.point_count
         const size = Math.min(60, Math.max(30, 20 + Math.log2(pointCount) * 5))
-        
+
         el.style.width = `${size}px`
         el.style.height = `${size}px`
         el.style.borderRadius = '50%'
@@ -277,14 +283,15 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
         el.style.fontSize = `${Math.min(16, size / 3)}px`
         el.style.cursor = 'pointer'
         el.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)'
-        el.textContent = pointCount >= 1000 ? `${(pointCount / 1000).toFixed(1)}k` : String(pointCount)
+        el.textContent =
+          pointCount >= 1000 ? `${(pointCount / 1000).toFixed(1)}k` : String(pointCount)
 
         // Add click handler to zoom into cluster
         el.addEventListener('click', () => {
           const zoom = index.getClusterExpansionZoom(properties.cluster_id)
           map.current?.easeTo({
             center: [lng, lat],
-            zoom: Math.min(zoom, 18)
+            zoom: Math.min(zoom, 18),
           })
         })
 
@@ -297,7 +304,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
         // Create individual marker
         const el = document.createElement('div')
         el.className = 'marker'
-        
+
         // Determine color based on state
         const state = properties.state || 'active'
         let color = 'var(--success)' // active
@@ -347,30 +354,30 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
     // Update on map move
     const updateMarkers = () => {
       // Remove all markers
-      Object.values(markersRef.current).forEach(marker => marker.remove())
+      Object.values(markersRef.current).forEach((marker) => marker.remove())
       markersRef.current = {}
 
       const newZoom = map.current!.getZoom()
       const newParams = getClusteringParams(newZoom)
-      
+
       // Note: Supercluster doesn't allow runtime reconfiguration of options
       // Would need to create a new instance if we want to change clustering parameters
-      
+
       const newBounds = map.current!.getBounds()
       if (!newBounds) return
-      
+
       const newBbox: [number, number, number, number] = [
         newBounds.getWest(),
         newBounds.getSouth(),
         newBounds.getEast(),
-        newBounds.getNorth()
+        newBounds.getNorth(),
       ]
 
       const newClusters = index.getClusters(newBbox, Math.floor(newZoom))
       const visibleNewClusters = newClusters.slice(0, newParams.maxMarkersVisible)
 
       // Re-add markers with new clustering
-      visibleNewClusters.forEach(cluster => {
+      visibleNewClusters.forEach((cluster) => {
         const [lng, lat] = cluster.geometry.coordinates
         const properties = cluster.properties
 
@@ -378,10 +385,10 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
           // Create cluster marker
           const el = document.createElement('div')
           el.className = 'cluster-marker'
-          
+
           const pointCount = properties.point_count
           const size = Math.min(60, Math.max(30, 20 + Math.log2(pointCount) * 5))
-          
+
           el.style.width = `${size}px`
           el.style.height = `${size}px`
           el.style.borderRadius = '50%'
@@ -395,13 +402,14 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
           el.style.fontSize = `${Math.min(16, size / 3)}px`
           el.style.cursor = 'pointer'
           el.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)'
-          el.textContent = pointCount >= 1000 ? `${(pointCount / 1000).toFixed(1)}k` : String(pointCount)
+          el.textContent =
+            pointCount >= 1000 ? `${(pointCount / 1000).toFixed(1)}k` : String(pointCount)
 
           el.addEventListener('click', () => {
             const zoom = index.getClusterExpansionZoom(properties.cluster_id)
             map.current?.easeTo({
               center: [lng, lat],
-              zoom: Math.min(zoom, 18)
+              zoom: Math.min(zoom, 18),
             })
           })
 
@@ -414,7 +422,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
           // Create individual marker
           const el = document.createElement('div')
           el.className = 'marker'
-          
+
           const state = properties.state || 'active'
           let color = 'var(--success)'
           if (state === 'declining') color = 'var(--warning)'
@@ -473,9 +481,7 @@ const MapboxMapTest: React.FC<MapboxMapTestProps> = ({
     }
   }, [markers, mapLoaded, activeMarkerId, onMarkerClick, getClusteringParams])
 
-  return (
-    <div ref={mapContainer} className="w-full h-full" />
-  )
+  return <div ref={mapContainer} className="w-full h-full" />
 }
 
 export default React.memo(MapboxMapTest)

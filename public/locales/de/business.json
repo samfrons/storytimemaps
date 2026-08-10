@@ -2,7 +2,8 @@
   "businessStates": {
     "active": "Aktiv",
     "declining": "Rückläufig",
-    "closed": "Geschlossen"
+    "closed": "Geschlossen",
+    "standing": "Heute vorhanden"
   },
   "mainPage": {
     "intro": {
@@ -37,7 +38,8 @@
       "allCategories": "Alle Kategorien",
       "activeBusinessLabel": "Aktives Geschäft",
       "decliningBusinessLabel": "Rückläufig",
-      "closedBusinessLabel": "Geschlossen"
+      "closedBusinessLabel": "Geschlossen",
+      "uncategorized": "Ohne Angabe"
     },
     "map": {
       "viewMore": "Mehr anzeigen →"
@@ -78,6 +80,50 @@
       "TRADE": "HANDEL",
       "RETAIL": "EINZELHANDEL",
       "FINANCE": "FINANZ"
+    },
+    "mainBranches": {
+      "TRADE": "Handel",
+      "INDUSTRY": "Industrie",
+      "SERVICES": "Dienstleistungen",
+      "HANDICRAFT": "Handwerk"
+    },
+    "businessSectors": {
+      "ADVERTISING": "Werbung",
+      "BANKS_AND_INSURANCE": "Banken und Versicherungen",
+      "BOOKS_AND_ART": "Bücher und Kunst",
+      "CHEMICALS_AND_PHARMACEUTICALS": "Chemie und Drogeriewaren",
+      "CONSTRUCTION": "Bau",
+      "CONSTRUCTION_MATERIALS_AND_FUEL": "Bau- und Brennstoffe",
+      "DEPARTMENT_STORES": "Waren- und Kaufhäuser",
+      "ELECTRICAL_GOODS": "Elektro",
+      "FOOD_AND_BEVERAGES": "Nahrungs- und Genussmittel",
+      "FURNITURE": "Möbel",
+      "HOUSEHOLD_GOODS": "Haushaltswaren",
+      "JEWELRY_AND_PRECIOUS_METALS": "Schmuck und Edelmetalle",
+      "LEATHER_AND_SHOES": "Leder- und Schuhwaren",
+      "MACHINES_AND_VEHICLES": "Maschinen und Fahrzeuge",
+      "METALS_AND_METAL_GOODS": "Metall und Metallwaren",
+      "OTHER": "Sonstiges",
+      "PAPER_AND_PAPER_GOODS": "Papier und Papierwaren",
+      "PHARMACIES": "Apotheken",
+      "PHOTOGRAPHY_AND_FILM": "Foto und Film",
+      "PUBLISHING_AND_PRINTING": "Verlags- und Druckereiwesen",
+      "REAL_ESTATE": "Immobilien",
+      "RESTAURANTS": "Gastronomie",
+      "TEXTILES_AND_CLOTHING": "Textil und Bekleidung",
+      "TRANSPORTATION": "Transport",
+      "USED_GOODS": "Altwaren"
+    },
+    "mapLegend": {
+      "title": "Legende",
+      "markerStates": "Markierungsstatus",
+      "categories": "Kategorie",
+      "showAllSectors": "Alle Branchen anzeigen",
+      "active": "Aktiv",
+      "declining": "Rückläufig",
+      "closed": "Geschlossen",
+      "future": "Noch nicht eröffnet",
+      "standing": "Heute vorhanden"
     },
     "businessDescriptions": {
       "tailor_shop": "Ein kleines Schneidergeschäft im Besitz von {owner}. Das Geschäft war bekannt für hochwertige Handwerkskunst.",

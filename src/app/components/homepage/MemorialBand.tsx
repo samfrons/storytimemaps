@@ -9,7 +9,7 @@ const MemorialBand: React.FC = () => {
 
   return (
     <section
-      className="py-16 sm:py-24 px-5 sm:px-8 border-t border-b"
+      className="py-10 sm:py-14 px-5 sm:px-8 border-t border-b"
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--card-bg)' }}
     >
       <div className="max-w-3xl mx-auto text-center">

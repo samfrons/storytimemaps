@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 import type { OutreachRecord } from '@/lib/types/outreach'
+import { isAuthorized } from '@/lib/outreachAuth'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,7 +17,11 @@ function escapeCSV(value: string | number | undefined): string {
   return str
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // Same gate as /api/outreach — this returns the whole contact dataset as CSV.
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
+  }
   try {
     if (!existsSync(DATA_PATH)) {
       return NextResponse.json({ success: false, error: 'Data file not found' }, { status: 404 })

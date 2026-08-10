@@ -1,0 +1,295 @@
+{
+  "totals": {
+    "records": 10021,
+    "sector": 9254,
+    "mainBranch": 7950,
+    "neither": 767,
+    "not_found": 0,
+    "duplicate_reused": 0,
+    "distinct_sectors": 25,
+    "ambiguous": 48,
+    "category_conflicts": 0
+  },
+  "unmapped_labels": [],
+  "main_branch_counts": {
+    "trade": 5906,
+    "industry": 1619,
+    "services": 289,
+    "handicraft": 136
+  },
+  "sector_counts": {
+    "TEXTILES_AND_CLOTHING": 3212,
+    "FOOD_AND_BEVERAGES": 1050,
+    "BANKS_AND_INSURANCE": 775,
+    "CHEMICALS_AND_PHARMACEUTICALS": 406,
+    "LEATHER_AND_SHOES": 357,
+    "FURNITURE": 336,
+    "MACHINES_AND_VEHICLES": 301,
+    "METALS_AND_METAL_GOODS": 296,
+    "OTHER": 280,
+    "PUBLISHING_AND_PRINTING": 266,
+    "REAL_ESTATE": 230,
+    "CONSTRUCTION_MATERIALS_AND_FUEL": 217,
+    "PAPER_AND_PAPER_GOODS": 209,
+    "PHARMACIES": 181,
+    "JEWELRY_AND_PRECIOUS_METALS": 154,
+    "ELECTRICAL_GOODS": 149,
+    "HOUSEHOLD_GOODS": 142,
+    "RESTAURANTS": 134,
+    "CONSTRUCTION": 120,
+    "BOOKS_AND_ART": 120,
+    "DEPARTMENT_STORES": 102,
+    "ADVERTISING": 65,
+    "PHOTOGRAPHY_AND_FILM": 65,
+    "TRANSPORTATION": 59,
+    "USED_GOODS": 28
+  },
+  "ambiguous_titles": [
+    {
+      "id": "business_00428",
+      "title": "Alfred Hartbrodt",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_00429",
+      "title": "Alfred Hartbrodt",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_00656",
+      "title": "Aron Elektrizitäts-GmbH",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_00657",
+      "title": "Aron Elektrizitäts-GmbH",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_01040",
+      "title": "Berlin-Suhler Waffen- und Fahrzeugwerke Simson & Co",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_01051",
+      "title": "Berlin-Suhler Waffen- und Fahrzeugwerke Simson & Co",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_01244",
+      "title": "Betty Fraenkel",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_01245",
+      "title": "Betty Fraenkel",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_02246",
+      "title": "Eisladen der Senta Reibach-Ruß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_02247",
+      "title": "Eisladen der Senta Reibach-Ruß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_02504",
+      "title": "Ernst H. Kayser",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_02505",
+      "title": "Ernst H. Kayser",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_03555",
+      "title": "Groß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_03556",
+      "title": "Groß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_03648",
+      "title": "Gustav Levy",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_03649",
+      "title": "Gustav Levy",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_03739",
+      "title": "H. Haß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_03740",
+      "title": "H. Haß",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_04119",
+      "title": "Herbert Levy",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_04120",
+      "title": "Herbert Levy",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_05143",
+      "title": "Julian Arendt",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_05144",
+      "title": "Julian Arendt",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_05610",
+      "title": "Kurt Baendel",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_05631",
+      "title": "Kurt Baendel",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_05848",
+      "title": "Leo Gottschalk",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_05849",
+      "title": "Leo Gottschalk",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06015",
+      "title": "Lewinnek & Schönlank",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06016",
+      "title": "Lewinnek & Schönlank",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06386",
+      "title": "M. Liemann & Co",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06387",
+      "title": "M. Liemann & Co",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06829",
+      "title": "Max Lichtenstein",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06830",
+      "title": "Max Lichtenstein",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06895",
+      "title": "Max Salomon",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_06896",
+      "title": "Max Salomon",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07326",
+      "title": "Naftali Parnes",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07327",
+      "title": "Naftali Parnes",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07529",
+      "title": "Oskar Drachsler",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07530",
+      "title": "Oskar Drachsler",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07658",
+      "title": "Paul Caspari",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07659",
+      "title": "Paul Caspari",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07793",
+      "title": "Pension Bernstein",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07794",
+      "title": "Pension Bernstein",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07834",
+      "title": "Pension Rosenbaum",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_07835",
+      "title": "Pension Rosenbaum",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_08894",
+      "title": "Siegfried Cohn",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_08895",
+      "title": "Siegfried Cohn",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_09852",
+      "title": "Willy Lachotzki",
+      "quality": "exact_ambiguous_2"
+    },
+    {
+      "id": "business_09853",
+      "title": "Willy Lachotzki",
+      "quality": "exact_ambiguous_2"
+    }
+  ],
+  "category_conflicts": [],
+  "cache": {
+    "pages_seen": 1003,
+    "total_entries": 10021,
+    "extraction_failures": 0
+  }
+}

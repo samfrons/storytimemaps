@@ -89,22 +89,8 @@
     "subtitle": "Brengen Digitale Zikorn in Fizishn Ort",
     "plaques": {
       "title": "Denkmal-Plaketen Initiative",
-      "description": "Inspirirt durkh di Stolpersteine proyekt, mir shteln zikh for instalirn denkmal plaketen bay di originele erter fun dokumentirte yidishe gesheftn iber Berlin.",
+      "description": "Mir shteln zikh for instalirn denkmal plaketen bay di originele erter fun dokumentirte yidishe gesheftn iber Berlin.",
       "vision": "Di plaketen voltn gedint vi shtendike dermonung fun dem lebedikn yidishn handls-lebn vos hot amol gebliet in di gegnt, farbindndik digitale dokumentatsye mit fizishe dermonung."
-    },
-    "stolpersteine": {
-      "title": "Inspirirt fun Stolpersteine",
-      "description": "Vi Gunter Demnigs shtarke Stolpersteine proyekt vos gedenkt ayntsike mentshn, voltn unzere denkmal plaketen mekhabed zayn di gesheft-erter vu yidishe mishpokhes hobn geboyt zeyer parnose un gedint zeyer kehiles.",
-      "stolpersteineFocus": "Stolpersteine Fokus",
-      "individualVictims": "Ayntsike korbones",
-      "residentialAddresses": "Voyn adreses",
-      "personalStories": "Perzenlekhe geshikhtes",
-      "familyDeportations": "Mishpokhe deportatsyes",
-      "businessFocus": "Gesheft Plaketen Fokus",
-      "commercialEnterprises": "Handl unternemungen",
-      "businessLocations": "Gesheft erter",
-      "economicPersecution": "Ekonomishe rdife",
-      "communityImpact": "Kehile virkung"
     },
     "plaqueMockup": {
       "hereStood": "DO IZ GESHTANEN",
@@ -114,7 +100,6 @@
     },
     "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
     "ctaDescription": "Mir zukhn shutfes mit Berlins kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet. Di initsyativ farlangt tsuzamenarbeit mit shtot planung, historisher bahaltung, un yidishe kehile organizatsyes.",
-    "learnStolpersteine": "Lernt vegn Stolpersteine",
     "community": {
       "title": "Kehile Bashteyung",
       "description": "Mir arbetn mit lokale kehiles, shuln, un Berliner yidishe organizatsyes tsu antviklen khinukh programen vos farbindn di historishe datn mit hayntike diskusyes vegn zikorn, handl, un kehile."
@@ -137,6 +122,25 @@
     "switchTo": "English",
     "current": "Yidish"
   },
+  "cookieConsent": {
+    "title": "מיר נוצן קוקיס און אַנדערע טעכנאָלאָגיעס.",
+    "description": "די וועבזייטל נוצט דריט-פּאַרטיי וועבזייטל טראַקינג טעכנאָלאָגיעס צו צושטעלן און פאָרלויפיק פֿאַרבעסערן אירע באַדינונגען און צו ווייזן רעקלאַמעס לויט די אינטערעסן פון באַניצערס. איך שטים צו דעם און קען אָפּרופן אָדער ענדערן מיין הסכמה בכל עת מיט ווירקונג פֿאַר דער צוקונפט.",
+    "settings": "אײַנשטעלונגען",
+    "decline": "אָפּזאָגן",
+    "acceptAll": "אַלעס אָננעמען",
+    "imprint": "אימפּרינט",
+    "privacyPolicy": "פּריוואַטקייט פּאָליטיק",
+    "settingsTitle": "קוקי אײַנשטעלונגען",
+    "essential": "וויכטיקע קוקיס",
+    "essentialDesc": "נויטיק פֿאַר דער וועבזייטל צו פונקציאָנירן. קען נישט אָפּגעשטעלט ווערן.",
+    "alwaysOn": "שטענדיק אָן",
+    "analytics": "אַנאַליטיק קוקיס",
+    "analyticsDesc": "העלפן אונדז פֿאַרשטיין ווי באַזוכער אינטעראַגירן מיט אונדזער וועבזייטל.",
+    "marketing": "מאַרקעטינג קוקיס",
+    "marketingDesc": "גענוצט צו טראַקן באַזוכער איבער וועבזייטלעך פֿאַר רעקלאַמע צוועקן.",
+    "back": "צוריק",
+    "saveSettings": "אײַנשטעלונגען שפּאָרן"
+  },
   "businessStates": {
     "active": "Aktiv",
     "declining": "Aropgeeyendik",
@@ -153,22 +157,11 @@
       "learnMore": "Lernt mer vegn di initsyativ",
       "visionTitle": "Unzer Vizye",
       "visionDescription": "Mir shteln zikh for a Berlin vu di zikorn fun yidishn handls-lebn iz bahitn nisht nor digital, ober in di gasn aleyn vu di gesheftn hobn amol gebliet. Yede plakete vet dertseyln di geshikhte fun a mishpokhe unternemung.",
-      "stolpersteineTitle": "Inspirirt fun Stolpersteine",
-      "stolpersteineDescription": "Vi Gunter Demnigs shtarke Stolpersteine proyekt vos gedenkt ayntsike mentshn, voltn unzere denkmal plaketen mekhabed zayn di gesheft-erter vu yidishe mishpokhes hobn geboyt zeyer parnose.",
-      "stolpersteineFocus": "Stolpersteine Fokus",
-      "businessPlaquesFocus": "Gesheft Plaketen Fokus",
-      "individualVictims": "Ayntsike korbones",
-      "residentialAddresses": "Voyn adreses",
-      "personalStories": "Perzenlekhe geshikhtes",
-      "commercialEnterprises": "Handl unternemungen",
-      "businessLocations": "Gesheft erter",
-      "economicPersecution": "Ekonomishe rdife",
       "berlinStyle": "Berliner Shtil",
       "brassStyle": "Messing Shtil",
       "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
       "ctaDescription": "Mir zukhn shutfes mit kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet iber Berlin.",
-      "supportInitiative": "Shtitst di Initsyativ",
-      "learnStolpersteine": "Lernt vegn Stolpersteine"
+      "supportInitiative": "Shtitst di Initsyativ"
     },
     "nav": {
       "backToMap": "Tsurik tsu der mape"
@@ -327,8 +320,8 @@
     },
     "hero": {
       "eyebrow": "A lebedike mape fun yidishn gesheft-lebn · Berlin 1900–1945",
-      "titleLine1": "Yeder pintl a gesheft.",
-      "titleLine2": "Yeder kolir a goyrl.",
+      "titleLine1": "10,021 yidishe gesheftn.",
+      "titleLine2": "Farmapt oyf di gasn vu zey zaynen geshtanen.",
       "description": "StoryTimeMaps farshraybt iber tsen toyznt yidishe gesheftn oyf zeyere emese Berliner adresn – un lozt aykh forn durkh der tsayt: zet vi dos virtshaftlekhe lebn fun a kehile hot geblit, iz gekumen unter druk, un iz sistematish oysgemekt gevorn.",
       "ctaMap": "Forsht oys di mape",
       "ctaHow": "Vi es arbet",
@@ -427,6 +420,60 @@
       "exhibitLink": "Oysshtelung-vizye",
       "phaseBeyondTitle": "Vayter fun Berlin",
       "phaseBeyondText": "A Frankfurter pilot fun 57 gesheftn vayzt az der model shtrekt zikh oys tsu andere daytshe shtet."
+    }
+  },
+  "exhibitVision": {
+    "nav": {
+      "backToMap": "Tsurik tsu der mape"
+    },
+    "landingLink": "Oysforshn di Vizye fun der Muzey-Oysshtelung",
+    "hero": {
+      "badge": "Oysshtelung-Vizye",
+      "title": "A Muzey-Oysshtelung far Berlins Farlorene Gesheftn",
+      "subtitle": "Fun a digitale arkhiv fun 10,021 unternemungen tsu an efntlekhn ort fun zikorn",
+      "visionTitle": "Unzer Vizye",
+      "visionDescription": "Mir shteln zikh for a muzey-oysshtelung vos brengt di dokumentirte geshikhte fun Berlins yidishe gesheftn aroys fun der datenbaze un arayn in a gemeynzamen fizishn ort — vu bazukher shteyen far a lebedike mape fun der shtot, folgn eyn eyntsiker mishpokhe unternemung durkh di yorn, un zeyen vi a lebedike handls-velt iz sistematish tseshtert gevorn tsvishn 1900 un 1945.",
+      "seeLiveExhibit": "Zen di lebedike interaktive oysshtelung",
+      "ctaTitle": "Helft undz boyen es",
+      "ctaDescription": "Mir zukhn shutfes fun muzeyen, kultur, un bildung — un di finantsirung — tsu farvandlen di vizye in a permanente un forndike oysshtelung.",
+      "supportInitiative": "Ver a Shutef"
+    },
+    "experience": {
+      "title": "Vos Bazukher Derfarn",
+      "subtitle": "An interaktive rayze durkh a farshvundene handls-velt",
+      "card1Title": "An Interaktiver Mape-Tish",
+      "card1Description": "A groyser touch-screen mape fun Berlin vu yeder marker iz an emesn dokumentirtn gesheft. Bazukher forshn oys gegntn, zumen arayn in gasn, un antdekn di geshikhtes unter zeyere fis.",
+      "card2Title": "A Rayze Durkh Tsayt",
+      "card2Description": "A tsayt-linye fun 1900 biz 1945 lozt bazukher kukn vi gesheftn efenen zikh, blien, geyen arop, un vern tsvangvayz farmakht — un makht dem groys un tempo fun der rdife zikhtbar mit eyn blik.",
+      "card3Title": "Ayntsike Mishpokhe-Geshikhtes",
+      "card3Description": "Hinter yedn marker shteyt a mishpokhe unternemung — a shnayder, a bukh-hendler, a groyser gesheft. Detaylirte geshikhtes gibn tsurik nemen, penemer, un parnoses tsum historishn rekord.",
+      "card4Title": "Tsugeynglekh in Fil Loshoynes",
+      "card4Description": "Geboyt mit fil loshoynes fun onheyb on (English, Daytsh, un Yidish), heyst di oysshtelung vilkum Berliner, potomkes, studentn, un internatsyonale bazukher glaykh."
+    },
+    "builds": {
+      "title": "Boyendik Oyf a Yortsen Forshung",
+      "subtitle": "Dray Shikhtn fun Dermonung",
+      "digitalTitle": "Digitale Arkhiv",
+      "digitalDescription": "An interaktive mape, bazirt oyf grindlekher historisher forshung, dokumentirt shoyn 10,021 yidish-aygntimlekhe gesheftn in Berlin.",
+      "plaquesTitle": "Denkmal-Plaketen",
+      "plaquesDescription": "Mir arbetn tsu instalirn plaketen bay di originele gesheft erter — zikorn in di gasn aleyn.",
+      "exhibitTitle": "Muzey-Oysshtelung",
+      "exhibitDescription": "Di oysshtelung zamlt di dozike arbet tsuzamen in eyn tifn roym, farbindndik datn, ort, un perzenlekhe geshikhte far a breytn oylem.",
+      "provenance": "Dos proyekt boyt zikh oyf Dr. Christoph Kreutzmüller's bahnbrekhndike shtudye 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' un di arkhivn fun Leo Baeck Institut."
+    },
+    "partners": {
+      "title": "Shutfes & Shtitse",
+      "description": "Di farvirklekhung fun der doziker oysshtelung farlangt tsuzamenarbeit un finantsirung. Mir zukhn shutfes fun Berlins muzeyen, kultur, bildung, un yidishe kehile institutsyes.",
+      "ask1": "Erter un muzey-shutfes far a permanente oder forndike installatsye",
+      "ask2": "Finantsirung far hardware, produktsye, un fil-shprakhikn inhalt",
+      "ask3": "Bildungs shutfes tsu antviklen programen far shuln un kehile grupes"
+    },
+    "footer": {
+      "exploreTitle": "Oysforshn Dem Lebedikn Arkhiv",
+      "exploreDescription": "Zet di interaktive mape vos di dozike oysshtelung boyt zikh oyf.",
+      "exploreMap": "Efent di Mape",
+      "viewPlaques": "Denkmal-Plaketen Initiative",
+      "rights": "Ale rekhtn bahitn."
     }
   }
 }

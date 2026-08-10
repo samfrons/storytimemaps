@@ -1,5 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+
+// Required by the project deployment rules: without this Next can statically optimise
+// the route at build time and serve a stale snapshot. That is wrong for every route
+// here - they read mutable data, and the auth-scoped ones would leak one user's view
+// to everyone.
+export const dynamic = 'force-dynamic'
 
 /**
  * GET /api/proposals/user
@@ -7,23 +13,23 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = await createClient()
 
     // Return error if Supabase is not configured
     if (!supabase) {
       return NextResponse.json(
         { error: 'Authentication service is not configured' },
         { status: 503 }
-      );
+      )
     }
 
     // Check if user is authenticated
     const {
       data: { user },
-    } = await supabase.auth.getUser();
+    } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     // Get user's proposals
@@ -31,16 +37,16 @@ export async function GET(request: NextRequest) {
       .from('proposals')
       .select('*')
       .eq('user_id', user.id)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error fetching user proposals:', error);
-      return NextResponse.json({ error: 'Failed to fetch proposals' }, { status: 500 });
+      console.error('Error fetching user proposals:', error)
+      return NextResponse.json({ error: 'Failed to fetch proposals' }, { status: 500 })
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data)
   } catch (error) {
-    console.error('Error in GET /api/proposals/user:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Error in GET /api/proposals/user:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

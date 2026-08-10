@@ -32,7 +32,8 @@
       "allCategories": "Ale Kategoryes",
       "activeBusinessLabel": "Aktiv Gesheft",
       "decliningBusinessLabel": "Aropgeyendik",
-      "closedBusinessLabel": "Farshlosn"
+      "closedBusinessLabel": "Farshlosn",
+      "uncategorized": "On Kategorye"
     },
     "map": {
       "viewMore": "Zen mer →"
@@ -74,6 +75,50 @@
       "RETAIL": "KHOYZEK-HANDL",
       "FINANCE": "FINANTS"
     },
+    "mainBranches": {
+      "TRADE": "HANDL",
+      "INDUSTRY": "INDUSTRIYE",
+      "SERVICES": "DINST",
+      "HANDICRAFT": "HANTVERK"
+    },
+    "businessSectors": {
+      "ADVERTISING": "REKLAME",
+      "BANKS_AND_INSURANCE": "BANK UN FARZIKHERUNG",
+      "BOOKS_AND_ART": "BIKHER UN KUNST",
+      "CHEMICALS_AND_PHARMACEUTICALS": "KHEMI UN DROGERI-VAREN",
+      "CONSTRUCTION": "BOYUNG",
+      "CONSTRUCTION_MATERIALS_AND_FUEL": "BOY-MATERIALN UN BRENSHTOF",
+      "DEPARTMENT_STORES": "VARENHAYZER",
+      "ELECTRICAL_GOODS": "ELEKTRO-VAREN",
+      "FOOD_AND_BEVERAGES": "SHPAYZ UN GETRANK",
+      "FURNITURE": "MEBL",
+      "HOUSEHOLD_GOODS": "HOYZGERETS",
+      "JEWELRY_AND_PRECIOUS_METALS": "TSIRUNG UN EYDLE METALN",
+      "LEATHER_AND_SHOES": "LEDER UN SHICH-VAREN",
+      "MACHINES_AND_VEHICLES": "MASHINEN UN FURVERK",
+      "METALS_AND_METAL_GOODS": "METAL UN METAL-VAREN",
+      "OTHER": "ANDERE",
+      "PAPER_AND_PAPER_GOODS": "PAPIR UN PAPIR-VAREN",
+      "PHARMACIES": "APTEYKN",
+      "PHOTOGRAPHY_AND_FILM": "FOTOGRAFYE UN FILM",
+      "PUBLISHING_AND_PRINTING": "FARLAG UN DRUKEREY",
+      "REAL_ESTATE": "IMOBILYE",
+      "RESTAURANTS": "RESTORANEN",
+      "TEXTILES_AND_CLOTHING": "TEKSTIL UN KLEYDUNG",
+      "TRANSPORTATION": "TRANSPORT",
+      "USED_GOODS": "ALTVAREN"
+    },
+    "mapLegend": {
+      "title": "Legende",
+      "markerStates": "Marker Status",
+      "categories": "Kategorye",
+      "showAllSectors": "Vayzn Ale Sektorn",
+      "active": "Aktiv",
+      "declining": "Aropgeyendik",
+      "closed": "Farshlosn",
+      "future": "Nokh Nit Geefnt",
+      "standing": "Shteyt haynt"
+    },
     "businessDescriptions": {
       "tailor_shop": "A kleyn shnayder gesheft in aygntum fun {owner}. Dos gesheft iz geven bakant far kvalitet handverk.",
       "department_store": "Eyns fun Berlins prominente yidish-aygntimlekhe varenhayzer. Dos {name} hot ongegebn a brayte produktn-game.",
@@ -103,7 +148,8 @@
   "businessStates": {
     "active": "Aktiv",
     "declining": "Aropgeyendik",
-    "closed": "Farshlosn"
+    "closed": "Farshlosn",
+    "standing": "Shteyt haynt"
   },
   "business": {
     "address": "Adres",

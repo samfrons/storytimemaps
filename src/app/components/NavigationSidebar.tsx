@@ -20,6 +20,9 @@ interface NavigationSidebarProps {
   toggleInfo: () => void
   language: string
   switchToLanguage: (lang: SupportedLanguage) => void
+  /** Optional: pages that offer the two map layouts pass these to show the layout toggle. */
+  layoutMode?: 'split' | 'drawer'
+  onLayoutSwitch?: (layout: 'split' | 'drawer') => void
   onLanguageChange: (lang: string) => void
   showMobileMenu: boolean
   setShowMobileMenu: (show: boolean) => void
@@ -35,6 +38,7 @@ const THEMES = [
   'art-nouveau',
   'archival',
   'hoefe',
+  'brutal-pop',
 ]
 
 const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
@@ -56,6 +60,8 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
     onLanguageChange,
     showMobileMenu,
     setShowMobileMenu,
+    layoutMode = 'split',
+    onLayoutSwitch,
   }) => {
     const handleViewModeChange = useCallback(
       (mode: 'stories' | 'database') => {
@@ -78,17 +84,25 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
     )
 
     const getThemeDisplayName = (themeName: string) => {
-      return themeName === 'art-nouveau' ? 'Art Nouveau' : themeName
+      const displayNames: Record<string, string> = {
+        'art-nouveau': 'Art Nouveau',
+        'brutal-pop': 'Brutal Pop',
+      }
+      return displayNames[themeName] ?? themeName
     }
 
     return (
       <>
         {/* Desktop Sidebar Navigation */}
         <div
-          className="hidden md:flex md:w-16 md:h-full flex-shrink-0 flex-col items-center py-6 gap-4 absolute left-0 top-0 backdrop-blur-sm hot-sidebar"
+          className="hidden md:flex md:w-12 md:h-full flex-shrink-0 flex-col items-center py-6 gap-4 absolute left-0 top-0 hot-sidebar"
           style={{
             zIndex: 10000,
-            backgroundColor: 'var(--input-bg)',
+            // The rail used to be a 64px opaque column with a backdrop blur - a solid wall down
+            // the side of a map whose whole point is seeing thousands of pins at once. It is now
+            // 48px and transparent, so the map reads continuously behind the icon gaps; each
+            // button carries its own surface (see the button styles below).
+            backgroundColor: 'transparent',
             marginTop: '0',
           }}
         >
@@ -102,7 +116,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               color: showThemeMenu ? 'var(--background)' : 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+              transition: 'transform 0.2s ease-in-out',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'scale(1.1)'
@@ -173,6 +187,44 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
             </div>
           )}
 
+          {/* Layout Button - switches between the split column and the map-first drawer */}
+          {onLayoutSwitch && (
+            <button
+              onClick={() => onLayoutSwitch(layoutMode === 'drawer' ? 'split' : 'drawer')}
+              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${layoutMode === 'drawer' ? 'hot-button-active' : ''}`}
+              style={{
+                backgroundColor: layoutMode === 'drawer' ? 'var(--primary)' : 'var(--input-bg)',
+                borderColor: 'var(--border)',
+                color: layoutMode === 'drawer' ? 'var(--background)' : 'var(--foreground)',
+                cursor: 'pointer',
+                transform: 'scale(1)',
+                transition: 'transform 0.2s ease-in-out',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
+              aria-label={
+                layoutMode === 'drawer' ? 'Switch to split layout' : 'Switch to full-width map'
+              }
+              aria-pressed={layoutMode === 'drawer'}
+              title={
+                layoutMode === 'drawer'
+                  ? 'Split layout: list beside the map'
+                  : 'Full-width map: list collapses to a tab'
+              }
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {/* Panel-and-canvas glyph: a bordered frame with a divider that reads as the
+                    list column. Filled when the drawer layout is active. */}
+                <rect x="3" y="4" width="18" height="16" strokeWidth={2} />
+                <line x1="9" y1="4" x2="9" y2="20" strokeWidth={2} />
+              </svg>
+            </button>
+          )}
+
           {/* Stories Mode Button */}
           <button
             onClick={() => handleViewModeChange('stories')}
@@ -183,7 +235,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               color: viewMode === 'stories' ? 'var(--background)' : 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+              transition: 'transform 0.2s ease-in-out',
               fontSize: '10px',
               fontFamily: 'Space Mono, monospace',
               fontWeight: '600',
@@ -217,7 +269,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               color: viewMode === 'database' ? 'var(--background)' : 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+              transition: 'transform 0.2s ease-in-out',
               fontSize: '10px',
               fontFamily: 'Space Mono, monospace',
               fontWeight: '600',
@@ -251,7 +303,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               color: showIntro ? 'var(--background)' : 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+              transition: 'transform 0.2s ease-in-out',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'scale(1.1)'
@@ -276,7 +328,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               color: showInfo ? 'var(--background)' : 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+              transition: 'transform 0.2s ease-in-out',
               fontSize: '18px',
               fontFamily: 'serif',
               fontStyle: 'italic',
@@ -303,7 +355,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               color: 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+              transition: 'transform 0.2s ease-in-out',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'scale(1.1)'
@@ -334,7 +386,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               color: 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+              transition: 'transform 0.2s ease-in-out',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'scale(1.1)'

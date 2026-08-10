@@ -149,7 +149,11 @@ export default function EducationPage() {
                 components={{
                   // The worksheet grids are wide; without this wrapper they push the
                   // whole page into horizontal scroll on a phone.
-                  table: ({ children, ...props }) => (
+                  //
+                  // `node` (react-markdown's hast element) is destructured out and
+                  // discarded, not spread — spreading it onto a real <table> passes an
+                  // object as a DOM attribute, which React warns about on every render.
+                  table: ({ node: _node, children, ...props }) => (
                     <div className="workbook-table-scroll">
                       <table {...props}>{children}</table>
                     </div>

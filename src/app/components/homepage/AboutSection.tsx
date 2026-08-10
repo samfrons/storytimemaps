@@ -322,10 +322,18 @@ const AboutSection: React.FC = () => {
       </div>
 
       <style jsx global>{`
+        /* The "further" grid cards (03-05) have no border of their own — they sit in a
+           gap-px grid where the background shows through as the rule — so the old
+           border-color-on-focus reset was invisible there; keyboard focus had no visible
+           indicator on 3 of 5 cards. An inset outline works on both the bordered and
+           borderless cards. :focus-visible so a mouse click doesn't draw it too. */
         .about-card:focus {
           outline: none;
           box-shadow: none;
-          border-color: var(--foreground);
+        }
+        .about-card:focus-visible {
+          outline: 2px solid var(--primary);
+          outline-offset: -2px;
         }
       `}</style>
     </section>

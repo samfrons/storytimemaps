@@ -120,10 +120,15 @@ const HomeHero: React.FC<HomeHeroProps> = ({ data }) => {
       const fx = drawWidth / GRID_SIZE
       const fy = drawHeight / GRID_SIZE
 
+      // canvas.width/height are device pixels (resize() multiplies by dpr), so a bare
+      // "2.5" floor is 2.5 *device* pixels — on a 2x display that is a 1.25 CSS-pixel dot,
+      // half the intended minimum. Scale the floor by the canvas's actual device-pixel
+      // ratio (width / clientWidth) so 2.5 stays 2.5 CSS pixels on every display.
+      const dpr = canvas.clientWidth > 0 ? width / canvas.clientWidth : 1
       // 380 put roughly 2px dots on a laptop, which disappeared entirely once the scrim was
       // over them. The field has to read as a city from across the room, so the dots are now
-      // ~2x the area and the floor is 2.5px on small viewports.
-      const size = Math.max(2.5, Math.min(width, height) / 240)
+      // ~2x the area and the floor is 2.5 CSS px on small viewports.
+      const size = Math.max(2.5 * dpr, Math.min(width, height) / 240)
       const half = size / 2
 
       // One pass per state keeps fillStyle changes to four per frame

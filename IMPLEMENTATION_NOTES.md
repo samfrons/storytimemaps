@@ -192,9 +192,9 @@ src/
 ```
 
 ## Environment Variables
-- Mapbox token currently hardcoded (should move to .env)
-- Token: `pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ`
-- Recommended: `NEXT_PUBLIC_MAPBOX_TOKEN` in .env.local
+- Mapbox token is read from `NEXT_PUBLIC_MAPBOX_TOKEN` in `.env.local`.
+  Never inline the value here or as a code fallback - GitHub push protection
+  blocks it, and a committed token cannot be rotated without a history rewrite.
 
 ## Build & Deployment
 

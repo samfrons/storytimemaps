@@ -6,9 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { useTranslation } from '../../../i18n/useTranslation'
 
 // Get token from environment
-const MAPBOX_TOKEN =
-  process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
-  ''
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 interface Business {
   name: string
@@ -146,7 +144,11 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
                               ? '#f4e4c1'
                               : theme === 'archival'
                                 ? '#3e4a5c'
-                                : '#4a4a57',
+                                : theme === 'hoefe'
+                                  ? '#f5f0e1'
+                                  : theme === 'brutal-pop'
+                                    ? '#131318'
+                                    : '#4a4a57',
             },
           },
           {

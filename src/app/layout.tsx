@@ -195,10 +195,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* CRITICAL: Theme Provider Settings - DO NOT CHANGE
               disableTransitionOnChange MUST be true to prevent flashing
               enableColorScheme MUST be false to prevent browser interference
-              enableSystem MUST be false for consistent behavior */}
+              enableSystem MUST be false for consistent behavior
+
+              defaultTheme is brutal-pop: it is the /museum-exhibit kiosk palette, so the site a
+              visitor lands on and the screen standing in the exhibition read as the same
+              project. Returning visitors keep whatever they picked — next-themes only falls
+              back to this when storageKey ("storymap-theme") has nothing stored. */}
           <ThemeProvider
             attribute="data-theme"
-            defaultTheme="moody"
+            defaultTheme="brutal-pop"
             themes={[
               'moody',
               'cool',

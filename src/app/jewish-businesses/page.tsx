@@ -189,7 +189,7 @@ export default function JewishBusinessesPage() {
 
         {/* Business List */}
         <div className="p-4">
-          <div className="text-sm mb-3 font-semibold" style={{ color: '#f4b643' }}>
+          <div className="text-sm mb-3 font-semibold" style={{ color: 'var(--primary)' }}>
             {filteredBusinesses?.features.length || 0} businesses found
           </div>
 
@@ -205,24 +205,29 @@ export default function JewishBusinessesPage() {
                 }}
                 className="p-4 rounded-lg cursor-pointer transition-all hover:shadow-sm"
                 style={{
-                  border: '1px solid #e2e0dd',
+                  border: '1px solid var(--border)',
                   backgroundColor:
-                    selectedBusiness === feature.properties.name ? '#fff4e6' : 'white',
+                    selectedBusiness === feature.properties.name
+                      ? 'rgba(var(--primary-rgb), 0.12)'
+                      : 'var(--card-bg)',
                 }}
               >
                 <h3
                   className="font-semibold mb-1"
                   style={{
-                    color: selectedBusiness === feature.properties.name ? '#d67b5a' : '#2d3748',
+                    color:
+                      selectedBusiness === feature.properties.name
+                        ? 'var(--primary)'
+                        : 'var(--foreground)',
                   }}
                 >
                   {feature.properties.name}
                 </h3>
-                <p className="text-sm mb-1" style={{ color: '#8a7d71' }}>
+                <p className="text-sm mb-1" style={{ color: 'var(--foreground-muted)' }}>
                   {feature.properties.business_type}
                   {feature.properties.category && ` (${feature.properties.category})`}
                 </p>
-                <p className="text-xs" style={{ color: '#a8a199' }}>
+                <p className="text-xs" style={{ color: 'var(--muted)' }}>
                   {(() => {
                     const coords = feature.geometry.coordinates
                     const zipcode = getZipcodeFromAddress(
@@ -240,7 +245,7 @@ export default function JewishBusinessesPage() {
                   <p
                     className="text-xs mt-1"
                     style={{
-                      color: '#f4b643',
+                      color: 'var(--primary)',
                       fontWeight: 600,
                     }}
                   >
@@ -275,7 +280,7 @@ export default function JewishBusinessesPage() {
             className="absolute bottom-4 left-4 right-4 max-w-md p-4 rounded-lg shadow-xl"
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.98)',
-              borderColor: '#8b7aa8',
+              borderColor: 'var(--border)',
               borderWidth: '2px',
               borderStyle: 'solid',
             }}
@@ -294,7 +299,7 @@ export default function JewishBusinessesPage() {
               </svg>
             </button>
 
-            <h3 className="font-bold text-lg mb-2" style={{ color: '#8b7aa8' }}>
+            <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--primary)' }}>
               {selectedBusinessData.properties.name}
             </h3>
 
@@ -340,7 +345,7 @@ export default function JewishBusinessesPage() {
                   <span className="text-muted-foreground">Active: </span>
                   <span
                     style={{
-                      color: '#f4b643',
+                      color: 'var(--primary)',
                       fontWeight: 600,
                     }}
                   >
@@ -357,7 +362,7 @@ export default function JewishBusinessesPage() {
           className="absolute top-4 left-4 p-3 rounded-lg shadow-lg"
           style={{
             backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            borderColor: '#f4b643',
+            borderColor: 'var(--primary)',
             borderWidth: '2px',
             borderStyle: 'solid',
           }}
@@ -365,15 +370,24 @@ export default function JewishBusinessesPage() {
           <h4 className="text-xs font-semibold text-foreground mb-2">Business Status</h4>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#7a8599' }}></div>
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: 'var(--muted)' }}
+              ></div>
               <span className="text-xs text-muted-foreground">Active</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#f4b643' }}></div>
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: 'var(--warning)' }}
+              ></div>
               <span className="text-xs text-muted-foreground">Ownership Changed</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#e89b7a' }}></div>
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: 'var(--danger)' }}
+              ></div>
               <span className="text-xs text-muted-foreground">Closed/Liquidated</span>
             </div>
           </div>

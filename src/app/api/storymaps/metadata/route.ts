@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
+import { StoryMap } from '../../../../types'
 
 // Required by the project deployment rules: without this Next can statically optimise
 // the route at build time and serve a stale snapshot. That is wrong for every route
@@ -46,8 +47,7 @@ async function getMetadata() {
 
     const categories = new Set<string>()
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    storyMaps.forEach((story: any) => {
+    ;(storyMaps as StoryMap[]).forEach((story) => {
       // Update bounds
       if (story.lat && story.lng) {
         minLat = Math.min(minLat, story.lat)

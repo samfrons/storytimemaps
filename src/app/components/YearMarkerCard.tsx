@@ -1,21 +1,21 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { YearMarker } from '../../types';
-import { useTranslation } from '../../i18n/useTranslation';
+import React, { useState } from 'react'
+import Image from 'next/image'
+import { YearMarker } from '../../types'
+import { useTranslation } from '../../i18n/useTranslation'
 import {
   getMarkerTypeColor,
   getMarkerTypeLabel,
   formatMarkerDate,
   getMarkerDate,
-} from '../../utils/yearMarkerLoader';
+} from '../../utils/yearMarkerLoader'
 
 interface YearMarkerCardProps {
-  marker: YearMarker;
-  currentDate: Date;
-  isExpanded?: boolean;
-  onToggleExpand?: () => void;
+  marker: YearMarker
+  currentDate: Date
+  isExpanded?: boolean
+  onToggleExpand?: () => void
 }
 
 const YearMarkerCard: React.FC<YearMarkerCardProps> = ({
@@ -24,30 +24,28 @@ const YearMarkerCard: React.FC<YearMarkerCardProps> = ({
   isExpanded = false,
   onToggleExpand,
 }) => {
-  const { t } = useTranslation();
-  const [imageError, setImageError] = useState(false);
+  const { t } = useTranslation()
+  const [imageError, setImageError] = useState(false)
 
-  const markerDate = getMarkerDate(marker);
-  const isPast = currentDate >= markerDate;
-  const typeColor = getMarkerTypeColor(marker.type);
-  const typeLabel = getMarkerTypeLabel(marker.type);
+  const markerDate = getMarkerDate(marker)
+  const isPast = currentDate >= markerDate
+  const typeColor = getMarkerTypeColor(marker.type)
+  const typeLabel = getMarkerTypeLabel(marker.type)
 
   // Get translated content or fall back to default
-  const title = marker.titleKey ? t(marker.titleKey) : marker.title;
-  const description = marker.descriptionKey ? t(marker.descriptionKey) : marker.description;
+  const title = marker.titleKey ? t(marker.titleKey) : marker.title
+  const description = marker.descriptionKey ? t(marker.descriptionKey) : marker.description
   const longDescription = marker.longDescriptionKey
     ? t(marker.longDescriptionKey)
-    : marker.longDescription;
-  const imageCaption = marker.imageCaptionKey
-    ? t(marker.imageCaptionKey)
-    : marker.imageCaption;
+    : marker.longDescription
+  const imageCaption = marker.imageCaptionKey ? t(marker.imageCaptionKey) : marker.imageCaption
 
   // Don't render if title key returns the key itself (translation missing)
-  const displayTitle = title === marker.titleKey ? marker.title : title;
-  const displayDescription = description === marker.descriptionKey ? marker.description : description;
-  const displayLongDescription = longDescription === marker.longDescriptionKey
-    ? marker.longDescription
-    : longDescription;
+  const displayTitle = title === marker.titleKey ? marker.title : title
+  const displayDescription =
+    description === marker.descriptionKey ? marker.description : description
+  const displayLongDescription =
+    longDescription === marker.longDescriptionKey ? marker.longDescription : longDescription
 
   return (
     <div
@@ -75,10 +73,7 @@ const YearMarkerCard: React.FC<YearMarkerCardProps> = ({
               >
                 {typeLabel}
               </span>
-              <span
-                className="text-xs font-mono"
-                style={{ color: 'var(--foreground-muted)' }}
-              >
+              <span className="text-xs font-mono" style={{ color: 'var(--foreground-muted)' }}>
                 {formatMarkerDate(marker)}
               </span>
             </div>
@@ -98,9 +93,7 @@ const YearMarkerCard: React.FC<YearMarkerCardProps> = ({
               }`}
               style={{ color: 'var(--foreground-muted)' }}
             >
-              {isExpanded && displayLongDescription
-                ? displayLongDescription
-                : displayDescription}
+              {isExpanded && displayLongDescription ? displayLongDescription : displayDescription}
             </p>
 
             {/* Expand/collapse button */}
@@ -113,12 +106,12 @@ const YearMarkerCard: React.FC<YearMarkerCardProps> = ({
                   borderColor: 'var(--muted)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--muted)';
-                  e.currentTarget.style.color = 'var(--background)';
+                  e.currentTarget.style.backgroundColor = 'var(--muted)'
+                  e.currentTarget.style.color = 'var(--background)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = 'var(--foreground)';
+                  e.currentTarget.style.backgroundColor = 'transparent'
+                  e.currentTarget.style.color = 'var(--foreground)'
                 }}
               >
                 {isExpanded ? 'Show Less' : 'Read More'}
@@ -211,7 +204,7 @@ const YearMarkerCard: React.FC<YearMarkerCardProps> = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default React.memo(YearMarkerCard);
+export default React.memo(YearMarkerCard)

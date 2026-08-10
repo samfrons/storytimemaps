@@ -6,9 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { useTranslation } from '../../../i18n/useTranslation'
 
 // Get token from environment
-const MAPBOX_TOKEN =
-  process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
-  ''
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 interface Business {
   name: string

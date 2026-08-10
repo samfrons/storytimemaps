@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
+import { StoryMap } from '../../../types'
 
 // Required by the project deployment rules: without this Next can statically optimise
 // the route at build time and serve a stale snapshot. That is wrong for every route
@@ -12,8 +13,7 @@ const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json')
 const DEFAULT_PAGE_SIZE = 3000 // Load all businesses by default
 const MAX_PAGE_SIZE = 3000 // Allow loading all at once
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let cachedData: any[] | null = null
+let cachedData: StoryMap[] | null = null
 
 async function getStoryMaps() {
   if (cachedData) {

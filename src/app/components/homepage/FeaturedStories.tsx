@@ -41,11 +41,11 @@ const FeaturedStories: React.FC = () => {
 
   return (
     <section
-      className="py-20 sm:py-28 px-5 sm:px-8"
+      className="py-12 sm:py-16 px-5 sm:px-8"
       style={{ backgroundColor: 'var(--background)' }}
     >
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-8">
           <div className="max-w-3xl">
             <p
               className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] mb-4"

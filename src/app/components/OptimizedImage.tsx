@@ -33,7 +33,7 @@ const shimmer = (w: number, h: number) => `
 const toBase64 = (str: string) =>
   typeof window === 'undefined' ? Buffer.from(str).toString('base64') : window.btoa(str)
 
-const OptimizedImage: React.FC<OptimizedImageProps> = ({
+function OptimizedImage({
   src,
   alt,
   width,
@@ -43,7 +43,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   fill = false,
   sizes,
   quality = 85,
-}) => {
+}: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true)
 
   // Generate dynamic blur placeholder

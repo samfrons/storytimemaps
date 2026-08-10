@@ -3,16 +3,8 @@
 import { useMemo, useState, useEffect } from 'react'
 import Supercluster from 'supercluster'
 import mapboxgl from 'mapbox-gl'
-
-interface MarkerInput {
-  id: string
-  position: [number, number]
-  popup: string
-  state?: string
-  description?: string
-  startDate?: string
-  endDate?: string
-}
+import { spatialSample, type ClusterFeature, type MarkerInput } from '../utils/mapHelpers'
+import { PERFORMANCE_CONFIG } from '../config/performance'
 
 interface GeoJSONFeature {
   type: 'Feature'
@@ -36,7 +28,7 @@ interface ClusterProperties {
   state?: string
 }
 
-export type ClusterFeature = GeoJSON.Feature<GeoJSON.Point, ClusterProperties>
+export type { ClusterFeature } from '../utils/mapHelpers'
 
 interface UseMapClusteringProps {
   markers: MarkerInput[]
@@ -65,59 +57,6 @@ interface UseMapClusteringReturn {
   clusters: ClusterFeature[]
   supercluster: Supercluster<ClusterProperties, ClusterProperties>
   processedMarkers: MarkerInput[]
-}
-
-/**
- * Spatial sampling function for even marker distribution
- */
-function spatialSample(
-  markers: ClusterFeature[],
-  maxCount: number,
-  bbox: [number, number, number, number]
-): ClusterFeature[] {
-  if (markers.length <= maxCount) return markers
-
-  // Create a spatial grid
-  const gridSize = Math.ceil(Math.sqrt(maxCount))
-  const [west, south, east, north] = bbox
-  const cellWidth = (east - west) / gridSize
-  const cellHeight = (north - south) / gridSize
-
-  // Group markers by grid cell
-  const grid: { [key: string]: ClusterFeature[] } = {}
-
-  markers.forEach((marker) => {
-    const [lng, lat] = marker.geometry.coordinates
-    const col = Math.floor((lng - west) / cellWidth)
-    const row = Math.floor((lat - south) / cellHeight)
-    const key = `${col},${row}`
-
-    if (!grid[key]) {
-      grid[key] = []
-    }
-    grid[key].push(marker)
-  })
-
-  // Sample from each cell
-  const sampled: ClusterFeature[] = []
-  const gridKeys = Object.keys(grid)
-  const markersPerCell = Math.max(1, Math.floor(maxCount / gridKeys.length))
-
-  gridKeys.forEach((key) => {
-    const cellMarkers = grid[key]
-    // Prioritize active businesses
-    const sorted = cellMarkers.sort((a, b) => {
-      const aState = a.properties?.state || 'active'
-      const bState = b.properties?.state || 'active'
-      if (aState === 'active' && bState !== 'active') return -1
-      if (bState === 'active' && aState !== 'active') return 1
-      return 0
-    })
-
-    sampled.push(...sorted.slice(0, markersPerCell))
-  })
-
-  return sampled.slice(0, maxCount)
 }
 
 /**
@@ -160,40 +99,31 @@ export function useMapClustering({
   }, [data, markers])
 
   // Initialize Supercluster for clustering with optimized settings for large datasets
+  // NOTE: Removed viewStateZoom from dependencies to prevent expensive re-indexing on zoom change
+  // The clustering radius is set to a moderate value that works well across zoom levels
+  // Supercluster.getClusters() already handles zoom-based clustering at query time
   const supercluster = useMemo(() => {
-    // Adjust clustering based on test mode and zoom level
-    let radius = isMobile ? 40 : 20
-    let maxZoom = isMobile ? 16 : 18
-    let minPoints = isMobile ? 4 : 2
+    const { CLUSTERING } = PERFORMANCE_CONFIG
 
-    if (isTestMode) {
-      // More aggressive clustering for 10,000+ markers
-      const currentZoom = viewStateZoom
-      if (currentZoom < 10) {
-        radius = 100
-        minPoints = 3
-      } else if (currentZoom < 12) {
-        radius = 60
-        minPoints = 2
-      } else if (currentZoom < 14) {
-        radius = 40
-        minPoints = 2
-      } else if (currentZoom < 16) {
-        radius = 25
-        minPoints = 2
-      } else {
-        radius = 15
-        minPoints = 2
-      }
-      maxZoom = 18
-    }
+    // Use a moderate radius that works across zoom levels
+    // For test mode with 10,000+ markers, use a slightly larger radius
+    const radius = isTestMode
+      ? isMobile
+        ? 60
+        : 40 // Moderate radius for large datasets
+      : isMobile
+        ? CLUSTERING.MOBILE_RADIUS
+        : CLUSTERING.DESKTOP_RADIUS
+
+    const maxZoom = isMobile ? CLUSTERING.MOBILE_MAX_ZOOM : CLUSTERING.DESKTOP_MAX_ZOOM
+    const minPoints = isMobile ? CLUSTERING.MOBILE_MIN_POINTS : CLUSTERING.DESKTOP_MIN_POINTS
 
     const index = new Supercluster<ClusterProperties, ClusterProperties>({
       radius,
       maxZoom,
       minPoints,
-      extent: 512, // Standard tile extent
-      nodeSize: 64, // Standard node size
+      extent: CLUSTERING.TILE_EXTENT,
+      nodeSize: CLUSTERING.NODE_SIZE,
     })
 
     if (processedMarkers.length > 0) {
@@ -213,7 +143,7 @@ export function useMapClustering({
     }
 
     return index
-  }, [processedMarkers, isMobile, isTestMode, viewStateZoom])
+  }, [processedMarkers, isMobile, isTestMode]) // Removed viewStateZoom - clustering handled at query time
 
   // Pre-compute initial markers for fallback with spatial distribution
   const initialMarkers = useMemo(() => {
@@ -248,7 +178,7 @@ export function useMapClustering({
         const bounds = mapRef.current.getBounds()
         setThrottledViewport({ zoom: Math.floor(viewStateZoom), bounds })
       }
-    }, 150) // Throttle viewport updates to 150ms
+    }, PERFORMANCE_CONFIG.THROTTLE_MS.VIEWPORT) // Throttle viewport updates
 
     return () => clearTimeout(throttleTimer)
   }, [viewStateZoom, mapLoaded, mapRef])
@@ -262,7 +192,7 @@ export function useMapClustering({
 
     try {
       // Add buffer to viewport for smooth panning
-      const buffer = 0.1 // 10% buffer around viewport
+      const buffer = PERFORMANCE_CONFIG.VIEWPORT.BUFFER
       const bounds = throttledViewport.bounds
       const width = bounds.getEast() - bounds.getWest()
       const height = bounds.getNorth() - bounds.getSouth()
@@ -277,14 +207,15 @@ export function useMapClustering({
       const clusteredMarkers = supercluster.getClusters(bbox, throttledViewport.zoom)
 
       // At very high zoom levels, limit individual markers spatially
-      if (throttledViewport.zoom > 15) {
+      const { DISPLAY_LIMITS, VIEWPORT } = PERFORMANCE_CONFIG
+      if (throttledViewport.zoom > VIEWPORT.HIGH_ZOOM_THRESHOLD) {
         const maxIndividualMarkers = isTestMode
           ? isMobile
-            ? 200
-            : 800 // Much higher limits for test mode
+            ? DISPLAY_LIMITS.MAX_MARKERS_MOBILE
+            : DISPLAY_LIMITS.MAX_MARKERS_DESKTOP
           : isMobile
-            ? 50
-            : 150
+            ? DISPLAY_LIMITS.MAX_MARKERS_MOBILE_NORMAL
+            : DISPLAY_LIMITS.MAX_MARKERS_DESKTOP_NORMAL
         const clusterItems = clusteredMarkers.filter((m) => m.properties?.cluster)
         const individuals = clusteredMarkers.filter((m) => !m.properties?.cluster)
 

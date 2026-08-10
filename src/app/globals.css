@@ -392,6 +392,97 @@
   --font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
 }
 
+/*
+ * Brutal Pop - the /museum-exhibit look brought into the theme system.
+ *
+ * Chrome is near-black and recedes; the map beneath it is charcoal with gold roads; the ONLY
+ * high-chroma things on screen are the business-state pins. That is the whole idea: the "pop"
+ * is the data, not the furniture. --success/--warning/--danger are set to the exact marker
+ * colours from getThemeMarkerColors('brutal-pop') so the legend swatches and the pins match.
+ * Brutalism here comes from weight, hard edges and heavy rules rather than from white mass -
+ * white panels are what buries the map on /museum-exhibit.
+ */
+[data-theme='brutal-pop'] {
+  --primary: #ecc368;
+  --primary-rgb: 236, 195, 104;
+  --primary-light: #f4d68f;
+  --secondary: #f2efe6;
+  --warning: #ff7a1a;
+  --warning-rgb: 255, 122, 26;
+  --danger: #ff2d55;
+  --danger-rgb: 255, 45, 85;
+  --success: #00e5c0;
+  --success-rgb: 0, 229, 192;
+  --background: #131318;
+  --background-rgb: 19, 19, 24;
+  --foreground: #f2efe6;
+  --foreground-muted: #9a9aa8;
+  --muted: #2a2a34;
+  --muted-rgb: 42, 42, 52;
+  --border: #55555f;
+  --shadow: rgba(0, 0, 0, 0.6);
+  --map-overlay: rgba(19, 19, 24, 0.85);
+  --accent-orange: #ff7a1a;
+  --accent-yellow: #ecc368;
+  --accent-purple: #a78bfa;
+  --accent-coral: #ff2d55;
+  --accent-navy: #2a2a44;
+  --accent-chartreuse: #00e5c0;
+  --dropdown-bg: #1c1c24;
+  --dropdown-bg-rgb: 28, 28, 36;
+  --card-bg: #1c1c24;
+  --card-bg-rgb: 28, 28, 36;
+  --input-bg: #1c1c24;
+  --input-bg-rgb: 28, 28, 36;
+  --placeholder-color: #7a7a88;
+  --active-text: #131318;
+  --active-text-secondary: #2a2a34;
+  --declining-text: #131318;
+  --declining-text-secondary: #2a2a34;
+  --closed-text: #f2efe6;
+  --closed-text-secondary: #e6e0d4;
+  /* globals.css defines a .font-display utility that reads this; only hoefe set it before,
+     so without this line the utility silently falls back to the browser default. */
+  --font-display: var(--font-space-mono), 'Space Mono', ui-monospace, monospace;
+}
+
+/*
+ * Post-1945 "standing" marker colour.
+ *
+ * Mirrors getThemeMarkerColors(theme).standing in src/utils/mapStyles.ts, which is the source of
+ * truth because Mapbox needs literal hex. This variable exists so the time-slider legend swatch
+ * matches the pins without hardcoding colours in the component. Keep the two in sync.
+ *
+ * Grouped by background luminance, not by theme family: light-ground themes need a dark pin and
+ * dark-ground themes need a light one, which is exactly why mapStyles.ts had to stop sharing one
+ * block between moody and the four light themes.
+ */
+:root,
+[data-theme='moody'] {
+  --marker-standing: #e8e8f0;
+}
+[data-theme='cool'],
+[data-theme='warm'],
+[data-theme='cold'],
+[data-theme='art-nouveau'] {
+  --marker-standing: #2c3e50;
+}
+[data-theme='bauhaus'] {
+  --marker-standing: #000000;
+}
+[data-theme='hot'] {
+  --marker-standing: #ffffff;
+}
+[data-theme='archival'] {
+  --marker-standing: rgba(18, 28, 46, 0.92);
+}
+[data-theme='hoefe'] {
+  --marker-standing: #2f4858;
+}
+[data-theme='brutal-pop'] {
+  --marker-standing: #ffffff;
+}
+
 /* Hoefe theme - Typography overrides */
 [data-theme='hoefe'] h1,
 [data-theme='hoefe'] h2,

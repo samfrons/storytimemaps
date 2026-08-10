@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import Link from 'next/link'
 import { useTranslation } from '../../i18n/useTranslation'
 import { useAuth } from '../../contexts/AuthContext'
 import AuthModal from '../../components/auth/AuthModal'
@@ -19,7 +19,7 @@ interface SidebarProps {
   setShowInfo?: (show: boolean) => void
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
+function Sidebar({
   viewMode,
   setViewMode,
   showIntro,
@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   setIntroExplicitlyClosed,
   showInfo,
   setShowInfo,
-}) => {
+}: SidebarProps) {
   const { theme, setTheme } = useTheme()
   const { language, switchToLanguage } = useTranslation()
   const { user } = useAuth()
@@ -106,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             color: 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -146,6 +146,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               'art-nouveau',
               'archival',
               'hoefe',
+              'brutal-pop',
             ].map((themeName) => (
               <button
                 key={themeName}
@@ -174,7 +175,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                   }
                 }}
               >
-                {themeName === 'art-nouveau' ? 'Art Nouveau' : themeName}
+                {themeName === 'art-nouveau'
+                  ? 'Art Nouveau'
+                  : themeName === 'brutal-pop'
+                    ? 'Brutal Pop'
+                    : themeName}
               </button>
             ))}
           </div>
@@ -198,7 +203,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             color: viewMode === 'stories' ? 'var(--background)' : 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -237,7 +242,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             color: viewMode === 'database' ? 'var(--background)' : 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -269,7 +274,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           color: isMainPage && showIntro ? 'var(--background)' : 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'scale(1.1)'
@@ -306,7 +311,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           color: isMainPage && showInfo ? 'var(--background)' : 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
           fontSize: '18px',
           fontFamily: 'serif',
           fontStyle: 'italic',
@@ -333,7 +338,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           color: isBarchartsPage ? 'var(--background)' : 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'scale(1.1)'
@@ -364,7 +369,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           color: 'var(--foreground)',
           cursor: 'pointer',
           transform: 'scale(1)',
-          transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+          transition: 'transform 0.2s ease-in-out',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'scale(1.1)'
@@ -428,7 +433,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             color: 'var(--foreground)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)'
@@ -461,7 +466,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             color: 'var(--background)',
             cursor: 'pointer',
             transform: 'scale(1)',
-            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            transition: 'transform 0.2s ease-in-out',
             fontSize: '14px',
             fontWeight: 'bold',
             fontFamily: 'monospace',
@@ -487,5 +492,4 @@ const Sidebar: React.FC<SidebarProps> = ({
     </div>
   )
 }
-
 export default React.memo(Sidebar)

@@ -89,9 +89,17 @@
     "subtitle": "Bringing Digital Memory into Physical Space",
     "plaques": {
       "title": "Memorial Plaques Initiative",
-      "description": "Inspired by the Stolpersteine (stumbling stones) project, we envision installing memorial plaques at the original locations of documented Jewish businesses throughout Berlin.",
+      "description": "We envision installing memorial plaques at the original locations of documented Jewish businesses throughout Berlin.",
       "vision": "These plaques would serve as permanent reminders of the vibrant Jewish commercial life that once flourished in these neighborhoods, connecting digital documentation with physical remembrance."
     },
+    "plaqueMockup": {
+      "hereStood": "HERE STOOD",
+      "owner": "Owner: Pelz Family",
+      "forcedClosure": "Forced closure",
+      "aryanized": "Aryanized"
+    },
+    "ctaTitle": "Help Bring These Memorials to Life",
+    "ctaDescription": "We're seeking partnerships with Berlin's cultural institutions, educational organizations, and community groups to make memorial plaques a reality. This initiative requires collaboration with city planning, historical preservation, and Jewish community organizations.",
     "community": {
       "title": "Community Engagement",
       "description": "We're working with local communities, schools, and Berlin's Jewish organizations to develop educational programs that connect this historical data with contemporary discussions about memory, commerce, and community."
@@ -113,6 +121,89 @@
   "language": {
     "switchTo": "Deutsch",
     "current": "English"
+  },
+  "plaques": {
+    "loading": "Loading plaques...",
+    "plaqueAltText": "Memorial plaque for {{name}}",
+    "hero": {
+      "badge": "Remembrance Initiative",
+      "title": "Memorial Plaques Initiative",
+      "subtitle": "Bringing digital memory into the physical streets of Berlin",
+      "compactDescription": "Help us install memorial plaques at the original locations of Jewish businesses throughout Berlin - connecting digital documentation with physical remembrance.",
+      "learnMore": "Learn more about this initiative",
+      "visionTitle": "Our Vision",
+      "visionDescription": "We envision a Berlin where the memory of Jewish commercial life is preserved not just digitally, but in the very streets where these businesses once thrived. Each plaque will tell the story of a family enterprise, connecting passersby to the rich history that was violently erased.",
+      "berlinStyle": "Berlin Style",
+      "brassStyle": "Brass Style",
+      "ctaTitle": "Help Bring These Memorials to Life",
+      "ctaDescription": "We are seeking partnerships with cultural institutions, educational organizations, and community groups to make memorial plaques a reality throughout Berlin.",
+      "supportInitiative": "Support This Initiative"
+    },
+    "nav": {
+      "backToMap": "Back to Map"
+    },
+    "gallery": {
+      "title": "Featured Memorial Plaques",
+      "subtitle": "15 plaques designed for documented Jewish businesses - click any plaque to explore the full story"
+    },
+    "howItWorks": {
+      "title": "How Memorial Plaques Work",
+      "subtitle": "Connecting physical memorials with digital storytelling",
+      "step1Title": "Research & Documentation",
+      "step1Description": "Each plaque is based on verified historical research from the Leo Baeck Institute database, documenting the business name, owner, location, and operational dates.",
+      "step2Title": "Physical Installation",
+      "step2Description": "Plaques would be installed at or near the original business locations, serving as permanent street-level memorials visible to all passersby.",
+      "step3Title": "Digital Connection",
+      "step3Description": "QR codes on each plaque link to our interactive map, providing visitors with photographs, detailed histories, and the full story of each business."
+    },
+    "partners": {
+      "title": "Seeking Partners",
+      "description": "This initiative requires collaboration across multiple sectors. We are actively seeking partners to help bring memorial plaques to Berlin's streets.",
+      "culturalInstitutions": "Cultural Institutions",
+      "educationalOrganizations": "Educational Organizations",
+      "jewishCommunity": "Jewish Community Organizations",
+      "cityPlanning": "City Planning & Preservation",
+      "becomePartner": "Become a Partner",
+      "supportProject": "Support the Project"
+    },
+    "footer": {
+      "exploreTitle": "Explore the Full Archive",
+      "exploreDescription": "Visit our interactive map to explore over 10,000 documented Jewish businesses in Berlin from 1900-1945.",
+      "exploreMap": "Explore Interactive Map",
+      "rights": "All rights reserved.",
+      "map": "Interactive Map",
+      "about": "About the Project"
+    },
+    "mockup": {
+      "altText": "Memorial plaque mockup for {{name}}",
+      "caption": "Imagine a plaque like this here",
+      "watermark": "MOCKUP",
+      "memorial": "In memory of Berlin's Jewish business community"
+    },
+    "cta": {
+      "title": "Are you the owner of this building?",
+      "body": "Help us install a memorial plaque commemorating {{businessName}} at this address. Tell us a bit about yourself and we will reach out."
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "role": "Your relationship to the building",
+      "message": "Message (optional)",
+      "submit": "Get in touch",
+      "submitting": "Sending…",
+      "thanksTitle": "Thank you",
+      "thanksBody": "We received your inquiry and will be in touch soon about a memorial plaque for this address.",
+      "errorName": "Please enter your name.",
+      "errorEmail": "Please enter a valid email address.",
+      "errorGeneric": "Submission failed. Please try again."
+    },
+    "role": {
+      "owner": "Building owner",
+      "tenant": "Tenant",
+      "manager": "Property manager",
+      "other": "Other"
+    }
   },
   "share": {
     "shareStory": "Share Story",
@@ -194,6 +285,171 @@
       "totalDestructions": "Total destructions",
       "peakMonth": "Peak destruction month",
       "dailyAverage": "Daily average (Nov 1938)"
+    }
+  },
+  "exhibitVision": {
+    "nav": {
+      "backToMap": "Back to Map"
+    },
+    "landingLink": "Explore the Museum Exhibit Vision",
+    "hero": {
+      "badge": "Exhibit Vision",
+      "title": "A Museum Exhibit for Berlin's Lost Businesses",
+      "subtitle": "From a digital archive of 10,021 enterprises to a public space of memory",
+      "visionTitle": "Our Vision",
+      "visionDescription": "We envision a museum exhibit that brings the documented history of Berlin's Jewish businesses out of the database and into a shared physical space — where visitors stand before a living map of the city, follow a single family enterprise through the years, and witness how a vibrant commercial world was systematically dismantled between 1900 and 1945.",
+      "seeLiveExhibit": "See the live interactive exhibit",
+      "ctaTitle": "Help Us Build It",
+      "ctaDescription": "We are seeking museum, cultural, and educational partners — and the funding — to turn this vision into a permanent and travelling exhibit.",
+      "supportInitiative": "Partner With Us"
+    },
+    "experience": {
+      "title": "What Visitors Experience",
+      "subtitle": "An interactive journey through a vanished commercial world",
+      "card1Title": "An Interactive Map Table",
+      "card1Description": "A large touch-screen map of Berlin where every marker is a real documented business. Visitors explore neighbourhoods, zoom into streets, and surface the stories beneath their feet.",
+      "card2Title": "A Journey Through Time",
+      "card2Description": "A timeline from 1900 to 1945 lets visitors watch businesses open, thrive, decline, and face forced closure — making the scale and pace of persecution visible at a glance.",
+      "card3Title": "Individual Family Stories",
+      "card3Description": "Behind each marker is a family enterprise — a tailor, a bookseller, a department store. Detailed stories restore names, faces, and livelihoods to the historical record.",
+      "card4Title": "Accessible in Many Languages",
+      "card4Description": "Built multilingual from the start (English, German, and Yiddish), the exhibit welcomes Berliners, descendants, students, and international visitors alike."
+    },
+    "builds": {
+      "title": "Building on a Decade of Research",
+      "subtitle": "Three layers of remembrance",
+      "digitalTitle": "Digital Archive",
+      "digitalDescription": "An interactive map already documents 10,021 Jewish-owned businesses in Berlin, drawn from rigorous historical scholarship.",
+      "plaquesTitle": "Memorial Plaques",
+      "plaquesDescription": "We are working to install plaques at the original business locations — memory in the streets themselves.",
+      "exhibitTitle": "Museum Exhibit",
+      "exhibitDescription": "The exhibit gathers this work into one immersive space, connecting data, place, and personal story for a broad public audience.",
+      "provenance": "The project builds on Dr. Christoph Kreutzmüller's landmark study “Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany” and the archives of the Leo Baeck Institute."
+    },
+    "partners": {
+      "title": "Partners & Support",
+      "description": "Realising this exhibit requires collaboration and funding. We are seeking partners across Berlin's museum, cultural, educational, and Jewish community institutions.",
+      "ask1": "Host venues and museum partners for a permanent or travelling installation",
+      "ask2": "Funding for hardware, fabrication, and multilingual content production",
+      "ask3": "Educational partners to develop programmes for schools and community groups"
+    },
+    "footer": {
+      "exploreTitle": "Explore the Living Archive",
+      "exploreDescription": "See the interactive map that this exhibit is built upon.",
+      "exploreMap": "Open the Map",
+      "viewPlaques": "Memorial Plaques Initiative",
+      "rights": "All rights reserved."
+    }
+  },
+  "homepage": {
+    "nav": {
+      "map": "Map",
+      "plaques": "Plaques",
+      "data": "Data",
+      "frankfurt": "Frankfurt"
+    },
+    "hero": {
+      "eyebrow": "A living map of Jewish commercial life · Berlin 1900–1945",
+      "titleLine1": "Every dot a business.",
+      "titleLine2": "Every color a fate.",
+      "description": "StoryTimeMaps charts more than ten thousand Jewish-owned businesses at their real Berlin addresses — and lets you move through time to watch a community’s economy flourish, come under attack, and be systematically erased.",
+      "ctaMap": "Explore the map",
+      "ctaHow": "How it works",
+      "pause": "Pause the timeline",
+      "play": "Play the timeline",
+      "sliderLabel": "Year",
+      "plotted": "{{total}} documented locations, drawn from the archive",
+      "loading": "Loading the archive…"
+    },
+    "states": {
+      "active": "Open",
+      "declining": "Under pressure",
+      "closed": "Closed"
+    },
+    "concept": {
+      "eyebrow": "The concept",
+      "title": "One map. Three dimensions.",
+      "intro": "The archive behind this site is a list of names, addresses and dates. The map turns that list back into a city — one you can stand in, move through, and watch change.",
+      "placeTag": "Place",
+      "placeTitle": "Every dot is a real address",
+      "placeText": "Each business is mapped to the street where it actually stood — tailors in Mitte, publishers in Kreuzberg, department stores on Kurfürstendamm. Zoom in and the dots become shops with names, owners and stories.",
+      "timeTag": "Time",
+      "timeTitle": "Drag the years, watch the city change",
+      "timeText": "A time slider runs beneath the map from 1900 to 1945. Slide it and businesses open, struggle and vanish around you — the boycott of 1933, the forced transfers of 1938, the end of the war.",
+      "fateTag": "Fate",
+      "fateTitle": "Color carries the story",
+      "fateText": "At any moment, each dot shows the state of that business: operating normally, under growing pressure in its final years, or closed — liquidated, seized, or destroyed."
+    },
+    "memorial": {
+      "quote": "Behind every dot: a family, a livelihood, a place where Berlin bought its bread, its books, its winter coats. This map exists so that they are not reduced to a number."
+    },
+    "history": {
+      "eyebrow": "What happened",
+      "note": "This was not a collapse but a campaign: boycott, legal exclusion, forced sale, destruction. Each step is visible on the map as a wave of color moving through the city."
+    },
+    "data": {
+      "eyebrow": "The record",
+      "title": "The numbers tell the story",
+      "intro": "Every figure below comes from the same archive the map draws from. The shape of the chart is the history: pressure building through the 1930s, then the catastrophe of 1938.",
+      "statDocumented": "Businesses documented",
+      "statMapped": "Mapped to street addresses",
+      "statClosed": "Closed between 1933 and 1945",
+      "statYears": "Years of history covered",
+      "chartTitle": "Documented business closings per year, 1930–1945",
+      "chartAlt": "Bar chart of business closings per year from 1930 to 1945, peaking at 2,195 in 1939 and 2,061 in 1945",
+      "note1933": "1933 — the April boycott begins",
+      "note1938": "1938–39 — “Aryanization” and Kristallnacht",
+      "note1945": "1945 — liquidations recorded by the war’s end"
+    },
+    "research": {
+      "eyebrow": "The foundation"
+    },
+    "explore": {
+      "eyebrow": "Ways in",
+      "title": "Begin exploring",
+      "mapTag": "Start here",
+      "mapText": "The full experience: ten thousand businesses, a time slider across 45 years, and in-depth stories of the people behind the storefronts.",
+      "plaquesTag": "Initiative",
+      "plaquesText": "Help bring the digital memorial into Berlin’s streets — physical plaques at the addresses where these businesses stood.",
+      "dataTag": "For researchers",
+      "dataText": "Browse the underlying records: names, addresses, trades and dates, with sources for every entry."
+    },
+    "footer": {
+      "about": "A digital memorial to the Jewish businesses of Berlin, 1900–1945. Built to preserve memory and educate — every record is drawn from documented archival sources.",
+      "navLabel": "Footer",
+      "citation": "Based on the research of Dr. Christoph Kreutzmüller and the database of Jewish commercial activity in Berlin. For academic use, please cite the original research."
+    },
+    "stories": {
+      "eyebrow": "The human dimension",
+      "title": "Behind every dot, a story",
+      "intro": "Fifteen businesses have been researched in depth — with archival photographs, documents and the histories of the families who built them. They are the first of many.",
+      "cta": "Read them all in the map",
+      "imageAlt": "Archival photograph: {{name}}",
+      "credit": "Photographs and documents from the project archive."
+    },
+    "about": {
+      "eyebrow": "About the project",
+      "title": "A digital memorial with a physical future",
+      "mission": "StoryTimeMaps set out to map the formerly Jewish-owned businesses of Berlin from verified historical records and archival imagery — and then to carry that memory back into the physical city: through memorial plaques at the original addresses, and a public museum exhibit.",
+      "sourceTitle": "Sourced and verified",
+      "sourceText": "Every record comes from the Datenbank jüdischer Gewerbebetriebe in Berlin at Humboldt-Universität zu Berlin — the scholarly database grounded in Dr. Christoph Kreutzmüller’s research — with archival material informed by the Leo Baeck Institute.",
+      "fact1": "All 10,021 records re-verified against the original source in 2026",
+      "fact2": "Every record carries its source link and a verification date",
+      "fact3": "Roughly nine in ten businesses plotted at their exact street address",
+      "fact4": "Multilingual from the ground up: English, German and Yiddish",
+      "statusLive": "Live",
+      "statusProgress": "In progress",
+      "statusPrototype": "Prototype",
+      "statusPilot": "Pilot",
+      "phaseMapTitle": "The digital map",
+      "phaseMapText": "The interactive memorial you are looking at: every documented business, searchable and explorable in three languages.",
+      "phasePlaquesTitle": "Memorial plaques",
+      "phasePlaquesText": "Fifteen plaques are fully designed — each carrying a QR code that links the street back to the business’s story. Outreach to building owners is underway.",
+      "phaseExhibitTitle": "Museum exhibit",
+      "phaseExhibitText": "A touch-screen exhibit version of the map is built and running, designed for kiosk display. We are seeking museum and cultural partners to host it.",
+      "exhibitLink": "Exhibit vision",
+      "phaseBeyondTitle": "Beyond Berlin",
+      "phaseBeyondText": "A Frankfurt pilot of 57 businesses shows the model extends to other German cities."
     }
   }
 }

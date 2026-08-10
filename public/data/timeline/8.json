@@ -1,0 +1,28 @@
+{
+  "businessId": "8",
+  "timeline": [
+    {
+      "startDate": "1875-01-01",
+      "description": "Josef Jacobowitz founds the egg import business in 1875; son-in-law Albert Schlesinger carries the prospering family firm into the 20th century.",
+      "longDescription": "Josef Jacobowitz, a merchant, founded the business in 1875, based at Bergmann Strasse 16 near the covered market in Kreuzberg; it first appeared in the Berlin commercial register in 1900. In 1918 the business was taken over by Josef's 55-year-old son-in-law Albert Schlesinger, who had built up an egg wholesale and import business in Herne, Westphalia. He was married to Bertha Jacobowitz, with whom he had two children, Alfred and Klara Erika; the family lived 'over the shop'. The business prospered and enabled a comfortable life – symbolized by ownership of a car as early as 1913, for which a garage was built into the courtyard. In the 1950s the company's value was estimated at 75,000 Reich marks with an annual turnover of 40,000 Reich marks.",
+      "endDate": "1932-12-31"
+    },
+    {
+      "startDate": "1933-01-01",
+      "description": "New regulations withdraw licenses from Jewish egg traders. Left only with reject goods, the family business faces ruin.",
+      "longDescription": "Nazi economic policy hit the youngest family member first: Klara Erika was dismissed from her job as a shorthand typist for the Reich Association of German Grocers and Food Traders in April 1933 and emigrated via Vienna to England; her brother Alfred followed the same month when he was denied access to foreign currency. In 1934, new regulations withdrew licenses from Jewish traders and an association of German egg traders was founded – only its members could import eggs through the central 'egg exploitation company', and Jewish businesses were not admitted. Left only with the reject goods which association members had discarded, Jewish egg wholesalers faced economic ruin. The year 1935 marked the climax of a huge wave of business sales as Jewish egg traders were forced to sell up for a nominal fee or – like the Jacobowitz family – close down. In 1935 Albert Schlesinger had to close the business; by 1936 all Jewish traders had been ousted from the market.",
+      "endDate": "1936-09-30"
+    },
+    {
+      "startDate": "1936-10-01",
+      "description": "The business is liquidated and struck from the register. After the November pogroms the Schlesingers flee penniless to England.",
+      "longDescription": "The business was liquidated on October 1, 1936, and deleted from the commercial register on July 28, 1937. Bertha and Albert Schlesinger resolved to leave Germany after the shock of the November pogroms in 1938, hastily making an oral testament naming their children as heirs before escaping, penniless, via Holland to England, where their children supported them. Rachel Rosenthal (née Jacobowitz) was deported with her husband on April 30, 1942, aged 66, via Theresienstadt to Zamosc and murdered. In April 1944 the house at Bergmann Strasse 16 was seized by the Gestapo.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "The Bergmann Strasse property is restored to the family in the 1950s. Today a wine store occupies the salesrooms.",
+      "longDescription": "A letter of January 31, 1947, from Alfred Schlesinger in Leeds to his cousin Max Rosenthal in New York shows how the surviving family members had become scattered across the globe – England, America, France. Eleven years after its seizure by the Gestapo, the property at Bergmann Strasse 16 was restored to the family, who received a one-off compensation payment of 270.56 German marks. As the sole heir, Klara Erika Werber (née Jacobowitz) received compensation for damages to her parents' occupational advancement of 15,350 German marks in 1963.\n\nThe site today\n\nToday there is a wine store in the salesrooms at Bergmann Strasse 16 in Kreuzberg, where the Jacobowitz family ran their egg business for over sixty years."
+    }
+  ]
+}

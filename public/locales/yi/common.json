@@ -9,7 +9,7 @@
     "mapTitle": "Interaktive Vizualizatsye",
     "paragraph1": "Dos proyekt boyt zikh oyf Dr. Christoph Kreutzmüller's bahnbrekhndike forshung dokumentirt in 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' (2015). Zayn tsen-yorike arbet mitn Leo Baeck Institut hot geshafn an umgeheyer arkhiv fun yidishe gesheftn iber gants Daytshland.",
     "paragraph2": "Unzer interaktive mape farvandlt di visnshaftlekhe datenbaze in a tsugeynglekhe digitale derfarung, dokumentirndik yidish-aygntimlekhe gesheftn in Berlin fun 1900 biz 1945. Yeder marker shtelt for a mishpokhe unternemung - fun ek-kromen tsu groyse gesheftn - vos hobn geformt di ekonomishe shtof fun der shtot.",
-    "paragraph3": "Navigirt durkh tsayt tsu oysforshn vi di gesheftn hobn gebliet, gekemft, un letsns zikh getrofn mit tsvang-farshlisung. Durkh kombinirnדik historishe forshung mit moderner vizualizatsye, viln mir makhn di vikhtige geshikhte tsugeynglekh far naye doyres."
+    "paragraph3": "Navigirt durkh tsayt tsu oysforshn vi di gesheftn hobn gebliet, gekemft, un letsns zikh getrofn mit tsvang-farshlisung. Durkh kombinirndik historishe forshung mit moderner vizualizatsye, viln mir makhn di vikhtige geshikhte tsugeynglekh far naye doyres."
   },
   "preview": {
     "title": "Oysgeklibene Gesheftn",
@@ -76,8 +76,8 @@
     },
     "database": {
       "title": "Di Leo Baeck Institut Datenbaze",
-      "description": "Di umfasenדike datenbaze baym Leo Baeck Institut antהalt detaylirte rekords fun toyzeter yidishe gesheftn, arayngerkhnt registratsye dokumentn, 'Arizirung' rekords, tsvang-farkoyf dokumentatsye, un perzenלekhe tsaygnshaftn fun gesheft aygntimer un zeyer mishpokhes.",
-      "scope": "Di unbatsalbare visnshaftlekhe resurs dokumentirt nisht nor di gesheftn aleyn, ober di mentshלekhe geshikhtes hinter zey - fartribene mishpokhes, tseshterteפarnoses, un oyf eybik geenderte kehiles."
+      "description": "Di umfasndike datenbaze baym Leo Baeck Institut antalt detaylirte rekords fun toyzeter yidishe gesheftn, arayngerkhnt registratsye dokumentn, 'Arizirung' rekords, tsvang-farkoyf dokumentatsye, un perzenlikhe tsaygnshaftn fun gesheft aygntimer un zeyer mishpokhes.",
+      "scope": "Di unbatsalbare visnshaftlekhe resurs dokumentirt nisht nor di gesheftn aleyn, ober di mentshlikhe geshikhtes hinter zey - fartribene mishpokhes, tsesherte parnoses, un oyf eybik geenderte kehiles."
     },
     "transformation": {
       "title": "Fun Arkhiv Tsu Tsugeynglekheyt",
@@ -89,9 +89,17 @@
     "subtitle": "Brengen Digitale Zikorn in Fizishn Ort",
     "plaques": {
       "title": "Denkmal-Plaketen Initiative",
-      "description": "Inspirirt durkh di Stolpersteine proyekt, mir shteln zikh for instalirn denkmal plaketen bay di originele erter fun dokumentirte yidishe gesheftn iber Berlin.",
+      "description": "Mir shteln zikh for instalirn denkmal plaketen bay di originele erter fun dokumentirte yidishe gesheftn iber Berlin.",
       "vision": "Di plaketen voltn gedint vi shtendike dermonung fun dem lebedikn yidishn handls-lebn vos hot amol gebliet in di gegnt, farbindndik digitale dokumentatsye mit fizishe dermonung."
     },
+    "plaqueMockup": {
+      "hereStood": "DO IZ GESHTANEN",
+      "owner": "Aygntimer: Mishpokhe Pelz",
+      "forcedClosure": "Tsvang-farshlisung",
+      "aryanized": "Arizirt"
+    },
+    "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
+    "ctaDescription": "Mir zukhn shutfes mit Berlins kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet. Di initsyativ farlangt tsuzamenarbeit mit shtot planung, historisher bahaltung, un yidishe kehile organizatsyes.",
     "community": {
       "title": "Kehile Bashteyung",
       "description": "Mir arbetn mit lokale kehiles, shuln, un Berliner yidishe organizatsyes tsu antviklen khinukh programen vos farbindn di historishe datn mit hayntike diskusyes vegn zikorn, handl, un kehile."
@@ -112,7 +120,7 @@
   },
   "language": {
     "switchTo": "English",
-    "current": "ייִדיש"
+    "current": "Yidish"
   },
   "cookieConsent": {
     "title": "מיר נוצן קוקיס און אַנדערע טעכנאָלאָגיעס.",
@@ -138,86 +146,334 @@
     "declining": "Aropgeeyendik",
     "closed": "Farshlosn"
   },
+  "plaques": {
+    "loading": "Plaketen lodn...",
+    "plaqueAltText": "Denkmal plakete far {{name}}",
+    "hero": {
+      "badge": "Zikorn Initsyativ",
+      "title": "Denkmal-Plaketen Initsyativ",
+      "subtitle": "Brengen digitale zikorn in di fizishe gasn fun Berlin",
+      "compactDescription": "Helft undz instalirn denkmal plaketen bay di originele erter fun yidishe gesheftn iber Berlin - farbindndik digitale dokumentatsye mit fizisher dermonung.",
+      "learnMore": "Lernt mer vegn di initsyativ",
+      "visionTitle": "Unzer Vizye",
+      "visionDescription": "Mir shteln zikh for a Berlin vu di zikorn fun yidishn handls-lebn iz bahitn nisht nor digital, ober in di gasn aleyn vu di gesheftn hobn amol gebliet. Yede plakete vet dertseyln di geshikhte fun a mishpokhe unternemung.",
+      "berlinStyle": "Berliner Shtil",
+      "brassStyle": "Messing Shtil",
+      "ctaTitle": "Helft brengen di denkmal-tofln tsum lebn",
+      "ctaDescription": "Mir zukhn shutfes mit kulturele institutsyes, bildungs organizatsyes, un kehile grupes tsu makhn denkmal plaketen a realitet iber Berlin.",
+      "supportInitiative": "Shtitst di Initsyativ"
+    },
+    "nav": {
+      "backToMap": "Tsurik tsu der mape"
+    },
+    "gallery": {
+      "title": "Oysgeklibene Denkmal Plaketen",
+      "subtitle": "15 plaketen far dokumentirte yidishe gesheftn - klik oyf a plakete tsu oysforshn di gantse geshikhte"
+    },
+    "howItWorks": {
+      "title": "Vi Denkmal Plaketen Arbetn",
+      "subtitle": "Farbindndik fizishe denkmeler mit digitale geshikhte-dertseylung",
+      "step1Title": "Forshung & Dokumentatsye",
+      "step1Description": "Yede plakete bazirt zikh oyf verifitsirte historishe forshung fun der Leo Baeck Institut datenbaze, dokumentirndik gesheft nomen, aygntimer, ort, un operatsyonele datn.",
+      "step2Title": "Fizishe Instalatsye",
+      "step2Description": "Plaketen voltn instalirt gevorn bay oder noent tsu di originele gesheft erter, dienendik vi shtendike gas-medayer denkmeler far ale farbaygeyer.",
+      "step3Title": "Digitale Farbindung",
+      "step3Description": "QR kodes oyf yeder plakete farbindn tsu unzer interaktive mape, gebndik bazukher fotografyes, detaylirte geshikhtes, un di gantse geshikhte fun yedn gesheft."
+    },
+    "partners": {
+      "title": "Zukhn Shutfes",
+      "description": "Di initsyativ farlangt tsuzamenarbeit iber fil sektorn. Mir zukhn aktiv shutfes tsu helfn brengen denkmal plaketen in Berlins gasn.",
+      "culturalInstitutions": "Kulturele Institutsyes",
+      "educationalOrganizations": "Bildungs Organizatsyes",
+      "jewishCommunity": "Yidishe Kehile Organizatsyes",
+      "cityPlanning": "Shtot Planung & Bahitung",
+      "becomePartner": "Ver a Shutef",
+      "supportProject": "Shtitst dos Proyekt"
+    },
+    "footer": {
+      "exploreTitle": "Oysforshn dos Gantse Arkhiv",
+      "exploreDescription": "Bazukht unzer interaktive mape tsu oysforshn iber 10,000 dokumentirte yidishe gesheftn in Berlin fun 1900-1945.",
+      "exploreMap": "Oysforshn Interaktive Mape",
+      "rights": "Ale rekhtn bahitn.",
+      "map": "Interaktive Mape",
+      "about": "Vegn dem Proyekt"
+    },
+    "mockup": {
+      "altText": "Gedenk-tovele muster far {{name}}",
+      "caption": "Forshtelt aza tovele do",
+      "watermark": "MUSTER",
+      "memorial": "Lzeykher der yidisher gesheft-kehile fun Berlin"
+    },
+    "cta": {
+      "title": "Zayt ir der balebos fun dem dozikn binyen?",
+      "body": "Helft undz tsu hengen a gedenk-tovele lekoved {{businessName}} oyf dem dozikn adres. Dertseylt undz a bisl vegn aykh, un mir veln zikh meldn."
+    },
+    "form": {
+      "name": "Nomen",
+      "email": "Imeyl",
+      "phone": "Telefon (freyvilik)",
+      "role": "Ayer batsiung tsum binyen",
+      "message": "Botshaft (freyvilik)",
+      "submit": "Nemt kontakt",
+      "submitting": "Shikt…",
+      "thanksTitle": "A dank",
+      "thanksBody": "Mir hobn bakumen ayer onfreg un veln zikh bald meldn vegn a gedenk-tovele oyf dem dozikn adres.",
+      "errorName": "Git arayn ayer nomen, biteshn.",
+      "errorEmail": "Git arayn an emesn imeyl-adres.",
+      "errorGeneric": "Iberzendung iz nit gelungen. Probirt nokh amol."
+    },
+    "role": {
+      "owner": "Balebos",
+      "tenant": "Miter",
+      "manager": "Farvalter",
+      "other": "Andersh"
+    }
+  },
   "share": {
-    "shareStory": "טיילן געשיכטע",
-    "shareWebsite": "טיילן",
-    "copyLink": "קאָפּירן לינק",
-    "copyLinkDesc": "קאָפּירן לינק צו קליפּבאָרד",
-    "email": "בליצפּאָסט",
-    "emailDesc": "שיקן דורך בליצפּאָסט",
-    "facebookDesc": "טיילן אויף Facebook",
-    "twitterDesc": "טיילן אויף X",
-    "instagramDesc": "קאָפּירן טעקסט פֿאַר Instagram",
-    "shareVia": "טיילן דורך...",
-    "shareViaDesc": "ניצן סיסטעם טייל אָפּציעס",
-    "copied": "קאָפּירט!",
-    "linkPreview": "לינק פאָרויסזעען"
+    "shareStory": "Teyln Geshikhte",
+    "shareWebsite": "Teyln",
+    "copyLink": "Kopirn Link",
+    "copyLinkDesc": "Kopirn link tsu kliboard",
+    "email": "Blitspost",
+    "emailDesc": "Shikn durkh blitspost",
+    "facebookDesc": "Teyln oyf Facebook",
+    "twitterDesc": "Teyln oyf X",
+    "instagramDesc": "Kopirn tekst far Instagram",
+    "shareVia": "Teyln durkh...",
+    "shareViaDesc": "Nutsn sistem teyl-opsyes",
+    "copied": "Kopirt!",
+    "linkPreview": "Link Foroysze"
   },
   "cookieConsent": {
-    "title": "מיר נוצן קוקיס און אַנדערע טעכנאָלאָגיעס.",
-    "description": "די וועבזייטל נוצט דריט-פּאַרטיי וועבזייטל טראַקינג טעכנאָלאָגיעס צו צושטעלן און פאָרלויפיק פֿאַרבעסערן אירע באַדינונגען און צו ווייזן רעקלאַמעס לויט די אינטערעסן פון באַניצערס. איך שטים צו דעם און קען אָפּרופן אָדער ענדערן מיין הסכמה בכל עת מיט ווירקונג פֿאַר דער צוקונפט.",
-    "settings": "אײַנשטעלונגען",
-    "decline": "אָפּזאָגן",
-    "acceptAll": "אַלעס אָננעמען",
-    "imprint": "אימפּרינט",
-    "privacyPolicy": "פּריוואַטקייט פּאָליטיק",
-    "settingsTitle": "קוקי אײַנשטעלונגען",
-    "essential": "וויכטיקע קוקיס",
-    "essentialDesc": "נויטיק פֿאַר דער וועבזייטל צו פונקציאָנירן. קען נישט אָפּגעשטעלט ווערן.",
-    "alwaysOn": "שטענדיק אָן",
-    "analytics": "אַנאַליטיק קוקיס",
-    "analyticsDesc": "העלפן אונדז פֿאַרשטיין ווי באַזוכער אינטעראַגירן מיט אונדזער וועבזייטל.",
-    "marketing": "מאַרקעטינג קוקיס",
-    "marketingDesc": "גענוצט צו טראַקן באַזוכער איבער וועבזייטלעך פֿאַר רעקלאַמע צוועקן.",
-    "back": "צוריק",
-    "saveSettings": "אײַנשטעלונגען שפּאָרן"
+    "title": "Mir nutsn kukis un andere tekhnologyes.",
+    "description": "Di vebzaytl nutst drit-partey vebzaytl-trakhing tekhnologyes tsu tsushteln un forloyfik farbesern ire badienungen un tsu vayzen reklames loyt di interesn fun banutser. Ikh shtim tsu dem un ken oprofn oder endern mayn haskome tsu yeder tsayt mit virkung far der tsukunft.",
+    "settings": "AYNSHTELUNGEN",
+    "decline": "OPZOGN",
+    "acceptAll": "ALES ONEMEN",
+    "imprint": "IMPRINT",
+    "privacyPolicy": "PRIVATKAYT POLITK",
+    "settingsTitle": "Kuki Aynshtelungen",
+    "essential": "Vikhtike Kukis",
+    "essentialDesc": "Noytik far der vebzaytl tsu funktsionirn. Ken nisht opgeshelt vern.",
+    "alwaysOn": "Shtendik On",
+    "analytics": "Analytik Kukis",
+    "analyticsDesc": "Helfn undz farshteyn vi bazukher interagirn mit undzer vebzaytl.",
+    "marketing": "Marketing Kukis",
+    "marketingDesc": "Genutsn tsu trakhn bazukher iber vebzaytlekh far reklame tsveknz.",
+    "back": "TSURIK",
+    "saveSettings": "AYNSHTELUNGEN SHPORN"
   },
   "barcharts": {
-    "title": "אינטעראַקטיווע דאַטן וויזואַליזאַציעס",
-    "subtitle": "3D מאַפּע מיט צייט אַנאַליז פון חורבן פון ייִדישע געשעפטן אין בערלין",
+    "title": "Interaktive Datn Vizualizatsyes",
+    "subtitle": "3D mape mit tsayt-analiz fun khurbn fun yidishe gesheftn in Berlin",
     "3dMap": {
-      "title": "3D אינטעראַקטיווע בערלין מאַפּע",
-      "statistics": "סטאַטיסטיק",
-      "totalBusinesses": "סך הכל געשעפטן",
-      "districts": "דיסטריקטן",
-      "topDistrict": "העכסטע דיסטריקט",
+      "title": "3D Interaktive Berlin Mape",
+      "statistics": "Statistik",
+      "totalBusinesses": "Ale Gesheftn",
+      "districts": "Distriktn",
+      "topDistrict": "Hekhster Distrikt",
       "viewModes": {
-        "hexagonal": "העקסאַגאָנאַל",
-        "towers": "טורעמס",
-        "particles": "פּאַרטיקאַלז"
+        "hexagonal": "Heksagonal",
+        "towers": "Turems",
+        "particles": "Partikln"
       },
-      "instructions": "קליק און שלעפּ צו דרייען • סקראָל צו זום • קליק העקסאַגאָנז פֿאַר דעטאַלן",
-      "visualization": "3D קלאַסטער וויזואַליזאַציע"
+      "instructions": "Klik un shlep tsu dreyen - Skrol tsu zum - Klik heksagonn far detayln",
+      "visualization": "3D Kluster Vizualizatsye"
     },
     "timeline": {
-      "title": "צייט אַנאַליז",
-      "yearlyOverview": "יערלעך חורבן איבערבליק",
-      "yearlySubtitle": "גאַנצע צייט-ליניע פון סיסטעמאַטיש חורבן פון ייִדיש האַנדל טעטיקייט",
-      "monthlyOverview": "חודשלעך חורבן מוסטער",
-      "monthlySubtitle": "נאָוועמבער 1938 - קריסטאַלנאַכט און איר נאָכפאָלג",
+      "title": "Tsayt Analiz",
+      "yearlyOverview": "Yorlekher Khurbn Iberblik",
+      "yearlySubtitle": "Gantse tsayt-linye fun sistematishn khurbn fun yidisher handls-tetikayt",
+      "monthlyOverview": "Khodeshldiker Khurbn Muster",
+      "monthlySubtitle": "November 1938 - Kristalnakht un ir nokhfolg",
       "filters": {
-        "allYears": "אַלע יאָרן",
-        "peak": "שפּיץ (1938-39)",
-        "warYears": "מלחמה יאָרן (1940+)"
+        "allYears": "Ale Yorn",
+        "peak": "Shpits (1938-39)",
+        "warYears": "Milkhome Yorn (1940+)"
       }
     },
     "legend": {
-      "title": "לעגענדע",
-      "liquidations": "ליקווידאַציעס (געשעפט פאַרמאַכן)",
-      "possessionTransfers": "פאַרמעגן טראַנספערס (געצווונגען פאַרקויפן)"
+      "title": "Legende",
+      "liquidations": "Likvidatsyes (Gesheft farmakhn)",
+      "possessionTransfers": "Farmegn transfern (Getsvaungen farkoyf)"
     },
     "historicalPeriods": {
-      "title": "היסטאָרישע פּעריאָדן",
-      "earlyPersecution": "פרי רדיפה",
-      "intensification": "אינטענסיפיקאַציע",
-      "warPeriod": "מלחמה צייט",
-      "finalPhase": "ענד פאַזע"
+      "title": "Historishe Periodn",
+      "earlyPersecution": "Fri Rdife",
+      "intensification": "Intensifitsirung",
+      "warPeriod": "Milkhome Tsayt",
+      "finalPhase": "End Faze"
     },
     "statistics": {
-      "peakYear": "שפּיץ חורבן יאָר",
-      "totalDestructions": "סך הכל חורבנות",
-      "peakMonth": "שפּיץ חורבן חודש",
-      "dailyAverage": "טעגלעך דורכשניט (נאָוו 1938)"
+      "peakYear": "Shpits khurbn yor",
+      "totalDestructions": "Ale khurbnot",
+      "peakMonth": "Shpits khurbn khoydesh",
+      "dailyAverage": "Teglekher durkhnit (Nov 1938)"
+    }
+  },
+  "homepage": {
+    "nav": {
+      "map": "Mape",
+      "plaques": "Tovlen",
+      "data": "Datn",
+      "frankfurt": "Frankfurt"
+    },
+    "hero": {
+      "eyebrow": "A lebedike mape fun yidishn gesheft-lebn · Berlin 1900–1945",
+      "titleLine1": "Yeder pintl a gesheft.",
+      "titleLine2": "Yeder kolir a goyrl.",
+      "description": "StoryTimeMaps farshraybt iber tsen toyznt yidishe gesheftn oyf zeyere emese Berliner adresn – un lozt aykh forn durkh der tsayt: zet vi dos virtshaftlekhe lebn fun a kehile hot geblit, iz gekumen unter druk, un iz sistematish oysgemekt gevorn.",
+      "ctaMap": "Forsht oys di mape",
+      "ctaHow": "Vi es arbet",
+      "pause": "Opshteln di tsaytlinye",
+      "play": "Shpiln di tsaytlinye",
+      "sliderLabel": "Yor",
+      "plotted": "{{total}} dokumentirte erter, getsikhnt funem arkhiv",
+      "loading": "Men lodt dem arkhiv…"
+    },
+    "states": {
+      "active": "Ofn",
+      "declining": "Unter druk",
+      "closed": "Farmakht"
+    },
+    "concept": {
+      "eyebrow": "Der kontsept",
+      "title": "Eyn mape. Dray dimensyes.",
+      "intro": "Der arkhiv hinter dem vebzaytl iz a reshime fun nemen, adresn un datn. Di mape farvandlt di reshime tsurik in a shtot – eyne in velkher men ken shteyn, zikh bavegn, un zen vi zi bayt zikh.",
+      "placeTag": "Ort",
+      "placeTitle": "Yeder pintl iz an emeser adres",
+      "placeText": "Yedes gesheft iz farbundn mit der gas vu es iz take geshtanen – shnayders in Mite, farlegers in Kroytsberg, kroym-hayzer oyfn Kurfirstndam. Zumt arayn un di pintlekh vern kromen mit nemen, balebatim un geshikhtes.",
+      "timeTag": "Tsayt",
+      "timeTitle": "Tsit durkh di yorn, zet vi di shtot bayt zikh",
+      "timeText": "Unter der mape loyft a tsayt-shiber fun 1900 biz 1945. Rukt im, un arum aykh efenen zikh gesheftn, matern zikh un farshvindn – der boykot fun 1933, di getsvungene ibergabes fun 1938, dos kriegs-ende.",
+      "fateTag": "Goyrl",
+      "fateTitle": "Der kolir trogt di geshikhte",
+      "fateText": "In yedn moment vayzt yeder pintl dem tsushtand funem gesheft: es arbet normal, es shteyt unter vaksndikn druk in zayne letste yorn, oder es iz farmakht – likvidirt, tsugenumen oder tseshtert."
+    },
+    "memorial": {
+      "quote": "Hinter yedn pintl: a mishpokhe, a parnose, an ort vu Berlin hot gekoyft zayn broyt, zayne bikher, zayne vinter-mantlen. Di mape ekzistirt kedey zey zoln nisht farvandlt vern in bloyz a tsol."
+    },
+    "history": {
+      "eyebrow": "Vos iz geshen",
+      "note": "Dos iz nisht geven keyn tsuzamenbrokh, nor a kampanye: boykot, rekhtlekhe oysshlisung, getsvungener farkoyf, tseshterung. Yeder trot iz zikhtbar oyf der mape – vi a khvalye fun kolir vos geyt durkh der shtot."
+    },
+    "data": {
+      "eyebrow": "Der kheshbn",
+      "title": "Di tsoln dertseyln di geshikhte",
+      "intro": "Yede tsifer untn kumt funem zelbn arkhiv fun velkhn di mape vert getsikhnt. Di form funem diagram iz di geshikhte aleyn: vaksndiker druk in di 1930er yorn, dernokh di katastrofe fun 1938.",
+      "statDocumented": "Dokumentirte gesheftn",
+      "statMapped": "Farbundn mit gas-adresn",
+      "statClosed": "Farmakht tsvishn 1933 un 1945",
+      "statYears": "Yor dokumentirte geshikhte",
+      "chartTitle": "Dokumentirte gesheft-farmakhungen a yor, 1930–1945",
+      "chartAlt": "Diagram fun gesheft-farmakhungen a yor fun 1930 biz 1945, mit shpitsn fun 2,195 in 1939 un 2,061 in 1945",
+      "note1933": "1933 – der April-boykot heybt zikh on",
+      "note1938": "1938–39 – „arisirung“ un Kristalnakht",
+      "note1945": "1945 – likvidatsyes farshribn bizn kriegs-ende"
+    },
+    "research": {
+      "eyebrow": "Der fundament"
+    },
+    "explore": {
+      "eyebrow": "Vegn arayn",
+      "title": "Heybt on oysforshn",
+      "mapTag": "Heybt on do",
+      "mapText": "Di fule iberlebung: tsen toyznt gesheftn, a tsayt-shiber iber 45 yor, un tife geshikhtes fun di mentshn hinter di shoyfenster.",
+      "plaquesTag": "Initsyativ",
+      "plaquesText": "Helft brengen dem digitaln denkmol oyf Berlins gasn – fizishe tovlen oyf di adresn vu di gesheftn zenen geshtanen.",
+      "dataTag": "Far forshers",
+      "dataText": "Blettert durkh di originele rekords: nemen, adresn, fakhn un datn, mit mekoyrim far yedn ayntrog."
+    },
+    "footer": {
+      "about": "A digitaler denkmol far di yidishe gesheftn fun Berlin, 1900–1945. Geboyt tsu ophitn zikorn un tsu lernen – yeder rekord shtamt fun dokumentirte arkhiv-mekoyrim.",
+      "navLabel": "Fus-teyl",
+      "citation": "Bazirt oyf der forshung fun Dr. Christoph Kreutzmüller un der datn-baze fun yidisher gesheft-tetikeyt in Berlin. Far akademishn banuts, tsitirt zeyer di originele forshung."
+    },
+    "stories": {
+      "eyebrow": "Di mentshlekhe dimensye",
+      "title": "Hinter yedn pintl a geshikhte",
+      "intro": "Fuftsn gesheftn zenen shoyn tif oysgeforsht gevorn – mit arkhiv-fotografyes, dokumentn un di geshikhtes fun di mishpokhes vos hobn zey oyfgeboyt. Zey zenen di ershte fun a sakh.",
+      "cta": "Leyent zey ale oyf der mape",
+      "imageAlt": "Arkhiv-fotografye: {{name}}",
+      "credit": "Fotografyes un dokumentn funem proyekt-arkhiv."
+    },
+    "about": {
+      "eyebrow": "Vegn dem proyekt",
+      "title": "A digitaler denkmol mit a fizisher tsukunft",
+      "mission": "StoryTimeMaps hot zikh untergenumen tsu kartografirn di amolike yidishe gesheftn fun Berlin loyt verifitsirte historishe kveln un arkhiv-bilder – un dernokh tsu trogn dem zikorn tsurik in der fizisher shtot: durkh denkmol-tovlen oyf di originele adresn, un an efntlekher muzey-oysshtelung.",
+      "sourceTitle": "Bakvelt un verifitsirt",
+      "sourceText": "Yeder rekord kumt fun der Datenbank jüdischer Gewerbebetriebe in Berlin bay der Humboldt-Universitet tsu Berlin – der visnshaftlekher datn-baze bazirt oyf der forshung fun Dr. Christoph Kreutzmüller – mit arkhiv-material funem Leo Baeck Institut.",
+      "fact1": "Ale 10,021 rekords in 2026 nokhamol geprift kegn der originaler kval",
+      "fact2": "Yeder rekord trogt zayn kval-link un a verifitsir-date",
+      "fact3": "Arum nayn fun tsen gesheftn geshtelt oyf zeyer pinktlekher gas-adres",
+      "fact4": "Fil-shprakhik fun onheyb on: english, daytsh un yidish",
+      "statusLive": "Lebedik",
+      "statusProgress": "In gang",
+      "statusPrototype": "Prototip",
+      "statusPilot": "Pilot",
+      "phaseMapTitle": "Di digitale mape",
+      "phaseMapText": "Der interaktiver denkmol vos ir kukt itst on: yedes dokumentirte gesheft, zukhbar un oysforshbar in dray shprakhn.",
+      "phasePlaquesTitle": "Denkmol-tovlen",
+      "phasePlaquesText": "Fuftsn tovlen zenen shoyn in gantsn geshtalt – yede mit a QR-kod vos farbindt di gas mit der geshikhte funem gesheft. Der kontakt mit di hoyz-eigentimer geyt on.",
+      "phaseExhibitTitle": "Muzey-oysshtelung",
+      "phaseExhibitText": "A tach-ekran versye fun der mape iz shoyn geboyt un loyft, batrakht far kiosk-vayzung. Mir zukhn muzey- un kultur-shutfim vos zoln zi bahauzn.",
+      "exhibitLink": "Oysshtelung-vizye",
+      "phaseBeyondTitle": "Vayter fun Berlin",
+      "phaseBeyondText": "A Frankfurter pilot fun 57 gesheftn vayzt az der model shtrekt zikh oys tsu andere daytshe shtet."
+    }
+  },
+  "exhibitVision": {
+    "nav": {
+      "backToMap": "Tsurik tsu der mape"
+    },
+    "landingLink": "Oysforshn di Vizye fun der Muzey-Oysshtelung",
+    "hero": {
+      "badge": "Oysshtelung-Vizye",
+      "title": "A Muzey-Oysshtelung far Berlins Farlorene Gesheftn",
+      "subtitle": "Fun a digitale arkhiv fun 10,021 unternemungen tsu an efntlekhn ort fun zikorn",
+      "visionTitle": "Unzer Vizye",
+      "visionDescription": "Mir shteln zikh for a muzey-oysshtelung vos brengt di dokumentirte geshikhte fun Berlins yidishe gesheftn aroys fun der datenbaze un arayn in a gemeynzamen fizishn ort — vu bazukher shteyen far a lebedike mape fun der shtot, folgn eyn eyntsiker mishpokhe unternemung durkh di yorn, un zeyen vi a lebedike handls-velt iz sistematish tseshtert gevorn tsvishn 1900 un 1945.",
+      "seeLiveExhibit": "Zen di lebedike interaktive oysshtelung",
+      "ctaTitle": "Helft undz boyen es",
+      "ctaDescription": "Mir zukhn shutfes fun muzeyen, kultur, un bildung — un di finantsirung — tsu farvandlen di vizye in a permanente un forndike oysshtelung.",
+      "supportInitiative": "Ver a Shutef"
+    },
+    "experience": {
+      "title": "Vos Bazukher Derfarn",
+      "subtitle": "An interaktive rayze durkh a farshvundene handls-velt",
+      "card1Title": "An Interaktiver Mape-Tish",
+      "card1Description": "A groyser touch-screen mape fun Berlin vu yeder marker iz an emesn dokumentirtn gesheft. Bazukher forshn oys gegntn, zumen arayn in gasn, un antdekn di geshikhtes unter zeyere fis.",
+      "card2Title": "A Rayze Durkh Tsayt",
+      "card2Description": "A tsayt-linye fun 1900 biz 1945 lozt bazukher kukn vi gesheftn efenen zikh, blien, geyen arop, un vern tsvangvayz farmakht — un makht dem groys un tempo fun der rdife zikhtbar mit eyn blik.",
+      "card3Title": "Ayntsike Mishpokhe-Geshikhtes",
+      "card3Description": "Hinter yedn marker shteyt a mishpokhe unternemung — a shnayder, a bukh-hendler, a groyser gesheft. Detaylirte geshikhtes gibn tsurik nemen, penemer, un parnoses tsum historishn rekord.",
+      "card4Title": "Tsugeynglekh in Fil Loshoynes",
+      "card4Description": "Geboyt mit fil loshoynes fun onheyb on (English, Daytsh, un Yidish), heyst di oysshtelung vilkum Berliner, potomkes, studentn, un internatsyonale bazukher glaykh."
+    },
+    "builds": {
+      "title": "Boyendik Oyf a Yortsen Forshung",
+      "subtitle": "Dray Shikhtn fun Dermonung",
+      "digitalTitle": "Digitale Arkhiv",
+      "digitalDescription": "An interaktive mape, bazirt oyf grindlekher historisher forshung, dokumentirt shoyn 10,021 yidish-aygntimlekhe gesheftn in Berlin.",
+      "plaquesTitle": "Denkmal-Plaketen",
+      "plaquesDescription": "Mir arbetn tsu instalirn plaketen bay di originele gesheft erter — zikorn in di gasn aleyn.",
+      "exhibitTitle": "Muzey-Oysshtelung",
+      "exhibitDescription": "Di oysshtelung zamlt di dozike arbet tsuzamen in eyn tifn roym, farbindndik datn, ort, un perzenlekhe geshikhte far a breytn oylem.",
+      "provenance": "Dos proyekt boyt zikh oyf Dr. Christoph Kreutzmüller's bahnbrekhndike shtudye 'Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany' un di arkhivn fun Leo Baeck Institut."
+    },
+    "partners": {
+      "title": "Shutfes & Shtitse",
+      "description": "Di farvirklekhung fun der doziker oysshtelung farlangt tsuzamenarbeit un finantsirung. Mir zukhn shutfes fun Berlins muzeyen, kultur, bildung, un yidishe kehile institutsyes.",
+      "ask1": "Erter un muzey-shutfes far a permanente oder forndike installatsye",
+      "ask2": "Finantsirung far hardware, produktsye, un fil-shprakhikn inhalt",
+      "ask3": "Bildungs shutfes tsu antviklen programen far shuln un kehile grupes"
+    },
+    "footer": {
+      "exploreTitle": "Oysforshn Dem Lebedikn Arkhiv",
+      "exploreDescription": "Zet di interaktive mape vos di dozike oysshtelung boyt zikh oyf.",
+      "exploreMap": "Efent di Mape",
+      "viewPlaques": "Denkmal-Plaketen Initiative",
+      "rights": "Ale rekhtn bahitn."
     }
   }
 }

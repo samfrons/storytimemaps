@@ -33,6 +33,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://storymaps.vercel.app'),
   title: 'Jewish Businesses in Berlin 1900-1945',
   description:
     'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore the history of Jewish entrepreneurship and discover the stories of businesses that shaped the city.',
@@ -208,6 +209,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               'art-nouveau',
               'archival',
               'hoefe',
+              'brutal-pop',
             ]}
             enableSystem={false}
             enableColorScheme={false}

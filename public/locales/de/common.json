@@ -89,9 +89,17 @@
     "subtitle": "Digitale Erinnerung in den physischen Raum bringen",
     "plaques": {
       "title": "Memorial-Plakett-Initiative",
-      "description": "Inspiriert vom Stolpersteine-Projekt stellen wir uns vor, Gedenkplaketten an den ursprünglichen Standorten dokumentierter jüdischer Geschäfte in ganz Berlin zu installieren.",
+      "description": "Wir stellen uns vor, Gedenkplaketten an den ursprünglichen Standorten dokumentierter jüdischer Geschäfte in ganz Berlin zu installieren.",
       "vision": "Diese Plaketten würden als permanente Erinnerung an das lebendige jüdische Handelsleben dienen, das einst in diesen Nachbarschaften blühte, und digitale Dokumentation mit physischem Gedenken verbinden."
     },
+    "plaqueMockup": {
+      "hereStood": "HIER STAND",
+      "owner": "Eigentümer: Familie Pelz",
+      "forcedClosure": "Zwangsschließung",
+      "aryanized": "Arisiert"
+    },
+    "ctaTitle": "Helfen Sie, diese Gedenktafeln zum Leben zu erwecken",
+    "ctaDescription": "Wir suchen Partnerschaften mit Berlins kulturellen Einrichtungen, Bildungsorganisationen und Gemeindegruppen, um Gedenkplaketten zu verwirklichen. Diese Initiative erfordert Zusammenarbeit mit Stadtplanung, Denkmalschutz und jüdischen Gemeindeorganisationen.",
     "community": {
       "title": "Gemeinschaftsengagement",
       "description": "Wir arbeiten mit lokalen Gemeinschaften, Schulen und Berliner jüdischen Organisationen zusammen, um Bildungsprogramme zu entwickeln, die diese historischen Daten mit zeitgenössischen Diskussionen über Erinnerung, Handel und Gemeinschaft verbinden."
@@ -113,6 +121,89 @@
   "language": {
     "switchTo": "English",
     "current": "Deutsch"
+  },
+  "plaques": {
+    "loading": "Plaketten werden geladen...",
+    "plaqueAltText": "Gedenkplakette für {{name}}",
+    "hero": {
+      "badge": "Erinnerungsinitiative",
+      "title": "Memorial-Plakett-Initiative",
+      "subtitle": "Digitale Erinnerung in die physischen Straßen Berlins bringen",
+      "compactDescription": "Helfen Sie uns, Gedenkplaketten an den ursprünglichen Standorten jüdischer Geschäfte in ganz Berlin zu installieren - digitale Dokumentation mit physischem Gedenken verbinden.",
+      "learnMore": "Mehr über diese Initiative erfahren",
+      "visionTitle": "Unsere Vision",
+      "visionDescription": "Wir stellen uns ein Berlin vor, in dem die Erinnerung an das jüdische Handelsleben nicht nur digital, sondern in den Straßen selbst bewahrt wird, wo diese Geschäfte einst blühten. Jede Plakette wird die Geschichte eines Familienunternehmens erzählen.",
+      "berlinStyle": "Berliner Stil",
+      "brassStyle": "Messing-Stil",
+      "ctaTitle": "Helfen Sie, diese Gedenktafeln zum Leben zu erwecken",
+      "ctaDescription": "Wir suchen Partnerschaften mit kulturellen Einrichtungen, Bildungsorganisationen und Gemeindegruppen, um Gedenkplaketten in ganz Berlin zu verwirklichen.",
+      "supportInitiative": "Diese Initiative unterstützen"
+    },
+    "nav": {
+      "backToMap": "Zurück zur Karte"
+    },
+    "gallery": {
+      "title": "Ausgewählte Gedenkplaketten",
+      "subtitle": "15 Plaketten für dokumentierte jüdische Geschäfte - klicken Sie auf eine Plakette, um die vollständige Geschichte zu erkunden"
+    },
+    "howItWorks": {
+      "title": "Wie Gedenkplaketten funktionieren",
+      "subtitle": "Physische Denkmäler mit digitalem Geschichtenerzählen verbinden",
+      "step1Title": "Forschung & Dokumentation",
+      "step1Description": "Jede Plakette basiert auf verifizierter historischer Forschung aus der Leo Baeck Institut-Datenbank, die Geschäftsname, Eigentümer, Standort und Betriebsdaten dokumentiert.",
+      "step2Title": "Physische Installation",
+      "step2Description": "Plaketten würden an oder in der Nähe der ursprünglichen Geschäftsstandorte installiert und dienen als permanente Straßendenkmäler für alle Passanten.",
+      "step3Title": "Digitale Verbindung",
+      "step3Description": "QR-Codes auf jeder Plakette verlinken zu unserer interaktiven Karte und bieten Besuchern Fotos, detaillierte Geschichten und die vollständige Geschichte jedes Geschäfts."
+    },
+    "partners": {
+      "title": "Partner gesucht",
+      "description": "Diese Initiative erfordert Zusammenarbeit über mehrere Sektoren hinweg. Wir suchen aktiv Partner, um Gedenkplaketten in Berlins Straßen zu bringen.",
+      "culturalInstitutions": "Kulturelle Einrichtungen",
+      "educationalOrganizations": "Bildungsorganisationen",
+      "jewishCommunity": "Jüdische Gemeindeorganisationen",
+      "cityPlanning": "Stadtplanung & Denkmalschutz",
+      "becomePartner": "Partner werden",
+      "supportProject": "Projekt unterstützen"
+    },
+    "footer": {
+      "exploreTitle": "Das vollständige Archiv erkunden",
+      "exploreDescription": "Besuchen Sie unsere interaktive Karte, um über 10.000 dokumentierte jüdische Geschäfte in Berlin von 1900-1945 zu erkunden.",
+      "exploreMap": "Interaktive Karte erkunden",
+      "rights": "Alle Rechte vorbehalten.",
+      "map": "Interaktive Karte",
+      "about": "Über das Projekt"
+    },
+    "mockup": {
+      "altText": "Gedenktafel-Entwurf für {{name}}",
+      "caption": "Stellen Sie sich hier eine solche Tafel vor",
+      "watermark": "ENTWURF",
+      "memorial": "Im Gedenken an Berlins jüdische Geschäftswelt"
+    },
+    "cta": {
+      "title": "Sind Sie Eigentümer dieses Gebäudes?",
+      "body": "Helfen Sie uns, an dieser Adresse eine Gedenktafel zur Erinnerung an {{businessName}} anzubringen. Erzählen Sie uns kurz von sich, und wir melden uns bei Ihnen."
+    },
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon (optional)",
+      "role": "Ihre Beziehung zum Gebäude",
+      "message": "Nachricht (optional)",
+      "submit": "Kontakt aufnehmen",
+      "submitting": "Wird gesendet…",
+      "thanksTitle": "Vielen Dank",
+      "thanksBody": "Wir haben Ihre Anfrage erhalten und melden uns bald bei Ihnen wegen einer Gedenktafel an dieser Adresse.",
+      "errorName": "Bitte geben Sie Ihren Namen ein.",
+      "errorEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "errorGeneric": "Übermittlung fehlgeschlagen. Bitte versuchen Sie es erneut."
+    },
+    "role": {
+      "owner": "Gebäudeeigentümer",
+      "tenant": "Mieter",
+      "manager": "Hausverwaltung",
+      "other": "Andere"
+    }
   },
   "share": {
     "shareStory": "Geschichte teilen",
@@ -194,6 +285,171 @@
       "totalDestructions": "Zerstörungen gesamt",
       "peakMonth": "Höhepunkt-Monat",
       "dailyAverage": "Tagesdurchschnitt (Nov 1938)"
+    }
+  },
+  "exhibitVision": {
+    "nav": {
+      "backToMap": "Zurück zur Karte"
+    },
+    "landingLink": "Die Vision der Museumsausstellung entdecken",
+    "hero": {
+      "badge": "Ausstellungsvision",
+      "title": "Eine Museumsausstellung für Berlins verlorene Geschäfte",
+      "subtitle": "Von einem digitalen Archiv mit 10.021 Unternehmen zu einem öffentlichen Ort der Erinnerung",
+      "visionTitle": "Unsere Vision",
+      "visionDescription": "Wir stellen uns eine Museumsausstellung vor, die die dokumentierte Geschichte der jüdischen Geschäfte Berlins aus der Datenbank in einen gemeinsamen physischen Raum holt — wo Besucherinnen und Besucher vor einer lebendigen Karte der Stadt stehen, einem einzelnen Familienunternehmen durch die Jahre folgen und miterleben, wie eine lebendige Geschäftswelt zwischen 1900 und 1945 systematisch zerstört wurde.",
+      "seeLiveExhibit": "Zur interaktiven Ausstellung",
+      "ctaTitle": "Helfen Sie uns beim Aufbau",
+      "ctaDescription": "Wir suchen Partner aus Museen, Kultur und Bildung — sowie Fördermittel —, um diese Vision in eine dauerhafte und reisende Ausstellung zu verwandeln.",
+      "supportInitiative": "Partner werden"
+    },
+    "experience": {
+      "title": "Was Besucher erleben",
+      "subtitle": "Eine interaktive Reise durch eine verschwundene Geschäftswelt",
+      "card1Title": "Ein interaktiver Kartentisch",
+      "card1Description": "Ein großer Touchscreen mit einer Karte Berlins, auf der jeder Marker ein real dokumentiertes Geschäft ist. Besucher erkunden Viertel, zoomen in Straßen und entdecken die Geschichten unter ihren Füßen.",
+      "card2Title": "Eine Reise durch die Zeit",
+      "card2Description": "Eine Zeitleiste von 1900 bis 1945 lässt Besucher beobachten, wie Geschäfte eröffnen, florieren, niedergehen und zwangsweise geschlossen werden — das Ausmaß und das Tempo der Verfolgung werden auf einen Blick sichtbar.",
+      "card3Title": "Einzelne Familiengeschichten",
+      "card3Description": "Hinter jedem Marker steht ein Familienunternehmen — ein Schneider, ein Buchhändler, ein Kaufhaus. Ausführliche Geschichten geben dem historischen Bestand Namen, Gesichter und Lebensgrundlagen zurück.",
+      "card4Title": "Zugänglich in mehreren Sprachen",
+      "card4Description": "Von Anfang an mehrsprachig konzipiert (Englisch, Deutsch und Jiddisch), heißt die Ausstellung Berlinerinnen und Berliner, Nachkommen, Schülerinnen und Schüler sowie internationale Gäste gleichermaßen willkommen."
+    },
+    "builds": {
+      "title": "Aufbauend auf einem Jahrzehnt Forschung",
+      "subtitle": "Drei Ebenen des Erinnerns",
+      "digitalTitle": "Digitales Archiv",
+      "digitalDescription": "Eine interaktive Karte dokumentiert bereits 10.021 jüdische Geschäfte in Berlin, basierend auf gründlicher historischer Forschung.",
+      "plaquesTitle": "Gedenktafeln",
+      "plaquesDescription": "Wir arbeiten daran, Tafeln an den ursprünglichen Geschäftsorten anzubringen — Erinnerung in den Straßen selbst.",
+      "exhibitTitle": "Museumsausstellung",
+      "exhibitDescription": "Die Ausstellung führt diese Arbeit in einem immersiven Raum zusammen und verbindet Daten, Ort und persönliche Geschichte für ein breites Publikum.",
+      "provenance": "Das Projekt baut auf der wegweisenden Studie von Dr. Christoph Kreutzmüller „Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany“ und den Archiven des Leo Baeck Instituts auf."
+    },
+    "partners": {
+      "title": "Partner & Unterstützung",
+      "description": "Die Verwirklichung dieser Ausstellung erfordert Zusammenarbeit und Förderung. Wir suchen Partner aus den Museen, der Kultur, der Bildung und den jüdischen Gemeindeinstitutionen Berlins.",
+      "ask1": "Veranstaltungsorte und Museumspartner für eine dauerhafte oder reisende Installation",
+      "ask2": "Fördermittel für Hardware, Fertigung und mehrsprachige Inhalte",
+      "ask3": "Bildungspartner zur Entwicklung von Programmen für Schulen und Gemeindegruppen"
+    },
+    "footer": {
+      "exploreTitle": "Entdecken Sie das lebendige Archiv",
+      "exploreDescription": "Sehen Sie die interaktive Karte, auf der diese Ausstellung aufbaut.",
+      "exploreMap": "Karte öffnen",
+      "viewPlaques": "Initiative Gedenktafeln",
+      "rights": "Alle Rechte vorbehalten."
+    }
+  },
+  "homepage": {
+    "nav": {
+      "map": "Karte",
+      "plaques": "Gedenktafeln",
+      "data": "Daten",
+      "frankfurt": "Frankfurt"
+    },
+    "hero": {
+      "eyebrow": "Eine lebendige Karte jüdischen Geschäftslebens · Berlin 1900–1945",
+      "titleLine1": "Jeder Punkt ein Geschäft.",
+      "titleLine2": "Jede Farbe ein Schicksal.",
+      "description": "StoryTimeMaps verzeichnet über zehntausend jüdische Geschäfte an ihren realen Berliner Adressen – und lässt Sie durch die Zeit reisen: Sehen Sie, wie das Wirtschaftsleben einer Gemeinschaft aufblühte, unter Druck geriet und systematisch ausgelöscht wurde.",
+      "ctaMap": "Karte erkunden",
+      "ctaHow": "So funktioniert es",
+      "pause": "Zeitleiste anhalten",
+      "play": "Zeitleiste abspielen",
+      "sliderLabel": "Jahr",
+      "plotted": "{{total}} dokumentierte Standorte, direkt aus dem Archiv gezeichnet",
+      "loading": "Archiv wird geladen…"
+    },
+    "states": {
+      "active": "Geöffnet",
+      "declining": "Unter Druck",
+      "closed": "Geschlossen"
+    },
+    "concept": {
+      "eyebrow": "Das Konzept",
+      "title": "Eine Karte. Drei Dimensionen.",
+      "intro": "Das Archiv hinter dieser Website ist eine Liste von Namen, Adressen und Daten. Die Karte verwandelt diese Liste zurück in eine Stadt – eine, in der man stehen, durch die man sich bewegen und deren Wandel man beobachten kann.",
+      "placeTag": "Ort",
+      "placeTitle": "Jeder Punkt ist eine echte Adresse",
+      "placeText": "Jedes Geschäft ist der Straße zugeordnet, in der es tatsächlich stand – Schneider in Mitte, Verlage in Kreuzberg, Kaufhäuser am Kurfürstendamm. Beim Hineinzoomen werden aus Punkten Läden mit Namen, Inhabern und Geschichten.",
+      "timeTag": "Zeit",
+      "timeTitle": "Ziehen Sie durch die Jahre und sehen Sie die Stadt sich verändern",
+      "timeText": "Unter der Karte verläuft ein Zeitregler von 1900 bis 1945. Bewegen Sie ihn, und um Sie herum eröffnen Geschäfte, geraten in Not und verschwinden – der Boykott von 1933, die Zwangsübertragungen von 1938, das Kriegsende.",
+      "fateTag": "Schicksal",
+      "fateTitle": "Die Farbe erzählt die Geschichte",
+      "fateText": "Zu jedem Zeitpunkt zeigt jeder Punkt den Zustand des Geschäfts: in normalem Betrieb, in den letzten Jahren unter wachsendem Druck, oder geschlossen – liquidiert, enteignet oder zerstört."
+    },
+    "memorial": {
+      "quote": "Hinter jedem Punkt: eine Familie, eine Existenz, ein Ort, an dem Berlin sein Brot, seine Bücher, seine Wintermäntel kaufte. Diese Karte existiert, damit sie nicht auf eine Zahl reduziert werden."
+    },
+    "history": {
+      "eyebrow": "Was geschah",
+      "note": "Dies war kein Zusammenbruch, sondern eine Kampagne: Boykott, rechtliche Ausgrenzung, Zwangsverkauf, Zerstörung. Jeder Schritt ist auf der Karte sichtbar – als Welle aus Farbe, die durch die Stadt zieht."
+    },
+    "data": {
+      "eyebrow": "Die Bilanz",
+      "title": "Die Zahlen erzählen die Geschichte",
+      "intro": "Jede Zahl unten stammt aus demselben Archiv, aus dem die Karte gezeichnet wird. Die Form des Diagramms ist die Geschichte selbst: wachsender Druck in den 1930er-Jahren, dann die Katastrophe von 1938.",
+      "statDocumented": "Dokumentierte Geschäfte",
+      "statMapped": "Straßenadressen zugeordnet",
+      "statClosed": "Geschlossen zwischen 1933 und 1945",
+      "statYears": "Jahre dokumentierter Geschichte",
+      "chartTitle": "Dokumentierte Geschäftsschließungen pro Jahr, 1930–1945",
+      "chartAlt": "Balkendiagramm der Geschäftsschließungen pro Jahr von 1930 bis 1945, mit Höchstwerten von 2.195 im Jahr 1939 und 2.061 im Jahr 1945",
+      "note1933": "1933 – der Aprilboykott beginnt",
+      "note1938": "1938–39 – „Arisierung“ und Novemberpogrome",
+      "note1945": "1945 – bis Kriegsende erfasste Liquidationen"
+    },
+    "research": {
+      "eyebrow": "Das Fundament"
+    },
+    "explore": {
+      "eyebrow": "Zugänge",
+      "title": "Jetzt erkunden",
+      "mapTag": "Hier beginnen",
+      "mapText": "Das vollständige Erlebnis: zehntausend Geschäfte, ein Zeitregler über 45 Jahre und ausführliche Geschichten der Menschen hinter den Schaufenstern.",
+      "plaquesTag": "Initiative",
+      "plaquesText": "Helfen Sie, das digitale Denkmal auf Berlins Straßen zu bringen – physische Gedenktafeln an den Adressen, an denen diese Geschäfte standen.",
+      "dataTag": "Für Forschende",
+      "dataText": "Durchsuchen Sie die zugrunde liegenden Datensätze: Namen, Adressen, Gewerbe und Daten, mit Quellen zu jedem Eintrag."
+    },
+    "footer": {
+      "about": "Ein digitales Denkmal für die jüdischen Geschäfte Berlins, 1900–1945. Geschaffen, um Erinnerung zu bewahren und zu bilden – jeder Eintrag beruht auf dokumentierten Archivquellen.",
+      "navLabel": "Fußzeile",
+      "citation": "Basierend auf der Forschung von Dr. Christoph Kreutzmüller und der Datenbank jüdischer Gewerbetätigkeit in Berlin. Für akademische Zwecke zitieren Sie bitte die Originalforschung."
+    },
+    "stories": {
+      "eyebrow": "Die menschliche Dimension",
+      "title": "Hinter jedem Punkt eine Geschichte",
+      "intro": "Fünfzehn Geschäfte wurden bislang vertieft erforscht – mit Archivfotografien, Dokumenten und den Geschichten der Familien, die sie aufgebaut haben. Sie sind die ersten von vielen.",
+      "cta": "Alle Geschichten auf der Karte lesen",
+      "imageAlt": "Archivfotografie: {{name}}",
+      "credit": "Fotografien und Dokumente aus dem Projektarchiv."
+    },
+    "about": {
+      "eyebrow": "Über das Projekt",
+      "title": "Ein digitales Denkmal mit physischer Zukunft",
+      "mission": "StoryTimeMaps hat sich vorgenommen, die ehemals jüdischen Geschäfte Berlins anhand verifizierter historischer Quellen und Archivbilder zu kartieren – und diese Erinnerung dann zurück in die physische Stadt zu tragen: durch Gedenktafeln an den ursprünglichen Adressen und eine öffentliche Museumsausstellung.",
+      "sourceTitle": "Belegt und verifiziert",
+      "sourceText": "Jeder Eintrag stammt aus der Datenbank jüdischer Gewerbebetriebe in Berlin der Humboldt-Universität zu Berlin – der wissenschaftlichen Datenbank auf Grundlage der Forschung von Dr. Christoph Kreutzmüller –, ergänzt um Archivmaterial des Leo Baeck Instituts.",
+      "fact1": "Alle 10.021 Einträge 2026 erneut gegen die Originalquelle geprüft",
+      "fact2": "Jeder Eintrag trägt seinen Quellenlink und ein Verifizierungsdatum",
+      "fact3": "Rund neun von zehn Geschäften an ihrer exakten Straßenadresse verortet",
+      "fact4": "Von Grund auf mehrsprachig: Englisch, Deutsch und Jiddisch",
+      "statusLive": "Live",
+      "statusProgress": "In Arbeit",
+      "statusPrototype": "Prototyp",
+      "statusPilot": "Pilot",
+      "phaseMapTitle": "Die digitale Karte",
+      "phaseMapText": "Das interaktive Denkmal, das Sie gerade betrachten: jedes dokumentierte Geschäft, durchsuchbar und erkundbar in drei Sprachen.",
+      "phasePlaquesTitle": "Gedenktafeln",
+      "phasePlaquesText": "Fünfzehn Tafeln sind vollständig gestaltet – jede mit einem QR-Code, der die Straße mit der Geschichte des Geschäfts verbindet. Die Ansprache der Hauseigentümer läuft.",
+      "phaseExhibitTitle": "Museumsausstellung",
+      "phaseExhibitText": "Eine Touchscreen-Version der Karte ist gebaut und läuft, konzipiert für Kiosk-Displays. Wir suchen Museums- und Kulturpartner als Gastgeber.",
+      "exhibitLink": "Ausstellungsvision",
+      "phaseBeyondTitle": "Über Berlin hinaus",
+      "phaseBeyondText": "Ein Frankfurter Pilot mit 57 Geschäften zeigt, dass sich das Modell auf andere deutsche Städte übertragen lässt."
     }
   }
 }

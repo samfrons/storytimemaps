@@ -1,47 +1,124 @@
 import { NextResponse, NextRequest } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
-import { inferBusinessCategory } from '../../../utils/businessTranslations'
-import { StoryMap } from '../../../types'
+import crypto from 'crypto'
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps_test_full.json')
 const STORIES_FILE_PATH = path.join(process.cwd(), 'data', 'storymaps.json')
-const DEFAULT_PAGE_SIZE = 10000 // Load all businesses by default for testing
-const MAX_PAGE_SIZE = 10000 // Allow loading all at once
+const DEFAULT_PAGE_SIZE = 10000
+const MAX_PAGE_SIZE = 10000
+const CACHE_TTL_MS = 5 * 60 * 1000 // 5 minutes TTL
 
-let cachedData: StoryMap[] | null = null
-let cachedStoriesData: StoryMap[] | null = null
+// In-memory cache with TTL
+interface CacheEntry<T> {
+  data: T
+  timestamp: number
+  etag: string
+}
 
-async function getStoryMaps() {
-  // Always read fresh data for test dataset to pick up changes
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let dataCache: CacheEntry<any[]> | null = null
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let storiesCache: CacheEntry<any[]> | null = null
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let minimalDataCache: CacheEntry<any[]> | null = null
+
+function isCacheValid<T>(cache: CacheEntry<T> | null): cache is CacheEntry<T> {
+  return cache !== null && Date.now() - cache.timestamp < CACHE_TTL_MS
+}
+
+function generateETag(data: unknown): string {
+  const hash = crypto.createHash('md5').update(JSON.stringify(data)).digest('hex')
+  return `"${hash.substring(0, 16)}"`
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function extractMinimalFields(stories: any[]): any[] {
+  return stories.map((story) => ({
+    id: story.id,
+    title: story.title,
+    lat: story.lat,
+    lng: story.lng,
+    state: story.state,
+    startDate: story.startDate,
+    endDate: story.endDate,
+    businessType: story.businessType,
+    sectorKey: story.sectorKey,
+    mainBranch: story.mainBranch,
+  }))
+}
+
+async function getStoryMaps(minimal = false) {
+  // Check cache first
+  if (minimal && isCacheValid(minimalDataCache)) {
+    return minimalDataCache
+  }
+  if (!minimal && isCacheValid(dataCache)) {
+    return dataCache
+  }
+
   try {
-    const data = await fs.readFile(DATA_FILE_PATH, 'utf8')
-    cachedData = JSON.parse(data)
-    return cachedData
+    const rawData = await fs.readFile(DATA_FILE_PATH, 'utf8')
+    // businessType/sectorKey/mainBranch come straight from the file — they are
+    // written by scripts/recover_branch_fields_2026.py from the HU Berlin
+    // source. There used to be a title/description-based inference pass here;
+    // it was dead code (it required a non-empty `description`, which no record
+    // in this dataset has) and it allocated a second 10,021-element array on
+    // every cache miss.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const parsedData: any[] = JSON.parse(rawData)
+
+    // Cache full data
+    dataCache = {
+      data: parsedData,
+      timestamp: Date.now(),
+      etag: generateETag(parsedData),
+    }
+
+    // Cache minimal data
+    const minimalData = extractMinimalFields(parsedData)
+    minimalDataCache = {
+      data: minimalData,
+      timestamp: Date.now(),
+      etag: generateETag(minimalData),
+    }
+
+    return minimal ? minimalDataCache : dataCache
   } catch (error) {
     console.error('Error reading storymaps_test_full.json:', error)
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
       console.error(
         'File not found. Please ensure storymaps_test_full.json exists in the data directory.'
       )
-      // Fallback to empty array for graceful degradation
-      return []
+      return { data: [], timestamp: Date.now(), etag: generateETag([]) }
     }
-    throw error // Re-throw the error to be caught in the GET function
+    throw error
   }
 }
 
 async function getDetailedStories() {
-  // Read detailed stories from main storymaps.json
+  // Check cache first
+  if (isCacheValid(storiesCache)) {
+    return storiesCache
+  }
+
   try {
-    const data = await fs.readFile(STORIES_FILE_PATH, 'utf8')
-    cachedStoriesData = JSON.parse(data)
-    return cachedStoriesData
+    const rawData = await fs.readFile(STORIES_FILE_PATH, 'utf8')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const parsedData: any[] = JSON.parse(rawData)
+
+    storiesCache = {
+      data: parsedData.slice(0, 16), // Only first 16 detailed stories
+      timestamp: Date.now(),
+      etag: generateETag(parsedData.slice(0, 16)),
+    }
+
+    return storiesCache
   } catch (error) {
     console.error('Error reading storymaps.json:', error)
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
       console.error('File not found. Please ensure storymaps.json exists in the data directory.')
-      return []
+      return { data: [], timestamp: Date.now(), etag: generateETag([]) }
     }
     throw error
   }
@@ -58,51 +135,108 @@ export async function GET(request: NextRequest) {
     const pageSize = Math.min(requestedPageSize, MAX_PAGE_SIZE)
     const all = searchParams.get('all') === 'true'
     const storiesOnly = searchParams.get('stories') === 'true'
+    const combined = searchParams.get('combined') === 'true'
+    const minimal = searchParams.get('minimal') === 'true'
 
-    let storyMaps
+    // Check If-None-Match header for conditional requests
+    const ifNoneMatch = request.headers.get('if-none-match')
 
-    if (storiesOnly) {
-      // Return only the first 15 detailed stories from main data file
-      const allStories = await getDetailedStories()
-      storyMaps = allStories ? allStories.slice(0, 15) : []
-    } else {
-      // Return full test dataset
-      storyMaps = await getStoryMaps()
+    // Combined mode: return both datasets in one request
+    if (combined) {
+      const [fullCache, storiesCache] = await Promise.all([
+        getStoryMaps(minimal),
+        getDetailedStories(),
+      ])
+
+      const combinedEtag = generateETag({ full: fullCache.etag, stories: storiesCache.etag })
+
+      // Return 304 if client has current version
+      if (ifNoneMatch === combinedEtag) {
+        return new NextResponse(null, {
+          status: 304,
+          headers: {
+            ETag: combinedEtag,
+            'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
+          },
+        })
+      }
+
+      const responseData = {
+        full: fullCache.data,
+        stories: storiesCache.data,
+        metadata: {
+          fullCount: fullCache.data.length,
+          storiesCount: storiesCache.data.length,
+          minimal,
+        },
+      }
+
+      return NextResponse.json(responseData, {
+        headers: {
+          'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
+          ETag: combinedEtag,
+          Vary: 'Accept-Encoding',
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      })
     }
 
-    // Populate businessType field using inference if it's missing
-    if (storyMaps && storyMaps.length > 0) {
-      storyMaps = storyMaps.map((story) => {
-        if (!story.businessType && story.description) {
-          // Use inferBusinessCategory to extract business type from description
-          const inferredType = inferBusinessCategory(story)
-          return {
-            ...story,
-            businessType: inferredType,
-          }
-        }
-        return story
+    let cache
+
+    if (storiesOnly) {
+      cache = await getDetailedStories()
+    } else {
+      cache = await getStoryMaps(minimal)
+    }
+
+    const storyMaps = cache.data
+    const etag = cache.etag
+
+    // Return 304 if client has current version
+    if (ifNoneMatch === etag) {
+      return new NextResponse(null, {
+        status: 304,
+        headers: {
+          ETag: etag,
+          'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
+        },
       })
     }
 
     // Return all data if requested (for backwards compatibility)
     if (all) {
-      return NextResponse.json(storyMaps)
+      return NextResponse.json(storyMaps, {
+        headers: {
+          'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
+          ETag: etag,
+          Vary: 'Accept-Encoding',
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      })
     }
 
     // Handle null/empty case
     if (!storyMaps || storyMaps.length === 0) {
-      return NextResponse.json({
-        data: [],
-        metadata: {
-          page,
-          pageSize,
-          totalItems: 0,
-          totalPages: 0,
-          hasNextPage: false,
-          hasPreviousPage: false,
+      return NextResponse.json(
+        {
+          data: [],
+          metadata: {
+            page,
+            pageSize,
+            totalItems: 0,
+            totalPages: 0,
+            hasNextPage: false,
+            hasPreviousPage: false,
+          },
         },
-      })
+        {
+          headers: {
+            'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
+            ETag: etag,
+            Vary: 'Accept-Encoding',
+          },
+        }
+      )
     }
 
     // Calculate pagination
@@ -127,14 +261,14 @@ export async function GET(request: NextRequest) {
       },
     }
 
-    // Add cache and compression headers for better performance
-    const headers = {
-      'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
-      Vary: 'Accept-Encoding',
-      'Content-Type': 'application/json; charset=utf-8',
-    }
-
-    return NextResponse.json(responseData, { headers })
+    return NextResponse.json(responseData, {
+      headers: {
+        'Cache-Control': 'public, max-age=300, stale-while-revalidate=86400',
+        ETag: etag,
+        Vary: 'Accept-Encoding',
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    })
   } catch (error) {
     console.error('Error in GET /api/storymaps-test:', error)
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {

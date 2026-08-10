@@ -1,23 +1,29 @@
-'use client';
+import i18next from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
 
-import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import resourcesToBackend from 'i18next-resources-to-backend';
+// Import translations directly for instant loading (no async delay)
+import enCommon from '../../public/locales/en/common.json'
+import enBusiness from '../../public/locales/en/business.json'
+import deCommon from '../../public/locales/de/common.json'
+import deBusiness from '../../public/locales/de/business.json'
+import yiCommon from '../../public/locales/yi/common.json'
+import yiBusiness from '../../public/locales/yi/business.json'
 
-const runsOnServerSide = typeof window === 'undefined';
+// Bundled resources for instant loading
+const resources = {
+  en: { common: enCommon, business: enBusiness },
+  de: { common: deCommon, business: deBusiness },
+  yi: { common: yiCommon, business: yiBusiness },
+}
 
-// Only initialize on client side
-if (!runsOnServerSide) {
+// Initialize i18next synchronously with bundled resources
+if (!i18next.isInitialized) {
   i18next
     .use(initReactI18next)
     .use(LanguageDetector)
-    .use(
-      resourcesToBackend((language: string, namespace: string) => 
-        import(`../../public/locales/${language}/${namespace}.json`)
-      )
-    )
     .init({
+      resources,
       fallbackLng: 'en',
       defaultNS: 'common',
       ns: ['common', 'business'],
@@ -35,9 +41,7 @@ if (!runsOnServerSide) {
       react: {
         useSuspense: false,
       },
-      // Preload English to ensure it's available immediately
-      preload: ['en'],
-    });
+    })
 }
 
-export default i18next;
+export default i18next

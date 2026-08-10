@@ -6,9 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { useTranslation } from '../../../i18n/useTranslation'
 
 // Get token from environment
-const MAPBOX_TOKEN =
-  process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
-  'pk.eyJ1Ijoic2FtZnJvbnMiLCJhIjoiY21lOTU4cnlxMG5wbjJtcTVtcGc4aWhhaiJ9.V-JWJlxk2hksMuxe0wsolQ'
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 interface Business {
   name: string
@@ -39,7 +37,7 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
   })
   const [viewMode, setViewMode] = useState<'hexbin' | 'towers' | 'particles'>('hexbin')
   const [mounted, setMounted] = useState(false)
-  const animationFrame = useRef<number>()
+  const animationFrame = useRef<number | undefined>(undefined)
 
   // Track mounted state to prevent hydration issues
   useEffect(() => {
@@ -73,24 +71,7 @@ const District3DMap: React.FC<District3DMapProps> = ({ theme }) => {
         const response = await fetch('/jewish_businesses.geojson')
         const geoData = await response.json()
 
-        interface GeoJSONFeature {
-          type: 'Feature'
-          properties: {
-            name: string
-            business_type: string
-            category: string
-            address: string
-            registration_date: string
-            liquidation_date: string
-            takeover_date: string
-          }
-          geometry: {
-            type: 'Point'
-            coordinates: [number, number]
-          }
-        }
-
-        const businessData = geoData.features.map((feature: GeoJSONFeature) => ({
+        const businessData = geoData.features.map((feature: any) => ({
           ...feature.properties,
           coordinates: feature.geometry.coordinates,
         }))

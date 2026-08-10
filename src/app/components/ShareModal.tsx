@@ -45,7 +45,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, story, current
       if (currentDate) {
         params.set('date', currentDate.toISOString().split('T')[0])
       }
-      return `${baseUrl}?${params.toString()}`
+      return `${baseUrl}/map?${params.toString()}`
     }
 
     // Share the website

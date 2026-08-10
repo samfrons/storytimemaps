@@ -33,8 +33,16 @@ export interface StoryMap {
   lat: number
   lng: number
   address?: string
+  // Vestigial. Holds 'business' in storymaps.json but a main-branch value
+  // ('trade', 'industry', …) in storymaps_test_full.json, so it is no longer
+  // read for filtering or labelling — use mainBranch/sectorKey below.
   category?: 'business' | 'institution' | 'residence'
-  businessType?: string
+
+  // HU Berlin taxonomy, recovered by scripts/recover_branch_fields_2026.py.
+  businessType?: string // raw Branche label from the source (EN or DE as emitted)
+  sectorKey?: string // stable slug for i18n, e.g. 'TEXTILES_AND_CLOTHING'
+  mainBranch?: 'trade' | 'industry' | 'services' | 'handicraft' // Hauptbranche
+  branchSource?: string // provenance of the two fields above
   startDate: string | null
   midDate: string | null
   endDate: string | null
@@ -42,6 +50,13 @@ export interface StoryMap {
   mediaLink?: string
   imageUrls?: string[]
   hasTimelineData?: boolean // Flag to indicate timeline data availability
+
+  // Track D (data verification) outputs — populated by scripts/verify_dataset_2026.py
+  source_url?: string // HU Berlin scrape URL the record was sourced from
+  last_verified?: string // ISO 8601 timestamp of last verification pass
+  verified_address?: boolean // True only when the address was confirmed against the source
+  // OR manually corrected and re-geocoded. Gates Track A.2's
+  // per-listing plaque CTA visibility.
 }
 
 export interface MarkerData {
@@ -57,6 +72,8 @@ export interface GeoJSONFeature {
     name: string
     category?: string
     businessType?: string
+    sectorKey?: string
+    mainBranch?: string
     description?: string
     startDate?: string
     endDate?: string

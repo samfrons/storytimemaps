@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useState, useEffect, useCallback, Suspense } from 'react'
+import Link from 'next/link'
 import type { GeoJSONFeatureCollection, GeoJSONFeature } from '../../types'
 import { useTheme } from 'next-themes'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 import { useIsMounted } from '../../hooks/useIsMounted'
@@ -74,9 +74,18 @@ function FrankfurtMapContent() {
     const themeParam = searchParams.get('theme')
     if (
       themeParam &&
-      ['moody', 'bauhaus', 'cool', 'warm', 'hot', 'cold', 'art-nouveau', 'archival'].includes(
-        themeParam
-      )
+      [
+        'moody',
+        'bauhaus',
+        'cool',
+        'warm',
+        'hot',
+        'cold',
+        'art-nouveau',
+        'archival',
+        'hoefe',
+        'brutal-pop',
+      ].includes(themeParam)
     ) {
       setTimeout(() => {
         setTheme(themeParam)
@@ -417,6 +426,7 @@ function FrankfurtMapContent() {
               data={businessData}
               selectedDate={selectedDate}
               onBusinessSelect={handleBusinessSelect}
+              city="frankfurt"
             />
           )}
 

@@ -1,46 +1,59 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
-import type { Proposal, ProposalStatus } from '@/lib/types/proposal';
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
+import { useRouter } from 'next/navigation'
+import type { Proposal, ProposalStatus, ProposalType } from '@/lib/types/proposal'
+
+const PROPOSAL_TYPES: Array<ProposalType | 'all'> = [
+  'all',
+  'plaque_inquiry',
+  'new_location',
+  'edit_location',
+  'correction',
+]
 
 export default function AdminProposalsPage() {
-  const { user, profile, loading: authLoading } = useAuth();
-  const router = useRouter();
-  const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<ProposalStatus | 'all'>('pending');
+  const { user, profile, loading: authLoading } = useAuth()
+  const router = useRouter()
+  const [proposals, setProposals] = useState<Proposal[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [filter, setFilter] = useState<ProposalStatus | 'all'>('pending')
+  const [typeFilter, setTypeFilter] = useState<ProposalType | 'all'>('all')
 
   useEffect(() => {
     if (!authLoading && (!user || !profile?.is_admin)) {
-      router.push('/');
+      router.push('/')
     }
-  }, [user, profile, authLoading, router]);
+  }, [user, profile, authLoading, router])
 
   useEffect(() => {
     if (user && profile?.is_admin) {
-      fetchProposals();
+      fetchProposals()
     }
-  }, [user, profile, filter]);
+  }, [user, profile, filter, typeFilter])
 
   const fetchProposals = async () => {
     try {
-      setLoading(true);
-      const url = filter === 'all' ? '/api/proposals' : `/api/proposals?status=${filter}`;
-      const response = await fetch(url);
+      setLoading(true)
+      const params = new URLSearchParams()
+      if (filter !== 'all') params.set('status', filter)
+      if (typeFilter !== 'all') params.set('proposal_type', typeFilter)
+      const qs = params.toString()
+      const url = qs ? `/api/proposals?${qs}` : '/api/proposals'
+      const response = await fetch(url)
       if (!response.ok) {
-        throw new Error('Failed to fetch proposals');
+        throw new Error('Failed to fetch proposals')
       }
-      const data = await response.json();
-      setProposals(data);
+      const data = await response.json()
+      setProposals(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const updateProposalStatus = async (id: string, status: ProposalStatus, adminNotes?: string) => {
     try {
@@ -50,30 +63,30 @@ export default function AdminProposalsPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ status, admin_notes: adminNotes }),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error('Failed to update proposal');
+        throw new Error('Failed to update proposal')
       }
 
-      fetchProposals();
+      fetchProposals()
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to update proposal');
+      alert(err instanceof Error ? err.message : 'Failed to update proposal')
     }
-  };
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'approved':
-        return 'var(--success)';
+        return 'var(--success)'
       case 'rejected':
-        return 'var(--danger)';
+        return 'var(--danger)'
       case 'under_review':
-        return 'var(--warning)';
+        return 'var(--warning)'
       default:
-        return 'var(--foreground-muted)';
+        return 'var(--foreground-muted)'
     }
-  };
+  }
 
   if (authLoading || !user || !profile?.is_admin) {
     return (
@@ -85,7 +98,7 @@ export default function AdminProposalsPage() {
           Loading...
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -101,8 +114,8 @@ export default function AdminProposalsPage() {
           </p>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="mb-6 flex gap-2">
+        {/* Status Filter Tabs */}
+        <div className="mb-3 flex gap-2 flex-wrap">
           {(['all', 'pending', 'under_review', 'approved', 'rejected'] as const).map((status) => (
             <button
               key={status}
@@ -121,6 +134,31 @@ export default function AdminProposalsPage() {
           ))}
         </div>
 
+        {/* Type Filter Tabs */}
+        <div className="mb-6 flex gap-2 flex-wrap items-center">
+          <span
+            className="text-xs font-mono uppercase tracking-wider mr-1"
+            style={{ color: 'var(--foreground-muted)' }}
+          >
+            Type:
+          </span>
+          {PROPOSAL_TYPES.map((type) => (
+            <button
+              key={type}
+              onClick={() => setTypeFilter(type)}
+              className="px-3 py-1.5 font-mono text-xs transition-all"
+              style={{
+                backgroundColor: typeFilter === type ? 'var(--primary)' : 'transparent',
+                color: typeFilter === type ? 'var(--background)' : 'var(--foreground)',
+                border: `1px solid ${typeFilter === type ? 'var(--primary)' : 'var(--border)'}`,
+                outline: 'none',
+              }}
+            >
+              {type === 'all' ? 'All' : type.replace(/_/g, ' ')}
+            </button>
+          ))}
+        </div>
+
         {/* Back Button */}
         <div className="mb-6">
           <button
@@ -133,10 +171,10 @@ export default function AdminProposalsPage() {
               outline: 'none',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.7';
+              e.currentTarget.style.opacity = '0.7'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1';
+              e.currentTarget.style.opacity = '1'
             }}
           >
             Back to Map
@@ -186,13 +224,22 @@ export default function AdminProposalsPage() {
                 {/* Header */}
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-mono font-bold mb-1" style={{ color: 'var(--primary)' }}>
+                    <h3
+                      className="text-xl font-mono font-bold mb-1"
+                      style={{ color: 'var(--primary)' }}
+                    >
                       {proposal.title}
                     </h3>
-                    <p className="text-sm font-mono mb-2" style={{ color: 'var(--foreground-muted)' }}>
+                    <p
+                      className="text-sm font-mono mb-2"
+                      style={{ color: 'var(--foreground-muted)' }}
+                    >
                       {proposal.address}
                     </p>
-                    <div className="flex gap-3 text-xs font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                    <div
+                      className="flex gap-3 text-xs font-mono"
+                      style={{ color: 'var(--foreground-muted)' }}
+                    >
                       <span>Type: {proposal.proposal_type.replace('_', ' ')}</span>
                       <span>•</span>
                       <span>Submitted: {new Date(proposal.created_at).toLocaleDateString()}</span>
@@ -220,9 +267,15 @@ export default function AdminProposalsPage() {
                 )}
 
                 {/* Details Grid */}
-                <div className="grid grid-cols-2 gap-4 mb-4 p-4" style={{ backgroundColor: 'rgba(var(--muted-rgb), 0.1)' }}>
+                <div
+                  className="grid grid-cols-2 gap-4 mb-4 p-4"
+                  style={{ backgroundColor: 'rgba(var(--muted-rgb), 0.1)' }}
+                >
                   <div>
-                    <p className="text-xs font-mono mb-1" style={{ color: 'var(--foreground-muted)' }}>
+                    <p
+                      className="text-xs font-mono mb-1"
+                      style={{ color: 'var(--foreground-muted)' }}
+                    >
                       Business Type:
                     </p>
                     <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
@@ -230,7 +283,10 @@ export default function AdminProposalsPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-mono mb-1" style={{ color: 'var(--foreground-muted)' }}>
+                    <p
+                      className="text-xs font-mono mb-1"
+                      style={{ color: 'var(--foreground-muted)' }}
+                    >
                       Coordinates:
                     </p>
                     <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
@@ -239,7 +295,10 @@ export default function AdminProposalsPage() {
                   </div>
                   {proposal.start_date && (
                     <div>
-                      <p className="text-xs font-mono mb-1" style={{ color: 'var(--foreground-muted)' }}>
+                      <p
+                        className="text-xs font-mono mb-1"
+                        style={{ color: 'var(--foreground-muted)' }}
+                      >
                         Dates:
                       </p>
                       <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
@@ -251,8 +310,14 @@ export default function AdminProposalsPage() {
 
                 {/* Sources */}
                 {proposal.sources && (
-                  <div className="mb-4 p-3" style={{ backgroundColor: 'rgba(var(--primary-rgb), 0.05)' }}>
-                    <p className="text-xs font-mono mb-1 font-bold" style={{ color: 'var(--primary)' }}>
+                  <div
+                    className="mb-4 p-3"
+                    style={{ backgroundColor: 'rgba(var(--primary-rgb), 0.05)' }}
+                  >
+                    <p
+                      className="text-xs font-mono mb-1 font-bold"
+                      style={{ color: 'var(--primary)' }}
+                    >
                       Sources:
                     </p>
                     <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
@@ -263,9 +328,17 @@ export default function AdminProposalsPage() {
 
                 {/* Notes */}
                 {proposal.notes && (
-                  <div className="mb-4 p-3" style={{ backgroundColor: 'rgba(var(--muted-rgb), 0.1)' }}>
-                    <p className="text-xs font-mono mb-1 font-bold" style={{ color: 'var(--foreground-muted)' }}>
-                      Contributor Notes:
+                  <div
+                    className="mb-4 p-3"
+                    style={{ backgroundColor: 'rgba(var(--muted-rgb), 0.1)' }}
+                  >
+                    <p
+                      className="text-xs font-mono mb-1 font-bold"
+                      style={{ color: 'var(--foreground-muted)' }}
+                    >
+                      {proposal.proposal_type === 'plaque_inquiry'
+                        ? 'Inquirer Message:'
+                        : 'Contributor Notes:'}
                     </p>
                     <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
                       {proposal.notes}
@@ -273,18 +346,103 @@ export default function AdminProposalsPage() {
                   </div>
                 )}
 
+                {/* Plaque Inquiry contact details */}
+                {proposal.proposal_type === 'plaque_inquiry' && (
+                  <div
+                    className="mb-4 p-4"
+                    style={{
+                      backgroundColor: 'rgba(var(--primary-rgb), 0.08)',
+                      border: '1px solid var(--primary)',
+                    }}
+                  >
+                    <p
+                      className="text-xs font-mono mb-3 font-bold uppercase tracking-wider"
+                      style={{ color: 'var(--primary)' }}
+                    >
+                      Plaque Inquiry &mdash; Building Owner Contact
+                    </p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <p
+                          className="text-xs font-mono mb-1"
+                          style={{ color: 'var(--foreground-muted)' }}
+                        >
+                          Name:
+                        </p>
+                        <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
+                          {proposal.inquiry_name || '—'}
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className="text-xs font-mono mb-1"
+                          style={{ color: 'var(--foreground-muted)' }}
+                        >
+                          Role:
+                        </p>
+                        <p
+                          className="text-sm font-mono capitalize"
+                          style={{ color: 'var(--foreground)' }}
+                        >
+                          {proposal.building_role || '—'}
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className="text-xs font-mono mb-1"
+                          style={{ color: 'var(--foreground-muted)' }}
+                        >
+                          Email:
+                        </p>
+                        {proposal.inquiry_email ? (
+                          <a
+                            href={`mailto:${proposal.inquiry_email}?subject=${encodeURIComponent(`Memorial plaque for ${proposal.title}`)}`}
+                            className="text-sm font-mono underline"
+                            style={{ color: 'var(--primary)' }}
+                          >
+                            {proposal.inquiry_email}
+                          </a>
+                        ) : (
+                          <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
+                            —
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <p
+                          className="text-xs font-mono mb-1"
+                          style={{ color: 'var(--foreground-muted)' }}
+                        >
+                          Phone:
+                        </p>
+                        <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
+                          {proposal.inquiry_phone || '—'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Admin Actions */}
                 <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border)' }}>
-                  <p className="text-xs font-mono mb-2 font-bold" style={{ color: 'var(--foreground)' }}>
+                  <p
+                    className="text-xs font-mono mb-2 font-bold"
+                    style={{ color: 'var(--foreground)' }}
+                  >
                     Admin Actions:
                   </p>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => updateProposalStatus(proposal.id, 'approved', 'Approved by admin')}
+                      onClick={() =>
+                        updateProposalStatus(proposal.id, 'approved', 'Approved by admin')
+                      }
                       disabled={proposal.status === 'approved'}
                       className="px-4 py-2 font-mono text-xs font-bold transition-opacity"
                       style={{
-                        backgroundColor: proposal.status === 'approved' ? 'rgba(var(--success-rgb), 0.3)' : 'var(--success)',
+                        backgroundColor:
+                          proposal.status === 'approved'
+                            ? 'rgba(var(--success-rgb), 0.3)'
+                            : 'var(--success)',
                         color: 'var(--background)',
                         border: 'none',
                         cursor: proposal.status === 'approved' ? 'not-allowed' : 'pointer',
@@ -295,13 +453,16 @@ export default function AdminProposalsPage() {
                     </button>
                     <button
                       onClick={() => {
-                        const notes = prompt('Enter reason for rejection (optional):');
-                        updateProposalStatus(proposal.id, 'rejected', notes || 'Rejected by admin');
+                        const notes = prompt('Enter reason for rejection (optional):')
+                        updateProposalStatus(proposal.id, 'rejected', notes || 'Rejected by admin')
                       }}
                       disabled={proposal.status === 'rejected'}
                       className="px-4 py-2 font-mono text-xs font-bold transition-opacity"
                       style={{
-                        backgroundColor: proposal.status === 'rejected' ? 'rgba(var(--danger-rgb), 0.3)' : 'var(--danger)',
+                        backgroundColor:
+                          proposal.status === 'rejected'
+                            ? 'rgba(var(--danger-rgb), 0.3)'
+                            : 'var(--danger)',
                         color: 'var(--background)',
                         border: 'none',
                         cursor: proposal.status === 'rejected' ? 'not-allowed' : 'pointer',
@@ -316,7 +477,9 @@ export default function AdminProposalsPage() {
                       className="px-4 py-2 font-mono text-xs font-bold transition-opacity"
                       style={{
                         backgroundColor:
-                          proposal.status === 'under_review' ? 'rgba(var(--warning-rgb), 0.3)' : 'var(--warning)',
+                          proposal.status === 'under_review'
+                            ? 'rgba(var(--warning-rgb), 0.3)'
+                            : 'var(--warning)',
                         color: 'var(--background)',
                         border: 'none',
                         cursor: proposal.status === 'under_review' ? 'not-allowed' : 'pointer',
@@ -333,5 +496,5 @@ export default function AdminProposalsPage() {
         )}
       </div>
     </div>
-  );
+  )
 }

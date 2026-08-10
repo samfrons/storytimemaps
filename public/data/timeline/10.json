@@ -1,0 +1,34 @@
+{
+  "businessId": "10",
+  "timeline": [
+    {
+      "startDate": "1913-01-01",
+      "description": "Karl Kutschera's Café Wien and the Zigeunerkeller become fashionable meeting places of international renown on Kurfürstendamm.",
+      "longDescription": "Karl Kutschera, born in Hungary in 1876, completed an apprenticeship in Vienna before moving to Berlin in 1900. He first ran a café at Kurfürstendamm 209 before opening a new restaurant at Kurfürstendamm 26, in a property he soon bought – built in 1912 as a true 'pleasure palace' housing a cinema leased to the Ufa film studios, a two-storey café, billiard hall and bowling alley. Kutschera added his Café Wien in the style of a Viennese coffee house. It was such a success that he expanded in 1929, converting the cellar into a restaurant offering Hungarian cuisine and 'gypsy music'. Acclaimed by the press as a sensation, the Zigeunerkeller became – in Kutschera's own words – a 'world-famous magnet for tourists', the first Berlin restaurant of its size entirely below street level.",
+      "endDate": "1932-12-31"
+    },
+    {
+      "startDate": "1933-01-01",
+      "description": "Kurfürstendamm is attacked as a hotbed of 'decadence'; the July 1935 riots bring the violence to Café Wien's doorstep.",
+      "longDescription": "Kurfürstendamm was regarded as a hotbed of decadence by Nazi ideologues and was frequently exposed to anti-Semitic attacks from the early 1930s. Kutschera's establishments, rendered doubly vulnerable by their location and their success, were not spared. In July 1935, during the so-called 'Kurfürstendamm riots', there were disturbances outside Café Wien after the Ufa film studios premiered the Swedish movie Petterson & Bendel, lauded in the Nazi press as a product of anti-Semitic thought; radical party members took this as grounds for assaulting supposedly Jewish passers-by and causing trouble in the surrounding establishments. Kutschera remained one of Berlin's best-known restaurateurs: in 1937 he employed 154 members of staff, including 13 musicians, with an annual turnover of one-and-a-half million Reich marks.",
+      "endDate": "1936-08-31"
+    },
+    {
+      "startDate": "1936-09-01",
+      "description": "A systematic smear campaign by Der Stürmer ruins Kutschera. He leases both establishments; 'Jews not welcome' is emblazoned over the doors.",
+      "longDescription": "In September 1936, Café Wien and the Zigeunerkeller were among the first businesses in Berlin to be targeted by a systematic smear campaign by Der Stürmer, which reported a 'scandalous' lack of hygiene and claimed staff worked in degrading conditions. The Board of Sanitation threatened to withdraw Kutschera's license under the pretext that the Zigeunerkeller was no longer suitable 'for permanent human residence'. To prevent the closure and break-up of the business, Kutschera leased both establishments to the non-Jewish shareholders Ernst Krüger and Josef Stüber – the latter leader of the Berlin Nazi association of coffee house owners. The Zigeunerkeller stayed open, but with the words 'Jews not welcome' emblazoned over its doors. Kutschera was ruined not by boycott – profits even increased in 1937 – but by the pressure Der Stürmer exerted on municipal authorities. He gave up his business in late 1937; his name was deleted from the commercial register a short time later. It remains unclear whether Stüber initiated the smear campaign to engineer a speedy takeover.",
+      "endDate": "1937-12-31"
+    },
+    {
+      "startDate": "1938-01-01",
+      "description": "The family is deported to Theresienstadt; the children are murdered in Auschwitz. Karl and Josephine Kutschera return after the war to run Café Wien again.",
+      "longDescription": "Kutschera's name was deleted from the commercial register a short time after he gave up his business. On June 14, 1938, a third ordinance of the Reich Citizenship Law compelled all Jewish businesses to be registered in centrally held lists – lessee Ernst Krüger duly declared that he was non-Jewish, and by December 1937 the Nazi press celebrated that the Zigeunerkeller had 'passed into German ownership'. The Kutschera family was deported to Theresienstadt in 1943. While Karl Kutschera and his second wife Josephine survived the concentration camp, their two children, Karin and Gerd, were murdered in Auschwitz.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "The Kutscheras return and run Café Wien again from 1946. The building at Kurfürstendamm 26 still stands today.",
+      "longDescription": "Mr. and Mrs. Kutschera returned to Berlin after 1945. Following the death of Josef Stüber shortly after the end of the war, they were able to resume work in Café Wien in 1946 – the Zigeunerkeller remained flooded. Though serving only cold drinks instead of expensive coffees, the terrace of Café Wien was a popular meeting place again in 1948. Although the café did not regain the glamour of the past, Kutschera was still a highly respected businessman and was made honorary chairman of the Berlin Innkeepers' Guild. Karl Kutschera died on May 19, 1950; after his death, his wife Josephine ran the business until the early 1970s.\n\nThe site today\n\nThe building at Kurfürstendamm 26 in Berlin-Charlottenburg still stands today. Its in-house cinema, the Filmbühne Wien – which had opened in 1913 with a showing of Max Reinhardt's Insel der Seligen – was closed in 2000."
+    }
+  ]
+}

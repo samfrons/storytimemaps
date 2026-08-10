@@ -1,0 +1,34 @@
+{
+  "businessId": "5",
+  "timeline": [
+    {
+      "startDate": "1919-01-01",
+      "description": "Alfred Höxter builds one of the best-known companies in grain wholesale on the Berlin commodity market.",
+      "longDescription": "Alfred Höxter was 39 years old when he set up his own business trading on the Berlin commodity market in 1919, having come to Berlin from Dahlenburg at the age of twenty to work at the republic's foremost stock exchange. He built a reputation as a trustworthy and respected trader. Six years after founding his company he took out a life insurance policy worth 42,000 Reich marks for himself and his wife Käthe, and took on Paul Pincus, a nephew of his wife, as business partner. Together they ran the business successfully despite the banking crisis of 1931 and the resulting 11-month closure of the stock exchange; from 1929 to 1932 they each had a net income of between 30,000 and 50,000 Reich marks. The family lived in splendor in an eight-room apartment at Pariser Strasse 32, which also became the company's official place of business.",
+      "endDate": "1932-12-31"
+    },
+    {
+      "startDate": "1933-01-01",
+      "description": "Boycotts and the officially termed 'purge' of the stock exchange strip Jewish traders of their clientele; restrictions render the exchange obsolete.",
+      "longDescription": "The year 1933 brought far-reaching changes to the commodity market, where Jewish owners had made up more than half the independent traders. Höxter and Pincus were repeatedly subjected to verbal abuse by groups of SA men and National Socialist students outside the stock exchange. On April 1, 1933, 'spontaneous' actions by the Nazi rank and file were channeled into a boycott campaign against the 'Jewified' commodity market. The persecution climaxed in the officially termed 'purge' of October 31, 1933, in which 87 Jewish commodity trading businesses had their admissions to the stock exchange withdrawn. While Höxter and Pincus retained their authorization, their clientele was significantly reduced. Nazi control of food production and distribution and Reich Economic Ministry restrictions caused trading to shrink until the exchange lost its market-forming function and became obsolete. In 1933 the partners' income was already half what it had been in 1932 – and falling.",
+      "endDate": "1935-12-31"
+    },
+    {
+      "startDate": "1936-01-01",
+      "description": "Pincus emigrates to Argentina after being attacked; the Höxters sell their furnishings and scrape together the Reich Flight Tax.",
+      "longDescription": "By 1936 the Höxters had made the decision to emigrate. In 1935 Paul Pincus had been attacked and threatened by a Nazi member of the commodity market; he left the business in February 1936 and emigrated via Turkey and Italy to Argentina. In April 1936 the Höxter family moved to a two-and-a-half room apartment at Clausewitz Strasse 5, selling the expensive furnishings from Pariser Strasse well below their value. On January 27, 1937, Höxter had his life insurance paid out – yet even with the 2,250 Reich marks saved from the business partnership insurance it was not enough to pay the 19,500 marks Reich Flight Tax demanded by the Charlottenburg-West tax office.",
+      "endDate": "1937-01-29"
+    },
+    {
+      "startDate": "1937-01-30",
+      "description": "Höxter escapes via London to Brazil, where he lives off the sale of his valuables before his wife opens a gift store in 1945.",
+      "longDescription": "Having finally managed to raise the money for the Reich Flight Tax, Höxter escaped three days later via London to Brazil. In the first years of exile he lived mainly off the sale of valuables and pieces of furniture which he had brought to Sao Paolo.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "The Höxters earn a modest living from a gift store in Sao Paolo. The Pariser Strasse house and the Berlin stock exchange itself were destroyed in the war.",
+      "longDescription": "In exile, Alfred Höxter described his later professional life in these succinct terms: 'When I emigrated to Brazil in early 1937 I was already 57 years old and had great difficulties finding a way to make a living here. In the first years, I lived mainly off the sale of valuables and pieces of furniture which I had brought to Sao Paolo. In 1945, my wife opened a gift store with which we earn a modest living.'\n\nThe site today\n\nThe house at Pariser Strasse 32 in Wilmersdorf, where the Höxter family lived and the company was based, was destroyed in the Second World War. The Berlin stock exchange where Höxter traded was destroyed in an air raid on May 24, 1944; the ruins were demolished in the 1950s and the exchange moved to a new building in Fasanen Strasse in West Berlin. The site of the former stock exchange lies at the corner of Burgstrasse 25 and Anna-Louisa-Karsch-Strasse in Berlin-Mitte. Technological advancement has put an end to floor trading such as in Alfred Höxter's time."
+    }
+  ]
+}

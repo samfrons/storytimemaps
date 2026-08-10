@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import React, { useState, useMemo } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import type { CreateProposalInput, ProposalType } from '@/lib/types/proposal';
-import type { StoryMap } from '@/types';
+import React, { useState, useMemo } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
+import type { CreateProposalInput, ProposalType } from '@/lib/types/proposal'
+import type { StoryMap } from '@/types'
 
 interface ProposalFormProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess?: () => void;
-  existingBusiness?: StoryMap; // For editing existing businesses
-  proposalType?: ProposalType;
+  isOpen: boolean
+  onClose: () => void
+  onSuccess?: () => void
+  existingBusiness?: StoryMap // For editing existing businesses
+  proposalType?: ProposalType
 }
 
 const ProposalForm: React.FC<ProposalFormProps> = ({
@@ -20,7 +20,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
   existingBusiness,
   proposalType = 'new_location',
 }) => {
-  const { user } = useAuth();
+  const { user } = useAuth()
 
   // Form state
   const [formData, setFormData] = useState<Partial<CreateProposalInput>>({
@@ -38,21 +38,21 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
     category: existingBusiness?.category || 'business',
     sources: '',
     notes: '',
-  });
+  })
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
 
     if (!user) {
-      setError('You must be logged in to submit a proposal');
-      setLoading(false);
-      return;
+      setError('You must be logged in to submit a proposal')
+      setLoading(false)
+      return
     }
 
     try {
@@ -62,17 +62,17 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData as CreateProposalInput),
-      });
+      })
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to submit proposal');
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to submit proposal')
       }
 
-      setSuccess(true);
+      setSuccess(true)
       setTimeout(() => {
-        onClose();
-        if (onSuccess) onSuccess();
+        onClose()
+        if (onSuccess) onSuccess()
         // Reset form
         setFormData({
           proposal_type: proposalType,
@@ -83,32 +83,32 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
           lng: 13.405,
           sources: '',
           notes: '',
-        });
-        setSuccess(false);
-      }, 2000);
+        })
+        setSuccess(false)
+      }, 2000)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleFieldChange = (field: keyof CreateProposalInput, value: unknown) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  if (!isOpen) return null;
+    setFormData((prev) => ({ ...prev, [field]: value }))
+  }
 
   const formTitle = useMemo(() => {
     switch (formData.proposal_type) {
       case 'edit_location':
-        return 'Suggest Edit to Location';
+        return 'Suggest Edit to Location'
       case 'correction':
-        return 'Submit Correction';
+        return 'Submit Correction'
       default:
-        return 'Propose New Location';
+        return 'Propose New Location'
     }
-  }, [formData.proposal_type]);
+  }, [formData.proposal_type])
+
+  if (!isOpen) return null
 
   return (
     <div
@@ -127,10 +127,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
       >
         {/* Header */}
         <div className="mb-6">
-          <h2
-            className="text-2xl font-mono font-bold mb-2"
-            style={{ color: 'var(--primary)' }}
-          >
+          <h2 className="text-2xl font-mono font-bold mb-2" style={{ color: 'var(--primary)' }}>
             {formTitle}
           </h2>
           <p className="text-sm font-sans" style={{ color: 'var(--foreground-muted)' }}>
@@ -238,7 +235,10 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
           {/* Coordinates */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-mono mb-2" style={{ color: 'var(--foreground)' }}>
+              <label
+                className="block text-sm font-mono mb-2"
+                style={{ color: 'var(--foreground)' }}
+              >
                 Latitude <span style={{ color: 'var(--danger)' }}>*</span>
               </label>
               <input
@@ -257,7 +257,10 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
               />
             </div>
             <div>
-              <label className="block text-sm font-mono mb-2" style={{ color: 'var(--foreground)' }}>
+              <label
+                className="block text-sm font-mono mb-2"
+                style={{ color: 'var(--foreground)' }}
+              >
                 Longitude <span style={{ color: 'var(--danger)' }}>*</span>
               </label>
               <input
@@ -320,7 +323,10 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
           {/* Dates */}
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-mono mb-2" style={{ color: 'var(--foreground)' }}>
+              <label
+                className="block text-sm font-mono mb-2"
+                style={{ color: 'var(--foreground)' }}
+              >
                 Start Date
               </label>
               <input
@@ -337,7 +343,10 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
               />
             </div>
             <div>
-              <label className="block text-sm font-mono mb-2" style={{ color: 'var(--foreground)' }}>
+              <label
+                className="block text-sm font-mono mb-2"
+                style={{ color: 'var(--foreground)' }}
+              >
                 Mid Date
               </label>
               <input
@@ -354,7 +363,10 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
               />
             </div>
             <div>
-              <label className="block text-sm font-mono mb-2" style={{ color: 'var(--foreground)' }}>
+              <label
+                className="block text-sm font-mono mb-2"
+                style={{ color: 'var(--foreground)' }}
+              >
                 End Date
               </label>
               <input
@@ -450,7 +462,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default React.memo(ProposalForm);
+export default React.memo(ProposalForm)

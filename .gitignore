@@ -34,3 +34,40 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+
+# Swarm coordination
+.swarm/
+
+# Hive-mind
+.hive-mind/
+
+# python venv
+.venv/
+
+# dataset backup snapshots (git history is the real backup)
+*.backup-2026-05.json
+*.backup-branch-*.json
+*.pre-regeocode-*.json
+
+# Rendered plaques. Outputs of scripts/generate-*.js, not sources: each SVG is a
+# 240KB-635KB single unioned path (text already converted), so they are large,
+# binary-ish and re-render exactly from the scripts + scripts/fonts/. The older
+# berlin-style/brass-style set was tracked and it only ever produced noisy diffs.
+public/plaques/lightburn/
+public/plaques/premium/
+plaque-scratch/
+
+# claude-flow / ruvector local agent state (regenerated per session)
+.claude-flow/
+**/.claude-flow/
+ruvector.db
+**/ruvector.db
+
+# local design captures & page screenshots (large binaries, not sources)
+design-screenshots/
+screencapture-*.pdf

@@ -1,0 +1,34 @@
+{
+  "businessId": "14",
+  "timeline": [
+    {
+      "startDate": "1889-01-01",
+      "description": "From Helene Weinberger's 1889 grocery store, the Weinberger brothers build Berlin's main butter supplier, serving 8,000 dairy stores.",
+      "longDescription": "The Gebrüder Weinberger butter business grew from a grocery store which Helene Weinberger had set up in 1889. Hermann Weinberger married into the business and founded a wholesale grocery which his brothers Adolf, Israel and Salomon – who had come to Berlin from Gorlice in Galicia – joined after the First World War. Residing in a magnificent building at Brunnen Strasse 188-190, the firm rose to become Berlin's main butter supplier in the mid-1920s: it manufactured its own butter, lard and fat, supplied about 8,000 small dairy goods stores with a fleet of over 50 trucks, and ran its own chain of grocery stores under the name Otto Thürmann. The world economic crisis caused difficulties, which the company overcame partly thanks to the help of the British-Dutch Unilever group.",
+      "endDate": "1932-12-31"
+    },
+    {
+      "startDate": "1933-01-01",
+      "description": "Berlin's largest butter business becomes a thorn in the side of local Nazis and struggles in the face of boycotts.",
+      "longDescription": "From 1933 the Weinberger brothers struggled in the face of boycotts. Berlin's largest butter business was a thorn in the side of local Nazis – and butter itself was in short supply as a consequence of rearmament and the Nazis' policy of autarchy; Goebbels addressed the issue in his propaganda by posing the rhetorical question 'Butter or bullets?'. For a time, the involvement of the foreign Unilever concern protected the company.",
+      "endDate": "1935-07-31"
+    },
+    {
+      "startDate": "1935-08-01",
+      "description": "Unilever withdraws, Der Angriff attacks, the German Labor Front strips the firm of staff and supplies, and police chief Helldorf orders liquidation.",
+      "longDescription": "The situation became really critical when the Unilever group withdrew its support in August 1935 and the Nazi newspaper Der Angriff fired the first shot in the campaign against the company, triggering a boycott of supplies by dairies. The German Labor Front offered the non-Jewish competition the Jewish company's quota of supplies and forced Gebr. Weinberger employees out; about two thirds of the staff left, deliveries of imported butter were stopped, and the business slid into a 'vegetative existence', as Salomon Weinberger wrote to the Polish embassy. In December 1935 the brothers had to sell Otto Thürmann GmbH far below its value to Otto Reichelt GmbH. On February 6, 1936, Israel and Adolf transferred their shares to Salomon, who had Polish nationality, hoping for the embassy's protection – but Berlin chief of police Helldorf's communication of March 6, 1936, prohibited the brothers from trading foodstuffs and granted them all of three days to liquidate. The embassy had the ban suspended; on April 9, 1936, the brothers were arrested on suspicion of fraudulent labelling and detained for three months.",
+      "endDate": "1936-06-30"
+    },
+    {
+      "startDate": "1936-07-01",
+      "description": "Released to find their offices looted, the brothers wind up the company and flee – to the USA, and, for Salomon's wife and daughter, to their deaths in Poland.",
+      "longDescription": "After a three-month detainment the three brothers received a relatively lenient sentence, deemed discharged by their pre-trial custody. On their release they discovered that the company's offices had been repeatedly searched, the storerooms looted and some machines removed: the butter wholesale company had de facto ceased to exist. Under the protection of the Polish embassy, Salomon Weinberger wound up the company by September 1938; it was deleted from the Berlin commercial register on June 19, 1939. Israel and Adolf Weinberger, like Salomon, were able to flee to safety in the USA only by leaving most of their assets behind. Salomon's daughter Judith and wife Ernestine were refused entry into the US because Judith suffered from a mental illness; they fled to Poland, where they were murdered in August 1942.",
+      "endDate": "1944-12-31"
+    },
+    {
+      "startDate": "1945-01-01",
+      "description": "Only the Otto Thürmann subsidiary survives. Brunnen Strasse 188/190 today houses the arts administration of the Berlin senate.",
+      "longDescription": "Of Berlin's largest butter business, only the subsidiary Otto Thürmann GmbH – sold on the verge of bankruptcy in 1935 – still exists today.\n\nThe site today\n\nThe building at Brunnen Strasse 188/190 in Berlin-Mitte, where the Weinberger brothers' butter wholesale business resided, today houses the arts administration of the Berlin senate. In 2010, a copy of the 1935 'Der getarnte Jude' poster that initiated the brothers' persecution was put on display in the foyer of the building as a reminder of the company's fate."
+    }
+  ]
+}

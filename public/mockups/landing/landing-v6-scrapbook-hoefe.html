@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryTimeMaps - Scrapbook Landing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f5f0e1;
+      --bg-paper: #faf7ed;
+      --bg-aged: #e8dcc8;
+      --primary: #4a90a4;
+      --primary-dark: #3a7589;
+      --secondary: #ffffff;
+      --success: #7db5a4;
+      --warning: #e8a830;
+      --danger: #8b4049;
+      --text: #1a1a1a;
+      --text-muted: #5a5a5a;
+      --ink: #2c2c2c;
+      --muted: #b8b0a0;
+      --border: #c4bfb0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 500;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      mix-blend-mode: multiply;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--danger);
+    }
+
+    /* Hero - Full Screen Scrapbook */
+    .hero-scrapbook {
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background:
+        linear-gradient(135deg, var(--bg-paper) 0%, var(--bg) 50%, var(--bg-aged) 100%);
+    }
+
+    /* Paper texture overlay */
+    .hero-scrapbook::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('/images/paper.jpg') center/cover;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 5rem 80px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-chapter {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .chapter-line {
+      width: 50px;
+      height: 1px;
+      background: var(--danger);
+    }
+
+    .chapter-text {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--danger);
+      letter-spacing: 0.05em;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(3rem, 5.5vw, 4.5rem);
+      line-height: 1.0;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+    }
+
+    .hero-text h1 .highlight {
+      display: block;
+      font-style: italic;
+      color: var(--danger);
+      font-weight: 400;
+    }
+
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      max-width: 420px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .hero-date-range {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .date-marker {
+      text-align: center;
+    }
+
+    .date-marker .year {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .date-marker.start .year { color: var(--success); }
+    .date-marker.end .year { color: var(--danger); }
+
+    .date-marker small {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    .date-line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--success), var(--warning) 50%, var(--danger));
+      position: relative;
+    }
+
+    .date-line::before,
+    .date-line::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      background: var(--bg);
+      border: 2px solid;
+      transform: translateY(-50%);
+    }
+
+    .date-line::before {
+      left: -4px;
+      border-color: var(--success);
+    }
+
+    .date-line::after {
+      right: -4px;
+      border-color: var(--danger);
+    }
+
+    /* Hero Collage Side */
+    .hero-collage {
+      position: relative;
+      padding: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .collage-stack {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 600px;
+    }
+
+    .stack-photo {
+      position: absolute;
+      background: var(--bg-paper);
+      padding: 12px 12px 40px;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.05),
+        0 10px 40px rgba(0,0,0,0.12);
+    }
+
+    .stack-photo img {
+      display: block;
+      width: 100%;
+      height: calc(100% - 28px);
+      object-fit: cover;
+      filter: grayscale(25%) sepia(10%) contrast(1.05);
+    }
+
+    .stack-photo .caption {
+      position: absolute;
+      bottom: 8px;
+      left: 12px;
+      right: 12px;
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .photo-main {
+      width: 380px;
+      height: 320px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-2deg);
+      z-index: 5;
+    }
+
+    .photo-back-1 {
+      width: 300px;
+      height: 240px;
+      top: 5%;
+      left: 5%;
+      transform: rotate(-8deg);
+      z-index: 2;
+    }
+
+    .photo-back-2 {
+      width: 280px;
+      height: 360px;
+      bottom: 5%;
+      right: 5%;
+      transform: rotate(5deg);
+      z-index: 3;
+    }
+
+    .photo-back-3 {
+      width: 220px;
+      height: 170px;
+      top: 15%;
+      right: 10%;
+      transform: rotate(12deg);
+      z-index: 4;
+    }
+
+    /* Handwritten annotation effect */
+    .annotation {
+      position: absolute;
+      font-family: 'Crimson Text', Georgia, serif;
+      font-style: italic;
+      color: var(--danger);
+      font-size: 1.1rem;
+      transform: rotate(-5deg);
+      white-space: nowrap;
+    }
+
+    .annotation-1 {
+      top: 8%;
+      right: 25%;
+    }
+
+    .annotation-2 {
+      bottom: 15%;
+      left: 10%;
+      transform: rotate(3deg);
+    }
+
+    /* Pin effect */
+    .pin {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle at 30% 30%, #c0392b, #7f1d1d);
+      border-radius: 50%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      z-index: 20;
+    }
+
+    .pin::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      transform: translate(-150%, -150%);
+    }
+
+    /* Artifacts Section */
+    .artifacts {
+      padding: 8rem 0;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .artifacts::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('/images/paper.jpg') center/cover;
+      opacity: 0.02;
+    }
+
+    .artifacts-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .artifacts-header h2 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      color: var(--bg);
+      margin-bottom: 1rem;
+    }
+
+    .artifacts-header p {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .artifact-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .artifact-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%) sepia(10%);
+      transition: all 0.5s ease;
+    }
+
+    .artifact-item:hover img {
+      filter: grayscale(0%) sepia(0%);
+      transform: scale(1.08);
+    }
+
+    .artifact-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        transparent 50%,
+        rgba(26,26,26,0.8) 100%
+      );
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .artifact-item:hover::before {
+      opacity: 1;
+    }
+
+    .artifact-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      color: white;
+      z-index: 2;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+
+    .artifact-item:hover .artifact-label {
+      transform: translateY(0);
+    }
+
+    .artifact-label h4 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .artifact-label span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .artifact-item.tall {
+      grid-row: span 2;
+    }
+
+    .artifact-item.wide {
+      grid-column: span 2;
+    }
+
+    /* Narrative Section */
+    .narrative {
+      padding: 10rem 6rem;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .narrative-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .narrative-photos {
+      position: relative;
+      height: 600px;
+    }
+
+    .narrative-photo {
+      position: absolute;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+    }
+
+    .narrative-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%) sepia(8%);
+    }
+
+    .n-photo-1 {
+      width: 320px;
+      height: 240px;
+      top: 0;
+      left: 0;
+      transform: rotate(-4deg);
+      z-index: 2;
+    }
+
+    .n-photo-2 {
+      width: 280px;
+      height: 350px;
+      bottom: 0;
+      right: 0;
+      transform: rotate(3deg);
+      z-index: 3;
+    }
+
+    .n-photo-3 {
+      width: 200px;
+      height: 150px;
+      top: 35%;
+      right: 15%;
+      transform: rotate(-7deg);
+      z-index: 1;
+    }
+
+    .narrative-text {
+      max-width: 480px;
+    }
+
+    .narrative-text .section-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 400;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .narrative-text h2 {
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    .narrative-text .lead {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid var(--danger);
+      padding-left: 1.5rem;
+    }
+
+    .narrative-text p {
+      color: var(--text-muted);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    /* Stats Strip */
+    .stats-strip {
+      background: var(--danger);
+      padding: 4rem;
+      position: relative;
+    }
+
+    .stats-strip::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: var(--bg);
+    }
+
+    .stats-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      text-align: center;
+    }
+
+    .stat {
+      color: white;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem;
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-desc {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    /* Call to Action */
+    .cta-section {
+      padding: 10rem 4rem;
+      background: linear-gradient(180deg, var(--bg-aged) 0%, var(--bg) 100%);
+      position: relative;
+    }
+
+    .cta-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-container h2 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    .cta-container .subtitle {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 4rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 2.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .cta-btn.primary {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .cta-btn.primary:hover {
+      background: var(--danger);
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 2px solid var(--ink);
+    }
+
+    .cta-btn.secondary:hover {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .cta-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Decorative scattered photos */
+    .scattered-decor {
+      position: absolute;
+      background: white;
+      padding: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      pointer-events: none;
+    }
+
+    .scattered-decor img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%);
+    }
+
+    .decor-1 {
+      width: 140px;
+      height: 100px;
+      top: 10%;
+      left: 5%;
+      transform: rotate(-12deg);
+    }
+
+    .decor-2 {
+      width: 120px;
+      height: 160px;
+      bottom: 15%;
+      right: 8%;
+      transform: rotate(8deg);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--ink);
+      padding: 5rem 4rem 2rem;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .footer-brand h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--bg);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .footer-col h5 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.4rem 0;
+      transition: color 0.3s;
+      font-weight: 300;
+    }
+
+    .footer-col a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 4rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .lang-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .lang-buttons button {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .lang-buttons button:hover,
+    .lang-buttons button.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .hero-scrapbook {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text {
+        padding: 120px 3rem 60px;
+      }
+
+      .hero-collage {
+        padding: 40px;
+        min-height: 500px;
+      }
+
+      .collage-stack {
+        max-width: 100%;
+        height: 450px;
+      }
+
+      .photo-main {
+        width: 280px;
+        height: 220px;
+      }
+
+      .photo-back-1 {
+        width: 200px;
+        height: 160px;
+      }
+
+      .photo-back-2 {
+        width: 180px;
+        height: 240px;
+      }
+
+      .photo-back-3 {
+        width: 150px;
+        height: 120px;
+      }
+
+      .artifact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .narrative-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .narrative-photos {
+        height: 450px;
+        order: -1;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 700px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .hero-text {
+        padding: 100px 1.5rem 40px;
+      }
+
+      .hero-date-range {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .date-line {
+        width: 100%;
+        height: 2px;
+      }
+
+      .artifact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .artifact-item.tall,
+      .artifact-item.wide {
+        grid-row: span 1;
+        grid-column: span 1;
+      }
+
+      .narrative {
+        padding: 5rem 1.5rem;
+      }
+
+      .narrative-photos {
+        height: 350px;
+      }
+
+      .n-photo-1 {
+        width: 220px;
+        height: 160px;
+      }
+
+      .n-photo-2 {
+        width: 180px;
+        height: 230px;
+      }
+
+      .n-photo-3 {
+        display: none;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .stat-value {
+        font-size: 3.5rem;
+      }
+
+      .cta-section {
+        padding: 6rem 1.5rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">StoryTimeMaps</div>
+    <div class="nav-links">
+      <a href="#">Stories</a>
+      <a href="#">Archive</a>
+      <a href="#">About</a>
+    </div>
+  </nav>
+
+  <!-- Hero Scrapbook -->
+  <section class="hero-scrapbook">
+    <div class="hero-text">
+      <div class="hero-chapter">
+        <span class="chapter-line"></span>
+        <span class="chapter-text">An Interactive Memorial</span>
+      </div>
+      <h1>
+        The Lost<br>
+        <span class="highlight">Storefronts</span>
+      </h1>
+      <p class="hero-subtitle">of Jewish Berlin</p>
+      <p class="hero-desc">
+        Over ten thousand businesses once thrived in Berlin&apos;s streets.
+        This archive preserves their memory through photographs, documents,
+        and the stories of the families who built them.
+      </p>
+      <div class="hero-date-range">
+        <div class="date-marker start">
+          <span class="year">1900</span>
+          <small>Beginning</small>
+        </div>
+        <div class="date-line"></div>
+        <div class="date-marker end">
+          <span class="year">1945</span>
+          <small>Destruction</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-collage">
+      <div class="collage-stack">
+        <div class="stack-photo photo-back-1">
+          <img src="/images/jonassco/jonassco.webp" alt="Jonass & Co.">
+          <span class="caption">Jonass & Co. Advertisement, 1928</span>
+        </div>
+        <div class="stack-photo photo-back-3">
+          <img src="/images/butter/butter.webp" alt="Delivery truck">
+          <span class="caption">Weinberger Butter</span>
+        </div>
+        <div class="stack-photo photo-main">
+          <img src="/images/ebraun/ebraun1.webp" alt="E. Braun storefront">
+          <span class="caption">E. Braun & Co., Unter den Linden</span>
+          <div class="pin" style="top: -8px; right: 25%;"></div>
+        </div>
+        <div class="stack-photo photo-back-2">
+          <img src="/images/kutschera/kutschera.webp" alt="Street scene">
+          <span class="caption">Scheunenviertel, 1932</span>
+        </div>
+        <span class="annotation annotation-1">Berlin, 1928</span>
+        <span class="annotation annotation-2">Unter den Linden</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Artifacts Grid -->
+  <section class="artifacts">
+    <div class="artifacts-header">
+      <h2>From the Archive</h2>
+      <p>Photographs and documents that survived</p>
+    </div>
+    <div class="artifact-grid">
+      <div class="artifact-item tall">
+        <img src="/images/dtheater/dtheater.webp" alt="Theater">
+        <div class="artifact-label">
+          <h4>Deutsches Theater</h4>
+          <span>Cultural Landmark</span>
+        </div>
+      </div>
+      <div class="artifact-item">
+        <img src="/images/yva/yva.webp" alt="Fashion">
+        <div class="artifact-label">
+          <h4>Fashion Photography</h4>
+          <span>Studio Yva, 1930s</span>
+        </div>
+      </div>
+      <div class="artifact-item wide">
+        <img src="/images/hoxter/hoxter.webp" alt="Bourse">
+        <div class="artifact-label">
+          <h4>Berlin Stock Exchange</h4>
+          <span>Financial District</span>
+        </div>
+      </div>
+      <div class="artifact-item">
+        <img src="/images/breslaur/breslaur1.webp" alt="Breslaur">
+        <div class="artifact-label">
+          <h4>Breslaur Family</h4>
+          <span>Antiquarian Books</span>
+        </div>
+      </div>
+      <div class="artifact-item">
+        <img src="/images/pkunst/pkunst.webp" alt="Art">
+        <div class="artifact-label">
+          <h4>Gauklerfest Poster</h4>
+          <span>Schule Reimann, 1928</span>
+        </div>
+      </div>
+      <div class="artifact-item">
+        <img src="/images/ebraun/ebraun2.webp" alt="Store">
+        <div class="artifact-label">
+          <h4>E. Braun Interior</h4>
+          <span>Fashion Retailer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Narrative Section -->
+  <section class="narrative">
+    <div class="narrative-container">
+      <div class="narrative-photos">
+        <div class="narrative-photo n-photo-1">
+          <img src="/images/breslaur/breslaur2.webp" alt="Documents">
+        </div>
+        <div class="narrative-photo n-photo-2">
+          <img src="/images/ebraun/ebraun3.webp" alt="Store detail">
+        </div>
+        <div class="narrative-photo n-photo-3">
+          <img src="/images/wassermann/wassermann.webp" alt="Wassermann">
+        </div>
+      </div>
+      <div class="narrative-text">
+        <span class="section-num">01</span>
+        <h2>Every Record Tells a Story</h2>
+        <p class="lead">
+          Behind each entry in this database lies a family, a dream,
+          a legacy systematically erased.
+        </p>
+        <p>
+          From department stores on Alexanderplatz to small workshops in
+          the Scheunenviertel, we have documented the addresses, owners,
+          and ultimate fates of businesses that once defined Berlin&apos;s
+          commercial landscape. Each record is backed by archival research
+          from Humboldt University Berlin.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-strip">
+    <div class="stats-container">
+      <div class="stat">
+        <div class="stat-value">10,847</div>
+        <div class="stat-desc">Businesses Documented</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">15</div>
+        <div class="stat-desc">Featured Stories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">45</div>
+        <div class="stat-desc">Years of History</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="scattered-decor decor-1">
+      <img src="/images/pelz/pelz.webp" alt="">
+    </div>
+    <div class="scattered-decor decor-2">
+      <img src="/images/eggs/eggs.webp" alt="">
+    </div>
+    <div class="cta-container">
+      <h2>Begin Your Exploration</h2>
+      <p class="subtitle">Discover the stories behind the statistics</p>
+      <div class="cta-buttons">
+        <a href="#" class="cta-btn primary">
+          Read Featured Stories
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a href="#" class="cta-btn secondary">
+          Browse Full Archive
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>StoryTimeMaps</h4>
+        <p>
+          Historical research by Dr. Christoph Kreutzmaller and team at
+          Humboldt University Berlin. An interactive memorial to the
+          Jewish businesses that once shaped the city.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="#">Featured Stories</a>
+        <a href="#">Full Database</a>
+        <a href="#">Timeline</a>
+        <a href="#">Districts</a>
+      </div>
+      <div class="footer-col">
+        <h5>Research</h5>
+        <a href="#">Methodology</a>
+        <a href="#">Sources</a>
+        <a href="#">Team</a>
+        <a href="#">Publications</a>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <a href="#">Contact</a>
+        <a href="#">Press</a>
+        <a href="#">Collaborate</a>
+        <a href="#">Donate</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>A Humboldt University Berlin Research Project</span>
+      <div class="lang-buttons">
+        <button class="active">EN</button>
+        <button>DE</button>
+        <button>YI</button>
+        <button>HE</button>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

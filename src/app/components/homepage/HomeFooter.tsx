@@ -48,6 +48,13 @@ const HomeFooter: React.FC = () => {
               {t('homepage.nav.plaques', { defaultValue: 'Plaques' })}
             </Link>
             <Link
+              href="/exhibit-vision"
+              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
+              style={{ color: 'var(--foreground-muted)' }}
+            >
+              {t('homepage.nav.exhibit', { defaultValue: 'Exhibition' })}
+            </Link>
+            <Link
               href="/education"
               className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
               style={{ color: 'var(--foreground-muted)' }}

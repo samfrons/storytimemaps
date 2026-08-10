@@ -4,8 +4,16 @@ import { join } from 'path'
 import { exec } from 'child_process'
 import { promisify } from 'util'
 import type { OutreachRecord } from '@/lib/types/outreach'
+import { isAuthorized } from '@/lib/outreachAuth'
 
 const execAsync = promisify(exec)
+
+// This dataset is not public: it carries contact names, emails and phone
+// numbers for present-day occupants. Both handlers are gated, and PATCH also
+// writes to disk and commits, so an open route was a write vector too.
+function denied() {
+  return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -36,7 +44,8 @@ async function autoCommit(message: string): Promise<void> {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!isAuthorized(request)) return denied()
   try {
     const data = loadData()
     return NextResponse.json({ success: true, data })
@@ -47,6 +56,7 @@ export async function GET() {
 }
 
 export async function PATCH(request: NextRequest) {
+  if (!isAuthorized(request)) return denied()
   try {
     const body = await request.json()
     const { id, ...updates } = body

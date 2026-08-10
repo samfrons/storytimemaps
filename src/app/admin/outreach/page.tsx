@@ -9,36 +9,57 @@ import OutreachTable from '@/app/components/outreach/OutreachTable'
 import OutreachForm from '@/app/components/outreach/OutreachForm'
 import ResearchHelper from '@/app/components/outreach/ResearchHelper'
 
-const AUTH_STORAGE_KEY = 'outreach_admin_auth'
-
 function AdminAuth({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [checking, setChecking] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
 
+  // The session lives in an httpOnly cookie the server sets, so ask the server
+  // whether we are logged in rather than trusting a client-set flag.
   useEffect(() => {
-    // Check if already authenticated in session
-    const stored = sessionStorage.getItem(AUTH_STORAGE_KEY)
-    if (stored === 'true') {
-      setAuthenticated(true)
+    let cancelled = false
+    fetch('/api/outreach/auth')
+      .then((r) => r.json())
+      .then((j) => {
+        if (!cancelled) setAuthenticated(Boolean(j?.authenticated))
+      })
+      .catch(() => {
+        /* treat as logged out */
+      })
+      .finally(() => {
+        if (!cancelled) setChecking(false)
+      })
+    return () => {
+      cancelled = true
     }
-    setChecking(false)
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // The password is verified server-side; it is never compared in the browser
+  // and never stored here.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Simple password check - in production use environment variable
-    // Default password is 'storytimemaps' - can be changed via ADMIN_PASSWORD env var
-    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'storytimemaps'
-
-    if (password === correctPassword) {
-      setAuthenticated(true)
-      sessionStorage.setItem(AUTH_STORAGE_KEY, 'true')
-      setError('')
-    } else {
-      setError('Invalid password')
-      setPassword('')
+    setSubmitting(true)
+    setError('')
+    try {
+      const res = await fetch('/api/outreach/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+      const json = await res.json().catch(() => null)
+      if (res.ok && json?.success) {
+        setAuthenticated(true)
+        setPassword('')
+      } else {
+        setError(json?.error || 'Invalid password')
+        setPassword('')
+      }
+    } catch {
+      setError('Could not reach the server')
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -99,14 +120,15 @@ function AdminAuth({ children }: { children: React.ReactNode }) {
             )}
             <button
               type="submit"
-              className="w-full px-4 py-2 text-sm font-mono border transition-all hover:opacity-80"
+              disabled={submitting || password.length === 0}
+              className="w-full px-4 py-2 text-sm font-mono border transition-all hover:opacity-80 disabled:opacity-50"
               style={{
                 backgroundColor: 'var(--primary)',
                 borderColor: 'var(--primary)',
                 color: 'var(--background)',
               }}
             >
-              Access Admin
+              {submitting ? 'Checking…' : 'Access Admin'}
             </button>
           </form>
           <p className="mt-4 text-xs text-center" style={{ color: 'var(--foreground-muted)' }}>
@@ -199,10 +221,13 @@ function OutreachPageContent() {
     setSelectedRecord(record)
   }, [])
 
-  // Logout function
+  // Logout: the session is an httpOnly cookie, so only the server can clear it.
   const handleLogout = useCallback(() => {
-    sessionStorage.removeItem(AUTH_STORAGE_KEY)
-    window.location.reload()
+    fetch('/api/outreach/auth', { method: 'DELETE' })
+      .catch(() => {
+        /* reload anyway — the cookie may already be gone */
+      })
+      .finally(() => window.location.reload())
   }, [])
 
   if (loading) {

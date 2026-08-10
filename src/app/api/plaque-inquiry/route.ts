@@ -14,6 +14,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import type { CreatePlaqueInquiryInput, BuildingRole } from '@/lib/types/proposal'
 
+// Required by the project deployment rules: without this Next can statically optimise
+// the route at build time and serve a stale snapshot. That is wrong for every route
+// here - they read mutable data, and the auth-scoped ones would leak one user's view
+// to everyone.
+export const dynamic = 'force-dynamic'
+
 const VALID_ROLES: BuildingRole[] = ['owner', 'tenant', 'manager', 'other']
 const RATE_LIMIT_WINDOW_MS = 60_000 // 1 minute
 const RATE_LIMIT_MAX = 5 // 5 submits per IP per minute

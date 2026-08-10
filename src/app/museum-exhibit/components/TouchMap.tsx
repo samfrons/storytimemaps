@@ -219,10 +219,11 @@ const TouchMap: React.FC<TouchMapProps> = ({
         const source = map.getSource('businesses') as mapboxgl.GeoJSONSource
 
         if (source && 'getClusterExpansionZoom' in source) {
-          // @ts-expect-error - Mapbox GL types are inconsistent with callback signature
+          // The mapbox-gl Callback<number> type reports the result as
+          // number | null | undefined; the guard below narrows it.
           source.getClusterExpansionZoom(
             clusterId,
-            (err: Error | null | undefined, zoom: number) => {
+            (err: Error | null | undefined, zoom: number | null | undefined) => {
               if (err || !zoom) return
 
               const geometry = feature.geometry as GeoJSON.Point

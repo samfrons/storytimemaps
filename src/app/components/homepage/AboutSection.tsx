@@ -319,6 +319,42 @@ const AboutSection: React.FC = () => {
             </Link>
           ))}
         </div>
+
+        <div
+          className="mt-10 border p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          style={{ borderColor: 'var(--border)', backgroundColor: 'var(--card-bg)' }}
+        >
+          <div>
+            <h3
+              className="font-mono text-sm font-bold uppercase tracking-wider mb-2"
+              style={{ color: 'var(--foreground)' }}
+            >
+              {t('homepage.about.collaborateTitle', { defaultValue: 'Built by volunteers' })}
+            </h3>
+            <p
+              className="font-['Inter'] text-sm leading-relaxed max-w-2xl"
+              style={{ color: 'var(--foreground-muted)' }}
+            >
+              {t('homepage.about.collaborateText', {
+                defaultValue:
+                  'Developers, researchers, translators, and outreach volunteers keep this memorial growing. There is a place for you.',
+              })}
+            </p>
+          </div>
+          <Link
+            href="/collaborate"
+            className="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider px-5 py-3 flex-shrink-0 transition-opacity hover:opacity-80"
+            style={{
+              backgroundColor: 'var(--primary)',
+              color: 'var(--background)',
+              outline: 'none',
+              boxShadow: 'none',
+            }}
+          >
+            {t('homepage.about.collaborateLink', { defaultValue: 'Get involved' })}{' '}
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
       </div>
 
       <style jsx global>{`

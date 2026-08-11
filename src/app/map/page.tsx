@@ -6,11 +6,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import StoryList from '../components/StoryList'
 import LoadingSkeleton from '../components/LoadingSkeleton'
-import ModeToggle from '../components/ModeToggle'
-import ContentPreview from '../components/ContentPreview'
 import NavigationSidebar from '../components/NavigationSidebar'
 import TimeSlider from '../components/TimeSlider'
-import PlaquesHero from '../components/PlaquesHero'
 import {
   useStoryMapLogicTest as useStoryMapLogic,
   berlinCoordinates,
@@ -36,16 +33,12 @@ const MapboxMap = dynamic(() => import('../components/MapboxMap'), {
 })
 
 function MapPageContent() {
-  const { t, language, toggleLanguage, switchToLanguage } = useTranslation()
+  const { t, language, switchToLanguage } = useTranslation()
   const { theme, setTheme } = useTheme()
   const mounted = useIsMounted()
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Always show intro on root page unless there are URL params
-  const hasUrlParams = searchParams.toString() !== ''
-  const [showIntro, setShowIntro] = useState(!hasUrlParams)
-  const [introExplicitlyClosed, setIntroExplicitlyClosed] = useState(false) // Track if user closed intro
   const [showInfo, setShowInfo] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showThemeMenu, setShowThemeMenu] = useState(false)
@@ -119,26 +112,8 @@ function MapPageContent() {
     const aboutParam = searchParams.get('about')
     if (aboutParam === 'true') {
       setShowInfo(true)
-      setShowIntro(false)
     }
-
-    // Show intro only on root page without significant params AND if not explicitly closed
-    // Don't consider language/theme params as "significant" for intro display.
-    // 'layout' and 'list' are presentation-only too: they describe how the page is arranged,
-    // not what the visitor asked to see. Leaving them out of this filter would mean the first
-    // drawer toggle permanently suppresses the intro, including for anyone given that URL.
-    const significantParams = Array.from(searchParams.keys()).filter(
-      (key) => key !== 'lang' && key !== 'theme' && key !== 'layout' && key !== 'list'
-    )
-    const hasSignificantParams = significantParams.length > 0
-
-    if (hasSignificantParams) {
-      setShowIntro(false)
-    } else if (!introExplicitlyClosed) {
-      // Only show intro if user hasn't explicitly closed it
-      setShowIntro(true)
-    }
-  }, [searchParams, mounted, introExplicitlyClosed])
+  }, [searchParams, mounted])
 
   // Owned here rather than inside StoryList so the map legend and the sidebar
   // dropdown drive the same filter.
@@ -176,8 +151,6 @@ function MapPageContent() {
       setViewMode('stories')
       setActiveStoryId(idParam)
       handleMarkerClick(idParam)
-      setShowIntro(false)
-      setIntroExplicitlyClosed(true)
       // Set deep link ID to auto-open the detail modal
       setDeepLinkId(idParam)
       // A deep link points at one record, so the list has to be on screen for it to land in -
@@ -250,12 +223,6 @@ function MapPageContent() {
     })
   }, [searchParams, router])
 
-  const handleLetsGo = useCallback(() => {
-    setShowIntro(false)
-    setIntroExplicitlyClosed(true) // Mark that user explicitly closed intro
-    // No sessionStorage - intro will show again on next visit to root
-  }, [])
-
   const toggleInfo = useCallback(() => {
     const newShowInfo = !showInfo
     setShowInfo(newShowInfo)
@@ -267,31 +234,24 @@ function MapPageContent() {
     }
     const queryString = params.toString()
     router.push(queryString ? `/map?${queryString}` : '/map', { scroll: false })
+  }, [showInfo, searchParams, router])
 
-    if (showIntro) {
-      setShowIntro(false)
-      setIntroExplicitlyClosed(true) // Mark as explicitly closed
-    }
-  }, [showInfo, showIntro, searchParams, router])
-
+  /**
+   * The home button leaves the map for the site homepage.
+   *
+   * It used to re-open an intro overlay that covered this page — the landing
+   * screen from before the map moved to /map. The site now has a real
+   * homepage, so the overlay was a second, stale copy of it standing between
+   * a visitor and the map they had just clicked through to.
+   */
   const goHome = useCallback(() => {
-    // Navigate to root URL preserving language
     const params = new URLSearchParams()
     if (language) {
       params.set('lang', language)
     }
     const queryString = params.toString()
-    router.push(queryString ? `/map?${queryString}` : '/map', { scroll: false })
-    setShowIntro(true)
-    setIntroExplicitlyClosed(false) // Reset so intro shows when home is clicked
-    setShowInfo(false)
+    router.push(queryString ? `/?${queryString}` : '/')
   }, [router, language])
-
-  // Memoized callback for closing intro
-  const handleCloseIntro = useCallback(() => {
-    setShowIntro(false)
-    setIntroExplicitlyClosed(true)
-  }, [])
 
   // Memoized callback for language change
   const handleLanguageChange = useCallback(
@@ -320,8 +280,6 @@ function MapPageContent() {
         onThemeSwitch={handleThemeSwitch}
         layoutMode={layoutMode}
         onLayoutSwitch={handleLayoutSwitch}
-        showIntro={showIntro}
-        onCloseIntro={handleCloseIntro}
         goHome={goHome}
         showInfo={showInfo}
         toggleInfo={toggleInfo}
@@ -516,128 +474,6 @@ function MapPageContent() {
           )}
         </div>
       )}
-
-      {/* Intro Overlay - Slides to the left, but leaves sidebar visible */}
-      <div
-        className={`fixed md:absolute top-0 left-0 md:left-12 right-0 bottom-0 backdrop-blur-sm transition-transform duration-700 ease-in-out overflow-hidden ${
-          showIntro ? 'translate-x-0' : '-translate-x-full'
-        }`}
-        style={{
-          zIndex: 9999,
-          backgroundColor: 'rgba(var(--background-rgb), 0.95)',
-        }}
-      >
-        {/* Animated Map Background with Ken Burns Effect - Lazy loaded */}
-        <div className="absolute inset-0 opacity-20">
-          <div
-            className="absolute w-[200%] h-[200%] -top-[50%] -left-[50%]"
-            style={{
-              backgroundImage: showIntro ? `url('/berlin-map.png')` : 'none',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              animation: showIntro ? 'kenBurns 30s ease-in-out infinite alternate' : 'none',
-              filter: 'contrast(1.2) brightness(0.9)',
-            }}
-          />
-        </div>
-
-        {/* Close button */}
-        <button
-          onClick={handleLetsGo}
-          className="absolute w-10 h-10 flex items-center justify-center border transition-colors z-10 hover:opacity-80 hot-close-button"
-          style={{
-            top: 'max(2vh, 1rem)',
-            right: 'max(2vw, 1rem)',
-            backgroundColor: 'var(--input-bg)',
-            borderColor: 'var(--border)',
-            color: 'var(--foreground)',
-            cursor: 'pointer',
-          }}
-          aria-label="Close"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-
-        <div
-          className="relative min-h-full flex items-center justify-center px-4 sm:px-6 md:px-8 overflow-y-auto"
-          style={{
-            paddingTop: 'max(2vh, 1rem)',
-            paddingBottom: 'max(2vh, 1rem)',
-            minHeight: '100vh',
-          }}
-        >
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <div className="relative space-y-8">
-              <div>
-                <h1
-                  className="font-kame text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4"
-                  style={{ color: 'var(--foreground)' }}
-                >
-                  {t('mainPage.intro.title')}
-                </h1>
-                <p
-                  className="text-lg sm:text-xl md:text-2xl lg:text-2xl font-light font-['Space_Mono'] font-mono"
-                  style={{ color: 'var(--foreground-muted)' }}
-                >
-                  {t('mainPage.intro.subtitle')}
-                </p>
-              </div>
-
-              <div className="space-y-4 max-w-2xl mx-auto">
-                <p
-                  className="text-sm sm:text-base md:text-lg leading-relaxed font-['Space_Mono'] font-mono"
-                  style={{ color: 'var(--foreground)' }}
-                >
-                  {t('mainPage.intro.description1')}
-                </p>
-                <p
-                  className="text-xs sm:text-sm md:text-base font-['Space_Mono'] font-mono"
-                  style={{ color: 'var(--foreground-muted)' }}
-                >
-                  {t('mainPage.intro.description2')}
-                </p>
-              </div>
-
-              {/* Mode Selection */}
-              <div className="pt-4 max-w-4xl mx-auto">
-                <ModeToggle
-                  mode={viewMode}
-                  onModeChange={(newMode) => {
-                    setViewMode(newMode)
-                    // Close intro overlay when mode is selected from the overlay
-                    setShowIntro(false)
-                    setIntroExplicitlyClosed(true)
-                  }}
-                  storiesCount={storiesWithDetailCount}
-                  totalCount={totalItems}
-                  theme={mounted ? theme : undefined}
-                />
-                <ContentPreview
-                  mode={viewMode}
-                  storiesCount={storiesWithDetailCount}
-                  totalCount={totalItems}
-                />
-              </div>
-
-              {/* Memorial Plaques Initiative Teaser */}
-              <div className="pt-8 max-w-2xl mx-auto">
-                <PlaquesHero compact={true} showFullContent={false} />
-              </div>
-
-              <div className="pt-12 text-sm font-mono" style={{ color: 'var(--muted)' }}>
-                <p>{t('mainPage.intro.credits')}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Info Panel - Slides from the right */}
       <div

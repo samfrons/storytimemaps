@@ -1415,6 +1415,31 @@ textarea:-ms-input-placeholder {
   background: rgba(var(--muted-rgb), 0.25);
   padding: 0.1em 0.35em;
 }
+/* Fenced blocks are the drawn parts of a worksheet — the timeline axis, the
+   plaque frame students write inside, the empty box for a hand-drawn chart.
+   They are fixed-width ASCII by nature, so they scroll inside their own box
+   rather than pushing the page sideways, and they do not take the inline
+   code background (a whole grey slab reads as a program listing). */
+.workbook-prose pre {
+  overflow-x: auto;
+  margin: 0 0 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  line-height: 1.5;
+}
+.workbook-prose pre code {
+  background: none;
+  padding: 0;
+  /* Sized so the widest block in the activity sheets — the 300 × 100 plaque
+     frame, 66 characters across — fits the 3xl prose column without a
+     scrollbar on a laptop. Narrower screens scroll rather than reflow, since
+     reflowing box-drawing characters destroys the frame. */
+  font-size: 0.7rem;
+  line-height: 1.45;
+  white-space: pre;
+  color: var(--foreground);
+}
 /* Tables carry the worksheet grids, so they must scroll rather than overflow. */
 .workbook-prose .workbook-table-scroll {
   overflow-x: auto;

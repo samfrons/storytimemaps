@@ -13,8 +13,6 @@ interface NavigationSidebarProps {
   theme: string | undefined
   mounted: boolean
   onThemeSwitch: (theme: string) => void
-  showIntro: boolean
-  onCloseIntro: () => void
   goHome: () => void
   showInfo: boolean
   toggleInfo: () => void
@@ -50,8 +48,6 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
     theme,
     mounted,
     onThemeSwitch,
-    showIntro,
-    onCloseIntro,
     goHome,
     showInfo,
     toggleInfo,
@@ -66,11 +62,8 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
     const handleViewModeChange = useCallback(
       (mode: 'stories' | 'database') => {
         setViewMode(mode)
-        if (showIntro) {
-          onCloseIntro()
-        }
       },
-      [setViewMode, showIntro, onCloseIntro]
+      [setViewMode]
     )
 
     const handleLanguageSwitch = useCallback(
@@ -293,14 +286,14 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
             </svg>
           </button>
 
-          {/* Home Button */}
+          {/* Home button — leaves the map for the site homepage. */}
           <button
             onClick={goHome}
-            className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110 ${showIntro ? 'hot-button-active' : ''}`}
+            className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
             style={{
-              backgroundColor: showIntro ? 'var(--primary)' : 'var(--input-bg)',
+              backgroundColor: 'var(--input-bg)',
               borderColor: 'var(--border)',
-              color: showIntro ? 'var(--background)' : 'var(--foreground)',
+              color: 'var(--foreground)',
               cursor: 'pointer',
               transform: 'scale(1)',
               transition: 'transform 0.2s ease-in-out',
@@ -570,11 +563,11 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
                 goHome()
                 setShowMobileMenu(false)
               }}
-              className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button ${showIntro ? 'hot-button-active' : ''}`}
+              className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
               style={{
-                backgroundColor: showIntro ? 'var(--primary)' : 'var(--input-bg)',
+                backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--border)',
-                color: showIntro ? 'var(--background)' : 'var(--foreground)',
+                color: 'var(--foreground)',
                 cursor: 'pointer',
               }}
               aria-label="Home"

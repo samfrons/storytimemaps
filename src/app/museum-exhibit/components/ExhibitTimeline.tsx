@@ -99,6 +99,8 @@ const ExhibitTimeline: React.FC<ExhibitTimelineProps> = ({
           {/* Play/Pause button */}
           <button
             onClick={() => setAutoPlay(!autoPlay)}
+            aria-label={autoPlay ? 'Pause timeline autoplay' : 'Start timeline autoplay'}
+            aria-pressed={autoPlay}
             className="flex items-center justify-center flex-shrink-0 transition-all duration-100"
             style={{
               width: `${CONTROL_HEIGHT}px`,

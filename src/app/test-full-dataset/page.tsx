@@ -77,10 +77,11 @@ function TestFullDatasetPageContent() {
       if (theme !== themeParam) {
         setTheme(themeParam)
       }
-    } else if (!themeParam && !theme) {
-      // Only set default if no theme is set at all
-      setTheme('archival')
     }
+    // No fallback theme here on purpose. This page used to set 'archival' when
+    // nothing was stored, which wrote to the shared theme storage and left every
+    // other page in that theme afterwards. The provider's default (brutal-pop)
+    // is the only thing that should decide an unset theme.
 
     // Show intro only on root page without significant params AND if not explicitly closed
     // Don't consider language/theme params as "significant" for intro display

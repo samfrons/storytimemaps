@@ -13,7 +13,7 @@
 | **Group size** | 12–30, working in pairs or threes |
 | **Total time** | 4–6 lesson hours, plus one walk of 60–90 minutes |
 | **Subjects** | History, Geography/Urban Studies, Ethics/Religion, Economics, Art & Design |
-| **Setting** | Berlin classrooms walking their own district; adaptable elsewhere (see *Outside Berlin*, p. 10) |
+| **Setting** | Berlin classrooms walking their own district; adaptable elsewhere (see *Outside Berlin*, below) |
 | **Core resource** | The StoryMaps map of Jewish businesses in Berlin, 1900–1945 |
 | **Student output** | A completed three-part workbook and one short pitch or poster per group |
 
@@ -414,7 +414,7 @@ _______________________________________________________________________
 | 25–40 min | **Framing input from you.** How the exclusion worked step by step — boycotts, professional bans, forced sales, liquidation decrees — using one class example. Take questions. |
 | 40–75 min | **Continuity design work** in groups on Worksheet 3, with you circulating. |
 | 75–85 min | **Two groups present** (rotate across sessions so every group presents once). |
-| 85–90 min | **Closing.** Ten minutes, not assessed, not collected: silent writing, or a short reading, or simply ending early and quietly. Do not end on a task. |
+| 85–90 min | **Closing.** Five minutes, not assessed, not collected: silent writing, or a short reading, or simply ending early and quietly. Do not end on a task. |
 
 ---
 

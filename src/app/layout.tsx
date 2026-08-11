@@ -199,8 +199,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
               defaultTheme is brutal-pop: it is the /museum-exhibit kiosk palette, so the site a
               visitor lands on and the screen standing in the exhibition read as the same
-              project. Returning visitors keep whatever they picked — next-themes only falls
-              back to this when storageKey ("storymap-theme") has nothing stored. */}
+              project. next-themes only falls back to the default when the storage key holds
+              nothing, so anyone who had ever tried another theme — or who passed through a page
+              that used to force one — stayed on it forever and never saw brutal-pop at all.
+              The key is versioned for exactly that reason: bumping it retires those stored
+              choices once, so brutal-pop is the default in fact and not only in this prop.
+              Bump it again only to force another site-wide reset. */}
           <ThemeProvider
             attribute="data-theme"
             defaultTheme="brutal-pop"
@@ -219,7 +223,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem={false}
             enableColorScheme={false}
             disableTransitionOnChange={true}
-            storageKey="storymap-theme"
+            storageKey="storymap-theme-v2"
             forcedTheme={undefined}
           >
             <AuthProvider>

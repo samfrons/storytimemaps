@@ -91,12 +91,16 @@ const FeaturedStories: React.FC = () => {
                 className="relative w-full overflow-hidden"
                 style={{ aspectRatio: '3 / 2', backgroundColor: 'var(--muted)' }}
               >
+                {/* The alt text is interpolated by hand, not by i18next: on the
+                    server the hook resolves straight out of the bundled JSON and
+                    never interpolates, so the markup shipped the raw placeholder
+                    while the client rendered the real title — a hydration
+                    mismatch React reported on every card. */}
                 <Image
                   src={story.image}
                   alt={t('homepage.stories.imageAlt', {
                     defaultValue: 'Archival photograph: {{name}}',
-                    name: story.title,
-                  })}
+                  }).replace('{{name}}', story.title)}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"

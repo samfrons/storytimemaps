@@ -4,8 +4,16 @@ import React from 'react'
 import Link from 'next/link'
 import { useTranslation } from '../../../i18n/useTranslation'
 import LanguageToggle from '../LanguageToggle'
+import { NAV_LINKS } from '../SiteHeader'
 
-/** Minimal top bar floating over the hero. */
+/**
+ * Minimal top bar floating over the hero.
+ *
+ * Visually it is its own thing — transparent, sitting on the animated map —
+ * but the links come from the same NAV_LINKS list the sticky SiteHeader uses,
+ * so the homepage can never offer a different set of destinations than the
+ * pages it links to. It previously omitted the exhibition entirely.
+ */
 const HomeHeader: React.FC = () => {
   const { t } = useTranslation()
 
@@ -20,35 +28,17 @@ const HomeHeader: React.FC = () => {
         </span>
 
         <div className="flex items-center gap-4 sm:gap-6">
-          <nav className="hidden md:flex items-center gap-6" aria-label="Primary">
-            <Link
-              href="/map"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.map', { defaultValue: 'Map' })}
-            </Link>
-            <Link
-              href="/plaques"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.plaques', { defaultValue: 'Plaques' })}
-            </Link>
-            <Link
-              href="/education"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.education', { defaultValue: 'For Teachers' })}
-            </Link>
-            <Link
-              href="/jewish-businesses"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.data', { defaultValue: 'Data' })}
-            </Link>
+          <nav className="hidden md:flex items-center gap-5 lg:gap-6" aria-label="Primary">
+            {NAV_LINKS.map(({ href, key, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
+                style={{ color: 'var(--foreground-muted)' }}
+              >
+                {t(key, { defaultValue: label })}
+              </Link>
+            ))}
           </nav>
           <LanguageToggle />
         </div>

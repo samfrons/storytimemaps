@@ -10,7 +10,14 @@ interface SiteHeaderProps {
   active?: string
 }
 
-const LINKS: Array<{ href: string; key: string; label: string }> = [
+/**
+ * The site's primary destinations, in order, defined once.
+ *
+ * Both bars render this list — the transparent one over the homepage hero and
+ * the sticky one on every standing page — so the nav cannot say "Exhibition"
+ * on one page and omit it on the next.
+ */
+export const NAV_LINKS: ReadonlyArray<{ href: string; key: string; label: string }> = [
   { href: '/map', key: 'homepage.nav.map', label: 'Map' },
   { href: '/plaques', key: 'homepage.nav.plaques', label: 'Plaques' },
   { href: '/exhibit-vision', key: 'homepage.nav.exhibit', label: 'Exhibition' },
@@ -51,7 +58,7 @@ const SiteHeaderNav: React.FC<SiteHeaderProps> = ({ active }) => {
             className="hidden md:flex items-center gap-5 lg:gap-6"
             aria-label={t('homepage.footer.navLabel', { defaultValue: 'Primary' })}
           >
-            {LINKS.map(({ href, key, label }) => {
+            {NAV_LINKS.map(({ href, key, label }) => {
               const isActive = active === href
               return (
                 <Link

@@ -10,6 +10,31 @@ export const metadata = {
   title: 'Six Lessons From One Archive — Classroom Activities | StoryTimeMaps',
   description:
     'Six free standalone classroom activities for students aged 13–18, each fitting a single lesson and needing no trip: read a street, audit an archive, write a memorial plaque, chart a trade, and put the measures that destroyed Jewish commercial life in order.',
+  alternates: {
+    canonical: '/education/activities',
+  },
+  openGraph: {
+    title: 'Six Lessons From One Archive — Classroom Activities | StoryTimeMaps',
+    description:
+      'Six free standalone classroom activities for students aged 13–18, each fitting a single lesson.',
+    url: '/education/activities',
+  },
+}
+
+const LEARNING_RESOURCE_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: 'Six Lessons From One Archive — Classroom Activities',
+  description:
+    'Six free standalone classroom activities for students aged 13-18, each fitting a single lesson: read a street, audit an archive, write a memorial plaque, chart a trade, and order the measures that destroyed Jewish commercial life in Berlin.',
+  educationalLevel: 'Secondary education',
+  learningResourceType: 'Lesson plan',
+  audience: {
+    '@type': 'EducationalAudience',
+    educationalRole: 'teacher',
+  },
+  isAccessibleForFree: true,
+  inLanguage: 'en',
 }
 
 const FACTS: Array<[string, string]> = [
@@ -24,6 +49,10 @@ export default function EducationActivitiesPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(LEARNING_RESOURCE_LD) }}
+      />
       <SiteHeader active="/education" />
 
       {/* Hero */}

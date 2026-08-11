@@ -8,6 +8,31 @@ export const metadata = {
   title: 'For teachers — Teaching from the archive | StoryTimeMaps',
   description:
     'Free teaching materials built on the archive of Jewish businesses in Berlin, 1900–1945: a three-phase neighbourhood workbook with a walk, and six standalone single-lesson activities with printable worksheets, for students aged 13–18.',
+  alternates: {
+    canonical: '/education',
+  },
+  openGraph: {
+    title: 'For teachers — Teaching from the archive | StoryTimeMaps',
+    description:
+      'Free teaching materials built on the archive of Jewish businesses in Berlin, 1900–1945, for students aged 13–18.',
+    url: '/education',
+  },
+}
+
+const LEARNING_RESOURCE_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: 'Teaching from the Archive: Jewish Businesses in Berlin, 1900-1945',
+  description:
+    'Free teaching materials built on the archive of Jewish businesses in Berlin, 1900-1945, for students aged 13-18: a neighbourhood workbook and six standalone classroom activities.',
+  educationalLevel: 'Secondary education',
+  learningResourceType: 'Lesson plan',
+  audience: {
+    '@type': 'EducationalAudience',
+    educationalRole: 'teacher',
+  },
+  isAccessibleForFree: true,
+  inLanguage: 'en',
 }
 
 /**
@@ -85,6 +110,10 @@ const ARCHIVE_FACTS: Array<[string, string]> = [
 export default function EducationHubPage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(LEARNING_RESOURCE_LD) }}
+      />
       <SiteHeader active="/education" />
 
       {/* Hero */}

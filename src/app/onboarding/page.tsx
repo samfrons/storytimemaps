@@ -11,6 +11,15 @@ export const metadata = {
   title: 'Collaborator Onboarding | StoryTimeMaps',
   description:
     'How to contribute to StoryTimeMaps — development setup, the research and outreach tracks, the contribution workflow, and the ground rules for working with this history.',
+  alternates: {
+    canonical: '/onboarding',
+  },
+  openGraph: {
+    title: 'Collaborator Onboarding | StoryTimeMaps',
+    description:
+      'How to contribute to StoryTimeMaps — development, research, outreach, and translation.',
+    url: '/onboarding',
+  },
 }
 
 const GITHUB_REPO = 'https://github.com/samfrons/storytimemaps'

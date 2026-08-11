@@ -22,6 +22,14 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
   return {
     title: `${doc.title} | StoryTimeMaps`,
     description: doc.blurb,
+    alternates: {
+      canonical: `/onboarding/${doc.slug}`,
+    },
+    openGraph: {
+      title: `${doc.title} | StoryTimeMaps`,
+      description: doc.blurb,
+      url: `/onboarding/${doc.slug}`,
+    },
   }
 }
 
@@ -32,8 +40,20 @@ export default async function OnboardingDocPage({ params }: DocPageProps) {
   const content = readRepoDoc(doc.file)
   const sourceUrl = `${GITHUB_REPO}/blob/main/${doc.file}`
 
+  const techArticleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: content?.title ?? doc.title,
+    description: doc.blurb,
+    about: doc.track,
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleLd) }}
+      />
       <SiteHeader />
 
       {/* Hero */}

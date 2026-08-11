@@ -173,6 +173,18 @@ export const useTranslation = () => {
     }
   }, [i18n])
 
+  // Keep <html lang> in step with the resolved language. The root layout hardcodes
+  // lang="en" (there's no server-side way to know the ?lang= choice before the request
+  // is parsed for a fully client-selected locale), so this is the one place that corrects
+  // it once the real language is known. <html> already carries suppressHydrationWarning
+  // for next-themes' data-theme attribute, which covers this mismatch too. All three
+  // locales (en, de, yi) render left-to-right, so dir is never touched here.
+  useEffect(() => {
+    if (typeof document !== 'undefined' && document.documentElement.lang !== language) {
+      document.documentElement.lang = language
+    }
+  }, [language])
+
   return {
     t,
     language,

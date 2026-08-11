@@ -144,6 +144,10 @@ function FrankfurtMapContent() {
       className="relative w-full h-screen overflow-hidden"
       style={{ backgroundColor: 'var(--background)' }}
     >
+      {/* Visually hidden — the map fills the viewport with no room for a
+          heading, but the page still needs exactly one h1 for a11y/SEO. */}
+      <h1 className="sr-only">Jewish Businesses in Frankfurt, 1900-1945</h1>
+
       {/* Desktop Sidebar Navigation - Same as main page */}
       <div
         className="hidden md:flex md:w-16 md:h-full flex-shrink-0 flex-col items-center py-6 gap-4 absolute left-0 top-0 backdrop-blur-sm hot-sidebar"

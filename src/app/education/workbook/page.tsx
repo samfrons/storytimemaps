@@ -10,6 +10,31 @@ export const metadata = {
   title: 'The Street You Walk On — Classroom Workbook | StoryTimeMaps',
   description:
     'A free neighbourhood workbook for students aged 13–18: research the Jewish-owned businesses that stood on your own street before 1945, walk to the addresses, and design what continuity could have looked like.',
+  alternates: {
+    canonical: '/education/workbook',
+  },
+  openGraph: {
+    title: 'The Street You Walk On — Classroom Workbook | StoryTimeMaps',
+    description:
+      'A free neighbourhood workbook for students aged 13–18, built on the Berlin business archive.',
+    url: '/education/workbook',
+  },
+}
+
+const LEARNING_RESOURCE_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: 'The Street You Walk On — Classroom Workbook',
+  description:
+    'A free neighbourhood workbook for students aged 13-18: research the Jewish-owned businesses that stood on your own street before 1945, walk to the addresses, and design what continuity could have looked like.',
+  educationalLevel: 'Secondary education',
+  learningResourceType: 'Workbook',
+  audience: {
+    '@type': 'EducationalAudience',
+    educationalRole: 'teacher',
+  },
+  isAccessibleForFree: true,
+  inLanguage: 'en',
 }
 
 const FACTS: Array<[string, string]> = [
@@ -24,6 +49,10 @@ export default function EducationWorkbookPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(LEARNING_RESOURCE_LD) }}
+      />
       <SiteHeader active="/education" />
 
       {/* Hero */}

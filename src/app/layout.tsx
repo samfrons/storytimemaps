@@ -32,8 +32,17 @@ const playfair = Playfair_Display({
   style: ['normal', 'italic'],
 })
 
+// The one production domain this deploy serves. NEXT_PUBLIC_SITE_URL can override it for
+// preview/staging builds, but the fallback must be the real domain — it used to be
+// https://storymaps.vercel.app, a project alias nothing actually resolves to, which made
+// every relative OG image, canonical, and sitemap URL wrong whenever the env var was unset.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://b3rlin.storytimemaps.com'
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://storymaps.vercel.app'),
+  metadataBase: new URL(SITE_URL),
+  // A plain string, not a title.template: every page on the site already writes its own
+  // full "Specific Title | StoryTimeMaps" string (see education/*, onboarding/*,
+  // history-tour/layout.tsx). A template would double that suffix on all of them.
   title: 'Jewish Businesses in Berlin 1900-1945',
   description:
     'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore the history of Jewish entrepreneurship and discover the stories of businesses that shaped the city.',
@@ -49,10 +58,16 @@ export const metadata: Metadata = {
   authors: [{ name: 'StoryMaps Project' }],
   creator: 'StoryMaps Project',
   publisher: 'StoryMaps Project',
+  // Every page below sets its own alternates.canonical override; this one only applies
+  // to '/' itself, since it is the metadata this root layout contributes for the segment
+  // that has no more specific layout or page metadata of its own.
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'Jewish Businesses in Berlin 1900-1945',
+    siteName: 'StoryTimeMaps',
     title: 'Jewish Businesses in Berlin 1900-1945',
     description:
       'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore the history of Jewish entrepreneurship and discover the stories of businesses that shaped the city.',
@@ -86,6 +101,33 @@ export const metadata: Metadata = {
   },
 }
 
+// Sitewide structured data. WebSite names the site itself and the languages it is served
+// in; Organization identifies the project as the publisher behind every page. Both only
+// assert facts already stated elsewhere on the site (name, url, description) — no ratings,
+// counts, or claims that aren't already true of the project. No SearchAction: the site has
+// no site-wide search endpoint to point one at.
+const STRUCTURED_DATA = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'StoryTimeMaps',
+    alternateName: 'Jewish Businesses in Berlin 1900-1945',
+    url: SITE_URL,
+    description:
+      'An interactive archive and map documenting Jewish-owned businesses in Berlin from 1900 to 1945, built for remembrance and education.',
+    inLanguage: ['en', 'de', 'yi'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'StoryTimeMaps',
+    url: SITE_URL,
+    logo: `${SITE_URL}/images/og-share-image.svg`,
+    description:
+      'A memorial and educational project documenting Jewish-owned businesses in Berlin, 1900-1945.',
+  },
+]
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -106,6 +148,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <head>
+        {/* Sitewide structured data — see STRUCTURED_DATA above for what each type asserts. */}
+        {STRUCTURED_DATA.map((entry) => (
+          <script
+            key={entry['@type']}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(entry) }}
+          />
+        ))}
+
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//api.mapbox.com" />
         <link rel="dns-prefetch" href="//events.mapbox.com" />

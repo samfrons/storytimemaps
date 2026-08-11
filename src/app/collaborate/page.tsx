@@ -25,7 +25,7 @@ const TRACKS: TrackCard[] = [
     description:
       'Next.js, TypeScript, Mapbox GL. Work on the interactive map, timeline, themes, and performance. Sharp edges only.',
     accent: 'var(--accent-chartreuse)',
-    href: 'https://github.com/samfrons/storytimemaps/blob/main/docs/ONBOARDING.md',
+    href: '/onboarding',
     linkLabel: 'Read the onboarding guide',
   },
   {
@@ -71,7 +71,7 @@ const STEPS: { num: string; title: string; body: string }[] = [
   {
     num: '1',
     title: 'READ THE GUIDE',
-    body: 'Start with docs/ONBOARDING.md — mission, setup, ground rules, and which track fits you.',
+    body: 'Start at /onboarding — mission, setup, ground rules, and which track fits you.',
   },
   {
     num: '2',
@@ -113,7 +113,11 @@ const TickerStrip: React.FC = React.memo(function TickerStrip() {
   )
 })
 
-const CollaborateContent: React.FC = () => {
+// Exported directly rather than through React.memo: a route's default export
+// has to be a plain component function. Wrapped in memo it is an object, which
+// Next does not recognise as a page — /collaborate was silently missing from
+// the build, so the public collaborator entry point 404'd in production.
+const CollaboratePage: React.FC = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
       {/* Top bar */}
@@ -359,13 +363,13 @@ const CollaborateContent: React.FC = () => {
             GitHub
           </Link>
           <Link
-            href="https://github.com/samfrons/storytimemaps/blob/main/docs/ONBOARDING.md"
+            href="/onboarding"
             style={{ color: 'var(--primary)', outline: 'none', boxShadow: 'none' }}
           >
             Onboarding
           </Link>
           <Link
-            href="https://github.com/samfrons/storytimemaps/blob/main/docs/OUTREACH_TRACKING.md"
+            href="/onboarding/outreach"
             style={{ color: 'var(--primary)', outline: 'none', boxShadow: 'none' }}
           >
             Outreach Guide
@@ -377,4 +381,4 @@ const CollaborateContent: React.FC = () => {
   )
 }
 
-export default React.memo(CollaborateContent)
+export default CollaboratePage

@@ -6,7 +6,7 @@ contributing, whether you're here to write code, research history, or run outrea
 
 > **Read this first:** This project visualizes a difficult period in history. The goal is
 > to preserve memory and educate — not to entertain. Keep all work respectful,
-> historically accurate, and objective. See [Historical Sensitivity](#historical-sensitivity).
+> historically accurate, and objective. See [Historical Sensitivity](#7-historical-sensitivity).
 
 ---
 

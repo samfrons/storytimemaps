@@ -347,7 +347,10 @@
       "plaques": "Plaques",
       "data": "Data",
       "frankfurt": "Frankfurt",
-      "education": "For Teachers"
+      "education": "For Teachers",
+      "exhibit": "Exhibition",
+      "collaborate": "Collaborate",
+      "onboarding": "Onboarding"
     },
     "hero": {
       "eyebrow": "A living map of Jewish commercial life · Berlin 1900–1945",

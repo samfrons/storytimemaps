@@ -347,7 +347,10 @@
       "plaques": "Gedenktafeln",
       "data": "Daten",
       "frankfurt": "Frankfurt",
-      "education": "Für Lehrkräfte"
+      "education": "Für Lehrkräfte",
+      "exhibit": "Ausstellung",
+      "collaborate": "Mitmachen",
+      "onboarding": "Erste Schritte"
     },
     "hero": {
       "eyebrow": "Eine lebendige Karte jüdischen Geschäftslebens · Berlin 1900–1945",

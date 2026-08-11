@@ -123,23 +123,23 @@
     "current": "Yidish"
   },
   "cookieConsent": {
-    "title": "מיר נוצן קוקיס און אַנדערע טעכנאָלאָגיעס.",
-    "description": "די וועבזייטל נוצט דריט-פּאַרטיי וועבזייטל טראַקינג טעכנאָלאָגיעס צו צושטעלן און פאָרלויפיק פֿאַרבעסערן אירע באַדינונגען און צו ווייזן רעקלאַמעס לויט די אינטערעסן פון באַניצערס. איך שטים צו דעם און קען אָפּרופן אָדער ענדערן מיין הסכמה בכל עת מיט ווירקונג פֿאַר דער צוקונפט.",
-    "settings": "אײַנשטעלונגען",
-    "decline": "אָפּזאָגן",
-    "acceptAll": "אַלעס אָננעמען",
-    "imprint": "אימפּרינט",
-    "privacyPolicy": "פּריוואַטקייט פּאָליטיק",
-    "settingsTitle": "קוקי אײַנשטעלונגען",
-    "essential": "וויכטיקע קוקיס",
-    "essentialDesc": "נויטיק פֿאַר דער וועבזייטל צו פונקציאָנירן. קען נישט אָפּגעשטעלט ווערן.",
-    "alwaysOn": "שטענדיק אָן",
-    "analytics": "אַנאַליטיק קוקיס",
-    "analyticsDesc": "העלפן אונדז פֿאַרשטיין ווי באַזוכער אינטעראַגירן מיט אונדזער וועבזייטל.",
-    "marketing": "מאַרקעטינג קוקיס",
-    "marketingDesc": "גענוצט צו טראַקן באַזוכער איבער וועבזייטלעך פֿאַר רעקלאַמע צוועקן.",
-    "back": "צוריק",
-    "saveSettings": "אײַנשטעלונגען שפּאָרן"
+    "title": "Mir nutsn kukis un andere tekhnologyes.",
+    "description": "Di vebzaytl nutst drit-partey vebzaytl-trakhing tekhnologyes tsu tsushteln un forloyfik farbesern ire badienungen un tsu vayzen reklames loyt di interesn fun banutser. Ikh shtim tsu dem un ken oprofn oder endern mayn haskome tsu yeder tsayt mit virkung far der tsukunft.",
+    "settings": "AYNSHTELUNGEN",
+    "decline": "OPZOGN",
+    "acceptAll": "ALES ONEMEN",
+    "imprint": "IMPRINT",
+    "privacyPolicy": "PRIVATKAYT POLITK",
+    "settingsTitle": "Kuki Aynshtelungen",
+    "essential": "Vikhtike Kukis",
+    "essentialDesc": "Noytik far der vebzaytl tsu funktsionirn. Ken nisht opgeshelt vern.",
+    "alwaysOn": "Shtendik On",
+    "analytics": "Analytik Kukis",
+    "analyticsDesc": "Helfn undz farshteyn vi bazukher interagirn mit undzer vebzaytl.",
+    "marketing": "Marketing Kukis",
+    "marketingDesc": "Genutsn tsu trakhn bazukher iber vebzaytlekh far reklame tsveknz.",
+    "back": "TSURIK",
+    "saveSettings": "AYNSHTELUNGEN SHPORN"
   },
   "businessStates": {
     "active": "Aktiv",
@@ -244,25 +244,6 @@
     "copied": "Kopirt!",
     "linkPreview": "Link Foroysze"
   },
-  "cookieConsent": {
-    "title": "Mir nutsn kukis un andere tekhnologyes.",
-    "description": "Di vebzaytl nutst drit-partey vebzaytl-trakhing tekhnologyes tsu tsushteln un forloyfik farbesern ire badienungen un tsu vayzen reklames loyt di interesn fun banutser. Ikh shtim tsu dem un ken oprofn oder endern mayn haskome tsu yeder tsayt mit virkung far der tsukunft.",
-    "settings": "AYNSHTELUNGEN",
-    "decline": "OPZOGN",
-    "acceptAll": "ALES ONEMEN",
-    "imprint": "IMPRINT",
-    "privacyPolicy": "PRIVATKAYT POLITK",
-    "settingsTitle": "Kuki Aynshtelungen",
-    "essential": "Vikhtike Kukis",
-    "essentialDesc": "Noytik far der vebzaytl tsu funktsionirn. Ken nisht opgeshelt vern.",
-    "alwaysOn": "Shtendik On",
-    "analytics": "Analytik Kukis",
-    "analyticsDesc": "Helfn undz farshteyn vi bazukher interagirn mit undzer vebzaytl.",
-    "marketing": "Marketing Kukis",
-    "marketingDesc": "Genutsn tsu trakhn bazukher iber vebzaytlekh far reklame tsveknz.",
-    "back": "TSURIK",
-    "saveSettings": "AYNSHTELUNGEN SHPORN"
-  },
   "barcharts": {
     "title": "Interaktive Datn Vizualizatsyes",
     "subtitle": "3D mape mit tsayt-analiz fun khurbn fun yidishe gesheftn in Berlin",
@@ -317,7 +298,10 @@
       "plaques": "Tovlen",
       "data": "Datn",
       "frankfurt": "Frankfurt",
-      "education": "Far Lerers"
+      "education": "Far Lerers",
+      "exhibit": "Oysshtelung",
+      "collaborate": "Mitarbetn",
+      "onboarding": "Ershte Trit"
     },
     "hero": {
       "eyebrow": "A lebedike mape fun yidishn gesheft-lebn · Berlin 1900–1945",

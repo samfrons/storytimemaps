@@ -34,11 +34,15 @@ const HomeFooter: React.FC = () => {
             className="flex flex-col gap-2"
             aria-label={t('homepage.footer.navLabel', { defaultValue: 'Footer' })}
           >
-            {/* Same destinations as both headers, plus the Frankfurt sibling
-                project, which is a footer-only link. */}
+            {/* Same destinations as both headers, plus the footer-only links:
+                the Frankfurt sibling project and the two collaborator entry
+                points, which belong here rather than in the primary nav — a
+                visitor comes for the map, a contributor goes looking. */}
             {[
               ...NAV_LINKS,
               { href: '/frankfurt', key: 'homepage.nav.frankfurt', label: 'Frankfurt' },
+              { href: '/collaborate', key: 'homepage.nav.collaborate', label: 'Collaborate' },
+              { href: '/onboarding', key: 'homepage.nav.onboarding', label: 'Onboarding' },
             ].map(({ href, key, label }) => (
               <Link
                 key={href}

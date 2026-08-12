@@ -89,7 +89,7 @@ const AboutSection: React.FC = () => {
       title: t('homepage.about.phaseBeyondTitle', { defaultValue: 'Beyond Berlin' }),
       text: t('homepage.about.phaseBeyondText', {
         defaultValue:
-          'A Frankfurt pilot of 57 businesses shows the model extends to other German cities.',
+          'A Frankfurt pilot — now over 600 businesses extracted from a 1935 directory — shows the model extends to other German cities.',
       }),
       href: '/frankfurt',
       linkLabel: t('homepage.nav.frankfurt', { defaultValue: 'Frankfurt' }),

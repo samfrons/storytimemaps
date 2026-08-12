@@ -1,0 +1,398 @@
+[
+  {
+    "name": "Adler, Leopold",
+    "address": "a) Klostergasse 6, b) Gwinnerstraße 16, Frankfurt am Main",
+    "trade": "Altwaren, Sackhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Eis, L.",
+    "address": "Nonnengasse 2, Frankfurt am Main",
+    "trade": "Altwaren, Sackhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Hessekiel, L.",
+    "address": "Synagogenstraße 1, Frankfurt am Main",
+    "trade": "Altwaren, Sackhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Inowlocki, N.",
+    "address": "Oscar-von-Miller-Straße 35, Frankfurt am Main",
+    "trade": "Altwaren, Sackhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Levi, S.",
+    "address": "Klostergasse 6, Frankfurt am Main",
+    "trade": "Altwaren, Sackhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Steinberg, J.",
+    "address": "Graubengasse 19, Frankfurt am Main",
+    "trade": "Altwaren, Sackhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Adler-Apotheke",
+    "address": "Trierischegasse 16, Frankfurt am Main",
+    "trade": "Apotheker",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Einhorn-Apotheke",
+    "address": "Horst-Wessel-Platz, Frankfurt am Main",
+    "trade": "Apotheker",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Engel-Apotheke",
+    "address": "Ecke Vilbeler- / Gr. Friedberger Straße, Frankfurt am Main",
+    "trade": "Apotheker",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Breslau, Friedrich",
+    "address": "Cronbergerstr. 9, Frankfurt am Main",
+    "trade": "Banken und Versicherungen — a) Bankgeschäfte und Bankleiter",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Cahn, Albert",
+    "address": "Sofienstraße 8, Frankfurt am Main",
+    "trade": "Banken und Versicherungen — a) Bankgeschäfte und Bankleiter",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Löb, Adam, Engel-Apotheke",
+    "address": "Ecke Vilbeler- Gr. Friedberger Straße, Frankfurt am Main",
+    "trade": "Apotheker",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Neumaier, F., Dr.",
+    "address": "Cronstetterstr. 43, Frankfurt am Main",
+    "trade": "Apotheker",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Fuerth, Franz, Dr.",
+    "address": "Duisburger Str. 3, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Goldmann, L.",
+    "address": "Sömmeringstraße 4, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Neuwahl & Co.",
+    "address": "Horst-Wessel-Platz 14, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Oettinger, Emil",
+    "address": "Hermann-Göring-Ufer 30, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Sander, Paul",
+    "address": "Mechthildenstraße 27 und Kaiserstraße 47, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Schwarzschild, M. I., sen.",
+    "address": "Eschenheimeranlage 19, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Stern-Guggenheim, Benno",
+    "address": "Hermann-Göring-Ufer 30, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Wertheimber & Co.",
+    "address": "Taunusanl. 15, Frankfurt am Main",
+    "trade": "Handel (Abschnittsüberschrift nicht sichtbar, Fortsetzung von Vorseite)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Adler, Albert",
+    "address": "Schillerplatz 5–9, Frankfurt am Main",
+    "trade": "Börsenmakler",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Blum, Adolf",
+    "address": "Franz-Rückert-All. 31, Frankfurt am Main",
+    "trade": "Börsenmakler",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Geismar, Ernst",
+    "address": "Hans-Handwerk-Straße 28, Frankfurt am Main",
+    "trade": "Börsenmakler",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Kugelmann, Robert",
+    "address": "Oppenheimerlandstraße 40, Frankfurt am Main",
+    "trade": "Börsenmakler",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Strauß, Richard",
+    "address": "Neuhausstraße 19, Frankfurt am Main",
+    "trade": "Börsenmakler",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Epstein, A.",
+    "address": "Friedberger Anl. 28, Frankfurt am Main",
+    "trade": "Versicherungsmakler und Agenten",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Goldstein, Hans",
+    "address": "Ffm.-Ginnheim, Fuchshohl 63, Frankfurt am Main",
+    "trade": "Versicherungsmakler und Agenten",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Grünebaum, Hans",
+    "address": "Hohenzollernstraße 9, Frankfurt am Main",
+    "trade": "Versicherungsmakler und Agenten",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Gutmann, Willy",
+    "address": "Ffm.-Ginnheim, Am eisernen Schlag 52, Frankfurt am Main",
+    "trade": "Versicherungsmakler und Agenten",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Homburger, Lemai",
+    "address": "Obermainanl. 22, Frankfurt am Main",
+    "trade": "Versicherungsmakler und Agenten",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "— Otto (Nachname vom vorigen Eintrag, auf Vorseite, nicht sichtbar)",
+    "address": "Mechthildstraße 27, Frankfurt am Main",
+    "trade": "Handel (Unterrubrik auf Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Stern, Siegfried",
+    "address": "Hindenburgstr. 180, Frankfurt am Main",
+    "trade": "Handel (Unterrubrik auf Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Strauß, K.",
+    "address": "Peterstraße 2, Frankfurt am Main",
+    "trade": "Handel (Unterrubrik auf Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Wallerstein, H.",
+    "address": "Hans-Handwerk-Straße 11, Frankfurt am Main",
+    "trade": "Handel (Unterrubrik auf Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Ballin, Gebr.",
+    "address": "Hohenzollernstraße 9, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Breslau, M., Moritz",
+    "address": "Sofienstr. 30 u. Adalbertstraße 4a, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Die elegante Hutetage",
+    "address": "Horst-Wessel-Platz 8, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Dienstag",
+    "address": "Gr. Sandgasse 8, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Haaß & Krieger",
+    "address": "Kronprinzenstr. 41, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Herrmann, A.",
+    "address": "Lichtensteiner Str. 8 u. Kaiserstraße, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Hirsch, Ferdinand",
+    "address": "Schillerplatz 9, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Horn, S.",
+    "address": "Graupengasse 34, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Joseph, J.",
+    "address": "Kronprinzenstraße 8, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Jung & Heß",
+    "address": "Kronprinzenstraße 36, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Kahn, L.",
+    "address": "Börnestraße 43—45, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Kaufmann, Julius",
+    "address": "Königstraße 60, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Langsam, M.",
+    "address": "Gr. Sandgasse 7, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Lewi, James",
+    "address": "Friedberger Anl. 20, Frankfurt am Main",
+    "trade": "Bekleidung",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Schiff, Paul und Karl",
+    "address": "Frankfurt a. M. u. Königsteiner Straße 9–13, Frankfurt am Main",
+    "trade": "Handel (Rubrikfortsetzung von Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Silbermann, Luci",
+    "address": "Karolingerallee 9, Frankfurt am Main",
+    "trade": "Handel (Rubrikfortsetzung von Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Simon, S.",
+    "address": "Eystättstraße 8, Frankfurt am Main",
+    "trade": "Handel (Rubrikfortsetzung von Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Sonneborn, C.",
+    "address": "Mainzer Ldstr. 121, Frankfurt am Main",
+    "trade": "Handel (Rubrikfortsetzung von Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Spinat, D.",
+    "address": "Börnestraße 29, Frankfurt am Main",
+    "trade": "Handel (Rubrikfortsetzung von Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Wolf, Marg., Wwe.",
+    "address": "Eichendorfstr. 33, Frankfurt am Main",
+    "trade": "Handel (Rubrikfortsetzung von Vorseite, Überschrift nicht sichtbar)",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Glücksmann",
+    "address": "Wollgraben 7, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Goldschmidt, S. M.",
+    "address": "Eschersheimer Ldstr. 12, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Grödel, D.",
+    "address": "Börnestraße 35, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Hofmann, A. J.",
+    "address": "Börnestraße 41, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Knopfmacher, Siegfried",
+    "address": "Richard-… (Straßenname im Druck abgebrochen), Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Ledermann & Co.",
+    "address": "Trierische Gasse Nr. 19, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Löb, O.",
+    "address": "Peterstraße 2, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Neumann, Sa.",
+    "address": "Börnestraße 27, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Schönfeld",
+    "address": "Kronprinzenstraße 21, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Verlag der Isr. Hermon, GmbH.",
+    "address": "Rechneistraße 7, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  },
+  {
+    "name": "Weil, Karl",
+    "address": "Hans-Handwerk-Str. 25, Frankfurt am Main",
+    "trade": "Buchhändler, Verleger, Papierwaren, Bürobed. Groß- und Einzelhandel",
+    "reason": "no geocode result"
+  }
+]

@@ -37,6 +37,14 @@ const MAP_COLORS = {
   buildingMid: '#cabb98',
   buildingHigh: '#a89e85',
   buildingMonument: '#948b74',
+  // The commercial ground floor sat darker than the plaster above it — painted
+  // stucco, stone facing or timber shopfronts, and grimier for being at street
+  // level.
+  shopfront: '#8a7c62',
+  // Berlin roofscape: red clay tile on the tenement stock, grey slate or zinc
+  // on the monumental scale.
+  roofTile: '#8d5a43',
+  roofSlate: '#6d6a63',
   inkSoft: '#5a4a35',
   accent: '#8a3b2e',
 }
@@ -73,6 +81,41 @@ function height1930(h: number): number {
   return Math.min(TRAUF_TRUE + (h - TRAUF_TRUE) * TALL_COMPRESS, TALL_CAP)
 }
 
+// --- The three horizontal bands of a Berlin street wall ---------------------
+//
+// OpenStreetMap gives us a footprint and one height, so a facade can only be
+// modelled as bands of the extrusion — but bands are exactly how the 1930
+// Mietskaserne street wall was actually composed, so the little we can express
+// is the part that carries the period:
+//
+//   Ladenzone   the commercial ground floor, ~4 m, in darker painted stucco or
+//               stone. These are the shopfronts this whole archive is about.
+//   Facade      four residential storeys of plaster to the 22 m Traufhöhe.
+//   Roof course a steep tiled or mansard roof — the single most recognisable
+//               feature of the Berlin roofscape, and the thing whose absence
+//               made the old flat-topped blocks read as post-war slabs.
+//
+// A window texture was tried first and abandoned: MapLibre's
+// `fill-extrusion-pattern` tiles the image down the wall in tile units, so at
+// this camera distance (a storey is a handful of pixels) every variant
+// averaged into flat mush while costing a sprite atlas per frame. Flat bands
+// read correctly at exactly the distance the tour is flown at.
+//
+// Fractions, not just absolute metres, so a 3 m garage still gets proportional
+// bands instead of being entirely roof. The fractions also guarantee the
+// ordering base < shopTop < facadeTop < height for every input.
+const SHOPFRONT_TOP = ['min', 4.2, ['*', HEIGHT_1930_EXPR, 0.34]]
+const ROOF_DEPTH = ['min', 3.2, ['*', HEIGHT_1930_EXPR, 0.28]]
+const FACADE_TOP = ['-', HEIGHT_1930_EXPR, ROOF_DEPTH]
+const MIN_HEIGHT = ['coalesce', ['get', 'render_min_height'], 0]
+
+// Shared by all three bands so they always extrude the same set of features.
+const BUILDING_FILTER = [
+  'all',
+  ['!=', ['get', 'hide_3d'], true],
+  ['<=', ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT], MODERN_CUTOFF],
+]
+
 // The K2-style relief stage: keyless sources — Esri World Imagery draped
 // over AWS terrarium elevation tiles with a sepia hillshade, plus extruded
 // OpenStreetMap building volumes (OpenFreeMap vector tiles) so each stop
@@ -92,6 +135,11 @@ function buildTourStyle(): StyleSpecification {
         maxzoom: 18,
         attribution: 'Imagery © Esri, Maxar, Earthstar Geographics',
       },
+      // Two DEM sources off one tile URL, deliberately. MapLibre warns when a
+      // hillshade layer and setTerrain() share a source — terrain re-tiles the
+      // cache for its own overscaling and the shading degrades. The second
+      // fetch costs nothing on the wire (same URL, same HTTP cache), only a
+      // second in-memory tile cache.
       demhs: {
         type: 'raster-dem',
         tiles: [TERRARIUM_TILES],
@@ -128,6 +176,18 @@ function buildTourStyle(): StyleSpecification {
         data: { type: 'FeatureCollection', features: [] },
       },
     },
+    // Directional light, anchored to the map rather than the viewport, so the
+    // sun stays in one place while the camera orbits — the block model then
+    // shades consistently with the terrain hillshade instead of swimming as
+    // the bearing changes. Azimuth matches the hillshade's default 335°
+    // illumination; the low polar angle is what gives the extrusions readable
+    // lit/shadowed faces instead of a uniform beige mass.
+    light: {
+      anchor: 'map',
+      color: '#fff3d8',
+      intensity: 0.55,
+      position: [1.5, 335, 42],
+    },
     sky: {
       'sky-color': '#cfd2c0',
       'horizon-color': '#e8dab4',
@@ -143,9 +203,15 @@ function buildTourStyle(): StyleSpecification {
         type: 'raster',
         source: 'sat',
         paint: {
-          'raster-saturation': -0.55,
-          'raster-contrast': 0.06,
-          'raster-brightness-max': 0.95,
+          // Desaturation moved here from the canvas CSS filter — same look on
+          // the imagery, but it no longer costs a full-canvas repaint per
+          // frame and no longer drains the contrast out of the extrusions.
+          // brightness-min lifts the blacks so the ground stays a mid-tone
+          // archival plate instead of dropping out under the lit model.
+          'raster-saturation': -0.62,
+          'raster-contrast': -0.04,
+          'raster-brightness-min': 0.14,
+          'raster-brightness-max': 1,
         },
       },
       {
@@ -160,16 +226,31 @@ function buildTourStyle(): StyleSpecification {
         },
       },
       {
+        // Band 1 — the Ladenzone. Skipped for features that already start
+        // above ground (upper-storey parts carry render_min_height), where a
+        // ground-floor band would be meaningless.
+        id: 'ht-shopfronts',
+        type: 'fill-extrusion',
+        source: 'ofm',
+        'source-layer': 'building',
+        minzoom: 15,
+        filter: ['all', ...BUILDING_FILTER.slice(1), ['==', MIN_HEIGHT, 0]] as never,
+        paint: {
+          'fill-extrusion-color': MAP_COLORS.shopfront,
+          'fill-extrusion-base': 0,
+          'fill-extrusion-height': SHOPFRONT_TOP as never,
+          'fill-extrusion-opacity': 1,
+          'fill-extrusion-vertical-gradient': true,
+        },
+      },
+      {
+        // Band 2 — the plaster storeys.
         id: 'ht-3d-buildings',
         type: 'fill-extrusion',
         source: 'ofm',
         'source-layer': 'building',
         minzoom: 14,
-        filter: [
-          'all',
-          ['!=', ['get', 'hide_3d'], true],
-          ['<=', ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT], MODERN_CUTOFF],
-        ],
+        filter: BUILDING_FILTER as never,
         paint: {
           'fill-extrusion-color': [
             'interpolate',
@@ -184,9 +265,35 @@ function buildTourStyle(): StyleSpecification {
             60,
             MAP_COLORS.buildingMonument,
           ],
+          'fill-extrusion-height': FACADE_TOP as never,
+          'fill-extrusion-base': ['max', SHOPFRONT_TOP, MIN_HEIGHT] as never,
+          // Near-opaque on purpose: at 0.82 the satellite imagery read straight
+          // through the volumes and the whole model looked like vapour over a
+          // photo. Solid blocks are what make the relief legible.
+          'fill-extrusion-opacity': 1,
+          'fill-extrusion-vertical-gradient': true,
+        },
+      },
+      {
+        // Band 3 — the roof course. Red clay Biberschwanz over the tenement
+        // stock, grey slate and zinc over the monumental scale.
+        id: 'ht-roofs',
+        type: 'fill-extrusion',
+        source: 'ofm',
+        'source-layer': 'building',
+        minzoom: 14,
+        filter: BUILDING_FILTER as never,
+        paint: {
+          'fill-extrusion-color': [
+            'step',
+            ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT],
+            MAP_COLORS.roofTile,
+            30,
+            MAP_COLORS.roofSlate,
+          ],
           'fill-extrusion-height': HEIGHT_1930_EXPR as never,
-          'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
-          'fill-extrusion-opacity': 0.82,
+          'fill-extrusion-base': ['max', FACADE_TOP, MIN_HEIGHT] as never,
+          'fill-extrusion-opacity': 1,
           'fill-extrusion-vertical-gradient': true,
         },
       },
@@ -260,6 +367,46 @@ interface CamKey {
   year: number
   stopIdx: number | null
 }
+
+// Last-resort marker volume for an address whose building cannot be resolved
+// — either no 1930 footprint was traced for it (stops 5 and 6) or the modern
+// parcel query came back empty. A stop with no marked volume at all leaves the
+// reader looking at an anonymous block, which is the one thing this stage
+// exists to prevent; a plain square on the address is honest about being a
+// marker rather than a traced outline.
+// Retries are ~600 ms apart. Generous on purpose: a real traced footprint is
+// always better than the synthetic marker below, and on a throttled phone the
+// building tiles can take several seconds to become queryable after arrival.
+const HIGHLIGHT_RETRIES = 14
+
+function syntheticFootprint(lng: number, lat: number, metres = 17): GeoJSON.Polygon {
+  const dLat = metres / 111_320
+  const dLng = metres / (111_320 * Math.cos((lat * Math.PI) / 180))
+  return {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [lng - dLng, lat - dLat],
+        [lng + dLng, lat - dLat],
+        [lng + dLng, lat + dLat],
+        [lng - dLng, lat + dLat],
+        [lng - dLng, lat - dLat],
+      ],
+    ],
+  }
+}
+
+// Called only from inside the map effect, so `window` is always present.
+const isCoarsePointer = () =>
+  window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth <= 768
+
+// Terrain is the single most expensive thing on this stage — measured at
+// roughly half the per-frame budget. Berlin is flat, so at street zoom the
+// relief it buys is invisible; it only earns its cost on the wide intro and
+// outro shots. Toggle it across this band, with hysteresis so a camera
+// hovering at the threshold can't thrash setTerrain() every frame.
+const TERRAIN_ON_BELOW = 13.6
+const TERRAIN_OFF_ABOVE = 14.4
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 const lerpAngle = (a: number, b: number, t: number) => {
@@ -337,7 +484,7 @@ const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => {
   const toggle = useCallback(() => setExpanded((v) => !v), [])
 
   return (
-    <article className="ht-card" data-ht-card>
+    <article className={`ht-card${expanded ? ' is-expanded' : ''}`} data-ht-card>
       <div className="ht-card-meta">
         <span className="ht-card-index">
           {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
@@ -431,12 +578,17 @@ const HistoryTour: React.FC = () => {
   const paddingRef = useRef<PaddingOptions>({ top: 0, bottom: 0, left: 0, right: 0 })
   const pendingHighlightRef = useRef<number>(-1)
   const lastHighlightTryRef = useRef<number>(0)
+  const highlightTriesRef = useRef<number>(0)
   const activeIdxRef = useRef<number>(-1)
   const reduceMotionRef = useRef<boolean>(false)
+  const terrainOnRef = useRef<boolean>(true)
+  const farRef = useRef<boolean | null>(null)
 
   const yearElRef = useRef<HTMLDivElement | null>(null)
   const districtElRef = useRef<HTMLDivElement | null>(null)
   const needleElRef = useRef<HTMLDivElement | null>(null)
+  const axisTrackRef = useRef<HTMLDivElement | null>(null)
+  const axisWidthRef = useRef<number>(0)
   const compassElRef = useRef<HTMLSpanElement | null>(null)
 
   const [mapReady, setMapReady] = useState(false)
@@ -502,6 +654,7 @@ const HistoryTour: React.FC = () => {
 
     keys.sort((a, b) => a.y - b.y)
     keysRef.current = keys
+    axisWidthRef.current = axisTrackRef.current?.getBoundingClientRect().width ?? 0
     lastScrollRef.current = -1
   }, [stopYears])
 
@@ -511,7 +664,11 @@ const HistoryTour: React.FC = () => {
     paddingRef.current =
       w > 768
         ? { top: 40, bottom: 120, left: 60, right: Math.min(540, w * 0.44) }
-        : { top: 60, bottom: h * 0.44, left: 0, right: 0 }
+        : // The phone card occupies roughly the lower 55% of the screen, so
+          // reserving only 44% left the marked building sitting on the card's
+          // top edge. This lifts the subject into the middle of the strip the
+          // reader can actually see.
+          { top: 50, bottom: h * 0.66, left: 0, right: 0 }
   }, [])
 
   // Copy the building footprint under the active stop into the highlight
@@ -603,10 +760,24 @@ const HistoryTour: React.FC = () => {
           ],
         })
         pendingHighlightRef.current = -1
-      } else {
+      } else if (highlightTriesRef.current < HIGHLIGHT_RETRIES) {
         // Buildings may not be rendered yet at this camera — retry on idle.
-        src.setData({ type: 'FeatureCollection', features: [] })
+        highlightTriesRef.current += 1
         pendingHighlightRef.current = idx
+      } else {
+        // Out of retries: mark the address itself rather than leaving the
+        // reader on an unmarked block.
+        src.setData({
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              geometry: syntheticFootprint(stop.lng, stop.lat),
+              properties: { render_height: 24, render_min_height: 0 },
+            },
+          ],
+        })
+        pendingHighlightRef.current = -1
       }
     } catch {
       pendingHighlightRef.current = -1
@@ -633,6 +804,11 @@ const HistoryTour: React.FC = () => {
         interactive: false,
         attributionControl: { compact: true },
         canvasContextAttributes: { antialias: true },
+        // A phone at DPR 3 renders ~3M pixels of terrain + extrusions + raster
+        // every frame, which is what put the tour under 20 fps on mobile.
+        // Capping the backing store costs almost nothing visually at this
+        // scale (the imagery is a soft sepia plate, not fine type).
+        pixelRatio: Math.min(window.devicePixelRatio || 1, isCoarsePointer() ? 1.5 : 2),
       })
     } catch {
       setMapFailed(true)
@@ -684,12 +860,6 @@ const HistoryTour: React.FC = () => {
       measure()
     })
 
-    map.on('zoom', () => {
-      const root = rootRef.current
-      if (!root || !map) return
-      root.classList.toggle('ht-far', map.getZoom() < 13.2)
-    })
-
     map.on('idle', () => {
       if (pendingHighlightRef.current >= 0) {
         tryHighlight(pendingHighlightRef.current)
@@ -732,20 +902,40 @@ const HistoryTour: React.FC = () => {
       let a = keys[0]
       let b = keys[0]
       for (let i = 0; i < keys.length; i++) {
-        if (keys[i].y <= yr) {
-          a = keys[i]
-          b = keys[i + 1] || keys[i]
-        }
+        // Keys are sorted by y, so the first one past the focal line ends it.
+        if (keys[i].y > yr) break
+        a = keys[i]
+        b = keys[i + 1] || keys[i]
       }
       const t = a === b ? 0 : easeInOut(Math.min(1, Math.max(0, (yr - a.y) / (b.y - a.y))))
 
       const driftBearing = drifting ? Math.sin(now / 9000) * 1.4 : 0
       const driftPitch = drifting ? Math.sin(now / 13000) * 0.7 : 0
+      const zoom = lerp(a.zoom, b.zoom, t)
+
+      // Drop terrain once the camera is down among the buildings and bring it
+      // back for the wide shots. setTerrain() rebuilds the render pipeline, so
+      // it must only ever be called on an actual state change.
+      if (terrainOnRef.current && zoom > TERRAIN_OFF_ABOVE) {
+        terrainOnRef.current = false
+        try {
+          m.setTerrain(null)
+        } catch {
+          // Terrain is an enhancement; the stage still works flat.
+        }
+      } else if (!terrainOnRef.current && zoom < TERRAIN_ON_BELOW) {
+        terrainOnRef.current = true
+        try {
+          m.setTerrain({ source: 'dem', exaggeration: 1.8 })
+        } catch {
+          // As above.
+        }
+      }
 
       try {
         m.jumpTo({
           center: [lerp(a.lng, b.lng, t), lerp(a.lat, b.lat, t)],
-          zoom: lerp(a.zoom, b.zoom, t),
+          zoom,
           pitch: Math.max(0, lerp(a.pitch, b.pitch, t) + driftPitch),
           bearing: lerpAngle(a.bearing, b.bearing, t) + driftBearing,
           padding: paddingRef.current,
@@ -754,10 +944,24 @@ const HistoryTour: React.FC = () => {
         return
       }
 
+      // Folded in from a map 'zoom' listener, which fired on every one of
+      // these jumpTo calls. Only touch the DOM when the state actually flips.
+      const far = zoom < 13.2
+      if (far !== farRef.current) {
+        farRef.current = far
+        rootRef.current?.classList.toggle('ht-far', far)
+      }
+
       // HUD updates outside React state (runs every frame).
       const year = lerp(a.year, b.year, t)
       if (yearElRef.current) yearElRef.current.textContent = formatMonthYear(year)
-      if (needleElRef.current) needleElRef.current.style.left = `${axisPercent(year)}%`
+      // translateX in px, not `left: %` — `left` forced a layout pass on every
+      // single frame. The track width is cached by measure() so this stays a
+      // pure composited transform.
+      if (needleElRef.current) {
+        const x = (axisPercent(year) / 100) * axisWidthRef.current
+        needleElRef.current.style.transform = `translateX(${x}px) translateX(-50%)`
+      }
       if (compassElRef.current) {
         compassElRef.current.style.transform = `rotate(${-m.getBearing()}deg)`
       }
@@ -780,13 +984,26 @@ const HistoryTour: React.FC = () => {
     }
     window.addEventListener('resize', onResize)
 
-    // Re-measure when content height changes (e.g. images finish loading).
+    // Re-measure when content height changes (e.g. images finish loading, or a
+    // card is expanded). measure() does ~35 getBoundingClientRect calls, so it
+    // must never run synchronously inside the observer callback — expanding a
+    // card injects thousands of words and would fire a reflow storm mid-scroll.
     const scroller = rootRef.current?.querySelector('.ht-scroll')
-    const ro = scroller ? new ResizeObserver(() => measure()) : null
+    let measureRaf = 0
+    const ro = scroller
+      ? new ResizeObserver(() => {
+          if (measureRaf) return
+          measureRaf = requestAnimationFrame(() => {
+            measureRaf = 0
+            measure()
+          })
+        })
+      : null
     if (scroller && ro) ro.observe(scroller)
 
     return () => {
       cancelAnimationFrame(rafRef.current)
+      if (measureRaf) cancelAnimationFrame(measureRaf)
       window.removeEventListener('resize', onResize)
       if (resizeTimer) clearTimeout(resizeTimer)
       ro?.disconnect()
@@ -810,6 +1027,8 @@ const HistoryTour: React.FC = () => {
       } catch {
         // Decorative ring only.
       }
+      // New stop, fresh retry budget before we fall back to a marker volume.
+      highlightTriesRef.current = 0
       tryHighlight(activeIdx)
     }
     if (districtElRef.current) {
@@ -892,7 +1111,7 @@ const HistoryTour: React.FC = () => {
 
       {/* Time axis — x = years */}
       <div className="ht-axis" aria-hidden="true">
-        <div className="ht-axis-track">
+        <div className="ht-axis-track" ref={axisTrackRef}>
           {axisTicks.map((tk) => (
             <div
               key={tk.year}
@@ -921,7 +1140,7 @@ const HistoryTour: React.FC = () => {
               onClick={() => scrollToStop(i)}
             />
           ))}
-          <div ref={needleElRef} className="ht-axis-needle" style={{ left: '0%' }} />
+          <div ref={needleElRef} className="ht-axis-needle" />
         </div>
       </div>
 

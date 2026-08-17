@@ -426,11 +426,37 @@ function wrapSVG(d, W, H, comment, qr) {
 </svg>`
 }
 
+/**
+ * Editable-text reading: the pre-Inkscape art, with the QR modules and any
+ * fill-geometry illustration appended. Text stays <text> so LightBurn (with
+ * the scripts/fonts TTFs installed) can still edit the copy. NOT cut-ready as
+ * emitted — it still contains strokes and live text; it is the editing source
+ * for the outlined -lines/-field pair. Lives in text/ because verify-plaques
+ * only scans the flat lightburn dir.
+ */
+function emitTextVersion(art, extraD, modules, W, H, qr, basename) {
+  const dir = path.join(OUT_DIR, 'text')
+  fs.mkdirSync(dir, { recursive: true })
+  const body = art
+    .replace(
+      '</svg>',
+      `  <path fill="#000" fill-rule="evenodd" d="${extraD ? `${extraD} ` : ''}${modules}"/>\n</svg>`
+    )
+    .replace(
+      '<svg ',
+      `<!-- EDITABLE SOURCE — text kept as text for LightBurn edits; regenerate the outlined pair after changes. ${W} x ${H} mm. -->\n<!-- qr-box mm: x=${qr.x} y=${qr.y} size=${qr.size} url=${qr.url} -->\n<svg `
+    )
+  const file = path.join(dir, `${basename}-text.svg`)
+  fs.writeFileSync(file, `<?xml version="1.0" encoding="UTF-8"?>\n${body}`)
+  console.log(`✓ text/${path.basename(file)} (${(body.length / 1024).toFixed(0)} KB)`)
+}
+
 /** run a layout through Inkscape and write both readings */
 function emit(layout, basename) {
   const { art, W, H, qr, extraD = '' } = layout
   const modules = qrModules(qr.url, qr.x, qr.y, qr.size)
   const card = qrCard(qr.x, qr.y, qr.size)
+  emitTextVersion(art, extraD, modules, W, H, qr, basename)
   // extraD (the layered fill illustration) joins AFTER the union — its evenodd
   // nesting is the layering, and a boolean union would destroy it
   const d = `${unionPathD(art)} ${extraD}`.trim()

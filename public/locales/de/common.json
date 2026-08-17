@@ -345,6 +345,7 @@
     "nav": {
       "map": "Karte",
       "plaques": "Gedenktafeln",
+      "historyTour": "Zum Rundgang",
       "data": "Daten",
       "frankfurt": "Frankfurt",
       "education": "Für Lehrkräfte",
@@ -449,6 +450,8 @@
       "phaseMapText": "Das interaktive Denkmal, das Sie gerade betrachten: jedes dokumentierte Geschäft, durchsuchbar und erkundbar in drei Sprachen.",
       "phasePlaquesTitle": "Gedenktafeln",
       "phasePlaquesText": "Fünfzehn Tafeln sind vollständig gestaltet – jede mit einem QR-Code, der die Straße mit der Geschichte des Geschäfts verbindet. Die Ansprache der Hauseigentümer läuft.",
+      "phaseTourTitle": "Historischer virtueller Rundgang",
+      "phaseTourText": "Fünfzehn Adressen in einem modellierten Berlin der 1930er Jahre. Beim Scrollen fliegt die Kamera von einem Ladengeschäft zum nächsten, während die Jahre von 1925 bis 1945 voranschreiten.",
       "phaseExhibitTitle": "Museumsausstellung",
       "phaseExhibitText": "Eine Touchscreen-Version der Karte ist gebaut und läuft, konzipiert für Kiosk-Displays. Wir suchen Museums- und Kulturpartner als Gastgeber.",
       "exhibitLink": "Ausstellungsvision",

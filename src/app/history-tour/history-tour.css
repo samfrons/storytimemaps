@@ -50,8 +50,12 @@
 .htour .ht-map {
   position: absolute;
   inset: 0;
-  /* aged aerial-survey grade over the satellite relief */
-  filter: sepia(0.35) saturate(0.75) contrast(1.05) brightness(1.04);
+  /* Aged aerial-survey grade. The `contrast()` term is deliberately gone:
+     together with the old saturate(.75) it was flattening the light off the
+     building model. Tonal grading now lives in the raster layer's own paint
+     properties, where it costs nothing per frame; what stays here is only
+     what a per-layer property cannot do. */
+  filter: sepia(0.3) saturate(0.88);
 }
 .ht-map .maplibregl-ctrl-attrib {
   opacity: 0.55;
@@ -178,6 +182,14 @@
   top: 18px;
   left: 20px;
   pointer-events: auto;
+  /* Ink-coloured type floating straight on the imagery was unreadable
+     wherever the plate ran dark, which made the three stacked lines look like
+     they were overlapping each other. A paper slip — the same surface the
+     cards use — keeps the mark legible over any part of the city. */
+  padding: 8px 12px 9px;
+  background: rgba(244, 236, 217, 0.82);
+  border: 1px solid var(--ht-hairline);
+  box-shadow: 3px 3px 0 rgba(var(--ht-ink-rgb), 0.12);
 }
 .ht-brand-kicker {
   font-family: var(--ht-font-mono);
@@ -223,7 +235,16 @@
   letter-spacing: 0.06em;
   color: var(--ht-ink);
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 1px 0 var(--ht-cream);
+  /* Same legibility problem as the brand mark, but a plate behind display
+     type this large would read as a second card — a paper halo carries it
+     over dark imagery without adding another box. The original 1px lift is
+     kept as the last layer; it must stay in this one declaration, since a
+     second `text-shadow` rule would silently replace the halo rather than
+     add to it. */
+  text-shadow:
+    0 0 10px rgba(244, 236, 217, 0.85),
+    0 0 3px rgba(244, 236, 217, 0.95),
+    0 1px 0 var(--ht-cream);
 }
 .ht-district {
   font-family: var(--ht-font-mono);
@@ -368,12 +389,15 @@
 }
 .ht-axis-needle {
   position: absolute;
+  left: 0;
   bottom: 0;
   top: -4px;
   width: 2px;
   background: var(--ht-accent);
+  /* Positioned by a composited transform from the scroll loop, never `left` —
+     the old `left: %` per frame forced a layout pass on the whole axis. */
   transform: translateX(-50%);
-  will-change: left;
+  will-change: transform;
 }
 .ht-axis-needle::after {
   content: '';
@@ -720,17 +744,103 @@
   .ht-stop {
     justify-content: center;
     padding: 0 4vw;
+    /* 170vh × 15 stops put the phone at ~28 screens of scrolling. The camera
+       is driven by proportion, not absolute distance, so a shorter runway
+       keeps the same choreography over a reachable amount of thumb travel. */
+    min-height: 118vh;
   }
   .ht-card-holder {
     top: auto;
     align-self: flex-end;
     position: sticky;
-    bottom: 9vh;
-    margin-bottom: 14vh;
+    bottom: 7vh;
+    margin-bottom: 11vh;
   }
+  /* No inner scroller on touch. A nested overflow container over a fixed
+     WebGL canvas swallowed the swipe that is supposed to advance the tour —
+     the reader got stuck reading instead of moving. The card now shows a
+     fixed lede and everything else lives behind "read the full account",
+     which gives the map back half the viewport. */
   .ht-card {
-    max-height: 52vh;
+    max-height: none;
+    overflow: visible;
+    padding: 1.1rem 1.1rem 1rem;
+  }
+  /* Everything below is one budget: the collapsed card must stay under ~45vh
+     so the city — the entire point of the stage — keeps the majority of a
+     phone screen. Anything trimmed here is still one tap away. */
+  .ht-card-story {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+  .ht-card.is-expanded .ht-card-story {
+    display: block;
+    overflow: visible;
+  }
+  /* The figure is the biggest single block on a phone; keep it to a band. */
+  .ht-card-figure {
+    margin: 0.6rem 0;
+  }
+  .ht-card-figure img {
+    max-height: 15vh;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+  .ht-card-figure figcaption {
+    display: none;
+  }
+  .ht-card.is-expanded .ht-card-figure img {
+    max-height: 30vh;
+  }
+  .ht-card.is-expanded .ht-card-figure figcaption {
+    display: block;
+  }
+  .ht-card h2 {
+    font-size: 1.15rem;
+  }
+  .ht-card-building,
+  .ht-card-fate {
+    display: none;
+  }
+  .ht-card.is-expanded .ht-card-building,
+  .ht-card.is-expanded .ht-card-fate {
+    display: block;
+  }
+  /* Expanded, the card does become a reading surface — give it its own
+     scroll, but stop the gesture leaking into the page mid-sentence. */
+  .ht-card.is-expanded {
+    max-height: 78vh;
     overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  /* The title and the back link were landing on top of each other, and the
+     year read-out on top of both. On a phone the back link is the only one
+     of the three that does anything. */
+  .ht-brand-title,
+  .ht-brand-kicker {
+    display: none;
+  }
+  .ht-hud--year {
+    top: 10px;
+    right: 12px;
+  }
+  /* Attribution sat under the card and bled through it, at full width. */
+  .ht-map .maplibregl-ctrl-bottom-left,
+  .ht-map .maplibregl-ctrl-bottom-right {
+    bottom: 46px;
+  }
+  .ht-map
+    .maplibregl-ctrl-attrib.maplibregl-compact:not(.maplibregl-compact-show)
+    .maplibregl-ctrl-attrib-inner {
+    display: none;
+  }
+  .ht-map .maplibregl-ctrl-attrib {
+    font-size: 10px;
+    max-width: 88vw;
   }
   .ht-axis {
     padding: 8px 14px 8px;

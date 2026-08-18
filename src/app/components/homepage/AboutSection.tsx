@@ -13,8 +13,8 @@ import { useTranslation } from '../../../i18n/useTranslation'
  * of destinations — /map and /plaques appeared in both — so a reader met the
  * same two links twice, described twice, a screen apart. Merged, the page
  * states the project's arc once and then offers every destination on it in a
- * single grid, ranked: the two live things you can look at right now carry a
- * picture and lead, the rest follow as a compact row.
+ * single grid, ranked: the things you can look at right now carry a picture
+ * and lead, the rest follow as a compact row.
  */
 
 interface Destination {
@@ -67,11 +67,28 @@ const AboutSection: React.FC = () => {
           'Memorial plaque for E. Braun & Co., Unter den Linden 75, Berlin-Mitte — gold lettering on deep blue, with an engraving of the storefront and a QR code.',
       }),
     },
+    {
+      number: '03',
+      status: t('homepage.about.statusLive', { defaultValue: 'Live' }),
+      statusColor: 'var(--success)',
+      title: t('homepage.about.phaseTourTitle', { defaultValue: 'Historical virtual tour' }),
+      text: t('homepage.about.phaseTourText', {
+        defaultValue:
+          'Fifteen addresses in a modelled 1930s Berlin. Scroll, and the camera flies from one storefront to the next as the years advance from 1925 to 1945.',
+      }),
+      href: '/history-tour',
+      linkLabel: t('homepage.nav.historyTour', { defaultValue: 'Take the tour' }),
+      image: '/images/history-tour-card.webp',
+      imageAlt: t('homepage.about.tourImageAlt', {
+        defaultValue:
+          'A sepia aerial view of Berlin with the 1930s city modelled as extruded blocks, one building marked in red and numbered — the address of the Wassermann brothers’ grocery in Brunnenstrasse.',
+      }),
+    },
   ]
 
   const further: Destination[] = [
     {
-      number: '03',
+      number: '04',
       status: t('homepage.about.statusPrototype', { defaultValue: 'Prototype' }),
       statusColor: 'var(--warning)',
       title: t('homepage.about.phaseExhibitTitle', { defaultValue: 'Museum exhibit' }),
@@ -83,7 +100,7 @@ const AboutSection: React.FC = () => {
       linkLabel: t('homepage.about.exhibitLink', { defaultValue: 'Exhibit vision' }),
     },
     {
-      number: '04',
+      number: '05',
       status: t('homepage.about.statusPilot', { defaultValue: 'Pilot' }),
       statusColor: 'var(--primary)',
       title: t('homepage.about.phaseBeyondTitle', { defaultValue: 'Beyond Berlin' }),
@@ -95,7 +112,7 @@ const AboutSection: React.FC = () => {
       linkLabel: t('homepage.nav.frankfurt', { defaultValue: 'Frankfurt' }),
     },
     {
-      number: '05',
+      number: '06',
       status: t('homepage.about.statusFree', { defaultValue: 'Free to use' }),
       statusColor: 'var(--success)',
       title: t('homepage.about.phaseEducationTitle', {
@@ -109,7 +126,7 @@ const AboutSection: React.FC = () => {
       linkLabel: t('homepage.nav.education', { defaultValue: 'For Teachers' }),
     },
     {
-      number: '06',
+      number: '07',
       status: t('homepage.explore.dataTag', { defaultValue: 'For researchers' }),
       statusColor: 'var(--muted)',
       title: t('cta.viewData', { defaultValue: 'View Raw Data' }),
@@ -216,8 +233,8 @@ const AboutSection: React.FC = () => {
           {t('homepage.explore.eyebrow', { defaultValue: 'Ways in' })}
         </p>
 
-        {/* The two destinations you can look at today, each with the thing itself. */}
-        <div className="grid md:grid-cols-2 gap-5 mb-5">
+        {/* The destinations you can look at today, each with the thing itself. */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
           {featured.map((dest) => (
             <Link
               key={dest.href}
@@ -231,7 +248,7 @@ const AboutSection: React.FC = () => {
                     src={dest.image}
                     alt={dest.imageAlt ?? ''}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>

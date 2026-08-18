@@ -345,6 +345,7 @@
     "nav": {
       "map": "Map",
       "plaques": "Plaques",
+      "historyTour": "Take the tour",
       "data": "Data",
       "frankfurt": "Frankfurt",
       "education": "For Teachers",
@@ -449,6 +450,8 @@
       "phaseMapText": "The interactive memorial you are looking at: every documented business, searchable and explorable in three languages.",
       "phasePlaquesTitle": "Memorial plaques",
       "phasePlaquesText": "Fifteen plaques are fully designed — each carrying a QR code that links the street back to the business’s story. Outreach to building owners is underway.",
+      "phaseTourTitle": "Historical virtual tour",
+      "phaseTourText": "Fifteen addresses in a modelled 1930s Berlin. Scroll, and the camera flies from one storefront to the next as the years advance from 1925 to 1945.",
       "phaseExhibitTitle": "Museum exhibit",
       "phaseExhibitText": "A touch-screen exhibit version of the map is built and running, designed for kiosk display. We are seeking museum and cultural partners to host it.",
       "exhibitLink": "Exhibit vision",

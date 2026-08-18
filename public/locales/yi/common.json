@@ -296,6 +296,7 @@
     "nav": {
       "map": "Mape",
       "plaques": "Tovlen",
+      "historyTour": "Nem dem rundgang",
       "data": "Datn",
       "frankfurt": "Frankfurt",
       "education": "Far Lerers",
@@ -400,6 +401,8 @@
       "phaseMapText": "Der interaktiver denkmol vos ir kukt itst on: yedes dokumentirte gesheft, zukhbar un oysforshbar in dray shprakhn.",
       "phasePlaquesTitle": "Denkmol-tovlen",
       "phasePlaquesText": "Fuftsn tovlen zenen shoyn in gantsn geshtalt – yede mit a QR-kod vos farbindt di gas mit der geshikhte funem gesheft. Der kontakt mit di hoyz-eigentimer geyt on.",
+      "phaseTourTitle": "Historisher virtueler rundgang",
+      "phaseTourText": "Fuftsn adresn in a modelirtn Berlin fun di 1930er yorn. Ven ir skrolt, flit di kamere fun eyn krom tsum tsveytn, beshas di yorn geyen faroys fun 1925 biz 1945.",
       "phaseExhibitTitle": "Muzey-oysshtelung",
       "phaseExhibitText": "A tach-ekran versye fun der mape iz shoyn geboyt un loyft, batrakht far kiosk-vayzung. Mir zukhn muzey- un kultur-shutfim vos zoln zi bahauzn.",
       "exhibitLink": "Oysshtelung-vizye",

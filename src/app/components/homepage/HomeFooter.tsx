@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import SiteCopyright from '../SiteCopyright'
 import { useTranslation } from '../../../i18n/useTranslation'
 import { NAV_LINKS } from '../SiteHeader'
 
@@ -63,6 +64,7 @@ const HomeFooter: React.FC = () => {
                 'Based on the research of Dr. Christoph Kreutzmüller and the database of Jewish commercial activity in Berlin. For academic use, please cite the original research.',
             })}
           </p>
+          <SiteCopyright className="font-mono text-xs block mt-4" />
         </div>
       </div>
     </footer>

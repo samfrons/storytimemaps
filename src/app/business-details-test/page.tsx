@@ -1,19 +1,20 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+import SiteFooter from '../components/SiteFooter'
 
 // Sample business data
 interface BusinessData {
-  id: string;
-  name: string;
-  address: string;
-  formerAddress?: string;
-  years: string;
-  category: string;
-  description: string;
-  sources: string[];
-  image?: string;
+  id: string
+  name: string
+  address: string
+  formerAddress?: string
+  years: string
+  category: string
+  description: string
+  sources: string[]
+  image?: string
 }
 
 const sampleBusinesses: BusinessData[] = [
@@ -24,9 +25,10 @@ const sampleBusinesses: BusinessData[] = [
     formerAddress: '1185 Broadway (1920-1932)',
     years: '1920-1965',
     category: 'Optical Services',
-    description: 'A family-owned optical shop that served the community for over four decades. Known for high-quality eyewear and professional eye examinations.',
+    description:
+      'A family-owned optical shop that served the community for over four decades. Known for high-quality eyewear and professional eye examinations.',
     sources: ['City Directory 1920-1965', 'Business License Records', 'Oral History Collection'],
-    image: '/images/breslaur/breslaur1.png'
+    image: '/images/breslaur/breslaur1.png',
   },
   {
     id: '2',
@@ -34,9 +36,10 @@ const sampleBusinesses: BusinessData[] = [
     address: '428 Market Street',
     years: '1895-1943',
     category: 'Import/Export',
-    description: 'Specialized in importing fine goods from Europe, particularly textiles and household items. One of the oldest established businesses in the district.',
+    description:
+      'Specialized in importing fine goods from Europe, particularly textiles and household items. One of the oldest established businesses in the district.',
     sources: ['Chamber of Commerce Records', 'Port Authority Import Logs', 'Family Archives'],
-    image: '/images/wassermann/wassermann.png'
+    image: '/images/wassermann/wassermann.png',
   },
   {
     id: '3',
@@ -45,70 +48,71 @@ const sampleBusinesses: BusinessData[] = [
     formerAddress: '298 Pine Avenue (1910-1925)',
     years: '1910-1955',
     category: 'Paper & Stationery',
-    description: 'Wholesale paper goods distributor serving local businesses and institutions. Expanded operations multiple times during peak business years.',
+    description:
+      'Wholesale paper goods distributor serving local businesses and institutions. Expanded operations multiple times during peak business years.',
     sources: ['Trade Association Records', 'Building Permits', 'Newspaper Archives'],
-    image: '/images/jonassco/jonassco.png'
-  }
-];
+    image: '/images/jonassco/jonassco.png',
+  },
+]
 
 // Modal Overlay Component with true expansion from card
 const ModalOverlay: React.FC<{
-  business: BusinessData;
-  isOpen: boolean;
-  onClose: () => void;
-  originRect: DOMRect | null;
+  business: BusinessData
+  isOpen: boolean
+  onClose: () => void
+  originRect: DOMRect | null
 }> = ({ business, isOpen, onClose, originRect }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [showContent, setShowContent] = useState(false)
+  const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (isOpen && originRect) {
-      setIsVisible(true);
+      setIsVisible(true)
       // Start expansion after a frame
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          setIsExpanded(true);
+          setIsExpanded(true)
           // Show content after expansion starts
-          setTimeout(() => setShowContent(true), 300);
-        });
-      });
+          setTimeout(() => setShowContent(true), 300)
+        })
+      })
     } else if (!isOpen) {
-      setShowContent(false);
-      setIsExpanded(false);
-      setTimeout(() => setIsVisible(false), 500);
+      setShowContent(false)
+      setIsExpanded(false)
+      setTimeout(() => setIsVisible(false), 500)
     }
-  }, [isOpen, originRect]);
+  }, [isOpen, originRect])
 
-  if (!isVisible || !originRect) return null;
+  if (!isVisible || !originRect) return null
 
   // Calculate the transform origin and initial position
-  const viewportWidth = window.innerWidth;
-  const viewportHeight = window.innerHeight;
-  const modalWidth = Math.min(672, viewportWidth - 32); // max-w-2xl with padding
-  const modalHeight = viewportHeight * 0.9;
-  
-  const finalX = (viewportWidth - modalWidth) / 2;
-  const finalY = (viewportHeight - modalHeight) / 2;
-  
-  const initialScaleX = originRect.width / modalWidth;
-  const initialScaleY = originRect.height / modalHeight;
-  const initialX = originRect.left - finalX;
-  const initialY = originRect.top - finalY;
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight
+  const modalWidth = Math.min(672, viewportWidth - 32) // max-w-2xl with padding
+  const modalHeight = viewportHeight * 0.9
+
+  const finalX = (viewportWidth - modalWidth) / 2
+  const finalY = (viewportHeight - modalHeight) / 2
+
+  const initialScaleX = originRect.width / modalWidth
+  const initialScaleY = originRect.height / modalHeight
+  const initialX = originRect.left - finalX
+  const initialY = originRect.top - finalY
 
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div 
+      <div
         className={`absolute inset-0 bg-black backdrop-blur-sm transition-all duration-500 ease-out ${
           isExpanded ? 'bg-opacity-60' : 'bg-opacity-0'
         }`}
         onClick={onClose}
       />
-      
+
       {/* Expanding Modal */}
-      <div 
+      <div
         ref={modalRef}
         className={`absolute bg-background border border-border shadow-2xl transition-all duration-700 ease-out`}
         style={{
@@ -116,52 +120,63 @@ const ModalOverlay: React.FC<{
           height: `${modalHeight}px`,
           left: `${finalX}px`,
           top: `${finalY}px`,
-          transform: isExpanded 
-            ? 'translate(0, 0) scale(1)' 
+          transform: isExpanded
+            ? 'translate(0, 0) scale(1)'
             : `translate(${initialX}px, ${initialY}px) scale(${initialScaleX}, ${initialScaleY})`,
           transformOrigin: 'top left',
-          transitionTimingFunction: isExpanded 
-            ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' 
-            : 'cubic-bezier(0.4, 0, 0.2, 1)'
+          transitionTimingFunction: isExpanded
+            ? 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+            : 'cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         {/* Simple Header - visible during expansion */}
-        <div className={`flex items-center justify-between p-6 border-b border-border transition-opacity duration-300 ${
-          showContent ? 'opacity-100' : 'opacity-0'
-        }`}>
+        <div
+          className={`flex items-center justify-between p-6 border-b border-border transition-opacity duration-300 ${
+            showContent ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
           <h2 className="text-xl font-semibold text-foreground font-mono">{business.name}</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-muted/20 transition-all duration-200 hover:scale-110 active:scale-95"
           >
-            <svg className="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-5 h-5 text-muted"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
-        
+
         {/* Content - fades in after expansion */}
-        <div className={`p-6 overflow-y-auto h-[calc(100%-80px)] transition-opacity duration-500 ${
-          showContent ? 'opacity-100' : 'opacity-0'
-        }`}>
+        <div
+          className={`p-6 overflow-y-auto h-[calc(100%-80px)] transition-opacity duration-500 ${
+            showContent ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
           <div className="space-y-6">
             {/* Image */}
             {business.image && (
               <div className="w-full h-48 bg-muted/20 border border-border overflow-hidden relative">
-                <Image
-                  src={business.image}
-                  alt={business.name}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={business.image} alt={business.name} fill className="object-cover" />
               </div>
             )}
-            
+
             {/* Business Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">Location</h3>
+                  <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">
+                    Location
+                  </h3>
                   <p className="font-mono text-sm text-foreground">{business.address}</p>
                   {business.formerAddress && (
                     <p className="font-mono text-xs text-muted mt-1">
@@ -169,40 +184,53 @@ const ModalOverlay: React.FC<{
                     </p>
                   )}
                 </div>
-                
+
                 <div>
-                  <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">Active Period</h3>
+                  <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">
+                    Active Period
+                  </h3>
                   <p className="font-mono text-sm text-foreground">{business.years}</p>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">Category</h3>
+                  <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">
+                    Category
+                  </h3>
                   <p className="font-mono text-sm text-foreground">{business.category}</p>
                 </div>
               </div>
             </div>
-            
+
             {/* Description */}
             <div>
-              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">Description</h3>
-              <p className="font-mono text-sm text-foreground leading-relaxed">{business.description}</p>
+              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">
+                Description
+              </h3>
+              <p className="font-mono text-sm text-foreground leading-relaxed">
+                {business.description}
+              </p>
             </div>
-            
+
             {/* Sources */}
             <div>
-              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">Sources</h3>
+              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">
+                Sources
+              </h3>
               <ul className="space-y-2">
                 {business.sources.map((source, index) => (
-                  <li key={index} className="font-mono text-sm text-foreground flex items-start gap-2">
+                  <li
+                    key={index}
+                    className="font-mono text-sm text-foreground flex items-start gap-2"
+                  >
                     <span className="text-primary mt-1">•</span>
                     {source}
                   </li>
                 ))}
               </ul>
             </div>
-            
+
             {/* Actions */}
             <div className="flex gap-3 pt-4 border-t border-border">
               <button className="flex-1 font-mono text-xs font-semibold py-3 px-4 bg-background border border-border text-foreground hover:bg-muted/10 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wide">
@@ -216,101 +244,112 @@ const ModalOverlay: React.FC<{
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // Sliding Panel Component with slide from card position
 const SlidingPanel: React.FC<{
-  business: BusinessData;
-  isOpen: boolean;
-  onClose: () => void;
-  originRect: DOMRect | null;
+  business: BusinessData
+  isOpen: boolean
+  onClose: () => void
+  originRect: DOMRect | null
 }> = ({ business, isOpen, onClose, originRect }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showContent, setShowContent] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [showContent, setShowContent] = useState(false)
 
   useEffect(() => {
     if (isOpen && originRect) {
-      setIsVisible(true);
+      setIsVisible(true)
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          setIsExpanded(true);
-          setTimeout(() => setShowContent(true), 200);
-        });
-      });
+          setIsExpanded(true)
+          setTimeout(() => setShowContent(true), 200)
+        })
+      })
     } else if (!isOpen) {
-      setShowContent(false);
-      setIsExpanded(false);
-      setTimeout(() => setIsVisible(false), 600);
+      setShowContent(false)
+      setIsExpanded(false)
+      setTimeout(() => setIsVisible(false), 600)
     }
-  }, [isOpen, originRect]);
+  }, [isOpen, originRect])
 
-  if (!isVisible || !originRect) return null;
+  if (!isVisible || !originRect) return null
 
-  const panelWidth = Math.min(512, window.innerWidth); // max-w-lg
-  const startX = originRect.left - (window.innerWidth - panelWidth);
-  const startY = originRect.top;
+  const panelWidth = Math.min(512, window.innerWidth) // max-w-lg
+  const startX = originRect.left - (window.innerWidth - panelWidth)
+  const startY = originRect.top
 
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div 
+      <div
         className={`absolute inset-0 bg-black backdrop-blur-sm transition-all duration-500 ease-out ${
           isExpanded ? 'bg-opacity-60' : 'bg-opacity-0'
         }`}
         onClick={onClose}
       />
-      
+
       {/* Expanding Panel */}
-      <div 
+      <div
         className={`absolute right-0 top-0 h-full w-full max-w-lg bg-background border-l border-border shadow-2xl transition-all duration-600`}
         style={{
-          transform: isExpanded 
-            ? 'translateX(0) translateY(0) scale(1)' 
+          transform: isExpanded
+            ? 'translateX(0) translateY(0) scale(1)'
             : `translateX(${startX}px) translateY(${startY}px) scale(${originRect.width / panelWidth}, ${originRect.height / window.innerHeight})`,
           transformOrigin: 'top right',
-          transitionTimingFunction: isExpanded 
-            ? 'cubic-bezier(0.68, -0.55, 0.265, 1.55)' 
-            : 'cubic-bezier(0.4, 0, 0.2, 1)'
+          transitionTimingFunction: isExpanded
+            ? 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+            : 'cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         {/* Header */}
-        <div className={`flex items-center justify-between p-6 border-b border-border transition-opacity duration-300 ${
-          showContent ? 'opacity-100' : 'opacity-0'
-        }`}>
+        <div
+          className={`flex items-center justify-between p-6 border-b border-border transition-opacity duration-300 ${
+            showContent ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
           <h2 className="text-lg font-semibold text-foreground font-mono">{business.name}</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-muted/20 transition-all duration-200 hover:rotate-90"
           >
-            <svg className="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-5 h-5 text-muted"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
-        
+
         {/* Content */}
-        <div className={`p-6 overflow-y-auto h-[calc(100%-80px)] transition-opacity duration-400 ${
-          showContent ? 'opacity-100' : 'opacity-0'
-        }`}>
+        <div
+          className={`p-6 overflow-y-auto h-[calc(100%-80px)] transition-opacity duration-400 ${
+            showContent ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
           <div className="space-y-6">
             {/* Image */}
             {business.image && (
               <div className="w-full h-48 bg-muted/20 border border-border overflow-hidden relative">
-                <Image
-                  src={business.image}
-                  alt={business.name}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={business.image} alt={business.name} fill className="object-cover" />
               </div>
             )}
-            
+
             {/* Business Details */}
             <div className="space-y-4">
               <div>
-                <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">Location</h3>
+                <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">
+                  Location
+                </h3>
                 <p className="font-mono text-sm text-foreground">{business.address}</p>
                 {business.formerAddress && (
                   <p className="font-mono text-xs text-muted mt-1">
@@ -318,37 +357,50 @@ const SlidingPanel: React.FC<{
                   </p>
                 )}
               </div>
-              
+
               <div>
-                <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">Active Period</h3>
+                <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">
+                  Active Period
+                </h3>
                 <p className="font-mono text-sm text-foreground">{business.years}</p>
               </div>
-              
+
               <div>
-                <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">Category</h3>
+                <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2">
+                  Category
+                </h3>
                 <p className="font-mono text-sm text-foreground">{business.category}</p>
               </div>
             </div>
-            
+
             {/* Description */}
             <div>
-              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">Description</h3>
-              <p className="font-mono text-sm text-foreground leading-relaxed">{business.description}</p>
+              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">
+                Description
+              </h3>
+              <p className="font-mono text-sm text-foreground leading-relaxed">
+                {business.description}
+              </p>
             </div>
-            
+
             {/* Sources */}
             <div>
-              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">Sources</h3>
+              <h3 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-3">
+                Sources
+              </h3>
               <ul className="space-y-2">
                 {business.sources.map((source, index) => (
-                  <li key={index} className="font-mono text-sm text-foreground flex items-start gap-2">
+                  <li
+                    key={index}
+                    className="font-mono text-sm text-foreground flex items-start gap-2"
+                  >
                     <span className="text-primary mt-1">•</span>
                     {source}
                   </li>
                 ))}
               </ul>
             </div>
-            
+
             {/* Actions */}
             <div className="space-y-3 pt-4 border-t border-border">
               <button className="w-full font-mono text-xs font-semibold py-3 px-4 bg-background border border-border text-foreground hover:bg-muted/10 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wide">
@@ -362,27 +414,27 @@ const SlidingPanel: React.FC<{
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // Business Card Component
 const BusinessCard: React.FC<{
-  business: BusinessData;
-  onClick: (rect: DOMRect) => void;
-  variant: 'modal' | 'panel';
-  isActive?: boolean;
+  business: BusinessData
+  onClick: (rect: DOMRect) => void
+  variant: 'modal' | 'panel'
+  isActive?: boolean
 }> = ({ business, onClick, variant, isActive }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null)
 
   const handleClick = () => {
     if (cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
-      onClick(rect);
+      const rect = cardRef.current.getBoundingClientRect()
+      onClick(rect)
     }
-  };
+  }
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className={`bg-background border border-border p-4 hover:border-primary/50 transition-all duration-300 cursor-pointer hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] ${
         isActive ? 'opacity-0 pointer-events-none' : ''
@@ -392,15 +444,10 @@ const BusinessCard: React.FC<{
       <div className="flex items-start gap-4">
         {business.image && (
           <div className="w-16 h-16 bg-muted/20 border border-border overflow-hidden flex-shrink-0 relative">
-            <Image
-              src={business.image}
-              alt={business.name}
-              fill
-              className="object-cover"
-            />
+            <Image src={business.image} alt={business.name} fill className="object-cover" />
           </div>
         )}
-        
+
         <div className="flex-1 min-w-0">
           <h3 className="font-mono text-sm font-semibold text-foreground mb-1 truncate">
             {business.name}
@@ -416,7 +463,7 @@ const BusinessCard: React.FC<{
             </span>
           </div>
         </div>
-        
+
         <div className="flex-shrink-0">
           <svg className="w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -424,48 +471,48 @@ const BusinessCard: React.FC<{
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // Main Component
 export default function BusinessDetailsTest() {
-  const [selectedBusiness, setSelectedBusiness] = useState<BusinessData | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [panelOpen, setPanelOpen] = useState(false);
-  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+  const [selectedBusiness, setSelectedBusiness] = useState<BusinessData | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [panelOpen, setPanelOpen] = useState(false)
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null)
+  const [activeCardId, setActiveCardId] = useState<string | null>(null)
 
   const openModal = (business: BusinessData, rect: DOMRect) => {
-    setOriginRect(rect);
-    setSelectedBusiness(business);
-    setActiveCardId(business.id);
-    setModalOpen(true);
-  };
+    setOriginRect(rect)
+    setSelectedBusiness(business)
+    setActiveCardId(business.id)
+    setModalOpen(true)
+  }
 
   const openPanel = (business: BusinessData, rect: DOMRect) => {
-    setOriginRect(rect);
-    setSelectedBusiness(business);
-    setActiveCardId(business.id);
-    setPanelOpen(true);
-  };
+    setOriginRect(rect)
+    setSelectedBusiness(business)
+    setActiveCardId(business.id)
+    setPanelOpen(true)
+  }
 
   const closeModal = () => {
-    setModalOpen(false);
+    setModalOpen(false)
     setTimeout(() => {
-      setSelectedBusiness(null);
-      setOriginRect(null);
-      setActiveCardId(null);
-    }, 600);
-  };
+      setSelectedBusiness(null)
+      setOriginRect(null)
+      setActiveCardId(null)
+    }, 600)
+  }
 
   const closePanel = () => {
-    setPanelOpen(false);
+    setPanelOpen(false)
     setTimeout(() => {
-      setSelectedBusiness(null);
-      setOriginRect(null);
-      setActiveCardId(null);
-    }, 700);
-  };
+      setSelectedBusiness(null)
+      setOriginRect(null)
+      setActiveCardId(null)
+    }, 700)
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -500,7 +547,7 @@ export default function BusinessDetailsTest() {
             <p className="text-xs text-muted font-mono mb-4">
               Card expands from its position to center modal
             </p>
-            
+
             <div className="space-y-3">
               {sampleBusinesses.map((business) => (
                 <BusinessCard
@@ -522,7 +569,7 @@ export default function BusinessDetailsTest() {
             <p className="text-xs text-muted font-mono mb-4">
               Card morphs and slides to side panel
             </p>
-            
+
             <div className="space-y-3">
               {sampleBusinesses.map((business) => (
                 <BusinessCard
@@ -539,7 +586,9 @@ export default function BusinessDetailsTest() {
 
         {/* Animation Notes */}
         <div className="mt-12 p-6 bg-background/50 border border-border backdrop-blur-sm">
-          <h3 className="font-mono text-sm font-bold text-foreground mb-3">True Expansion Animation:</h3>
+          <h3 className="font-mono text-sm font-bold text-foreground mb-3">
+            True Expansion Animation:
+          </h3>
           <ul className="space-y-2 text-xs text-muted font-mono">
             <li>• Cards expand from their exact position to final destination</li>
             <li>• Modal: Expands from card to centered overlay</li>
@@ -570,6 +619,10 @@ export default function BusinessDetailsTest() {
           originRect={originRect}
         />
       )}
+
+      <div className="relative z-10">
+        <SiteFooter />
+      </div>
     </div>
-  );
+  )
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import { getZipcodeFromAddress } from '../../utils/berlinZipcodes'
 import SiteHeader from '../components/SiteHeader'
+import SiteFooter from '../components/SiteFooter'
 
 // Dynamic import keeps the ~400 kB Mapbox GL bundle out of the initial
 // page payload. Without this, /jewish-businesses ships 682 kB First
@@ -411,6 +412,8 @@ export default function JewishBusinessesPage() {
           </div>
         </div>
       </div>
+
+      <SiteFooter className="flex-shrink-0 py-3" />
     </div>
   )
 }

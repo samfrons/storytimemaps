@@ -16,6 +16,7 @@ import {
 import { useIsMounted } from '../../hooks/useIsMounted'
 // TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation'
+import { OverlayCopyright } from '../components/SiteFooter'
 
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), {
   ssr: false,
@@ -1040,6 +1041,8 @@ function TestFullDatasetPageContent() {
           }
         }
       `}</style>
+
+      <OverlayCopyright />
     </div>
   )
 }

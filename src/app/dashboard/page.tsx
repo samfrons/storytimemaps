@@ -1,71 +1,72 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
-import type { Proposal } from '@/lib/types/proposal';
-import ProposalForm from '@/components/proposals/ProposalForm';
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
+import { useRouter } from 'next/navigation'
+import type { Proposal } from '@/lib/types/proposal'
+import ProposalForm from '@/components/proposals/ProposalForm'
+import SiteFooter from '@/app/components/SiteFooter'
 
 export default function DashboardPage() {
-  const { user, profile, loading: authLoading } = useAuth();
-  const router = useRouter();
-  const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [showProposalForm, setShowProposalForm] = useState(false);
+  const { user, profile, loading: authLoading } = useAuth()
+  const router = useRouter()
+  const [proposals, setProposals] = useState<Proposal[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [showProposalForm, setShowProposalForm] = useState(false)
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push('/');
+      router.push('/')
     }
-  }, [user, authLoading, router]);
+  }, [user, authLoading, router])
 
   useEffect(() => {
     if (user) {
-      fetchProposals();
+      fetchProposals()
     }
-  }, [user]);
+  }, [user])
 
   const fetchProposals = async () => {
     try {
-      const response = await fetch('/api/proposals/user');
+      const response = await fetch('/api/proposals/user')
       if (!response.ok) {
-        throw new Error('Failed to fetch proposals');
+        throw new Error('Failed to fetch proposals')
       }
-      const data = await response.json();
-      setProposals(data);
+      const data = await response.json()
+      setProposals(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'approved':
-        return 'var(--success)';
+        return 'var(--success)'
       case 'rejected':
-        return 'var(--danger)';
+        return 'var(--danger)'
       case 'under_review':
-        return 'var(--warning)';
+        return 'var(--warning)'
       default:
-        return 'var(--foreground-muted)';
+        return 'var(--foreground-muted)'
     }
-  };
+  }
 
   const getStatusBgColor = (status: string) => {
     switch (status) {
       case 'approved':
-        return 'rgba(var(--success-rgb), 0.1)';
+        return 'rgba(var(--success-rgb), 0.1)'
       case 'rejected':
-        return 'rgba(var(--danger-rgb), 0.1)';
+        return 'rgba(var(--danger-rgb), 0.1)'
       case 'under_review':
-        return 'rgba(var(--warning-rgb), 0.1)';
+        return 'rgba(var(--warning-rgb), 0.1)'
       default:
-        return 'rgba(var(--muted-rgb), 0.1)';
+        return 'rgba(var(--muted-rgb), 0.1)'
     }
-  };
+  }
 
   if (authLoading || !user) {
     return (
@@ -77,7 +78,7 @@ export default function DashboardPage() {
           Loading...
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -105,10 +106,10 @@ export default function DashboardPage() {
               outline: 'none',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.8';
+              e.currentTarget.style.opacity = '0.8'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1';
+              e.currentTarget.style.opacity = '1'
             }}
           >
             + Propose New Location
@@ -124,10 +125,10 @@ export default function DashboardPage() {
               outline: 'none',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.7';
+              e.currentTarget.style.opacity = '0.7'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1';
+              e.currentTarget.style.opacity = '1'
             }}
           >
             Back to Map
@@ -192,7 +193,10 @@ export default function DashboardPage() {
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-xl font-mono font-bold mb-1" style={{ color: 'var(--primary)' }}>
+                      <h3
+                        className="text-xl font-mono font-bold mb-1"
+                        style={{ color: 'var(--primary)' }}
+                      >
                         {proposal.title}
                       </h3>
                       <p className="text-sm font-mono" style={{ color: 'var(--foreground-muted)' }}>
@@ -217,7 +221,10 @@ export default function DashboardPage() {
                     </p>
                   )}
 
-                  <div className="flex gap-4 text-xs font-mono" style={{ color: 'var(--foreground-muted)' }}>
+                  <div
+                    className="flex gap-4 text-xs font-mono"
+                    style={{ color: 'var(--foreground-muted)' }}
+                  >
                     <span>Type: {proposal.proposal_type.replace('_', ' ')}</span>
                     <span>•</span>
                     <span>Submitted: {new Date(proposal.created_at).toLocaleDateString()}</span>
@@ -231,7 +238,10 @@ export default function DashboardPage() {
                         border: '1px solid var(--warning)',
                       }}
                     >
-                      <p className="text-xs font-mono font-bold mb-1" style={{ color: 'var(--warning)' }}>
+                      <p
+                        className="text-xs font-mono font-bold mb-1"
+                        style={{ color: 'var(--warning)' }}
+                      >
                         Admin Notes:
                       </p>
                       <p className="text-sm font-mono" style={{ color: 'var(--foreground)' }}>
@@ -253,6 +263,8 @@ export default function DashboardPage() {
         onSuccess={fetchProposals}
         proposalType="new_location"
       />
+
+      <SiteFooter className="mt-12" />
     </div>
-  );
+  )
 }

@@ -21,6 +21,15 @@ import {
   type TourStop,
 } from './tourData'
 import { FOOTPRINTS_1930 } from './footprints1930'
+import { CopyrightLine } from '../components/SiteFooter'
+
+// The tour runs on its own aged-paper palette (the --ht-* variables in
+// history-tour.css), so the shared copyright line is handed that ink rather
+// than the site-wide muted grey it would otherwise inherit.
+const HT_FOOTER_TYPE: React.CSSProperties = {
+  color: 'var(--ht-ink-soft)',
+  fontFamily: 'var(--ht-font-mono)',
+}
 
 // Map-internal palette. WebGL layers require literal color values (CSS
 // variables cannot reach into the map) — the documented map-styling
@@ -1234,6 +1243,9 @@ const HistoryTour: React.FC = () => {
                 terrain Mapzen/AWS Open Data; buildings © OpenStreetMap contributors via OpenFreeMap
                 — rendered as an aged aerial survey.
               </p>
+              <footer className="ht-footer">
+                <CopyrightLine style={HT_FOOTER_TYPE} />
+              </footer>
             </div>
           </section>
         </div>
@@ -1257,6 +1269,9 @@ const HistoryTour: React.FC = () => {
           {TOUR_STOPS.map((stop, i) => (
             <StopCard key={stop.id} stop={stop} index={i} total={TOUR_STOPS.length} />
           ))}
+          <footer className="ht-footer">
+            <CopyrightLine style={HT_FOOTER_TYPE} />
+          </footer>
         </div>
       )}
     </div>

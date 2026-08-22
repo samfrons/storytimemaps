@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import SiteHeader from '../components/SiteHeader'
+import HomeFooter from '../components/homepage/HomeFooter'
 
 export const dynamic = 'force-dynamic'
 
@@ -479,6 +480,8 @@ export default function EducationHubPage() {
           </p>
         </div>
       </section>
+
+      <HomeFooter />
     </div>
   )
 }

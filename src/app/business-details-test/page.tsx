@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import SiteFooter from '../components/SiteFooter'
 
 // Sample business data
 interface BusinessData {
@@ -618,6 +619,10 @@ export default function BusinessDetailsTest() {
           originRect={originRect}
         />
       )}
+
+      <div className="relative z-10">
+        <SiteFooter />
+      </div>
     </div>
   )
 }

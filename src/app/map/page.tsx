@@ -17,6 +17,7 @@ import { useIsMounted } from '../../hooks/useIsMounted'
 import { ALL_CATEGORIES } from '../../utils/businessSectors'
 // TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation'
+import { OverlayCopyright } from '../components/SiteFooter'
 
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), {
   ssr: false,
@@ -665,6 +666,8 @@ function MapPageContent() {
           }
         }
       `}</style>
+
+      <OverlayCopyright />
     </div>
   )
 }

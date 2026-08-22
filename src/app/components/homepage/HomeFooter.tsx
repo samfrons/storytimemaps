@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useTranslation } from '../../../i18n/useTranslation'
 import { NAV_LINKS } from '../SiteHeader'
+import { CopyrightLine } from '../SiteFooter'
 
 const HomeFooter: React.FC = () => {
   const { t } = useTranslation()
@@ -63,6 +64,7 @@ const HomeFooter: React.FC = () => {
                 'Based on the research of Dr. Christoph Kreutzmüller and the database of Jewish commercial activity in Berlin. For academic use, please cite the original research.',
             })}
           </p>
+          <CopyrightLine className="mt-4" />
         </div>
       </div>
     </footer>

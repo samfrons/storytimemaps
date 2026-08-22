@@ -7,6 +7,7 @@ import SessionManager from './components/SessionManager'
 import ExhibitTimeline from './components/ExhibitTimeline'
 // TranslationProvider now in root layout
 import { useTranslation } from '../../i18n/useTranslation'
+import { OverlayCopyright } from '../components/SiteFooter'
 
 const TouchMap = dynamic(() => import('./components/TouchMapSimple'), {
   ssr: false,
@@ -377,6 +378,13 @@ function MuseumExhibitContent() {
           </div>
         </div>
       </div>
+
+      {/* The kiosk runs on its own hard black-on-white palette rather than the
+          site themes, so the notice is given those literal values. */}
+      <OverlayCopyright
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+        textStyle={{ color: '#3a3a3a' }}
+      />
 
       {/* Session Manager */}
       <SessionManager isActive={isActive} onSessionEnd={handleSessionEnd} timeoutMinutes={3} />

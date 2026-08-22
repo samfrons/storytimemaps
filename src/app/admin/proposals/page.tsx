@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import type { Proposal, ProposalStatus, ProposalType } from '@/lib/types/proposal'
+import SiteFooter from '@/app/components/SiteFooter'
 
 const PROPOSAL_TYPES: Array<ProposalType | 'all'> = [
   'all',
@@ -495,6 +496,8 @@ export default function AdminProposalsPage() {
           </div>
         )}
       </div>
+
+      <SiteFooter className="mt-12" />
     </div>
   )
 }

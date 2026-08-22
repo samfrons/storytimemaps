@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import type { Proposal } from '@/lib/types/proposal'
 import ProposalForm from '@/components/proposals/ProposalForm'
+import SiteFooter from '@/app/components/SiteFooter'
 
 export default function DashboardPage() {
   const { user, profile, loading: authLoading } = useAuth()
@@ -262,6 +263,8 @@ export default function DashboardPage() {
         onSuccess={fetchProposals}
         proposalType="new_location"
       />
+
+      <SiteFooter className="mt-12" />
     </div>
   )
 }

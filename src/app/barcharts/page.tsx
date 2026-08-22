@@ -8,6 +8,7 @@ import { useTranslation } from '../../i18n/useTranslation'
 import dynamic from 'next/dynamic'
 import ErrorBoundary from '../../components/ErrorBoundary'
 import Sidebar from '../components/Sidebar'
+import SiteFooter from '../components/SiteFooter'
 
 // Chart loading skeleton
 const ChartSkeleton = ({ height = '400px' }: { height?: string }) => (
@@ -160,6 +161,8 @@ function BarChartsContent() {
           </div>
         </div>
       )}
+
+      <SiteFooter className="md:pl-20" />
     </div>
   )
 }

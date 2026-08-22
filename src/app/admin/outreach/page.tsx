@@ -8,6 +8,7 @@ import OutreachFilters from '@/app/components/outreach/OutreachFilters'
 import OutreachTable from '@/app/components/outreach/OutreachTable'
 import OutreachForm from '@/app/components/outreach/OutreachForm'
 import ResearchHelper from '@/app/components/outreach/ResearchHelper'
+import SiteFooter from '@/app/components/SiteFooter'
 
 function AdminAuth({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false)
@@ -358,6 +359,8 @@ function OutreachPageContent() {
           onClose={() => setSelectedRecord(null)}
         />
       )}
+
+      <SiteFooter className="mt-12" />
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes'
 import dynamic from 'next/dynamic'
 import StoryList from '../components/StoryList'
 import { useStoryMapLogic, berlinCoordinates, defaultZoom } from '../../hooks/useStoryMapLogic'
+import { OverlayCopyright } from '../components/SiteFooter'
 // TranslationProvider now in root layout
 
 const MapboxMap = dynamic(() => import('../components/MapboxMap'), {
@@ -658,6 +659,8 @@ function OverlayTestPageContent() {
           }
         }
       `}</style>
+
+      <OverlayCopyright />
     </div>
   )
 }

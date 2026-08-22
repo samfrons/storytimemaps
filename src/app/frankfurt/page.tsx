@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 import { useIsMounted } from '../../hooks/useIsMounted'
 import { useTranslation } from '../../i18n/useTranslation'
+import { OverlayCopyright } from '../components/SiteFooter'
 
 // Frankfurt coordinates
 const frankfurtCoordinates = {
@@ -933,6 +934,8 @@ function FrankfurtMapContent() {
           </div>
         </div>
       </div>
+
+      <OverlayCopyright />
     </div>
   )
 }

@@ -706,6 +706,19 @@
   font-size: 0.72rem !important;
   line-height: 1.55 !important;
 }
+.ht-rights {
+  margin-top: 0.9rem;
+  font-size: 0.72rem !important;
+  line-height: 1.55 !important;
+  color: var(--ht-ink-soft);
+}
+.ht-rights a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  outline: none;
+  box-shadow: none;
+}
 
 /* ---------- fallback (no token / no WebGL) ---------- */
 

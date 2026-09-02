@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useTranslation } from '../../../i18n/useTranslation'
 import { NAV_LINKS } from '../SiteHeader'
+import CopyrightNotice from '../CopyrightNotice'
 
 const HomeFooter: React.FC = () => {
   const { t } = useTranslation()
@@ -62,6 +63,12 @@ const HomeFooter: React.FC = () => {
               defaultValue:
                 'Based on the research of Dr. Christoph Kreutzmüller and the database of Jewish commercial activity in Berlin. For academic use, please cite the original research.',
             })}
+          </p>
+          <p className="font-mono text-xs leading-relaxed mt-4" style={{ color: 'var(--muted)' }}>
+            <CopyrightNotice
+              linkClassName="transition-opacity hover:opacity-80"
+              linkStyle={{ color: 'var(--foreground-muted)' }}
+            />
           </p>
         </div>
       </div>

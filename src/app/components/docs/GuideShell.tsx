@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import SiteHeader from '../SiteHeader'
+import CopyrightNotice from '../CopyrightNotice'
 import { ONBOARDING_DOCS } from '../../onboarding/docs'
 import { GUIDE_BORDER } from './GuideBlocks'
 
@@ -253,6 +254,9 @@ const GuideShell: React.FC<GuideShellProps> = ({
             GitHub
           </a>
           <span style={{ color: 'var(--foreground-muted)' }}>StoryMaps · Berlin 1900–1945</span>
+          <span style={{ color: 'var(--foreground-muted)' }}>
+            <CopyrightNotice linkStyle={{ color: 'var(--primary)' }} />
+          </span>
         </div>
       </footer>
     </div>

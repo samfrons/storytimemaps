@@ -3,6 +3,7 @@ import Link from 'next/link'
 import EducationDocument, { readEducationDoc } from '../../components/education/EducationDocument'
 import EducationPrintButton from '../../components/education/EducationPrintButton'
 import SiteHeader from '../../components/SiteHeader'
+import CopyrightNotice from '../../components/CopyrightNotice'
 
 export const dynamic = 'force-dynamic'
 
@@ -139,6 +140,14 @@ export default function EducationWorkbookPage() {
           )}
         </div>
       </section>
+
+      {/* The teaching pages carry no site nav of their own; this is their whole
+          footer — the standing attribution for the printed and shared material. */}
+      <footer className="px-5 sm:px-8 py-8 border-t" style={{ borderColor: 'var(--border)' }}>
+        <p className="max-w-5xl mx-auto font-mono text-xs" style={{ color: 'var(--muted)' }}>
+          <CopyrightNotice linkStyle={{ color: 'var(--foreground-muted)' }} />
+        </p>
+      </footer>
     </div>
   )
 }

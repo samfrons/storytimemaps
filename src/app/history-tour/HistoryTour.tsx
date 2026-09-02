@@ -21,6 +21,7 @@ import {
   type TourStop,
 } from './tourData'
 import { FOOTPRINTS_1930 } from './footprints1930'
+import CopyrightNotice from '../components/CopyrightNotice'
 
 // Map-internal palette. WebGL layers require literal color values (CSS
 // variables cannot reach into the map) — the documented map-styling
@@ -1233,6 +1234,9 @@ const HistoryTour: React.FC = () => {
                 Nominatim/OpenStreetMap. Relief: imagery © Esri, Maxar, Earthstar Geographics;
                 terrain Mapzen/AWS Open Data; buildings © OpenStreetMap contributors via OpenFreeMap
                 — rendered as an aged aerial survey.
+              </p>
+              <p className="ht-rights">
+                <CopyrightNotice />
               </p>
             </div>
           </section>

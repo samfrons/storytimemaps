@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import CopyrightNotice from '../components/CopyrightNotice'
 
 // Brutal-pop building blocks: thick borders, hard offset shadows, sharp edges.
 // All colors come from theme CSS variables per project rules.
@@ -375,6 +376,9 @@ const CollaboratePage: React.FC = () => {
             Outreach Guide
           </Link>
           <span style={{ color: 'var(--foreground-muted)' }}>StoryMaps · Berlin 1900–1945</span>
+          <span style={{ color: 'var(--foreground-muted)' }}>
+            <CopyrightNotice linkStyle={{ color: 'var(--primary)' }} />
+          </span>
         </div>
       </footer>
     </div>

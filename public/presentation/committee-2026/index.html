@@ -262,14 +262,14 @@ h2 + .lead { margin-top: 26px; }
 #s16 .foot { margin-top: 22px; font-size: 21px; line-height: 1.4; color: var(--foreground-muted); max-width: 1500px; }
 
 /* 14 — asks */
-.asks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 48px; align-items: stretch; }
-.ask { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 28px 30px; cursor: pointer; display: flex; flex-direction: column; min-height: 560px; }
-.ask h3 { margin-bottom: 18px; }
-.ask .k { font: 700 22px var(--font-mono); margin-bottom: 14px; color: var(--muted); }
+.asks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 40px; align-items: stretch; }
+.ask { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 24px 26px; cursor: pointer; display: flex; flex-direction: column; min-height: 520px; }
+.ask h3 { margin-bottom: 14px; }
+.ask .k { font: 700 22px var(--font-mono); margin-bottom: 10px; color: var(--muted); }
 .ask h3 { font-size: 28px; font-weight: 600; line-height: 1.2; }
-.ask ul { list-style: none; padding: 0; margin: 18px 0 22px; display: none; font-size: 22px; line-height: 1.4; color: var(--foreground-muted); }
-.ask li { padding: 10px 0; border-top: 2px solid var(--border); }
-.ask .one { display: block; margin-top: auto; padding: 16px 18px; background: var(--warning); border: 2px solid var(--border); font-size: 22px; line-height: 1.4; }
+.ask ul { list-style: none; padding: 0; margin: 14px 0 18px; display: none; font-size: 21px; line-height: 1.35; color: var(--foreground-muted); }
+.ask li { padding: 9px 0; border-top: 2px solid var(--border); }
+.ask .one { display: block; margin-top: auto; padding: 14px 16px; background: var(--warning); border: 2px solid var(--border); font-size: 21px; line-height: 1.35; }
 .ask.open { background: var(--foreground); color: var(--background); }
 .ask.open .k { color: var(--primary); }
 .ask.open ul { display: block; }
@@ -280,6 +280,10 @@ h2 + .lead { margin-top: 26px; }
 
 /* 15 — close */
 #s15 { background: var(--foreground); color: var(--background); }
+#s15 .photo { position: absolute; inset: 0; background: url('../../images/ebraun/ebraun1.webp') left 40% / 108% auto no-repeat; filter: grayscale(1) contrast(1.1); opacity: .34; }
+#s15 .wash { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(19,19,24,.92) 0%, rgba(19,19,24,.6) 55%, rgba(19,19,24,.25) 100%); }
+#s15 .body { position: relative; }
+#s15 .addr { font: 22px var(--font-mono); color: var(--warning); margin-bottom: 26px; }
 #s15 .body { display: grid; grid-template-columns: 1fr 360px; gap: 80px; align-items: end; height: 760px; }
 #s15 h2 { color: var(--background); font-size: 120px; }
 #s15 .contact { font: 400 34px var(--font-mono); line-height: 1.6; margin-top: 60px; }
@@ -347,11 +351,11 @@ body.print .ask { cursor: default; }
 <!-- ============ 2 · ONE NAME ============ -->
 <section class="slide" id="s2" data-n="2">
   <div class="kicker" data-de="Eine Adresse, dreißig Jahre" data-en="One address, thirty years"></div>
-  <h2 data-de="Was die Daten über ein einziges Geschäft wissen" data-en="What the data knows about a single store"></h2>
+  <h2 data-de="Was das Archiv über ein Geschäft weiß" data-en="What the archive knows about one store"></h2>
   <div class="body">
     <div class="beats reveal">
       <div class="beat"><div class="y">1914</div><p data-de="Die größte Filiale von E. Braun &amp; Co. eröffnet Unter den Linden 2, direkt neben dem Hotel Adlon. Abendgarderobe, Tischwäsche, später Möbel." data-en="E. Braun &amp; Co.’s largest branch opens at Unter den Linden 2, next to Hotel Adlon. Formal wear, table linen, later furniture."></p></div>
-      <div class="beat"><div class="y">1933</div><p data-de="Als österreichische Staatsbürger sind die jüdischen Inhaber zunächst geschützt. Das Geschäft läuft weiter." data-en="As Austrian nationals, the Jewish owners are initially protected. The store keeps trading."></p></div>
+      <div class="beat"><div class="y">1933</div><p data-de="Als österreichische Staatsbürger bleiben die jüdischen Inhaber zunächst verschont. Das Geschäft läuft weiter." data-en="As Austrian nationals, the Jewish owners are initially spared. The store keeps trading."></p></div>
       <div class="beat"><div class="y">1938</div><p data-de="Nach dem „Anschluss“ wird Siegfried Oser-Braun verhaftet und aus der Haft heraus zum Verkauf gezwungen. Die Familie flieht über London und Ägypten in die USA." data-en="After Austria’s annexation, Siegfried Oser-Braun is arrested and, while still detained, forced to sell. The family escapes via London and Egypt to the USA."></p></div>
       <div class="beat"><div class="y">1943</div><p data-de="Als „nicht kriegswichtig“ geschlossen, beschlagnahmt, einem SS-Führer zugewiesen. Im September durch Bomben zerstört." data-en="Closed as not relevant to the war effort, seized, assigned to a senior SS official. Destroyed by bombing in September."></p></div>
       <div class="beat now"><div class="y" data-de="Heute" data-en="Today"></div><p data-de="Der Zwangsverkauf wird 1954 für nichtig erklärt. Auf dem Grundstück steht heute das Hotel Adlon." data-en="The forced sale is declared void in 1954. The Hotel Adlon now covers the site."></p></div>
@@ -402,7 +406,7 @@ body.print .ask { cursor: default; }
     </div>
     <div class="legend">
       <span><i style="background:var(--success)"></i><span data-de="in Betrieb" data-en="active"></span></span>
-      <span><i style="background:var(--warning)"></i><span data-de="unter Druck" data-en="declining"></span></span>
+      <span><i style="background:var(--warning)"></i><span data-de="unter Druck" data-en="under pressure"></span></span>
       <span><i style="background:var(--danger)"></i><span data-de="geschlossen" data-en="closed"></span></span>
       <span><i style="background:var(--marker-standing)"></i><span data-de="Gebäude steht noch" data-en="building still standing"></span></span>
     </div>
@@ -427,7 +431,7 @@ body.print .ask { cursor: default; }
       <div class="kicker" data-de="Live, Teil 2" data-en="Live, part 2"></div>
       <h2 data-de="Der virtuelle Rundgang, 1925 bis 1945" data-en="The virtual tour, 1925 to 1945"></h2>
     </div>
-    <p class="small" style="max-width:520px;text-align:right" data-de="15 Schaufenster in einem modellierten Berlin der 1930er. Scrollen bewegt die Kamera und die Jahre." data-en="15 storefronts in a modelled 1930s Berlin. Scrolling moves the camera and the years."></p>
+    <p class="small" style="max-width:520px;text-align:right" data-de="15 Schaufenster, als Baukörper der 1930er auf dem heutigen Stadtgrund. Scrollen bewegt die Kamera und die Jahre." data-en="15 storefronts, as 1930s building volumes on today’s city ground. Scrolling moves the camera and the years."></p>
   </div>
   <div class="live" data-poster="posters/history-tour.webp">
     <img class="poster" src="posters/history-tour.webp" alt="">
@@ -472,8 +476,8 @@ body.print .ask { cursor: default; }
   </div>
   <div class="facts reveal">
     <div class="fact"><div class="num">2</div><p data-de="Formate: 300 × 200 mm mit Geschichte und Schaufenster-Gravur, 300 × 100 mm kompakt mit den vier Fakten" data-en="Formats: 300 × 200 mm with narrative and storefront engraving, 300 × 100 mm compact with the four facts"></p></div>
-    <div class="fact"><div class="num">18</div><p data-de="Tafeln mit laserfertigen Schnittdateien, je zwei Lesarten für zweifarbiges ABS" data-en="Plaques with laser-ready cut files, two readings each for two-tone ABS"></p></div>
-    <div class="fact"><div class="num">181</div><p data-de="Kandidaten-Adressen in der Ansprache-Liste für Eigentümer und Bezirke" data-en="Candidate addresses in the outreach list for owners and districts"></p></div>
+    <div class="fact"><div class="num">18</div><p data-de="Tafeln mit Gravurdateien, je zwei Lesarten für zweifarbiges ABS" data-en="Plaques with engraving files, two readings each for two-tone ABS"></p></div>
+    <div class="fact"><div class="num">181</div><p data-de="Adressen auf der Kontaktliste für Eigentümer und Bezirke" data-en="Addresses on the contact list for owners and districts"></p></div>
     <div class="fact"><div class="lockup">Stiftung<br><b>Zurückgeben</b></div><p data-de="auf jeder Tafel, in jedem Format. Keine Ausnahme." data-en="on every plaque, in every format. No exceptions."></p></div>
   </div>
   <p class="small" style="margin-top:40px" data-de="Stand: entworfen, geprüft, schneidbar. Noch keine Tafel hängt. Das ist der nächste Schritt, und er braucht Türen, die wir allein nicht öffnen können." data-en="Status: designed, verified, cuttable. No plaque is installed yet. That is the next step, and it needs doors we can’t open alone."></p>
@@ -492,7 +496,7 @@ body.print .ask { cursor: default; }
     <figure style="margin:0"><img src="../../images/exhibit/kiosk-in-gallery.webp" alt="Kiosk in gallery render"><figcaption data-de="Touch-Kiosk mit Karte und Zeitregler" data-en="Touch kiosk with map and time slider"></figcaption></figure>
   </div>
   <div class="kiosk">
-    <p data-de="Der Kiosk ist kein Rendering. Die Touch-Oberfläche mit Anlockmodus und Sitzungs-Timeout läuft heute im Browser und wartet auf einen Raum." data-en="The kiosk is not a rendering. The touch interface with attract mode and session timeout runs in a browser today and is waiting for a room."></p>
+    <p data-de="Der Kiosk ist kein Rendering. Die Touch-Oberfläche mit Attract-Loop und automatischem Neustart läuft heute im Browser und wartet auf einen Raum." data-en="The kiosk is not a rendering. The touch interface with an attract loop and automatic reset runs in a browser today and is waiting for a room."></p>
     <div><span class="status proto" data-de="Prototyp, sucht Partnerhaus" data-en="Prototype, seeking a partner venue"></span><br><span class="small mono">b3rlin.storytimemaps.com/museum-exhibit</span></div>
   </div>
   <aside class="notes">
@@ -504,11 +508,11 @@ body.print .ask { cursor: default; }
 <!-- ============ 7 · CLASSROOMS ============ -->
 <section class="slide" id="s7" data-n="9">
   <div class="kicker" data-de="Für den Unterricht" data-en="For classrooms"></div>
-  <h2 data-de="Kostenlose Materialien für 13- bis 18-Jährige" data-en="Free materials for ages 13 to 18"></h2>
+  <h2 data-de="Kostenloses Unterrichtsmaterial, Klasse 8 bis 13" data-en="Free teaching material, grades 8 to 13"></h2>
   <div class="body reveal">
     <div class="card">
       <div class="big">6</div>
-      <h3 data-de="Sechs Stunden aus einem Archiv" data-en="Six Lessons From One Archive"></h3>
+      <h3 data-de="Sechs Unterrichtsstunden aus einem Archiv" data-en="Six Lessons From One Archive"></h3>
       <p data-de="Sechs eigenständige Unterrichtseinheiten, jede in einer Schulstunde durchführbar, mit Arbeitsblättern. Datenlesen, Quellenkritik, eine Adresse recherchieren, eine Tafel entwerfen." data-en="Six standalone single-lesson activities with worksheets. Reading data, source criticism, researching one address, designing a plaque."></p>
       <div class="fine" data-de="storytimemaps.com/education/activities" data-en="storytimemaps.com/education/activities"></div>
     </div>
@@ -563,10 +567,10 @@ body.print .ask { cursor: default; }
   <div class="timeline reveal">
     <div class="ms"><div class="m">Jun</div><h3 data-de="Datenprüfung" data-en="Data verification"></h3><p data-de="10.021 Datensätze gegen die HU-Quelle geprüft, 587 Adressen wiederhergestellt, 251 neu geokodiert." data-en="10,021 records checked against the HU source, 587 addresses restored, 251 re-geocoded."></p></div>
     <div class="ms"><div class="m">Jun</div><h3 data-de="Drei Sprachen" data-en="Three languages"></h3><p data-de="Deutsch, Englisch, Jiddisch für die gesamte Oberfläche. Ausstellungskonzept online." data-en="German, English, Yiddish across the interface. Exhibit concept published."></p></div>
-    <div class="ms"><div class="m">Aug</div><h3 data-de="Nachkriegs-Ebene" data-en="Postwar layer"></h3><p data-de="Welche Gebäude heute noch stehen. Der Touch-Kiosk als lauffähiger Prototyp." data-en="Which buildings still stand today. The touch kiosk as a working prototype."></p></div>
+    <div class="ms"><div class="m">Aug</div><h3 data-de="Was heute noch steht" data-en="What still stands today"></h3><p data-de="Welche Gebäude heute noch stehen. Der Touch-Kiosk als lauffähiger Prototyp." data-en="Which buildings still stand today. The touch kiosk as a working prototype."></p></div>
     <div class="ms"><div class="m">Aug</div><h3 data-de="Unterricht und Auffindbarkeit" data-en="Classrooms and findability"></h3><p data-de="Sechs Unterrichtseinheiten, ein Arbeitsheft. Suchmaschinen-Grundlagen, damit das Archiv gefunden wird." data-en="Six lessons and a workbook. Search-engine groundwork so the archive can be found."></p></div>
-    <div class="ms"><div class="m">Aug</div><h3 data-de="Startseite und Rundgang" data-en="Homepage and tour"></h3><p data-de="Neue erzählende Startseite. 3D-Rundgang durch 15 Schaufenster, auch auf dem Handy flüssig." data-en="New narrative homepage. 3D tour through 15 storefronts, smooth on phones too."></p></div>
-    <div class="ms"><div class="m">Sep</div><h3 data-de="Tafeln schneidbar" data-en="Plaques cuttable"></h3><p data-de="18 Tafeln mit Gravurdateien, zwei Formate, eine verzierte Variante, Ansprache-Liste mit 181 Adressen." data-en="18 plaques with engraving files, two formats, one ornate variant, outreach list of 181 addresses."></p></div>
+    <div class="ms"><div class="m">Aug</div><h3 data-de="Startseite und Rundgang" data-en="Homepage and tour"></h3><p data-de="Neue erzählende Startseite. 3D-Rundgang durch 15 Schaufenster, auch auf dem Handy flüssig." data-en="New narrative homepage. 3D tour through 15 storefronts, runs smoothly on phones."></p></div>
+    <div class="ms"><div class="m">Sep</div><h3 data-de="Tafeln schneidbar" data-en="Plaques ready to cut"></h3><p data-de="18 Tafeln mit Gravurdateien, zwei Formate, eine verzierte Variante, Kontaktliste mit 181 Adressen." data-en="18 plaques with engraving files, two formats, one ornate variant, outreach list of 181 addresses."></p></div>
   </div>
   <aside class="notes">
     <p data-de="Alles davon ist online oder im Repository nachprüfbar. Vier Monate, ein Entwickler, ein knappes Hosting-Budget." data-en="All of it is online or verifiable in the repository. Four months, one developer, a tight hosting budget."></p>
@@ -579,7 +583,7 @@ body.print .ask { cursor: default; }
   <h2 data-de="Vier Schritte, und was jeder davon braucht" data-en="Four steps, and what each one needs"></h2>
   <div class="roadmap reveal">
     <div class="row"><div class="q" data-de="Q4" data-en="Q4"></div><h3 data-de="Die ersten Tafeln hängen. Drei bis fünf Adressen als Pilot." data-en="The first plaques go up. Three to five addresses as a pilot."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Zustimmung von Eigentümern und Bezirksamt, einen Handwerksbetrieb für die Montage, einen kleinen Installationsetat." data-en="Consent from property owners and the district office, a workshop for mounting, a small installation budget."></span></p></div>
-    <div class="row"><div class="q" data-de="Q1" data-en="Q1"></div><h3 data-de="Eigene Einstiege für Institutionen und für Lehrkräfte." data-en="Dedicated entry points for institutions and for teachers."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Zwei Gespräche mit Häusern und zwei mit Schulen, damit wir bauen, was gebraucht wird, statt was wir vermuten." data-en="Two conversations with venues and two with schools, so we build what is needed rather than what we assume."></span></p></div>
+    <div class="row"><div class="q" data-de="Q1" data-en="Q1"></div><h3 data-de="Eigene Startseiten für Museen und für Lehrkräfte." data-en="Dedicated landing pages for museums and for teachers."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Zwei Gespräche mit Häusern und zwei mit Schulen, damit wir bauen, was gebraucht wird, statt was wir vermuten." data-en="Two conversations with venues and two with schools, so we build what is needed rather than what we assume."></span></p></div>
     <div class="row"><div class="q" data-de="Q2" data-en="Q2"></div><h3 data-de="Der Kiosk steht in einem Partnerhaus, zunächst in der kleinsten Größe." data-en="The kiosk stands in a partner venue, starting at the smallest scale."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Ein Haus, eine Steckdose, ein Bildschirm. Der Rest existiert." data-en="A venue, a power socket, a screen. The rest exists."></span></p></div>
     <div class="row"><div class="q" data-de="Q3" data-en="Q3"></div><h3 data-de="Frankfurt vollständig, eine weitere Stadt begonnen." data-en="Frankfurt complete, one more city begun."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Zugang zu einer vergleichbaren Quelle und einen lokalen Forschungspartner." data-en="Access to a comparable source and a local research partner."></span></p></div>
   </div>
@@ -651,7 +655,7 @@ body.print .ask { cursor: default; }
         <li data-de="Welches Haus wäre der richtige erste Ort für den Kiosk?" data-en="Which venue would be the right first home for the kiosk?"></li>
         <li data-de="Jüdisches Museum, Topographie des Terrors, Bezirksmuseen, Stolpersteine-Initiative: Wen kennen Sie dort?" data-en="Jewish Museum, Topography of Terror, district museums, the Stolpersteine initiative: who do you know there?"></li>
       </ul>
-      <div class="one" data-de="Die eine wertvollste Einführung: ein Kurator, der bereit ist, 30 Minuten den Kiosk anzufassen." data-en="The single most useful introduction: a curator willing to spend 30 minutes touching the kiosk."></div>
+      <div class="one" data-de="Die eine wertvollste Einführung: eine Kuratorin oder ein Kurator, die den Kiosk 30 Minuten ausprobiert." data-en="The single most useful introduction: a curator who will try the kiosk for 30 minutes."></div>
     </div>
     <div class="ask" tabindex="0" data-k="2">
       <div class="k">2</div>
@@ -666,14 +670,14 @@ body.print .ask { cursor: default; }
       <div class="k">3</div>
       <h3 data-de="Tafeln in der Stadt" data-en="Plaques in the city"></h3>
       <ul>
-        <li data-de="Wie erreicht man Hauseigentümer und Ladenbetreiber, ohne dass die Post im Papierkorb landet?" data-en="How do you reach property owners and shopkeepers without the letter landing in the bin?"></li>
+        <li data-de="Wie erreicht man Hauseigentümer und Ladenbetreiber, ohne dass der Brief ungelesen bleibt?" data-en="How do you reach property owners and shopkeepers without the letter going unread?"></li>
         <li data-de="Welches Bezirksamt ist erfahrungsgemäß offen? Gibt es Vorbilder aus Stolpersteine oder Berliner Gedenktafel?" data-en="Which district office is known to be open? Are there precedents from Stolpersteine or the Berliner Gedenktafel?"></li>
       </ul>
       <div class="one" data-de="Die eine wertvollste Einführung: ein Eigentümer Unter den Linden oder in der Friedrichstraße, der Ja sagt." data-en="The single most useful introduction: one property owner on Unter den Linden or Friedrichstraße who says yes."></div>
     </div>
     <div class="ask" tabindex="0" data-k="4">
       <div class="k">4</div>
-      <h3 data-de="Presse, Forschung, Mitförderer" data-en="Press, research, co-funders"></h3>
+      <h3 data-de="Presse, Forschung, Förderprogramme" data-en="Press, research, funding programmes"></h3>
       <ul>
         <li data-de="Welche Redaktion würde die Karte zeigen, nicht nur erwähnen?" data-en="Which editorial desk would show the map, not just mention it?"></li>
         <li data-de="HU Berlin, Leo-Baeck-Institut, Aktives Museum: Wie wird aus Quellennutzung eine Kooperation?" data-en="HU Berlin, Leo Baeck Institute, Aktives Museum: how does using a source become a cooperation?"></li>
@@ -681,6 +685,7 @@ body.print .ask { cursor: default; }
       <div class="one" data-de="Die eine wertvollste Einführung: eine Programmverantwortliche, die uns sagt, welchen Antrag wir nicht schreiben sollten." data-en="The single most useful introduction: a programme officer who tells us which application not to write."></div>
     </div>
   </div>
+  <p class="lead" style="margin-top:30px;font-size:24px" data-de="Eine Einführung pro Person reicht. Wir melden uns innerhalb von 48 Stunden." data-en="One introduction per person is enough. We will follow up within 48 hours."></p>
   <aside class="notes">
     <p data-de="Tasten 1 bis 4 klappen die Fragen einer Karte auf." data-en="Keys 1 to 4 unfold a card’s questions."></p>
     <p data-de="Das ist der eigentliche Zweck des Treffens. 10 Minuten oder mehr. Karten einzeln öffnen, dann Stille aushalten." data-en="This is the actual point of the meeting. 10 minutes or more. Open the cards one at a time, then tolerate the silence."></p>
@@ -690,8 +695,10 @@ body.print .ask { cursor: default; }
 
 <!-- ============ 15 · CLOSE ============ -->
 <section class="slide dark" id="s15" data-n="15">
+  <div class="photo"></div><div class="wash"></div>
   <div class="body">
     <div class="reveal">
+      <div class="addr" data-de="Unter den Linden 2. Noch keine Tafel." data-en="Unter den Linden 2. No plaque yet."></div>
       <h2 data-de="Danke." data-en="Thank you."></h2>
       <div class="contact"><span>b3rlin.storytimemaps.com</span><br>info@storytimemaps.com</div>
       <div class="lockup"><span data-de="Ein Projekt gefördert durch" data-en="A project supported by"></span> Stiftung <b>Zurückgeben</b></div>
@@ -713,7 +720,7 @@ body.print .ask { cursor: default; }
     <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
     <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
   </div>
-  <aside class="notes"><p data-de="Anlockmodus startet nach 60 Sekunden ohne Berührung." data-en="Attract mode starts after 60 seconds without touch."></p></aside>
+  <aside class="notes"><p data-de="Der Attract-Loop startet nach 60 Sekunden ohne Berührung." data-en="Attract mode starts after 60 seconds without touch."></p></aside>
 </section>
 
 <section class="slide appx" id="a2" data-n="A2">
@@ -778,7 +785,7 @@ body.print .ask { cursor: default; }
     <div class="tile"><div class="num">16</div><p data-de="recherchierte und erzählte Geschichten" data-en="researched and narrated stories"></p></div>
     <div class="tile"><div class="num">15</div><p data-de="Stationen im 3D-Rundgang" data-en="stops in the 3D tour"></p></div>
     <div class="tile"><div class="num">18</div><p data-de="Gedenktafeln, laserfertig" data-en="memorial plaques, laser-ready"></p></div>
-    <div class="tile"><div class="num">181</div><p data-de="Adressen in der Ansprache-Liste" data-en="addresses in the outreach list"></p></div>
+    <div class="tile"><div class="num">181</div><p data-de="Adressen auf der Kontaktliste" data-en="addresses on the contact list"></p></div>
     <div class="tile"><div class="num">6 + 1</div><p data-de="Unterrichtseinheiten und ein Arbeitsheft" data-en="lessons and one workbook"></p></div>
     <div class="tile"><div class="num">3</div><p data-de="Sprachen: Deutsch, Englisch, Jiddisch" data-en="languages: German, English, Yiddish"></p></div>
     <div class="tile"><div class="num">167</div><p data-de="Geschäfte in Frankfurt, der erste Schritt über Berlin hinaus" data-en="businesses in Frankfurt, the first step beyond Berlin"></p></div>

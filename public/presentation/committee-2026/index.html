@@ -194,8 +194,8 @@ h2 + .lead { margin-top: 26px; }
 #s7 .strip i { width: 14px; height: 14px; background: var(--primary); border: 2px solid var(--border); }
 
 /* 8 — exhibit */
-#s8 .renders { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 30px; margin-top: 40px; }
-#s8 .renders img { width: 100%; height: 420px; object-fit: cover; display: block; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); }
+#s8 .renders { display: grid; grid-template-columns: 1.3fr 1fr; gap: 36px; margin-top: 40px; }
+#s8 .renders img { width: 100%; height: 480px; object-fit: cover; display: block; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); }
 #s8 .renders figcaption { font-size: 17px; color: var(--muted); margin-top: 16px; }
 #s8 .kiosk { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 #s8 .kiosk p { font-size: 22px; line-height: 1.45; color: var(--foreground-muted); }
@@ -248,16 +248,17 @@ h2 + .lead { margin-top: 26px; }
 .row .need b { font-weight: 600; color: var(--foreground); }
 
 /* 14 — asks */
-.asks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 48px; align-items: start; }
-.ask { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 28px 30px; cursor: pointer; }
+.asks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 48px; align-items: stretch; }
+.ask { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 28px 30px; cursor: pointer; display: flex; flex-direction: column; min-height: 560px; }
+.ask h3 { margin-bottom: 18px; }
 .ask .k { font: 700 22px var(--font-mono); margin-bottom: 14px; color: var(--muted); }
 .ask h3 { font-size: 28px; font-weight: 600; line-height: 1.2; }
-.ask ul { list-style: none; padding: 0; margin: 18px 0 0; display: none; font-size: 19px; line-height: 1.45; color: var(--foreground-muted); }
+.ask ul { list-style: none; padding: 0; margin: 18px 0 22px; display: none; font-size: 22px; line-height: 1.4; color: var(--foreground-muted); }
 .ask li { padding: 10px 0; border-top: 2px solid var(--border); }
-.ask .one { display: none; margin-top: 18px; padding: 14px 16px; background: var(--warning); border: 2px solid var(--border); font-size: 19px; line-height: 1.4; }
+.ask .one { display: block; margin-top: auto; padding: 16px 18px; background: var(--warning); border: 2px solid var(--border); font-size: 22px; line-height: 1.4; }
 .ask.open { background: var(--foreground); color: var(--background); }
 .ask.open .k { color: var(--primary); }
-.ask.open ul, .ask.open .one { display: block; }
+.ask.open ul { display: block; }
 .ask.open ul { color: rgba(242,239,230,.85); }
 .ask.open li { border-color: rgba(242,239,230,.3); }
 .ask.open .one { color: var(--foreground); }
@@ -297,7 +298,7 @@ body.print .live .hint, body.print .live .offline { display: none; }
 body.print #progress, body.print #lang, body.print #nav, body.print #notes { display: none; }
 body.print #counter, body.print #brand { display: none; }
 body.print .slide .pcount { display: block; position: absolute; right: var(--mx); bottom: 44px; font: 18px var(--font-mono); color: var(--muted); }
-body.print .ask ul, body.print .ask .one { display: block; }
+body.print .ask ul { display: block; }
 body.print .ask { cursor: default; }
 .pcount { display: none; }
 </style>
@@ -343,7 +344,8 @@ body.print .ask { cursor: default; }
     </div>
     <div class="reveal">
       <img class="plaque" src="../../images/plaques/e-braun-plaque.webp" alt="Memorial plaque for E. Braun & Co.">
-      <p class="cap small" data-de="Die Gedenktafel für diese Adresse, fertigungsreif. Mehr dazu auf Folie 6." data-en="The memorial plaque for this address, ready for fabrication. More on slide 6."></p>
+      <p class="cap small" data-de="Die Gedenktafel für diese Adresse, fertigungsreif. Mehr dazu auf Folie 7." data-en="The memorial plaque for this address, ready for fabrication. More on slide 7."></p>
+      <p class="cap small" data-de="Die Tafel nennt die historische Hausnummer 75. Nach der Neunummerierung liegt das Grundstück heute bei Unter den Linden 2, im Block des Hotels Adlon." data-en="The plaque gives the historical street number, 75. After renumbering, the site is today Unter den Linden 2, within the Hotel Adlon block."></p>
     </div>
   </div>
   <aside class="notes">
@@ -426,8 +428,26 @@ body.print .ask { cursor: default; }
   </aside>
 </section>
 
+<!-- ============ 12 · VISION ============ -->
+<section class="slide" id="s12" data-n="6">
+  <div class="kicker" data-de="Was wir bauen" data-en="What we are building"></div>
+  <h2 data-de="Erinnerung an drei Orten: im Archiv, auf der Straße, im Museum" data-en="Memory in three places: the archive, the street, the museum"></h2>
+  <div class="vision reveal">
+    <div class="card"><div class="n">1</div><h3 data-de="Das Archiv" data-en="The archive"></h3><p data-de="Die Karte, der Rundgang, die Daten. Offen, dreisprachig, für Forschung und Unterricht nutzbar." data-en="The map, the tour, the data. Open, in three languages, usable for research and teaching."></p><span class="status on" data-de="online" data-en="live"></span><div class="arrow"></div></div>
+    <div class="card"><div class="n">2</div><h3 data-de="Die Straße" data-en="The street"></h3><p data-de="Gedenktafeln an den echten Adressen, mit QR-Code zurück ins Archiv. Aus dem Bildschirm in die Stadt." data-en="Memorial plaques at the real addresses, with a QR code back into the archive. From the screen into the city."></p><span class="status progress" data-de="in Arbeit" data-en="in progress"></span><div class="arrow"></div></div>
+    <div class="card"><div class="n">3</div><h3 data-de="Das Museum" data-en="The museum"></h3><p data-de="Eine begehbare Karte und ein Touch-Kiosk in einem Haus, das die Geschichte ohnehin erzählt." data-en="A walk-on map and a touch kiosk in a venue that already tells this history."></p><span class="status proto" data-de="Prototyp" data-en="prototype"></span></div>
+  </div>
+  <div class="beyond">
+    <span class="tag cyan" data-de="Und darüber hinaus" data-en="And beyond"></span>
+    <span data-de="Frankfurt als Pilot mit 167 Geschäften. Die Methode ist übertragbar auf jede Stadt mit einer Quelle wie der Berliner." data-en="Frankfurt as a pilot with 167 businesses. The method transfers to any city with a source like Berlin’s."></span>
+  </div>
+  <aside class="notes">
+    <p data-de="Die drei Orte verstärken sich gegenseitig: Die Tafel führt zur Karte, die Karte ins Museum, das Museum in die Straße." data-en="The three places reinforce each other: the plaque leads to the map, the map to the museum, the museum back to the street."></p>
+  </aside>
+</section>
+
 <!-- ============ 6 · PLAQUES ============ -->
-<section class="slide" id="s6" data-n="6">
+<section class="slide" id="s6" data-n="7">
   <div class="kicker" data-de="Von der Karte auf die Straße" data-en="From the map to the street"></div>
   <h2 data-de="Gedenktafeln, fertigungsreif" data-en="Memorial plaques, ready to fabricate"></h2>
   <div class="plaques reveal">
@@ -449,8 +469,26 @@ body.print .ask { cursor: default; }
   </aside>
 </section>
 
+<!-- ============ 8 · EXHIBIT ============ -->
+<section class="slide" id="s8" data-n="8">
+  <div class="kicker" data-de="Ins Museum" data-en="Into the museum"></div>
+  <h2 data-de="Die Ausstellung: entworfen, der Kiosk läuft bereits" data-en="The exhibit: designed, and the kiosk already runs"></h2>
+  <div class="renders reveal">
+    <figure style="margin:0"><img src="../../images/exhibit/gallery-isometric-plan.webp" alt="Isometric gallery plan"><figcaption data-de="Raumplan mit begehbarer Bodenkarte, in drei Größen: Vitrine, Raum, Halle" data-en="Gallery plan with a walk-on floor map, at three scales: case, room, hall"></figcaption></figure>
+    <figure style="margin:0"><img src="../../images/exhibit/kiosk-in-gallery.webp" alt="Kiosk in gallery render"><figcaption data-de="Touch-Kiosk mit Karte und Zeitregler" data-en="Touch kiosk with map and time slider"></figcaption></figure>
+  </div>
+  <div class="kiosk">
+    <p data-de="Der Kiosk ist kein Rendering. Die Touch-Oberfläche mit Anlockmodus und Sitzungs-Timeout läuft heute im Browser und wartet auf einen Raum." data-en="The kiosk is not a rendering. The touch interface with attract mode and session timeout runs in a browser today and is waiting for a room."></p>
+    <div><span class="status proto" data-de="Prototyp, sucht Partnerhaus" data-en="Prototype, seeking a partner venue"></span><br><span class="small mono">b3rlin.storytimemaps.com/museum-exhibit</span></div>
+  </div>
+  <aside class="notes">
+    <p data-de="Bei Nachfrage: Anhang-Folie mit der Live-Kiosk-Ansicht ist mit Taste K erreichbar (Appendix 1)." data-en="If asked: the live kiosk view is in the appendix, key K jumps there (Appendix 1)."></p>
+    <p data-de="Drei Größen, weil wir nicht wissen, welches Haus Ja sagt." data-en="Three scales because we don’t know which venue says yes."></p>
+  </aside>
+</section>
+
 <!-- ============ 7 · CLASSROOMS ============ -->
-<section class="slide" id="s7" data-n="7">
+<section class="slide" id="s7" data-n="9">
   <div class="kicker" data-de="Für den Unterricht" data-en="For classrooms"></div>
   <h2 data-de="Kostenlose Materialien für 13- bis 18-Jährige" data-en="Free materials for ages 13 to 18"></h2>
   <div class="body reveal">
@@ -477,44 +515,25 @@ body.print .ask { cursor: default; }
   </aside>
 </section>
 
-<!-- ============ 8 · EXHIBIT ============ -->
-<section class="slide" id="s8" data-n="8">
-  <div class="kicker" data-de="Ins Museum" data-en="Into the museum"></div>
-  <h2 data-de="Die Ausstellung: entworfen, der Kiosk läuft bereits" data-en="The exhibit: designed, and the kiosk already runs"></h2>
-  <div class="renders reveal">
-    <figure style="margin:0"><img src="../../images/exhibit/floor-map-installation.webp" alt="Floor map installation render"><figcaption data-de="Begehbare Bodenkarte, Zeitachse als Lichtband" data-en="Walk-on floor map, timeline as a light strip"></figcaption></figure>
-    <figure style="margin:0"><img src="../../images/exhibit/gallery-isometric-plan.webp" alt="Isometric gallery plan"><figcaption data-de="Raumplan in drei Größen: Vitrine, Raum, Halle" data-en="Gallery plan at three scales: case, room, hall"></figcaption></figure>
-    <figure style="margin:0"><img src="../../images/exhibit/kiosk-in-gallery.webp" alt="Kiosk in gallery render"><figcaption data-de="Touch-Kiosk mit Karte und Zeitregler" data-en="Touch kiosk with map and time slider"></figcaption></figure>
-  </div>
-  <div class="kiosk">
-    <p data-de="Der Kiosk ist kein Rendering. Die Touch-Oberfläche mit Anlockmodus und Sitzungs-Timeout läuft heute im Browser und wartet auf einen Raum." data-en="The kiosk is not a rendering. The touch interface with attract mode and session timeout runs in a browser today and is waiting for a room."></p>
-    <div><span class="status proto" data-de="Prototyp, sucht Partnerhaus" data-en="Prototype, seeking a partner venue"></span><br><span class="small mono">b3rlin.storytimemaps.com/museum-exhibit</span></div>
-  </div>
-  <aside class="notes">
-    <p data-de="Bei Nachfrage: Anhang-Folie mit der Live-Kiosk-Ansicht ist mit Taste K erreichbar (Appendix 1)." data-en="If asked: the live kiosk view is in the appendix, key K jumps there (Appendix 1)."></p>
-    <p data-de="Drei Größen, weil wir nicht wissen, welches Haus Ja sagt." data-en="Three scales because we don’t know which venue says yes."></p>
-  </aside>
-</section>
-
 <!-- ============ 9 · RIGOR ============ -->
-<section class="slide" id="s9" data-n="9">
+<section class="slide" id="s9" data-n="10">
   <div class="kicker" data-de="Warum man dem trauen kann" data-en="Why this can be trusted"></div>
-  <h2 data-de="Jede Zahl hat eine Quelle, jede Quelle wurde 2026 nachgeprüft" data-en="Every number has a source, every source was re-checked in 2026"></h2>
+  <h2 data-de="Jede Zahl hat eine Quelle und wurde 2026 dagegen geprüft" data-en="Every number has a source and was checked against it in 2026"></h2>
   <div class="cols reveal">
     <div class="col">
       <h3 data-de="Die Quelle" data-en="The source"></h3>
-      <p data-de="Dr. Christoph Kreutzmüller, „Final Sale. The Destruction of Jewish Commercial Activity in Nazi Germany“ (2015), und die Datenbank jüdischer Gewerbebetriebe an der Humboldt-Universität zu Berlin." data-en="Dr. Christoph Kreutzmüller, “Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany” (2015), and the database of Jewish businesses at Humboldt University Berlin."></p>
+      <p data-de="Dr. Christoph Kreutzmüller, „Ausverkauf. Die Vernichtung der jüdischen Gewerbetätigkeit in Berlin 1930–1945“ (2012, englisch als „Final Sale“ 2015), und die Datenbank jüdischer Gewerbebetriebe an der Humboldt-Universität zu Berlin." data-en="Dr. Christoph Kreutzmüller, “Ausverkauf” (2012; in English as “Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany”, 2015), and the database of Jewish businesses at Humboldt University Berlin."></p>
       <p data-de="Die 16 erzählten Geschichten stammen aus der Forschung von Christine Fischer-Defoy und dem Aktiven Museum." data-en="The 16 narrated stories draw on the research of Christine Fischer-Defoy and the Aktives Museum."></p>
     </div>
     <div class="col">
       <h3 data-de="Die Prüfung" data-en="The verification"></h3>
       <div class="pct">91<small>,6 %</small></div>
-      <p data-de="9.177 von 10.021 Datensätzen stimmen in jedem geprüften Feld mit der Quelle überein. 607 vorsichtige Korrekturen, 254 Datensätze zur Handprüfung markiert. Vollständiger Prüflauf: 8 Sekunden." data-en="9,177 of 10,021 records match the source on every checked field. 607 conservative fixes, 254 records flagged for manual review. Full verification run: 8 seconds."></p>
+      <p data-de="9.177 von 10.021 Datensätzen stimmen in jedem geprüften Feld mit der Quelle überein. Bei den übrigen fanden sich 861 Feldabweichungen: 607 automatisch korrigiert (Leerzeichen, Umlaute), 254 zur Handprüfung markiert." data-en="9,177 of 10,021 records match the source on every checked field. The rest showed 861 field differences: 607 fixed automatically (whitespace, diacritics), 254 flagged for manual review."></p>
     </div>
     <div class="col">
       <h3 data-de="Die Sprachen" data-en="The languages"></h3>
       <div class="langs"><span>DE</span><span>EN</span><span class="yi">ייִדיש</span></div>
-      <p style="margin-top:22px" data-de="Die gesamte Oberfläche, nicht nur die Startseite. Jiddisch, weil die Sprache der Ladenschilder es war." data-en="The whole interface, not just the homepage. Yiddish, because that is what many of the shop signs were in."></p>
+      <p style="margin-top:22px" data-de="Die gesamte Oberfläche, nicht nur die Startseite. Jiddisch, weil ein Teil dieser Welt, vor allem im Scheunenviertel, jiddisch sprach." data-en="The whole interface, not just the homepage. Yiddish, because part of this world, above all in the Scheunenviertel, spoke it."></p>
     </div>
   </div>
   <aside class="notes">
@@ -524,7 +543,7 @@ body.print .ask { cursor: default; }
 </section>
 
 <!-- ============ 10 · WHAT THE GRANT BUILT ============ -->
-<section class="slide" id="s10" data-n="10">
+<section class="slide" id="s10" data-n="11">
   <div class="kicker" data-de="Juni bis September 2026" data-en="June to September 2026"></div>
   <h2 data-de="Was mit der Förderung entstanden ist" data-en="What the grant built"></h2>
   <div class="timeline reveal">
@@ -540,46 +559,8 @@ body.print .ask { cursor: default; }
   </aside>
 </section>
 
-<!-- ============ 11 · BY THE NUMBERS ============ -->
-<section class="slide" id="s11" data-n="11">
-  <div class="kicker" data-de="Stand heute" data-en="As of today"></div>
-  <h2 data-de="In Zahlen" data-en="By the numbers"></h2>
-  <div class="tiles reveal">
-    <div class="tile hi"><div class="num" data-de="10.021" data-en="10,021"></div><p data-de="dokumentierte Geschäfte" data-en="documented businesses"></p></div>
-    <div class="tile"><div class="num" data-de="8.838" data-en="8,838"></div><p data-de="an ihrer Adresse auf der Karte" data-en="placed at their address on the map"></p></div>
-    <div class="tile"><div class="num">16</div><p data-de="recherchierte und erzählte Geschichten" data-en="researched and narrated stories"></p></div>
-    <div class="tile"><div class="num">15</div><p data-de="Stationen im 3D-Rundgang" data-en="stops in the 3D tour"></p></div>
-    <div class="tile"><div class="num">18</div><p data-de="Gedenktafeln, laserfertig" data-en="memorial plaques, laser-ready"></p></div>
-    <div class="tile"><div class="num">181</div><p data-de="Adressen in der Ansprache-Liste" data-en="addresses in the outreach list"></p></div>
-    <div class="tile"><div class="num">6 + 1</div><p data-de="Unterrichtseinheiten und ein Arbeitsheft" data-en="lessons and one workbook"></p></div>
-    <div class="tile"><div class="num">3</div><p data-de="Sprachen: Deutsch, Englisch, Jiddisch" data-en="languages: German, English, Yiddish"></p></div>
-    <div class="tile"><div class="num">167</div><p data-de="Geschäfte in Frankfurt, der erste Schritt über Berlin hinaus" data-en="businesses in Frankfurt, the first step beyond Berlin"></p></div>
-  </div>
-  <aside class="notes">
-    <p data-de="Nur vorlesen, was gefragt wird. Diese Folie ist zum Anschauen." data-en="Only read out what gets asked. This slide is for looking at."></p>
-  </aside>
-</section>
-
-<!-- ============ 12 · VISION ============ -->
-<section class="slide" id="s12" data-n="12">
-  <div class="kicker" data-de="Die Idee dahinter" data-en="The idea behind it"></div>
-  <h2 data-de="Erinnerung an drei Orten: im Archiv, auf der Straße, im Museum" data-en="Memory in three places: the archive, the street, the museum"></h2>
-  <div class="vision reveal">
-    <div class="card"><div class="n">1</div><h3 data-de="Das Archiv" data-en="The archive"></h3><p data-de="Die Karte, der Rundgang, die Daten. Offen, dreisprachig, für Forschung und Unterricht nutzbar." data-en="The map, the tour, the data. Open, in three languages, usable for research and teaching."></p><span class="status on" data-de="online" data-en="live"></span><div class="arrow"></div></div>
-    <div class="card"><div class="n">2</div><h3 data-de="Die Straße" data-en="The street"></h3><p data-de="Gedenktafeln an den echten Adressen, mit QR-Code zurück ins Archiv. Aus dem Bildschirm in die Stadt." data-en="Memorial plaques at the real addresses, with a QR code back into the archive. From the screen into the city."></p><span class="status progress" data-de="in Arbeit" data-en="in progress"></span><div class="arrow"></div></div>
-    <div class="card"><div class="n">3</div><h3 data-de="Das Museum" data-en="The museum"></h3><p data-de="Eine begehbare Karte und ein Touch-Kiosk in einem Haus, das die Geschichte ohnehin erzählt." data-en="A walk-on map and a touch kiosk in a venue that already tells this history."></p><span class="status proto" data-de="Prototyp" data-en="prototype"></span></div>
-  </div>
-  <div class="beyond">
-    <span class="tag cyan" data-de="Und darüber hinaus" data-en="And beyond"></span>
-    <span data-de="Frankfurt als Pilot mit 167 Geschäften. Die Methode ist übertragbar auf jede Stadt mit einer Quelle wie der Berliner." data-en="Frankfurt as a pilot with 167 businesses. The method transfers to any city with a source like Berlin’s."></span>
-  </div>
-  <aside class="notes">
-    <p data-de="Die drei Orte verstärken sich gegenseitig: Die Tafel führt zur Karte, die Karte ins Museum, das Museum in die Straße." data-en="The three places reinforce each other: the plaque leads to the map, the map to the museum, the museum back to the street."></p>
-  </aside>
-</section>
-
 <!-- ============ 13 · NEXT 12 MONTHS ============ -->
-<section class="slide" id="s13" data-n="13">
+<section class="slide" id="s13" data-n="12">
   <div class="kicker" data-de="Die nächsten zwölf Monate" data-en="The next twelve months"></div>
   <h2 data-de="Vier Schritte, und was jeder davon braucht" data-en="Four steps, and what each one needs"></h2>
   <div class="roadmap reveal">
@@ -595,7 +576,7 @@ body.print .ask { cursor: default; }
 </section>
 
 <!-- ============ 14 · WHERE WE NEED YOU ============ -->
-<section class="slide" id="s14" data-n="14">
+<section class="slide" id="s14" data-n="13">
   <div class="kicker" data-de="Keine Bitte um Geld. Eine Bitte um Ideen und Türen." data-en="Not a request for money. A request for ideas and doors."></div>
   <h2 data-de="Wo wir Ihre Erfahrung brauchen" data-en="Where we need your experience"></h2>
   <div class="asks reveal" id="asks">
@@ -605,7 +586,6 @@ body.print .ask { cursor: default; }
       <ul>
         <li data-de="Welches Haus wäre der richtige erste Ort für den Kiosk?" data-en="Which venue would be the right first home for the kiosk?"></li>
         <li data-de="Jüdisches Museum, Topographie des Terrors, Bezirksmuseen, Stolpersteine-Initiative: Wen kennen Sie dort?" data-en="Jewish Museum, Topography of Terror, district museums, the Stolpersteine initiative: who do you know there?"></li>
-        <li data-de="Gibt es eine Sonderausstellung 2027, in die das passt?" data-en="Is there a 2027 special exhibition this would fit into?"></li>
       </ul>
       <div class="one" data-de="Die eine wertvollste Einführung: ein Kurator, der bereit ist, 30 Minuten den Kiosk anzufassen." data-en="The single most useful introduction: a curator willing to spend 30 minutes touching the kiosk."></div>
     </div>
@@ -615,7 +595,6 @@ body.print .ask { cursor: default; }
       <ul>
         <li data-de="Welche Schule oder welches Lehrkräfte-Netzwerk würde das Arbeitsheft in einem Halbjahr erproben?" data-en="Which school or teacher network would trial the workbook over one term?"></li>
         <li data-de="Landesinstitut, Fachverbände, Bildungsträger: Wer entscheidet, was in Berlin unterrichtet wird?" data-en="State institute, subject associations, education providers: who decides what gets taught in Berlin?"></li>
-        <li data-de="Gibt es Fortbildungsformate, in denen wir 20 Minuten bekommen könnten?" data-en="Are there teacher-training formats where we could get 20 minutes?"></li>
       </ul>
       <div class="one" data-de="Die eine wertvollste Einführung: eine Geschichtslehrkraft, die ehrlich sagt, was im Klassenzimmer scheitert." data-en="The single most useful introduction: a history teacher who will say honestly what fails in the classroom."></div>
     </div>
@@ -625,7 +604,6 @@ body.print .ask { cursor: default; }
       <ul>
         <li data-de="Wie erreicht man Hauseigentümer und Ladenbetreiber, ohne dass die Post im Papierkorb landet?" data-en="How do you reach property owners and shopkeepers without the letter landing in the bin?"></li>
         <li data-de="Welches Bezirksamt ist erfahrungsgemäß offen? Gibt es Vorbilder aus Stolpersteine oder Berliner Gedenktafel?" data-en="Which district office is known to be open? Are there precedents from Stolpersteine or the Berliner Gedenktafel?"></li>
-        <li data-de="Könnte die Montage über bestehende Programme mitfinanziert werden?" data-en="Could mounting be co-funded through existing programmes?"></li>
       </ul>
       <div class="one" data-de="Die eine wertvollste Einführung: ein Eigentümer Unter den Linden oder in der Friedrichstraße, der Ja sagt." data-en="The single most useful introduction: one property owner on Unter den Linden or Friedrichstraße who says yes."></div>
     </div>
@@ -635,20 +613,19 @@ body.print .ask { cursor: default; }
       <ul>
         <li data-de="Welche Redaktion würde die Karte zeigen, nicht nur erwähnen?" data-en="Which editorial desk would show the map, not just mention it?"></li>
         <li data-de="HU Berlin, Leo-Baeck-Institut, Aktives Museum: Wie wird aus Quellennutzung eine Kooperation?" data-en="HU Berlin, Leo Baeck Institute, Aktives Museum: how does using a source become a cooperation?"></li>
-        <li data-de="Welche Stiftungen oder Bundes- und EU-Programme passen zu Tafeln, Ausstellung oder weiteren Städten?" data-en="Which foundations or federal and EU programmes fit plaques, the exhibit, or further cities?"></li>
       </ul>
       <div class="one" data-de="Die eine wertvollste Einführung: eine Programmverantwortliche, die uns sagt, welchen Antrag wir nicht schreiben sollten." data-en="The single most useful introduction: a programme officer who tells us which application not to write."></div>
     </div>
   </div>
-  <p class="small" style="margin-top:36px" data-de="Tasten 1 bis 4 öffnen eine Karte. Wir nehmen alles mit, auch die unbequemen Antworten." data-en="Keys 1 to 4 open a card. We’ll take everything, the uncomfortable answers included."></p>
   <aside class="notes">
+    <p data-de="Tasten 1 bis 4 klappen die Fragen einer Karte auf." data-en="Keys 1 to 4 unfold a card’s questions."></p>
     <p data-de="Das ist der eigentliche Zweck des Treffens. 10 Minuten oder mehr. Karten einzeln öffnen, dann Stille aushalten." data-en="This is the actual point of the meeting. 10 minutes or more. Open the cards one at a time, then tolerate the silence."></p>
     <p data-de="Namen und Zusagen sofort notieren. Nach dem Treffen innerhalb von 48 Stunden nachfassen." data-en="Write down names and commitments immediately. Follow up within 48 hours."></p>
   </aside>
 </section>
 
 <!-- ============ 15 · CLOSE ============ -->
-<section class="slide dark" id="s15" data-n="15">
+<section class="slide dark" id="s15" data-n="14">
   <div class="body">
     <div class="reveal">
       <h2 data-de="Danke." data-en="Thank you."></h2>
@@ -725,6 +702,26 @@ body.print .ask { cursor: default; }
     <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
   </div>
   <aside class="notes"><p data-de="Alle 10.021 Datensätze durchsuchbar. Für die Frage „Kann ich das für meine eigene Arbeit nutzen?“" data-en="All 10,021 records searchable. For the question “Can I use this for my own work?”"></p></aside>
+</section>
+
+<!-- ============ 11 · BY THE NUMBERS ============ -->
+<section class="slide appx" id="s11" data-n="A6">
+  <div class="kicker" data-de="Anhang 6" data-en="Appendix 6"></div>
+  <h2 data-de="In Zahlen" data-en="By the numbers"></h2>
+  <div class="tiles reveal">
+    <div class="tile hi"><div class="num" data-de="10.021" data-en="10,021"></div><p data-de="dokumentierte Geschäfte" data-en="documented businesses"></p></div>
+    <div class="tile"><div class="num" data-de="8.838" data-en="8,838"></div><p data-de="an ihrer Adresse auf der Karte" data-en="placed at their address on the map"></p></div>
+    <div class="tile"><div class="num">16</div><p data-de="recherchierte und erzählte Geschichten" data-en="researched and narrated stories"></p></div>
+    <div class="tile"><div class="num">15</div><p data-de="Stationen im 3D-Rundgang" data-en="stops in the 3D tour"></p></div>
+    <div class="tile"><div class="num">18</div><p data-de="Gedenktafeln, laserfertig" data-en="memorial plaques, laser-ready"></p></div>
+    <div class="tile"><div class="num">181</div><p data-de="Adressen in der Ansprache-Liste" data-en="addresses in the outreach list"></p></div>
+    <div class="tile"><div class="num">6 + 1</div><p data-de="Unterrichtseinheiten und ein Arbeitsheft" data-en="lessons and one workbook"></p></div>
+    <div class="tile"><div class="num">3</div><p data-de="Sprachen: Deutsch, Englisch, Jiddisch" data-en="languages: German, English, Yiddish"></p></div>
+    <div class="tile"><div class="num">167</div><p data-de="Geschäfte in Frankfurt, der erste Schritt über Berlin hinaus" data-en="businesses in Frankfurt, the first step beyond Berlin"></p></div>
+  </div>
+  <aside class="notes">
+    <p data-de="Nur vorlesen, was gefragt wird. Diese Folie ist zum Anschauen." data-en="Only read out what gets asked. This slide is for looking at."></p>
+  </aside>
 </section>
 
 <!-- chrome -->

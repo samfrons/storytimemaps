@@ -247,6 +247,20 @@ h2 + .lead { margin-top: 26px; }
 .row .need { font-size: 21px; line-height: 1.45; color: var(--foreground-muted); }
 .row .need b { font-weight: 600; color: var(--foreground); }
 
+
+/* funding pipeline */
+.funds { margin-top: 36px; }
+.fund { display: grid; grid-template-columns: 330px 1fr 300px 230px; gap: 36px; padding: 15px 0; border-top: 3px solid var(--border); align-items: start; }
+.fund:last-child { border-bottom: 3px solid var(--border); }
+.fund h3 { font-size: 24px; font-weight: 600; line-height: 1.2; }
+.fund h3 small { display: block; font: 400 17px var(--font-body); color: var(--muted); margin-top: 3px; }
+.fund p { font-size: 20px; line-height: 1.4; color: var(--foreground-muted); }
+.fund .when { font: 700 22px var(--font-mono); line-height: 1.3; }
+.fund .when small { display: block; font: 400 17px var(--font-body); color: var(--muted); margin-top: 4px; }
+.fund .tag { font-size: 16px; }
+.fund.key .when { color: var(--secondary); }
+#s16 .foot { margin-top: 22px; font-size: 21px; line-height: 1.4; color: var(--foreground-muted); max-width: 1500px; }
+
 /* 14 — asks */
 .asks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 48px; align-items: stretch; }
 .ask { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 28px 30px; cursor: pointer; display: flex; flex-direction: column; min-height: 560px; }
@@ -575,8 +589,58 @@ body.print .ask { cursor: default; }
   </aside>
 </section>
 
+<!-- ============ 13 · FUNDING PIPELINE ============ -->
+<section class="slide" id="s16" data-n="13">
+  <div class="kicker" data-de="Wie wir das finanzieren wollen" data-en="How we plan to fund it"></div>
+  <h2 data-de="Sechs Anträge, einer ist schon draußen" data-en="Six applications, one already out"></h2>
+  <div class="funds reveal">
+    <div class="fund">
+      <h3>Bewegungsstiftung<small data-de="Starthilfe und Kampagnenförderung" data-en="Start-up aid and campaign funding"></small></h3>
+      <p data-de="13.000 € beantragt. Beide Anträge sind eingereicht." data-en="€13,000 applied for. Both applications submitted."></p>
+      <div class="when" data-de="Eingereicht" data-en="Submitted"><small data-de="Antwort ausstehend" data-en="awaiting decision"></small></div>
+      <span class="tag cyan" data-de="nichts offen" data-en="nothing pending from us"></span>
+    </div>
+    <div class="fund key">
+      <h3>Hauptstadtkulturfonds<small data-de="Berliner Projektförderung, Geschichte und Medienkunst" data-en="Berlin project funding, history and media art"></small></h3>
+      <p data-de="Der wichtigste nächste Antrag. Einzelpersonen sind antragsberechtigt, also ohne Verein möglich." data-en="The key near-term application. Individuals are eligible, so no association is needed."></p>
+      <div class="when" data-de="1. Oktober 2026" data-en="1 October 2026"><small data-de="Frist" data-en="deadline"></small></div>
+      <span class="tag fill" data-de="in Arbeit" data-en="in progress"></span>
+    </div>
+    <div class="fund">
+      <h3>LOTTO-Stiftung Berlin<small data-de="Erinnerungsarbeit ist Förderthema" data-en="Remembrance work is a listed theme"></small></h3>
+      <p data-de="Nimmt Einzelpersonen aus dem Kulturbereich. Ziel: Förderung 2027." data-en="Accepts individuals in the cultural field. Aiming at 2027 funding."></p>
+      <div class="when" data-de="Laufend" data-en="Rolling"><small data-de="Ziel 2027" data-en="target 2027"></small></div>
+      <span class="tag" data-de="geplant" data-en="planned"></span>
+    </div>
+    <div class="fund">
+      <h3>Stiftung EVZ<small data-de="Bildungsagenda NS-Unrecht" data-en="Bildungsagenda NS-Unrecht"></small></h3>
+      <p data-de="Größere Summen, aber nur für Organisationen. Braucht eine Trägerorganisation, die den Antrag hält." data-en="Larger amounts, but organisations only. Needs a partner organisation to hold the grant."></p>
+      <div class="when" data-de="1. November 2026" data-en="1 November 2026"><small data-de="Skizze" data-en="concept sketch"></small></div>
+      <span class="tag fill" data-de="Partner gesucht" data-en="partner wanted"></span>
+    </div>
+    <div class="fund">
+      <h3>Prototype Fund<small data-de="Open-Source-Förderung für die Plattform" data-en="Open-source funding for the platform"></small></h3>
+      <p data-de="Für die weitere StoryTimeMaps-Plattform. Passt weniger gut als früher; nur, wenn die Rahmung trägt." data-en="For the wider StoryTimeMaps platform. A weaker fit than it used to be; only if the framing works."></p>
+      <div class="when" data-de="1. Okt. bis 30. Nov. 2026" data-en="1 Oct to 30 Nov 2026"><small data-de="Antragsfenster" data-en="application window"></small></div>
+      <span class="tag" data-de="optional" data-en="optional"></span>
+    </div>
+    <div class="fund">
+      <h3>Yiddish Book Center<small data-de="Übersetzungswerkzeug" data-en="Translation tool"></small></h3>
+      <p data-de="Eigener Antrag für das jiddische Übersetzungswerkzeug, unabhängig vom Rest." data-en="Separate application for the Yiddish translation tool, on its own track."></p>
+      <div class="when" data-de="Eigener Zeitplan" data-en="Own timeline"></div>
+      <span class="tag" data-de="geplant" data-en="planned"></span>
+    </div>
+  </div>
+  <p class="foot" data-de="Keiner dieser Anträge richtet sich an Sie. Was uns helfen würde: eine Trägerorganisation für EVZ und ein Blick auf den Hauptstadtkulturfonds-Antrag vor dem 1. Oktober." data-en="None of these applications is addressed to you. What would help: a partner organisation for EVZ, and a second pair of eyes on the Hauptstadtkulturfonds application before 1 October."></p>
+  <aside class="notes">
+    <p data-de="Bewegungsstiftung: Starthilfe und Kampagnenantrag sind beide drin. Nichts mehr zu tun, bis sie antworten." data-en="Bewegungsstiftung: both the start-up aid and the campaign application are in. Nothing to do until they answer."></p>
+    <p data-de="EVZ ist die Brücke zur nächsten Folie: Wer im Raum kennt eine Organisation, die den Antrag tragen könnte?" data-en="EVZ is the bridge to the next slide: who in the room knows an organisation that could hold the grant?"></p>
+    <p data-de="Projektmanagement ist in jedem Antrag als Personalkosten enthalten; keine gesonderte Bitte." data-en="Project management sits inside each application as a personnel cost; no separate request."></p>
+  </aside>
+</section>
+
 <!-- ============ 14 · WHERE WE NEED YOU ============ -->
-<section class="slide" id="s14" data-n="13">
+<section class="slide" id="s14" data-n="14">
   <div class="kicker" data-de="Keine Bitte um Geld. Eine Bitte um Ideen und Türen." data-en="Not a request for money. A request for ideas and doors."></div>
   <h2 data-de="Wo wir Ihre Erfahrung brauchen" data-en="Where we need your experience"></h2>
   <div class="asks reveal" id="asks">
@@ -625,7 +689,7 @@ body.print .ask { cursor: default; }
 </section>
 
 <!-- ============ 15 · CLOSE ============ -->
-<section class="slide dark" id="s15" data-n="14">
+<section class="slide dark" id="s15" data-n="15">
   <div class="body">
     <div class="reveal">
       <h2 data-de="Danke." data-en="Thank you."></h2>

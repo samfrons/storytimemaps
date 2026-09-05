@@ -66,7 +66,10 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    // German is the site's default language; English and Yiddish are alternates
+    // reachable via ?lang=.
+    locale: 'de_DE',
+    alternateLocale: ['en_US', 'yi'],
     siteName: 'StoryTimeMaps',
     title: 'Jewish Businesses in Berlin 1900-1945',
     description:
@@ -115,7 +118,7 @@ const STRUCTURED_DATA = [
     url: SITE_URL,
     description:
       'An interactive archive and map documenting Jewish-owned businesses in Berlin from 1900 to 1945, built for remembrance and education.',
-    inLanguage: ['en', 'de', 'yi'],
+    inLanguage: ['de', 'en', 'yi'],
   },
   {
     '@context': 'https://schema.org',
@@ -143,7 +146,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      lang="de"
       className={`${inter.variable} ${spaceMono.variable} ${playfair.variable}`}
       suppressHydrationWarning
     >

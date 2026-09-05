@@ -193,6 +193,40 @@ function TestFullDatasetPageContent() {
       >
         {/* Theme Button */}
         <button
+          onClick={() => {
+            if (language !== 'de') {
+              toggleLanguage()
+              const params = new URLSearchParams(searchParams.toString())
+              params.set('lang', 'de')
+              const queryString = params.toString()
+              router.push(
+                queryString ? `/test-full-dataset?${queryString}` : '/test-full-dataset',
+                { scroll: false }
+              )
+            }
+          }}
+          className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+          style={{
+            backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+            borderColor: 'var(--border)',
+            color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+            cursor: 'pointer',
+            transform: 'scale(1)',
+            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            fontSize: '12px',
+            fontFamily: 'Space Mono, monospace',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)'
+          }}
+          aria-label="Switch to German"
+        >
+          DE
+        </button>
+        <button
           onClick={() => setShowThemeMenu(!showThemeMenu)}
           className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border relative hot-button hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
           style={{
@@ -416,40 +450,6 @@ function TestFullDatasetPageContent() {
           >
             EN
           </button>
-          <button
-            onClick={() => {
-              if (language !== 'de') {
-                toggleLanguage()
-                const params = new URLSearchParams(searchParams.toString())
-                params.set('lang', 'de')
-                const queryString = params.toString()
-                router.push(
-                  queryString ? `/test-full-dataset?${queryString}` : '/test-full-dataset',
-                  { scroll: false }
-                )
-              }
-            }}
-            className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
-            style={{
-              backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
-              borderColor: 'var(--border)',
-              color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
-              fontSize: '12px',
-              fontFamily: 'Space Mono, monospace',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)'
-            }}
-            aria-label="Switch to German"
-          >
-            DE
-          </button>
         </div>
       </div>
 
@@ -490,6 +490,32 @@ function TestFullDatasetPageContent() {
       )}
 
       {/* Mobile Hamburger Menu Button */}
+      <button
+        onClick={() => {
+          if (language !== 'de') {
+            toggleLanguage()
+            const params = new URLSearchParams(searchParams.toString())
+            params.set('lang', 'de')
+            const queryString = params.toString()
+            router.push(queryString ? `/test-full-dataset?${queryString}` : '/test-full-dataset', {
+              scroll: false,
+            })
+          }
+          // Don't close mobile menu on language change
+        }}
+        className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
+        style={{
+          backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+          borderColor: 'var(--border)',
+          color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+          cursor: 'pointer',
+          fontSize: '12px',
+          fontFamily: 'Space Mono, monospace',
+        }}
+        aria-label="Switch to German"
+      >
+        DE
+      </button>
       <button
         onClick={() => setShowMobileMenu(!showMobileMenu)}
         className="md:hidden fixed left-4 w-10 h-10 flex items-center justify-center border backdrop-blur-sm cursor-pointer hover:opacity-80 hot-button"
@@ -630,33 +656,6 @@ function TestFullDatasetPageContent() {
               aria-label="Switch to English"
             >
               EN
-            </button>
-            <button
-              onClick={() => {
-                if (language !== 'de') {
-                  toggleLanguage()
-                  const params = new URLSearchParams(searchParams.toString())
-                  params.set('lang', 'de')
-                  const queryString = params.toString()
-                  router.push(
-                    queryString ? `/test-full-dataset?${queryString}` : '/test-full-dataset',
-                    { scroll: false }
-                  )
-                }
-                // Don't close mobile menu on language change
-              }}
-              className="flex-1 h-12 flex items-center justify-center transition-all duration-200 border hot-button"
-              style={{
-                backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
-                borderColor: 'var(--border)',
-                color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontFamily: 'Space Mono, monospace',
-              }}
-              aria-label="Switch to German"
-            >
-              DE
             </button>
           </div>
         </div>

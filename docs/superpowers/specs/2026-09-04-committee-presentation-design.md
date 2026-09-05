@@ -115,3 +115,16 @@ Estimate: ~4 h of build, plus ~30 min of Sam's review for copy in German.
   fallback timer starts when a slide is actually shown, not when it is preloaded.
 - PDF: `node ~/.claude/skills/deck-to-pdf/generate.mjs public/presentation/committee-2026/index.html`
   (system-Chrome fallback; Playwright is not a dependency of this repo).
+
+## Revision 2026-09-05 (after board-prior grilling)
+
+Board has never seen the site, so the deck now opens with the project, not a business.
+Order (17 main): 1 Intro (homepage hero + the one sentence) · 2 Die Grundlage (sources,
+2026 verification, languages) · 3 E. Braun photo · 4 E. Braun timeline · 5 Zoom out
+(10.021 / 8.838 / 9.679) · 6 Map · 7 Tour · 8 Archive–Street–Museum · 9 Plaques (designs
++ 3 prototype-photo slots at plaques/prototype-{1,2,3}.jpg) · 10 Exhibit · 11 Classrooms ·
+12 What the grant built (3 promised items with status + strip) · 13 Next 12 months ·
+14 Funding pipeline · 15 Team (Sam Frons, Chandra Brooks, research partners) ·
+16 Where we need you · 17 Close. Appendix A1–A6.
+Site inconsistencies found and NOT the deck's to fix: homepage says Frankfurt pilot = 57
+(live page loads 167); homepage "15 plaques designed" vs /plaques "25 addresses drawn".

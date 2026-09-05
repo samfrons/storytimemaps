@@ -136,17 +136,15 @@ h2 + .lead { margin-top: 26px; }
    SLIDE-SPECIFIC
 ================================================================ */
 
-/* 0 — intro (project landing) */
-#s0 .intro { display: grid; grid-template-columns: 1fr 720px; gap: 60px; align-items: center; height: 720px; }
-#s0 .kicker { color: var(--primary); font-family: var(--font-mono); font-size: 18px; letter-spacing: .04em; }
-#s0 h1 { font-family: var(--font-display); font-size: 108px; line-height: .95; font-weight: 900; text-transform: uppercase; letter-spacing: .005em; margin: 0 0 34px; }
-#s0 .lead { font-size: 30px; max-width: 900px; }
-#s0 .dots { height: 560px; overflow: hidden; position: relative; }
-#s0 .dots img { position: absolute; width: 1400px; height: auto; left: -760px; top: -60px; }
-#s0 .dots::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 45%; background: linear-gradient(rgba(242,239,230,0), var(--background) 70%); }
-#s0 .foot { position: absolute; left: var(--mx); right: var(--mx); bottom: 110px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 22px; }
-#s0 .foot .lockup { border-left: 4px solid var(--primary); padding-left: 16px; }
+/* 0 — intro (project landing: the live homepage itself) */
+#s0 { padding: 0; }
+#s0 .live { position: absolute; left: 0; right: 0; top: 0; bottom: 200px; border: 0; box-shadow: none; }
+#s0 .band { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: var(--background); border-top: 3px solid var(--border); padding: 0 var(--mx) 88px; display: flex; justify-content: space-between; align-items: flex-end; }
+#s0 .band .lead { font-size: 30px; max-width: 1150px; margin: 0; }
+#s0 .band .sub { font-size: 20px; color: var(--muted); margin: 10px 0 0; }
+#s0 .band .lockup { border-left: 4px solid var(--primary); padding-left: 16px; flex-shrink: 0; margin-left: 48px; }
 #s0.current ~ #brand { display: none; }
+#s0.current ~ #counter { display: none; }
 
 /* 1 — title */
 #s1 { padding: 0; }
@@ -384,24 +382,23 @@ body.print .ask { cursor: default; }
 
 <!-- ============ 0 · INTRO ============ -->
 <section class="slide" id="s0" data-n="1">
-  <div class="intro">
-    <div class="reveal">
-      <div class="kicker" data-de="Eine lebendige Karte jüdischen Geschäftslebens, Berlin 1900–1945" data-en="A living map of Jewish commercial life, Berlin 1900–1945"></div>
-      <h1 data-de="10.021 jüdische Geschäfte. Kartiert an den Straßen, in denen sie standen." data-en="10,021 Jewish-owned businesses. Mapped to the streets where they stood."></h1>
-      <p class="lead" data-de="Aus einer Forschungsdatenbank wird eine interaktive Karte, und aus der Karte Erinnerung im Stadtraum." data-en="A research database becomes an interactive map, and the map becomes remembrance in the city."></p>
-    </div>
-    <div class="dots"><img src="posters/home-hero.webp" alt=""></div>
+  <div class="live" data-poster="posters/home-hero.webp">
+    <img class="poster" src="posters/home-hero.webp" alt="">
+    <iframe data-src="https://b3rlin.storytimemaps.com/?theme=brutal-pop&amp;lang=de" title="StoryMaps homepage" allow="fullscreen" loading="lazy"></iframe>
+    <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
+    <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
   </div>
-  <div class="foot">
+  <div class="band">
     <div>
-      <div style="font-size:30px;font-weight:600;margin-bottom:8px">StoryMaps Berlin</div>
-      <div data-de="Stand und Ausblick für den Stiftungsrat, September 2026" data-en="Progress and outlook for the foundation board, September 2026"></div>
+      <p class="lead" data-de="Aus einer Forschungsdatenbank wird eine interaktive Karte, und aus der Karte Erinnerung im Stadtraum." data-en="A research database becomes an interactive map, and the map becomes remembrance in the city."></p>
+      <p class="sub" data-de="StoryMaps Berlin — Stand und Ausblick für den Stiftungsrat, September 2026" data-en="StoryMaps Berlin — Progress and outlook for the foundation board, September 2026"></p>
     </div>
     <div class="lockup"><span data-de="Ein Projekt gefördert durch" data-en="A project supported by"></span><br>Stiftung <b>Zurückgeben</b></div>
   </div>
   <aside class="notes">
     <p data-de="Das ist die Startseite der Website, wörtlich. Der Satz darunter ist der eine Satz für heute: Datenbank, Karte, Stadtraum." data-en="This is the site’s own homepage, word for word. The line beneath it is today’s one sentence: database, map, city."></p>
     <p data-de="Der Stiftungsrat hat die Website noch nicht gesehen. Zwei Minuten für das Ganze, dann hineinzoomen." data-en="The board has not seen the site. Two minutes for the whole, then zoom in."></p>
+    <p data-de="Die Seite ist live; bei Bedarf hineinklicken und den Zeitregler ziehen. F für Vollbild." data-en="The page is live; click in and drag the year slider if useful. F for fullscreen."></p>
   </aside>
 </section>
 

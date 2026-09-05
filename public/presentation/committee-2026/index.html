@@ -210,11 +210,11 @@ h2 + .lead { margin-top: 26px; }
 .plaques img { max-height: 210px; object-fit: cover; }
 .rowlabel { margin-top: 22px; font: 700 17px var(--font-mono); color: var(--muted); }
 .protos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 16px; }
-.proto { position: relative; height: 180px; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); background: var(--card-bg); overflow: hidden; }
-.proto img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.proto .ph { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; text-align: center; padding: 20px; font: 16px/1.5 var(--font-mono); color: var(--muted); border: 2px dashed var(--muted); margin: 10px; }
-.proto.empty img { display: none; }
-.proto.empty .ph { display: flex; }
+.protos .proto { position: relative; height: 180px; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); background: var(--card-bg); overflow: hidden; }
+.protos .proto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.protos .proto .ph { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; text-align: center; padding: 20px; font: 16px/1.5 var(--font-mono); color: var(--muted); border: 2px dashed var(--muted); margin: 10px; }
+.protos .proto.empty img { display: none; }
+.protos .proto.empty .ph { display: flex; }
 .plaques img { width: 100%; display: block; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); }
 .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; margin-top: 30px; }
 .fact { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: baseline; }
@@ -337,6 +337,7 @@ h2 + .lead { margin-top: 26px; }
 
 /* appendix */
 .appx .kicker { color: var(--secondary); }
+.appx h2 { max-width: none; }
 .appx .live { height: 700px; margin-top: 30px; }
 .anatomy { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px; align-items: start; }
 .anatomy img { width: 100%; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); }

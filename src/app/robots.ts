@@ -21,6 +21,7 @@ export default function robots(): MetadataRoute.Robots {
         '/overlay-test',
         '/business-details-test',
         '/test-full-dataset',
+        '/presentation/',
       ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,

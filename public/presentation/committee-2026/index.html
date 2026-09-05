@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>StoryMaps Berlin – Stiftung Zurückgeben 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   Palette: the live site's default theme (`brutal-pop`, src/app/globals.css).
+   Copied verbatim so the embedded site and the deck read as one object.
+   Project rules carried over: no border-radius, no blue focus rings,
+   no transitions on color/background-color.
+------------------------------------------------------------------ */
+@font-face { font-family: 'Kame Poster'; src: url('../../fonts/Kame Poster Black.woff2') format('woff2'); font-weight: 900; font-display: swap; }
+:root {
+  --primary: #00d9d9;
+  --primary-rgb: 0, 217, 217;
+  --secondary: #ff6b35;
+  --warning: #ffd93d;
+  --danger: #ff6b35;
+  --success: #00d9d9;
+  --background: #f2efe6;
+  --foreground: #131318;
+  --foreground-muted: #4a4a55;
+  --muted: #6f6b7d;
+  --border: #131318;
+  --shadow: rgba(19, 19, 24, 0.35);
+  --card-bg: #fffdf7;
+  --accent-purple: #c589e8;
+  --accent-navy: #2a2a44;
+  --marker-standing: #e8e8f0;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-display: 'Kame Poster', 'Inter', Impact, sans-serif;
+
+  --W: 1920px;
+  --H: 1080px;
+  --mx: 120px;   /* stage side margin */
+  --s: 1;        /* stage scale, set by JS */
+}
+
+* { box-sizing: border-box; border-radius: 0 !important; }
+:focus { outline: none; box-shadow: none; }
+:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+html, body { margin: 0; height: 100%; background: var(--foreground); color: var(--foreground); font-family: var(--font-body); font-weight: 400; overflow: hidden; }
+
+/* ---------- stage ---------- */
+#stage { position: fixed; inset: 0; display: grid; place-items: center; background: var(--foreground); }
+#deck { position: relative; width: var(--W); height: var(--H); transform: scale(var(--s)); transform-origin: center; background: var(--background); overflow: hidden; }
+
+.slide { position: absolute; inset: 0; padding: 120px var(--mx) 110px; display: none; }
+.slide.current { display: block; }
+
+/* ---------- chrome ---------- */
+#progress { position: absolute; left: 0; top: 0; height: 6px; width: 0; background: var(--primary); z-index: 5; }
+#counter { position: absolute; right: var(--mx); bottom: 44px; font-family: var(--font-mono); font-size: 18px; color: var(--muted); z-index: 5; }
+#brand { position: absolute; left: var(--mx); bottom: 44px; font-size: 18px; color: var(--muted); z-index: 5; }
+#brand b { font-weight: 600; color: var(--foreground); }
+#s1.current ~ #brand { display: none; }
+#lang { position: absolute; right: var(--mx); top: 36px; z-index: 6; display: flex; gap: 0; font-family: var(--font-mono); font-size: 16px; }
+#lang button { border: 2px solid var(--border); background: var(--card-bg); color: var(--foreground); padding: 6px 14px; cursor: pointer; font: inherit; }
+#lang button + button { border-left: 0; }
+#lang button[aria-pressed="true"] { background: var(--foreground); color: var(--background); }
+#nav { position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%); z-index: 5; display: flex; gap: 0; }
+#nav button { border: 2px solid var(--border); background: var(--card-bg); color: var(--foreground); width: 44px; height: 36px; cursor: pointer; font: 18px var(--font-mono); }
+#nav button + button { border-left: 0; }
+.slide.dark ~ #counter, .slide.dark ~ #brand { color: rgba(242,239,230,.75); }
+.slide.dark ~ #brand b { color: var(--background); }
+
+/* ---------- type ---------- */
+h1, h2, h3, p { margin: 0; }
+.kicker { font-size: 22px; color: var(--muted); margin-bottom: 18px; }
+h2 { font-family: var(--font-display); font-size: 76px; line-height: 1.0; font-weight: 900; letter-spacing: 0.005em; text-transform: uppercase; max-width: 1400px; }
+h2 + .lead { margin-top: 26px; }
+.lead { font-size: 28px; line-height: 1.4; font-weight: 300; color: var(--foreground-muted); max-width: 1100px; }
+.num { font-family: var(--font-mono); font-weight: 700; letter-spacing: -0.03em; }
+.mono { font-family: var(--font-mono); }
+.small { font-size: 18px; color: var(--muted); line-height: 1.45; }
+.status { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 16px; color: var(--foreground-muted); }
+.status::before { content: ''; width: 14px; height: 14px; background: var(--dot, var(--primary)); border: 2px solid var(--border); }
+.status.on { --dot: var(--success); }
+.status.progress { --dot: var(--warning); }
+.status.proto { --dot: var(--accent-purple); }
+.status.pilot { --dot: var(--card-bg); }
+
+/* ---------- primitives ---------- */
+.card { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 32px 36px; }
+.card h3 { font-size: 28px; font-weight: 600; line-height: 1.2; margin-bottom: 12px; }
+.card p { font-size: 20px; line-height: 1.45; color: var(--foreground-muted); }
+.grid { display: grid; gap: 36px; }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+.body { margin-top: 48px; }
+.rule { border-top: 3px solid var(--border); }
+.tag { display: inline-block; font-family: var(--font-mono); font-size: 15px; padding: 4px 10px; border: 2px solid var(--border); background: var(--card-bg); }
+.tag.fill { background: var(--warning); }
+.tag.cyan { background: var(--primary); }
+
+/* ---------- live embeds ---------- */
+.live { position: relative; border: 3px solid var(--border); box-shadow: 10px 10px 0 var(--border); background: var(--card-bg); overflow: hidden; }
+.live img.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.live iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; opacity: 0; }
+.live.loaded iframe { opacity: 1; }
+.live .offline { display: none; position: absolute; left: 0; bottom: 0; padding: 8px 14px; background: var(--foreground); color: var(--background); font: 15px var(--font-mono); }
+.live.offline .offline { display: block; }
+.live .hint { position: absolute; right: 0; top: 0; padding: 6px 12px; background: var(--warning); border-left: 3px solid var(--border); border-bottom: 3px solid var(--border); font: 15px var(--font-mono); color: var(--foreground); }
+
+/* ---------- reveal (the one motion in the deck) ---------- */
+.slide.current .reveal > * { opacity: 0; transform: translateY(12px); animation: rise .5s ease-out forwards; }
+.slide.current .reveal > *:nth-child(2) { animation-delay: .06s }
+.slide.current .reveal > *:nth-child(3) { animation-delay: .12s }
+.slide.current .reveal > *:nth-child(4) { animation-delay: .18s }
+.slide.current .reveal > *:nth-child(5) { animation-delay: .24s }
+.slide.current .reveal > *:nth-child(6) { animation-delay: .30s }
+.slide.current .reveal > *:nth-child(n+7) { animation-delay: .36s }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .slide.current .reveal > * { animation: none; opacity: 1; transform: none; } }
+
+/* ---------- notes drawer ---------- */
+#notes { position: absolute; right: 0; top: 0; bottom: 0; width: 460px; background: var(--card-bg); border-left: 3px solid var(--border); padding: 48px 40px; z-index: 20; transform: translateX(100%); font-size: 22px; line-height: 1.5; overflow: auto; }
+#notes.open { transform: none; }
+#notes h4 { margin: 0 0 20px; font: 16px var(--font-mono); color: var(--muted); }
+#notes p { margin: 0 0 16px; }
+#notes .keys { margin-top: 40px; font: 15px/1.9 var(--font-mono); color: var(--muted); border-top: 2px solid var(--border); padding-top: 16px; }
+.notes { display: none; }
+
+/* ================================================================
+   SLIDE-SPECIFIC
+================================================================ */
+
+/* 1 — title */
+#s1 { padding: 0; }
+#s1 .photo { position: absolute; inset: 0; background: url('../../images/ebraun/ebraun1.webp') left 40% / 108% auto no-repeat; filter: grayscale(1) contrast(1.05); }
+#s1 .wash { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(19,19,24,.92) 0%, rgba(19,19,24,.78) 45%, rgba(19,19,24,.25) 100%); }
+#s1 .text { position: absolute; left: var(--mx); right: var(--mx); top: 150px; bottom: 120px; color: var(--background); display: flex; flex-direction: column; justify-content: space-between; }
+#s1 .addr { font: 22px var(--font-mono); color: var(--warning); }
+#s1 h1 { font-family: var(--font-display); font-size: 170px; line-height: .92; font-weight: 900; letter-spacing: 0.005em; text-transform: uppercase; margin: 26px 0 34px; }
+#s1 .sub { font-size: 34px; font-weight: 300; max-width: 900px; line-height: 1.3; }
+#s1 .foot { display: flex; justify-content: space-between; align-items: flex-end; font-size: 22px; }
+.lockup { font-size: 22px; } .lockup b { font-weight: 700; }
+#s1 .lockup { border-left: 4px solid var(--primary); padding-left: 16px; }
+
+/* 2 — one name */
+#s2 .body { display: grid; grid-template-columns: 1fr 640px; gap: 80px; align-items: start; }
+.beats { display: grid; gap: 0; }
+.beat { display: grid; grid-template-columns: 150px 1fr; gap: 28px; padding: 26px 0; border-top: 3px solid var(--border); }
+.beat:last-child { border-bottom: 3px solid var(--border); }
+.beat .y { font: 700 44px var(--font-mono); letter-spacing: -0.03em; line-height: 1; }
+.beat.now .y { color: var(--secondary); }
+.beat p { font-size: 22px; line-height: 1.45; color: var(--foreground-muted); align-self: center; }
+#s2 .plaque { border: 3px solid var(--border); box-shadow: 10px 10px 0 var(--border); display: block; width: 100%; }
+#s2 .cap { margin-top: 20px; }
+
+/* 3 — zoom out */
+#s3 .body { display: grid; grid-template-columns: 820px 1fr; gap: 60px; align-items: stretch; height: 760px; }
+#s3 .live img.poster { object-position: right top; }
+#s3 .big { font-family: var(--font-mono); font-weight: 700; letter-spacing: -0.05em; line-height: .9; }
+#s3 .big .a { font-size: 196px; }
+#s3 .big .b { font-size: 196px; color: var(--secondary); }
+#s3 .lbl { font-size: 28px; font-weight: 300; margin: 6px 0 40px; }
+#s3 .quote { font-size: 24px; line-height: 1.5; font-weight: 300; border-left: 4px solid var(--primary); padding-left: 20px; margin-top: 30px; max-width: 700px; }
+
+/* 4/5 — demo slides */
+.demo { padding-top: 90px; }
+.demo .top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 26px; }
+.demo h2 { font-size: 60px; }
+.demo .live { height: 780px; }
+.legend { display: flex; gap: 28px; font: 17px var(--font-mono); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 16px; height: 16px; border: 2px solid var(--border); display: inline-block; }
+
+/* 6 — plaques */
+.plaques { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 44px; }
+.plaques img { width: 100%; display: block; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; margin-top: 60px; }
+.fact .num { font-size: 64px; line-height: 1; }
+.fact p { font-size: 19px; color: var(--foreground-muted); margin-top: 10px; line-height: 1.4; }
+.fact .lockup { font-size: 46px; line-height: 1; font-family: var(--font-body); letter-spacing: -0.02em; }
+
+/* 7 — classrooms */
+#s7 .body { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+#s7 .card { min-height: 420px; display: flex; flex-direction: column; }
+#s7 .card .big { font: 700 96px var(--font-mono); letter-spacing: -0.04em; line-height: 1; margin-bottom: 14px; }
+#s7 .card .fine { margin-top: auto; padding-top: 24px; font-size: 18px; color: var(--muted); }
+#s7 .strip { display: flex; gap: 40px; margin-top: 40px; font-size: 22px; }
+#s7 .strip span { display: inline-flex; align-items: center; gap: 12px; }
+#s7 .strip i { width: 14px; height: 14px; background: var(--primary); border: 2px solid var(--border); }
+
+/* 8 — exhibit */
+#s8 .renders { display: grid; grid-template-columns: 1.3fr 1fr; gap: 36px; margin-top: 40px; }
+#s8 .renders img { width: 100%; height: 480px; object-fit: cover; display: block; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); }
+#s8 .renders figcaption { font-size: 17px; color: var(--muted); margin-top: 16px; }
+#s8 .kiosk { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+#s8 .kiosk p { font-size: 22px; line-height: 1.45; color: var(--foreground-muted); }
+
+/* 9 — rigor */
+#s9 .cols { display: grid; grid-template-columns: 1.1fr 1fr .8fr; gap: 48px; margin-top: 70px; }
+#s9 .col { border-top: 3px solid var(--border); padding-top: 24px; }
+#s9 .col h3 { font-size: 26px; font-weight: 600; margin-bottom: 18px; }
+#s9 .col p { font-size: 22px; line-height: 1.5; color: var(--foreground-muted); margin-bottom: 14px; }
+#s9 .pct { font: 700 150px var(--font-mono); letter-spacing: -0.05em; line-height: 1; }
+#s9 .pct small { font-size: 60px; }
+#s9 .langs { display: flex; gap: 14px; }
+#s9 .langs span { font: 700 40px var(--font-mono); border: 3px solid var(--border); padding: 12px 22px; background: var(--card-bg); box-shadow: 6px 6px 0 var(--border); }
+#s9 .langs span.yi { font-family: var(--font-body); }
+
+/* 10 — milestones */
+.timeline { margin-top: 110px; position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
+.timeline::before { content: ''; position: absolute; left: 0; right: 0; top: 10px; height: 4px; background: var(--border); }
+.ms { padding-top: 48px; position: relative; }
+.ms::before { content: ''; position: absolute; left: 0; top: 0; width: 24px; height: 24px; background: var(--primary); border: 3px solid var(--border); }
+.ms .m { font: 700 22px var(--font-mono); margin-bottom: 14px; }
+.ms h3 { font-size: 26px; font-weight: 600; line-height: 1.25; margin-bottom: 12px; }
+.ms p { font-size: 19px; line-height: 1.45; color: var(--foreground-muted); }
+
+/* 11 — numbers */
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 48px; }
+.tile { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 28px 32px 26px; }
+.tile .num { font-size: 84px; line-height: 1; }
+.tile p { font-size: 20px; color: var(--foreground-muted); margin-top: 10px; }
+.tile.hi { background: var(--foreground); color: var(--background); }
+.tile.hi p { color: rgba(242,239,230,.8); }
+
+/* 12 — vision */
+.vision { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-top: 56px; }
+.vision .card { position: relative; min-height: 520px; margin-right: 40px; display: flex; flex-direction: column; }
+.vision .card:last-child { margin-right: 0; }
+.vision .card .n { font: 700 100px var(--font-mono); letter-spacing: -0.05em; line-height: 1; margin-bottom: 18px; }
+.vision .card h3 { font-size: 34px; }
+.vision .card .status { margin-top: auto; padding-top: 24px; }
+.vision .arrow { position: absolute; right: -40px; top: 50%; width: 40px; height: 4px; background: var(--border); }
+#s12 .beyond { margin-top: 36px; display: flex; align-items: center; gap: 24px; font-size: 22px; }
+
+/* 13 — next 12 months */
+.roadmap { margin-top: 48px; }
+.row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 40px; padding: 28px 0; border-top: 3px solid var(--border); align-items: start; }
+.row:last-child { border-bottom: 3px solid var(--border); }
+.row .q { font: 700 28px var(--font-mono); color: var(--secondary); }
+.row h3 { font-size: 28px; font-weight: 600; line-height: 1.25; }
+.row .need { font-size: 21px; line-height: 1.45; color: var(--foreground-muted); }
+.row .need b { font-weight: 600; color: var(--foreground); }
+
+
+/* funding pipeline */
+.funds { margin-top: 36px; }
+.fund { display: grid; grid-template-columns: 330px 1fr 300px 230px; gap: 36px; padding: 15px 0; border-top: 3px solid var(--border); align-items: start; }
+.fund:last-child { border-bottom: 3px solid var(--border); }
+.fund h3 { font-size: 24px; font-weight: 600; line-height: 1.2; }
+.fund h3 small { display: block; font: 400 17px var(--font-body); color: var(--muted); margin-top: 3px; }
+.fund p { font-size: 20px; line-height: 1.4; color: var(--foreground-muted); }
+.fund .when { font: 700 22px var(--font-mono); line-height: 1.3; }
+.fund .when small { display: block; font: 400 17px var(--font-body); color: var(--muted); margin-top: 4px; }
+.fund .tag { font-size: 16px; }
+.fund.key .when { color: var(--secondary); }
+#s16 .foot { margin-top: 22px; font-size: 21px; line-height: 1.4; color: var(--foreground-muted); max-width: 1500px; }
+
+/* 14 — asks */
+.asks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 40px; align-items: stretch; }
+.ask { background: var(--card-bg); border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); padding: 24px 26px; cursor: pointer; display: flex; flex-direction: column; min-height: 520px; }
+.ask h3 { margin-bottom: 14px; }
+.ask .k { font: 700 22px var(--font-mono); margin-bottom: 10px; color: var(--muted); }
+.ask h3 { font-size: 28px; font-weight: 600; line-height: 1.2; }
+.ask ul { list-style: none; padding: 0; margin: 14px 0 18px; display: none; font-size: 21px; line-height: 1.35; color: var(--foreground-muted); }
+.ask li { padding: 9px 0; border-top: 2px solid var(--border); }
+.ask .one { display: block; margin-top: auto; padding: 14px 16px; background: var(--warning); border: 2px solid var(--border); font-size: 21px; line-height: 1.35; }
+.ask.open { background: var(--foreground); color: var(--background); }
+.ask.open .k { color: var(--primary); }
+.ask.open ul { display: block; }
+.ask.open ul { color: rgba(242,239,230,.85); }
+.ask.open li { border-color: rgba(242,239,230,.3); }
+.ask.open .one { color: var(--foreground); }
+.asks.has-open .ask:not(.open) { opacity: .55; }
+
+/* 15 — close */
+#s15 { background: var(--foreground); color: var(--background); }
+#s15 .photo { position: absolute; inset: 0; background: url('../../images/ebraun/ebraun1.webp') left 40% / 108% auto no-repeat; filter: grayscale(1) contrast(1.1); opacity: .34; }
+#s15 .wash { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(19,19,24,.92) 0%, rgba(19,19,24,.6) 55%, rgba(19,19,24,.25) 100%); }
+#s15 .body { position: relative; }
+#s15 .addr { font: 22px var(--font-mono); color: var(--warning); margin-bottom: 26px; }
+#s15 .body { display: grid; grid-template-columns: 1fr 360px; gap: 80px; align-items: end; height: 760px; }
+#s15 h2 { color: var(--background); font-size: 120px; }
+#s15 .contact { font: 400 34px var(--font-mono); line-height: 1.6; margin-top: 60px; }
+#s15 .contact span { color: var(--primary); }
+#s15 .qr { background: var(--background); padding: 24px; border: 3px solid var(--primary); }
+#s15 .qr svg { display: block; width: 100%; height: auto; }
+#s15 .lockup { color: var(--background); font-size: 26px; margin-top: 60px; }
+
+/* appendix */
+.appx .kicker { color: var(--secondary); }
+.appx .live { height: 700px; margin-top: 30px; }
+.anatomy { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px; align-items: start; }
+.anatomy img { width: 100%; border: 3px solid var(--border); box-shadow: 8px 8px 0 var(--border); }
+.anatomy ol { margin: 0; padding-left: 28px; font-size: 21px; line-height: 1.5; color: var(--foreground-muted); }
+.anatomy li { margin-bottom: 12px; }
+.anatomy li b { color: var(--foreground); font-weight: 600; }
+.tracks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 48px; }
+
+/* ================================================================
+   PRINT (?print) — stacked, 1920×1080 per page, final frames, posters
+================================================================ */
+@page { size: 1920px 1080px; margin: 0; }
+body.print { overflow: visible; height: auto; background: var(--background); }
+body.print #stage { position: static; display: block; }
+body.print #deck { transform: none; height: auto; overflow: visible; width: var(--W); }
+body.print .slide { position: relative; display: block; width: var(--W); height: var(--H); page-break-after: always; break-after: page; overflow: hidden; }
+body.print .slide .reveal > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+body.print .live iframe { display: none; }
+body.print .live .hint, body.print .live .offline { display: none; }
+body.print #progress, body.print #lang, body.print #nav, body.print #notes { display: none; }
+body.print #counter, body.print #brand { display: none; }
+body.print .slide .pcount { display: block; position: absolute; right: var(--mx); bottom: 44px; font: 18px var(--font-mono); color: var(--muted); }
+body.print .ask ul { display: block; }
+body.print .ask { cursor: default; }
+.pcount { display: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+<div id="deck">
+
+<!-- ============ 1 · TITLE ============ -->
+<section class="slide dark" id="s1" data-n="1">
+  <div class="photo"></div><div class="wash"></div>
+  <div class="text">
+    <div class="reveal">
+      <div class="addr">Unter den Linden 2, Berlin-Mitte, 1914–1943</div>
+      <h1>E. Braun &amp; Co.</h1>
+      <p class="sub" data-de="Jüdisches Geschäftsleben in Berlin 1900–1945, kartiert an den Straßen, in denen es stand." data-en="Jewish commercial life in Berlin 1900–1945, mapped to the streets where it stood."></p>
+    </div>
+    <div class="foot">
+      <div>
+        <div style="font-size:30px;font-weight:600;margin-bottom:8px">StoryMaps Berlin</div>
+        <div data-de="Stand und Ausblick für den Stiftungsrat, September 2026" data-en="Progress and outlook for the foundation board, September 2026"></div>
+      </div>
+      <div class="lockup"><span data-de="Ein Projekt gefördert durch" data-en="A project supported by"></span><br>Stiftung <b>Zurückgeben</b></div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p data-de="Mit einem Namen anfangen, nicht mit einer Zahl. E. Braun: Wiener Luxusgeschäft, neben dem Adlon. Stammkunden: Emil Jannings, Heinz Rühmann, Paul Hindemith." data-en="Open with one name, not a number. E. Braun: Viennese luxury store next to the Adlon. Regulars: Emil Jannings, Heinz Rühmann, Paul Hindemith."></p>
+    <p data-de="Dauer: 30 Sekunden. Dann weiter." data-en="30 seconds. Then move on."></p>
+  </aside>
+</section>
+
+<!-- ============ 2 · ONE NAME ============ -->
+<section class="slide" id="s2" data-n="2">
+  <div class="kicker" data-de="Eine Adresse, dreißig Jahre" data-en="One address, thirty years"></div>
+  <h2 data-de="Was das Archiv über ein Geschäft weiß" data-en="What the archive knows about one store"></h2>
+  <div class="body">
+    <div class="beats reveal">
+      <div class="beat"><div class="y">1914</div><p data-de="Die größte Filiale von E. Braun &amp; Co. eröffnet Unter den Linden 2, direkt neben dem Hotel Adlon. Abendgarderobe, Tischwäsche, später Möbel." data-en="E. Braun &amp; Co.’s largest branch opens at Unter den Linden 2, next to Hotel Adlon. Formal wear, table linen, later furniture."></p></div>
+      <div class="beat"><div class="y">1933</div><p data-de="Als österreichische Staatsbürger bleiben die jüdischen Inhaber zunächst verschont. Das Geschäft läuft weiter." data-en="As Austrian nationals, the Jewish owners are initially spared. The store keeps trading."></p></div>
+      <div class="beat"><div class="y">1938</div><p data-de="Nach dem „Anschluss“ wird Siegfried Oser-Braun verhaftet und aus der Haft heraus zum Verkauf gezwungen. Die Familie flieht über London und Ägypten in die USA." data-en="After Austria’s annexation, Siegfried Oser-Braun is arrested and, while still detained, forced to sell. The family escapes via London and Egypt to the USA."></p></div>
+      <div class="beat"><div class="y">1943</div><p data-de="Als „nicht kriegswichtig“ geschlossen, beschlagnahmt, einem SS-Führer zugewiesen. Im September durch Bomben zerstört." data-en="Closed as not relevant to the war effort, seized, assigned to a senior SS official. Destroyed by bombing in September."></p></div>
+      <div class="beat now"><div class="y" data-de="Heute" data-en="Today"></div><p data-de="Der Zwangsverkauf wird 1954 für nichtig erklärt. Auf dem Grundstück steht heute das Hotel Adlon." data-en="The forced sale is declared void in 1954. The Hotel Adlon now covers the site."></p></div>
+    </div>
+    <div class="reveal">
+      <img class="plaque" src="../../images/plaques/e-braun-plaque.webp" alt="Memorial plaque for E. Braun & Co.">
+      <p class="cap small" data-de="Die Gedenktafel für diese Adresse, fertigungsreif. Mehr dazu auf Folie 7." data-en="The memorial plaque for this address, ready for fabrication. More on slide 7."></p>
+      <p class="cap small" data-de="Die Tafel nennt die historische Hausnummer 75. Nach der Neunummerierung liegt das Grundstück heute bei Unter den Linden 2, im Block des Hotels Adlon." data-en="The plaque gives the historical street number, 75. After renumbering, the site is today Unter den Linden 2, within the Hotel Adlon block."></p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p data-de="Jeder Punkt auf der Karte hat so eine Geschichte. Für 16 Geschäfte haben wir sie recherchiert und erzählt; für 10.000 kennen wir Name, Branche, Adresse und Daten." data-en="Every dot on the map has a story like this. For 16 we have researched and told it; for 10,000 we know name, trade, address and dates."></p>
+    <p data-de="Quelle: Christine Fischer-Defoy, Timeline-Datei 1.json." data-en="Source: Christine Fischer-Defoy, timeline file 1.json."></p>
+  </aside>
+</section>
+
+<!-- ============ 3 · ZOOM OUT ============ -->
+<section class="slide" id="s3" data-n="3">
+  <div class="kicker" data-de="Und dann herauszoomen" data-en="And then zoom out"></div>
+  <div class="body">
+    <div class="reveal">
+      <div class="big"><div class="a" data-de="10.021" data-en="10,021"></div></div>
+      <p class="lbl" data-de="jüdische Geschäfte in Berlin, dokumentiert" data-en="Jewish-owned businesses in Berlin, documented"></p>
+      <div class="big"><div class="b" data-de="8.838" data-en="8,838"></div></div>
+      <p class="lbl" data-de="davon an ihrer realen Adresse auf der Karte" data-en="of them placed at their real address on the map"></p>
+      <p class="small" data-de="Die übrigen 1.183 haben keine eindeutig auflösbare historische Adresse. Wir raten nicht." data-en="The remaining 1,183 lack a resolvable historical address. We don’t guess."></p>
+      <p class="quote" data-de="Hinter jedem Punkt: eine Familie, eine Existenz, ein Ort, an dem Berlin sein Brot, seine Bücher, seine Wintermäntel kaufte. Diese Karte existiert, damit sie nicht auf eine Zahl reduziert werden." data-en="Behind every dot: a family, a livelihood, a place where Berlin bought its bread, its books, its winter coats. This map exists so that they are not reduced to a number."></p>
+    </div>
+    <div class="live" data-poster="posters/home-hero.webp">
+      <img class="poster" src="posters/home-hero.webp" alt="">
+      <iframe data-src="https://b3rlin.storytimemaps.com/?theme=brutal-pop" title="StoryMaps homepage" allow="fullscreen" loading="lazy"></iframe>
+      <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p data-de="Die Lücke ansprechen, bevor jemand nachfragt: 1.183 Datensätze ohne auflösbare Adresse bleiben bewusst unten." data-en="Name the gap before anyone asks: 1,183 records without a resolvable address are deliberately left off."></p>
+    <p data-de="Rechts läuft die echte Startseite." data-en="On the right: the real homepage, live."></p>
+    <p data-de="Vorher auf dem Vortrags-Laptop einmal das Cookie-Banner der Seite bestätigen, sonst erscheint es in jedem Einbettungsrahmen." data-en="Beforehand, accept the site’s cookie banner once on the presenting laptop, or it shows in every embed."></p>
+  </aside>
+</section>
+
+<!-- ============ 4 · DEMO: MAP ============ -->
+<section class="slide demo" id="s4" data-n="4">
+  <div class="top">
+    <div>
+      <div class="kicker" data-de="Live, Teil 1" data-en="Live, part 1"></div>
+      <h2 data-de="Die Karte. Zeit als Regler." data-en="The map. Time as a slider."></h2>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--success)"></i><span data-de="in Betrieb" data-en="active"></span></span>
+      <span><i style="background:var(--warning)"></i><span data-de="unter Druck" data-en="under pressure"></span></span>
+      <span><i style="background:var(--danger)"></i><span data-de="geschlossen" data-en="closed"></span></span>
+      <span><i style="background:var(--marker-standing)"></i><span data-de="Gebäude steht noch" data-en="building still standing"></span></span>
+    </div>
+  </div>
+  <div class="live" data-poster="posters/map.webp">
+    <img class="poster" src="posters/map.webp" alt="">
+    <iframe data-src="https://b3rlin.storytimemaps.com/map?theme=brutal-pop" title="Interactive map" allow="fullscreen" loading="lazy"></iframe>
+    <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
+    <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
+  </div>
+  <aside class="notes">
+    <p data-de="Regler von 1933 nach 1938 ziehen. Erst wird es gelb, dann orange. Auf ein Cluster klicken, ein Geschäft öffnen." data-en="Drag the slider from 1933 to 1938. Yellow first, then orange. Click a cluster, open one business."></p>
+    <p data-de="F drücken für Vollbild, Esc zurück. Klick außerhalb der Karte, damit die Pfeiltasten wieder die Folien steuern." data-en="Press F for fullscreen, Esc to return. Click outside the map so arrow keys drive the slides again."></p>
+    <p data-de="Dauer: 4 Minuten." data-en="4 minutes."></p>
+  </aside>
+</section>
+
+<!-- ============ 5 · DEMO: TOUR ============ -->
+<section class="slide demo" id="s5" data-n="5">
+  <div class="top">
+    <div>
+      <div class="kicker" data-de="Live, Teil 2" data-en="Live, part 2"></div>
+      <h2 data-de="Der virtuelle Rundgang, 1925 bis 1945" data-en="The virtual tour, 1925 to 1945"></h2>
+    </div>
+    <p class="small" style="max-width:520px;text-align:right" data-de="15 Schaufenster, als Baukörper der 1930er auf dem heutigen Stadtgrund. Scrollen bewegt die Kamera und die Jahre." data-en="15 storefronts, as 1930s building volumes on today’s city ground. Scrolling moves the camera and the years."></p>
+  </div>
+  <div class="live" data-poster="posters/history-tour.webp">
+    <img class="poster" src="posters/history-tour.webp" alt="">
+    <iframe data-src="https://b3rlin.storytimemaps.com/history-tour" title="Virtual tour" allow="fullscreen" loading="lazy"></iframe>
+    <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
+    <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
+  </div>
+  <aside class="notes">
+    <p data-de="In den Rahmen klicken, langsam scrollen. Bei Station 3 kurz stehen bleiben. Auf die Jahreszahl oben achten." data-en="Click into the frame, scroll slowly. Pause at stop 3. Point at the year counter."></p>
+    <p data-de="Das ist der emotionale Höhepunkt. Nicht zu lange reden." data-en="This is the emotional peak. Don’t talk over it too much."></p>
+    <p data-de="Dauer: 3 Minuten." data-en="3 minutes."></p>
+  </aside>
+</section>
+
+<!-- ============ 12 · VISION ============ -->
+<section class="slide" id="s12" data-n="6">
+  <div class="kicker" data-de="Was wir bauen" data-en="What we are building"></div>
+  <h2 data-de="Erinnerung an drei Orten: im Archiv, auf der Straße, im Museum" data-en="Memory in three places: the archive, the street, the museum"></h2>
+  <div class="vision reveal">
+    <div class="card"><div class="n">1</div><h3 data-de="Das Archiv" data-en="The archive"></h3><p data-de="Die Karte, der Rundgang, die Daten. Offen, dreisprachig, für Forschung und Unterricht nutzbar." data-en="The map, the tour, the data. Open, in three languages, usable for research and teaching."></p><span class="status on" data-de="online" data-en="live"></span><div class="arrow"></div></div>
+    <div class="card"><div class="n">2</div><h3 data-de="Die Straße" data-en="The street"></h3><p data-de="Gedenktafeln an den echten Adressen, mit QR-Code zurück ins Archiv. Aus dem Bildschirm in die Stadt." data-en="Memorial plaques at the real addresses, with a QR code back into the archive. From the screen into the city."></p><span class="status progress" data-de="in Arbeit" data-en="in progress"></span><div class="arrow"></div></div>
+    <div class="card"><div class="n">3</div><h3 data-de="Das Museum" data-en="The museum"></h3><p data-de="Eine begehbare Karte und ein Touch-Kiosk in einem Haus, das die Geschichte ohnehin erzählt." data-en="A walk-on map and a touch kiosk in a venue that already tells this history."></p><span class="status proto" data-de="Prototyp" data-en="prototype"></span></div>
+  </div>
+  <div class="beyond">
+    <span class="tag cyan" data-de="Und darüber hinaus" data-en="And beyond"></span>
+    <span data-de="Frankfurt als Pilot mit 167 Geschäften. Die Methode ist übertragbar auf jede Stadt mit einer Quelle wie der Berliner." data-en="Frankfurt as a pilot with 167 businesses. The method transfers to any city with a source like Berlin’s."></span>
+  </div>
+  <aside class="notes">
+    <p data-de="Die drei Orte verstärken sich gegenseitig: Die Tafel führt zur Karte, die Karte ins Museum, das Museum in die Straße." data-en="The three places reinforce each other: the plaque leads to the map, the map to the museum, the museum back to the street."></p>
+  </aside>
+</section>
+
+<!-- ============ 6 · PLAQUES ============ -->
+<section class="slide" id="s6" data-n="7">
+  <div class="kicker" data-de="Von der Karte auf die Straße" data-en="From the map to the street"></div>
+  <h2 data-de="Gedenktafeln, fertigungsreif" data-en="Memorial plaques, ready to fabricate"></h2>
+  <div class="plaques reveal">
+    <img src="../../plaques/premium/ebraun-ornate-copper.svg" alt="E. Braun plaque, ornate">
+    <img src="../../plaques/premium/e-braun-medium.svg" alt="E. Braun plaque, medium tier">
+    <img src="../../plaques/premium/breslauer-medium.svg" alt="Martin Breslauer plaque">
+    <img src="../../plaques/premium/a-asher-co-simple.svg" alt="A. Asher & Co plaque, compact">
+  </div>
+  <div class="facts reveal">
+    <div class="fact"><div class="num">2</div><p data-de="Formate: 300 × 200 mm mit Geschichte und Schaufenster-Gravur, 300 × 100 mm kompakt mit den vier Fakten" data-en="Formats: 300 × 200 mm with narrative and storefront engraving, 300 × 100 mm compact with the four facts"></p></div>
+    <div class="fact"><div class="num">18</div><p data-de="Tafeln mit Gravurdateien, je zwei Lesarten für zweifarbiges ABS" data-en="Plaques with engraving files, two readings each for two-tone ABS"></p></div>
+    <div class="fact"><div class="num">181</div><p data-de="Adressen auf der Kontaktliste für Eigentümer und Bezirke" data-en="Addresses on the contact list for owners and districts"></p></div>
+    <div class="fact"><div class="lockup">Stiftung<br><b>Zurückgeben</b></div><p data-de="auf jeder Tafel, in jedem Format. Keine Ausnahme." data-en="on every plaque, in every format. No exceptions."></p></div>
+  </div>
+  <p class="small" style="margin-top:40px" data-de="Stand: entworfen, geprüft, schneidbar. Noch keine Tafel hängt. Das ist der nächste Schritt, und er braucht Türen, die wir allein nicht öffnen können." data-en="Status: designed, verified, cuttable. No plaque is installed yet. That is the next step, and it needs doors we can’t open alone."></p>
+  <aside class="notes">
+    <p data-de="Jede Tafel nennt vier Fakten: Name, Branche, Daten, Ort. Fehlt einer, gibt es keine Tafel. Wir raten nicht." data-en="Every plaque states four facts: name, trade, dates, place. Missing one means no plaque. We don’t guess."></p>
+    <p data-de="Kontextzeile auf jeder Tafel: „Jüdisches Unternehmen, unter nationalsozialistischer Herrschaft enteignet und liquidiert.“" data-en="Context line on every plaque: “Jewish business, expropriated and liquidated under National Socialist rule.”"></p>
+  </aside>
+</section>
+
+<!-- ============ 8 · EXHIBIT ============ -->
+<section class="slide" id="s8" data-n="8">
+  <div class="kicker" data-de="Ins Museum" data-en="Into the museum"></div>
+  <h2 data-de="Die Ausstellung: entworfen, der Kiosk läuft bereits" data-en="The exhibit: designed, and the kiosk already runs"></h2>
+  <div class="renders reveal">
+    <figure style="margin:0"><img src="../../images/exhibit/gallery-isometric-plan.webp" alt="Isometric gallery plan"><figcaption data-de="Raumplan mit begehbarer Bodenkarte, in drei Größen: Vitrine, Raum, Halle" data-en="Gallery plan with a walk-on floor map, at three scales: case, room, hall"></figcaption></figure>
+    <figure style="margin:0"><img src="../../images/exhibit/kiosk-in-gallery.webp" alt="Kiosk in gallery render"><figcaption data-de="Touch-Kiosk mit Karte und Zeitregler" data-en="Touch kiosk with map and time slider"></figcaption></figure>
+  </div>
+  <div class="kiosk">
+    <p data-de="Der Kiosk ist kein Rendering. Die Touch-Oberfläche mit Attract-Loop und automatischem Neustart läuft heute im Browser und wartet auf einen Raum." data-en="The kiosk is not a rendering. The touch interface with an attract loop and automatic reset runs in a browser today and is waiting for a room."></p>
+    <div><span class="status proto" data-de="Prototyp, sucht Partnerhaus" data-en="Prototype, seeking a partner venue"></span><br><span class="small mono">b3rlin.storytimemaps.com/museum-exhibit</span></div>
+  </div>
+  <aside class="notes">
+    <p data-de="Bei Nachfrage: Anhang-Folie mit der Live-Kiosk-Ansicht ist mit Taste K erreichbar (Appendix 1)." data-en="If asked: the live kiosk view is in the appendix, key K jumps there (Appendix 1)."></p>
+    <p data-de="Drei Größen, weil wir nicht wissen, welches Haus Ja sagt." data-en="Three scales because we don’t know which venue says yes."></p>
+  </aside>
+</section>
+
+<!-- ============ 7 · CLASSROOMS ============ -->
+<section class="slide" id="s7" data-n="9">
+  <div class="kicker" data-de="Für den Unterricht" data-en="For classrooms"></div>
+  <h2 data-de="Kostenloses Unterrichtsmaterial, Klasse 8 bis 13" data-en="Free teaching material, grades 8 to 13"></h2>
+  <div class="body reveal">
+    <div class="card">
+      <div class="big">6</div>
+      <h3 data-de="Sechs Unterrichtsstunden aus einem Archiv" data-en="Six Lessons From One Archive"></h3>
+      <p data-de="Sechs eigenständige Unterrichtseinheiten, jede in einer Schulstunde durchführbar, mit Arbeitsblättern. Datenlesen, Quellenkritik, eine Adresse recherchieren, eine Tafel entwerfen." data-en="Six standalone single-lesson activities with worksheets. Reading data, source criticism, researching one address, designing a plaque."></p>
+      <div class="fine" data-de="storytimemaps.com/education/activities" data-en="storytimemaps.com/education/activities"></div>
+    </div>
+    <div class="card">
+      <div class="big">3</div>
+      <h3 data-de="Die Straße, auf der du gehst" data-en="The Street You Walk On"></h3>
+      <p data-de="Ein Stadtteil-Spaziergang in drei Phasen: vorbereiten, gehen, dokumentieren. Druckbares Arbeitsheft, die Karte als Begleiter auf dem Handy." data-en="A neighbourhood walk in three phases: prepare, walk, document. Printable workbook, the map as a companion on the phone."></p>
+      <div class="fine" data-de="storytimemaps.com/education/workbook" data-en="storytimemaps.com/education/workbook"></div>
+    </div>
+  </div>
+  <div class="strip">
+    <span><i></i><span data-de="Deutsch, Englisch, Jiddisch" data-en="German, English, Yiddish"></span></span>
+    <span><i></i><span data-de="ohne Anmeldung, ohne Kosten" data-en="no login, no cost"></span></span>
+    <span><i></i><span data-de="noch keine Pilotschule" data-en="no pilot school yet"></span></span>
+  </div>
+  <aside class="notes">
+    <p data-de="Das Material existiert und ist online. Was fehlt, ist eine Schule, die es ausprobiert, und jemand, der uns sagt, was im Klassenzimmer nicht funktioniert." data-en="The material exists and is online. What’s missing is a school that tries it, and someone telling us what doesn’t work in a classroom."></p>
+  </aside>
+</section>
+
+<!-- ============ 9 · RIGOR ============ -->
+<section class="slide" id="s9" data-n="10">
+  <div class="kicker" data-de="Warum man dem trauen kann" data-en="Why this can be trusted"></div>
+  <h2 data-de="Jede Zahl hat eine Quelle und wurde 2026 dagegen geprüft" data-en="Every number has a source and was checked against it in 2026"></h2>
+  <div class="cols reveal">
+    <div class="col">
+      <h3 data-de="Die Quelle" data-en="The source"></h3>
+      <p data-de="Dr. Christoph Kreutzmüller, „Ausverkauf. Die Vernichtung der jüdischen Gewerbetätigkeit in Berlin 1930–1945“ (2012, englisch als „Final Sale“ 2015), und die Datenbank jüdischer Gewerbebetriebe an der Humboldt-Universität zu Berlin." data-en="Dr. Christoph Kreutzmüller, “Ausverkauf” (2012; in English as “Final Sale: The Destruction of Jewish Commercial Activity in Nazi Germany”, 2015), and the database of Jewish businesses at Humboldt University Berlin."></p>
+      <p data-de="Die 16 erzählten Geschichten stammen aus der Forschung von Christine Fischer-Defoy und dem Aktiven Museum." data-en="The 16 narrated stories draw on the research of Christine Fischer-Defoy and the Aktives Museum."></p>
+    </div>
+    <div class="col">
+      <h3 data-de="Die Prüfung" data-en="The verification"></h3>
+      <div class="pct">91<small>,6 %</small></div>
+      <p data-de="9.177 von 10.021 Datensätzen stimmen in jedem geprüften Feld mit der Quelle überein. Bei den übrigen fanden sich 861 Feldabweichungen: 607 automatisch korrigiert (Leerzeichen, Umlaute), 254 zur Handprüfung markiert." data-en="9,177 of 10,021 records match the source on every checked field. The rest showed 861 field differences: 607 fixed automatically (whitespace, diacritics), 254 flagged for manual review."></p>
+    </div>
+    <div class="col">
+      <h3 data-de="Die Sprachen" data-en="The languages"></h3>
+      <div class="langs"><span>DE</span><span>EN</span><span class="yi">ייִדיש</span></div>
+      <p style="margin-top:22px" data-de="Die gesamte Oberfläche, nicht nur die Startseite. Jiddisch, weil ein Teil dieser Welt, vor allem im Scheunenviertel, jiddisch sprach." data-en="The whole interface, not just the homepage. Yiddish, because part of this world, above all in the Scheunenviertel, spoke it."></p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p data-de="Diese Folie ist für die Skeptiker im Raum. Nicht überspringen." data-en="This slide is for the sceptics in the room. Don’t skip it."></p>
+    <p data-de="Die 254 zur Handprüfung: ein Werkstudent, zwei Wochen. Das wäre ein sinnvoller kleiner Kooperationsbaustein mit der HU." data-en="The 254 for manual review: one student assistant, two weeks. A sensible small cooperation piece with HU Berlin."></p>
+  </aside>
+</section>
+
+<!-- ============ 10 · WHAT THE GRANT BUILT ============ -->
+<section class="slide" id="s10" data-n="11">
+  <div class="kicker" data-de="Juni bis September 2026" data-en="June to September 2026"></div>
+  <h2 data-de="Was mit der Förderung entstanden ist" data-en="What the grant built"></h2>
+  <div class="timeline reveal">
+    <div class="ms"><div class="m">Jun</div><h3 data-de="Datenprüfung" data-en="Data verification"></h3><p data-de="10.021 Datensätze gegen die HU-Quelle geprüft, 587 Adressen wiederhergestellt, 251 neu geokodiert." data-en="10,021 records checked against the HU source, 587 addresses restored, 251 re-geocoded."></p></div>
+    <div class="ms"><div class="m">Jun</div><h3 data-de="Drei Sprachen" data-en="Three languages"></h3><p data-de="Deutsch, Englisch, Jiddisch für die gesamte Oberfläche. Ausstellungskonzept online." data-en="German, English, Yiddish across the interface. Exhibit concept published."></p></div>
+    <div class="ms"><div class="m">Aug</div><h3 data-de="Was heute noch steht" data-en="What still stands today"></h3><p data-de="Welche Gebäude heute noch stehen. Der Touch-Kiosk als lauffähiger Prototyp." data-en="Which buildings still stand today. The touch kiosk as a working prototype."></p></div>
+    <div class="ms"><div class="m">Aug</div><h3 data-de="Unterricht und Auffindbarkeit" data-en="Classrooms and findability"></h3><p data-de="Sechs Unterrichtseinheiten, ein Arbeitsheft. Suchmaschinen-Grundlagen, damit das Archiv gefunden wird." data-en="Six lessons and a workbook. Search-engine groundwork so the archive can be found."></p></div>
+    <div class="ms"><div class="m">Aug</div><h3 data-de="Startseite und Rundgang" data-en="Homepage and tour"></h3><p data-de="Neue erzählende Startseite. 3D-Rundgang durch 15 Schaufenster, auch auf dem Handy flüssig." data-en="New narrative homepage. 3D tour through 15 storefronts, runs smoothly on phones."></p></div>
+    <div class="ms"><div class="m">Sep</div><h3 data-de="Tafeln schneidbar" data-en="Plaques ready to cut"></h3><p data-de="18 Tafeln mit Gravurdateien, zwei Formate, eine verzierte Variante, Kontaktliste mit 181 Adressen." data-en="18 plaques with engraving files, two formats, one ornate variant, outreach list of 181 addresses."></p></div>
+  </div>
+  <aside class="notes">
+    <p data-de="Alles davon ist online oder im Repository nachprüfbar. Vier Monate, ein Entwickler, ein knappes Hosting-Budget." data-en="All of it is online or verifiable in the repository. Four months, one developer, a tight hosting budget."></p>
+  </aside>
+</section>
+
+<!-- ============ 13 · NEXT 12 MONTHS ============ -->
+<section class="slide" id="s13" data-n="12">
+  <div class="kicker" data-de="Die nächsten zwölf Monate" data-en="The next twelve months"></div>
+  <h2 data-de="Vier Schritte, und was jeder davon braucht" data-en="Four steps, and what each one needs"></h2>
+  <div class="roadmap reveal">
+    <div class="row"><div class="q" data-de="Q4" data-en="Q4"></div><h3 data-de="Die ersten Tafeln hängen. Drei bis fünf Adressen als Pilot." data-en="The first plaques go up. Three to five addresses as a pilot."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Zustimmung von Eigentümern und Bezirksamt, einen Handwerksbetrieb für die Montage, einen kleinen Installationsetat." data-en="Consent from property owners and the district office, a workshop for mounting, a small installation budget."></span></p></div>
+    <div class="row"><div class="q" data-de="Q1" data-en="Q1"></div><h3 data-de="Eigene Startseiten für Museen und für Lehrkräfte." data-en="Dedicated landing pages for museums and for teachers."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Zwei Gespräche mit Häusern und zwei mit Schulen, damit wir bauen, was gebraucht wird, statt was wir vermuten." data-en="Two conversations with venues and two with schools, so we build what is needed rather than what we assume."></span></p></div>
+    <div class="row"><div class="q" data-de="Q2" data-en="Q2"></div><h3 data-de="Der Kiosk steht in einem Partnerhaus, zunächst in der kleinsten Größe." data-en="The kiosk stands in a partner venue, starting at the smallest scale."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Ein Haus, eine Steckdose, ein Bildschirm. Der Rest existiert." data-en="A venue, a power socket, a screen. The rest exists."></span></p></div>
+    <div class="row"><div class="q" data-de="Q3" data-en="Q3"></div><h3 data-de="Frankfurt vollständig, eine weitere Stadt begonnen." data-en="Frankfurt complete, one more city begun."></h3><p class="need"><b data-de="Braucht:" data-en="Needs:"></b> <span data-de="Zugang zu einer vergleichbaren Quelle und einen lokalen Forschungspartner." data-en="Access to a comparable source and a local research partner."></span></p></div>
+  </div>
+  <aside class="notes">
+    <p data-de="Ehrlich bleiben: Die Einstiege für Institutionen und Lehrkräfte sind geplant, nicht gebaut. Der Kiosk existiert, das Haus nicht." data-en="Stay honest: the institution and teacher entry points are planned, not built. The kiosk exists, the venue doesn’t."></p>
+    <p data-de="Jede Zeile ist eine Überleitung zur nächsten Folie." data-en="Every row is a lead-in to the next slide."></p>
+  </aside>
+</section>
+
+<!-- ============ 13 · FUNDING PIPELINE ============ -->
+<section class="slide" id="s16" data-n="13">
+  <div class="kicker" data-de="Wie wir das finanzieren wollen" data-en="How we plan to fund it"></div>
+  <h2 data-de="Sechs Anträge, einer ist schon draußen" data-en="Six applications, one already out"></h2>
+  <div class="funds reveal">
+    <div class="fund">
+      <h3>Bewegungsstiftung<small data-de="Starthilfe und Kampagnenförderung" data-en="Start-up aid and campaign funding"></small></h3>
+      <p data-de="13.000 € beantragt. Beide Anträge sind eingereicht." data-en="€13,000 applied for. Both applications submitted."></p>
+      <div class="when" data-de="Eingereicht" data-en="Submitted"><small data-de="Antwort ausstehend" data-en="awaiting decision"></small></div>
+      <span class="tag cyan" data-de="nichts offen" data-en="nothing pending from us"></span>
+    </div>
+    <div class="fund key">
+      <h3>Hauptstadtkulturfonds<small data-de="Berliner Projektförderung, Geschichte und Medienkunst" data-en="Berlin project funding, history and media art"></small></h3>
+      <p data-de="Der wichtigste nächste Antrag. Einzelpersonen sind antragsberechtigt, also ohne Verein möglich." data-en="The key near-term application. Individuals are eligible, so no association is needed."></p>
+      <div class="when" data-de="1. Oktober 2026" data-en="1 October 2026"><small data-de="Frist" data-en="deadline"></small></div>
+      <span class="tag fill" data-de="in Arbeit" data-en="in progress"></span>
+    </div>
+    <div class="fund">
+      <h3>LOTTO-Stiftung Berlin<small data-de="Erinnerungsarbeit ist Förderthema" data-en="Remembrance work is a listed theme"></small></h3>
+      <p data-de="Nimmt Einzelpersonen aus dem Kulturbereich. Ziel: Förderung 2027." data-en="Accepts individuals in the cultural field. Aiming at 2027 funding."></p>
+      <div class="when" data-de="Laufend" data-en="Rolling"><small data-de="Ziel 2027" data-en="target 2027"></small></div>
+      <span class="tag" data-de="geplant" data-en="planned"></span>
+    </div>
+    <div class="fund">
+      <h3>Stiftung EVZ<small data-de="Bildungsagenda NS-Unrecht" data-en="Bildungsagenda NS-Unrecht"></small></h3>
+      <p data-de="Größere Summen, aber nur für Organisationen. Braucht eine Trägerorganisation, die den Antrag hält." data-en="Larger amounts, but organisations only. Needs a partner organisation to hold the grant."></p>
+      <div class="when" data-de="1. November 2026" data-en="1 November 2026"><small data-de="Skizze" data-en="concept sketch"></small></div>
+      <span class="tag fill" data-de="Partner gesucht" data-en="partner wanted"></span>
+    </div>
+    <div class="fund">
+      <h3>Prototype Fund<small data-de="Open-Source-Förderung für die Plattform" data-en="Open-source funding for the platform"></small></h3>
+      <p data-de="Für die weitere StoryTimeMaps-Plattform. Passt weniger gut als früher; nur, wenn die Rahmung trägt." data-en="For the wider StoryTimeMaps platform. A weaker fit than it used to be; only if the framing works."></p>
+      <div class="when" data-de="1. Okt. bis 30. Nov. 2026" data-en="1 Oct to 30 Nov 2026"><small data-de="Antragsfenster" data-en="application window"></small></div>
+      <span class="tag" data-de="optional" data-en="optional"></span>
+    </div>
+    <div class="fund">
+      <h3>Yiddish Book Center<small data-de="Übersetzungswerkzeug" data-en="Translation tool"></small></h3>
+      <p data-de="Eigener Antrag für das jiddische Übersetzungswerkzeug, unabhängig vom Rest." data-en="Separate application for the Yiddish translation tool, on its own track."></p>
+      <div class="when" data-de="Eigener Zeitplan" data-en="Own timeline"></div>
+      <span class="tag" data-de="geplant" data-en="planned"></span>
+    </div>
+  </div>
+  <p class="foot" data-de="Keiner dieser Anträge richtet sich an Sie. Was uns helfen würde: eine Trägerorganisation für EVZ und ein Blick auf den Hauptstadtkulturfonds-Antrag vor dem 1. Oktober." data-en="None of these applications is addressed to you. What would help: a partner organisation for EVZ, and a second pair of eyes on the Hauptstadtkulturfonds application before 1 October."></p>
+  <aside class="notes">
+    <p data-de="Bewegungsstiftung: Starthilfe und Kampagnenantrag sind beide drin. Nichts mehr zu tun, bis sie antworten." data-en="Bewegungsstiftung: both the start-up aid and the campaign application are in. Nothing to do until they answer."></p>
+    <p data-de="EVZ ist die Brücke zur nächsten Folie: Wer im Raum kennt eine Organisation, die den Antrag tragen könnte?" data-en="EVZ is the bridge to the next slide: who in the room knows an organisation that could hold the grant?"></p>
+    <p data-de="Projektmanagement ist in jedem Antrag als Personalkosten enthalten; keine gesonderte Bitte." data-en="Project management sits inside each application as a personnel cost; no separate request."></p>
+  </aside>
+</section>
+
+<!-- ============ 14 · WHERE WE NEED YOU ============ -->
+<section class="slide" id="s14" data-n="14">
+  <div class="kicker" data-de="Keine Bitte um Geld. Eine Bitte um Ideen und Türen." data-en="Not a request for money. A request for ideas and doors."></div>
+  <h2 data-de="Wo wir Ihre Erfahrung brauchen" data-en="Where we need your experience"></h2>
+  <div class="asks reveal" id="asks">
+    <div class="ask" tabindex="0" data-k="1">
+      <div class="k">1</div>
+      <h3 data-de="Museen und Gedenkorte" data-en="Museums and memorial sites"></h3>
+      <ul>
+        <li data-de="Welches Haus wäre der richtige erste Ort für den Kiosk?" data-en="Which venue would be the right first home for the kiosk?"></li>
+        <li data-de="Jüdisches Museum, Topographie des Terrors, Bezirksmuseen, Stolpersteine-Initiative: Wen kennen Sie dort?" data-en="Jewish Museum, Topography of Terror, district museums, the Stolpersteine initiative: who do you know there?"></li>
+      </ul>
+      <div class="one" data-de="Die eine wertvollste Einführung: eine Kuratorin oder ein Kurator, die den Kiosk 30 Minuten ausprobiert." data-en="The single most useful introduction: a curator who will try the kiosk for 30 minutes."></div>
+    </div>
+    <div class="ask" tabindex="0" data-k="2">
+      <div class="k">2</div>
+      <h3 data-de="Schulen und Lehrkräfte" data-en="Schools and teachers"></h3>
+      <ul>
+        <li data-de="Welche Schule oder welches Lehrkräfte-Netzwerk würde das Arbeitsheft in einem Halbjahr erproben?" data-en="Which school or teacher network would trial the workbook over one term?"></li>
+        <li data-de="Landesinstitut, Fachverbände, Bildungsträger: Wer entscheidet, was in Berlin unterrichtet wird?" data-en="State institute, subject associations, education providers: who decides what gets taught in Berlin?"></li>
+      </ul>
+      <div class="one" data-de="Die eine wertvollste Einführung: eine Geschichtslehrkraft, die ehrlich sagt, was im Klassenzimmer scheitert." data-en="The single most useful introduction: a history teacher who will say honestly what fails in the classroom."></div>
+    </div>
+    <div class="ask" tabindex="0" data-k="3">
+      <div class="k">3</div>
+      <h3 data-de="Tafeln in der Stadt" data-en="Plaques in the city"></h3>
+      <ul>
+        <li data-de="Wie erreicht man Hauseigentümer und Ladenbetreiber, ohne dass der Brief ungelesen bleibt?" data-en="How do you reach property owners and shopkeepers without the letter going unread?"></li>
+        <li data-de="Welches Bezirksamt ist erfahrungsgemäß offen? Gibt es Vorbilder aus Stolpersteine oder Berliner Gedenktafel?" data-en="Which district office is known to be open? Are there precedents from Stolpersteine or the Berliner Gedenktafel?"></li>
+      </ul>
+      <div class="one" data-de="Die eine wertvollste Einführung: ein Eigentümer Unter den Linden oder in der Friedrichstraße, der Ja sagt." data-en="The single most useful introduction: one property owner on Unter den Linden or Friedrichstraße who says yes."></div>
+    </div>
+    <div class="ask" tabindex="0" data-k="4">
+      <div class="k">4</div>
+      <h3 data-de="Presse, Forschung, Förderprogramme" data-en="Press, research, funding programmes"></h3>
+      <ul>
+        <li data-de="Welche Redaktion würde die Karte zeigen, nicht nur erwähnen?" data-en="Which editorial desk would show the map, not just mention it?"></li>
+        <li data-de="HU Berlin, Leo-Baeck-Institut, Aktives Museum: Wie wird aus Quellennutzung eine Kooperation?" data-en="HU Berlin, Leo Baeck Institute, Aktives Museum: how does using a source become a cooperation?"></li>
+      </ul>
+      <div class="one" data-de="Die eine wertvollste Einführung: eine Programmverantwortliche, die uns sagt, welchen Antrag wir nicht schreiben sollten." data-en="The single most useful introduction: a programme officer who tells us which application not to write."></div>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:30px;font-size:24px" data-de="Eine Einführung pro Person reicht. Wir melden uns innerhalb von 48 Stunden." data-en="One introduction per person is enough. We will follow up within 48 hours."></p>
+  <aside class="notes">
+    <p data-de="Tasten 1 bis 4 klappen die Fragen einer Karte auf." data-en="Keys 1 to 4 unfold a card’s questions."></p>
+    <p data-de="Das ist der eigentliche Zweck des Treffens. 10 Minuten oder mehr. Karten einzeln öffnen, dann Stille aushalten." data-en="This is the actual point of the meeting. 10 minutes or more. Open the cards one at a time, then tolerate the silence."></p>
+    <p data-de="Namen und Zusagen sofort notieren. Nach dem Treffen innerhalb von 48 Stunden nachfassen." data-en="Write down names and commitments immediately. Follow up within 48 hours."></p>
+  </aside>
+</section>
+
+<!-- ============ 15 · CLOSE ============ -->
+<section class="slide dark" id="s15" data-n="15">
+  <div class="photo"></div><div class="wash"></div>
+  <div class="body">
+    <div class="reveal">
+      <div class="addr" data-de="Unter den Linden 2. Noch keine Tafel." data-en="Unter den Linden 2. No plaque yet."></div>
+      <h2 data-de="Danke." data-en="Thank you."></h2>
+      <div class="contact"><span>b3rlin.storytimemaps.com</span><br>info@storytimemaps.com</div>
+      <div class="lockup"><span data-de="Ein Projekt gefördert durch" data-en="A project supported by"></span> Stiftung <b>Zurückgeben</b></div>
+    </div>
+    <div class="qr" id="qr"></div>
+  </div>
+  <aside class="notes">
+    <p data-de="QR führt zur Karte. Die Folien gibt es als PDF; die Adresse dieser Präsentation kann weitergegeben werden." data-en="QR goes to the map. The slides exist as a PDF; this presentation’s address can be shared."></p>
+  </aside>
+</section>
+
+<!-- ============ APPENDIX ============ -->
+<section class="slide appx" id="a1" data-n="A1">
+  <div class="kicker" data-de="Anhang 1" data-en="Appendix 1"></div>
+  <h2 data-de="Der Kiosk, live" data-en="The kiosk, live"></h2>
+  <div class="live" data-poster="posters/museum-exhibit.webp">
+    <img class="poster" src="posters/museum-exhibit.webp" alt="">
+    <iframe data-src="https://b3rlin.storytimemaps.com/museum-exhibit" title="Museum kiosk" allow="fullscreen" loading="lazy"></iframe>
+    <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
+    <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
+  </div>
+  <aside class="notes"><p data-de="Der Attract-Loop startet nach 60 Sekunden ohne Berührung." data-en="Attract mode starts after 60 seconds without touch."></p></aside>
+</section>
+
+<section class="slide appx" id="a2" data-n="A2">
+  <div class="kicker" data-de="Anhang 2" data-en="Appendix 2"></div>
+  <h2 data-de="Frankfurt: der erste Schritt über Berlin hinaus" data-en="Frankfurt: the first step beyond Berlin"></h2>
+  <div class="live" data-poster="posters/frankfurt.webp">
+    <img class="poster" src="posters/frankfurt.webp" alt="">
+    <iframe data-src="https://b3rlin.storytimemaps.com/frankfurt" title="Frankfurt map" allow="fullscreen" loading="lazy"></iframe>
+    <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
+    <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
+  </div>
+  <aside class="notes"><p data-de="167 Geschäfte, andere Quelle, gleiche Methode. Zeigt, dass das Werkzeug nicht an Berlin hängt." data-en="167 businesses, a different source, the same method. Shows the tool isn’t tied to Berlin."></p></aside>
+</section>
+
+<section class="slide appx" id="a3" data-n="A3">
+  <div class="kicker" data-de="Anhang 3" data-en="Appendix 3"></div>
+  <h2 data-de="Anatomie einer Tafel" data-en="Anatomy of a plaque"></h2>
+  <div class="anatomy reveal">
+    <img src="../../plaques/premium/e-braun-detailed.svg" alt="E. Braun plaque, detailed tier">
+    <ol>
+      <li><b data-de="Gedenktafel, Hier stand:" data-en="Gedenktafel, Hier stand:"></b> <span data-de="jede Tafel sagt, was sie ist, auch die kleinste." data-en="every plaque says what it is, even the smallest."></span></li>
+      <li><b data-de="Vier Fakten:" data-en="Four facts:"></b> <span data-de="Name, Branche, Daten, Ort. Fehlt einer, gibt es keine Tafel." data-en="name, trade, dates, place. Missing one means no plaque."></span></li>
+      <li><b data-de="Kontextzeile:" data-en="Context line:"></b> <span data-de="„Jüdisches Unternehmen, unter nationalsozialistischer Herrschaft enteignet und liquidiert.“ Genau die Verben, die die Akten belegen." data-en="“Jewish business, expropriated and liquidated under National Socialist rule.” Exactly the verbs the records document."></span></li>
+      <li><b data-de="Schaufenster-Gravur:" data-en="Storefront engraving:"></b> <span data-de="nur im großen Format, aus dem historischen Foto." data-en="large format only, drawn from the historical photograph."></span></li>
+      <li><b data-de="QR-Code:" data-en="QR code:"></b> <span data-de="auf einer ungravierten Insel, damit er lesbar bleibt. Führt zur Geschichte auf der Karte." data-en="on an unengraved island so it stays scannable. Leads to the story on the map."></span></li>
+      <li><b>Stiftung Zurückgeben:</b> <span data-de="auf jeder Tafel, als dünn-fette Wortmarke." data-en="on every plaque, as the thin-bold wordmark."></span></li>
+      <li><b data-de="Material:" data-en="Material:"></b> <span data-de="zweifarbiges ABS, lasergraviert, 300 × 200 oder 300 × 100 mm, Mindeststrichstärke 0,3 mm." data-en="two-tone ABS, laser-engraved, 300 × 200 or 300 × 100 mm, minimum feature width 0.3 mm."></span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide appx" id="a4" data-n="A4">
+  <div class="kicker" data-de="Anhang 4" data-en="Appendix 4"></div>
+  <h2 data-de="Wie man mitmachen kann, ohne Geld zu geben" data-en="How to contribute without giving money"></h2>
+  <div class="tracks reveal">
+    <div class="card"><h3 data-de="Forschung" data-en="Research"></h3><p data-de="Die 254 markierten Datensätze prüfen. Eine weitere Geschichte der 16 schreiben. Eine Quelle für eine neue Stadt nennen." data-en="Check the 254 flagged records. Write one more of the 16 stories. Name a source for a new city."></p></div>
+    <div class="card"><h3 data-de="Ansprache" data-en="Outreach"></h3><p data-de="Eine Adresse aus der Liste übernehmen und den Eigentümer anschreiben. Wir stellen Brief und Tafelentwurf." data-en="Adopt one address from the list and write to the owner. We supply the letter and the plaque design."></p></div>
+    <div class="card"><h3 data-de="Übersetzung" data-en="Translation"></h3><p data-de="Die 16 Geschichten ins Jiddische. Die Unterrichtsmaterialien ins Englische." data-en="The 16 stories into Yiddish. The teaching materials into English."></p></div>
+    <div class="card"><h3 data-de="Code und Daten" data-en="Code and data"></h3><p data-de="Offen auf GitHub. Aufgaben mit Anleitung unter storytimemaps.com/collaborate." data-en="Open on GitHub. Tasks with guides at storytimemaps.com/collaborate."></p></div>
+  </div>
+</section>
+
+<section class="slide appx" id="a5" data-n="A5">
+  <div class="kicker" data-de="Anhang 5" data-en="Appendix 5"></div>
+  <h2 data-de="Die Daten selbst, für Forschende" data-en="The data itself, for researchers"></h2>
+  <div class="live" data-poster="posters/data-browser.webp">
+    <img class="poster" src="posters/data-browser.webp" alt="">
+    <iframe data-src="https://b3rlin.storytimemaps.com/jewish-businesses" title="Data browser" allow="fullscreen" loading="lazy"></iframe>
+    <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
+    <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
+  </div>
+  <aside class="notes"><p data-de="Alle 10.021 Datensätze durchsuchbar. Für die Frage „Kann ich das für meine eigene Arbeit nutzen?“" data-en="All 10,021 records searchable. For the question “Can I use this for my own work?”"></p></aside>
+</section>
+
+<!-- ============ 11 · BY THE NUMBERS ============ -->
+<section class="slide appx" id="s11" data-n="A6">
+  <div class="kicker" data-de="Anhang 6" data-en="Appendix 6"></div>
+  <h2 data-de="In Zahlen" data-en="By the numbers"></h2>
+  <div class="tiles reveal">
+    <div class="tile hi"><div class="num" data-de="10.021" data-en="10,021"></div><p data-de="dokumentierte Geschäfte" data-en="documented businesses"></p></div>
+    <div class="tile"><div class="num" data-de="8.838" data-en="8,838"></div><p data-de="an ihrer Adresse auf der Karte" data-en="placed at their address on the map"></p></div>
+    <div class="tile"><div class="num">16</div><p data-de="recherchierte und erzählte Geschichten" data-en="researched and narrated stories"></p></div>
+    <div class="tile"><div class="num">15</div><p data-de="Stationen im 3D-Rundgang" data-en="stops in the 3D tour"></p></div>
+    <div class="tile"><div class="num">18</div><p data-de="Gedenktafeln, laserfertig" data-en="memorial plaques, laser-ready"></p></div>
+    <div class="tile"><div class="num">181</div><p data-de="Adressen auf der Kontaktliste" data-en="addresses on the contact list"></p></div>
+    <div class="tile"><div class="num">6 + 1</div><p data-de="Unterrichtseinheiten und ein Arbeitsheft" data-en="lessons and one workbook"></p></div>
+    <div class="tile"><div class="num">3</div><p data-de="Sprachen: Deutsch, Englisch, Jiddisch" data-en="languages: German, English, Yiddish"></p></div>
+    <div class="tile"><div class="num">167</div><p data-de="Geschäfte in Frankfurt, der erste Schritt über Berlin hinaus" data-en="businesses in Frankfurt, the first step beyond Berlin"></p></div>
+  </div>
+  <aside class="notes">
+    <p data-de="Nur vorlesen, was gefragt wird. Diese Folie ist zum Anschauen." data-en="Only read out what gets asked. This slide is for looking at."></p>
+  </aside>
+</section>
+
+<!-- chrome -->
+<div id="progress"></div>
+<div id="brand"><b>StoryMaps Berlin</b> <span data-de="für Stiftung Zurückgeben, 2026" data-en="for Stiftung Zurückgeben, 2026"></span></div>
+<div id="counter"></div>
+<div id="lang"><button type="button" data-set="de" aria-pressed="true">DE</button><button type="button" data-set="en" aria-pressed="false">EN</button></div>
+<div id="nav"><button type="button" id="prev" aria-label="Previous">‹</button><button type="button" id="next" aria-label="Next">›</button></div>
+<aside id="notes"><h4 data-de="Sprechernotizen" data-en="Presenter notes"></h4><div id="notesBody"></div><div class="keys">← → Space PgUp PgDn<br>L: DE/EN · N: Notizen · F: Vollbild<br>1–4: Karten · K: Anhang · Home/End</div></aside>
+
+</div>
+</div>
+
+<script>
+(function () {
+  const PRINT = /[?&]print\b/.test(location.search);
+  const deck = document.getElementById('deck');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const MAIN = slides.filter(s => !s.classList.contains('appx')).length;
+  let idx = 0;
+  let lang = 'de';
+
+  /* ---------- language ---------- */
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-de]').forEach(el => {
+      const v = el.dataset[l];
+      if (v == null) return;
+      // allow the few strings that carry an entity
+      if (/&amp;|&nbsp;/.test(v)) el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll('#lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.set === l)));
+    try { localStorage.setItem('deck-lang', l); } catch (e) {}
+    renderNotes();
+  }
+  document.querySelectorAll('#lang button').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.set)));
+
+  /* ---------- QR (inline SVG; generated offline from https://b3rlin.storytimemaps.com) ---------- */
+  const QR_SVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 29 29\" shape-rendering=\"crispEdges\"><path stroke=\"#131318\" d=\"M0 0.5h7m1 0h2m1 0h1m5 0h2m3 0h7M0 1.5h1m5 0h1m4 0h1m4 0h1m2 0h1m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h4m3 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h5m1 0h3m1 0h2m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m2 0h3m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h4m1 0h3m3 0h2m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m3 0h1m2 0h2m1 0h1M0 8.5h1m3 0h1m1 0h3m3 0h6m1 0h1m1 0h5m2 0h1M0 9.5h1m1 0h2m1 0h1m2 0h1m1 0h3m4 0h2m3 0h7M2 10.5h1m1 0h1m1 0h3m4 0h3m1 0h2m1 0h2m1 0h1m4 0h1M0 11.5h1m1 0h2m1 0h1m1 0h1m2 0h1m2 0h1m1 0h4m3 0h1m1 0h2m1 0h2M1 12.5h1m1 0h1m2 0h1m2 0h2m2 0h1m3 0h1m3 0h1m5 0h1M0 13.5h5m3 0h3m2 0h2m1 0h1m1 0h1m3 0h7M1 14.5h4m1 0h4m2 0h1m3 0h2m5 0h4m1 0h1M0 15.5h2m2 0h1m2 0h2m3 0h1m1 0h1m2 0h3m1 0h1m1 0h1m3 0h2M2 16.5h1m3 0h10m1 0h1m1 0h1m3 0h1m3 0h1M0 17.5h1m1 0h1m1 0h1m2 0h1m2 0h1m11 0h4m1 0h2M5 18.5h2m1 0h3m2 0h3m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1M2 19.5h2m1 0h1m3 0h2m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m3 0h2M0 20.5h3m2 0h5m2 0h2m1 0h1m1 0h1m2 0h6m2 0h1M8 21.5h2m2 0h5m2 0h2m3 0h1m3 0h1M0 22.5h7m1 0h1m2 0h1m3 0h1m3 0h2m1 0h1m1 0h3m1 0h1M0 23.5h1m5 0h1m2 0h2m1 0h1m1 0h1m2 0h4m3 0h1m2 0h2M0 24.5h1m1 0h3m1 0h1m1 0h1m4 0h3m1 0h9M0 25.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h7m1 0h1m4 0h1M0 26.5h1m1 0h3m1 0h1m2 0h2m3 0h2m2 0h2m3 0h1m1 0h4M0 27.5h1m5 0h1m4 0h1m4 0h2m1 0h7m1 0h2M0 28.5h7m1 0h1m2 0h2m1 0h1m2 0h1m2 0h3m1 0h2m1 0h1\"/></svg>";
+  document.getElementById('qr').innerHTML = QR_SVG;
+
+  /* ---------- scale ---------- */
+  function fit() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    deck.style.setProperty('--s', s);
+  }
+  window.addEventListener('resize', fit);
+
+  /* ---------- live iframes ---------- */
+  function mount(slide) {
+    slide.querySelectorAll('.live').forEach(live => {
+      const f = live.querySelector('iframe');
+      if (!f || f.src) return;
+      live.classList.remove('offline', 'loaded');
+      f.addEventListener('load', () => { clearTimeout(live._t); live.classList.add('loaded'); live.classList.remove('offline'); }, { once: true });
+      f.src = f.dataset.src;
+    });
+  }
+  // the offline fallback only counts from the moment the slide is actually shown
+  function watch(slide) {
+    slide.querySelectorAll('.live').forEach(live => {
+      if (live.classList.contains('loaded')) return;
+      clearTimeout(live._t);
+      live._t = setTimeout(() => { if (!live.classList.contains('loaded')) live.classList.add('offline'); }, 6000);
+    });
+  }
+  function unmount(slide) {
+    slide.querySelectorAll('.live').forEach(live => {
+      const f = live.querySelector('iframe');
+      if (f && f.src) { f.removeAttribute('src'); live.classList.remove('loaded', 'offline'); }
+    });
+  }
+
+  /* ---------- notes ---------- */
+  const notesEl = document.getElementById('notes');
+  function renderNotes() {
+    const src = slides[idx].querySelector('.notes');
+    document.getElementById('notesBody').innerHTML = src ? src.innerHTML : '<p>–</p>';
+    document.querySelectorAll('#notesBody [data-de]').forEach(el => { el.textContent = el.dataset[lang] || ''; });
+  }
+
+  /* ---------- navigation ---------- */
+  function go(n, push) {
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    idx = n;
+    slides.forEach((s, i) => {
+      s.classList.toggle('current', i === n);
+      // current + next are mounted (next preloads while you talk); two away is torn down
+      if (i === n || i === n + 1) mount(s); else if (Math.abs(i - n) >= 2) unmount(s);
+    });
+    watch(slides[n]);
+    const label = slides[n].dataset.n;
+    document.getElementById('counter').textContent = /^A/.test(label) ? label : label + ' / ' + MAIN;
+    document.getElementById('progress').style.width = ((n + 1) / slides.length * 100) + '%';
+    if (push !== false) history.replaceState(null, '', '#' + label);
+    renderNotes();
+    // closing a card set when leaving slide 14
+    document.querySelectorAll('.ask.open').forEach(a => a.classList.remove('open'));
+    document.getElementById('asks').classList.remove('has-open');
+  }
+  function fromHash() {
+    const h = location.hash.slice(1);
+    const i = slides.findIndex(s => s.dataset.n === h);
+    return i < 0 ? 0 : i;
+  }
+  window.addEventListener('hashchange', () => go(fromHash(), false));
+  document.getElementById('prev').addEventListener('click', () => go(idx - 1));
+  document.getElementById('next').addEventListener('click', () => go(idx + 1));
+
+  /* ---------- asks (slide 14) ---------- */
+  function openAsk(k) {
+    const asks = document.getElementById('asks');
+    const target = asks.querySelector('.ask[data-k="' + k + '"]');
+    const was = target.classList.contains('open');
+    asks.querySelectorAll('.ask').forEach(a => a.classList.remove('open'));
+    if (!was) target.classList.add('open');
+    asks.classList.toggle('has-open', !was);
+  }
+  document.querySelectorAll('.ask').forEach(a => {
+    a.addEventListener('click', () => openAsk(a.dataset.k));
+    a.addEventListener('keydown', e => { if (e.key === 'Enter') openAsk(a.dataset.k); });
+  });
+
+  /* ---------- keys ---------- */
+  document.addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key;
+    if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); go(idx + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(idx - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(MAIN - 1);
+    else if (k === 'k' || k === 'K') go(MAIN);
+    else if (k === 'l' || k === 'L') applyLang(lang === 'de' ? 'en' : 'de');
+    else if (k === 'n' || k === 'N') notesEl.classList.toggle('open');
+    else if (k === 'f' || k === 'F') {
+      const f = slides[idx].querySelector('.live.loaded iframe');
+      if (f && f.requestFullscreen) f.requestFullscreen();
+    }
+    else if (/^[1-4]$/.test(k) && slides[idx].id === 's14') openAsk(k);
+  });
+  // click on the deck's left/right thirds (not on interactive elements)
+  deck.addEventListener('click', e => {
+    if (e.target.closest('button, a, iframe, .ask, #notes, #lang')) return;
+    const r = deck.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    if (x > 0.66) go(idx + 1); else if (x < 0.15) go(idx - 1);
+  });
+
+  /* ---------- boot ---------- */
+  let saved = 'de';
+  try { saved = localStorage.getItem('deck-lang') || 'de'; } catch (e) {}
+  const q = new URLSearchParams(location.search);
+  if (q.get('lang')) saved = q.get('lang');
+  applyLang(saved === 'en' ? 'en' : 'de');
+
+  if (PRINT) {
+    document.body.classList.add('print');
+    slides.forEach((s, i) => {
+      s.classList.add('current');
+      const c = document.createElement('div');
+      c.className = 'pcount';
+      c.textContent = /^A/.test(s.dataset.n) ? s.dataset.n : s.dataset.n + ' / ' + MAIN;
+      s.appendChild(c);
+    });
+    document.querySelectorAll('.ask').forEach(a => a.classList.add('open'));
+    document.querySelectorAll('#notesBody').forEach(n => n.innerHTML = '');
+  } else {
+    fit();
+    go(fromHash(), false);
+  }
+})();
+</script>
+</body>
+</html>

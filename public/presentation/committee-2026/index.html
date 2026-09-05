@@ -61,6 +61,12 @@ html, body { margin: 0; height: 100%; background: var(--foreground); color: var(
 /* ---------- chrome ---------- */
 #progress { position: absolute; left: 0; top: 0; height: 6px; width: 0; background: var(--primary); z-index: 5; }
 #counter { position: absolute; right: var(--mx); bottom: 44px; font-family: var(--font-mono); font-size: 18px; color: var(--muted); z-index: 5; }
+#head { position: absolute; left: var(--mx); top: 38px; z-index: 5; display: flex; align-items: baseline; gap: 18px; }
+#head .site { font-family: var(--font-display); font-size: 22px; letter-spacing: .02em; text-transform: uppercase; color: var(--foreground); }
+#head .proj { font: 16px var(--font-mono); color: var(--muted); }
+.slide.dark ~ #head .site { color: var(--background); }
+.slide.dark ~ #head .proj { color: rgba(242,239,230,.7); }
+body.print #head { display: none; }
 #brand { position: absolute; left: var(--mx); bottom: 44px; font-size: 18px; color: var(--muted); z-index: 5; }
 #brand b { font-weight: 600; color: var(--foreground); }
 #s1.current ~ #brand { display: none; }
@@ -138,13 +144,12 @@ h2 + .lead { margin-top: 26px; }
 
 /* 0 — intro (project landing: the live homepage itself) */
 #s0 { padding: 0; }
-#s0 .live { position: absolute; left: 0; right: 0; top: 0; bottom: 200px; border: 0; box-shadow: none; }
-#s0 .band { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: var(--background); border-top: 3px solid var(--border); padding: 0 var(--mx) 88px; display: flex; justify-content: space-between; align-items: flex-end; }
-#s0 .band .lead { font-size: 30px; max-width: 1150px; margin: 0; }
-#s0 .band .sub { font-size: 20px; color: var(--muted); margin: 10px 0 0; }
-#s0 .band .lockup { border-left: 4px solid var(--primary); padding-left: 16px; flex-shrink: 0; margin-left: 48px; }
-#s0.current ~ #brand { display: none; }
-#s0.current ~ #counter { display: none; }
+#s0 .live { position: absolute; left: 0; right: 0; top: 0; bottom: 330px; border: 0; box-shadow: none; border-bottom: 3px solid var(--border); }
+#s0 .band { position: absolute; left: 0; right: 0; bottom: 0; height: 330px; background: var(--background); padding: 44px var(--mx) 0; display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: start; }
+#s0 .band .lead { font-size: 34px; line-height: 1.3; max-width: 1150px; color: var(--foreground); font-weight: 300; }
+#s0 .band .sub { font-size: 20px; color: var(--muted); margin-top: 22px; }
+#s0 .band .lockup { border-left: 4px solid var(--primary); padding-left: 16px; font-size: 22px; justify-self: end; margin: 6px 0 0; }
+#s0.current ~ #brand, #s0.current ~ #counter, #s0.current ~ #head { display: none; }
 
 /* 1 — title */
 #s1 { padding: 0; }
@@ -380,6 +385,23 @@ body.print .ask { cursor: default; }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- ============ 0 · INTRO ============ -->
 <section class="slide" id="s0" data-n="1">
   <div class="live" data-poster="posters/home-hero.webp">
@@ -391,7 +413,7 @@ body.print .ask { cursor: default; }
   <div class="band">
     <div>
       <p class="lead" data-de="Aus einer Forschungsdatenbank wird eine interaktive Karte, und aus der Karte Erinnerung im Stadtraum." data-en="A research database becomes an interactive map, and the map becomes remembrance in the city."></p>
-      <p class="sub" data-de="StoryMaps Berlin — Stand und Ausblick für den Stiftungsrat, September 2026" data-en="StoryMaps Berlin — Progress and outlook for the foundation board, September 2026"></p>
+      <p class="sub" data-de="Verschwunden, nicht vergessen. Stand und Ausblick für den Stiftungsrat, September 2026" data-en="Verschwunden, nicht vergessen. Progress and outlook for the foundation board, September 2026"></p>
     </div>
     <div class="lockup"><span data-de="Ein Projekt gefördert durch" data-en="A project supported by"></span><br>Stiftung <b>Zurückgeben</b></div>
   </div>
@@ -429,53 +451,9 @@ body.print .ask { cursor: default; }
   </aside>
 </section>
 
-<!-- ============ 1 · TITLE ============ -->
-<section class="slide dark" id="s1" data-n="3">
-  <div class="photo"></div><div class="wash"></div>
-  <div class="text">
-    <div class="reveal">
-      <div class="addr">Unter den Linden 2, Berlin-Mitte, 1914–1943</div>
-      <h1>E. Braun &amp; Co.</h1>
-      <p class="sub" data-de="Wiener Wäsche- und Modewarenhaus neben dem Hotel Adlon. 1914 eröffnet, 1938 zum Verkauf gezwungen, 1943 geschlossen." data-en="Viennese linen and fashion house next to the Hotel Adlon. Opened 1914, forced to sell 1938, closed 1943."></p>
-    </div>
-    <div class="foot">
-      <div data-de="Hineinzoomen: eine von 10.021 Adressen" data-en="Zooming in: one of 10,021 addresses"></div>
-      <div class="lockup" style="border-left-color:var(--warning)" data-de="Foto: Zentral- und Landesbibliothek Berlin" data-en="Photo: Zentral- und Landesbibliothek Berlin"></div>
-    </div>
-  </div>
-  <aside class="notes">
-    <p data-de="Von der Zahl zum Namen. E. Braun: Wiener Luxusgeschäft, neben dem Adlon. Stammkunden: Emil Jannings, Heinz Rühmann, Paul Hindemith." data-en="Open with one name, not a number. E. Braun: Viennese luxury store next to the Adlon. Regulars: Emil Jannings, Heinz Rühmann, Paul Hindemith."></p>
-    <p data-de="Dauer: 30 Sekunden. Dann weiter." data-en="30 seconds. Then move on."></p>
-  </aside>
-</section>
-
-<!-- ============ 2 · ONE NAME ============ -->
-<section class="slide" id="s2" data-n="4">
-  <div class="kicker" data-de="Eine Adresse, dreißig Jahre" data-en="One address, thirty years"></div>
-  <h2 data-de="Was das Archiv über ein Geschäft weiß" data-en="What the archive knows about one store"></h2>
-  <div class="body">
-    <div class="beats reveal">
-      <div class="beat"><div class="y">1914</div><p data-de="Die größte Filiale von E. Braun &amp; Co. eröffnet Unter den Linden 2, direkt neben dem Hotel Adlon. Abendgarderobe, Tischwäsche, später Möbel." data-en="E. Braun &amp; Co.’s largest branch opens at Unter den Linden 2, next to Hotel Adlon. Formal wear, table linen, later furniture."></p></div>
-      <div class="beat"><div class="y">1933</div><p data-de="Als österreichische Staatsbürger bleiben die jüdischen Inhaber zunächst verschont. Das Geschäft läuft weiter." data-en="As Austrian nationals, the Jewish owners are initially spared. The store keeps trading."></p></div>
-      <div class="beat"><div class="y">1938</div><p data-de="Nach dem „Anschluss“ wird Siegfried Oser-Braun verhaftet und aus der Haft heraus zum Verkauf gezwungen. Die Familie flieht über London und Ägypten in die USA." data-en="After Austria’s annexation, Siegfried Oser-Braun is arrested and, while still detained, forced to sell. The family escapes via London and Egypt to the USA."></p></div>
-      <div class="beat"><div class="y">1943</div><p data-de="Als „nicht kriegswichtig“ geschlossen, beschlagnahmt, einem SS-Führer zugewiesen. Im September durch Bomben zerstört." data-en="Closed as not relevant to the war effort, seized, assigned to a senior SS official. Destroyed by bombing in September."></p></div>
-      <div class="beat now"><div class="y" data-de="Heute" data-en="Today"></div><p data-de="Der Zwangsverkauf wird 1954 für nichtig erklärt. Auf dem Grundstück steht heute das Hotel Adlon." data-en="The forced sale is declared void in 1954. The Hotel Adlon now covers the site."></p></div>
-    </div>
-    <div class="reveal">
-      <img class="plaque" src="../../images/plaques/e-braun-plaque.webp" alt="Memorial plaque for E. Braun & Co.">
-      <p class="cap small" data-de="Die Gedenktafel für diese Adresse, fertigungsreif. Mehr dazu auf Folie 9." data-en="The memorial plaque for this address, ready for fabrication. More on slide 9."></p>
-      <p class="cap small" data-de="Die Tafel nennt die historische Hausnummer 75. Nach der Neunummerierung liegt das Grundstück heute bei Unter den Linden 2, im Block des Hotels Adlon." data-en="The plaque gives the historical street number, 75. After renumbering, the site is today Unter den Linden 2, within the Hotel Adlon block."></p>
-    </div>
-  </div>
-  <aside class="notes">
-    <p data-de="Jeder Punkt auf der Karte hat so eine Geschichte. Für 16 Geschäfte haben wir sie recherchiert und erzählt; für 10.000 kennen wir Name, Branche, Adresse und Daten." data-en="Every dot on the map has a story like this. For 16 we have researched and told it; for 10,000 we know name, trade, address and dates."></p>
-    <p data-de="Quelle: Christine Fischer-Defoy, Timeline-Datei 1.json." data-en="Source: Christine Fischer-Defoy, timeline file 1.json."></p>
-  </aside>
-</section>
-
 <!-- ============ 3 · ZOOM OUT ============ -->
-<section class="slide" id="s3" data-n="5">
-  <div class="kicker" data-de="Und dann herauszoomen" data-en="And then zoom out"></div>
+<section class="slide" id="s3" data-n="3">
+  <div class="kicker" data-de="Der Bestand" data-en="What the archive holds"></div>
   <div class="body">
     <div class="reveal">
       <div class="big"><div class="a" data-de="10.021" data-en="10,021"></div></div>
@@ -501,7 +479,7 @@ body.print .ask { cursor: default; }
 </section>
 
 <!-- ============ 4 · DEMO: MAP ============ -->
-<section class="slide demo" id="s4" data-n="6">
+<section class="slide demo" id="s4" data-n="4">
   <div class="top">
     <div>
       <div class="kicker" data-de="Live, Teil 1" data-en="Live, part 1"></div>
@@ -528,7 +506,7 @@ body.print .ask { cursor: default; }
 </section>
 
 <!-- ============ 5 · DEMO: TOUR ============ -->
-<section class="slide demo" id="s5" data-n="7">
+<section class="slide demo" id="s5" data-n="5">
   <div class="top">
     <div>
       <div class="kicker" data-de="Live, Teil 2" data-en="Live, part 2"></div>
@@ -538,19 +516,19 @@ body.print .ask { cursor: default; }
   </div>
   <div class="live" data-poster="posters/history-tour.webp">
     <img class="poster" src="posters/history-tour.webp" alt="">
-    <iframe data-src="https://b3rlin.storytimemaps.com/history-tour" title="Virtual tour" allow="fullscreen" loading="lazy"></iframe>
-    <div class="hint" data-de="F für Vollbild" data-en="F for fullscreen"></div>
+    <iframe data-src="https://b3rlin.storytimemaps.com/history-tour?lang=de" title="Virtual tour" allow="fullscreen" loading="lazy"></iframe>
+    <div class="hint" data-de="Rote Marker in der Zeitleiste anklicken oder scrollen. F für Vollbild" data-en="Click the red markers on the timeline, or scroll. F for fullscreen"></div>
     <div class="offline" data-de="Live-Ansicht nicht erreichbar, Standbild" data-en="Live view unreachable, showing still"></div>
   </div>
   <aside class="notes">
-    <p data-de="In den Rahmen klicken, langsam scrollen. Bei Station 3 kurz stehen bleiben. Auf die Jahreszahl oben achten." data-en="Click into the frame, scroll slowly. Pause at stop 3. Point at the year counter."></p>
+    <p data-de="Einmal in den Rahmen klicken. Dann entweder scrollen oder die roten Marker unten in der Zeitleiste anklicken, sie springen direkt zu den 15 Geschäften. Bei Station 3 kurz stehen bleiben." data-en="Click into the frame once. Then either scroll or click the red markers on the timeline, which jump straight to the 15 stores. Pause at stop 3."></p>
     <p data-de="Das ist der emotionale Höhepunkt. Nicht zu lange reden." data-en="This is the emotional peak. Don’t talk over it too much."></p>
     <p data-de="Dauer: 3 Minuten." data-en="3 minutes."></p>
   </aside>
 </section>
 
 <!-- ============ 12 · VISION ============ -->
-<section class="slide" id="s12" data-n="8">
+<section class="slide" id="s12" data-n="6">
   <div class="kicker" data-de="Was wir bauen" data-en="What we are building"></div>
   <h2 data-de="Erinnerung an drei Orten: im Archiv, auf der Straße, im Museum" data-en="Memory in three places: the archive, the street, the museum"></h2>
   <div class="vision reveal">
@@ -564,6 +542,50 @@ body.print .ask { cursor: default; }
   </div>
   <aside class="notes">
     <p data-de="Die drei Orte verstärken sich gegenseitig: Die Tafel führt zur Karte, die Karte ins Museum, das Museum in die Straße." data-en="The three places reinforce each other: the plaque leads to the map, the map to the museum, the museum back to the street."></p>
+  </aside>
+</section>
+
+<!-- ============ 1 · TITLE ============ -->
+<section class="slide dark" id="s1" data-n="7">
+  <div class="photo"></div><div class="wash"></div>
+  <div class="text">
+    <div class="reveal">
+      <div class="addr">Unter den Linden 2, Berlin-Mitte, 1914–1943</div>
+      <h1>E. Braun &amp; Co.</h1>
+      <p class="sub" data-de="Wiener Wäsche- und Modewarenhaus neben dem Hotel Adlon. 1914 eröffnet, 1938 zum Verkauf gezwungen, 1943 geschlossen." data-en="Viennese linen and fashion house next to the Hotel Adlon. Opened 1914, forced to sell 1938, closed 1943."></p>
+    </div>
+    <div class="foot">
+      <div data-de="Von der Karte auf die Straße: eine von 10.021 Adressen" data-en="From the map to the street: one of 10,021 addresses"></div>
+      <div class="lockup" style="border-left-color:var(--warning)" data-de="Foto: Zentral- und Landesbibliothek Berlin" data-en="Photo: Zentral- und Landesbibliothek Berlin"></div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p data-de="Von der Zahl zum Namen. E. Braun: Wiener Luxusgeschäft, neben dem Adlon. Stammkunden: Emil Jannings, Heinz Rühmann, Paul Hindemith." data-en="Open with one name, not a number. E. Braun: Viennese luxury store next to the Adlon. Regulars: Emil Jannings, Heinz Rühmann, Paul Hindemith."></p>
+    <p data-de="Dauer: 30 Sekunden. Dann weiter." data-en="30 seconds. Then move on."></p>
+  </aside>
+</section>
+
+<!-- ============ 2 · ONE NAME ============ -->
+<section class="slide" id="s2" data-n="8">
+  <div class="kicker" data-de="Eine Adresse, dreißig Jahre" data-en="One address, thirty years"></div>
+  <h2 data-de="Was das Archiv über ein Geschäft weiß" data-en="What the archive knows about one store"></h2>
+  <div class="body">
+    <div class="beats reveal">
+      <div class="beat"><div class="y">1914</div><p data-de="Die größte Filiale von E. Braun &amp; Co. eröffnet Unter den Linden 2, direkt neben dem Hotel Adlon. Abendgarderobe, Tischwäsche, später Möbel." data-en="E. Braun &amp; Co.’s largest branch opens at Unter den Linden 2, next to Hotel Adlon. Formal wear, table linen, later furniture."></p></div>
+      <div class="beat"><div class="y">1933</div><p data-de="Als österreichische Staatsbürger bleiben die jüdischen Inhaber zunächst verschont. Das Geschäft läuft weiter." data-en="As Austrian nationals, the Jewish owners are initially spared. The store keeps trading."></p></div>
+      <div class="beat"><div class="y">1938</div><p data-de="Nach dem „Anschluss“ wird Siegfried Oser-Braun verhaftet und aus der Haft heraus zum Verkauf gezwungen. Die Familie flieht über London und Ägypten in die USA." data-en="After Austria’s annexation, Siegfried Oser-Braun is arrested and, while still detained, forced to sell. The family escapes via London and Egypt to the USA."></p></div>
+      <div class="beat"><div class="y">1943</div><p data-de="Als „nicht kriegswichtig“ geschlossen, beschlagnahmt, einem SS-Führer zugewiesen. Im September durch Bomben zerstört." data-en="Closed as not relevant to the war effort, seized, assigned to a senior SS official. Destroyed by bombing in September."></p></div>
+      <div class="beat now"><div class="y" data-de="Heute" data-en="Today"></div><p data-de="Der Zwangsverkauf wird 1954 für nichtig erklärt. Auf dem Grundstück steht heute das Hotel Adlon." data-en="The forced sale is declared void in 1954. The Hotel Adlon now covers the site."></p></div>
+    </div>
+    <div class="reveal">
+      <img class="plaque" src="../../images/plaques/e-braun-plaque.webp" alt="Memorial plaque for E. Braun & Co.">
+      <p class="cap small" data-de="Die Gedenktafel für diese Adresse, fertigungsreif. Mehr dazu auf Folie 9." data-en="The memorial plaque for this address, ready for fabrication. More on slide 9."></p>
+      <p class="cap small" data-de="Die Tafel nennt die historische Hausnummer 75. Nach der Neunummerierung liegt das Grundstück heute bei Unter den Linden 2, im Block des Hotels Adlon." data-en="The plaque gives the historical street number, 75. After renumbering, the site is today Unter den Linden 2, within the Hotel Adlon block."></p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p data-de="Jeder Punkt auf der Karte hat so eine Geschichte. Für 16 Geschäfte haben wir sie recherchiert und erzählt; für 10.000 kennen wir Name, Branche, Adresse und Daten." data-en="Every dot on the map has a story like this. For 16 we have researched and told it; for 10,000 we know name, trade, address and dates."></p>
+    <p data-de="Quelle: Christine Fischer-Defoy, Timeline-Datei 1.json." data-en="Source: Christine Fischer-Defoy, timeline file 1.json."></p>
   </aside>
 </section>
 
@@ -911,7 +933,8 @@ body.print .ask { cursor: default; }
 
 <!-- chrome -->
 <div id="progress"></div>
-<div id="brand"><b>StoryMaps Berlin</b> <span data-de="für Stiftung Zurückgeben, 2026" data-en="for Stiftung Zurückgeben, 2026"></span></div>
+<div id="head"><span class="site">StoryTimeMaps</span><span class="proj">Verschwunden, nicht vergessen</span></div>
+<div id="brand"><b>Verschwunden, nicht vergessen</b> <span data-de="für Stiftung Zurückgeben, 2026" data-en="for Stiftung Zurückgeben, 2026"></span></div>
 <div id="counter"></div>
 <div id="lang"><button type="button" data-set="de" aria-pressed="true">DE</button><button type="button" data-set="en" aria-pressed="false">EN</button></div>
 <div id="nav"><button type="button" id="prev" aria-label="Previous">‹</button><button type="button" id="next" aria-label="Next">›</button></div>

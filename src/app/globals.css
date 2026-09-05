@@ -1495,3 +1495,35 @@ textarea:-ms-input-placeholder {
     page-break-after: avoid;
   }
 }
+
+/*
+ * Partner / funder marks (currently Stiftung Zurückgeben in the site footer).
+ *
+ * The foundation publishes its logo only as a JPEG on a white ground, so the
+ * white is part of the artwork. multiply erases it: white multiplied by the
+ * page's cream returns the cream, while the blue wordmark and black subtitle
+ * survive. That gives a logo sitting on the page rather than in a white box,
+ * without our repainting a trademark we do not own.
+ */
+.partner-logo {
+  mix-blend-mode: multiply;
+}
+
+/*
+ * multiply only erases white against a LIGHT ground. Nine of the eleven themes
+ * are light, but moody is dark (#4a4a57) and hot is a saturated red (#e4525e);
+ * there the same rule multiplies the whole mark down into the background and
+ * loses it. Those two get the logo on the light plate it was drawn for. The
+ * bare :root is included because it carries moody's palette for the first paint,
+ * before next-themes stamps a data-theme onto the element.
+ *
+ * Deliberately NOT invert()/hue-rotate(): the colours are a partner's trademark
+ * and are not ours to alter.
+ */
+:root:not([data-theme]) .partner-logo,
+[data-theme='moody'] .partner-logo,
+[data-theme='hot'] .partner-logo {
+  mix-blend-mode: normal;
+  background-color: #ffffff;
+  padding: 0.6rem 0.75rem;
+}

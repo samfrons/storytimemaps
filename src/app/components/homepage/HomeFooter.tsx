@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from '../../../i18n/useTranslation'
 import { NAV_LINKS } from '../SiteHeader'
@@ -28,6 +29,22 @@ const HomeFooter: React.FC = () => {
                   'A digital memorial to the Jewish businesses of Berlin, 1900–1945. Built to preserve memory and educate — every record is drawn from documented archival sources.',
               })}
             </p>
+
+            {/* The funder's mark. The foundation publishes it only on a white
+                ground, so `.partner-logo` (globals.css) multiplies that white
+                away into the page rather than sitting in a white box. The
+                intrinsic size is the asset's own 900 x 275; the rendered width
+                is set in CSS. */}
+            <Image
+              src="/images/logos/stiftung-zurueckgeben.webp"
+              alt={t('homepage.footer.funderLogoAlt', {
+                defaultValue:
+                  'Stiftung Zurückgeben — Stiftung zur Förderung jüdischer Frauen in Kunst & Wissenschaft',
+              })}
+              width={900}
+              height={275}
+              className="partner-logo mt-8 h-auto w-[180px] sm:w-[200px]"
+            />
           </div>
 
           <nav

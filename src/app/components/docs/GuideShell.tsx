@@ -3,6 +3,7 @@ import Link from 'next/link'
 import SiteHeader from '../SiteHeader'
 import { ONBOARDING_DOCS } from '../../onboarding/docs'
 import { GUIDE_BORDER } from './GuideBlocks'
+import SiteCredit from '../SiteCredit'
 
 /**
  * The frame every contributor guide is served in.
@@ -253,6 +254,7 @@ const GuideShell: React.FC<GuideShellProps> = ({
             GitHub
           </a>
           <span style={{ color: 'var(--foreground-muted)' }}>StoryMaps · Berlin 1900–1945</span>
+          <SiteCredit className="normal-case tracking-normal" />
         </div>
       </footer>
     </div>

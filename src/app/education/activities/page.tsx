@@ -3,6 +3,7 @@ import Link from 'next/link'
 import EducationDocument, { readEducationDoc } from '../../components/education/EducationDocument'
 import EducationPrintButton from '../../components/education/EducationPrintButton'
 import SiteHeader from '../../components/SiteHeader'
+import { CreditFooter } from '../../components/SiteCredit'
 
 export const dynamic = 'force-dynamic'
 
@@ -155,6 +156,8 @@ export default function EducationActivitiesPage() {
           )}
         </div>
       </section>
+
+      <CreditFooter />
     </div>
   )
 }

@@ -1500,30 +1500,40 @@ textarea:-ms-input-placeholder {
  * Partner / funder marks (currently Stiftung Zurückgeben in the site footer).
  *
  * The foundation publishes its logo only as a JPEG on a white ground, so the
- * white is part of the artwork. multiply erases it: white multiplied by the
- * page's cream returns the cream, while the blue wordmark and black subtitle
- * survive. That gives a logo sitting on the page rather than in a white box,
- * without our repainting a trademark we do not own.
+ * white is part of the artwork. The image multiplies against the plate behind
+ * it: white multiplied by the plate returns the plate and vanishes, while the
+ * blue wordmark and black subtitle survive. That gives a logo sitting on a
+ * surface rather than in a white box, without our repainting a trademark we do
+ * not own — deliberately NOT invert()/hue-rotate(), which would.
+ *
+ * `isolation` is what makes it one mechanism for every theme: it gives the
+ * plate its own stacking context, so the blend resolves against the plate's
+ * colour alone and never against whatever else is painted below.
  */
+.partner-logo-plate {
+  display: inline-block;
+  isolation: isolate;
+  /* Light themes: the plate matches the page, so no plate is visible. */
+  background-color: var(--background);
+}
+
 .partner-logo {
   mix-blend-mode: multiply;
 }
 
 /*
- * multiply only erases white against a LIGHT ground. Nine of the eleven themes
- * are light, but moody is dark (#4a4a57) and hot is a saturated red (#e4525e);
- * there the same rule multiplies the whole mark down into the background and
- * loses it. Those two get the logo on the light plate it was drawn for. The
- * bare :root is included because it carries moody's palette for the first paint,
- * before next-themes stamps a data-theme onto the element.
- *
- * Deliberately NOT invert()/hue-rotate(): the colours are a partner's trademark
- * and are not ours to alter.
+ * multiply only erases the white against a LIGHT plate. Nine of the eleven
+ * themes are light, but moody's ground is dark (#4a4a57) and hot's is a
+ * saturated red (#e4525e); there a plate the colour of the page would multiply
+ * the whole mark away. Both get a plate in their own --foreground instead —
+ * moody's peach (#f5cdb4), the colour its type is already set in, and hot's
+ * white — so the panel reads as part of the theme rather than as a stray
+ * white rectangle. The bare :root is included because it carries moody's
+ * palette for the first paint, before next-themes stamps a data-theme on.
  */
-:root:not([data-theme]) .partner-logo,
-[data-theme='moody'] .partner-logo,
-[data-theme='hot'] .partner-logo {
-  mix-blend-mode: normal;
-  background-color: #ffffff;
+:root:not([data-theme]) .partner-logo-plate,
+[data-theme='moody'] .partner-logo-plate,
+[data-theme='hot'] .partner-logo-plate {
+  background-color: var(--foreground);
   padding: 0.6rem 0.75rem;
 }

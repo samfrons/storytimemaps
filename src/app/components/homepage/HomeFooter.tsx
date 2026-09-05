@@ -4,6 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from '../../../i18n/useTranslation'
+import SiteCredit from '../SiteCredit'
 import { NAV_LINKS } from '../SiteHeader'
 
 const HomeFooter: React.FC = () => {
@@ -31,20 +32,22 @@ const HomeFooter: React.FC = () => {
             </p>
 
             {/* The funder's mark. The foundation publishes it only on a white
-                ground, so `.partner-logo` (globals.css) multiplies that white
-                away into the page rather than sitting in a white box. The
-                intrinsic size is the asset's own 900 x 275; the rendered width
-                is set in CSS. */}
-            <Image
-              src="/images/logos/stiftung-zurueckgeben.webp"
-              alt={t('homepage.footer.funderLogoAlt', {
-                defaultValue:
-                  'Stiftung Zurückgeben — Stiftung zur Förderung jüdischer Frauen in Kunst & Wissenschaft',
-              })}
-              width={900}
-              height={275}
-              className="partner-logo mt-8 h-auto w-[180px] sm:w-[200px]"
-            />
+                ground, so the image multiplies that white away against the
+                plate behind it — see .partner-logo-plate in globals.css, which
+                also decides what colour that plate is per theme. The intrinsic
+                size is the asset's own 900 x 275; the rendered width is CSS. */}
+            <span className="partner-logo-plate mt-8">
+              <Image
+                src="/images/logos/stiftung-zurueckgeben.webp"
+                alt={t('homepage.footer.funderLogoAlt', {
+                  defaultValue:
+                    'Stiftung Zurückgeben — Stiftung zur Förderung jüdischer Frauen in Kunst & Wissenschaft',
+                })}
+                width={900}
+                height={275}
+                className="partner-logo block h-auto w-[180px] sm:w-[200px]"
+              />
+            </span>
           </div>
 
           <nav
@@ -73,13 +76,17 @@ const HomeFooter: React.FC = () => {
           </nav>
         </div>
 
-        <div className="border-t mt-10 pt-6" style={{ borderColor: 'var(--border)' }}>
+        <div
+          className="border-t mt-10 pt-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
+          style={{ borderColor: 'var(--border)' }}
+        >
           <p className="font-mono text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>
             {t('homepage.footer.citation', {
               defaultValue:
                 'Based on the research of Dr. Christoph Kreutzmüller and the database of Jewish commercial activity in Berlin. For academic use, please cite the original research.',
             })}
           </p>
+          <SiteCredit className="shrink-0" />
         </div>
       </div>
     </footer>

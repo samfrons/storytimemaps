@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import SiteCredit from '../components/SiteCredit'
 
 // Brutal-pop building blocks: thick borders, hard offset shadows, sharp edges.
 // All colors come from theme CSS variables per project rules.
@@ -375,6 +376,7 @@ const CollaboratePage: React.FC = () => {
             Outreach Guide
           </Link>
           <span style={{ color: 'var(--foreground-muted)' }}>StoryMaps · Berlin 1900–1945</span>
+          <SiteCredit className="normal-case tracking-normal" />
         </div>
       </footer>
     </div>

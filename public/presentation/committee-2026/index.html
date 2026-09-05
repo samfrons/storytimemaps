@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<script>/* relative asset paths must resolve to this folder whether the URL ends in /, /index.html or bare */(function(){var u=location.href.replace(/[#?].*$/,"");u=/\.html$/.test(u)?u.replace(/[^\/]*$/,""):(/\/$/.test(u)?u:u+"/");document.write("<base href=\""+u+"\">")})();</script>
 <title>StoryMaps Berlin – Stiftung Zurückgeben 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,8 +52,8 @@
 html, body { margin: 0; height: 100%; background: var(--foreground); color: var(--foreground); font-family: var(--font-body); font-weight: 400; overflow: hidden; }
 
 /* ---------- stage ---------- */
-#stage { position: fixed; inset: 0; display: grid; place-items: center; background: var(--foreground); }
-#deck { position: relative; width: var(--W); height: var(--H); transform: scale(var(--s)); transform-origin: center; background: var(--background); overflow: hidden; }
+#stage { position: fixed; inset: 0; background: var(--foreground); }
+#deck { position: absolute; left: 50%; top: 50%; width: var(--W); height: var(--H); transform: translate(-50%, -50%) scale(var(--s)); transform-origin: center; background: var(--background); overflow: hidden; }
 
 .slide { position: absolute; inset: 0; padding: 120px var(--mx) 110px; display: none; }
 .slide.current { display: block; }
@@ -308,7 +309,7 @@ h2 + .lead { margin-top: 26px; }
 @page { size: 1920px 1080px; margin: 0; }
 body.print { overflow: visible; height: auto; background: var(--background); }
 body.print #stage { position: static; display: block; }
-body.print #deck { transform: none; height: auto; overflow: visible; width: var(--W); }
+body.print #deck { position: static; transform: none; height: auto; overflow: visible; width: var(--W); }
 body.print .slide { position: relative; display: block; width: var(--W); height: var(--H); page-break-after: always; break-after: page; overflow: hidden; }
 body.print .slide .reveal > * { animation: none !important; opacity: 1 !important; transform: none !important; }
 body.print .live iframe { display: none; }
@@ -469,10 +470,10 @@ body.print .ask { cursor: default; }
   <div class="kicker" data-de="Von der Karte auf die Straße" data-en="From the map to the street"></div>
   <h2 data-de="Gedenktafeln, fertigungsreif" data-en="Memorial plaques, ready to fabricate"></h2>
   <div class="plaques reveal">
-    <img src="../../plaques/premium/ebraun-ornate-copper.svg" alt="E. Braun plaque, ornate">
-    <img src="../../plaques/premium/e-braun-medium.svg" alt="E. Braun plaque, medium tier">
-    <img src="../../plaques/premium/breslauer-medium.svg" alt="Martin Breslauer plaque">
-    <img src="../../plaques/premium/a-asher-co-simple.svg" alt="A. Asher & Co plaque, compact">
+    <img src="plaques/ebraun-ornate-copper.svg" alt="E. Braun plaque, ornate">
+    <img src="plaques/e-braun-medium.svg" alt="E. Braun plaque, medium tier">
+    <img src="plaques/breslauer-medium.svg" alt="Martin Breslauer plaque">
+    <img src="plaques/a-asher-co-simple.svg" alt="A. Asher & Co plaque, compact">
   </div>
   <div class="facts reveal">
     <div class="fact"><div class="num">2</div><p data-de="Formate: 300 × 200 mm mit Geschichte und Schaufenster-Gravur, 300 × 100 mm kompakt mit den vier Fakten" data-en="Formats: 300 × 200 mm with narrative and storefront engraving, 300 × 100 mm compact with the four facts"></p></div>
@@ -739,7 +740,7 @@ body.print .ask { cursor: default; }
   <div class="kicker" data-de="Anhang 3" data-en="Appendix 3"></div>
   <h2 data-de="Anatomie einer Tafel" data-en="Anatomy of a plaque"></h2>
   <div class="anatomy reveal">
-    <img src="../../plaques/premium/e-braun-detailed.svg" alt="E. Braun plaque, detailed tier">
+    <img src="plaques/e-braun-detailed.svg" alt="E. Braun plaque, detailed tier">
     <ol>
       <li><b data-de="Gedenktafel, Hier stand:" data-en="Gedenktafel, Hier stand:"></b> <span data-de="jede Tafel sagt, was sie ist, auch die kleinste." data-en="every plaque says what it is, even the smallest."></span></li>
       <li><b data-de="Vier Fakten:" data-en="Four facts:"></b> <span data-de="Name, Branche, Daten, Ort. Fehlt einer, gibt es keine Tafel." data-en="name, trade, dates, place. Missing one means no plaque."></span></li>
@@ -848,7 +849,7 @@ body.print .ask { cursor: default; }
       const f = live.querySelector('iframe');
       if (!f || f.src) return;
       live.classList.remove('offline', 'loaded');
-      f.addEventListener('load', () => { clearTimeout(live._t); live.classList.add('loaded'); live.classList.remove('offline'); }, { once: true });
+      f.addEventListener('load', () => { clearTimeout(live._t); live.classList.add('loaded'); live.classList.remove('offline'); if (document.activeElement === f && !slide.classList.contains('current')) { f.blur(); window.focus(); } }, { once: true });
       f.src = f.dataset.src;
     });
   }
@@ -900,6 +901,8 @@ body.print .ask { cursor: default; }
     return i < 0 ? 0 : i;
   }
   window.addEventListener('hashchange', () => go(fromHash(), false));
+  // if focus lands in an embed that is not on the current slide, take it back so the arrow keys keep working
+  window.addEventListener('blur', () => setTimeout(() => { const a = document.activeElement; if (a && a.tagName === 'IFRAME' && !a.closest('.slide.current')) { a.blur(); window.focus(); } }, 0));
   document.getElementById('prev').addEventListener('click', () => go(idx - 1));
   document.getElementById('next').addEventListener('click', () => go(idx + 1));
 

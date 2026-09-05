@@ -98,6 +98,15 @@ function Sidebar({
       {/* Theme Switcher Button */}
       <div className="relative">
         <button
+          onClick={() => handleLanguageSwitch('de')}
+          className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:scale-110 text-xs font-mono ${
+            language === 'de' ? 'lang-btn-active' : 'lang-btn'
+          }`}
+          aria-label="Switch to German"
+        >
+          DE
+        </button>
+        <button
           onClick={() => setShowThemeMenu(!showThemeMenu)}
           className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
           style={{
@@ -400,15 +409,6 @@ function Sidebar({
           aria-label="Switch to English"
         >
           EN
-        </button>
-        <button
-          onClick={() => handleLanguageSwitch('de')}
-          className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:scale-110 text-xs font-mono ${
-            language === 'de' ? 'lang-btn-active' : 'lang-btn'
-          }`}
-          aria-label="Switch to German"
-        >
-          DE
         </button>
         <button
           onClick={() => handleLanguageSwitch('yi')}

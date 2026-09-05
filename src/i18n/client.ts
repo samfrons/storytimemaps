@@ -24,7 +24,14 @@ if (!i18next.isInitialized) {
     .use(LanguageDetector)
     .init({
       resources,
-      fallbackLng: 'en',
+      // German is the site's default language: this is a German-language memorial
+      // project about Berlin, so an unconfigured visitor should land in German.
+      // A key missing from de/yi therefore degrades to German, not English.
+      //
+      // This is fallbackLng rather than lng: setting lng would switch the language
+      // detector off entirely, throwing away a visitor's ?lang= and stored choice.
+      // With detection finding nothing, i18next lands on fallbackLng — German.
+      fallbackLng: 'de',
       defaultNS: 'common',
       ns: ['common', 'business'],
       debug: false,
@@ -32,7 +39,12 @@ if (!i18next.isInitialized) {
         escapeValue: false,
       },
       detection: {
-        order: ['querystring', 'localStorage', 'navigator'],
+        // 'navigator' is deliberately absent. With it, an English browser would be
+        // detected as 'en' on the client while the server (see i18n/useTranslationNew.ts)
+        // has no navigator to read and renders 'de' — a hydration mismatch, and a visitor
+        // who never chose English would silently override the site's German default.
+        // Language now comes only from an explicit choice: ?lang= or a stored preference.
+        order: ['querystring', 'localStorage'],
         caches: ['localStorage'],
         lookupQuerystring: 'lang',
         lookupLocalStorage: 'storymap-language',

@@ -101,6 +101,15 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
         >
           {/* Theme Button */}
           <button
+            onClick={() => handleLanguageSwitch('de')}
+            className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:scale-110 text-xs font-mono ${
+              language === 'de' ? 'lang-btn-active' : 'lang-btn'
+            }`}
+            aria-label="Switch to German"
+          >
+            DE
+          </button>
+          <button
             onClick={() => setShowThemeMenu(!showThemeMenu)}
             className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border relative hot-button hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
             style={{
@@ -413,7 +422,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
             </button>
             <button
               onClick={() => handleLanguageSwitch('de')}
-              className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border hover:scale-110 text-xs font-mono ${
+              className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer text-xs font-mono ${
                 language === 'de' ? 'lang-btn-active' : 'lang-btn'
               }`}
               aria-label="Switch to German"
@@ -630,15 +639,6 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = memo(
               aria-label="Switch to English"
             >
               EN
-            </button>
-            <button
-              onClick={() => handleLanguageSwitch('de')}
-              className={`w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer text-xs font-mono ${
-                language === 'de' ? 'lang-btn-active' : 'lang-btn'
-              }`}
-              aria-label="Switch to German"
-            >
-              DE
             </button>
             <button
               onClick={() => handleLanguageSwitch('yi')}

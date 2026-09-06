@@ -321,6 +321,17 @@ h2 + .lead { margin-top: 26px; }
 .ask.open .one { color: var(--foreground); }
 .asks.has-open .ask:not(.open) { opacity: .55; }
 
+/* 17 — concrete asks */
+.asks5 { margin-top: 36px; }
+.ask5 { display: grid; grid-template-columns: 64px 1fr 1fr; gap: 0 32px; padding: 18px 0; border-top: 3px solid var(--border); align-items: start; }
+.ask5:last-child { border-bottom: 3px solid var(--border); }
+.ask5 .n { font: 700 40px var(--font-mono); line-height: 1; letter-spacing: -0.03em; color: var(--secondary); }
+.ask5 h3 { font-size: 25px; font-weight: 600; line-height: 1.2; }
+.ask5 h3 small { display: block; font: 700 15px var(--font-mono); color: var(--muted); margin-top: 6px; }
+.ask5 p { font-size: 19px; line-height: 1.4; color: var(--foreground-muted); }
+.ask5 p b { color: var(--foreground); font-weight: 600; }
+#s18 .foot { margin-top: 24px; font-size: 20px; color: var(--foreground-muted); }
+
 /* 15 — close */
 #s15 { background: var(--foreground); color: var(--background); }
 #s15 .photo { position: absolute; inset: 0; background: url('../../images/ebraun/ebraun1.webp') left 40% / 108% auto no-repeat; filter: grayscale(1) contrast(1.1); opacity: .34; }
@@ -782,7 +793,7 @@ body.print .ask { cursor: default; }
 
 <!-- ============ 14 · WHERE WE NEED YOU ============ -->
 <section class="slide" id="s14" data-n="16">
-  <div class="kicker" data-de="Keine Bitte um Geld. Eine Bitte um Ideen und Türen." data-en="Not a request for money. A request for ideas and doors."></div>
+  <div class="kicker" data-de="Zuerst Ideen und Türen. Auf der nächsten Folie fünf konkrete Bitten." data-en="First, ideas and doors. On the next slide, five concrete requests."></div>
   <h2 data-de="Wo wir Ihre Erfahrung brauchen" data-en="Where we need your experience"></h2>
   <div class="asks reveal" id="asks">
     <div class="ask" tabindex="0" data-k="1">
@@ -822,7 +833,7 @@ body.print .ask { cursor: default; }
       <div class="one" data-de="Die eine wertvollste Einführung: eine Programmverantwortliche, die uns sagt, welchen Antrag wir nicht schreiben sollten." data-en="The single most useful introduction: a programme officer who tells us which application not to write."></div>
     </div>
   </div>
-  <p class="lead" style="margin-top:30px;font-size:24px" data-de="Eine Einführung pro Person reicht. Wir melden uns innerhalb von 48 Stunden." data-en="One introduction per person is enough. We will follow up within 48 hours."></p>
+  <p class="lead" style="margin-top:30px;font-size:24px" data-de="Alles, was Sie hier sagen, nehmen wir mit. Die nächste Folie macht es konkret." data-en="We take everything said here with us. The next slide makes it concrete."></p>
   <aside class="notes">
     <p data-de="Tasten 1 bis 4 klappen die Fragen einer Karte auf." data-en="Keys 1 to 4 unfold a card’s questions."></p>
     <p data-de="Das ist der eigentliche Zweck des Treffens. 10 Minuten oder mehr. Karten einzeln öffnen, dann Stille aushalten." data-en="This is the actual point of the meeting. 10 minutes or more. Open the cards one at a time, then tolerate the silence."></p>
@@ -830,8 +841,26 @@ body.print .ask { cursor: default; }
   </aside>
 </section>
 
+<!-- ============ 17 · FIVE CONCRETE ASKS ============ -->
+<section class="slide" id="s18" data-n="17">
+  <div class="kicker" data-de="Konkret, mit Datum" data-en="Concrete, with dates"></div>
+  <h2 data-de="Fünf Bitten, von denen jede beantwortbar ist" data-en="Five requests, each of them answerable"></h2>
+  <div class="asks5 reveal">
+    <div class="ask5"><div class="n">1</div><h3 data-de="Ein Träger" data-en="A legal applicant"><small data-de="Verein oder Stiftung als Antragsteller" data-en="association or foundation to hold the grants"></small></h3><p data-de="Kennt jemand einen gemeinnützigen Verein oder eine Stiftung, die als Antragsteller auftreten würde, und zu welchem Overhead? Mehrere Fonds nehmen keine Anträge von Einzelpersonen. <b>Das entscheidet, welche Fristen überhaupt real sind.</b>" data-en="Does anyone know a non-profit association or foundation willing to act as legal applicant, and at what overhead? Several funds cannot accept an individual. <b>This decides which deadlines are real.</b>"></p></div>
+    <div class="ask5"><div class="n">2</div><h3 data-de="Eine Einführung bis zum 1. November" data-en="One introduction by 1 November"><small data-de="Centrum Judaicum, Aktives Museum e.V. oder Mitte Museum" data-en="Centrum Judaicum, Aktives Museum e.V. or Mitte Museum"></small></h3><p data-de="Die EVZ-Skizze braucht einen organisatorischen Partner und ist am 1. November fällig. <b>Bitten mit Datum werden beantwortet, offene nicht.</b>" data-en="The EVZ sketch needs an organisational partner and is due 1 November. <b>Dated asks get answered; open ones do not.</b>"></p></div>
+    <div class="ask5"><div class="n">3</div><h3 data-de="Ein Unterstützungsschreiben" data-en="A written statement of support"><small data-de="Christoph Kreutzmüller oder Aktives Museum" data-en="Christoph Kreutzmüller or Aktives Museum"></small></h3><p data-de="Ein Schreiben zur Unterstützung oder Datenkooperation. <b>Kostet einen Anruf und wiegt in jedem Antrag mehr als jede Beschreibung der Plattform.</b>" data-en="A statement of support or data cooperation. <b>It costs a phone call and carries more weight in an application than any description of the platform.</b>"></p></div>
+    <div class="ask5"><div class="n">4</div><h3 data-de="Kontakte für die Tafeln" data-en="Contacts for the plaques"><small data-de="Hausverwaltungen, Bezirksämter, Denkmalschutz, ein Hersteller" data-en="property managers, district offices, heritage office, a fabricator"></small></h3><p data-de="Wandtafeln brauchen die Zustimmung der Eigentümer und in geschützten Bereichen den Denkmalschutz, langsamer als Stolpersteine. Und wer hat schon einmal eine Wandinstallation umgesetzt? <b>Ohne Hersteller gibt es keinen Preis pro Standort.</b>" data-en="Wall plaques need owner consent and, in protected areas, heritage sign-off, slower than Stolpersteine. Who has run a wall-mounted installation before? <b>Without a fabricator there is no per-site price to quote.</b>"></p></div>
+    <div class="ask5"><div class="n">5</div><h3 data-de="Geld, in zwei beantwortbaren Teilen" data-en="Money, in two answerable parts"><small data-de="Pilotstraße und Koordination" data-en="a pilot street and coordination"></small></h3><p data-de="<b>Eine Straße als Pilot, rund zehn Tafeln,</b> gefördert von einer namentlich genannten Person oder Stiftung. Und <b>ein kleiner, nicht zweckgebundener Betrag für die Koordination,</b> solange die großen Anträge laufen. Beides steht hier, damit es nicht nachher im Flur besprochen wird." data-en="<b>One street as a pilot, roughly ten plaques,</b> sponsored by a named individual or foundation. And <b>a small unrestricted sum for coordination</b> while the larger applications are pending. Both are on this slide so they are not raised in the corridor afterwards."></p></div>
+  </div>
+  <p class="foot" data-de="Eine Zusage pro Person reicht. Wir bestätigen schriftlich innerhalb von 48 Stunden." data-en="One commitment per person is enough. We confirm in writing within 48 hours."></p>
+  <aside class="notes">
+    <p data-de="Reihenfolge ist Priorität: ohne Träger sind Fristen 2 und 5 nicht real. Punkt 2 mit Datum aussprechen. Punkt 5 klar sagen, dann still sein." data-en="Order is priority: without a Träger, deadlines 2 and 5 are not real. Say item 2 with the date. Say item 5 plainly, then be quiet."></p>
+    <p data-de="Wenn nach Beträgen gefragt wird: Tafelpreis steht erst nach Punkt 4 fest; Koordination ist ein Betrag, den Chandra nennen kann." data-en="If asked for amounts: the plaque price only exists after item 4; coordination is a figure Chandra can name."></p>
+  </aside>
+</section>
+
 <!-- ============ 15 · CLOSE ============ -->
-<section class="slide dark" id="s15" data-n="17">
+<section class="slide dark" id="s15" data-n="18">
   <div class="photo"></div><div class="wash"></div>
   <div class="body">
     <div class="reveal">

@@ -24,6 +24,7 @@ import { FOOTPRINTS_1930 } from './footprints1930'
 import {
   STATUS_LABEL,
   extractSiteToday,
+  initialTodayMode,
   streetViewEmbedUrl,
   streetViewLink,
   todayStatus,
@@ -563,12 +564,24 @@ function loadSiteToday(id: string): Promise<string | null> {
 interface StopCardProps {
   /** Street View iframes mount only once the map has settled. */
   embedsAllowed: boolean
+  /**
+   * "Heute" swaps the card's lead: the present-day block (status and Street
+   * View of what stands at the address now) takes the figure slot at the
+   * top, and the archival photograph moves down to where that block sat.
+   */
+  todayMode: boolean
   stop: TourStop
   index: number
   total: number
 }
 
-const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total, embedsAllowed }) => {
+const StopCardComponent: React.FC<StopCardProps> = ({
+  stop,
+  index,
+  total,
+  embedsAllowed,
+  todayMode,
+}) => {
   const [expanded, setExpanded] = useState(false)
   const [siteToday, setSiteToday] = useState<string | null>(null)
   const articleRef = useRef<HTMLElement | null>(null)
@@ -627,6 +640,67 @@ const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total, embeds
     process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY
   )
 
+  // The card has two picture slots — the lead figure under the address and
+  // the block above the fate line. "1930" leads with the archival photograph
+  // and keeps the present day below; "Heute" swaps them so what stands at
+  // the address now (status + Street View) is the first thing on the card,
+  // rather than the bottom of a scrolling one.
+  const archivalFigure = stop.images[0] ? (
+    <figure className={`ht-card-figure${todayMode ? ' is-then' : ''}`}>
+      {todayMode && <h3 className="ht-card-figure-label">1930</h3>}
+      <Image
+        src={stop.images[0]}
+        alt={`Archival image — ${stop.title}`}
+        width={860}
+        height={560}
+        sizes="(max-width: 768px) 92vw, 430px"
+        style={{ width: '100%', height: 'auto' }}
+        // Eager on purpose: next/image defaults to lazy, which meant each
+        // photo only started downloading when its card scrolled into view,
+        // right when the map is busiest. All fifteen are ~100 KB WebPs.
+        loading="eager"
+        priority={index === 0}
+      />
+      <figcaption>{stop.imageCredit}</figcaption>
+    </figure>
+  ) : null
+
+  const todayBlock = (
+    <div className={`ht-card-today${todayMode ? ' is-lead' : ''}`}>
+      <h3>{todayMode ? 'What stands here today' : 'Today'}</h3>
+      <div className="ht-today-status">
+        <span
+          className="ht-today-swatch"
+          style={{ backgroundColor: todayStatusColor }}
+          aria-hidden="true"
+        />
+        <span>{STATUS_LABEL[todayStatusValue].en}</span>
+      </div>
+      {streetViewEmbed && embedsAllowed ? (
+        <div className="ht-today-streetview">
+          <iframe
+            src={streetViewEmbed}
+            title={`Street View — ${stop.title}`}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </div>
+      ) : (
+        <a
+          className="ht-today-streetview-link"
+          href={streetViewLink(stop.lat, stop.lng)}
+          target="_blank"
+          rel="noopener"
+        >
+          Open in Street View
+          <span aria-hidden="true"> ↗</span>
+        </a>
+      )}
+      {siteToday && <p className="ht-today-text">{siteToday}</p>}
+    </div>
+  )
+
   return (
     <article ref={articleRef} className={`ht-card${expanded ? ' is-expanded' : ''}`} data-ht-card>
       <div className="ht-card-meta">
@@ -641,24 +715,7 @@ const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total, embeds
       <p className="ht-card-address">
         {stop.address} · {stop.district}
       </p>
-      {stop.images[0] && (
-        <figure className="ht-card-figure">
-          <Image
-            src={stop.images[0]}
-            alt={`Archival image — ${stop.title}`}
-            width={860}
-            height={560}
-            sizes="(max-width: 768px) 92vw, 430px"
-            style={{ width: '100%', height: 'auto' }}
-            // Eager on purpose: next/image defaults to lazy, which meant each
-            // photo only started downloading when its card scrolled into view,
-            // right when the map is busiest. All fifteen are ~100 KB WebPs.
-            loading="eager"
-            priority={index === 0}
-          />
-          <figcaption>{stop.imageCredit}</figcaption>
-        </figure>
-      )}
+      {todayMode ? todayBlock : archivalFigure}
       <p className="ht-card-story">{stop.story}</p>
 
       <button
@@ -707,39 +764,7 @@ const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total, embeds
         <p>{stop.building}</p>
       </div>
 
-      <div className="ht-card-today">
-        <h3>Today</h3>
-        <div className="ht-today-status">
-          <span
-            className="ht-today-swatch"
-            style={{ backgroundColor: todayStatusColor }}
-            aria-hidden="true"
-          />
-          <span>{STATUS_LABEL[todayStatusValue].en}</span>
-        </div>
-        {siteToday && <p className="ht-today-text">{siteToday}</p>}
-        {streetViewEmbed && embedsAllowed ? (
-          <div className="ht-today-streetview">
-            <iframe
-              src={streetViewEmbed}
-              title={`Street View — ${stop.title}`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        ) : (
-          <a
-            className="ht-today-streetview-link"
-            href={streetViewLink(stop.lat, stop.lng)}
-            target="_blank"
-            rel="noopener"
-          >
-            Open in Street View
-            <span aria-hidden="true"> ↗</span>
-          </a>
-        )}
-      </div>
+      {todayMode ? archivalFigure : todayBlock}
 
       <span className={`ht-card-fate${stop.fateKind === 'destroyed' ? ' is-destroyed' : ''}`}>
         {stop.fate}
@@ -1257,13 +1282,17 @@ const HistoryTour: React.FC = () => {
   // out of the initial render (rather than a useState initializer) so the
   // server-rendered and first client-rendered markup match — sessionStorage
   // does not exist during SSR.
+  // A `?view=heute` in the URL overrides it, so an embed can open straight
+  // onto the present-day view (see initialTodayMode).
   useEffect(() => {
+    let stored: string | null = null
     try {
-      if (window.sessionStorage.getItem('ht-today') === '1') setTodayMode(true)
+      stored = window.sessionStorage.getItem('ht-today')
     } catch {
       // Storage may be unavailable (private browsing, disabled site data);
       // the toggle still works for the session, it just won't persist.
     }
+    if (initialTodayMode(window.location.search, stored)) setTodayMode(true)
   }, [])
 
   useEffect(() => {
@@ -1492,6 +1521,7 @@ const HistoryTour: React.FC = () => {
                   index={i}
                   total={TOUR_STOPS.length}
                   embedsAllowed={embedsAllowed}
+                  todayMode={todayMode}
                 />
               </div>
             </section>
@@ -1558,6 +1588,7 @@ const HistoryTour: React.FC = () => {
               index={i}
               total={TOUR_STOPS.length}
               embedsAllowed={embedsAllowed}
+              todayMode={todayMode}
             />
           ))}
         </div>

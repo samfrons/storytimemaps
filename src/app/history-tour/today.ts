@@ -85,3 +85,19 @@ export function streetViewEmbedUrl(
   })
   return `https://www.google.com/maps/embed/v1/streetview?${params.toString()}`
 }
+
+/**
+ * Which state the tour should open in. The URL wins so an embed (the
+ * committee deck, a shared link) can open straight onto the present-day
+ * view: `?view=heute` (or `today`) starts in "Heute", `?view=1930` in the
+ * 1930 relief. Without a `view` param the reader's stored preference from
+ * earlier in the session applies (`stored` is the raw sessionStorage value,
+ * '1' meaning "Heute"). Pure: takes `location.search` and the stored value
+ * so it can run in a test without a window.
+ */
+export function initialTodayMode(search: string, stored: string | null): boolean {
+  const view = new URLSearchParams(search).get('view')?.trim().toLowerCase()
+  if (view === 'heute' || view === 'today') return true
+  if (view === '1930') return false
+  return stored === '1'
+}

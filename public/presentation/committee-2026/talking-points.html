@@ -4,299 +4,250 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Talking points – StoryMaps Berlin board, September 2026</title>
+<title>Script – StoryMaps Berlin board, September 2026</title>
 <style>
-  @page { size: A4; margin: 13mm 14mm 14mm; }
+  @page { size: A4; margin: 14mm 15mm 15mm; }
   :root { --ink: #131318; --muted: #5a5a66; --rule: #131318; --cue: #b3470f; --band: #f2efe6; }
   * { box-sizing: border-box; border-radius: 0; }
-  html, body { margin: 0; background: #fff; color: var(--ink); font: 13.5px/1.38 Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
-  .page { max-width: 820px; margin: 0 auto; padding: 32px 24px 60px; }
-  h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
-  .sub { color: var(--muted); margin: 0 0 18px; }
-  .box { border: 2px solid var(--rule); padding: 12px 16px; margin: 0 0 22px; background: var(--band); display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px; font-size: 14px; }
-  .box b { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
-  .box code { font: 13px "Space Mono", ui-monospace, Menlo, monospace; }
-  h2 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 18px 0 4px; break-after: avoid; page-break-after: avoid; border-bottom: 2px solid var(--rule); padding-bottom: 4px; }
-  .step { display: grid; grid-template-columns: 90px 1fr; gap: 0 14px; padding: 9px 0; border-bottom: 1px solid #cfcfd6; break-inside: avoid; page-break-inside: avoid; }
-  .step:last-child { border-bottom: 0; }
-  .cue { font: 700 13px/1.3 "Space Mono", ui-monospace, Menlo, monospace; color: var(--cue); }
-  .cue small { display: block; font-weight: 400; color: var(--muted); margin-top: 3px; }
-  .step h3 { margin: 0 0 3px; font-size: 15px; }
-  .step ul { margin: 0; padding-left: 18px; }
-  .step li { margin: 2px 0; }
-  .step li.do { list-style: none; margin-left: -18px; padding-left: 18px; position: relative; }
-  .step li.do::before { content: "▸"; position: absolute; left: 0; color: var(--cue); }
-  .say { font-style: italic; }
-  .keys { margin-top: 26px; border: 2px solid var(--rule); padding: 10px 16px; font-size: 13px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 20px; }
-  .keys code { font: 12px "Space Mono", ui-monospace, Menlo, monospace; }
-  .foot { margin-top: 18px; font-size: 12px; color: var(--muted); }
-  @media print {
-    .page { max-width: none; padding: 0; }
-    a { color: inherit; text-decoration: none; }
-  }
+  html, body { margin: 0; background: #fff; color: var(--ink); font: 15px/1.5 Georgia, "Times New Roman", serif; }
+  .page { max-width: 760px; margin: 0 auto; padding: 32px 24px 60px; }
+  h1 { font: 700 24px/1.2 Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0 0 4px; }
+  .sub { font: 13px Inter, -apple-system, Helvetica, Arial, sans-serif; color: var(--muted); margin: 0 0 16px; }
+  .box { border: 2px solid var(--rule); padding: 10px 14px; margin: 0 0 20px; background: var(--band); font: 13px/1.45 Inter, -apple-system, Helvetica, Arial, sans-serif; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+  .box b { display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .box code { font: 12px "Space Mono", ui-monospace, Menlo, monospace; }
+  h2 { font: 700 11px/1.2 Inter, -apple-system, Helvetica, Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; border-bottom: 2px solid var(--rule); padding-bottom: 4px; break-after: avoid; page-break-after: avoid; }
+  .s { display: grid; grid-template-columns: 78px 1fr; gap: 0 14px; padding: 10px 0; border-bottom: 1px solid #d6d6dd; break-inside: avoid; page-break-inside: avoid; }
+  .s:last-child { border-bottom: 0; }
+  .cue { font: 700 12px/1.3 "Space Mono", ui-monospace, Menlo, monospace; color: var(--cue); padding-top: 3px; }
+  .cue small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  .s p { margin: 0 0 8px; }
+  .s p:last-child { margin-bottom: 0; }
+  .do { font: 13px/1.4 Inter, -apple-system, Helvetica, Arial, sans-serif; color: var(--muted); }
+  .do::before { content: "▸ "; color: var(--cue); }
+  .stop { display: block; font: italic 13px Inter, -apple-system, Helvetica, Arial, sans-serif; color: var(--cue); margin-top: 4px; }
+  .keys { margin-top: 22px; border: 2px solid var(--rule); padding: 8px 14px; font: 12px/1.6 Inter, -apple-system, Helvetica, Arial, sans-serif; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 16px; }
+  .keys code { font: 11px "Space Mono", ui-monospace, Menlo, monospace; }
+  @media print { .page { max-width: none; padding: 0; } }
 </style>
 </head>
 <body>
 <div class="page">
 
-<h1>Talking points · Stiftung Zurückgeben board</h1>
-<p class="sub">StoryMaps Berlin — <em>Verschwunden, nicht vergessen</em> · September 2026 · target 29 minutes plus discussion</p>
+<h1>Script · Stiftung Zurückgeben board</h1>
+<p class="sub">StoryMaps Berlin — <em>Verschwunden, nicht vergessen</em> · September 2026 · about 28 minutes, then discussion</p>
 
 <div class="box">
   <div><b>Deck</b><code>b3rlin.storytimemaps.com/presentation/committee-2026</code></div>
-  <div><b>Before you start</b>Open the deck, accept the site’s cookie banner once, press <code>L</code> for German, plug in, test <code>→</code>.</div>
+  <div><b>Before you start</b>Open the deck, accept the cookie banner once, press <code>L</code> for German, test <code>→</code>.</div>
   <div><b>The one sentence</b>A research database becomes an interactive map, and the map becomes remembrance in the city.</div>
-  <div><b>What success looks like</b>A Träger, one dated introduction, one letter of support, plaque contacts, and a sponsor for a pilot street.</div>
+  <div><b>Leave with</b>A Träger, one dated introduction, one letter of support, plaque contacts, a sponsor for a pilot street.</div>
 </div>
 
 <h2>Opening · 3 min</h2>
 
-<div class="step">
-  <div class="cue">Slide 1<small>live homepage</small></div>
+<div class="s">
+  <div class="cue">Slide 1<small>homepage, live</small></div>
   <div>
-    <h3>What this is</h3>
-    <ul>
-      <li class="do">Let the dots animate for a few seconds before speaking.</li>
-      <li><span class="say">“This is the site as it is today. 10,021 Jewish-owned businesses in Berlin, placed on the streets where they stood.”</span></li>
-      <li>Say the one sentence from the band. That is the frame for everything that follows.</li>
-      <li>You funded this a year ago on paper. Today you see it.</li>
-    </ul>
+    <p class="do">Let the dots run for five seconds before you speak.</p>
+    <p>A year ago you funded this on paper. This is what it is now.</p>
+    <p>Ten thousand and twenty-one Jewish-owned businesses in Berlin, placed on the streets where they stood. Every dot is an address. Drag the year and you watch a city’s economy flourish, come under pressure, and be erased.</p>
+    <p>The whole project in one sentence: a research database becomes an interactive map, and the map becomes remembrance in the city. Everything I show you today is one of those two moves.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 2<small>the foundation</small></div>
   <div>
-    <h3>Where the data comes from</h3>
-    <ul>
-      <li>Source: Christoph Kreutzmüller, <em>Ausverkauf</em> (2012), and the HU Berlin database. The 16 narrated stories: Christine Fischer-Defoy and the Aktives Museum.</li>
-      <li>Checked in 2026: 9,177 of 10,021 records match the source on every field. The rest were 861 field differences, 607 fixed automatically, 254 flagged for manual review.</li>
-      <li>Three languages: German, English, Yiddish.</li>
-      <li class="do">Don’t skip this slide. It is for the sceptics in the room.</li>
-    </ul>
+    <p>First, where the data comes from, because in this room that question comes before any other.</p>
+    <p>The source is Christoph Kreutzmüller’s <em>Ausverkauf</em> and the database of Jewish businesses at Humboldt University. The sixteen stories we tell in full come from Christine Fischer-Defoy and the Aktives Museum.</p>
+    <p>This year we checked every one of the 10,021 records against the source. 9,177 match on every field. The rest had 861 field differences: 607 we fixed automatically, spacing and diacritics. 254 are flagged for a human to look at. Nothing was guessed.</p>
+    <p>The whole interface exists in German, English and Yiddish.</p>
   </div>
 </div>
 
-<div class="step">
-  <div class="cue">Slide 3<small>what the archive holds</small></div>
+<div class="s">
+  <div class="cue">Slide 3<small>the numbers</small></div>
   <div>
-    <h3>The numbers, honestly</h3>
-    <ul>
-      <li>10,021 documented. 8,838 placed on the map. 9,679 closed between 1933 and 1945.</li>
-      <li class="do">Name the gap before anyone asks: 1,183 have no resolvable historical address. We don’t guess.</li>
-      <li>Read the quote: behind every dot a family, a livelihood, a place where Berlin bought its bread.</li>
-    </ul>
+    <p>Three numbers to hold on to. 10,021 documented. 8,838 on the map at their real address. 9,679 closed between 1933 and 1945.</p>
+    <p>The gap between the first two is 1,183 businesses whose historical address we cannot resolve with confidence. They are not on the map. We would rather show fewer dots than a wrong one.</p>
+    <p>And behind every dot: a family, a livelihood, a place where Berlin bought its bread, its books, its winter coats. The map exists so that they are not reduced to a number.</p>
   </div>
 </div>
 
 <h2>Live demos · 7 min</h2>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 4<small>the map, live</small></div>
   <div>
-    <h3>Time as a slider</h3>
-    <ul>
-      <li class="do">Click into the map. Drag the year from 1933 to 1938. Point out: mint turns yellow, then orange.</li>
-      <li class="do">Click one cluster, open one business, read the name and the dates.</li>
-      <li>Four states: active, under pressure, closed, and “building still standing today”.</li>
-      <li class="do">Press <code>F</code> for fullscreen, <code>Esc</code> back. Click outside the map before using the arrow keys again. About 4 minutes.</li>
-    </ul>
+    <p>This is the map itself. Let me show you 1933 to 1938.</p>
+    <p class="do">Click into the map. Drag the year slowly from 1933 to 1938.</p>
+    <p>Mint is open. Yellow is under pressure. Orange is closed. Watch the colour move through the city as the years pass. This is not an illustration; every change is a record.</p>
+    <p class="do">Click one cluster, open one business. Read its name and its dates aloud. Then click outside the map.</p>
+    <p>Anyone with a browser can do this. No login, no cost.</p>
+    <span class="stop">About 4 minutes. F for fullscreen, Esc back.</span>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 5<small>the tour, live</small></div>
   <div>
-    <h3>Fifteen storefronts, 1925 to 1945</h3>
-    <ul>
-      <li class="do">Click into the frame once. Then click the red markers on the timeline at the bottom; they jump straight to each store. Or scroll.</li>
-      <li class="do">Stop at station 3. Show the <strong>1930 | Heute</strong> toggle top-left: same camera, today’s buildings, Street View of the site now.</li>
-      <li>This is the emotional peak. Say little. About 3 minutes.</li>
-    </ul>
+    <p>Now the same city from street level. Fifteen storefronts, 1925 to 1945, the buildings raised to their 1930 height on today’s ground.</p>
+    <p class="do">Click into the frame. Click the red markers on the timeline; each jumps to one store. Stop at station 3.</p>
+    <p>And this is what the site looks like today.</p>
+    <p class="do">Press the “Heute” toggle top-left. Let it sit. Show the Street View pane in the card.</p>
+    <p>Same camera, same corner, ninety years apart. That is the whole idea of the project in one screen.</p>
+    <span class="stop">About 3 minutes. Say as little as possible here.</span>
   </div>
 </div>
 
 <h2>What we are building · 8 min</h2>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 6<small>archive, street, museum</small></div>
   <div>
-    <h3>Memory in three places</h3>
-    <ul>
-      <li>Archive: online. Street: plaques, in progress. Museum: prototype.</li>
-      <li>They reinforce each other: the plaque leads to the map, the map to the museum, the museum back to the street.</li>
-      <li>Beyond Berlin: Frankfurt pilot, 167 businesses. The method transfers to any city with a source like Berlin’s.</li>
-    </ul>
+    <p>Memory in three places. The archive, which you just saw, is online. The street: memorial plaques at the real addresses, in progress. The museum: a walk-on map and a touch kiosk, a working prototype.</p>
+    <p>They feed each other. A plaque carries a code that opens the map. The map leads into the exhibit. The exhibit sends you back out to the street.</p>
+    <p>And it travels. Frankfurt is our first city beyond Berlin. The method works anywhere there is a source like Berlin’s.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slides 7–8<small>E. Braun &amp; Co.</small></div>
   <div>
-    <h3>One name</h3>
-    <ul>
-      <li>Slide 7, 30 seconds: Viennese luxury store next to the Hotel Adlon, Unter den Linden. Customers included Käthe Dorsch and Paul Hindemith.</li>
-      <li>Slide 8: 1914 opens · 1933 owners spared as Austrian nationals · 1938 arrested, forced sale · 1943 closed, seized, bombed · 1954 sale declared void. The Adlon covers the site today.</li>
-      <li>Every dot has a story like this. For 16 we have told it; for 10,000 we know name, trade, address, dates.</li>
-      <li>If asked about the plaque saying Nr. 75: that is the historical number; the block was renumbered.</li>
-    </ul>
+    <p>One address, so the numbers have a face.</p>
+    <p>E. Braun and Co., Unter den Linden, next to the Hotel Adlon. A Viennese house for fine linen and fashion. Käthe Dorsch and Paul Hindemith shopped here.</p>
+    <p class="do">Next slide.</p>
+    <p>Opened 1914. In 1933 the owners are spared, for a while, because they are Austrian. In 1938, after the Anschluss, Siegfried Oser-Braun is arrested on a business trip and forced to sell from his cell. In 1943 the store is closed as irrelevant to the war, seized, and then bombed. In 1954 the sale is declared void. Today the Hotel Adlon stands on the site.</p>
+    <p>Every dot has a story of this shape. For sixteen we have told it. For ten thousand we know the name, the trade, the address, the dates.</p>
+    <p class="do">If asked why the plaque says Nr. 75: that was the historical number; the block was renumbered.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 9<small>plaques</small></div>
   <div>
-    <h3>Design, proof, prototype</h3>
-    <ul>
-      <li>Two formats: 300 × 200 mm with story and storefront engraving; 300 × 100 mm compact with the four facts.</li>
-      <li>18 plaques with engraving files. 181 addresses on the contact list for owners and districts.</li>
-      <li>Every plaque names four facts (name, trade, dates, place) and carries the context line: expropriated and liquidated under National Socialist rule. Stiftung Zurückgeben on every one.</li>
-      <li class="do">Status, in these words: designed, verified, prototypes made. No plaque is installed yet. Final fabrication waits on sites.</li>
-    </ul>
+    <p>From the map to the wall. This is what your grant paid for most directly.</p>
+    <p>Two formats. A large one with the story and an engraving of the storefront. A compact one with the four facts: name, trade, dates, place. If a record is missing any of the four, it gets no plaque. We do not guess.</p>
+    <p>Every plaque says what it is and what happened: a Jewish business, expropriated and liquidated under National Socialist rule. And every plaque carries the name Stiftung Zurückgeben.</p>
+    <p>Where we stand: eighteen plaques designed and verified, engraving files ready, prototypes made. None is on a wall yet. That is not a design problem. It is a permissions problem, and I will come back to it.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 10<small>exhibit</small></div>
   <div>
-    <h3>The kiosk already runs</h3>
-    <ul>
-      <li>The plan: walk-on floor map, three scales (case, room, hall) because we don’t know which venue says yes.</li>
-      <li>The kiosk is not a rendering. Touch interface with attract loop and automatic reset runs in a browser today. It needs a room.</li>
-      <li>If asked to see it: <code>K</code> jumps to Appendix 1, the live kiosk.</li>
-    </ul>
+    <p>The museum piece. On the left, the plan: a walk-on floor map, in three sizes because we do not yet know which venue will say yes. On the right, the kiosk.</p>
+    <p>The kiosk is not a rendering. The touch interface runs today, with an attract loop and automatic reset. It needs a room and a socket.</p>
+    <p class="do">If someone wants to see it live: press K, Appendix 1.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 11<small>classrooms</small></div>
   <div>
-    <h3>Free teaching material, grades 8 to 13</h3>
-    <ul>
-      <li>“Six lessons from one archive”: six single-lesson units with worksheets. “The street you walk on”: a three-phase neighbourhood walk workbook.</li>
-      <li>Three languages, no login, no cost. What is missing: a school that tries it and tells us what fails.</li>
-    </ul>
+    <p>For schools, two things, both free and online. Six lessons from one archive: single-period units with worksheets. And a workbook, “The street you walk on”: prepare, walk your own neighbourhood, document what you find.</p>
+    <p>What we do not have yet is a school that has tried it and told us what does not work in a real classroom.</p>
   </div>
 </div>
 
 <h2>Accountability and plan · 6 min</h2>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 12<small>what the grant built</small></div>
   <div>
-    <h3>Three promises, status of each</h3>
-    <ul>
-      <li>1 · The complete digital project: delivered. 2 · Plaque prototyping: delivered. 3 · Three to six metal plaques: prototypes made, final fabrication waits on sites.</li>
-      <li>June to September: data verification, three languages, postwar layer and kiosk, classroom material, new homepage and 3D tour, plaques cut-ready.</li>
-      <li>Four months, one developer, a tight hosting budget. All of it verifiable online.</li>
-    </ul>
+    <p>You funded three things. Here is where each one stands.</p>
+    <p>The complete digital project: delivered. Map, tour, kiosk, teaching material, three languages, all online and verified.</p>
+    <p>Plaque prototyping: delivered. Two formats, eighteen plaques with engraving files, prototypes made.</p>
+    <p>Three to six finished metal plaques: prototypes made, final fabrication waiting on sites. That is the honest status, and it is why the last part of today is the way it is.</p>
+    <p>All of this in four months, one developer, a hosting budget that sits near its cap.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 13<small>next twelve months</small></div>
   <div>
-    <h3>Four steps and what each needs</h3>
-    <ul>
-      <li>Q4: first plaques go up, three to five pilot addresses. Needs owners, district office, a workshop, a small installation budget.</li>
-      <li>Q1: landing pages for museums and for teachers. Needs two conversations with venues, two with schools.</li>
-      <li>Q2: kiosk in a partner venue. Needs a venue, a socket, a screen.</li>
-      <li>Q3: Frankfurt complete, one more city begun. Needs a source and a local research partner.</li>
-      <li class="do">Stay honest: the landing pages are planned, not built. The kiosk exists, the venue doesn’t.</li>
-    </ul>
+    <p>Four steps. Each one needs something we cannot supply ourselves.</p>
+    <p>This quarter: the first plaques go up, three to five addresses as a pilot. Needs owners, a district office, a workshop, a small installation budget.</p>
+    <p>Early next year: dedicated pages for museums and for teachers. Needs two conversations with venues and two with schools, so we build what is needed rather than what we assume.</p>
+    <p>Then the kiosk in a partner venue. Needs a room. Then Frankfurt complete and one more city begun. Needs a source and a local research partner.</p>
+    <p>To be clear: the pages are planned, not built. The kiosk exists; the venue does not.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 14<small>funding</small></div>
   <div>
-    <h3>Six applications, one already out</h3>
-    <ul>
-      <li>Bewegungsstiftung, €13,000, both applications submitted, awaiting decision.</li>
-      <li>Hauptstadtkulturfonds, deadline 1 October: the key near-term one; individuals eligible.</li>
-      <li>LOTTO-Stiftung Berlin (rolling, 2027) · EVZ Bildungsagenda, sketch due 1 November, <strong>needs a partner organisation to hold it</strong> · Prototype Fund (Oct–Nov, optional) · Yiddish Book Center for the translation tool.</li>
-      <li class="do">None of these is addressed to you. What would help: a partner organisation for EVZ, and a second pair of eyes on the Hauptstadtkulturfonds application before 1 October.</li>
-      <li>If asked about fees: project management sits inside each application as a personnel cost; there is no separate request.</li>
-    </ul>
+    <p>How we plan to pay for it. Six applications, one already out.</p>
+    <p>Bewegungsstiftung, thirteen thousand euros, both applications submitted, waiting for an answer. Hauptstadtkulturfonds, first of October, the big one, and open to individuals. LOTTO-Stiftung for 2027. The EVZ Bildungsagenda, sketch due first of November, larger sums, but organisations only. Prototype Fund if the framing holds. And a separate application to the Yiddish Book Center for the translation tool.</p>
+    <p>None of these is addressed to you. Two of them are why I need you, and that is the next slide but one.</p>
+    <p class="do">If asked about fees: project management sits inside each application as a personnel cost; there is no separate request.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 15<small>team</small></div>
   <div>
-    <h3>Who is doing this</h3>
-    <ul>
-      <li>Sam Frons, initiator, design and development. Chandra Brooks leads funding and project coordination: grant applications, institutional partnerships, day-to-day delivery; currently a guest researcher at the Royal College of Art. Keep it to two sentences.</li>
-      <li>Research partners on screen: Kreutzmüller, Fischer-Defoy and Aktives Museum, HU Berlin, and you.</li>
-    </ul>
+    <p>Who is doing this. I build it: the map, the tour, the kiosk, the plaques, the material. Chandra Brooks leads funding and project coordination: the applications, the partnerships, the day-to-day delivery. She is currently a guest researcher at the Royal College of Art.</p>
+    <p>And beneath us, the people whose work this stands on: Kreutzmüller, Fischer-Defoy and the Aktives Museum, Humboldt University, and you.</p>
   </div>
 </div>
 
 <h2>The ask · 10 min or more</h2>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 16<small>where we need you</small></div>
   <div>
-    <h3>Not money. Ideas and doors.</h3>
-    <ul>
-      <li class="do">Open the cards one at a time with keys <code>1</code> to <code>4</code>. Read the yellow line on each aloud, then stop talking. Tolerate the silence.</li>
-      <li><strong>1 Museums and memorial sites:</strong> a curator who will try the kiosk for 30 minutes. Jewish Museum, Topography of Terror, district museums, Stolpersteine.</li>
-      <li><strong>2 Schools and teachers:</strong> a history teacher who will say honestly what fails in the classroom. Landesinstitut, subject associations.</li>
-      <li><strong>3 Plaques in the city:</strong> one property owner on Unter den Linden or Friedrichstraße who says yes. Which district office is known to be open?</li>
-      <li><strong>4 Press, research, funding programmes:</strong> a programme officer who tells us which application not to write. Which desk would show the map, not just mention it?</li>
-      <li class="do">Write every name down as it is said. Then: “The next slide makes this concrete.”</li>
-    </ul>
+    <p>This is the real reason for today. Not money first. Ideas, and doors.</p>
+    <p class="do">Press 1. Read the yellow box. Stop. Wait. Then 2, 3, 4 the same way.</p>
+    <p>Museums and memorial sites: the single most useful introduction is a curator who will spend thirty minutes with the kiosk.</p>
+    <p>Schools: a history teacher who will tell us, honestly, what fails in the classroom.</p>
+    <p>Plaques: one property owner on Unter den Linden or Friedrichstraße who says yes.</p>
+    <p>Press, research, funding programmes: a programme officer who tells us which application not to write.</p>
+    <p class="do">Write every name down as it is said. Then: “Let me make this concrete.”</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 17<small>five asks</small></div>
   <div>
-    <h3>Concrete, with dates</h3>
-    <ul>
-      <li class="do">Read the five in order; the order is the priority. Pause after each.</li>
-      <li><strong>1 A Träger.</strong> A non-profit Verein or Stiftung willing to be the legal applicant, and at what overhead. Several funds cannot accept an individual, so this decides which deadlines are real.</li>
-      <li><strong>2 One introduction by 1 November</strong> to Centrum Judaicum, Aktives Museum e.V. or Mitte Museum. The EVZ sketch needs an organisational partner. Say the date.</li>
-      <li><strong>3 A written statement of support</strong> or data cooperation from Christoph Kreutzmüller or Aktives Museum. One phone call; worth more in an application than any description of the platform.</li>
-      <li><strong>4 Plaque contacts:</strong> Hausverwaltungen, Bezirksämter, anyone who has run a wall-mounted installation, and a fabricator. Owner consent plus, in protected areas, Denkmalschutz; slower than Stolpersteine. No per-site price until a fabricator has quoted.</li>
-      <li><strong>5 Money, in two parts:</strong> one pilot street, about ten plaques, sponsored by a named person or foundation; and a small unrestricted sum for coordination while the big applications are pending. Say it plainly, then be quiet.</li>
-      <li>If asked for amounts: plaque price exists only after item 4; the coordination figure is Chandra’s to name. Close: one commitment per person; we confirm in writing within 48 hours.</li>
-    </ul>
+    <p>Five things. In order of priority, and each one you can answer today.</p>
+    <p><strong>One, a Träger.</strong> Does anyone here know a non-profit association or foundation that would act as the legal applicant, and at what overhead? Several of the funds on that list cannot accept an individual at all. This single answer decides which of those deadlines are real.</p>
+    <p><strong>Two, one introduction by the first of November.</strong> Centrum Judaicum, Aktives Museum, or Mitte Museum. The EVZ sketch needs an organisational partner by that date. I am asking with a date because dated asks get answered.</p>
+    <p><strong>Three, a letter.</strong> A written statement of support or data cooperation from Christoph Kreutzmüller or the Aktives Museum. It costs one phone call, and it carries more weight in an application than any description of the platform.</p>
+    <p><strong>Four, contacts for the plaques.</strong> Property managers, district offices, anyone who has put a commemorative installation on a wall, and a fabricator. Wall plaques need the owner’s consent and, in protected areas, heritage sign-off. It is slower than Stolpersteine. And until a fabricator has quoted, there is no per-site price to give you.</p>
+    <p><strong>Five, money, in two parts so it can be answered.</strong> One street as a pilot, roughly ten plaques, sponsored by a named person or foundation. And a small unrestricted sum for coordination while the large applications are pending. I put both on this slide so that we do not have that conversation in the corridor afterwards.</p>
+    <p class="do">Say the fifth plainly. Then stop talking.</p>
+    <p>One commitment per person is enough. We confirm everything in writing within 48 hours.</p>
+    <p class="do">If asked for figures: the plaque price exists only after item four; the coordination sum is Chandra’s to name.</p>
   </div>
 </div>
 
-<div class="step">
+<div class="s">
   <div class="cue">Slide 18<small>close</small></div>
   <div>
-    <h3>Thank you</h3>
-    <ul>
-      <li>Stay on slide 17 during discussion. Move to 18 only when leaving.</li>
-      <li>QR code goes to the map. The deck address and the PDF can be shared afterwards.</li>
-    </ul>
+    <p class="do">Stay on 17 for the discussion. Move to 18 only when leaving.</p>
+    <p>Thank you. The address on screen is the map; the code takes you there. These slides exist as a PDF and I will send them tonight, with the list of what each of you offered.</p>
   </div>
 </div>
 
 <h2>If asked · appendix</h2>
 
-<div class="step">
+<div class="s">
   <div class="cue">A1–A6<small>press <code>K</code></small></div>
   <div>
-    <ul>
-      <li><strong>A1</strong> the kiosk live · <strong>A2</strong> Frankfurt map, 167 businesses, same method · <strong>A3</strong> anatomy of a plaque · <strong>A4</strong> how to contribute without money · <strong>A5</strong> the searchable data for researchers · <strong>A6</strong> all the numbers on one slide.</li>
-    </ul>
+    <p class="do">A1 the kiosk live · A2 Frankfurt, same method, different source · A3 anatomy of a plaque · A4 how to contribute without money · A5 the searchable data · A6 all numbers on one slide.</p>
   </div>
 </div>
 
 <div class="keys">
   <div><code>→ ← Space</code> next / previous</div>
   <div><code>L</code> German / English</div>
-  <div><code>N</code> presenter notes (don’t use when mirrored)</div>
-  <div><code>F</code> fullscreen the live map or tour</div>
+  <div><code>N</code> notes (not when mirrored)</div>
+  <div><code>F</code> fullscreen a live embed</div>
   <div><code>1–4</code> open a card on slide 16</div>
-  <div><code>K</code> appendix · <code>Home</code> slide 1 · <code>End</code> slide 18</div>
+  <div><code>K</code> appendix · <code>Home</code> / <code>End</code></div>
 </div>
-
-<p class="foot">If the room’s wifi fails, every live slide falls back to a still image after six seconds; the talk works without the demos. Print this page: browser → Print → A4, two pages.</p>
 
 </div>
 </body>

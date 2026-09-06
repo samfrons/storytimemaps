@@ -1,4 +1,10 @@
-import { extractSiteToday, streetViewEmbedUrl, streetViewLink, todayStatus } from '../today'
+import {
+  extractSiteToday,
+  initialTodayMode,
+  streetViewEmbedUrl,
+  streetViewLink,
+  todayStatus,
+} from '../today'
 
 describe('todayStatus', () => {
   it('reports a surviving footprint as standing', () => {
@@ -75,5 +81,30 @@ describe('streetViewEmbedUrl', () => {
     expect(parsed.searchParams.get('heading')).toBe('45')
     expect(parsed.searchParams.get('pitch')).toBe('0')
     expect(parsed.searchParams.get('fov')).toBe('90')
+  })
+})
+
+describe('initialTodayMode', () => {
+  it('opens in "Heute" when the URL asks for it, whatever was stored', () => {
+    expect(initialTodayMode('?view=heute', null)).toBe(true)
+    expect(initialTodayMode('?view=heute', '0')).toBe(true)
+    expect(initialTodayMode('?lang=de&view=today', '0')).toBe(true)
+    expect(initialTodayMode('?view=HEUTE', null)).toBe(true)
+  })
+
+  it('opens in 1930 when the URL asks for it, even with a stored "Heute"', () => {
+    expect(initialTodayMode('?view=1930', '1')).toBe(false)
+  })
+
+  it('falls back to the stored session preference without a view param', () => {
+    expect(initialTodayMode('', '1')).toBe(true)
+    expect(initialTodayMode('?lang=de', '1')).toBe(true)
+    expect(initialTodayMode('', '0')).toBe(false)
+    expect(initialTodayMode('', null)).toBe(false)
+  })
+
+  it('ignores an unknown view value', () => {
+    expect(initialTodayMode('?view=sepia', '1')).toBe(true)
+    expect(initialTodayMode('?view=sepia', null)).toBe(false)
   })
 })

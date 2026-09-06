@@ -115,6 +115,13 @@ Estimate: ~4 h of build, plus ~30 min of Sam's review for copy in German.
   fallback timer starts when a slide is actually shown, not when it is preloaded.
 - PDF: `node ~/.claude/skills/deck-to-pdf/generate.mjs public/presentation/committee-2026/index.html`
   (system-Chrome fallback; Playwright is not a dependency of this repo).
+- Tour slide, "what stands here today": pressing "Heute" in the tour swaps each stop
+  card's lead to the present-day block (status + Street View of the address, same
+  bearing as the tour camera) with the 1930 photograph beneath, so the Street View is
+  visible without scrolling the card. The tour also accepts `?view=heute` (or `today`)
+  and `?view=1930` to choose its opening state; the deck's embed keeps the 1930 relief
+  as the opener per the script, change the iframe's `data-src` to
+  `/history-tour?lang=de&view=heute` to open on today's view instead.
 
 ## Revision 2026-09-05 (after board-prior grilling)
 

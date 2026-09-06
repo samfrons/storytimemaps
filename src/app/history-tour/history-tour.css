@@ -624,6 +624,21 @@
   padding: 5px 8px;
   border-top: 1px solid var(--ht-hairline);
 }
+/* In "Heute" the archival photograph moves down the card (the present-day
+   block takes its slot, see .ht-card-today.is-lead) and gets a "1930" label
+   so the pair reads as then / now. */
+.ht-card-figure.is-then {
+  margin-bottom: 1.1rem;
+}
+.ht-card-figure-label {
+  font-family: var(--ht-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--ht-hairline);
+}
 .ht-card-building {
   border-left: 2px solid var(--ht-accent);
   padding: 0.15rem 0 0.15rem 0.9rem;
@@ -650,6 +665,28 @@
   border-left: 2px solid var(--ht-ink-soft);
   padding: 0.15rem 0 0.15rem 0.9rem;
   margin-bottom: 1.1rem;
+}
+/* "Heute" mode: the present-day block leads the card in the figure slot,
+   so the Street View of what stands at the address now is the first thing
+   on the card (and visible without scrolling the card, e.g. in the
+   committee deck's embed). Loses the side rule and takes the figure's
+   framing. */
+.ht-card-today.is-lead {
+  border-left: 0;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.ht-card-today.is-lead h3 {
+  margin-bottom: 0.3rem;
+}
+.ht-card-today.is-lead .ht-today-status {
+  margin-bottom: 0.45rem;
+}
+.ht-card-today.is-lead .ht-today-streetview {
+  margin-bottom: 0.6rem;
+}
+.ht-card-today.is-lead .ht-today-text {
+  margin-bottom: 0;
 }
 .ht-card-today h3 {
   font-family: var(--ht-font-mono);
@@ -933,6 +970,21 @@
   .ht-card.is-expanded .ht-card-building,
   .ht-card.is-expanded .ht-card-today,
   .ht-card.is-expanded .ht-card-fate {
+    display: block;
+  }
+  /* "Heute" on a phone: the lead present-day block is the card's picture
+     band; the archival photograph waits behind "Read the full account". */
+  .ht-card-today.is-lead {
+    display: block;
+    margin: 0.6rem 0;
+  }
+  .ht-card:not(.is-expanded) .ht-card-figure.is-then {
+    display: none;
+  }
+  .ht-card-today.is-lead .ht-today-text {
+    display: none;
+  }
+  .ht-card.is-expanded .ht-card-today.is-lead .ht-today-text {
     display: block;
   }
   /* Expanded, the card does become a reading surface — give it its own

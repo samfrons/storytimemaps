@@ -504,6 +504,34 @@ interface TimelineFile {
 }
 
 const siteTodayCache = new Map<string, string | null>()
+
+/**
+ * Warm the per-stop assets as soon as the page mounts, in parallel, so they are
+ * in the browser cache before the map has finished loading tiles. The card
+ * photos use next/image's optimizer, so we request the same URL it will ask
+ * for (largest configured width for the card's sizes attribute).
+ */
+function warmTourAssets(): void {
+  if (typeof window === 'undefined') return
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+  if (conn?.saveData) return
+  // Same width ladder next/image builds from next.config deviceSizes for the
+  // card's sizes attribute; the browser picks one entry, so this warms exactly
+  // the variant the card will render and nothing else.
+  const widths = [640, 750, 828, 1080, 1200, 1920]
+  for (const stop of TOUR_STOPS) {
+    const src = stop.images[0]
+    if (src) {
+      const enc = encodeURIComponent(src)
+      const img = new window.Image()
+      img.decoding = 'async'
+      img.sizes = '(max-width: 768px) 92vw, 430px'
+      img.srcset = widths.map((w) => `/_next/image?url=${enc}&w=${w}&q=75 ${w}w`).join(', ')
+      img.src = `/_next/image?url=${enc}&w=828&q=75`
+    }
+    void loadSiteToday(stop.id)
+  }
+}
 const siteTodayRequests = new Map<string, Promise<string | null>>()
 
 function loadSiteToday(id: string): Promise<string | null> {
@@ -533,12 +561,14 @@ function loadSiteToday(id: string): Promise<string | null> {
 }
 
 interface StopCardProps {
+  /** Street View iframes mount only once the map has settled. */
+  embedsAllowed: boolean
   stop: TourStop
   index: number
   total: number
 }
 
-const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total }) => {
+const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total, embedsAllowed }) => {
   const [expanded, setExpanded] = useState(false)
   const [siteToday, setSiteToday] = useState<string | null>(null)
   const articleRef = useRef<HTMLElement | null>(null)
@@ -620,6 +650,11 @@ const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total }) => {
             height={560}
             sizes="(max-width: 768px) 92vw, 430px"
             style={{ width: '100%', height: 'auto' }}
+            // Eager on purpose: next/image defaults to lazy, which meant each
+            // photo only started downloading when its card scrolled into view,
+            // right when the map is busiest. All fifteen are ~100 KB WebPs.
+            loading="eager"
+            priority={index === 0}
           />
           <figcaption>{stop.imageCredit}</figcaption>
         </figure>
@@ -683,7 +718,7 @@ const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total }) => {
           <span>{STATUS_LABEL[todayStatusValue].en}</span>
         </div>
         {siteToday && <p className="ht-today-text">{siteToday}</p>}
-        {streetViewEmbed ? (
+        {streetViewEmbed && embedsAllowed ? (
           <div className="ht-today-streetview">
             <iframe
               src={streetViewEmbed}
@@ -746,6 +781,19 @@ const HistoryTour: React.FC = () => {
   const [mapFailed, setMapFailed] = useState(false)
   const [activeIdx, setActiveIdx] = useState(-1)
   const [todayMode, setTodayMode] = useState(false)
+  // Street View iframes are heavy (each loads Google's full viewer); hold them
+  // until the map has rendered so they don't compete for bandwidth with tiles.
+  const [embedsAllowed, setEmbedsAllowed] = useState(false)
+
+  useEffect(() => {
+    warmTourAssets()
+  }, [])
+
+  useEffect(() => {
+    if (!mapReady && !mapFailed) return
+    const t = window.setTimeout(() => setEmbedsAllowed(true), 1500)
+    return () => window.clearTimeout(t)
+  }, [mapReady, mapFailed])
 
   const stopYears = useMemo(() => TOUR_STOPS.map((s) => toDecimalYear(s.turningDate)), [])
 
@@ -1439,7 +1487,12 @@ const HistoryTour: React.FC = () => {
               id={`tour-stop-${stop.id}`}
             >
               <div className="ht-card-holder">
-                <StopCard stop={stop} index={i} total={TOUR_STOPS.length} />
+                <StopCard
+                  stop={stop}
+                  index={i}
+                  total={TOUR_STOPS.length}
+                  embedsAllowed={embedsAllowed}
+                />
               </div>
             </section>
           ))}
@@ -1499,7 +1552,13 @@ const HistoryTour: React.FC = () => {
             are listed below.
           </p>
           {TOUR_STOPS.map((stop, i) => (
-            <StopCard key={stop.id} stop={stop} index={i} total={TOUR_STOPS.length} />
+            <StopCard
+              key={stop.id}
+              stop={stop}
+              index={i}
+              total={TOUR_STOPS.length}
+              embedsAllowed={embedsAllowed}
+            />
           ))}
         </div>
       )}

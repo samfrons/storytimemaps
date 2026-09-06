@@ -18,6 +18,22 @@ import {
 } from '../../utils/mapStyles'
 import { getMaxLabelsForZoom } from '../../config/performance'
 import { spatialSample, type ClusterFeature } from '../../utils/mapHelpers'
+import { TOUR_STOPS } from '../history-tour/tourData'
+
+/**
+ * Researched detail for the fifteen curated stories, keyed by record id.
+ *
+ * The popup already carries the catalogue description; what it never showed is
+ * the two facts a reader actually wants standing at the address — how the
+ * business was taken, and what occupies the site now. Both are transcribed
+ * verbatim in tourData.ts (see its header) and were until now only reachable by
+ * scrolling the whole history tour.
+ */
+// A plain record, not a Map: `Map` in this module is the react-map-gl
+// component imported at the top, which shadows the global constructor.
+const TOUR_BY_ID: Record<string, (typeof TOUR_STOPS)[number]> = Object.fromEntries(
+  TOUR_STOPS.map((stop) => [stop.id, stop])
+)
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
@@ -1181,7 +1197,8 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         }
       case 'brutal-pop':
         return {
-          backgroundColor: '#ecc368',
+          // Kiosk teal, matching getThemeMarkerColors('brutal-pop').active
+          backgroundColor: '#00D9D9',
           border: '3px solid #131318',
           color: '#131318',
         }
@@ -1874,6 +1891,35 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
                         {description}
                       </p>
                     ) : null
+                  })()}
+                  {/* Researched fate and present-day building, for the curated
+                      stories. Rendered under a hairline rule so it reads as a
+                      second register rather than more description. */}
+                  {(() => {
+                    const stop = TOUR_BY_ID[String(popupInfo.properties.id)]
+                    if (!stop) return null
+                    return (
+                      <div
+                        className="mt-3 pt-2 text-xs"
+                        style={{
+                          borderTop: '1px solid rgba(255, 255, 255, 0.25)',
+                          color: 'inherit',
+                        }}
+                      >
+                        <div className="mb-1">
+                          <span className="uppercase tracking-wide" style={{ opacity: 0.7 }}>
+                            {t('mainPage.popup.fate', { defaultValue: 'What happened' })}:
+                          </span>{' '}
+                          <span style={{ opacity: 0.95 }}>{stop.fate}</span>
+                        </div>
+                        <div className="line-clamp-3">
+                          <span className="uppercase tracking-wide" style={{ opacity: 0.7 }}>
+                            {t('mainPage.popup.building', { defaultValue: 'The site today' })}:
+                          </span>{' '}
+                          <span style={{ opacity: 0.95 }}>{stop.building}</span>
+                        </div>
+                      </div>
+                    )
                   })()}
                   {/* Timeline Data Availability Indicator */}
                   {Boolean(popupInfo.properties.hasTimelineData) && (

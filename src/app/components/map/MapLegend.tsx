@@ -127,7 +127,7 @@ const MapLegend: React.FC<MapLegendProps> = ({
         onClick={() => setIsOpen(true)}
         className="p-2.5 border shadow-sm transition-all duration-200 focus:outline-none hover:scale-110"
         style={{
-          backgroundColor: 'rgba(var(--muted-rgb), 0.8)',
+          backgroundColor: 'var(--legend-bg)',
           borderColor: 'var(--border)',
           color: 'var(--foreground)',
           cursor: 'pointer',
@@ -150,7 +150,7 @@ const MapLegend: React.FC<MapLegendProps> = ({
     <div
       className="border shadow-sm backdrop-blur-sm w-56 max-h-[60vh] overflow-y-auto"
       style={{
-        backgroundColor: 'rgba(var(--muted-rgb), 0.9)',
+        backgroundColor: 'var(--legend-bg)',
         borderColor: 'var(--border)',
         color: 'var(--foreground)',
       }}

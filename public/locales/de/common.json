@@ -345,13 +345,18 @@
     "nav": {
       "map": "Karte",
       "plaques": "Gedenktafeln",
+      "historyTour": "Zum Rundgang",
       "data": "Daten",
-      "frankfurt": "Frankfurt"
+      "frankfurt": "Frankfurt",
+      "education": "Für Lehrkräfte",
+      "exhibit": "Ausstellung",
+      "collaborate": "Mitmachen",
+      "onboarding": "Erste Schritte"
     },
     "hero": {
       "eyebrow": "Eine lebendige Karte jüdischen Geschäftslebens · Berlin 1900–1945",
-      "titleLine1": "Jeder Punkt ein Geschäft.",
-      "titleLine2": "Jede Farbe ein Schicksal.",
+      "titleLine1": "10.021 jüdische Geschäfte.",
+      "titleLine2": "Kartiert an den Straßen, in denen sie standen.",
       "description": "StoryTimeMaps verzeichnet über zehntausend jüdische Geschäfte an ihren realen Berliner Adressen – und lässt Sie durch die Zeit reisen: Sehen Sie, wie das Wirtschaftsleben einer Gemeinschaft aufblühte, unter Druck geriet und systematisch ausgelöscht wurde.",
       "ctaMap": "Karte erkunden",
       "ctaHow": "So funktioniert es",
@@ -445,6 +450,8 @@
       "phaseMapText": "Das interaktive Denkmal, das Sie gerade betrachten: jedes dokumentierte Geschäft, durchsuchbar und erkundbar in drei Sprachen.",
       "phasePlaquesTitle": "Gedenktafeln",
       "phasePlaquesText": "Fünfzehn Tafeln sind vollständig gestaltet – jede mit einem QR-Code, der die Straße mit der Geschichte des Geschäfts verbindet. Die Ansprache der Hauseigentümer läuft.",
+      "phaseTourTitle": "Historischer virtueller Rundgang",
+      "phaseTourText": "Fünfzehn Adressen in einem modellierten Berlin der 1930er Jahre. Beim Scrollen fliegt die Kamera von einem Ladengeschäft zum nächsten, während die Jahre von 1925 bis 1945 voranschreiten.",
       "phaseExhibitTitle": "Museumsausstellung",
       "phaseExhibitText": "Eine Touchscreen-Version der Karte ist gebaut und läuft, konzipiert für Kiosk-Displays. Wir suchen Museums- und Kulturpartner als Gastgeber.",
       "exhibitLink": "Ausstellungsvision",

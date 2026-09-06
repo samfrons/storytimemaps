@@ -765,18 +765,21 @@ export function getThemeMarkerColors(theme: string | undefined): ThemeMarkerColo
         standing: '#2f4858', // Deep slate
       }
     case 'brutal-pop':
-      // The basemap is charcoal with a four-weight GOLD road hierarchy (#ecc368 -> #7a6230),
-      // so 'declining' must not be gold or thousands of pins would vanish into the streets.
-      // These are pushed to high chroma deliberately: on this theme the basemap is silent and
-      // the pins are the only saturated thing on screen, so the mint -> orange -> red shift
-      // across the 1930s reads as a mass even at low zoom. 'future' is muted on purpose - it
-      // recedes into the charcoal so the eye tracks businesses that are alive or dying.
+      // These are the /museum-exhibit accents verbatim (see getMarkerColor in
+      // museum-exhibit/components/TouchMapSimple.tsx) so the theme and the kiosk read as one
+      // design. The kiosk's four-step legend is ACTIVE -> PRESSURE -> TAKEN -> CLOSED; the
+      // theme system only carries three business states, so PRESSURE/TAKEN collapse onto
+      // declining/closed and the kiosk's purple is reused for 'standing'.
+      // Caveat kept from the previous palette: the basemap is charcoal with a four-weight GOLD
+      // road hierarchy (#ecc368 -> #7a6230) and 'declining' is now kiosk yellow, which sits
+      // close to that gold. It survives because the pins are filled squares with a dark stroke
+      // while roads are thin gold lines - if that stroke is ever dropped, revisit this.
       return {
-        active: '#00e5c0', // Electric mint
-        declining: '#ff7a1a', // Hot orange - deliberately not gold
-        closed: '#ff2d55', // Hot red
+        active: '#00D9D9', // Kiosk teal
+        declining: '#FFD93D', // Kiosk yellow (PRESSURE)
+        closed: '#FF6B35', // Kiosk orange (TAKEN)
         future: '#6b6b7d', // Muted violet-grey, recedes
-        standing: '#ffffff', // Plain white - the only unsaturated pin, reads as "now"
+        standing: '#C589E8', // Kiosk purple - the post-1945 pin
       }
     case 'moody':
       return {

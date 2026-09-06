@@ -10,7 +10,29 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  
+
+  // The onboarding and teaching pages render Markdown read from the repo at
+  // request time. readRepoDoc / readEducationDoc build the path at runtime, so
+  // Next's file tracer cannot see which files they need and leaves every .md
+  // out of the server bundle — the traces list zero docs/ entries. It happens
+  // to work on the current deploy, but nothing declares that it should, and a
+  // packaging change would silently turn these pages into their "currently
+  // unavailable" fallback. Declaring the inputs makes it hold on purpose.
+  outputFileTracingIncludes: {
+    '/onboarding': ['./docs/ONBOARDING.md'],
+    '/onboarding/[slug]': [
+      './docs/THEMING_GUIDE.md',
+      './docs/OUTREACH_TRACKING.md',
+      './docs/TASK_TRACKING.md',
+      './STYLE.md',
+      './PERFORMANCE_RULES.md',
+    ],
+    '/education': ['./docs/education/*.md'],
+    '/education/workbook': ['./docs/education/*.md'],
+    '/education/activities': ['./docs/education/*.md'],
+  },
+
+
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

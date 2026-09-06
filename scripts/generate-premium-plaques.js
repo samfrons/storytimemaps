@@ -2,8 +2,13 @@
 /**
  * Premium memorial plaque generator — "Gedenktafel" series
  *
- * Three tiers (simple / medium / detailed) × two type themes for
- * E. Braun & Co. (story id=1).
+ * Three tiers (simple / medium / detailed) × two type themes.
+ *
+ * The `simple` tier is pure typography and is generated for EVERY featured
+ * story that carries the four facts a plaque must state. `medium` and
+ * `detailed` embed a hand-traced line engraving of the storefront, so they are
+ * only produced for businesses that have one (see ENGRAVINGS below) — an
+ * engraving cannot be derived from data, it has to be drawn from the photo.
  *
  * Design language: deep navy enamel field + gold engraving (old Jewish
  * shop-sign palette), storefront line-engraving based on the historical photo
@@ -17,12 +22,14 @@
  * Fonts are embedded as base64 woff2 so the SVGs render identically everywhere.
  *
  * Usage: node scripts/generate-premium-plaques.js
- * Output: public/plaques/premium/e-braun-{tier}[-cinzel].svg
+ * Output: public/plaques/premium/{slug}-{tier}[-cinzel].svg
+ *         public/plaques/premium/index.json  (manifest for the /plaques page)
  */
 
 const fs = require('fs')
 const path = require('path')
 const QRCode = require('qrcode')
+const { ENGRAVINGS } = require('./engravings.js')
 
 const FONT_DIR = process.env.FONT_DIR || path.join(__dirname, 'fonts')
 const OUT_DIR = path.join(__dirname, '../public/plaques/premium')
@@ -39,7 +46,16 @@ const C = {
   creamDim: '#cfc0a0',
 }
 
-const QR_URL = 'https://b3rlin.storytimemaps.com/?id=1'
+const SITE = 'https://b3rlin.storytimemaps.com'
+
+/**
+ * Context line for businesses that have no researched fate sentence of their
+ * own. Kept identical to CONTEXT_DE in generate-lightburn-plaque.js — the
+ * wording is deliberate ("enteignet und liquidiert" is what the records
+ * document) and the two generators must not drift apart. See CLAUDE.md.
+ */
+const CONTEXT_DE =
+  'Jüdisches Unternehmen, unter nationalsozialistischer Herrschaft enteignet und liquidiert.'
 
 // ---------------------------------------------------------------- type themes
 // bScale compensates for x-height differences so body copy reads the same size.
@@ -64,10 +80,60 @@ const THEMES = [
     dispMed: 400,
     medSub: 12.5,
   },
+  {
+    suffix: '-sans',
+    display: 'Inter',
+    body: 'Inter',
+    files: { Inter: 'Inter-latin.woff2' },
+    bScale: 1,
+    bodyBold: 700,
+    dispMed: 500,
+    medSub: 15,
+  },
 ]
 
 let T = THEMES[0] // active theme (set in main loop)
 const bs = (px) => Math.round(px * T.bScale * 10) / 10 // body size helper
+
+/**
+ * Trade line. `cities` is only set for a firm that genuinely traded in more
+ * than one city; without this guard a single-city business gets a dangling
+ * "TRADE · " on the plaque.
+ */
+const tradeLine = (d) => (d.cities ? `${esc(d.type)} · ${esc(d.cities)}` : esc(d.type))
+
+/**
+ * Display size for the business name, shrunk to fit the plate.
+ *
+ * The name is set in caps at a fixed optical size, and the archive is full of
+ * long firm names ("A. B. C. Apotheken-Bedarfs-Contor"). Without this they ran
+ * straight off both edges of the plate. Caps in the display faces average
+ * ~0.62em wide, so the widest name that still fits `maxWidth` sets the size,
+ * clamped so a short name never balloons past the design size.
+ */
+function fitDisplay(text, maxWidth, designSize, minSize) {
+  const est = text.length * designSize * 0.62
+  if (est <= maxWidth) return designSize
+  return Math.max(minSize, Math.floor((maxWidth / (text.length * 0.62)) * 10) / 10)
+}
+
+/**
+ * Split a name that cannot be set on one line without dropping below the
+ * legible floor. Shrinking indefinitely is not an option on a memorial — the
+ * longest firm names in the archive run to 80+ characters and would end up
+ * under 12px — and clipping a name is worse than either. Break on the last
+ * comma or space in the first half so the split falls at a real boundary.
+ */
+function fitDisplayLines(text, maxWidth, designSize, minSize) {
+  const chars = Math.floor(maxWidth / (minSize * 0.62))
+  if (text.length <= chars) return [text]
+  const cut = Math.max(
+    text.lastIndexOf(',', Math.ceil(text.length / 2)),
+    text.lastIndexOf(' ', Math.ceil(text.length / 2))
+  )
+  if (cut <= 0) return [text]
+  return [text.slice(0, cut).replace(/,$/, ''), text.slice(cut + 1).trim()]
+}
 
 // ---------------------------------------------------------------- helpers
 function esc(s) {
@@ -112,8 +178,8 @@ function fontFaceCSS() {
 }
 
 // ---------------------------------------------------------------- QR — gold modules straight on the navy field
-async function qrGroup(size) {
-  const qr = QRCode.create(QR_URL, { errorCorrectionLevel: 'M' })
+async function qrGroup(size, url) {
+  const qr = QRCode.create(url, { errorCorrectionLevel: 'M' })
   const n = qr.modules.size
   const data = qr.modules.data
   const m = size / n
@@ -217,7 +283,7 @@ function attribution(x, y, size, anchor) {
 // ---------------------------------------------------------------- storefront engraving
 // Line-engraving of Unter den Linden 2 based on the historical photograph.
 // Natural size 420 × 244, stroke in gold on navy.
-function storefrontEngraving() {
+function storefrontEngraving(sign = EBRAUN.sign) {
   const g = C.gold
   let s = `<g fill="none" stroke="${g}" stroke-width="1.2" stroke-linecap="square">`
 
@@ -246,11 +312,11 @@ function storefrontEngraving() {
   s += `<line x1="128" y1="36" x2="128" y2="72" stroke-width="0.8"/>`
   s += `<line x1="292" y1="36" x2="292" y2="72" stroke-width="0.8"/>`
   s += `<text x="70" y="58.5" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="11"
-        letter-spacing="1.5" fill="${g}" stroke="none">WÄSCHEHAUS</text>`
+        letter-spacing="1.5" fill="${g}" stroke="none">${esc(sign.left)}</text>`
   s += `<text x="210" y="60" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="15"
-        letter-spacing="1.2" fill="${g}" stroke="none">E. BRAUN &amp; Cº</text>`
+        letter-spacing="1.2" fill="${g}" stroke="none">${esc(sign.centre)}</text>`
   s += `<text x="350" y="58.5" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="9.5"
-        letter-spacing="1" fill="${g}" stroke="none">WIEN · BERLIN · PARIS</text>`
+        letter-spacing="1" fill="${g}" stroke="none">${esc(sign.right)}</text>`
 
   // pilasters
   for (const px of [12, 400]) {
@@ -309,12 +375,25 @@ function storefrontEngraving() {
   return s
 }
 
+/**
+ * The artwork for a business: E. Braun keeps its in-file facade (selected by
+ * `sign`), everyone else resolves through the ENGRAVINGS registry by slug.
+ * Resolved at render time because the sign-band lettering inside a drawing
+ * reads the active theme's display face.
+ */
+function artFor(d) {
+  if (d.sign) return storefrontEngraving(d.sign)
+  const e = ENGRAVINGS[d.slug]
+  if (!e) throw new Error(`no engraving for slug "${d.slug}"`)
+  return e.draw({ gold: C.gold, navyDeep: C.navyDeep, display: T.display })
+}
+
 /** engraving scaled to a target width, with optional caption */
-function engravingPanel(x, y, w, caption) {
+function engravingPanel(x, y, w, caption, d) {
   const scale = w / 420
   const h = 244 * scale
   let s = `<g transform="translate(${x},${y})">`
-  s += `<g transform="scale(${scale})">${storefrontEngraving()}</g>`
+  s += `<g transform="scale(${scale})">${artFor(d)}</g>`
   if (caption) {
     s += `<text x="${w / 2}" y="${h + 18}" text-anchor="middle" font-family="${T.body}" font-weight="400"
       font-size="${bs(10.5)}" letter-spacing="1.2" fill="${C.creamDim}">${esc(caption)}</text>`
@@ -331,8 +410,18 @@ function qrBlock(qr, x, y, size, label) {
   </g>`
 }
 
-// ---------------------------------------------------------------- data (real, from data/storymaps.json id=1)
-const D = {
+// ---------------------------------------------------------------- data
+/**
+ * E. Braun & Co. (story id=1) — the fully researched record. It is the only
+ * business with a traced storefront engraving and its own narrative copy, so
+ * it is the only one that can carry the medium and detailed tiers.
+ *
+ * Still exported as `D` at the bottom of this file because
+ * generate-lightburn-plaque.js builds its 300 × 200 format from it.
+ */
+const EBRAUN = {
+  id: '1',
+  slug: 'e-braun',
   name: 'E. BRAUN & CO.',
   type: 'Wäsche- und Modewarenhaus',
   cities: 'Wien · Berlin · Paris',
@@ -345,32 +434,45 @@ const D = {
   p2: 'Im Mai 1938, nach dem „Anschluss“ Österreichs, wurde Mitinhaber Siegfried Franz Oser-Braun von der Gestapo verhaftet und in der Haft gezwungen, das Unternehmen weit unter Wert zu verkaufen. 1943 wurde die Firma liquidiert. Diese Tafel erinnert an die Menschen, die dieses Haus aufgebaut haben.',
   facts: ['GEGRÜNDET 1914', 'UMBAU 1926–28', 'ZWANGSVERKAUF 1938', 'LIQUIDATION 1943'],
   caption: 'Unter den Linden 2 · Aufnahme um 1930',
+  sign: { left: 'WÄSCHEHAUS', centre: 'E. BRAUN & Cº', right: 'WIEN · BERLIN · PARIS' },
 }
 
 // ---------------------------------------------------------------- tier 1: SIMPLE (800×450)
-async function simple() {
+async function simple(d) {
   const W = 800,
     H = 450,
     cx = W / 2
   const qrSize = 56
-  const qr = await qrGroup(qrSize)
+  const qr = await qrGroup(qrSize, d.url)
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${defs()}
   ${chrome(W, H)}
   ${gedenktafelTab(cx, 74, 250)}
   <text x="${cx}" y="122" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(15)}"
         letter-spacing="7" fill="${C.cream}">HIER STAND</text>
-  <text x="${cx}" y="185" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="50"
-        letter-spacing="2" fill="${C.goldBright}">${esc(D.name)}</text>
+  ${(() => {
+    const lines = fitDisplayLines(d.name, 640, 50, 21)
+    const size = Math.min(...lines.map((l) => fitDisplay(l, 640, 50, 21)))
+    // Two lines have to grow upward from the same baseline so the divider,
+    // address and years below them do not move.
+    const y0 = lines.length > 1 ? 185 - (size + 4) : 185
+    return lines
+      .map(
+        (l, i) =>
+          `<text x="${cx}" y="${y0 + i * (size + 4)}" text-anchor="middle" font-family="${T.display}"
+        font-weight="700" font-size="${size}" letter-spacing="2" fill="${C.goldBright}">${esc(l)}</text>`
+      )
+      .join('\n  ')
+  })()}
   <text x="${cx}" y="218" text-anchor="middle" font-family="${T.display}" font-weight="${T.dispMed}" font-size="19"
-        letter-spacing="1" fill="${C.cream}">${esc(D.type)} · ${esc(D.cities)}</text>
+        letter-spacing="1" fill="${C.cream}">${tradeLine(d)}</text>
   ${divider(cx, 248, 180)}
   <text x="${cx}" y="284" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(15)}"
-        letter-spacing="2.5" fill="${C.cream}">${esc(D.address)}</text>
+        letter-spacing="2.5" fill="${C.cream}">${esc(d.address)}</text>
   <text x="${cx}" y="325" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="30"
-        letter-spacing="3" fill="${C.gold}">${esc(D.years)}</text>
+        letter-spacing="3" fill="${C.gold}">${esc(d.years)}</text>
   <text x="${cx}" y="356" text-anchor="middle" font-family="${T.body}" font-weight="400" font-size="${bs(13)}"
-        fill="${C.creamDim}">${esc(D.fate)}</text>
+        fill="${C.creamDim}">${esc(d.fate)}</text>
   ${attribution(118, 398, 13, 'start')}
   <text x="${cx}" y="398" text-anchor="middle" font-family="${T.body}" font-weight="400" font-size="${bs(10.5)}"
         letter-spacing="1.5" fill="${C.creamDim}" opacity="0.8">b3rlin.storytimemaps.com</text>
@@ -379,14 +481,14 @@ async function simple() {
 }
 
 // ---------------------------------------------------------------- tier 2: MEDIUM (800×450, two-column w/ engraving)
-async function medium() {
+async function medium(d) {
   const W = 800,
     H = 450
   const qrSize = 52
-  const qr = await qrGroup(qrSize)
+  const qr = await qrGroup(qrSize, d.url)
   const lx = 62
-  const shortLines = wrap(D.short, 52)
-  const eng = engravingPanel(452, 108, 288, D.caption)
+  const shortLines = wrap(d.short, 52)
+  const eng = engravingPanel(452, 108, 288, d.caption, d)
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${defs()}
   ${chrome(W, H)}
@@ -396,14 +498,15 @@ async function medium() {
     <line x1="${lx + 130}" y1="76.5" x2="392" y2="76.5" stroke="${C.gold}" stroke-width="1"/>
     <text x="${lx}" y="110" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(13)}" letter-spacing="6"
           fill="${C.cream}">HIER STAND</text>
-    <text x="${lx}" y="152" font-family="${T.display}" font-weight="700" font-size="35" letter-spacing="1"
-          fill="${C.goldBright}">${esc(D.name)}</text>
+    <text x="${lx}" y="152" font-family="${T.display}" font-weight="700"
+          font-size="${fitDisplay(d.name, 330, 35, 20)}" letter-spacing="1"
+          fill="${C.goldBright}">${esc(d.name)}</text>
     <text x="${lx}" y="178" font-family="${T.display}" font-weight="${T.dispMed}" font-size="${T.medSub}"
-          fill="${C.cream}">${esc(D.type)} · ${esc(D.cities)}</text>
-    <text x="${lx}" y="206" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(12.5)}" letter-spacing="1.8"
-          fill="${C.cream}">${esc(D.address)}</text>
+          fill="${C.cream}">${tradeLine(d)}</text>
+    <text x="${lx}" y="206" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(d.address.length > 38 ? 10.5 : 12.5)}" letter-spacing="1.8"
+          fill="${C.cream}">${esc(d.address)}</text>
     <text x="${lx}" y="240" font-family="${T.display}" font-weight="700" font-size="24" letter-spacing="2"
-          fill="${C.gold}">${esc(D.years)}</text>
+          fill="${C.gold}">${esc(d.years)}</text>
     <line x1="${lx}" y1="258" x2="392" y2="258" stroke="${C.gold}" stroke-width="0.8" opacity="0.7"/>
     ${textBlock(shortLines, lx, 282, 18, `font-family="${T.body}" font-weight="400" font-size="${bs(12.5)}" fill="${C.cream}"`)}
   </g>
@@ -414,48 +517,57 @@ async function medium() {
 }
 
 // ---------------------------------------------------------------- tier 3: DETAILED (800×680)
-async function detailed() {
+async function detailed(d) {
   const W = 800,
     H = 680,
     cx = W / 2
   const qrSize = 52
-  const qr = await qrGroup(qrSize)
-  const col1 = wrap(D.p1, 60)
-  const col2 = wrap(D.p2, 60)
+  const qr = await qrGroup(qrSize, d.url)
+  const col1 = wrap(d.p1, 60)
+  const col2 = wrap(d.p2, 60)
   const engW = 340
-  const eng = engravingPanel((W - engW) / 2, 172, engW, null)
+  const eng = engravingPanel((W - engW) / 2, 172, engW, null, d)
   const engBottom = 172 + eng.h
   const colsY = engBottom + 92
   const factsY = H - 86
-  const factX = [124, 258, 420, 578]
-  const diamondX = [193, 323, 507]
-  const factCells =
-    D.facts
-      .map(
-        (f, i) =>
-          `<text x="${factX[i]}" y="0" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}"
-      font-size="${bs(9.5)}" letter-spacing="1" fill="${C.gold}">${esc(f)}</text>`
-      )
-      .join('') +
-    diamondX
-      .map(
-        (dx) =>
-          `<rect x="${dx - 2.5}" y="-6" width="5" height="5" transform="rotate(45 ${dx} ${-3.5})" fill="${C.gold}"/>`
-      )
-      .join('')
+  // Facts row laid out left-to-right from measured label widths — fixed
+  // positions collide as soon as a business has longer facts than E. Braun's.
+  const factCells = (() => {
+    const gap = 34
+    const width = (t) => t.length * bs(9.5) * 0.66 + 8
+    let x = 74
+    let out = ''
+    d.facts.forEach((f, i) => {
+      const w = width(f)
+      out += `<text x="${x + w / 2}" y="0" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}"
+        font-size="${bs(9.5)}" letter-spacing="1" fill="${C.gold}">${esc(f)}</text>`
+      x += w
+      if (i < d.facts.length - 1) {
+        const dx = x + gap / 2
+        out += `<rect x="${dx - 2.5}" y="-6" width="5" height="5" transform="rotate(45 ${dx} ${-3.5})" fill="${C.gold}"/>`
+        x += gap
+      }
+    })
+    return out
+  })()
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${defs()}
   ${chrome(W, H)}
   ${gedenktafelTab(cx, 66, 240)}
   <text x="${cx}" y="102" text-anchor="middle" font-family="${T.body}" font-weight="${T.bodyBold}" font-size="${bs(13)}"
         letter-spacing="6" fill="${C.cream}">HIER STAND</text>
-  <text x="${cx}" y="150" text-anchor="middle" font-family="${T.display}" font-weight="700" font-size="40"
-        letter-spacing="1.5" fill="${C.goldBright}">${esc(D.name)}</text>
+  <text x="${cx}" y="150" text-anchor="middle" font-family="${T.display}" font-weight="700"
+        font-size="${fitDisplay(d.name, 660, 40, 24)}"
+        letter-spacing="1.5" fill="${C.goldBright}">${esc(d.name)}</text>
   ${eng.svg}
   <text x="${cx}" y="${engBottom + 20}" text-anchor="middle" font-family="${T.body}" font-weight="400"
-        font-size="${bs(10.5)}" letter-spacing="1.2" fill="${C.creamDim}">${esc(D.caption)}</text>
-  <text x="${cx}" y="${engBottom + 48}" text-anchor="middle" font-family="${T.display}" font-weight="${T.dispMed}" font-size="16"
-        fill="${C.cream}">${esc(D.type)} · ${esc(D.address.replace(' · ', ', '))} · ${esc(D.years)}</text>
+        font-size="${bs(10.5)}" letter-spacing="1.2" fill="${C.creamDim}">${esc(d.caption)}</text>
+  ${(() => {
+    const meta = `${d.type} · ${(d.shortAddress || d.address).replace(' · ', ', ')} · ${d.years}`
+    return `<text x="${cx}" y="${engBottom + 48}" text-anchor="middle" font-family="${T.display}"
+      font-weight="${T.dispMed}" font-size="${meta.length > 72 ? 13.5 : 16}"
+      fill="${C.cream}">${esc(meta)}</text>`
+  })()}
   <line x1="62" y1="${engBottom + 66}" x2="${W - 62}" y2="${engBottom + 66}" stroke="${C.gold}" stroke-width="0.8" opacity="0.7"/>
   <g transform="translate(0,${colsY})">
     ${textBlock(col1, 62, 0, 16, `font-family="${T.body}" font-weight="400" font-size="${bs(11)}" fill="${C.cream}"`)}
@@ -466,8 +578,6 @@ async function detailed() {
   <text x="${cx - 40}" y="${H - 46}" text-anchor="middle" font-family="${T.body}" font-weight="400" font-size="${bs(10.5)}"
         letter-spacing="1.5" fill="${C.creamDim}" opacity="0.8">b3rlin.storytimemaps.com</text>
   <g transform="translate(${W - 78 - qrSize},${H - 78 - qrSize})">${qr}</g>
-  <text x="${W - 78 - qrSize - 16}" y="${H - 78 - qrSize / 2 + 4}" text-anchor="end" font-family="${T.body}"
-        font-weight="${T.bodyBold}" font-size="${bs(9.5)}" letter-spacing="2" fill="${C.gold}">MEHR ERFAHREN</text>
 </svg>`
 }
 
@@ -478,7 +588,7 @@ async function detailed() {
 module.exports = {
   storefrontEngraving,
   qrGroup,
-  D,
+  D: EBRAUN,
   C,
   THEMES,
   esc,
@@ -489,19 +599,311 @@ module.exports = {
   },
 }
 
+// ---------------------------------------------------------------- business set
+const { usable } = require('./lightburn-businesses.js')
+
+/**
+ * Which businesses get a premium plaque.
+ *
+ * NOT the 16 featured stories. Those records carry no `businessType` — see
+ * isComplete() in lightburn-businesses.js — and a plaque must state the type of
+ * business (CLAUDE.md). The trade cannot be recovered from the archive either:
+ * matching the featured titles against the typed records finds exactly one true
+ * hit (E. Braun) and at least one false one, so deriving it would put a wrong
+ * trade on a memorial. They become eligible the day someone adds a sourced
+ * businessType to those records, and this generator will pick them up
+ * automatically.
+ *
+ * So the set is drawn from the 2,464 records that ARE complete, one per trade.
+ * That rule is deterministic (usable() is already sorted), it is honest about
+ * why these and not others, and it puts the full range of Jewish commercial
+ * life on the page rather than fifteen shops of the same kind.
+ *
+ * One per trade also keeps the asset set small: each SVG embeds its fonts as
+ * base64 and weighs ~150 KB, so generating all 2,464 in two type themes would
+ * be about 740 MB of repository.
+ */
+function oneBusinessPerTrade() {
+  const seenTrade = new Set()
+  const seenSlug = new Set()
+  const out = []
+  for (const b of usable()) {
+    if (seenTrade.has(b.trade) || seenSlug.has(b.slug)) continue
+    seenTrade.add(b.trade)
+    seenSlug.add(b.slug)
+    out.push({
+      id: String(b.id),
+      slug: b.slug,
+      name: b.name.toUpperCase(),
+      type: b.trade,
+      cities: '',
+      address: b.address,
+      years: b.years,
+      fate: CONTEXT_DE,
+      url: `${SITE}/?id=${b.id}`,
+    })
+  }
+  return out
+}
+
+/** E. Braun's own record, in the same shape, keeping its researched copy. */
+const EBRAUN_TIERS = { ...EBRAUN, url: `${SITE}/?id=${EBRAUN.id}` }
+
+/**
+ * The featured stories that carry an engraving (scripts/engravings.js) and
+ * therefore the medium and detailed tiers. Copy is condensed from each story's
+ * researched description/longDescription in data/storymaps.json — nothing here
+ * is invented. Slugs must match ENGRAVINGS keys; captions come from there.
+ */
+const FEATURED_ENGRAVED = [
+  {
+    id: '2',
+    slug: 'breslauer',
+    name: 'MARTIN BRESLAUER',
+    type: 'Antiquariat und Sortimentsbuchhandlung',
+    cities: '',
+    address: 'FRANZÖSISCHE STRASSE 46 · BERLIN-MITTE',
+    years: '1898 – 1937',
+    fate: '1936 zur Geschäftsübergabe gezwungen · 1937 Emigration nach London',
+    short:
+      'Martin Breslauers Antiquariat war seit 1898 das Herz des bibliophilen Berlin. 1936 zwang ihn die Reichskulturkammer, das Geschäft „an einen geeigneten Arier“ zu übergeben; Anfang 1937 floh die Familie nach London, wo Breslauer 1940 nach einem deutschen Bombenangriff starb.',
+    p1: '1898 gegründet, wurde die Buchhandlung Martin Breslauers zum Treffpunkt der Berliner Bibliophilen. Breslauer beriet die Preußische Staatsbibliothek, vermittelte fürstliche Bibliotheken und trug mit 21.000 Bänden die größte bibliographische Privatsammlung der Welt zusammen.',
+    p2: '1936 erzwang die Reichskulturkammer die Übergabe des Geschäfts „an einen geeigneten Arier“. Die Steuerbehörden nahmen ihm den Erlös seiner verkauften Sammlung ab; Anfang 1937 floh die Familie nach London. Dort starb Martin Breslauer 1940 in der Nacht eines deutschen Bombenangriffs.',
+    facts: ['GEGRÜNDET 1898', '21.000 BÄNDE', 'SCHLIESSUNG 1937', 'EXIL LONDON 1937'],
+  },
+  {
+    id: '3',
+    slug: 'dtheater',
+    name: 'DEUTSCHES THEATER',
+    type: 'Theater',
+    cities: '',
+    address: 'SCHUMANNSTRASSE 13A · BERLIN-MITTE',
+    years: '1906 – 1934',
+    fate: 'Max Reinhardt ab 1933 planmäßig enteignet · 1934 Übernahme durch die DAF',
+    short:
+      'Unter Max Reinhardt wurde das Deutsche Theater ab 1906 zu einer der berühmtesten Bühnen Europas — 1931 umfasste sein Konzern zwölf Theater. Ab 1933 entzogen die NS-Behörden Reinhardt planmäßig sein Lebenswerk; 1934 fiel das Haus an die Deutsche Arbeitsfront.',
+    p1: '1906 übernahm Max Reinhardt das 1883 gegründete Haus in der Schumannstraße und machte es mit den Kammerspielen zu einer der ersten Bühnen Europas. Bis 1931 wuchs sein Konzern auf zwölf Theater mit über 10.000 Plätzen.',
+    p2: 'Ab 1933 wurde Reinhardt Schritt für Schritt enteignet: Steuerforderungen, erzwungene Rücktritte, entwertete Aktien. Im September 1934 ersteigerte die von der Deutschen Arbeitsfront kontrollierte AG auch das Grundstück. Erst 1995 wurden die Immobilien an Reinhardts Erben zurückgegeben.',
+    facts: ['REINHARDT AB 1906', '12 BÜHNEN 1931', 'ENTZOGEN 1933/34', 'RÜCKGABE ERST 1995'],
+  },
+  {
+    id: '4',
+    slug: 'ebro',
+    name: 'EBRO A.G.',
+    type: 'Rosshaarspinnerei und Polsterwaren',
+    cities: '',
+    address: 'PISTORIUSSTRASSE 66–69 & 95–96 · WEISSENSEE',
+    shortAddress: 'PISTORIUSSTRASSE 66–69, WEISSENSEE',
+    years: '1900 – 1938',
+    fate: '1938 unter Gewaltandrohung zwangsverkauft',
+    short:
+      'Die Erste Berliner Dampf-Rosshaarspinnerei der Brüder Richard und Ernst Friedmann lieferte patentierte Polster an Daimler-Benz, Opel und BMW. 1938 wurde die Familie unter Drohungen zum Verkauf weit unter Wert gezwungen; die Brüder überlebten die Verfolgung nicht.',
+    p1: 'Um 1900 gründete Ingenieur Richard Friedmann die Rosshaarspinnerei Ebro in Weißensee; sein Bruder Ernst wurde Teilhaber. Mit einem patentierten Polsterverfahren wurde Ebro Zulieferer von Auto-Union, Daimler-Benz, Opel und BMW.',
+    p2: 'Ab 1936 erzwang der Berliner Wirtschaftsberater Heinrich Hunke die Übernahme; 1938 mussten die Friedmanns unter Drohungen weit unter Wert verkaufen. Richard Friedmann nahm sich 1942 vor der Deportation das Leben, Ernst Friedmann wurde nach Kulmhof deportiert und ermordet.',
+    facts: ['GEGRÜNDET UM 1900', 'PATENTVERFAHREN', 'ZWANGSVERKAUF 1938', 'ERMORDET 1942'],
+  },
+  {
+    id: '5',
+    slug: 'hoexter',
+    name: 'ALFRED HÖXTER',
+    type: 'Getreidegroßhandlung',
+    cities: '',
+    address: 'PARISER STRASSE 32 · BERLIN-WILMERSDORF',
+    years: '1919 – 1937',
+    fate: 'Durch Boykott und Zwangsbewirtschaftung verdrängt · 1937 aufgegeben',
+    short:
+      'Alfred Höxter handelte seit 1919 an der Berliner Produktenbörse mit Getreide. Boykott, Sondergesetze und die antiliberale Wirtschaftspolitik der Nationalsozialisten entzogen dem jüdischen Großhandel schrittweise die Grundlage; 1937 musste das Geschäft aufgegeben werden.',
+    p1: 'Seit 1919 führte Alfred Höxter seine Getreidegroßhandlung von Wilmersdorf aus und handelte an der Berliner Produktenbörse, dem Zentrum des regionalen Agrarhandels.',
+    p2: 'Nach 1933 trafen den jüdischen Getreidehandel Boykott und gezielte Sondermaßnahmen; zugleich zerstörte die staatliche Zwangsbewirtschaftung den freien Handel, von dem er lebte. 1937 musste Alfred Höxter sein Geschäft aufgeben.',
+    facts: ['GEGRÜNDET 1919', 'PRODUKTENBÖRSE', 'BOYKOTT AB 1933', 'AUFGABE 1937'],
+  },
+  {
+    id: '6',
+    slug: 'pelz',
+    name: 'FRÖHLICH & PELZ',
+    type: 'Glas · Kristall · Porzellan',
+    cities: '',
+    address: 'RITTERSTRASSE 86 · BERLIN-KREUZBERG',
+    years: '1924 – 1939',
+    fate: 'Inhaber Moritz Fröhlich 1938 aus der eigenen Firma gedrängt · 1939 Emigration',
+    short:
+      'Moritz Fröhlich baute ab 1924 in Kreuzberg einen florierenden Handel mit Glas, Kristall und Porzellan auf. Ab 1936 drängte ihn sein Teilhaber Kurt Pelz mit Rückendeckung der NS-Behörden aus der eigenen Firma; Fröhlich verlor seine Existenz; im April 1939 gelang der Familie die Flucht über Kuba in die USA.',
+    p1: '1924 eröffnete Moritz Fröhlich, Sohn eines oberschlesischen Gastwirts, sein Geschäft für Glas, Kristall und Porzellan in der Ritterstraße. Auch nach 1933 florierte der Handel zunächst weiter.',
+    p2: 'Ab 1936 nutzte Teilhaber Kurt Pelz die Entrechtung der jüdischen Unternehmer: Bis 1938 drängte er Moritz Fröhlich vollständig aus dessen eigener Firma. Fröhlich verlor seine Existenzgrundlage. Im April 1939 gelang der Familie die Emigration über Kuba in die USA — unter ihnen der Sohn, der spätere Historiker Peter Gay.',
+    facts: ['GEGRÜNDET 1924', 'GLAS · PORZELLAN', 'VERDRÄNGT 1938', 'EMIGRATION 1939'],
+  },
+  {
+    id: '7',
+    slug: 'theaterkunst',
+    name: 'THEATERKUNST',
+    type: 'Theaterausstattung',
+    cities: '',
+    address: 'SCHWEDTER STRASSE 9 · PRENZLAUER BERG',
+    years: '1907 – 1936',
+    fate: 'Unter wachsendem Druck 1936 verkauft',
+    short:
+      'Hermann J. Kaufmanns Theaterkunst stattete seit 1907 Bühne und Film mit Kostümen und Requisiten aus und zählte in den 1920er Jahren zur Weltspitze. Unter wachsendem Druck verkaufte Kaufmann 1936; als Theaterkunst GmbH besteht die Firma bis heute.',
+    p1: 'Seit 1907 belieferte Hermann J. Kaufmann Theater und Film mit Kostümen, Dekorationen und Requisiten. In den 1920er Jahren zählte die Theaterkunst zu den führenden Ausstattern der Welt.',
+    p2: 'Nach 1933 wuchs der Druck von Behörden, Institutionen und Konkurrenten auf den jüdischen Inhaber. 1936 verkaufte Kaufmann das Unternehmen. Unter dem Namen Theaterkunst GmbH besteht die Firma bis heute fort.',
+    facts: ['GEGRÜNDET 1907', 'BÜHNE UND FILM', 'VERKAUF 1936', 'BESTEHT FORT'],
+  },
+  {
+    id: '9',
+    slug: 'jonass',
+    name: 'JONASS & CO.',
+    type: 'Kredit-Kaufhaus',
+    cities: '',
+    address: 'LOTHRINGER STRASSE 1 · BERLIN-MITTE',
+    years: '1926 – 1938',
+    fate: '1938 zum Verkauf gezwungen',
+    short:
+      'Das Kreditkaufhaus Jonass & Co. verkaufte auf Teilzahlung an Berlins weniger Wohlhabende; 1928 eröffnete der markante Neubau an der Lothringer Straße 1. 1938 wurden die jüdischen Inhaber zum Verkauf des Unternehmens gezwungen.',
+    p1: '1926 gegründet, brachte Jonass & Co. das Kaufhaus zu Berlins kleinen Einkommen: Kauf auf Teilzahlung, „¼ Anzahlung und 4 Monatsraten“. 1928 eröffnete an der Lothringer Straße 1 der sechsgeschossige Neubau — „Groß-Berlin hat jetzt 2 Jonass-Häuser“.',
+    p2: '1938 zwangen die NS-Behörden die jüdischen Eigentümer, Kaufhaus und Haus abzugeben. Das Gebäude an der heutigen Torstraße 1 steht noch; an die Firma Jonass erinnerte dort lange nichts.',
+    facts: ['ERÖFFNET 1926', 'KAUF AUF RATEN', 'NEUBAU 1928', 'ZWANGSVERKAUF 1938'],
+  },
+  {
+    id: '10',
+    slug: 'kutschera',
+    name: 'KARL KUTSCHERA',
+    type: 'Café Wien und Zigeunerkeller',
+    cities: '',
+    address: 'KURFÜRSTENDAMM 26 · CHARLOTTENBURG',
+    years: '1913 – 1937',
+    fate: 'Nach Hetzkampagne des „Stürmer“ 1937 zum Verkauf gezwungen',
+    short:
+      'Karl Kutscheras Café Wien und der Weinkeller Zigeunerkeller am Kurfürstendamm waren Treffpunkte von internationalem Ruf. Ab 1936 hetzte das NS-Blatt „Der Stürmer“ gegen den jüdischen Wirt; ein Jahr später musste Kutschera verkaufen.',
+    p1: 'Seit 1913 führte Karl Kutschera am Kurfürstendamm 26 das Café Wien und im Keller den Zigeunerkeller — mit Musik, Wein und Gästen aus Theater und Film ein Begriff weit über Berlin hinaus.',
+    p2: 'Ab 1936 machte das Hetzblatt „Der Stürmer“ Kutschera mit verleumderischen Artikeln zur Zielscheibe. Nach einem Jahr war das Ziel erreicht: 1937 musste Karl Kutschera Café und Keller verkaufen.',
+    facts: ['ERÖFFNET 1913', 'KURFÜRSTENDAMM 26', 'STÜRMER-HETZE 1936', 'VERKAUF 1937'],
+  },
+  {
+    id: '12',
+    slug: 'ruilos',
+    name: 'RUILOS G.M.B.H.',
+    type: 'Naturheilmittel',
+    cities: '',
+    address: 'ACHENBACHSTRASSE 33–35 · BERLIN-KÖPENICK',
+    years: '1921 – 1951',
+    fate: 'Inhaber Dr. Georg Eppenstein 1933 von der SA ermordet',
+    short:
+      'Die Ruilos G.m.b.H. des Chemikers Dr. Georg Eppenstein stellte in Köpenick Knoblauch-Heilmittel her. In der „Köpenicker Blutwoche“ im Juni 1933 verschleppten und misshandelten SA-Männer Eppenstein; er starb am 3. August 1933. Seine Frau führte den Betrieb weiter.',
+    p1: '1921 gründete der Chemiker Dr. Georg Eppenstein die Ruilos G.m.b.H. in Köpenick. Ihre Knoblauch-Präparate — „Gleich der Sonne wirkt Ruilos“ — wurden als natürliche Hausmittel beworben.',
+    p2: 'Am 21. Juni 1933, dem ersten Tag der „Köpenicker Blutwoche“, verschleppten SA-Männer Georg Eppenstein und misshandelten ihn schwer. Er erlag seinen Verletzungen am 3. August 1933. Seine nichtjüdische Frau führte das Unternehmen bis 1951 weiter.',
+    facts: ['GEGRÜNDET 1921', 'DR. G. EPPENSTEIN', 'VERSCHLEPPT 1933', 'ERMORDET 1933'],
+  },
+  {
+    id: '13',
+    slug: 'wassermann',
+    name: 'GEBR. WASSERMANN',
+    type: 'Lebensmittel- und Gänsehandlung',
+    cities: '',
+    address: 'BRUNNENSTRASSE 71 · BERLIN-MITTE',
+    years: '1923 – 1939',
+    fate: '1939 zur Geschäftsaufgabe gedrängt',
+    short:
+      'Die Brüder Eduard Elias und Max Moses Wassermann handelten in der Brunnenstraße mit Lebensmitteln und Gänsen. Mit Teilhaberschaften und Branchenwechseln widerstanden sie jahrelang der Verdrängung — im September 1939 mussten auch sie aufgeben.',
+    p1: 'Seit 1923 gehörten die Läden der Brüder Wassermann zur Brunnenstraße im Berliner Norden. Der eine hielt sich als stiller Teilhaber, der andere blieb durch Branchenwechsel im Geschäft — Strategien jüdischer Kaufleute gegen die Verdrängung.',
+    p2: 'Auch wirtschaftlicher Erfolg bot keinen Schutz: Im September 1939 mussten die Brüder ihr Gewerbe endgültig aufgeben. Diese Tafel erinnert an sie und an die vielen kleinen Läden des Berliner Nordens.',
+    facts: ['SEIT 1923', 'BRUNNENSTRASSE 71', 'BRANCHENWECHSEL', 'AUFGABE 1939'],
+  },
+  {
+    id: '14',
+    slug: 'weinberger',
+    name: 'GEBR. WEINBERGER',
+    type: 'Butter-Großhandlung',
+    cities: '',
+    address: 'BRUNNENSTRASSE 188–190 · BERLIN-MITTE',
+    years: '1889 – 1938',
+    fate: '1938 liquidiert',
+    short:
+      'Die Gebrüder Weinberger führten Berlins größte Butter-Großhandlung. Ausländisches Kapital und die polnische Botschaft schützten die Firma eine Zeit lang — doch 1938 gab es für das jüdische Unternehmen kein Entkommen mehr: Es wurde liquidiert.',
+    p1: 'Seit 1889 belieferten die Gebrüder Weinberger Berlin mit Butter — zuletzt als größtes Buttergeschäft der Stadt, mit eigener Marke und eigenem Fuhrpark. Die Beteiligung eines ausländischen Konzerns und die polnische Botschaft boten zunächst Schutz.',
+    p2: 'Den örtlichen Nationalsozialisten war das Unternehmen ein Dorn im Auge. 1938 halfen weder Kapital noch Diplomatie: Die Firma wurde liquidiert. Diese Tafel erinnert an Berlins größte Butterhandlung.',
+    facts: ['GEGRÜNDET 1889', 'GRÖSSTE BERLINS', 'SCHUTZ BIS 1937', 'LIQUIDIERT 1938'],
+  },
+].map((d) => ({ ...d, caption: ENGRAVINGS[d.slug].caption, url: `${SITE}/?id=${d.id}` }))
+
+// declared after module.exports above, so attach rather than inline
+module.exports.FEATURED_ENGRAVED = FEATURED_ENGRAVED
+
 // ---------------------------------------------------------------- main
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true })
-  const tiers = { simple, medium, detailed }
+
+  const others = oneBusinessPerTrade()
+  const entries = []
+
   for (const theme of THEMES) {
     T = theme
-    for (const [name, fn] of Object.entries(tiers)) {
-      const svg = await fn()
-      const file = path.join(OUT_DIR, `e-braun-${name}${theme.suffix}.svg`)
-      fs.writeFileSync(file, svg)
-      console.log(`✓ ${file} (${(svg.length / 1024).toFixed(0)} KB)`)
+
+    // E. Braun: every tier, every type theme — the one record with a traced
+    // storefront engraving and researched narrative copy.
+    for (const [tier, fn] of Object.entries({ simple, medium, detailed })) {
+      const file = `${EBRAUN.slug}-${tier}${theme.suffix}.svg`
+      fs.writeFileSync(path.join(OUT_DIR, file), await fn(EBRAUN_TIERS))
+    }
+
+    // Featured stories with an engraving: the two illustrated tiers, both
+    // type themes (they sit beside E. Braun on the /plaques page).
+    for (const b of FEATURED_ENGRAVED) {
+      for (const [tier, fn] of Object.entries({ medium, detailed })) {
+        const file = `${b.slug}-${tier}${theme.suffix}.svg`
+        fs.writeFileSync(path.join(OUT_DIR, file), await fn(b))
+      }
+    }
+
+    // Everyone else: the typographic tier only (no engraving exists for them),
+    // and only in the classic type theme — a second theme would double an
+    // already font-heavy asset set for a variant the page never shows.
+    if (theme.suffix !== '') continue
+    for (const b of others) {
+      const file = `${b.slug}-simple.svg`
+      fs.writeFileSync(path.join(OUT_DIR, file), await simple(b))
+      entries.push({
+        id: b.id,
+        slug: b.slug,
+        name: b.name,
+        type: b.type,
+        address: b.address,
+        years: b.years,
+        file,
+      })
     }
   }
+
+  // The /plaques page reads this instead of rebuilding filenames from business
+  // names. Slugging in two places is exactly how the old asset paths drifted
+  // until every image on that page 404'd.
+  const index = {
+    note: 'Generated by scripts/generate-premium-plaques.js — do not edit by hand.',
+    featured: {
+      id: EBRAUN.id,
+      slug: EBRAUN.slug,
+      name: EBRAUN.name,
+      type: EBRAUN.type,
+      address: EBRAUN.address,
+      years: EBRAUN.years,
+      tiers: ['simple', 'medium', 'detailed'],
+      themes: THEMES.map((t) => t.suffix),
+    },
+    engraved: FEATURED_ENGRAVED.map((b) => ({
+      id: b.id,
+      slug: b.slug,
+      name: b.name,
+      type: b.type,
+      address: b.address,
+      years: b.years,
+      tiers: ['medium', 'detailed'],
+      themes: THEMES.map((t) => t.suffix),
+    })),
+    plaques: entries,
+  }
+  fs.writeFileSync(path.join(OUT_DIR, 'index.json'), JSON.stringify(index, null, 2) + '\n')
+
+  console.log(
+    `\u2713 E. Braun (3 tiers) + 11 engraved stories (2 tiers) x ${THEMES.length} themes + ${entries.length} trades \u2192 ${OUT_DIR}`
+  )
 }
 
 if (require.main === module) main()

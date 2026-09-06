@@ -28,6 +28,17 @@ const BUSINESS_NAMESPACE_ROOTS = [
   'businessStates',
 ]
 
+export type SupportedLanguage = 'en' | 'de' | 'yi'
+
+// The site is a German-language memorial project about Berlin: German is the default
+// everywhere the language has not been chosen explicitly (?lang= or a stored preference).
+export const DEFAULT_LANGUAGE: SupportedLanguage = 'de'
+
+const SUPPORTED_LANGUAGES: SupportedLanguage[] = ['en', 'de', 'yi']
+
+const isSupportedLanguage = (value: string | null | undefined): value is SupportedLanguage =>
+  !!value && SUPPORTED_LANGUAGES.includes(value as SupportedLanguage)
+
 const detectNamespace = (path: string, explicitNs?: string): string => {
   if (explicitNs) return explicitNs
   return BUSINESS_NAMESPACE_ROOTS.includes(path.split('.')[0]) ? 'business' : 'common'
@@ -59,27 +70,30 @@ export const useTranslation = () => {
 
   // Get current language - support en, de, yi
   // Ensure consistent language detection between server and client
-  const getLanguage = (): 'en' | 'de' | 'yi' => {
+  const getLanguage = (): SupportedLanguage => {
     // Check URL params first for SSR consistency
     const urlLang = searchParams.get('lang')
-    if (urlLang && ['en', 'de', 'yi'].includes(urlLang)) {
-      return urlLang as 'en' | 'de' | 'yi'
+    if (isSupportedLanguage(urlLang)) {
+      return urlLang
     }
 
     // Fall back to i18n.language if available and valid
-    if (i18n && i18n.language && ['de', 'yi'].includes(i18n.language)) {
-      return i18n.language as 'en' | 'de' | 'yi'
+    if (i18n && isSupportedLanguage(i18n.language)) {
+      return i18n.language
     }
 
-    // Default to English for SSR consistency
-    return 'en'
+    // German is the site default, so it is also what the server renders when no
+    // explicit choice is present. i18n/client.ts sets the same fallbackLng and no
+    // longer sniffs the browser, so the client resolves to 'de' here too and the
+    // two sides of hydration agree.
+    return DEFAULT_LANGUAGE
   }
 
   const language = getLanguage()
 
   // Switch to specific language
   const switchToLanguage = useCallback(
-    (targetLang: 'en' | 'de' | 'yi') => {
+    (targetLang: SupportedLanguage) => {
       if (targetLang === language) return
 
       // Change i18next language
@@ -103,11 +117,12 @@ export const useTranslation = () => {
   // Legacy toggle function - cycles through languages
   const toggleLanguage = useCallback(
     (targetLang?: string) => {
-      if (targetLang && ['en', 'de', 'yi'].includes(targetLang)) {
-        switchToLanguage(targetLang as 'en' | 'de' | 'yi')
+      if (isSupportedLanguage(targetLang)) {
+        switchToLanguage(targetLang)
       } else {
-        // Cycle through: en -> de -> yi -> en
-        const nextLang = language === 'en' ? 'de' : language === 'de' ? 'yi' : 'en'
+        // Cycle through: de -> en -> yi -> de, starting from the site default
+        const nextLang: SupportedLanguage =
+          language === 'de' ? 'en' : language === 'en' ? 'yi' : 'de'
         switchToLanguage(nextLang)
       }
     },
@@ -136,10 +151,10 @@ export const useTranslation = () => {
         const fromRequestedLanguage = resolveFromBundle(language, namespace, path)
         if (fromRequestedLanguage !== undefined) return fromRequestedLanguage
 
-        // Mirror i18next's own fallbackLng: 'en' so a key missing from de/yi degrades to English
-        // rather than to its own name.
-        const fromEnglish = resolveFromBundle('en', namespace, path)
-        if (fromEnglish !== undefined) return fromEnglish
+        // Mirror i18next's own fallbackLng: 'de' so a key missing from en/yi degrades to the
+        // site's default language rather than to its own name.
+        const fromDefaultLanguage = resolveFromBundle(DEFAULT_LANGUAGE, namespace, path)
+        if (fromDefaultLanguage !== undefined) return fromDefaultLanguage
 
         return options?.defaultValue || path
       }
@@ -162,9 +177,9 @@ export const useTranslation = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search)
-      const langParam = urlParams.get('lang') as 'en' | 'de' | 'yi' | null
+      const langParam = urlParams.get('lang')
 
-      if (langParam && ['de', 'en', 'yi'].includes(langParam)) {
+      if (isSupportedLanguage(langParam)) {
         if (i18n.language !== langParam) {
           i18n.changeLanguage(langParam)
           localStorage.setItem('storymap-language', langParam)
@@ -172,6 +187,18 @@ export const useTranslation = () => {
       }
     }
   }, [i18n])
+
+  // Keep <html lang> in step with the resolved language. The root layout hardcodes
+  // lang="de" (there's no server-side way to know the ?lang= choice before the request
+  // is parsed for a fully client-selected locale), so this is the one place that corrects
+  // it once the real language is known. <html> already carries suppressHydrationWarning
+  // for next-themes' data-theme attribute, which covers this mismatch too. All three
+  // locales (en, de, yi) render left-to-right, so dir is never touched here.
+  useEffect(() => {
+    if (typeof document !== 'undefined' && document.documentElement.lang !== language) {
+      document.documentElement.lang = language
+    }
+  }, [language])
 
   return {
     t,

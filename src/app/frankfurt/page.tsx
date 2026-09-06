@@ -144,6 +144,10 @@ function FrankfurtMapContent() {
       className="relative w-full h-screen overflow-hidden"
       style={{ backgroundColor: 'var(--background)' }}
     >
+      {/* Visually hidden — the map fills the viewport with no room for a
+          heading, but the page still needs exactly one h1 for a11y/SEO. */}
+      <h1 className="sr-only">Jewish Businesses in Frankfurt, 1900-1945</h1>
+
       {/* Desktop Sidebar Navigation - Same as main page */}
       <div
         className="hidden md:flex md:w-16 md:h-full flex-shrink-0 flex-col items-center py-6 gap-4 absolute left-0 top-0 backdrop-blur-sm hot-sidebar"
@@ -154,6 +158,39 @@ function FrankfurtMapContent() {
         }}
       >
         {/* Theme Button */}
+        <button
+          onClick={() => {
+            if (language !== 'de') {
+              switchToLanguage('de')
+              const params = new URLSearchParams(searchParams.toString())
+              params.set('lang', 'de')
+              const queryString = params.toString()
+              router.push(queryString ? `/frankfurt?${queryString}` : '/frankfurt', {
+                scroll: false,
+              })
+            }
+          }}
+          className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+          style={{
+            backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
+            borderColor: 'var(--border)',
+            color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
+            cursor: 'pointer',
+            transform: 'scale(1)',
+            transition: 'transform 0.2s ease-in-out, background-color 0.2s',
+            fontSize: '12px',
+            fontFamily: 'Space Mono, monospace',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)'
+          }}
+          aria-label="Switch to German"
+        >
+          DE
+        </button>
         <button
           onClick={() => setShowThemeMenu(!showThemeMenu)}
           className={`w-10 h-10 flex items-center justify-center transition-all duration-200 border relative hot-button hover:scale-110 ${showThemeMenu ? 'hot-button-active' : ''}`}
@@ -357,22 +394,14 @@ function FrankfurtMapContent() {
                 })
               }
             }}
-            className="w-10 h-10 flex items-center justify-center transition-all duration-200 border hot-button hover:scale-110"
+            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
             style={{
               backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
               borderColor: 'var(--border)',
               color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
               cursor: 'pointer',
-              transform: 'scale(1)',
-              transition: 'transform 0.2s ease-in-out, background-color 0.2s',
               fontSize: '12px',
               fontFamily: 'Space Mono, monospace',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)'
             }}
             aria-label="Switch to German"
           >
@@ -700,31 +729,6 @@ function FrankfurtMapContent() {
             aria-label="Switch to English"
           >
             EN
-          </button>
-          <button
-            onClick={() => {
-              if (language !== 'de') {
-                switchToLanguage('de')
-                const params = new URLSearchParams(searchParams.toString())
-                params.set('lang', 'de')
-                const queryString = params.toString()
-                router.push(queryString ? `/frankfurt?${queryString}` : '/frankfurt', {
-                  scroll: false,
-                })
-              }
-            }}
-            className="w-12 h-12 flex items-center justify-center transition-all duration-200 border hover:opacity-80 cursor-pointer hot-button"
-            style={{
-              backgroundColor: language === 'de' ? 'var(--primary)' : 'var(--input-bg)',
-              borderColor: 'var(--border)',
-              color: language === 'de' ? 'var(--background)' : 'var(--foreground)',
-              cursor: 'pointer',
-              fontSize: '12px',
-              fontFamily: 'Space Mono, monospace',
-            }}
-            aria-label="Switch to German"
-          >
-            DE
           </button>
           <button
             onClick={() => {

@@ -11,7 +11,6 @@ import HistorySection from './homepage/HistorySection'
 import DataSection from './homepage/DataSection'
 import AboutSection from './homepage/AboutSection'
 import ResearchFoundation from './homepage/ResearchFoundation'
-import ExploreSection from './homepage/ExploreSection'
 import HomeFooter from './homepage/HomeFooter'
 
 /**
@@ -35,7 +34,6 @@ const Homepage: React.FC = () => {
       <DataSection data={points} />
       <AboutSection />
       <ResearchFoundation />
-      <ExploreSection />
       <HomeFooter />
     </div>
   )

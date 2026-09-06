@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useTranslation } from '../../../i18n/useTranslation'
+import { NAV_LINKS } from '../SiteHeader'
 
 const HomeFooter: React.FC = () => {
   const { t } = useTranslation()
@@ -33,34 +34,25 @@ const HomeFooter: React.FC = () => {
             className="flex flex-col gap-2"
             aria-label={t('homepage.footer.navLabel', { defaultValue: 'Footer' })}
           >
-            <Link
-              href="/map"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.map', { defaultValue: 'Map' })}
-            </Link>
-            <Link
-              href="/plaques"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.plaques', { defaultValue: 'Plaques' })}
-            </Link>
-            <Link
-              href="/jewish-businesses"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.data', { defaultValue: 'Data' })}
-            </Link>
-            <Link
-              href="/frankfurt"
-              className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
-              style={{ color: 'var(--foreground-muted)' }}
-            >
-              {t('homepage.nav.frankfurt', { defaultValue: 'Frankfurt' })}
-            </Link>
+            {/* Same destinations as both headers, plus the footer-only links:
+                the Frankfurt sibling project and the two collaborator entry
+                points, which belong here rather than in the primary nav — a
+                visitor comes for the map, a contributor goes looking. */}
+            {[
+              ...NAV_LINKS,
+              { href: '/frankfurt', key: 'homepage.nav.frankfurt', label: 'Frankfurt' },
+              { href: '/collaborate', key: 'homepage.nav.collaborate', label: 'Collaborate' },
+              { href: '/onboarding', key: 'homepage.nav.onboarding', label: 'Onboarding' },
+            ].map(({ href, key, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="font-mono text-xs uppercase tracking-wider transition-opacity hover:opacity-80"
+                style={{ color: 'var(--foreground-muted)' }}
+              >
+                {t(key, { defaultValue: label })}
+              </Link>
+            ))}
           </nav>
         </div>
 

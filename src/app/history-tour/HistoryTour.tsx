@@ -21,6 +21,13 @@ import {
   type TourStop,
 } from './tourData'
 import { FOOTPRINTS_1930 } from './footprints1930'
+import {
+  STATUS_LABEL,
+  extractSiteToday,
+  streetViewEmbedUrl,
+  streetViewLink,
+  todayStatus,
+} from './today'
 
 // Map-internal palette. WebGL layers require literal color values (CSS
 // variables cannot reach into the map) — the documented map-styling
@@ -116,6 +123,32 @@ const BUILDING_FILTER = [
   ['<=', ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT], MODERN_CUTOFF],
 ]
 
+// The Ladenzone band additionally skips features that already start above
+// ground. Named so the "Heute" toggle can restore it without retyping it.
+const SHOPFRONT_FILTER = ['all', ...BUILDING_FILTER.slice(1), ['==', MIN_HEIGHT, 0]]
+
+// --- "Heute" (today) mode --------------------------------------------------
+//
+// The tour's default rendering compresses building heights to the 1930
+// Traufhöhe and hides anything built after the war (BUILDING_FILTER,
+// MODERN_CUTOFF). "Heute" temporarily undoes both — real heights, post-war
+// towers included, unfiltered — plus removes the aging colour grade, so the
+// same relief reads as the city today. Values below are named once and
+// reused by the toggle effect so the "1930" state it restores can never
+// drift from the values buildTourStyle() actually shipped.
+const RAW_HEIGHT_EXPR = ['coalesce', ['get', 'render_height'], TRAUF_DEFAULT]
+const TODAY_BUILDING_FILTER = ['!=', ['get', 'hide_3d'], true]
+const SAT_PAINT_1930 = {
+  'raster-saturation': -0.62,
+  'raster-contrast': -0.04,
+  'raster-brightness-min': 0.14,
+} as const
+const SAT_PAINT_TODAY = {
+  'raster-saturation': 0,
+  'raster-contrast': 0,
+  'raster-brightness-min': 0,
+} as const
+
 // The K2-style relief stage: keyless sources — Esri World Imagery draped
 // over AWS terrarium elevation tiles with a sepia hillshade, plus extruded
 // OpenStreetMap building volumes (OpenFreeMap vector tiles) so each stop
@@ -208,9 +241,7 @@ function buildTourStyle(): StyleSpecification {
           // frame and no longer drains the contrast out of the extrusions.
           // brightness-min lifts the blacks so the ground stays a mid-tone
           // archival plate instead of dropping out under the lit model.
-          'raster-saturation': -0.62,
-          'raster-contrast': -0.04,
-          'raster-brightness-min': 0.14,
+          ...SAT_PAINT_1930,
           'raster-brightness-max': 1,
         },
       },
@@ -234,7 +265,7 @@ function buildTourStyle(): StyleSpecification {
         source: 'ofm',
         'source-layer': 'building',
         minzoom: 15,
-        filter: ['all', ...BUILDING_FILTER.slice(1), ['==', MIN_HEIGHT, 0]] as never,
+        filter: SHOPFRONT_FILTER as never,
         paint: {
           'fill-extrusion-color': MAP_COLORS.shopfront,
           'fill-extrusion-base': 0,
@@ -461,14 +492,87 @@ function pickFootprint(geometry: GeoJSON.Geometry, pt: LngLat): GeoJSON.Polygon 
   return null
 }
 
+// --- "Heute" site-today text, fetched lazily -------------------------------
+//
+// Only the timeline JSON (not tourData.ts) carries the "the site today"
+// paragraph, so the card fetches it on demand rather than loading all 16
+// files up front. Resolved text (or null, meaning the record has no such
+// section) is cached at module scope so the fetch never repeats for a stop
+// once resolved, across every StopCard instance and every mount.
+interface TimelineFile {
+  timeline?: { longDescription?: string }[]
+}
+
+const siteTodayCache = new Map<string, string | null>()
+
+/**
+ * Warm the per-stop assets as soon as the page mounts, in parallel, so they are
+ * in the browser cache before the map has finished loading tiles. The card
+ * photos use next/image's optimizer, so we request the same URL it will ask
+ * for (largest configured width for the card's sizes attribute).
+ */
+function warmTourAssets(): void {
+  if (typeof window === 'undefined') return
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+  if (conn?.saveData) return
+  // Same width ladder next/image builds from next.config deviceSizes for the
+  // card's sizes attribute; the browser picks one entry, so this warms exactly
+  // the variant the card will render and nothing else.
+  const widths = [640, 750, 828, 1080, 1200, 1920]
+  for (const stop of TOUR_STOPS) {
+    const src = stop.images[0]
+    if (src) {
+      const enc = encodeURIComponent(src)
+      const img = new window.Image()
+      img.decoding = 'async'
+      img.sizes = '(max-width: 768px) 92vw, 430px'
+      img.srcset = widths.map((w) => `/_next/image?url=${enc}&w=${w}&q=75 ${w}w`).join(', ')
+      img.src = `/_next/image?url=${enc}&w=828&q=75`
+    }
+    void loadSiteToday(stop.id)
+  }
+}
+const siteTodayRequests = new Map<string, Promise<string | null>>()
+
+function loadSiteToday(id: string): Promise<string | null> {
+  const cached = siteTodayCache.get(id)
+  if (cached !== undefined) return Promise.resolve(cached)
+  const pending = siteTodayRequests.get(id)
+  if (pending) return pending
+
+  const request = fetch(`/data/timeline/${id}.json`)
+    .then((res) => (res.ok ? (res.json() as Promise<TimelineFile>) : null))
+    .then((data) => {
+      const last = data?.timeline?.[data.timeline.length - 1]
+      const text = last?.longDescription ? extractSiteToday(last.longDescription) : null
+      siteTodayCache.set(id, text)
+      return text
+    })
+    .catch(() => {
+      siteTodayCache.set(id, null)
+      return null
+    })
+    .finally(() => {
+      siteTodayRequests.delete(id)
+    })
+
+  siteTodayRequests.set(id, request)
+  return request
+}
+
 interface StopCardProps {
+  /** Street View iframes mount only once the map has settled. */
+  embedsAllowed: boolean
   stop: TourStop
   index: number
   total: number
 }
 
-const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => {
+const StopCardComponent: React.FC<StopCardProps> = ({ stop, index, total, embedsAllowed }) => {
   const [expanded, setExpanded] = useState(false)
+  const [siteToday, setSiteToday] = useState<string | null>(null)
+  const articleRef = useRef<HTMLElement | null>(null)
+  const siteTodayFetchedRef = useRef(false)
 
   // The catalogue text arrives as a single string with blank-line paragraph
   // breaks; the first line is its own heading.
@@ -481,10 +585,50 @@ const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => {
     [stop.longStory]
   )
 
-  const toggle = useCallback(() => setExpanded((v) => !v), [])
+  const fetchSiteToday = useCallback(() => {
+    if (siteTodayFetchedRef.current) return
+    siteTodayFetchedRef.current = true
+    loadSiteToday(stop.id).then(setSiteToday)
+  }, [stop.id])
+
+  const toggle = useCallback(() => {
+    setExpanded((v) => !v)
+    fetchSiteToday()
+  }, [fetchSiteToday])
+
+  // "Becomes active": the card scrolling into view. Covers both the
+  // scroll-driven tour (one card in view at a time) and the no-WebGL
+  // fallback (a plain scrolling list) without needing the active-stop index
+  // threaded down as a prop.
+  useEffect(() => {
+    const el = articleRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) fetchSiteToday()
+      },
+      { threshold: 0.15 }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [fetchSiteToday])
+
+  const todayStatusValue = todayStatus(stop.id)
+  const todayStatusColor =
+    todayStatusValue === 'standing'
+      ? 'var(--success)'
+      : todayStatusValue === 'replacement'
+        ? 'var(--warning)'
+        : 'var(--danger)'
+  const streetViewEmbed = streetViewEmbedUrl(
+    stop.lat,
+    stop.lng,
+    stop.cam.bearing,
+    process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY
+  )
 
   return (
-    <article className={`ht-card${expanded ? ' is-expanded' : ''}`} data-ht-card>
+    <article ref={articleRef} className={`ht-card${expanded ? ' is-expanded' : ''}`} data-ht-card>
       <div className="ht-card-meta">
         <span className="ht-card-index">
           {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
@@ -506,6 +650,11 @@ const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => {
             height={560}
             sizes="(max-width: 768px) 92vw, 430px"
             style={{ width: '100%', height: 'auto' }}
+            // Eager on purpose: next/image defaults to lazy, which meant each
+            // photo only started downloading when its card scrolled into view,
+            // right when the map is busiest. All fifteen are ~100 KB WebPs.
+            loading="eager"
+            priority={index === 0}
           />
           <figcaption>{stop.imageCredit}</figcaption>
         </figure>
@@ -557,12 +706,49 @@ const StopCard: React.FC<StopCardProps> = ({ stop, index, total }) => {
         <h3>The building &amp; the street</h3>
         <p>{stop.building}</p>
       </div>
+
+      <div className="ht-card-today">
+        <h3>Today</h3>
+        <div className="ht-today-status">
+          <span
+            className="ht-today-swatch"
+            style={{ backgroundColor: todayStatusColor }}
+            aria-hidden="true"
+          />
+          <span>{STATUS_LABEL[todayStatusValue].en}</span>
+        </div>
+        {siteToday && <p className="ht-today-text">{siteToday}</p>}
+        {streetViewEmbed && embedsAllowed ? (
+          <div className="ht-today-streetview">
+            <iframe
+              src={streetViewEmbed}
+              title={`Street View — ${stop.title}`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        ) : (
+          <a
+            className="ht-today-streetview-link"
+            href={streetViewLink(stop.lat, stop.lng)}
+            target="_blank"
+            rel="noopener"
+          >
+            Open in Street View
+            <span aria-hidden="true"> ↗</span>
+          </a>
+        )}
+      </div>
+
       <span className={`ht-card-fate${stop.fateKind === 'destroyed' ? ' is-destroyed' : ''}`}>
         {stop.fate}
       </span>
     </article>
   )
 }
+
+const StopCard = React.memo(StopCardComponent)
 
 const HistoryTour: React.FC = () => {
   const rootRef = useRef<HTMLDivElement | null>(null)
@@ -594,6 +780,20 @@ const HistoryTour: React.FC = () => {
   const [mapReady, setMapReady] = useState(false)
   const [mapFailed, setMapFailed] = useState(false)
   const [activeIdx, setActiveIdx] = useState(-1)
+  const [todayMode, setTodayMode] = useState(false)
+  // Street View iframes are heavy (each loads Google's full viewer); hold them
+  // until the map has rendered so they don't compete for bandwidth with tiles.
+  const [embedsAllowed, setEmbedsAllowed] = useState(false)
+
+  useEffect(() => {
+    warmTourAssets()
+  }, [])
+
+  useEffect(() => {
+    if (!mapReady && !mapFailed) return
+    const t = window.setTimeout(() => setEmbedsAllowed(true), 1500)
+    return () => window.clearTimeout(t)
+  }, [mapReady, mapFailed])
 
   const stopYears = useMemo(() => TOUR_STOPS.map((s) => toDecimalYear(s.turningDate)), [])
 
@@ -1053,8 +1253,82 @@ const HistoryTour: React.FC = () => {
     return () => io.disconnect()
   }, [])
 
+  // Restore the reader's "Heute" preference after mount. Read is deferred
+  // out of the initial render (rather than a useState initializer) so the
+  // server-rendered and first client-rendered markup match — sessionStorage
+  // does not exist during SSR.
+  useEffect(() => {
+    try {
+      if (window.sessionStorage.getItem('ht-today') === '1') setTodayMode(true)
+    } catch {
+      // Storage may be unavailable (private browsing, disabled site data);
+      // the toggle still works for the session, it just won't persist.
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem('ht-today', todayMode ? '1' : '0')
+    } catch {
+      // Same as above — persistence is a nicety, not a requirement.
+    }
+  }, [todayMode])
+
+  // "Heute" toggle: swap the 1930-normalized building relief and aged
+  // colour grade for true heights, post-war towers, and colour imagery.
+  // Every value it sets is restored from the same named constants
+  // buildTourStyle() used, so toggling back and forth can never drift from
+  // the "1930" state the map actually loaded with.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady) return
+    try {
+      if (todayMode) {
+        map.setPaintProperty('sat', 'raster-saturation', SAT_PAINT_TODAY['raster-saturation'])
+        map.setPaintProperty('sat', 'raster-contrast', SAT_PAINT_TODAY['raster-contrast'])
+        map.setPaintProperty(
+          'sat',
+          'raster-brightness-min',
+          SAT_PAINT_TODAY['raster-brightness-min']
+        )
+        map.setPaintProperty('ht-3d-buildings', 'fill-extrusion-height', RAW_HEIGHT_EXPR)
+        map.setPaintProperty('ht-3d-buildings', 'fill-extrusion-base', MIN_HEIGHT)
+        map.setLayoutProperty('ht-shopfronts', 'visibility', 'none')
+        map.setLayoutProperty('ht-roofs', 'visibility', 'none')
+        map.setFilter('ht-shopfronts', TODAY_BUILDING_FILTER as never)
+        map.setFilter('ht-3d-buildings', TODAY_BUILDING_FILTER as never)
+        map.setFilter('ht-roofs', TODAY_BUILDING_FILTER as never)
+      } else {
+        map.setPaintProperty('sat', 'raster-saturation', SAT_PAINT_1930['raster-saturation'])
+        map.setPaintProperty('sat', 'raster-contrast', SAT_PAINT_1930['raster-contrast'])
+        map.setPaintProperty(
+          'sat',
+          'raster-brightness-min',
+          SAT_PAINT_1930['raster-brightness-min']
+        )
+        map.setPaintProperty('ht-3d-buildings', 'fill-extrusion-height', FACADE_TOP)
+        map.setPaintProperty('ht-3d-buildings', 'fill-extrusion-base', [
+          'max',
+          SHOPFRONT_TOP,
+          MIN_HEIGHT,
+        ])
+        map.setLayoutProperty('ht-shopfronts', 'visibility', 'visible')
+        map.setLayoutProperty('ht-roofs', 'visibility', 'visible')
+        map.setFilter('ht-shopfronts', SHOPFRONT_FILTER as never)
+        map.setFilter('ht-3d-buildings', BUILDING_FILTER as never)
+        map.setFilter('ht-roofs', BUILDING_FILTER as never)
+      }
+    } catch {
+      // The style may still be settling right after 'load'; harmless to
+      // skip a frame; the effect re-runs on the next mapReady/todayMode
+      // change.
+    }
+  }, [todayMode, mapReady])
+
+  const toggleTodayMode = useCallback((value: boolean) => setTodayMode(value), [])
+
   return (
-    <div ref={rootRef} className="htour">
+    <div ref={rootRef} className={`htour${todayMode ? ' is-heute' : ''}`}>
       {!mapFailed && (
         <div className="ht-stage" aria-hidden="true">
           <div ref={mapContainerRef} className="ht-map" />
@@ -1074,6 +1348,24 @@ const HistoryTour: React.FC = () => {
         <Link href="/" className="ht-back-link">
           ← Back to the map
         </Link>
+        <div className="ht-mode-toggle" role="group" aria-label="Time period">
+          <button
+            type="button"
+            className={todayMode ? '' : 'is-active'}
+            aria-pressed={!todayMode}
+            onClick={() => toggleTodayMode(false)}
+          >
+            1930
+          </button>
+          <button
+            type="button"
+            className={todayMode ? 'is-active' : ''}
+            aria-pressed={todayMode}
+            onClick={() => toggleTodayMode(true)}
+          >
+            Heute
+          </button>
+        </div>
       </div>
       <div className="ht-hud ht-hud--year">
         <div ref={yearElRef} className="ht-year">
@@ -1195,7 +1487,12 @@ const HistoryTour: React.FC = () => {
               id={`tour-stop-${stop.id}`}
             >
               <div className="ht-card-holder">
-                <StopCard stop={stop} index={i} total={TOUR_STOPS.length} />
+                <StopCard
+                  stop={stop}
+                  index={i}
+                  total={TOUR_STOPS.length}
+                  embedsAllowed={embedsAllowed}
+                />
               </div>
             </section>
           ))}
@@ -1255,7 +1552,13 @@ const HistoryTour: React.FC = () => {
             are listed below.
           </p>
           {TOUR_STOPS.map((stop, i) => (
-            <StopCard key={stop.id} stop={stop} index={i} total={TOUR_STOPS.length} />
+            <StopCard
+              key={stop.id}
+              stop={stop}
+              index={i}
+              total={TOUR_STOPS.length}
+              embedsAllowed={embedsAllowed}
+            />
           ))}
         </div>
       )}

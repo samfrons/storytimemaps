@@ -56,6 +56,10 @@
      properties, where it costs nothing per frame; what stays here is only
      what a per-layer property cannot do. */
   filter: sepia(0.3) saturate(0.88);
+  /* "Heute" mode drops this filter entirely (see .is-heute below). Only
+     filter is animated here — never color/background-color, per project
+     rule. */
+  transition: filter 0.5s ease;
 }
 .ht-map .maplibregl-ctrl-attrib {
   opacity: 0.55;
@@ -85,6 +89,7 @@
   background: url('/images/paper.jpg') center / cover;
   mix-blend-mode: multiply;
   opacity: 0.16;
+  transition: opacity 0.5s ease;
 }
 .ht-grain {
   position: absolute;
@@ -93,6 +98,7 @@
   opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: ht-grain-shift 1.4s steps(4) infinite;
+  transition: opacity 0.5s ease;
 }
 @keyframes ht-grain-shift {
   0% {
@@ -221,6 +227,48 @@
 }
 .ht-back-link:hover {
   transform: translateX(-2px);
+}
+
+/* Two-segment "1930 / Heute" period switch. */
+.ht-mode-toggle {
+  display: flex;
+  width: fit-content;
+  margin-top: 7px;
+  border: 2px solid var(--ht-ink);
+}
+.ht-mode-toggle button {
+  border: none;
+  background: transparent;
+  padding: 4px 10px;
+  font-family: var(--ht-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+  cursor: pointer;
+}
+.ht-mode-toggle button + button {
+  border-left: 2px solid var(--ht-ink);
+}
+.ht-mode-toggle button.is-active {
+  background: var(--ht-ink);
+  color: var(--ht-cream);
+}
+
+/* "Heute" mode: drop the aging treatment — colour imagery, no paper/grain
+   overlay, no sepia on the archival photographs. No color/background-color
+   transitions, per project rule; opacity and filter transitions are fine
+   (declared alongside their base rules, .ht-map above and .ht-card-figure
+   img below). */
+.htour.is-heute .ht-map {
+  filter: none;
+}
+.htour.is-heute .ht-paper-overlay,
+.htour.is-heute .ht-grain {
+  opacity: 0;
+}
+.htour.is-heute .ht-card-figure img {
+  filter: none;
 }
 
 .ht-hud--year {
@@ -565,6 +613,7 @@
   width: 100%;
   height: auto;
   filter: sepia(0.25) contrast(0.98);
+  transition: filter 0.5s ease;
 }
 .ht-card-figure figcaption {
   font-family: var(--ht-font-mono);
@@ -592,6 +641,80 @@
   font-size: 0.8rem;
   line-height: 1.6;
   color: var(--ht-ink-soft);
+}
+
+/* "Heute" block on every card — shown regardless of the map's toggle state,
+   since a reader may never touch the 3D toggle but still wants to know what
+   is at the address now. */
+.ht-card-today {
+  border-left: 2px solid var(--ht-ink-soft);
+  padding: 0.15rem 0 0.15rem 0.9rem;
+  margin-bottom: 1.1rem;
+}
+.ht-card-today h3 {
+  font-family: var(--ht-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ht-ink-soft);
+  margin-bottom: 0.4rem;
+}
+.ht-today-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ht-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: var(--ht-ink-soft);
+  margin-bottom: 0.5rem;
+}
+.ht-today-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border: 1px solid var(--ht-hairline);
+}
+.ht-today-text {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ht-ink-soft);
+  margin-bottom: 0.6rem;
+}
+.ht-today-streetview {
+  position: relative;
+  width: 100%;
+  /* 16:9 via the padding-box trick — no aspect-ratio fallback needed for
+     this app's supported browsers, but padding-top is the safer of the two
+     inside a card that also has to print sanely. */
+  padding-top: 56.25%;
+  border: 1px solid var(--ht-hairline);
+  overflow: hidden;
+}
+.ht-today-streetview iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.ht-today-streetview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 2px solid var(--ht-ink);
+  font-family: var(--ht-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ht-ink);
+  text-decoration: none;
+  background: transparent;
+}
+.ht-today-streetview-link:hover {
+  background: rgba(var(--ht-ink-rgb), 0.06);
 }
 /* expandable full catalogue account */
 .ht-card-expand {
@@ -803,10 +926,12 @@
     font-size: 1.15rem;
   }
   .ht-card-building,
+  .ht-card-today,
   .ht-card-fate {
     display: none;
   }
   .ht-card.is-expanded .ht-card-building,
+  .ht-card.is-expanded .ht-card-today,
   .ht-card.is-expanded .ht-card-fate {
     display: block;
   }

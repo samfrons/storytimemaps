@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { shareCard } from '../shareCard'
 
 // page.tsx is 'use client' (it drives the interactive Mapbox view and reads URL state),
 // so metadata has to live in this sibling layout — same pattern as history-tour/layout.tsx
@@ -10,18 +11,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/map',
   },
-  openGraph: {
+  ...shareCard('map', {
     title: 'Interactive Map — Jewish Businesses in Berlin 1900-1945',
     description:
       'A year-by-year map of Jewish-owned businesses in Berlin, 1900-1945, built from archival research.',
-    url: '/map',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Interactive Map — Jewish Businesses in Berlin 1900-1945',
-    description:
-      'A year-by-year map of Jewish-owned businesses in Berlin, 1900-1945, built from archival research.',
-  },
+    alt: 'The interactive map: Jewish-owned businesses marked across Berlin over a dark street plan.',
+    path: '/map',
+  }),
 }
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {

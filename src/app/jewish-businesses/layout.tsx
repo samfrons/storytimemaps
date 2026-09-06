@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { shareCard } from '../shareCard'
 import fs from 'fs'
 import path from 'path'
 
@@ -10,18 +11,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/jewish-businesses',
   },
-  openGraph: {
+  ...shareCard('jewish-businesses', {
     title: 'Jewish Business Records — Berlin 1900-1945 | StoryTimeMaps',
     description:
       'Geocoded records of Jewish-owned businesses in Berlin, 1900-1945, drawn from archival research.',
-    url: '/jewish-businesses',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Jewish Business Records — Berlin 1900-1945 | StoryTimeMaps',
-    description:
-      'Geocoded records of Jewish-owned businesses in Berlin, 1900-1945, drawn from archival research.',
-  },
+    alt: 'The business records browser for the Berlin archive.',
+    path: '/jewish-businesses',
+  }),
 }
 
 /**

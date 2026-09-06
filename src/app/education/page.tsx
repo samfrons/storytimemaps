@@ -1,4 +1,5 @@
 import React from 'react'
+import { shareCard } from '../shareCard'
 import Link from 'next/link'
 import SiteHeader from '../components/SiteHeader'
 
@@ -11,12 +12,13 @@ export const metadata = {
   alternates: {
     canonical: '/education',
   },
-  openGraph: {
+  ...shareCard('education', {
     title: 'For teachers — Teaching from the archive | StoryTimeMaps',
     description:
       'Free teaching materials built on the archive of Jewish businesses in Berlin, 1900–1945, for students aged 13–18.',
-    url: '/education',
-  },
+    alt: 'The teachers page: "Teach it from the evidence, on their own street."',
+    path: '/education',
+  }),
 }
 
 const LEARNING_RESOURCE_LD = {

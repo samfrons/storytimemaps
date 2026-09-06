@@ -1,4 +1,5 @@
 import React from 'react'
+import { shareCard } from '../../shareCard'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import GuideShell, { type GuideTocEntry } from '../../components/docs/GuideShell'
@@ -48,11 +49,12 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
     alternates: {
       canonical: `/onboarding/${doc.slug}`,
     },
-    openGraph: {
+    ...shareCard('onboarding', {
       title: `${doc.title} | StoryTimeMaps`,
       description: doc.blurb,
-      url: `/onboarding/${doc.slug}`,
-    },
+      alt: 'The StoryTimeMaps homepage: 10,021 Jewish-owned businesses drawn as points across Berlin.',
+      path: `/onboarding/${doc.slug}`,
+    }),
   }
 }
 

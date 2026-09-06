@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { shareCard } from '../shareCard'
 
 // page.tsx is 'use client'; metadata lives in this sibling layout (see map/layout.tsx).
 export const metadata: Metadata = {
@@ -8,18 +9,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/collaborate',
   },
-  openGraph: {
+  ...shareCard('collaborate', {
     title: 'Contribute to StoryTimeMaps | StoryTimeMaps',
     description:
       'Four ways to contribute: development, historical research, plaque outreach, and translation.',
-    url: '/collaborate',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Contribute to StoryTimeMaps | StoryTimeMaps',
-    description:
-      'Four ways to contribute: development, historical research, plaque outreach, and translation.',
-  },
+    alt: 'The collaborator page: "Help us preserve the record."',
+    path: '/collaborate',
+  }),
 }
 
 export default function CollaborateLayout({ children }: { children: React.ReactNode }) {

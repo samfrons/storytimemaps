@@ -15,7 +15,8 @@
     "plaques:web": "node scripts/generate-premium-plaques.js",
     "plaques:cut": "node scripts/generate-lightburn-plaque.js",
     "plaques:verify": "node scripts/verify-plaques.js",
-    "plaques": "pnpm run plaques:web && pnpm run plaques:cut && pnpm run plaques:verify"
+    "plaques": "pnpm run plaques:web && pnpm run plaques:cut && pnpm run plaques:verify",
+    "og:capture": "node scripts/capture-og-screenshots.mjs"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [

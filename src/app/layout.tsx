@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { AuthProvider } from '../contexts/AuthContext'
 import CookieConsentWrapper from './components/CookieConsentWrapper'
+import { shareCard } from './shareCard'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -64,33 +65,16 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  openGraph: {
-    type: 'website',
-    // German is the site's default language; English and Yiddish are alternates
-    // reachable via ?lang=.
-    locale: 'de_DE',
-    alternateLocale: ['en_US', 'yi'],
-    siteName: 'StoryTimeMaps',
+  // German is the site's default language; English and Yiddish are alternates
+  // reachable via ?lang= — see shareCard() for the locale block and for why
+  // the card is a screenshot rather than the drawn SVG this used to point at.
+  ...shareCard('home', {
     title: 'Jewish Businesses in Berlin 1900-1945',
     description:
       'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore the history of Jewish entrepreneurship and discover the stories of businesses that shaped the city.',
-    images: [
-      {
-        url: '/images/og-share-image.svg',
-        width: 1200,
-        height: 630,
-        alt: 'Jewish Businesses in Berlin 1900-1945 - Interactive Historical Map',
-        type: 'image/svg+xml',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Jewish Businesses in Berlin 1900-1945',
-    description:
-      'Interactive map documenting Jewish-owned businesses in Berlin from 1900-1945. Explore history through data visualization.',
-    images: ['/images/og-share-image.svg'],
-  },
+    alt: 'The StoryTimeMaps homepage: 10,021 Jewish-owned businesses drawn as points across Berlin, with the timeline standing at 1933.',
+    path: '/',
+  }),
   robots: {
     index: true,
     follow: true,

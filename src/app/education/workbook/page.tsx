@@ -1,4 +1,5 @@
 import React from 'react'
+import { shareCard } from '../../shareCard'
 import Link from 'next/link'
 import EducationDocument, { readEducationDoc } from '../../components/education/EducationDocument'
 import EducationPrintButton from '../../components/education/EducationPrintButton'
@@ -13,12 +14,13 @@ export const metadata = {
   alternates: {
     canonical: '/education/workbook',
   },
-  openGraph: {
+  ...shareCard('education', {
     title: 'The Street You Walk On — Classroom Workbook | StoryTimeMaps',
     description:
       'A free neighbourhood workbook for students aged 13–18, built on the Berlin business archive.',
-    url: '/education/workbook',
-  },
+    alt: 'The teachers page: "Teach it from the evidence, on their own street."',
+    path: '/education/workbook',
+  }),
 }
 
 const LEARNING_RESOURCE_LD = {

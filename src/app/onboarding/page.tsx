@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { shareCard } from '../shareCard'
 import GuideShell, { type GuideTocEntry } from '../components/docs/GuideShell'
 import {
   GuideBullets,
@@ -35,12 +36,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/onboarding',
   },
-  openGraph: {
+  ...shareCard('onboarding', {
     title: 'Collaborator Onboarding | StoryTimeMaps',
     description:
       'How to contribute to StoryTimeMaps — development, research, outreach, and translation.',
-    url: '/onboarding',
-  },
+    alt: 'The StoryTimeMaps homepage: 10,021 Jewish-owned businesses drawn as points across Berlin.',
+    path: '/onboarding',
+  }),
 }
 
 const TECH_ARTICLE_LD = {

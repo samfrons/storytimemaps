@@ -1,4 +1,5 @@
 import React from 'react'
+import { shareCard } from '../../shareCard'
 import Link from 'next/link'
 import EducationDocument, { readEducationDoc } from '../../components/education/EducationDocument'
 import EducationPrintButton from '../../components/education/EducationPrintButton'
@@ -13,12 +14,13 @@ export const metadata = {
   alternates: {
     canonical: '/education/activities',
   },
-  openGraph: {
+  ...shareCard('education', {
     title: 'Six Lessons From One Archive — Classroom Activities | StoryTimeMaps',
     description:
       'Six free standalone classroom activities for students aged 13–18, each fitting a single lesson.',
-    url: '/education/activities',
-  },
+    alt: 'The teachers page: "Teach it from the evidence, on their own street."',
+    path: '/education/activities',
+  }),
 }
 
 const LEARNING_RESOURCE_LD = {

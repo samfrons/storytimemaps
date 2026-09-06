@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { shareCard } from '../shareCard'
 
 // page.tsx is 'use client'; metadata lives in this sibling layout (see map/layout.tsx).
 export const metadata: Metadata = {
@@ -8,18 +9,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/exhibit-vision',
   },
-  openGraph: {
+  ...shareCard('exhibit-vision', {
     title: 'Museum Exhibition Proposal | StoryTimeMaps',
     description:
       'A proposed physical exhibition documenting Jewish-owned businesses in Berlin, 1900-1945, for venues and funders.',
-    url: '/exhibit-vision',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Museum Exhibition Proposal | StoryTimeMaps',
-    description:
-      'A proposed physical exhibition documenting Jewish-owned businesses in Berlin, 1900-1945, for venues and funders.',
-  },
+    alt: 'The exhibition proposal page, showing Berlin cut into a gallery floor with lit markers standing on it.',
+    path: '/exhibit-vision',
+  }),
 }
 
 export default function ExhibitVisionLayout({ children }: { children: React.ReactNode }) {

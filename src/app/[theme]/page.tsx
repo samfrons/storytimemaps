@@ -1,8 +1,18 @@
-'use client'
+import { notFound } from 'next/navigation'
+import ThemeRedirect from './ThemeRedirect'
 
-import React, { useEffect } from 'react'
-import { useTheme } from 'next-themes'
-import { notFound, useRouter } from 'next/navigation'
+const VALID_THEMES = [
+  'moody',
+  'cool',
+  'warm',
+  'hot',
+  'cold',
+  'bauhaus',
+  'art-nouveau',
+  'archival',
+  'hoefe',
+  'brutal-pop',
+]
 
 interface ThemePageProps {
   params: Promise<{
@@ -10,44 +20,10 @@ interface ThemePageProps {
   }>
 }
 
-export default function ThemePage({ params }: ThemePageProps) {
-  const { setTheme } = useTheme()
-  const router = useRouter()
-
-  useEffect(() => {
-    const validThemes = [
-      'moody',
-      'cool',
-      'warm',
-      'hot',
-      'cold',
-      'bauhaus',
-      'art-nouveau',
-      'archival',
-      'hoefe',
-      'brutal-pop',
-    ]
-
-    params.then((resolvedParams) => {
-      if (validThemes.includes(resolvedParams.theme)) {
-        // Set the theme and redirect to the map for single-page performance
-        setTheme(resolvedParams.theme)
-        router.replace('/map')
-      } else {
-        notFound()
-      }
-    })
-  }, [params, setTheme, router])
-
-  // Show loading while redirecting
-  return (
-    <div
-      className="w-full h-screen flex items-center justify-center"
-      style={{ backgroundColor: 'var(--background)' }}
-    >
-      <div className="font-mono" style={{ color: 'var(--primary)' }}>
-        Redirecting...
-      </div>
-    </div>
-  )
+// Validated on the server so an unknown path (e.g. /llms.txt, a mistyped link) returns a
+// real HTTP 404 to crawlers and agents instead of a 200 "Redirecting..." soft-404.
+export default async function ThemePage({ params }: ThemePageProps) {
+  const { theme } = await params
+  if (!VALID_THEMES.includes(theme)) notFound()
+  return <ThemeRedirect theme={theme} />
 }

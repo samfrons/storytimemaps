@@ -1,0 +1,21 @@
+# StoryTimeMaps — Jewish Businesses in Berlin 1900–1945
+
+> An interactive archive and map documenting Jewish-owned businesses in Berlin, 1900–1945, built for remembrance and education. Content is available in German (default), English and Yiddish via `?lang=de|en|yi`.
+
+Site: https://b3rlin.storytimemaps.com
+Sitemap: https://b3rlin.storytimemaps.com/sitemap.xml
+Contact: info@storytimemaps.com
+
+## Main pages
+- [Map](https://b3rlin.storytimemaps.com/map): interactive map of businesses over time
+- [Business browser](https://b3rlin.storytimemaps.com/jewish-businesses): searchable list of businesses
+- [Frankfurt map](https://b3rlin.storytimemaps.com/frankfurt)
+- [History tour](https://b3rlin.storytimemaps.com/history-tour)
+- [Memorial plaques](https://b3rlin.storytimemaps.com/plaques)
+- [Museum exhibit vision](https://b3rlin.storytimemaps.com/exhibit-vision)
+- [Education](https://b3rlin.storytimemaps.com/education): workbook and activities
+- [Collaborate](https://b3rlin.storytimemaps.com/collaborate)
+
+## Notes
+- Public pages are open to crawlers and agents. /admin, /dashboard, /api and /presentation are excluded in robots.txt.
+- Please present the material respectfully and accurately; it documents expropriation and persecution.
